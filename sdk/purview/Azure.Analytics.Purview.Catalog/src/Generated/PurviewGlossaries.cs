@@ -14,7 +14,8 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
-    /// <summary> The PurviewGlossaries service client. </summary>
+    // Data plane generated sub-client. The PurviewGlossaries sub-client.
+    /// <summary> The PurviewGlossaries sub-client. </summary>
     public partial class PurviewGlossaries
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
@@ -57,38 +58,70 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossariesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossariesAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetGlossariesAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossariesAsync(1234, 1234, "<sort>", true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("language").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("usage").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossary</c>:
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -112,8 +145,34 @@ namespace Azure.Analytics.Purview.Catalog
         ///     }
         ///   ], # Optional. An array of related term headers.
         ///   usage: string, # Optional. The usage of the glossary.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Response> GetGlossariesAsync(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestContext context = null)
@@ -140,38 +199,70 @@ namespace Azure.Analytics.Purview.Catalog
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossaries and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaries();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetGlossaries with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaries(1234, 1234, "<sort>", true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("language").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("usage").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossary</c>:
+        /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -195,8 +286,34 @@ namespace Azure.Analytics.Purview.Catalog
         ///     }
         ///   ], # Optional. An array of related term headers.
         ///   usage: string, # Optional. The usage of the glossary.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
+        /// </details>
         /// 
         /// </remarks>
         public virtual Response GetGlossaries(int? limit = null, int? offset = null, string sort = null, bool? ignoreTermsAndCategories = null, RequestContext context = null)
@@ -221,6 +338,454 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateGlossaryAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateGlossaryAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     categoryInfo = new {
+        ///         key = new {
+        ///             anchor = new {
+        ///                 displayText = "<displayText>",
+        ///                 glossaryGuid = "<glossaryGuid>",
+        ///                 relationGuid = "<relationGuid>",
+        ///             },
+        ///             childrenCategories = new[] {
+        ///                 new {
+        ///                     categoryGuid = "<categoryGuid>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     parentCategoryGuid = "<parentCategoryGuid>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                 }
+        ///             },
+        ///             parentCategory = new {
+        ///                 categoryGuid = "<categoryGuid>",
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 parentCategoryGuid = "<parentCategoryGuid>",
+        ///                 relationGuid = "<relationGuid>",
+        ///             },
+        ///             terms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             classifications = new[] {
+        ///                 new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 }
+        ///             },
+        ///             longDescription = "<longDescription>",
+        ///             name = "<name>",
+        ///             qualifiedName = "<qualifiedName>",
+        ///             shortDescription = "<shortDescription>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///             guid = "<guid>",
+        ///         },
+        ///     },
+        ///     termInfo = new {
+        ///         key = new {
+        ///             abbreviation = "<abbreviation>",
+        ///             templateName = new[] {
+        ///                 new {}
+        ///             },
+        ///             anchor = new {
+        ///                 displayText = "<displayText>",
+        ///                 glossaryGuid = "<glossaryGuid>",
+        ///                 relationGuid = "<relationGuid>",
+        ///             },
+        ///             antonyms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             status = "Draft",
+        ///             resources = new[] {
+        ///                 new {
+        ///                     displayName = "<displayName>",
+        ///                     url = "<url>",
+        ///                 }
+        ///             },
+        ///             contacts = new {
+        ///                 key = new[] {
+        ///                     new {
+        ///                         id = "<id>",
+        ///                         info = "<info>",
+        ///                     }
+        ///                 },
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {
+        ///                     key = new {},
+        ///                 },
+        ///             },
+        ///             assignedEntities = new[] {
+        ///                 new {
+        ///                     displayText = "<displayText>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     relationshipType = "<relationshipType>",
+        ///                     relationshipAttributes = new {
+        ///                         entityGuid = "<entityGuid>",
+        ///                         entityStatus = "ACTIVE",
+        ///                         removePropagationsOnEntityDelete = true,
+        ///                         validityPeriods = new[] {
+        ///                             new {
+        ///                                 endTime = "<endTime>",
+        ///                                 startTime = "<startTime>",
+        ///                                 timeZone = "<timeZone>",
+        ///                             }
+        ///                         },
+        ///                         source = "<source>",
+        ///                         sourceDetails = new {
+        ///                             key = new {},
+        ///                         },
+        ///                         attributes = new {
+        ///                             key = new {},
+        ///                         },
+        ///                         typeName = "<typeName>",
+        ///                         lastModifiedTS = "<lastModifiedTS>",
+        ///                     },
+        ///                     relationshipGuid = "<relationshipGuid>",
+        ///                     relationshipStatus = "ACTIVE",
+        ///                     guid = "<guid>",
+        ///                     typeName = "<typeName>",
+        ///                     uniqueAttributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                 }
+        ///             },
+        ///             categories = new[] {
+        ///                 new {
+        ///                     categoryGuid = "<categoryGuid>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     status = "DRAFT",
+        ///                 }
+        ///             },
+        ///             classifies = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             examples = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             isA = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             preferredTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             preferredToTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             replacedBy = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             replacementTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             seeAlso = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             synonyms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             translatedTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             translationTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             usage = "<usage>",
+        ///             validValues = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             validValuesFor = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             classifications = new[] {
+        ///                 new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 }
+        ///             },
+        ///             longDescription = "<longDescription>",
+        ///             name = "<name>",
+        ///             qualifiedName = "<qualifiedName>",
+        ///             shortDescription = "<shortDescription>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///             guid = "<guid>",
+        ///         },
+        ///     },
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "<categoryGuid>",
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             parentCategoryGuid = "<parentCategoryGuid>",
+        ///             relationGuid = "<relationGuid>",
+        ///         }
+        ///     },
+        ///     language = "<language>",
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     usage = "<usage>",
+        ///     classifications = new[] {
+        ///         new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         }
+        ///     },
+        ///     longDescription = "<longDescription>",
+        ///     name = "<name>",
+        ///     qualifiedName = "<qualifiedName>",
+        ///     shortDescription = "<shortDescription>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        ///     guid = "<guid>",
+        /// };
+        /// 
+        /// Response response = await client.CreateGlossaryAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -228,6 +793,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -253,9 +820,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -268,6 +832,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   longDescription: string, # Optional. The long version description.
@@ -276,8 +843,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
         /// </details>
@@ -286,6 +851,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -311,9 +878,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -326,6 +890,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   longDescription: string, # Optional. The long version description.
@@ -334,8 +901,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
         /// </details>
@@ -365,6 +930,454 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateGlossary and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateGlossary(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateGlossary with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     categoryInfo = new {
+        ///         key = new {
+        ///             anchor = new {
+        ///                 displayText = "<displayText>",
+        ///                 glossaryGuid = "<glossaryGuid>",
+        ///                 relationGuid = "<relationGuid>",
+        ///             },
+        ///             childrenCategories = new[] {
+        ///                 new {
+        ///                     categoryGuid = "<categoryGuid>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     parentCategoryGuid = "<parentCategoryGuid>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                 }
+        ///             },
+        ///             parentCategory = new {
+        ///                 categoryGuid = "<categoryGuid>",
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 parentCategoryGuid = "<parentCategoryGuid>",
+        ///                 relationGuid = "<relationGuid>",
+        ///             },
+        ///             terms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             classifications = new[] {
+        ///                 new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 }
+        ///             },
+        ///             longDescription = "<longDescription>",
+        ///             name = "<name>",
+        ///             qualifiedName = "<qualifiedName>",
+        ///             shortDescription = "<shortDescription>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///             guid = "<guid>",
+        ///         },
+        ///     },
+        ///     termInfo = new {
+        ///         key = new {
+        ///             abbreviation = "<abbreviation>",
+        ///             templateName = new[] {
+        ///                 new {}
+        ///             },
+        ///             anchor = new {
+        ///                 displayText = "<displayText>",
+        ///                 glossaryGuid = "<glossaryGuid>",
+        ///                 relationGuid = "<relationGuid>",
+        ///             },
+        ///             antonyms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             status = "Draft",
+        ///             resources = new[] {
+        ///                 new {
+        ///                     displayName = "<displayName>",
+        ///                     url = "<url>",
+        ///                 }
+        ///             },
+        ///             contacts = new {
+        ///                 key = new[] {
+        ///                     new {
+        ///                         id = "<id>",
+        ///                         info = "<info>",
+        ///                     }
+        ///                 },
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {
+        ///                     key = new {},
+        ///                 },
+        ///             },
+        ///             assignedEntities = new[] {
+        ///                 new {
+        ///                     displayText = "<displayText>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     relationshipType = "<relationshipType>",
+        ///                     relationshipAttributes = new {
+        ///                         entityGuid = "<entityGuid>",
+        ///                         entityStatus = "ACTIVE",
+        ///                         removePropagationsOnEntityDelete = true,
+        ///                         validityPeriods = new[] {
+        ///                             new {
+        ///                                 endTime = "<endTime>",
+        ///                                 startTime = "<startTime>",
+        ///                                 timeZone = "<timeZone>",
+        ///                             }
+        ///                         },
+        ///                         source = "<source>",
+        ///                         sourceDetails = new {
+        ///                             key = new {},
+        ///                         },
+        ///                         attributes = new {
+        ///                             key = new {},
+        ///                         },
+        ///                         typeName = "<typeName>",
+        ///                         lastModifiedTS = "<lastModifiedTS>",
+        ///                     },
+        ///                     relationshipGuid = "<relationshipGuid>",
+        ///                     relationshipStatus = "ACTIVE",
+        ///                     guid = "<guid>",
+        ///                     typeName = "<typeName>",
+        ///                     uniqueAttributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                 }
+        ///             },
+        ///             categories = new[] {
+        ///                 new {
+        ///                     categoryGuid = "<categoryGuid>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     status = "DRAFT",
+        ///                 }
+        ///             },
+        ///             classifies = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             examples = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             isA = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             preferredTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             preferredToTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             replacedBy = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             replacementTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             seeAlso = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             synonyms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             translatedTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             translationTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             usage = "<usage>",
+        ///             validValues = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             validValuesFor = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             classifications = new[] {
+        ///                 new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 }
+        ///             },
+        ///             longDescription = "<longDescription>",
+        ///             name = "<name>",
+        ///             qualifiedName = "<qualifiedName>",
+        ///             shortDescription = "<shortDescription>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///             guid = "<guid>",
+        ///         },
+        ///     },
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "<categoryGuid>",
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             parentCategoryGuid = "<parentCategoryGuid>",
+        ///             relationGuid = "<relationGuid>",
+        ///         }
+        ///     },
+        ///     language = "<language>",
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     usage = "<usage>",
+        ///     classifications = new[] {
+        ///         new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         }
+        ///     },
+        ///     longDescription = "<longDescription>",
+        ///     name = "<name>",
+        ///     qualifiedName = "<qualifiedName>",
+        ///     shortDescription = "<shortDescription>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        ///     guid = "<guid>",
+        /// };
+        /// 
+        /// Response response = client.CreateGlossary(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -372,6 +1385,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -397,9 +1412,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -412,6 +1424,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   longDescription: string, # Optional. The long version description.
@@ -420,8 +1435,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
         /// </details>
@@ -430,6 +1443,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -455,9 +1470,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -470,6 +1482,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   longDescription: string, # Optional. The long version description.
@@ -478,8 +1493,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
         /// </details>
@@ -509,38 +1522,130 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryCategoriesAsync with required request content and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         anchor = new {
+        ///             displayText = "<displayText>",
+        ///             glossaryGuid = "<glossaryGuid>",
+        ///             relationGuid = "<relationGuid>",
+        ///         },
+        ///         childrenCategories = new[] {
+        ///             new {
+        ///                 categoryGuid = "<categoryGuid>",
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 parentCategoryGuid = "<parentCategoryGuid>",
+        ///                 relationGuid = "<relationGuid>",
+        ///             }
+        ///         },
+        ///         parentCategory = new {
+        ///             categoryGuid = "<categoryGuid>",
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             parentCategoryGuid = "<parentCategoryGuid>",
+        ///             relationGuid = "<relationGuid>",
+        ///         },
+        ///         terms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         classifications = new[] {
+        ///             new {
+        ///                 entityGuid = "<entityGuid>",
+        ///                 entityStatus = "ACTIVE",
+        ///                 removePropagationsOnEntityDelete = true,
+        ///                 validityPeriods = new[] {
+        ///                     new {
+        ///                         endTime = "<endTime>",
+        ///                         startTime = "<startTime>",
+        ///                         timeZone = "<timeZone>",
+        ///                     }
+        ///                 },
+        ///                 source = "<source>",
+        ///                 sourceDetails = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "<typeName>",
+        ///                 lastModifiedTS = "<lastModifiedTS>",
+        ///             }
+        ///         },
+        ///         longDescription = "<longDescription>",
+        ///         name = "<name>",
+        ///         qualifiedName = "<qualifiedName>",
+        ///         shortDescription = "<shortDescription>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
+        ///         guid = "<guid>",
+        ///     }
+        /// };
+        /// 
+        /// Response response = await client.CreateGlossaryCategoriesAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -568,38 +1673,38 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -627,6 +1732,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -655,38 +1785,130 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryCategories with required request content and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         anchor = new {
+        ///             displayText = "<displayText>",
+        ///             glossaryGuid = "<glossaryGuid>",
+        ///             relationGuid = "<relationGuid>",
+        ///         },
+        ///         childrenCategories = new[] {
+        ///             new {
+        ///                 categoryGuid = "<categoryGuid>",
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 parentCategoryGuid = "<parentCategoryGuid>",
+        ///                 relationGuid = "<relationGuid>",
+        ///             }
+        ///         },
+        ///         parentCategory = new {
+        ///             categoryGuid = "<categoryGuid>",
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             parentCategoryGuid = "<parentCategoryGuid>",
+        ///             relationGuid = "<relationGuid>",
+        ///         },
+        ///         terms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         classifications = new[] {
+        ///             new {
+        ///                 entityGuid = "<entityGuid>",
+        ///                 entityStatus = "ACTIVE",
+        ///                 removePropagationsOnEntityDelete = true,
+        ///                 validityPeriods = new[] {
+        ///                     new {
+        ///                         endTime = "<endTime>",
+        ///                         startTime = "<startTime>",
+        ///                         timeZone = "<timeZone>",
+        ///                     }
+        ///                 },
+        ///                 source = "<source>",
+        ///                 sourceDetails = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "<typeName>",
+        ///                 lastModifiedTS = "<lastModifiedTS>",
+        ///             }
+        ///         },
+        ///         longDescription = "<longDescription>",
+        ///         name = "<name>",
+        ///         qualifiedName = "<qualifiedName>",
+        ///         shortDescription = "<shortDescription>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
+        ///         guid = "<guid>",
+        ///     }
+        /// };
+        /// 
+        /// Response response = client.CreateGlossaryCategories(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -714,38 +1936,38 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -773,6 +1995,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -801,6 +2048,134 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryCategoryAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateGlossaryCategoryAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateGlossaryCategoryAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     anchor = new {
+        ///         displayText = "<displayText>",
+        ///         glossaryGuid = "<glossaryGuid>",
+        ///         relationGuid = "<relationGuid>",
+        ///     },
+        ///     childrenCategories = new[] {
+        ///         new {
+        ///             categoryGuid = "<categoryGuid>",
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             parentCategoryGuid = "<parentCategoryGuid>",
+        ///             relationGuid = "<relationGuid>",
+        ///         }
+        ///     },
+        ///     parentCategory = new {
+        ///         categoryGuid = "<categoryGuid>",
+        ///         description = "<description>",
+        ///         displayText = "<displayText>",
+        ///         parentCategoryGuid = "<parentCategoryGuid>",
+        ///         relationGuid = "<relationGuid>",
+        ///     },
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     classifications = new[] {
+        ///         new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         }
+        ///     },
+        ///     longDescription = "<longDescription>",
+        ///     name = "<name>",
+        ///     qualifiedName = "<qualifiedName>",
+        ///     shortDescription = "<shortDescription>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        ///     guid = "<guid>",
+        /// };
+        /// 
+        /// Response response = await client.CreateGlossaryCategoryAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -808,31 +2183,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -860,6 +2210,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -867,31 +2242,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -919,6 +2269,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -947,6 +2322,134 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryCategory and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateGlossaryCategory(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateGlossaryCategory with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     anchor = new {
+        ///         displayText = "<displayText>",
+        ///         glossaryGuid = "<glossaryGuid>",
+        ///         relationGuid = "<relationGuid>",
+        ///     },
+        ///     childrenCategories = new[] {
+        ///         new {
+        ///             categoryGuid = "<categoryGuid>",
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             parentCategoryGuid = "<parentCategoryGuid>",
+        ///             relationGuid = "<relationGuid>",
+        ///         }
+        ///     },
+        ///     parentCategory = new {
+        ///         categoryGuid = "<categoryGuid>",
+        ///         description = "<description>",
+        ///         displayText = "<displayText>",
+        ///         parentCategoryGuid = "<parentCategoryGuid>",
+        ///         relationGuid = "<relationGuid>",
+        ///     },
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     classifications = new[] {
+        ///         new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         }
+        ///     },
+        ///     longDescription = "<longDescription>",
+        ///     name = "<name>",
+        ///     qualifiedName = "<qualifiedName>",
+        ///     shortDescription = "<shortDescription>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        ///     guid = "<guid>",
+        /// };
+        /// 
+        /// Response response = client.CreateGlossaryCategory(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -954,31 +2457,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -1006,6 +2484,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -1013,31 +2516,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -1065,6 +2543,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -1094,6 +2597,56 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossaryCategoryAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryCategoryAsync("<categoryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -1101,31 +2654,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -1153,6 +2681,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -1182,6 +2735,56 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossaryCategory with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryCategory("<categoryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -1189,31 +2792,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -1241,6 +2819,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -1271,6 +2874,134 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call UpdateGlossaryCategoryAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call UpdateGlossaryCategoryAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     anchor = new {
+        ///         displayText = "<displayText>",
+        ///         glossaryGuid = "<glossaryGuid>",
+        ///         relationGuid = "<relationGuid>",
+        ///     },
+        ///     childrenCategories = new[] {
+        ///         new {
+        ///             categoryGuid = "<categoryGuid>",
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             parentCategoryGuid = "<parentCategoryGuid>",
+        ///             relationGuid = "<relationGuid>",
+        ///         }
+        ///     },
+        ///     parentCategory = new {
+        ///         categoryGuid = "<categoryGuid>",
+        ///         description = "<description>",
+        ///         displayText = "<displayText>",
+        ///         parentCategoryGuid = "<parentCategoryGuid>",
+        ///         relationGuid = "<relationGuid>",
+        ///     },
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     classifications = new[] {
+        ///         new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         }
+        ///     },
+        ///     longDescription = "<longDescription>",
+        ///     name = "<name>",
+        ///     qualifiedName = "<qualifiedName>",
+        ///     shortDescription = "<shortDescription>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        ///     guid = "<guid>",
+        /// };
+        /// 
+        /// Response response = await client.UpdateGlossaryCategoryAsync("<categoryGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -1278,31 +3009,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -1330,6 +3036,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -1337,31 +3068,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -1389,6 +3095,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -1420,6 +3151,134 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call UpdateGlossaryCategory with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.UpdateGlossaryCategory("<categoryGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call UpdateGlossaryCategory with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     anchor = new {
+        ///         displayText = "<displayText>",
+        ///         glossaryGuid = "<glossaryGuid>",
+        ///         relationGuid = "<relationGuid>",
+        ///     },
+        ///     childrenCategories = new[] {
+        ///         new {
+        ///             categoryGuid = "<categoryGuid>",
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             parentCategoryGuid = "<parentCategoryGuid>",
+        ///             relationGuid = "<relationGuid>",
+        ///         }
+        ///     },
+        ///     parentCategory = new {
+        ///         categoryGuid = "<categoryGuid>",
+        ///         description = "<description>",
+        ///         displayText = "<displayText>",
+        ///         parentCategoryGuid = "<parentCategoryGuid>",
+        ///         relationGuid = "<relationGuid>",
+        ///     },
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     classifications = new[] {
+        ///         new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         }
+        ///     },
+        ///     longDescription = "<longDescription>",
+        ///     name = "<name>",
+        ///     qualifiedName = "<qualifiedName>",
+        ///     shortDescription = "<shortDescription>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        ///     guid = "<guid>",
+        /// };
+        /// 
+        /// Response response = client.UpdateGlossaryCategory("<categoryGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -1427,31 +3286,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -1479,6 +3313,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -1486,31 +3345,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -1538,6 +3372,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -1568,6 +3427,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteGlossaryCategoryAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.DeleteGlossaryCategoryAsync("<categoryGuid>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> DeleteGlossaryCategoryAsync(string categoryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -1593,6 +3463,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteGlossaryCategory with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.DeleteGlossaryCategory("<categoryGuid>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response DeleteGlossaryCategory(string categoryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(categoryGuid, nameof(categoryGuid));
@@ -1619,6 +3500,60 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call PartialUpdateGlossaryCategoryAsync with required parameters and request content and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "<String>",
+        /// };
+        /// 
+        /// Response response = await client.PartialUpdateGlossaryCategoryAsync("<categoryGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -1626,31 +3561,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -1678,6 +3588,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -1709,6 +3644,60 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call PartialUpdateGlossaryCategory with required parameters and request content and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "<String>",
+        /// };
+        /// 
+        /// Response response = client.PartialUpdateGlossaryCategory("<categoryGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -1716,31 +3705,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -1768,6 +3732,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -1801,12 +3790,40 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRelatedCategoriesAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("<test>")[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetRelatedCategoriesAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetRelatedCategoriesAsync("<categoryGuid>", 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("relationGuid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>DictionaryOfpathsCic80AAtlasV2GlossaryCategoryCategoryguidRelatedGetResponses200ContentApplicationJsonSchemaAdditionalproperties</c>:
+        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
         /// <code>{
         ///   categoryGuid: string, # Optional. The GUID of the category.
         ///   description: string, # Optional. The description of the category header.
@@ -1845,12 +3862,40 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRelatedCategories with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetRelatedCategories("<categoryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("<test>")[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetRelatedCategories with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetRelatedCategories("<categoryGuid>", 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("relationGuid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>DictionaryOfpathsCic80AAtlasV2GlossaryCategoryCategoryguidRelatedGetResponses200ContentApplicationJsonSchemaAdditionalproperties</c>:
+        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
         /// <code>{
         ///   categoryGuid: string, # Optional. The GUID of the category.
         ///   description: string, # Optional. The description of the category header.
@@ -1889,12 +3934,43 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetCategoryTermsAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetCategoryTermsAsync("<categoryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetCategoryTermsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetCategoryTermsAsync("<categoryGuid>", 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("termGuid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedTermHeader</c>:
+        /// Schema for <c>AtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -1936,12 +4012,43 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="categoryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetCategoryTerms with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetCategoryTerms("<categoryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetCategoryTerms with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetCategoryTerms("<categoryGuid>", 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("termGuid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedTermHeader</c>:
+        /// Schema for <c>AtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -1980,6 +4087,454 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryTermAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateGlossaryTermAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateGlossaryTermAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     abbreviation = "<abbreviation>",
+        ///     templateName = new[] {
+        ///         new {}
+        ///     },
+        ///     anchor = new {
+        ///         displayText = "<displayText>",
+        ///         glossaryGuid = "<glossaryGuid>",
+        ///         relationGuid = "<relationGuid>",
+        ///     },
+        ///     antonyms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     createTime = 123.45f,
+        ///     createdBy = "<createdBy>",
+        ///     updateTime = 123.45f,
+        ///     updatedBy = "<updatedBy>",
+        ///     status = "Draft",
+        ///     resources = new[] {
+        ///         new {
+        ///             displayName = "<displayName>",
+        ///             url = "<url>",
+        ///         }
+        ///     },
+        ///     contacts = new {
+        ///         key = new[] {
+        ///             new {
+        ///                 id = "<id>",
+        ///                 info = "<info>",
+        ///             }
+        ///         },
+        ///     },
+        ///     attributes = new {
+        ///         key = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     assignedEntities = new[] {
+        ///         new {
+        ///             displayText = "<displayText>",
+        ///             entityStatus = "ACTIVE",
+        ///             relationshipType = "<relationshipType>",
+        ///             relationshipAttributes = new {
+        ///                 entityGuid = "<entityGuid>",
+        ///                 entityStatus = "ACTIVE",
+        ///                 removePropagationsOnEntityDelete = true,
+        ///                 validityPeriods = new[] {
+        ///                     new {
+        ///                         endTime = "<endTime>",
+        ///                         startTime = "<startTime>",
+        ///                         timeZone = "<timeZone>",
+        ///                     }
+        ///                 },
+        ///                 source = "<source>",
+        ///                 sourceDetails = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "<typeName>",
+        ///                 lastModifiedTS = "<lastModifiedTS>",
+        ///             },
+        ///             relationshipGuid = "<relationshipGuid>",
+        ///             relationshipStatus = "ACTIVE",
+        ///             guid = "<guid>",
+        ///             typeName = "<typeName>",
+        ///             uniqueAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "<categoryGuid>",
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             relationGuid = "<relationGuid>",
+        ///             status = "DRAFT",
+        ///         }
+        ///     },
+        ///     classifies = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     examples = new[] {
+        ///         "<String>"
+        ///     },
+        ///     isA = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     preferredTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     preferredToTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     replacedBy = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     replacementTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     seeAlso = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     synonyms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     translatedTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     translationTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     usage = "<usage>",
+        ///     validValues = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     validValuesFor = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     classifications = new[] {
+        ///         new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         }
+        ///     },
+        ///     longDescription = "<longDescription>",
+        ///     name = "<name>",
+        ///     qualifiedName = "<qualifiedName>",
+        ///     shortDescription = "<shortDescription>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        ///     guid = "<guid>",
+        /// };
+        /// 
+        /// Response response = await client.CreateGlossaryTermAsync(RequestContent.Create(data), true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -1987,31 +4542,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -2047,9 +4577,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -2060,6 +4587,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -2085,6 +4615,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -2092,31 +4647,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -2152,9 +4682,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -2165,6 +4692,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -2190,6 +4720,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -2219,6 +4774,454 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryTerm with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateGlossaryTerm(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateGlossaryTerm with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     abbreviation = "<abbreviation>",
+        ///     templateName = new[] {
+        ///         new {}
+        ///     },
+        ///     anchor = new {
+        ///         displayText = "<displayText>",
+        ///         glossaryGuid = "<glossaryGuid>",
+        ///         relationGuid = "<relationGuid>",
+        ///     },
+        ///     antonyms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     createTime = 123.45f,
+        ///     createdBy = "<createdBy>",
+        ///     updateTime = 123.45f,
+        ///     updatedBy = "<updatedBy>",
+        ///     status = "Draft",
+        ///     resources = new[] {
+        ///         new {
+        ///             displayName = "<displayName>",
+        ///             url = "<url>",
+        ///         }
+        ///     },
+        ///     contacts = new {
+        ///         key = new[] {
+        ///             new {
+        ///                 id = "<id>",
+        ///                 info = "<info>",
+        ///             }
+        ///         },
+        ///     },
+        ///     attributes = new {
+        ///         key = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     assignedEntities = new[] {
+        ///         new {
+        ///             displayText = "<displayText>",
+        ///             entityStatus = "ACTIVE",
+        ///             relationshipType = "<relationshipType>",
+        ///             relationshipAttributes = new {
+        ///                 entityGuid = "<entityGuid>",
+        ///                 entityStatus = "ACTIVE",
+        ///                 removePropagationsOnEntityDelete = true,
+        ///                 validityPeriods = new[] {
+        ///                     new {
+        ///                         endTime = "<endTime>",
+        ///                         startTime = "<startTime>",
+        ///                         timeZone = "<timeZone>",
+        ///                     }
+        ///                 },
+        ///                 source = "<source>",
+        ///                 sourceDetails = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "<typeName>",
+        ///                 lastModifiedTS = "<lastModifiedTS>",
+        ///             },
+        ///             relationshipGuid = "<relationshipGuid>",
+        ///             relationshipStatus = "ACTIVE",
+        ///             guid = "<guid>",
+        ///             typeName = "<typeName>",
+        ///             uniqueAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "<categoryGuid>",
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             relationGuid = "<relationGuid>",
+        ///             status = "DRAFT",
+        ///         }
+        ///     },
+        ///     classifies = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     examples = new[] {
+        ///         "<String>"
+        ///     },
+        ///     isA = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     preferredTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     preferredToTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     replacedBy = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     replacementTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     seeAlso = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     synonyms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     translatedTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     translationTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     usage = "<usage>",
+        ///     validValues = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     validValuesFor = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     classifications = new[] {
+        ///         new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         }
+        ///     },
+        ///     longDescription = "<longDescription>",
+        ///     name = "<name>",
+        ///     qualifiedName = "<qualifiedName>",
+        ///     shortDescription = "<shortDescription>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        ///     guid = "<guid>",
+        /// };
+        /// 
+        /// Response response = client.CreateGlossaryTerm(RequestContent.Create(data), true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -2226,31 +5229,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -2286,9 +5264,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -2299,6 +5274,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -2324,6 +5302,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -2331,31 +5334,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -2391,9 +5369,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -2404,6 +5379,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -2429,6 +5407,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -2460,6 +5463,183 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossaryTermAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryTermAsync("<termGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetGlossaryTermAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryTermAsync("<termGuid>", true, new String[]{"<excludeRelationshipTypeList>"});
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -2467,31 +5647,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -2527,9 +5682,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -2540,6 +5692,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -2565,6 +5720,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -2596,6 +5776,183 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossaryTerm with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryTerm("<termGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetGlossaryTerm with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryTerm("<termGuid>", true, new String[]{"<excludeRelationshipTypeList>"});
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -2603,31 +5960,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -2663,9 +5995,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -2676,6 +6005,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -2701,6 +6033,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -2732,6 +6089,454 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call UpdateGlossaryTermAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.UpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call UpdateGlossaryTermAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     abbreviation = "<abbreviation>",
+        ///     templateName = new[] {
+        ///         new {}
+        ///     },
+        ///     anchor = new {
+        ///         displayText = "<displayText>",
+        ///         glossaryGuid = "<glossaryGuid>",
+        ///         relationGuid = "<relationGuid>",
+        ///     },
+        ///     antonyms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     createTime = 123.45f,
+        ///     createdBy = "<createdBy>",
+        ///     updateTime = 123.45f,
+        ///     updatedBy = "<updatedBy>",
+        ///     status = "Draft",
+        ///     resources = new[] {
+        ///         new {
+        ///             displayName = "<displayName>",
+        ///             url = "<url>",
+        ///         }
+        ///     },
+        ///     contacts = new {
+        ///         key = new[] {
+        ///             new {
+        ///                 id = "<id>",
+        ///                 info = "<info>",
+        ///             }
+        ///         },
+        ///     },
+        ///     attributes = new {
+        ///         key = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     assignedEntities = new[] {
+        ///         new {
+        ///             displayText = "<displayText>",
+        ///             entityStatus = "ACTIVE",
+        ///             relationshipType = "<relationshipType>",
+        ///             relationshipAttributes = new {
+        ///                 entityGuid = "<entityGuid>",
+        ///                 entityStatus = "ACTIVE",
+        ///                 removePropagationsOnEntityDelete = true,
+        ///                 validityPeriods = new[] {
+        ///                     new {
+        ///                         endTime = "<endTime>",
+        ///                         startTime = "<startTime>",
+        ///                         timeZone = "<timeZone>",
+        ///                     }
+        ///                 },
+        ///                 source = "<source>",
+        ///                 sourceDetails = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "<typeName>",
+        ///                 lastModifiedTS = "<lastModifiedTS>",
+        ///             },
+        ///             relationshipGuid = "<relationshipGuid>",
+        ///             relationshipStatus = "ACTIVE",
+        ///             guid = "<guid>",
+        ///             typeName = "<typeName>",
+        ///             uniqueAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "<categoryGuid>",
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             relationGuid = "<relationGuid>",
+        ///             status = "DRAFT",
+        ///         }
+        ///     },
+        ///     classifies = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     examples = new[] {
+        ///         "<String>"
+        ///     },
+        ///     isA = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     preferredTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     preferredToTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     replacedBy = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     replacementTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     seeAlso = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     synonyms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     translatedTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     translationTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     usage = "<usage>",
+        ///     validValues = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     validValuesFor = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     classifications = new[] {
+        ///         new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         }
+        ///     },
+        ///     longDescription = "<longDescription>",
+        ///     name = "<name>",
+        ///     qualifiedName = "<qualifiedName>",
+        ///     shortDescription = "<shortDescription>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        ///     guid = "<guid>",
+        /// };
+        /// 
+        /// Response response = await client.UpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data), true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -2739,31 +6544,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -2799,9 +6579,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -2812,6 +6589,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -2837,6 +6617,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -2844,31 +6649,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -2904,9 +6684,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -2917,6 +6694,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -2942,6 +6722,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -2974,6 +6779,454 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call UpdateGlossaryTerm with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.UpdateGlossaryTerm("<termGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call UpdateGlossaryTerm with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     abbreviation = "<abbreviation>",
+        ///     templateName = new[] {
+        ///         new {}
+        ///     },
+        ///     anchor = new {
+        ///         displayText = "<displayText>",
+        ///         glossaryGuid = "<glossaryGuid>",
+        ///         relationGuid = "<relationGuid>",
+        ///     },
+        ///     antonyms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     createTime = 123.45f,
+        ///     createdBy = "<createdBy>",
+        ///     updateTime = 123.45f,
+        ///     updatedBy = "<updatedBy>",
+        ///     status = "Draft",
+        ///     resources = new[] {
+        ///         new {
+        ///             displayName = "<displayName>",
+        ///             url = "<url>",
+        ///         }
+        ///     },
+        ///     contacts = new {
+        ///         key = new[] {
+        ///             new {
+        ///                 id = "<id>",
+        ///                 info = "<info>",
+        ///             }
+        ///         },
+        ///     },
+        ///     attributes = new {
+        ///         key = new {
+        ///             key = new {},
+        ///         },
+        ///     },
+        ///     assignedEntities = new[] {
+        ///         new {
+        ///             displayText = "<displayText>",
+        ///             entityStatus = "ACTIVE",
+        ///             relationshipType = "<relationshipType>",
+        ///             relationshipAttributes = new {
+        ///                 entityGuid = "<entityGuid>",
+        ///                 entityStatus = "ACTIVE",
+        ///                 removePropagationsOnEntityDelete = true,
+        ///                 validityPeriods = new[] {
+        ///                     new {
+        ///                         endTime = "<endTime>",
+        ///                         startTime = "<startTime>",
+        ///                         timeZone = "<timeZone>",
+        ///                     }
+        ///                 },
+        ///                 source = "<source>",
+        ///                 sourceDetails = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "<typeName>",
+        ///                 lastModifiedTS = "<lastModifiedTS>",
+        ///             },
+        ///             relationshipGuid = "<relationshipGuid>",
+        ///             relationshipStatus = "ACTIVE",
+        ///             guid = "<guid>",
+        ///             typeName = "<typeName>",
+        ///             uniqueAttributes = new {
+        ///                 key = new {},
+        ///             },
+        ///         }
+        ///     },
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "<categoryGuid>",
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             relationGuid = "<relationGuid>",
+        ///             status = "DRAFT",
+        ///         }
+        ///     },
+        ///     classifies = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     examples = new[] {
+        ///         "<String>"
+        ///     },
+        ///     isA = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     preferredTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     preferredToTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     replacedBy = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     replacementTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     seeAlso = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     synonyms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     translatedTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     translationTerms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     usage = "<usage>",
+        ///     validValues = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     validValuesFor = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     classifications = new[] {
+        ///         new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         }
+        ///     },
+        ///     longDescription = "<longDescription>",
+        ///     name = "<name>",
+        ///     qualifiedName = "<qualifiedName>",
+        ///     shortDescription = "<shortDescription>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        ///     guid = "<guid>",
+        /// };
+        /// 
+        /// Response response = client.UpdateGlossaryTerm("<termGuid>", RequestContent.Create(data), true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -2981,31 +7234,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -3041,9 +7269,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -3054,6 +7279,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -3079,6 +7307,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -3086,31 +7339,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -3146,9 +7374,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -3159,6 +7384,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -3184,6 +7412,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -3214,6 +7467,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteGlossaryTermAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.DeleteGlossaryTermAsync("<termGuid>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> DeleteGlossaryTermAsync(string termGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -3239,6 +7503,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteGlossaryTerm with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.DeleteGlossaryTerm("<termGuid>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response DeleteGlossaryTerm(string termGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(termGuid, nameof(termGuid));
@@ -3266,6 +7541,191 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call PartialUpdateGlossaryTermAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "<String>",
+        /// };
+        /// 
+        /// Response response = await client.PartialUpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call PartialUpdateGlossaryTermAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "<String>",
+        /// };
+        /// 
+        /// Response response = await client.PartialUpdateGlossaryTermAsync("<termGuid>", RequestContent.Create(data), true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -3273,31 +7733,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -3333,9 +7768,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -3346,6 +7778,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -3371,6 +7806,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -3403,6 +7863,191 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call PartialUpdateGlossaryTerm with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "<String>",
+        /// };
+        /// 
+        /// Response response = client.PartialUpdateGlossaryTerm("<termGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call PartialUpdateGlossaryTerm with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "<String>",
+        /// };
+        /// 
+        /// Response response = client.PartialUpdateGlossaryTerm("<termGuid>", RequestContent.Create(data), true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -3410,31 +8055,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -3470,9 +8090,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -3483,6 +8100,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -3508,6 +8128,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -3538,38 +8183,465 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryTermsAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {}
+        /// };
+        /// 
+        /// Response response = await client.CreateGlossaryTermsAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateGlossaryTermsAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         abbreviation = "<abbreviation>",
+        ///         templateName = new[] {
+        ///             new {}
+        ///         },
+        ///         anchor = new {
+        ///             displayText = "<displayText>",
+        ///             glossaryGuid = "<glossaryGuid>",
+        ///             relationGuid = "<relationGuid>",
+        ///         },
+        ///         antonyms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         createTime = 123.45f,
+        ///         createdBy = "<createdBy>",
+        ///         updateTime = 123.45f,
+        ///         updatedBy = "<updatedBy>",
+        ///         status = "Draft",
+        ///         resources = new[] {
+        ///             new {
+        ///                 displayName = "<displayName>",
+        ///                 url = "<url>",
+        ///             }
+        ///         },
+        ///         contacts = new {
+        ///             key = new[] {
+        ///                 new {
+        ///                     id = "<id>",
+        ///                     info = "<info>",
+        ///                 }
+        ///             },
+        ///         },
+        ///         attributes = new {
+        ///             key = new {
+        ///                 key = new {},
+        ///             },
+        ///         },
+        ///         assignedEntities = new[] {
+        ///             new {
+        ///                 displayText = "<displayText>",
+        ///                 entityStatus = "ACTIVE",
+        ///                 relationshipType = "<relationshipType>",
+        ///                 relationshipAttributes = new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 },
+        ///                 relationshipGuid = "<relationshipGuid>",
+        ///                 relationshipStatus = "ACTIVE",
+        ///                 guid = "<guid>",
+        ///                 typeName = "<typeName>",
+        ///                 uniqueAttributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///             }
+        ///         },
+        ///         categories = new[] {
+        ///             new {
+        ///                 categoryGuid = "<categoryGuid>",
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 status = "DRAFT",
+        ///             }
+        ///         },
+        ///         classifies = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         examples = new[] {
+        ///             "<String>"
+        ///         },
+        ///         isA = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         preferredTerms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         preferredToTerms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         replacedBy = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         replacementTerms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         seeAlso = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         synonyms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         translatedTerms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         translationTerms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         usage = "<usage>",
+        ///         validValues = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         validValuesFor = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         classifications = new[] {
+        ///             new {
+        ///                 entityGuid = "<entityGuid>",
+        ///                 entityStatus = "ACTIVE",
+        ///                 removePropagationsOnEntityDelete = true,
+        ///                 validityPeriods = new[] {
+        ///                     new {
+        ///                         endTime = "<endTime>",
+        ///                         startTime = "<startTime>",
+        ///                         timeZone = "<timeZone>",
+        ///                     }
+        ///                 },
+        ///                 source = "<source>",
+        ///                 sourceDetails = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "<typeName>",
+        ///                 lastModifiedTS = "<lastModifiedTS>",
+        ///             }
+        ///         },
+        ///         longDescription = "<longDescription>",
+        ///         name = "<name>",
+        ///         qualifiedName = "<qualifiedName>",
+        ///         shortDescription = "<shortDescription>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
+        ///         guid = "<guid>",
+        ///     }
+        /// };
+        /// 
+        /// Response response = await client.CreateGlossaryTermsAsync(RequestContent.Create(data), true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result[0].GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("usage").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -3605,9 +8677,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -3618,6 +8687,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -3643,38 +8715,38 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -3710,9 +8782,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -3723,6 +8792,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -3748,6 +8820,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -3777,38 +8874,465 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateGlossaryTerms with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {}
+        /// };
+        /// 
+        /// Response response = client.CreateGlossaryTerms(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateGlossaryTerms with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         abbreviation = "<abbreviation>",
+        ///         templateName = new[] {
+        ///             new {}
+        ///         },
+        ///         anchor = new {
+        ///             displayText = "<displayText>",
+        ///             glossaryGuid = "<glossaryGuid>",
+        ///             relationGuid = "<relationGuid>",
+        ///         },
+        ///         antonyms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         createTime = 123.45f,
+        ///         createdBy = "<createdBy>",
+        ///         updateTime = 123.45f,
+        ///         updatedBy = "<updatedBy>",
+        ///         status = "Draft",
+        ///         resources = new[] {
+        ///             new {
+        ///                 displayName = "<displayName>",
+        ///                 url = "<url>",
+        ///             }
+        ///         },
+        ///         contacts = new {
+        ///             key = new[] {
+        ///                 new {
+        ///                     id = "<id>",
+        ///                     info = "<info>",
+        ///                 }
+        ///             },
+        ///         },
+        ///         attributes = new {
+        ///             key = new {
+        ///                 key = new {},
+        ///             },
+        ///         },
+        ///         assignedEntities = new[] {
+        ///             new {
+        ///                 displayText = "<displayText>",
+        ///                 entityStatus = "ACTIVE",
+        ///                 relationshipType = "<relationshipType>",
+        ///                 relationshipAttributes = new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 },
+        ///                 relationshipGuid = "<relationshipGuid>",
+        ///                 relationshipStatus = "ACTIVE",
+        ///                 guid = "<guid>",
+        ///                 typeName = "<typeName>",
+        ///                 uniqueAttributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///             }
+        ///         },
+        ///         categories = new[] {
+        ///             new {
+        ///                 categoryGuid = "<categoryGuid>",
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 status = "DRAFT",
+        ///             }
+        ///         },
+        ///         classifies = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         examples = new[] {
+        ///             "<String>"
+        ///         },
+        ///         isA = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         preferredTerms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         preferredToTerms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         replacedBy = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         replacementTerms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         seeAlso = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         synonyms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         translatedTerms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         translationTerms = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         usage = "<usage>",
+        ///         validValues = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         validValuesFor = new[] {
+        ///             new {
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 expression = "<expression>",
+        ///                 relationGuid = "<relationGuid>",
+        ///                 source = "<source>",
+        ///                 status = "DRAFT",
+        ///                 steward = "<steward>",
+        ///                 termGuid = "<termGuid>",
+        ///             }
+        ///         },
+        ///         classifications = new[] {
+        ///             new {
+        ///                 entityGuid = "<entityGuid>",
+        ///                 entityStatus = "ACTIVE",
+        ///                 removePropagationsOnEntityDelete = true,
+        ///                 validityPeriods = new[] {
+        ///                     new {
+        ///                         endTime = "<endTime>",
+        ///                         startTime = "<startTime>",
+        ///                         timeZone = "<timeZone>",
+        ///                     }
+        ///                 },
+        ///                 source = "<source>",
+        ///                 sourceDetails = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 attributes = new {
+        ///                     key = new {},
+        ///                 },
+        ///                 typeName = "<typeName>",
+        ///                 lastModifiedTS = "<lastModifiedTS>",
+        ///             }
+        ///         },
+        ///         longDescription = "<longDescription>",
+        ///         name = "<name>",
+        ///         qualifiedName = "<qualifiedName>",
+        ///         shortDescription = "<shortDescription>",
+        ///         lastModifiedTS = "<lastModifiedTS>",
+        ///         guid = "<guid>",
+        ///     }
+        /// };
+        /// 
+        /// Response response = client.CreateGlossaryTerms(RequestContent.Create(data), true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result[0].GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("usage").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -3844,9 +9368,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -3857,6 +9378,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -3882,38 +9406,38 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -3949,9 +9473,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -3962,6 +9483,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -3987,6 +9511,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -4019,16 +9568,47 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetEntitiesAssignedWithTermAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetEntitiesAssignedWithTermAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetEntitiesAssignedWithTermAsync("<termGuid>", 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
-        ///   guid: string, # Optional. The GUID of the object.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///   displayText: string, # Optional. The display text.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   relationshipType: string, # Optional.
@@ -4039,6 +9619,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///   relationshipGuid: string, # Optional. The GUID of the relationship.
         ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   guid: string, # Optional. The GUID of the object.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         /// }
         /// </code>
         /// 
@@ -4071,16 +9654,47 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetEntitiesAssignedWithTerm with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetEntitiesAssignedWithTerm("<termGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetEntitiesAssignedWithTerm with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetEntitiesAssignedWithTerm("<termGuid>", 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
-        ///   guid: string, # Optional. The GUID of the object.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///   displayText: string, # Optional. The display text.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   relationshipType: string, # Optional.
@@ -4091,6 +9705,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///   relationshipGuid: string, # Optional. The GUID of the relationship.
         ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   guid: string, # Optional. The GUID of the object.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         /// }
         /// </code>
         /// 
@@ -4121,16 +9738,60 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call AssignTermToEntitiesAsync with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         displayText = "<displayText>",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "<relationshipType>",
+        ///         relationshipAttributes = new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
+        ///         relationshipGuid = "<relationshipGuid>",
+        ///         relationshipStatus = "ACTIVE",
+        ///         guid = "<guid>",
+        ///         typeName = "<typeName>",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// Response response = await client.AssignTermToEntitiesAsync("<termGuid>", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload.
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
-        ///   guid: string, # Optional. The GUID of the object.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///   displayText: string, # Optional. The display text.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   relationshipType: string, # Optional.
@@ -4141,6 +9802,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///   relationshipGuid: string, # Optional. The GUID of the relationship.
         ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   guid: string, # Optional. The GUID of the object.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         /// }
         /// </code>
         /// 
@@ -4172,16 +9836,60 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call AssignTermToEntities with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         displayText = "<displayText>",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "<relationshipType>",
+        ///         relationshipAttributes = new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
+        ///         relationshipGuid = "<relationshipGuid>",
+        ///         relationshipStatus = "ACTIVE",
+        ///         guid = "<guid>",
+        ///         typeName = "<typeName>",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// Response response = client.AssignTermToEntities("<termGuid>", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload.
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
-        ///   guid: string, # Optional. The GUID of the object.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///   displayText: string, # Optional. The display text.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   relationshipType: string, # Optional.
@@ -4192,6 +9900,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///   relationshipGuid: string, # Optional. The GUID of the relationship.
         ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   guid: string, # Optional. The GUID of the object.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         /// }
         /// </code>
         /// 
@@ -4223,16 +9934,60 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call RemoveTermAssignmentFromEntitiesAsync with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         displayText = "<displayText>",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "<relationshipType>",
+        ///         relationshipAttributes = new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
+        ///         relationshipGuid = "<relationshipGuid>",
+        ///         relationshipStatus = "ACTIVE",
+        ///         guid = "<guid>",
+        ///         typeName = "<typeName>",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// Response response = await client.RemoveTermAssignmentFromEntitiesAsync("<termGuid>", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload.
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
-        ///   guid: string, # Optional. The GUID of the object.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///   displayText: string, # Optional. The display text.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   relationshipType: string, # Optional.
@@ -4243,6 +9998,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///   relationshipGuid: string, # Optional. The GUID of the relationship.
         ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   guid: string, # Optional. The GUID of the object.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         /// }
         /// </code>
         /// 
@@ -4274,16 +10032,60 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call RemoveTermAssignmentFromEntities with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         displayText = "<displayText>",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "<relationshipType>",
+        ///         relationshipAttributes = new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
+        ///         relationshipGuid = "<relationshipGuid>",
+        ///         relationshipStatus = "ACTIVE",
+        ///         guid = "<guid>",
+        ///         typeName = "<typeName>",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// Response response = client.RemoveTermAssignmentFromEntities("<termGuid>", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload.
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
-        ///   guid: string, # Optional. The GUID of the object.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///   displayText: string, # Optional. The display text.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   relationshipType: string, # Optional.
@@ -4294,6 +10096,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///   relationshipGuid: string, # Optional. The GUID of the relationship.
         ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   guid: string, # Optional. The GUID of the object.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         /// }
         /// </code>
         /// 
@@ -4325,16 +10130,60 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteTermAssignmentFromEntitiesAsync with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         displayText = "<displayText>",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "<relationshipType>",
+        ///         relationshipAttributes = new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
+        ///         relationshipGuid = "<relationshipGuid>",
+        ///         relationshipStatus = "ACTIVE",
+        ///         guid = "<guid>",
+        ///         typeName = "<typeName>",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// Response response = await client.DeleteTermAssignmentFromEntitiesAsync("<termGuid>", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload.
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
-        ///   guid: string, # Optional. The GUID of the object.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///   displayText: string, # Optional. The display text.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   relationshipType: string, # Optional.
@@ -4345,6 +10194,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///   relationshipGuid: string, # Optional. The GUID of the relationship.
         ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   guid: string, # Optional. The GUID of the object.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         /// }
         /// </code>
         /// 
@@ -4376,16 +10228,60 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteTermAssignmentFromEntities with required parameters and request content.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     new {
+        ///         displayText = "<displayText>",
+        ///         entityStatus = "ACTIVE",
+        ///         relationshipType = "<relationshipType>",
+        ///         relationshipAttributes = new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         },
+        ///         relationshipGuid = "<relationshipGuid>",
+        ///         relationshipStatus = "ACTIVE",
+        ///         guid = "<guid>",
+        ///         typeName = "<typeName>",
+        ///         uniqueAttributes = new {
+        ///             key = new {},
+        ///         },
+        ///     }
+        /// };
+        /// 
+        /// Response response = client.DeleteTermAssignmentFromEntities("<termGuid>", RequestContent.Create(data));
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload.
         /// 
         /// Request Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedObjectId</c>:
+        /// Schema for <c>AtlasRelatedObjectId</c>:
         /// <code>{
-        ///   guid: string, # Optional. The GUID of the object.
-        ///   typeName: string, # Optional. The name of the type.
-        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///   displayText: string, # Optional. The display text.
         ///   entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///   relationshipType: string, # Optional.
@@ -4396,6 +10292,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///   }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///   relationshipGuid: string, # Optional. The GUID of the relationship.
         ///   relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///   guid: string, # Optional. The GUID of the object.
+        ///   typeName: string, # Optional. The name of the type.
+        ///   uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         /// }
         /// </code>
         /// 
@@ -4429,12 +10328,43 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRelatedTermsAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetRelatedTermsAsync("<termGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("<test>")[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetRelatedTermsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetRelatedTermsAsync("<termGuid>", 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("termGuid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>DictionaryOfpathsV84KwqAtlasV2GlossaryTermsTermguidRelatedGetResponses200ContentApplicationJsonSchemaAdditionalproperties</c>:
+        /// Schema for <c>AtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -4476,12 +10406,43 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="termGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetRelatedTerms with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetRelatedTerms("<termGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("<test>")[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetRelatedTerms with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetRelatedTerms("<termGuid>", 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("<test>")[0].GetProperty("termGuid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>DictionaryOfpathsV84KwqAtlasV2GlossaryTermsTermguidRelatedGetResponses200ContentApplicationJsonSchemaAdditionalproperties</c>:
+        /// Schema for <c>AtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -4520,6 +10481,50 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossaryAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryAsync("<glossaryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -4527,6 +10532,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -4552,9 +10559,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -4567,6 +10571,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   longDescription: string, # Optional. The long version description.
@@ -4575,8 +10582,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
         /// </details>
@@ -4607,6 +10612,50 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossary with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossary("<glossaryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -4614,6 +10663,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -4639,9 +10690,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -4654,6 +10702,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   longDescription: string, # Optional. The long version description.
@@ -4662,8 +10713,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
         /// </details>
@@ -4695,6 +10744,454 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call UpdateGlossaryAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call UpdateGlossaryAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     categoryInfo = new {
+        ///         key = new {
+        ///             anchor = new {
+        ///                 displayText = "<displayText>",
+        ///                 glossaryGuid = "<glossaryGuid>",
+        ///                 relationGuid = "<relationGuid>",
+        ///             },
+        ///             childrenCategories = new[] {
+        ///                 new {
+        ///                     categoryGuid = "<categoryGuid>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     parentCategoryGuid = "<parentCategoryGuid>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                 }
+        ///             },
+        ///             parentCategory = new {
+        ///                 categoryGuid = "<categoryGuid>",
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 parentCategoryGuid = "<parentCategoryGuid>",
+        ///                 relationGuid = "<relationGuid>",
+        ///             },
+        ///             terms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             classifications = new[] {
+        ///                 new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 }
+        ///             },
+        ///             longDescription = "<longDescription>",
+        ///             name = "<name>",
+        ///             qualifiedName = "<qualifiedName>",
+        ///             shortDescription = "<shortDescription>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///             guid = "<guid>",
+        ///         },
+        ///     },
+        ///     termInfo = new {
+        ///         key = new {
+        ///             abbreviation = "<abbreviation>",
+        ///             templateName = new[] {
+        ///                 new {}
+        ///             },
+        ///             anchor = new {
+        ///                 displayText = "<displayText>",
+        ///                 glossaryGuid = "<glossaryGuid>",
+        ///                 relationGuid = "<relationGuid>",
+        ///             },
+        ///             antonyms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             status = "Draft",
+        ///             resources = new[] {
+        ///                 new {
+        ///                     displayName = "<displayName>",
+        ///                     url = "<url>",
+        ///                 }
+        ///             },
+        ///             contacts = new {
+        ///                 key = new[] {
+        ///                     new {
+        ///                         id = "<id>",
+        ///                         info = "<info>",
+        ///                     }
+        ///                 },
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {
+        ///                     key = new {},
+        ///                 },
+        ///             },
+        ///             assignedEntities = new[] {
+        ///                 new {
+        ///                     displayText = "<displayText>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     relationshipType = "<relationshipType>",
+        ///                     relationshipAttributes = new {
+        ///                         entityGuid = "<entityGuid>",
+        ///                         entityStatus = "ACTIVE",
+        ///                         removePropagationsOnEntityDelete = true,
+        ///                         validityPeriods = new[] {
+        ///                             new {
+        ///                                 endTime = "<endTime>",
+        ///                                 startTime = "<startTime>",
+        ///                                 timeZone = "<timeZone>",
+        ///                             }
+        ///                         },
+        ///                         source = "<source>",
+        ///                         sourceDetails = new {
+        ///                             key = new {},
+        ///                         },
+        ///                         attributes = new {
+        ///                             key = new {},
+        ///                         },
+        ///                         typeName = "<typeName>",
+        ///                         lastModifiedTS = "<lastModifiedTS>",
+        ///                     },
+        ///                     relationshipGuid = "<relationshipGuid>",
+        ///                     relationshipStatus = "ACTIVE",
+        ///                     guid = "<guid>",
+        ///                     typeName = "<typeName>",
+        ///                     uniqueAttributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                 }
+        ///             },
+        ///             categories = new[] {
+        ///                 new {
+        ///                     categoryGuid = "<categoryGuid>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     status = "DRAFT",
+        ///                 }
+        ///             },
+        ///             classifies = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             examples = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             isA = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             preferredTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             preferredToTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             replacedBy = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             replacementTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             seeAlso = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             synonyms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             translatedTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             translationTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             usage = "<usage>",
+        ///             validValues = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             validValuesFor = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             classifications = new[] {
+        ///                 new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 }
+        ///             },
+        ///             longDescription = "<longDescription>",
+        ///             name = "<name>",
+        ///             qualifiedName = "<qualifiedName>",
+        ///             shortDescription = "<shortDescription>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///             guid = "<guid>",
+        ///         },
+        ///     },
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "<categoryGuid>",
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             parentCategoryGuid = "<parentCategoryGuid>",
+        ///             relationGuid = "<relationGuid>",
+        ///         }
+        ///     },
+        ///     language = "<language>",
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     usage = "<usage>",
+        ///     classifications = new[] {
+        ///         new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         }
+        ///     },
+        ///     longDescription = "<longDescription>",
+        ///     name = "<name>",
+        ///     qualifiedName = "<qualifiedName>",
+        ///     shortDescription = "<shortDescription>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        ///     guid = "<guid>",
+        /// };
+        /// 
+        /// Response response = await client.UpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -4702,6 +11199,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -4727,9 +11226,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -4742,6 +11238,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   longDescription: string, # Optional. The long version description.
@@ -4750,8 +11249,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
         /// </details>
@@ -4760,6 +11257,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -4785,9 +11284,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -4800,6 +11296,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   longDescription: string, # Optional. The long version description.
@@ -4808,8 +11307,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
         /// </details>
@@ -4842,6 +11339,454 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call UpdateGlossary with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.UpdateGlossary("<glossaryGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call UpdateGlossary with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     categoryInfo = new {
+        ///         key = new {
+        ///             anchor = new {
+        ///                 displayText = "<displayText>",
+        ///                 glossaryGuid = "<glossaryGuid>",
+        ///                 relationGuid = "<relationGuid>",
+        ///             },
+        ///             childrenCategories = new[] {
+        ///                 new {
+        ///                     categoryGuid = "<categoryGuid>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     parentCategoryGuid = "<parentCategoryGuid>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                 }
+        ///             },
+        ///             parentCategory = new {
+        ///                 categoryGuid = "<categoryGuid>",
+        ///                 description = "<description>",
+        ///                 displayText = "<displayText>",
+        ///                 parentCategoryGuid = "<parentCategoryGuid>",
+        ///                 relationGuid = "<relationGuid>",
+        ///             },
+        ///             terms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             classifications = new[] {
+        ///                 new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 }
+        ///             },
+        ///             longDescription = "<longDescription>",
+        ///             name = "<name>",
+        ///             qualifiedName = "<qualifiedName>",
+        ///             shortDescription = "<shortDescription>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///             guid = "<guid>",
+        ///         },
+        ///     },
+        ///     termInfo = new {
+        ///         key = new {
+        ///             abbreviation = "<abbreviation>",
+        ///             templateName = new[] {
+        ///                 new {}
+        ///             },
+        ///             anchor = new {
+        ///                 displayText = "<displayText>",
+        ///                 glossaryGuid = "<glossaryGuid>",
+        ///                 relationGuid = "<relationGuid>",
+        ///             },
+        ///             antonyms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             createTime = 123.45f,
+        ///             createdBy = "<createdBy>",
+        ///             updateTime = 123.45f,
+        ///             updatedBy = "<updatedBy>",
+        ///             status = "Draft",
+        ///             resources = new[] {
+        ///                 new {
+        ///                     displayName = "<displayName>",
+        ///                     url = "<url>",
+        ///                 }
+        ///             },
+        ///             contacts = new {
+        ///                 key = new[] {
+        ///                     new {
+        ///                         id = "<id>",
+        ///                         info = "<info>",
+        ///                     }
+        ///                 },
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {
+        ///                     key = new {},
+        ///                 },
+        ///             },
+        ///             assignedEntities = new[] {
+        ///                 new {
+        ///                     displayText = "<displayText>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     relationshipType = "<relationshipType>",
+        ///                     relationshipAttributes = new {
+        ///                         entityGuid = "<entityGuid>",
+        ///                         entityStatus = "ACTIVE",
+        ///                         removePropagationsOnEntityDelete = true,
+        ///                         validityPeriods = new[] {
+        ///                             new {
+        ///                                 endTime = "<endTime>",
+        ///                                 startTime = "<startTime>",
+        ///                                 timeZone = "<timeZone>",
+        ///                             }
+        ///                         },
+        ///                         source = "<source>",
+        ///                         sourceDetails = new {
+        ///                             key = new {},
+        ///                         },
+        ///                         attributes = new {
+        ///                             key = new {},
+        ///                         },
+        ///                         typeName = "<typeName>",
+        ///                         lastModifiedTS = "<lastModifiedTS>",
+        ///                     },
+        ///                     relationshipGuid = "<relationshipGuid>",
+        ///                     relationshipStatus = "ACTIVE",
+        ///                     guid = "<guid>",
+        ///                     typeName = "<typeName>",
+        ///                     uniqueAttributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                 }
+        ///             },
+        ///             categories = new[] {
+        ///                 new {
+        ///                     categoryGuid = "<categoryGuid>",
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     status = "DRAFT",
+        ///                 }
+        ///             },
+        ///             classifies = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             examples = new[] {
+        ///                 "<String>"
+        ///             },
+        ///             isA = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             preferredTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             preferredToTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             replacedBy = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             replacementTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             seeAlso = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             synonyms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             translatedTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             translationTerms = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             usage = "<usage>",
+        ///             validValues = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             validValuesFor = new[] {
+        ///                 new {
+        ///                     description = "<description>",
+        ///                     displayText = "<displayText>",
+        ///                     expression = "<expression>",
+        ///                     relationGuid = "<relationGuid>",
+        ///                     source = "<source>",
+        ///                     status = "DRAFT",
+        ///                     steward = "<steward>",
+        ///                     termGuid = "<termGuid>",
+        ///                 }
+        ///             },
+        ///             classifications = new[] {
+        ///                 new {
+        ///                     entityGuid = "<entityGuid>",
+        ///                     entityStatus = "ACTIVE",
+        ///                     removePropagationsOnEntityDelete = true,
+        ///                     validityPeriods = new[] {
+        ///                         new {
+        ///                             endTime = "<endTime>",
+        ///                             startTime = "<startTime>",
+        ///                             timeZone = "<timeZone>",
+        ///                         }
+        ///                     },
+        ///                     source = "<source>",
+        ///                     sourceDetails = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     attributes = new {
+        ///                         key = new {},
+        ///                     },
+        ///                     typeName = "<typeName>",
+        ///                     lastModifiedTS = "<lastModifiedTS>",
+        ///                 }
+        ///             },
+        ///             longDescription = "<longDescription>",
+        ///             name = "<name>",
+        ///             qualifiedName = "<qualifiedName>",
+        ///             shortDescription = "<shortDescription>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///             guid = "<guid>",
+        ///         },
+        ///     },
+        ///     categories = new[] {
+        ///         new {
+        ///             categoryGuid = "<categoryGuid>",
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             parentCategoryGuid = "<parentCategoryGuid>",
+        ///             relationGuid = "<relationGuid>",
+        ///         }
+        ///     },
+        ///     language = "<language>",
+        ///     terms = new[] {
+        ///         new {
+        ///             description = "<description>",
+        ///             displayText = "<displayText>",
+        ///             expression = "<expression>",
+        ///             relationGuid = "<relationGuid>",
+        ///             source = "<source>",
+        ///             status = "DRAFT",
+        ///             steward = "<steward>",
+        ///             termGuid = "<termGuid>",
+        ///         }
+        ///     },
+        ///     usage = "<usage>",
+        ///     classifications = new[] {
+        ///         new {
+        ///             entityGuid = "<entityGuid>",
+        ///             entityStatus = "ACTIVE",
+        ///             removePropagationsOnEntityDelete = true,
+        ///             validityPeriods = new[] {
+        ///                 new {
+        ///                     endTime = "<endTime>",
+        ///                     startTime = "<startTime>",
+        ///                     timeZone = "<timeZone>",
+        ///                 }
+        ///             },
+        ///             source = "<source>",
+        ///             sourceDetails = new {
+        ///                 key = new {},
+        ///             },
+        ///             attributes = new {
+        ///                 key = new {},
+        ///             },
+        ///             typeName = "<typeName>",
+        ///             lastModifiedTS = "<lastModifiedTS>",
+        ///         }
+        ///     },
+        ///     longDescription = "<longDescription>",
+        ///     name = "<name>",
+        ///     qualifiedName = "<qualifiedName>",
+        ///     shortDescription = "<shortDescription>",
+        ///     lastModifiedTS = "<lastModifiedTS>",
+        ///     guid = "<guid>",
+        /// };
+        /// 
+        /// Response response = client.UpdateGlossary("<glossaryGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -4849,6 +11794,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -4874,9 +11821,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -4889,6 +11833,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   longDescription: string, # Optional. The long version description.
@@ -4897,8 +11844,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
         /// </details>
@@ -4907,6 +11852,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -4932,9 +11879,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -4947,6 +11891,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   longDescription: string, # Optional. The long version description.
@@ -4955,8 +11902,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
         /// </details>
@@ -4988,6 +11933,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteGlossaryAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.DeleteGlossaryAsync("<glossaryGuid>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> DeleteGlossaryAsync(string glossaryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -5013,6 +11969,17 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteGlossary with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.DeleteGlossary("<glossaryGuid>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response DeleteGlossary(string glossaryGuid, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -5041,38 +12008,74 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossaryCategoriesAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetGlossaryCategoriesAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryCategoriesAsync("<glossaryGuid>", 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -5100,6 +12103,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -5132,38 +12160,74 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossaryCategories with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryCategories("<glossaryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetGlossaryCategories with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryCategories("<glossaryGuid>", 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryCategory</c>:
+        /// Schema for <c>AtlasGlossaryCategory</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   anchor: {
         ///     displayText: string, # Optional. The display text.
         ///     glossaryGuid: string, # Optional. The GUID of the glossary.
@@ -5191,6 +12255,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///       termGuid: string, # Optional. The GUID of the term.
         ///     }
         ///   ], # Optional. An array of related term headers.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -5223,12 +12312,40 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossaryCategoriesHeadersAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetGlossaryCategoriesHeadersAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryCategoriesHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationGuid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedCategoryHeader</c>:
+        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
         /// <code>{
         ///   categoryGuid: string, # Optional. The GUID of the category.
         ///   description: string, # Optional. The description of the category header.
@@ -5267,12 +12384,40 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossaryCategoriesHeaders with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryCategoriesHeaders("<glossaryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetGlossaryCategoriesHeaders with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryCategoriesHeaders("<glossaryGuid>", 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationGuid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedCategoryHeader</c>:
+        /// Schema for <c>AtlasRelatedCategoryHeader</c>:
         /// <code>{
         ///   categoryGuid: string, # Optional. The GUID of the category.
         ///   description: string, # Optional. The description of the category header.
@@ -5309,6 +12454,253 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetDetailedGlossaryAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetDetailedGlossaryAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetDetailedGlossaryAsync("<glossaryGuid>", true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -5316,6 +12708,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -5341,9 +12735,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -5356,6 +12747,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   longDescription: string, # Optional. The long version description.
@@ -5364,8 +12758,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
         /// 
@@ -5396,6 +12788,253 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetDetailedGlossary with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetDetailedGlossary("<glossaryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetDetailedGlossary with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetDetailedGlossary("<glossaryGuid>", true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("childrenCategories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("parentCategory").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("categoryInfo").GetProperty("<test>").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("termInfo").GetProperty("<test>").GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -5403,6 +13042,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -5428,9 +13069,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -5443,6 +13081,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   longDescription: string, # Optional. The long version description.
@@ -5451,8 +13092,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
         /// 
@@ -5484,6 +13123,69 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call PartialUpdateGlossaryAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "<String>",
+        /// };
+        /// 
+        /// Response response = await client.PartialUpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call PartialUpdateGlossaryAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "<String>",
+        /// };
+        /// 
+        /// Response response = await client.PartialUpdateGlossaryAsync("<glossaryGuid>", RequestContent.Create(data), true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -5491,6 +13193,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -5516,9 +13220,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -5531,6 +13232,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   longDescription: string, # Optional. The long version description.
@@ -5539,8 +13243,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
         /// </details>
@@ -5574,6 +13276,69 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call PartialUpdateGlossary with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "<String>",
+        /// };
+        /// 
+        /// Response response = client.PartialUpdateGlossary("<glossaryGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call PartialUpdateGlossary with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new {
+        ///     key = "<String>",
+        /// };
+        /// 
+        /// Response response = client.PartialUpdateGlossary("<glossaryGuid>", RequestContent.Create(data), true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("parentCategoryGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("language").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result.GetProperty("terms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("usage").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result.GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result.GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -5581,6 +13346,8 @@ namespace Azure.Analytics.Purview.Catalog
         /// 
         /// <details><summary>AtlasGlossaryExtInfo</summary>Schema for <c>AtlasGlossaryExtInfo</c>:
         /// <code>{
+        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
+        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         ///   categories: [
         ///     {
         ///       categoryGuid: string, # Optional. The GUID of the category.
@@ -5606,9 +13373,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the glossary.
         ///   classifications: [
         ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///       entityGuid: string, # Optional. The GUID of the entity.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
@@ -5621,6 +13385,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       ], # Optional. An array of time boundaries indicating validity periods.
         ///       source: string, # Optional. indicate the source who create the classification detail
         ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///     }
         ///   ], # Optional. An array of classifications.
         ///   longDescription: string, # Optional. The long version description.
@@ -5629,8 +13396,6 @@ namespace Azure.Analytics.Purview.Catalog
         ///   shortDescription: string, # Optional. The short version of description.
         ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
         ///   guid: string, # Optional. The GUID of the object.
-        ///   categoryInfo: Dictionary&lt;string, AtlasGlossaryCategory&gt;, # Optional. The glossary category information.
-        ///   termInfo: Dictionary&lt;string, AtlasGlossaryTerm&gt;, # Optional. The glossary term information.
         /// }
         /// </code>
         /// </details>
@@ -5666,38 +13431,190 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossaryTermsAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetGlossaryTermsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryTermsAsync("<glossaryGuid>", true, 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result[0].GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("usage").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -5733,9 +13650,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -5746,6 +13660,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -5771,6 +13688,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -5804,38 +13746,190 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossaryTerms with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryTerms("<glossaryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetGlossaryTerms with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryTerms("<glossaryGuid>", true, 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result[0].GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("usage").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -5871,9 +13965,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -5884,6 +13975,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -5909,6 +14003,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -5941,12 +14060,43 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossaryTermHeadersAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetGlossaryTermHeadersAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetGlossaryTermHeadersAsync("<glossaryGuid>", 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("termGuid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedTermHeader</c>:
+        /// Schema for <c>AtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -5988,12 +14138,43 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetGlossaryTermHeaders with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryTermHeaders("<glossaryGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetGlossaryTermHeaders with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetGlossaryTermHeaders("<glossaryGuid>", 1234, 1234, "<sort>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("termGuid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasRelatedTermHeader</c>:
+        /// Schema for <c>AtlasRelatedTermHeader</c>:
         /// <code>{
         ///   description: string, # Optional. The description of the related term.
         ///   displayText: string, # Optional. The display text.
@@ -6032,6 +14213,26 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="operationGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetImportCsvOperationStatusAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetImportCsvOperationStatusAsync("<operationGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("importedTerms").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -6080,6 +14281,26 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="operationGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetImportCsvOperationStatus with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetImportCsvOperationStatus("<operationGuid>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("importedTerms").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -6130,6 +14351,38 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call ExportGlossaryTermsAsCsvAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     "<String>"
+        /// };
+        /// 
+        /// Response response = await client.ExportGlossaryTermsAsCsvAsync("<glossaryGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call ExportGlossaryTermsAsCsvAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     "<String>"
+        /// };
+        /// 
+        /// Response response = await client.ExportGlossaryTermsAsCsvAsync("<glossaryGuid>", RequestContent.Create(data), true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> ExportGlossaryTermsAsCsvAsync(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -6158,6 +14411,38 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call ExportGlossaryTermsAsCsv with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     "<String>"
+        /// };
+        /// 
+        /// Response response = client.ExportGlossaryTermsAsCsv("<glossaryGuid>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call ExportGlossaryTermsAsCsv with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = new[] {
+        ///     "<String>"
+        /// };
+        /// 
+        /// Response response = client.ExportGlossaryTermsAsCsv("<glossaryGuid>", RequestContent.Create(data), true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// </example>
         public virtual Response ExportGlossaryTermsAsCsv(string glossaryGuid, RequestContent content, bool? includeTermHierarchy = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(glossaryGuid, nameof(glossaryGuid));
@@ -6187,38 +14472,190 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetTermsByGlossaryNameAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetTermsByGlossaryNameAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = await client.GetTermsByGlossaryNameAsync("<glossaryName>", 1234, 1234, true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result[0].GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("usage").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -6254,9 +14691,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -6267,6 +14701,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -6292,6 +14729,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -6324,38 +14786,190 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetTermsByGlossaryName with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetTermsByGlossaryName("<glossaryName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetTermsByGlossaryName with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// Response response = client.GetTermsByGlossaryName("<glossaryName>", 1234, 1234, true);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result[0].GetProperty("abbreviation").ToString());
+        /// Console.WriteLine(result[0].GetProperty("templateName")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("glossaryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("anchor").GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("antonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("createTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("createdBy").ToString());
+        /// Console.WriteLine(result[0].GetProperty("updateTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("updatedBy").ToString());
+        /// Console.WriteLine(result[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("resources")[0].GetProperty("url").ToString());
+        /// Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result[0].GetProperty("contacts").GetProperty("<test>")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result[0].GetProperty("attributes").GetProperty("<test>").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipType").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipAttributes").GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("relationshipStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("assignedEntities")[0].GetProperty("uniqueAttributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("categoryGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("categories")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifies")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("examples")[0].ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("isA")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("preferredToTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacedBy")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("replacementTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("seeAlso")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("synonyms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translatedTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("translationTerms")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("usage").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValues")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("displayText").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("expression").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("relationGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("status").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("steward").ToString());
+        /// Console.WriteLine(result[0].GetProperty("validValuesFor")[0].GetProperty("termGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityGuid").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("entityStatus").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("removePropagationsOnEntityDelete").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("endTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("startTime").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("validityPeriods")[0].GetProperty("timeZone").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("source").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("sourceDetails").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("attributes").GetProperty("<test>").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("typeName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("classifications")[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("longDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result[0].GetProperty("shortDescription").ToString());
+        /// Console.WriteLine(result[0].GetProperty("lastModifiedTS").ToString());
+        /// Console.WriteLine(result[0].GetProperty("guid").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
         /// Response Body:
         /// 
-        /// Schema for <c>ArrayOfAtlasGlossaryTerm</c>:
+        /// Schema for <c>AtlasGlossaryTerm</c>:
         /// <code>{
-        ///   classifications: [
-        ///     {
-        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///       entityGuid: string, # Optional. The GUID of the entity.
-        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
-        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
-        ///       validityPeriods: [
-        ///         {
-        ///           endTime: string, # Optional. The end of the time boundary.
-        ///           startTime: string, # Optional. The start of the time boundary.
-        ///           timeZone: string, # Optional. The timezone of the time boundary.
-        ///         }
-        ///       ], # Optional. An array of time boundaries indicating validity periods.
-        ///       source: string, # Optional. indicate the source who create the classification detail
-        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
-        ///     }
-        ///   ], # Optional. An array of classifications.
-        ///   longDescription: string, # Optional. The long version description.
-        ///   name: string, # Optional. The name of the glossary object.
-        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
-        ///   shortDescription: string, # Optional. The short version of description.
-        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
-        ///   guid: string, # Optional. The GUID of the object.
         ///   abbreviation: string, # Optional. The abbreviation of the term.
         ///   templateName: [AnyObject], # Optional.
         ///   anchor: {
@@ -6391,9 +15005,6 @@ namespace Azure.Analytics.Purview.Catalog
         /// The key of the first layer map is term template name.
         ///   assignedEntities: [
         ///     {
-        ///       guid: string, # Optional. The GUID of the object.
-        ///       typeName: string, # Optional. The name of the type.
-        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///       displayText: string, # Optional. The display text.
         ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
         ///       relationshipType: string, # Optional.
@@ -6404,6 +15015,9 @@ namespace Azure.Analytics.Purview.Catalog
         ///       }, # Optional. Captures details of struct contents. Not instantiated directly, used only via AtlasEntity, AtlasClassification.
         ///       relationshipGuid: string, # Optional. The GUID of the relationship.
         ///       relationshipStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. The enum of relationship status.
+        ///       guid: string, # Optional. The GUID of the object.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       uniqueAttributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The unique attributes of the object.
         ///     }
         ///   ], # Optional. An array of related object IDs.
         ///   categories: [
@@ -6429,6 +15043,31 @@ namespace Azure.Analytics.Purview.Catalog
         ///   usage: string, # Optional. The usage of the term.
         ///   validValues: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values.
         ///   validValuesFor: [AtlasRelatedTermHeader], # Optional. An array of related term headers as valid values for other records.
+        ///   classifications: [
+        ///     {
+        ///       entityGuid: string, # Optional. The GUID of the entity.
+        ///       entityStatus: &quot;ACTIVE&quot; | &quot;DELETED&quot;, # Optional. Status of the entity - can be active or deleted. Deleted entities are not removed from Atlas store.
+        ///       removePropagationsOnEntityDelete: boolean, # Optional. Determines if propagations will be removed on entity deletion.
+        ///       validityPeriods: [
+        ///         {
+        ///           endTime: string, # Optional. The end of the time boundary.
+        ///           startTime: string, # Optional. The start of the time boundary.
+        ///           timeZone: string, # Optional. The timezone of the time boundary.
+        ///         }
+        ///       ], # Optional. An array of time boundaries indicating validity periods.
+        ///       source: string, # Optional. indicate the source who create the classification detail
+        ///       sourceDetails: Dictionary&lt;string, AnyObject&gt;, # Optional. more detail on source information
+        ///       attributes: Dictionary&lt;string, AnyObject&gt;, # Optional. The attributes of the struct.
+        ///       typeName: string, # Optional. The name of the type.
+        ///       lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///     }
+        ///   ], # Optional. An array of classifications.
+        ///   longDescription: string, # Optional. The long version description.
+        ///   name: string, # Optional. The name of the glossary object.
+        ///   qualifiedName: string, # Optional. The qualified name of the glossary object.
+        ///   shortDescription: string, # Optional. The short version of description.
+        ///   lastModifiedTS: string, # Optional. ETag for concurrency control.
+        ///   guid: string, # Optional. The GUID of the object.
         /// }
         /// </code>
         /// 
@@ -6461,6 +15100,43 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call ImportGlossaryTermsViaCsvAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// var operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call ImportGlossaryTermsViaCsvAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// var operation = await client.ImportGlossaryTermsViaCsvAsync(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("importedTerms").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -6513,6 +15189,43 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryGuid"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call ImportGlossaryTermsViaCsv with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// var operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call ImportGlossaryTermsViaCsv with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// var operation = client.ImportGlossaryTermsViaCsv(WaitUntil.Completed, "<glossaryGuid>", RequestContent.Create(data), true);
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("importedTerms").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -6565,6 +15278,43 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryNameAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// var operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryNameAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// var operation = await client.ImportGlossaryTermsViaCsvByGlossaryNameAsync(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
+        /// 
+        /// BinaryData data = await operation.WaitForCompletionAsync();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("importedTerms").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -6617,6 +15367,43 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentException"> <paramref name="glossaryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryName with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// var operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data));
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call ImportGlossaryTermsViaCsvByGlossaryName with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential).GetPurviewGlossariesClient();
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// var operation = client.ImportGlossaryTermsViaCsvByGlossaryName(WaitUntil.Completed, "<glossaryName>", RequestContent.Create(data), true);
+        /// 
+        /// BinaryData data = operation.WaitForCompletion();
+        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("createTime").ToString());
+        /// Console.WriteLine(result.GetProperty("lastUpdateTime").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("importedTerms").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("totalTermsDetected").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorCode").ToString());
+        /// Console.WriteLine(result.GetProperty("error").GetProperty("errorMessage").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 

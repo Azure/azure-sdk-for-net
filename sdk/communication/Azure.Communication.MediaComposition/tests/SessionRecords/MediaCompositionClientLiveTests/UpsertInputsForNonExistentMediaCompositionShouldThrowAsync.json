@@ -1,0 +1,57 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://shwali-test-resource.int.communication.azure.net/mediaCompositions/nonexistentMediaCompositionId?api-version=2022-07-16-preview1",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "318",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-520130978664eb498a8aae4c7128781d-b172857c3783eb40-00",
+        "User-Agent": "azsdk-net-Communication.MediaComposition/1.0.0-alpha.20220810.1 (.NET Framework 4.8.4510.0; Microsoft Windows 10.0.22000 )",
+        "x-ms-client-request-id": "60b8f543f26ca0040e20fceecbae54a6",
+        "x-ms-content-sha256": "Sanitized",
+        "x-ms-date": "Wed, 10 Aug 2022 23:37:19 GMT",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "id": "nonexistentMediaCompositionId",
+        "inputs": {
+          "james": {
+            "id": {
+              "rawId": "8:orgid:f3ba9014-6dca-4456-8ec0-fa03cfa2b70p",
+              "microsoftTeamsUser": {
+                "userId": "f3ba9014-6dca-4456-8ec0-fa03cfa2b70p",
+                "isAnonymous": false,
+                "cloud": "public"
+              }
+            },
+            "call": "teamsMeeting",
+            "kind": "participant",
+            "placeholderImageUri": "https://imageendpoint"
+          }
+        }
+      },
+      "StatusCode": 404,
+      "ResponseHeaders": {
+        "api-supported-versions": "2022-07-16-preview1",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 10 Aug 2022 23:37:19 GMT",
+        "Transfer-Encoding": "chunked",
+        "X-Azure-Ref": "0L0H0YgAAAACEam4c0Y1FSIUv9jIfskjpWVZSMzExMDAwMTE2MDIxAGNjOTI3NThkLTA1ZjctNGFkNi1hYTVlLTBmYTk3MThkODk4NQ==",
+        "X-Cache": "CONFIG_NOCACHE"
+      },
+      "ResponseBody": {
+        "type": "https://tools.ietf.org/html/rfc7231#section-6.5.4",
+        "title": "Not Found",
+        "status": 404,
+        "traceId": "00-520130978664eb498a8aae4c7128781d-9d5bfdbacdda9a7c-00"
+      }
+    }
+  ],
+  "Variables": {
+    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://shwali-test-resource.int.communication.azure.net/;accesskey=Kg==",
+    "RandomSeed": "596884902"
+  }
+}

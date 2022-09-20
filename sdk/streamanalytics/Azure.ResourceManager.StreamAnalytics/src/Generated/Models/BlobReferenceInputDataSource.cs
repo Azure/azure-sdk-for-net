@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> Initializes a new instance of BlobReferenceInputDataSource. </summary>
         public BlobReferenceInputDataSource()
         {
-            StorageAccounts = new ChangeTrackingList<StorageAccount>();
+            StorageAccounts = new ChangeTrackingList<StreamAnalyticsStorageAccount>();
             ReferenceInputDataSourceType = "Microsoft.Storage/Blob";
         }
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="sourcePartitionCount"> The partition count of the blob input data source. Range 1 - 256. </param>
         /// <param name="fullSnapshotRefreshRate"> The refresh interval of the blob input data source. </param>
         /// <param name="deltaSnapshotRefreshRate"> The interval that the user generates a delta snapshot of this reference blob input data source. </param>
-        internal BlobReferenceInputDataSource(string referenceInputDataSourceType, IList<StorageAccount> storageAccounts, string container, string pathPattern, string dateFormat, string timeFormat, AuthenticationMode? authenticationMode, string blobName, string deltaPathPattern, int? sourcePartitionCount, string fullSnapshotRefreshRate, string deltaSnapshotRefreshRate) : base(referenceInputDataSourceType)
+        internal BlobReferenceInputDataSource(string referenceInputDataSourceType, IList<StreamAnalyticsStorageAccount> storageAccounts, string container, string pathPattern, string dateFormat, string timeFormat, StreamAnalyticsAuthenticationMode? authenticationMode, string blobName, string deltaPathPattern, int? sourcePartitionCount, string fullSnapshotRefreshRate, string deltaSnapshotRefreshRate) : base(referenceInputDataSourceType)
         {
             StorageAccounts = storageAccounts;
             Container = container;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         }
 
         /// <summary> A list of one or more Azure Storage accounts. Required on PUT (CreateOrReplace) requests. </summary>
-        public IList<StorageAccount> StorageAccounts { get; }
+        public IList<StreamAnalyticsStorageAccount> StorageAccounts { get; }
         /// <summary> The name of a container within the associated Storage account. This container contains either the blob(s) to be read from or written to. Required on PUT (CreateOrReplace) requests. </summary>
         public string Container { get; set; }
         /// <summary> The blob path pattern. Not a regular expression. It represents a pattern against which blob names will be matched to determine whether or not they should be included as input or output to the job. See https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-input or https://docs.microsoft.com/en-us/rest/api/streamanalytics/stream-analytics-output for a more detailed explanation and example. </summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The time format. Wherever {time} appears in pathPattern, the value of this property is used as the time format instead. </summary>
         public string TimeFormat { get; set; }
         /// <summary> Authentication Mode. </summary>
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        public StreamAnalyticsAuthenticationMode? AuthenticationMode { get; set; }
         /// <summary> The name of the blob input. </summary>
         public string BlobName { get; set; }
         /// <summary> The path pattern of the delta snapshot. </summary>

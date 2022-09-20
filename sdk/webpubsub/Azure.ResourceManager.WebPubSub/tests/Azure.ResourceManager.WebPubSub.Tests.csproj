@@ -9,7 +9,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.WebPubSub.csproj" />
-    <ProjectReference Include="..\..\..\network\Azure.ResourceManager.Network\src\Azure.ResourceManager.Network.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Network" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\PrivateEndpointConnectionTests\" />

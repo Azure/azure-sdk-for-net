@@ -22,6 +22,7 @@ This troubleshooting guide covers failure investigation techniques, common error
   - [Logs reflect intermittent HTTP 412 and HTTP 409 responses from storage](#logs-reflect-intermittent-http-412-and-http-409-responses-from-storage)
   - [Partitions close and initialize intermittently or during scaling](#partitions-close-and-initialize-intermittently-or-during-scaling)
   - [Partitions close and initialize frequently](#partitions-close-and-initialize-frequently)
+  - [Warnings being raised to the error handler that starts with "A load balancing cycle has taken too long to complete."](#warnings-being-raised-to-the-error-handler-that-starts-with--a-load-balancing-cycle-has-taken-too-long-to-complete-)
   - ["Frequent errors for "...current receiver '< RECEIVER_NAME >' with epoch '0' is getting disconnected""](#frequent-errors-for-current-receiver--receiver_name--with-epoch-0-is-getting-disconnected)
   - [High CPU usage](#high-cpu-usage)
   - [A partition is not being processed](#a-partition-is-not-being-processed)
@@ -36,7 +37,7 @@ This troubleshooting guide covers failure investigation techniques, common error
 
 ## Handle Event Hubs exceptions
 
-The Event Hubs client library will surface exceptions when en error is encountered by a service operation or within the client.  When possible, standard .NET exception types are used to convey error information.  For scenarios specific to Event Hubs, an [EventHubsException][EventHubsException] is thrown; this is the most common exception type that applications will encounter. 
+The Event Hubs client library will surface exceptions when an error is encountered by a service operation or within the client.  When possible, standard .NET exception types are used to convey error information.  For scenarios specific to Event Hubs, an [EventHubsException][EventHubsException] is thrown; this is the most common exception type that applications will encounter. 
 
 The Event Hubs clients will implicitly retry exceptions that are considered transient, following the configured [retry options][EventHubsRetryOptions].  When an exception is surfaced to the application, either all retries were applied unsuccessfully, or the exception was considered non-transient.  More information on configuring retry options can be found in the [Configuring the client retry thresholds][ConfigureRetrySample] sample.
 
@@ -111,7 +112,7 @@ For more possible solutions, see: [Troubleshoot authentication and authorization
 
 ### Timeout when connecting to service
 
-Depending on the host environment and network, this may present to applications as either a `TimeoutException` or `OperationCanceledException` and most often occurs the client cannot find a network path to the service.
+Depending on the host environment and network, this may present to applications as a `TimeoutException`, `OperationCanceledException`, or an `EventHubsException` with `Reason` of `ServiceTimeout` and most often occurs the client cannot find a network path to the service.
 
 To troubleshoot:
 
@@ -159,7 +160,7 @@ The endpoint in an IoT Hub query string specifies an IoT Hub, not an Event Hubs 
 
 Using that "built-in Event Hub-compatible endpoint" requires obtaining its connection string from IoT Hub.  The recommended approach is to copy the connection string from the Azure portal, as discussed in the [IoT Hub documentation][IoTHubDocs]. 
 
-For applications that are unable to do so, see the following for an illustration of querying IoT Hub in real-time to obtain it: [How to request the IoT Hub built-in Event Hubs-compatible endpoint connection string][IoTConnectionStringSample]
+For applications that are unable to do so, see the following for an illustration of querying IoT Hub in real-time to obtain it: [How to request the IoT Hub built-in Event Hubs-compatible endpoint connection string][IoTConnectionStringSample].
 
 Further reading:
 * [Control access to IoT Hub using Shared Access Signatures][IoTHubSAS]
@@ -189,7 +190,7 @@ By design, Event Hubs does not directly reflect a Kafka message key as an Event 
 
 ## Troubleshoot event processor issues
 
-### Logs reflect intermittent HTTP 412 and HTTP 409 responses from storage
+### Logs reflect intermittent HTTP 412 and HTTP 409 responses from Azure Storage
 
 This is normal and does not indicate an issue with the processor nor with the associated checkpoint store.  
 
@@ -229,11 +230,12 @@ It is generally recommended that an event processor own no more than three parti
 
 Further reading:
 - [Debug ThreadPool Starvation][DebugThreadPoolStarvation]
+- [Diagnosing .NET Core ThreadPool Starvation with PerfView (Why my service is not saturating all cores or seems to stall)](https://docs.microsoft.com/archive/blogs/vancem/diagnosing-net-core-threadpool-starvation-with-perfview-why-my-service-is-not-saturating-all-cores-or-seems-to-stall)
 - [Diagnosing ThreadPool Exhaustion Issues in .NET Core Apps][DiagnoseThreadPoolExhaustion] _(video)_
 
-#### "Soft Delete" is enabled for a Blob Storage checkpoint store:
+#### "Soft Delete" or "Blob versioning" is enabled for a Blob Storage checkpoint store:
 
-To coordinate with other event processors, the checkpoint store ownership records are inspected during each load balancing cycle.  When using an Azure Blob Storage as a checkpoint store, the "soft delete" feature can cause large delays when attempting to read the contents of a container.   It is strongly recommended that "soft delete" be disabled.  For more information, see: [Soft delete for blobs][SoftDeleteBlobStorage].
+To coordinate with other event processors, the checkpoint store ownership records are inspected during each load balancing cycle.  When using an Azure Blob Storage as a checkpoint store, the "soft delete" and "Blob versioning" features can cause large delays when attempting to read the contents of a container.  It is strongly recommended that both be disabled.  For more information, see: [Soft delete for blobs][SoftDeleteBlobStorage] and [Blob versioning][VersioningBlobStorage].
 
 ### Warnings being raised to the error handler that starts with  "A load balancing cycle has taken too long to complete. ..."
 
@@ -266,11 +268,15 @@ Another possible cause is an event processor owning too many partitions.  See: [
 
 High CPU usage is usually because an event processor owns too many partitions.  See: [Too many partitions are owned](#too-many-partitions-are-owned).
 
+### One or more partitions have high latency for processing
+
+When processing for one or more partitions is delayed, it is most often because an event processor owns too many partitions.  See: [Too many partitions are owned](#too-many-partitions-are-owned).
+
 ### A partition is not being processed
 
-An event processor runs continually in a host application for a prolonged period.  Sometimes, it may appear that some partitions are uncrowned or are not being processed.  Most often, this presents as [Partitions close and initialize frequently](#partitions-close-and-initialize-frequently) and should follow those troubleshooting steps.
+An event processor runs continually in a host application for a prolonged period.  Sometimes, it may appear that some partitions are uncrowned or are not being processed.  Most often, this presents as [Partitions close and initialize frequently](#partitions-close-and-initialize-frequently) or [Warnings being raised to the error handler that starts with "A load balancing cycle has taken too long to complete."](#warnings-being-raised-to-the-error-handler-that-starts-with--a-load-balancing-cycle-has-taken-too-long-to-complete-) and should follow those troubleshooting steps.
 
-If partitions are not observed closing and initializing frequently, then a stalled or unowned partition may be part of a larger problem and a GitHub issue should be opened.  Please see: [Filing GitHub issues](#filing-github-issues).
+If partitions are not observed closing and initializing frequently and no warning is being raised to the error handler, then a stalled or unowned partition may be part of a larger problem and a GitHub issue should be opened.  Please see: [Filing GitHub issues](#filing-github-issues).
 
 ### Duplicate events are being processed
 
@@ -451,6 +457,7 @@ For more information on ways to request support, please see: [Support][SUPPORT].
 [IoTHubSAS]: https://docs.microsoft.com/azure/iot-hub/iot-hub-dev-guide-sas#security-tokens
 [RBAC]: https://docs.microsoft.com/azure/event-hubs/authorize-access-azure-active-directory
 [SoftDeleteBlobStorage]: https://docs.microsoft.com/azure/storage/blobs/soft-delete-blob-overview
+[VersioningBlobStorage]: https://docs.microsoft.com/azure/storage/blobs/versioning-overview
 [TroubleshootAuthenticationAuthorization]: https://docs.microsoft.com/azure/event-hubs/troubleshoot-authentication-authorization
 [UnauthorizedAccessException]: https://docs.microsoft.com/dotnet/api/system.unauthorizedaccessexception
 

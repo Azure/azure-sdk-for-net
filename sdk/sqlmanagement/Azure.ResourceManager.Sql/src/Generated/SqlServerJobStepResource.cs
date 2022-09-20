@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _sqlServerJobStepJobStepsClientDiagnostics;
         private readonly JobStepsRestOperations _sqlServerJobStepJobStepsRestClient;
-        private readonly JobStepData _data;
+        private readonly SqlServerJobStepData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SqlServerJobStepResource"/> class for mocking. </summary>
         protected SqlServerJobStepResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref = "SqlServerJobStepResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlServerJobStepResource(ArmClient client, JobStepData data) : this(client, data.Id)
+        internal SqlServerJobStepResource(ArmClient client, SqlServerJobStepData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual JobStepData Data
+        public virtual SqlServerJobStepData Data
         {
             get
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The requested state of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlServerJobStepResource>> UpdateAsync(WaitUntil waitUntil, JobStepData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlServerJobStepResource>> UpdateAsync(WaitUntil waitUntil, SqlServerJobStepData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The requested state of the job step. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SqlServerJobStepResource> Update(WaitUntil waitUntil, JobStepData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlServerJobStepResource> Update(WaitUntil waitUntil, SqlServerJobStepData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

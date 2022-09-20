@@ -155,7 +155,9 @@ namespace Azure.Storage.Blobs
                 clientDiagnostics: new StorageClientDiagnostics(options),
                 version: options.Version,
                 customerProvidedKey: options.CustomerProvidedKey,
-                encryptionScope: options.EncryptionScope);
+                transferValidation: options.TransferValidation,
+                encryptionScope: options.EncryptionScope,
+                preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes);
 
             _clientSideEncryption = options._clientSideEncryptionOptions?.Clone();
             _serviceRestClient = BuildServiceRestClient(_uri);
@@ -281,7 +283,9 @@ namespace Azure.Storage.Blobs
                       clientDiagnostics: new StorageClientDiagnostics(options),
                       version: options?.Version ?? BlobClientOptions.LatestVersion,
                       customerProvidedKey: options?.CustomerProvidedKey,
-                      encryptionScope: options?.EncryptionScope),
+                      transferValidation: options.TransferValidation,
+                      encryptionScope: options?.EncryptionScope,
+                      preserveBlobNameOuterSlashes: options?.PreserveBlobNameSlashes ?? false),
                   authentication,
                   options?._clientSideEncryptionOptions?.Clone())
         {
@@ -359,7 +363,9 @@ namespace Azure.Storage.Blobs
                     clientDiagnostics: new StorageClientDiagnostics(options),
                     version: options.Version,
                     customerProvidedKey: null,
-                    encryptionScope: null),
+                    transferValidation: options.TransferValidation,
+                    encryptionScope: null,
+                    preserveBlobNameOuterSlashes: options.PreserveBlobNameSlashes),
                 authentication,
                 clientSideEncryption: null);
         }

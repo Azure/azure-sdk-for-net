@@ -165,8 +165,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #endregion
 
             Assert.AreEqual(204, addFeedbackResponse.Status);
-
-            DeleteProject(testProjectName);
         }
 
         [RecordedTest]
@@ -317,8 +315,6 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #endregion
 
             Assert.AreEqual(204, addFeedbackResponse.Status);
-
-            await DeleteProjectAsync(testProjectName);
         }
     }
 }

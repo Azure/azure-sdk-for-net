@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         internal static WebBasicAuthentication DeserializeWebBasicAuthentication(JsonElement element)
         {
             BinaryData username = default;
-            SecretBase password = default;
+            FactorySecretBaseDefinition password = default;
             BinaryData url = default;
             WebAuthenticationType authenticationType = default;
             foreach (var property in element.EnumerateObject())
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("password"))
                 {
-                    password = SecretBase.DeserializeSecretBase(property.Value);
+                    password = FactorySecretBaseDefinition.DeserializeFactorySecretBaseDefinition(property.Value);
                     continue;
                 }
                 if (property.NameEquals("url"))

@@ -27,7 +27,9 @@ Following parameter is available
 * dotnet new azuremgmt --provider `ResourceProviderName`  **OR**
 * dotnet new azuremgmt --provider `ResourceProviderName` --tagVersion `Optional tag in README.MD`  **OR**
 * dotnet new azuremgmt --provider `ResourceProviderName` --includeCI true
+* ..\..\eng\scripts Update-Mgmt-CI.ps1
 * 
+> Note: The last step updates the ci paths in Azure.ResourceManager ci.mgmt.yml file so that it will run anytime this new package changes
 > Note: Please use proper casing for the directory name as well as resource provider name. `Azure.ResourceManager.Rp`, `Microsoft.Compute` or `Microsoft.KeyVault`. The resource provider name without `Microsoft.` will be used in autorest.md file pointing to the  `https://raw.githubusercontent.com/Azure/azure-rest-api-specs/main/specification/<resource name>/resource-manager/readme.md`
 
 ---

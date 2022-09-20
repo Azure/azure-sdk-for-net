@@ -1,0 +1,58 @@
+parameters:
+- name: ProjectFilesOutputFolder
+  type: string
+  default: "$(Build.ArtifactStagingDirectory)"
+- name: NumOfTestProjectsPerJob
+  type: number
+  default: 20
+- name: OutputProjectFilePath
+  type: string
+  default: "$(System.DefaultWorkingDirectory)/projects.txt"
+- name: TestDependsOnDependency
+  type: string
+  default: "not-specific"
+- name: ProjectListOverrideFilePropertyName
+  type: string
+  default: ''
+- name: MatrixConfigsFile
+  type: string
+  default: './eng/pipelines/templates/stages/platform-matrix.json'
+- name: ExcludeTargetTestProjects
+  type: boolean
+  default: false
+- name: ServiceDirectory
+  type: string
+  default: 'not-specific'
+steps:
+  - template: /eng/pipelines/templates/steps/install-dotnet.yml
+    parameters:
+      EnableNuGetCache: false
+  - pwsh: |
+      dotnet build /t:ProjectDependsOn ./eng/service.proj `
+        /p:TestDependsOnDependency="${{parameters.TestDependsOnDependency}}" `
+        /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false  `
+        /p:IncludePerf=false /p:RunApiCompat=false `
+        /p:InheritDocEnabled=false /p:BuildProjectReferences=false `
+        /p:OutputProjectFilePath="${{parameters.OutputProjectFilePath}}"
+    displayName: Find all test dependencies
+
+  - task: PowerShell@2
+    inputs:
+      targetType: filePath
+      filePath: eng/scripts/splittestdependencies/Generate-Dependency-Test-References.ps1
+      arguments: >-
+        -ProjectListFilePath ${{ parameters.OutputProjectFilePath }}
+        -ProjectFilesOutputFolder ${{ parameters.ProjectFilesOutputFolder }}
+        -NumOfTestProjectsPerJob ${{ parameters.NumOfTestProjectsPerJob }}
+        -MatrixConfigsFile ${{parameters.MatrixConfigsFile}}
+        -ProjectFileConfigName ${{parameters.ProjectListOverrideFilePropertyName}}
+        -ExcludeTargetTestProjects: $${{parameters.ExcludeTargetTestProjects}}
+        -ServiceDirectoryToExclude ${{parameters.ServiceDirectory}}
+      ignoreLASTEXITCODE: true
+      pwsh: true
+    displayName: Split testing packages into different files
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: $(Build.ArtifactStagingDirectory)
+      artifactName: DependencyTestProjectReferences

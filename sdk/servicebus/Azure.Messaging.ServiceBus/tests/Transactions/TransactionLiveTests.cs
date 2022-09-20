@@ -971,7 +971,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             await processorA.StartProcessingAsync();
             await tcs.Task;
-            await processorA.StopProcessingAsync();
+            // close rather than just stop because we want the session link to be closed
+            await processorA.CloseAsync();
 
             // transaction wasn't committed - verify that it was rolled back
             ServiceBusSessionReceiver receiverA = await client.AcceptNextSessionAsync(queueA.QueueName);
@@ -1017,7 +1018,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Transactions
 
             await processorA.StartProcessingAsync();
             await tcs.Task;
-            await processorA.StopProcessingAsync();
+            // close rather than just stop because we want the session link to be closed
+            await processorA.CloseAsync();
 
             // this should timeout as the session message was completed
             Assert.ThrowsAsync<ServiceBusException>(

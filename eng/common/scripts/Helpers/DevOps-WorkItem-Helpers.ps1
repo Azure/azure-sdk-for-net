@@ -108,8 +108,8 @@ function LoginToAzureDevops([string]$devops_pat)
   if (!$devops_pat) {
     return
   }
-  $azCmdStr = "'$devops_pat' | az devops login $($ReleaseDevOpsOrgParameters -join ' ')"
-  Invoke-Expression $azCmdStr
+  # based on the docs at https://aka.ms/azure-devops-cli-auth the recommendation is to set this env variable to login
+  $env:AZURE_DEVOPS_EXT_PAT = $devops_pat
 }
 
 function BuildHashKeyNoNull()
@@ -234,6 +234,7 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
   $fields += "Custom.PackagePatchVersions"
   $fields += "Custom.Generated"
   $fields += "Custom.RoadmapState"
+  $fields += "Microsoft.VSTS.Common.StateChangeDate"
 
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
   $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Package'"
@@ -466,7 +467,7 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
     if ($pkgName -ne $existingItem.fields["Custom.Package"]) { $changedField = "Custom.Package" }
     if ($verMajorMinor -ne $existingItem.fields["Custom.PackageVersionMajorMinor"]) { $changedField = "Custom.PackageVersionMajorMinor" }
     if ($pkgDisplayName -ne $existingItem.fields["Custom.PackageDisplayName"]) { $changedField = "Custom.PackageDisplayName" }
-    if ($pkgType -ne $existingItem.fields["Custom.PackageType"]) { $changedField = "Custom.PackageType" }
+    if ($pkgType -ne [string]$existingItem.fields["Custom.PackageType"]) { $changedField = "Custom.PackageType" }
     if ($pkgNewLibrary -ne $existingItem.fields["Custom.PackageTypeNewLibrary"]) { $changedField = "Custom.PackageTypeNewLibrary" }
     if ($pkgRepoPath -ne $existingItem.fields["Custom.PackageRepoPath"]) { $changedField = "Custom.PackageRepoPath" }
     if ($serviceName -ne $existingItem.fields["Custom.ServiceName"]) { $changedField = "Custom.ServiceName" }
@@ -884,6 +885,25 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
   "value": "$shippedPackages"
 }
 "@
+
+    # If we shipped a version after we set "In Release" state then reset the state to "Next Release Unknown"
+    if ($pkgWorkItem.fields["System.State"] -eq "In Release")
+    {
+      $lastShippedDate = [DateTime]$newShippedVersions[0].Date
+      $markedInReleaseDate = ([DateTime]$pkgWorkItem.fields["Microsoft.VSTS.Common.StateChangeDate"])
+
+      # We just shipped so lets set the state to "Next Release Unknown"
+      if ($markedInReleaseDate -le $lastShippedDate)
+      {
+        $fieldUpdates += @'
+{
+  "op": "replace",
+  "path": "/fields/State",
+  "value": "Next Release Unknown"
+}
+'@
+      }
+    }
   }
 
   # Full merged version set

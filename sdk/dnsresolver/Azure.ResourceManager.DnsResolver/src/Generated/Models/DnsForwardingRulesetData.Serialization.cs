@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -57,7 +58,7 @@ namespace Azure.ResourceManager.DnsResolver
             Optional<SystemData> systemData = default;
             IList<WritableSubResource> dnsResolverOutboundEndpoints = default;
             Optional<DnsResolverProvisioningState> provisioningState = default;
-            Optional<string> resourceGuid = default;
+            Optional<Guid> resourceGuid = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -146,14 +147,19 @@ namespace Azure.ResourceManager.DnsResolver
                         }
                         if (property0.NameEquals("resourceGuid"))
                         {
-                            resourceGuid = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceGuid = property0.Value.GetGuid();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new DnsForwardingRulesetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), dnsResolverOutboundEndpoints, Optional.ToNullable(provisioningState), resourceGuid.Value);
+            return new DnsForwardingRulesetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), dnsResolverOutboundEndpoints, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
         }
     }
 }

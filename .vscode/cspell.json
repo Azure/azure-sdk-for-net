@@ -111,7 +111,8 @@
       "filename": "**/sdk/apimanagement/**/*.cs",
       "words": [
         "signin",
-        "Wadl"
+        "Wadl",
+        "Invokable"
       ]
     },
     {
@@ -119,6 +120,23 @@
       "words": [
         "dynatrace",
         "fqdns"
+      ]
+    },
+    {
+      "filename": "**/sdk/automation/**/*.cs",
+      "words": [
+        "tfvc"
+      ]
+    },
+    {
+      "filename": "**/sdk/avs/**/*.cs",
+      "words": [
+        "dhcps",
+        "mirrorings",
+        "nsxt",
+        "vcenter",
+        "vcsa",
+        "vmotion"
       ]
     },
     {
@@ -133,6 +151,14 @@
       "filename": "**/sdk/batch/**/*.cs",
       "words": [
         "cifs"
+      ]
+    },
+    {
+      "filename": "**/sdk/botservice/**/*.cs",
+      "words": [
+        "Alexa",
+        "Cmek",
+        "Omnichannel"
       ]
     },
     {
@@ -212,6 +238,54 @@
       ]
     },
     {
+      "filename": "**/sdk/customer-insights/**/*.cs",
+      "words": [
+        "kpis"
+      ]
+    },
+    {
+      "filename": "**/sdk/databox/**/*.cs",
+      "words": [
+        "errored"
+      ]
+    },
+    {
+      "filename": "**/sdk/databoxedge/**/*.cs",
+      "words": [
+        "mbps",
+        "mrtcp",
+        "rsaes",
+        "numa",
+        "posix",
+        "rdma"
+      ]
+    },
+    {
+      "filename": "**/sdk/datadog/**/*.cs",
+      "words": [
+        "liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/datalake-analytics/**/*.cs",
+      "words": [
+        "undeleting"
+      ]
+    },
+    {
+      "filename": "**/sdk/datalake-store/**/*.cs",
+      "words": [
+        "undeleting"
+      ]
+    },
+    {
+      "filename": "**/sdk/datashare/**/*.cs",
+      "words": [
+        "adls",
+        "kusto"
+      ]
+    },
+    {
       "filename": "**/sdk/datafactory/**/*.cs",
       "words": [
         "Ssis",
@@ -272,8 +346,24 @@
       ]
     },
     {
+      "filename": "**/sdk/devtestlabs/**/*.cs",
+      "words": [
+        "Vhds",
+        "Retarget",
+        "Sysprepped"
+      ]
+    },
+    {
       "filename": "**/sdk/formrecognizer/**/*.cs",
       "words": ["ZhHant"]
+    },
+    {
+      "filename": "**/sdk/frontdoor/**/*.cs",
+      "words": ["cname"]
+    },
+    {
+      "filename": "**/sdk/guestconfiguration/**/*.cs",
+      "words": ["Hcrp"]
     },
     {
       "filename": "**/sdk/hdinsight/**/*.cs",
@@ -281,6 +371,19 @@
         "aadds",
         "ldaps",
         "oaep"
+      ]
+    },
+    {
+      "filename": "**/sdk/healthcareapis/**/*.cs",
+      "words": [
+        "dicom",
+        "fhir"
+      ]
+    },
+    {
+      "filename": "**/sdk/iothub/**/*.cs",
+      "words": [
+        "fqdns"
       ]
     },
     {
@@ -306,6 +409,16 @@
         "Hhmm",
         "Hhmmss",
         "Hhmms"
+      ]
+    },
+    {
+      "filename": "**/sdk/netapp/**/*.cs",
+      "words": [
+        "mibps",
+        "hana",
+        "cifs",
+        "nfsv",
+        "ntfs"
       ]
     },
     {
@@ -355,7 +468,24 @@
         "mhsmip"
       ]
     },
-	{
+    {
+      "filename": "**/sdk/kusto/**/*.cs",
+      "words": [
+        "kusto",
+        "tbps",
+        "scsv",
+        "sohsv",
+        "tsve"
+      ]
+    },
+    {
+      "filename": "**/sdk/labservices/**/*.cs",
+      "words": [
+        "reimage",
+        "reimaging"
+      ]
+    },
+    {
       "filename": "**/sdk/mediaservices/**/*.cs",
       "words": [
         "cabac",
@@ -386,7 +516,30 @@
         "ipfix"
       ]
     },
-	{
+    {
+      "filename": "**/sdk/orbital/**/*.cs",
+      "words": [
+        "eirpd",
+        "lhcp",
+        "rhcp"
+      ]
+    },
+    {
+      "filename": "**/sdk/peering/**/*.cs",
+      "words": [
+        "asns",
+        "glas",
+        "rpki",
+        "mbps"
+      ]
+    },
+    {
+      "filename": "**/sdk/policyinsights/**/*.cs",
+      "words": [
+        "remediations"
+      ]
+    },
+    {
       "filename": "**/sdk/postgresql/**/*.cs",
       "words": [
         "byok",
@@ -394,7 +547,14 @@
         "vcores"
       ]
     },
-	{
+    {
+      "filename": "**/sdk/privatedns/**/*.cs",
+      "words": [
+        "cname",
+        "ptrdname"
+      ]
+    },
+    {
       "filename": "**/sdk/redis/**/*.cs",
       "words": [
         "hana",
@@ -413,6 +573,46 @@
       "words": ["Puid"]
     },
     {
+      "filename": "**/sdk/servicefabricmanagedclusters/**/*.cs",
+      "words": [
+        "reimage",
+        "ssdlrs"
+      ]
+    },
+    {
+      "filename": "**/sdk/securitycenter/**/*.cs",
+      "words": [
+        "Cspm",
+        "Pricings",
+        "Kube",
+        "Exfiltration",
+        "Ngfw",
+        "Saas",
+        "Mcas",
+        "Wdatp",
+        "Qualys"
+      ]
+    },
+    {
+      "filename": "**/sdk/securityinsights/**/*.cs",
+      "words": [
+        "Exfiltration",
+        "Mcas",
+        "Mdatp",
+        "Msti",
+        "Aadiam",
+        "Hkey",
+        "Taxii",
+        "Ueba",
+        "Signin",
+        "Defanged",
+        "Aatp",
+        "Puid",
+        "Stix",
+        "Whois"
+      ]
+    },
+    {
       "filename": "**/sdk/sqlmanagement/**/*.cs",
       "words": [
         "CIAS",
@@ -422,7 +622,8 @@
         "Nvarchar",
         "Stdev",
         "Unrestorable",
-        "Vcores"
+        "Vcores",
+        "Dtcs"
       ]
     },
     {
@@ -472,7 +673,14 @@
         "Ragrs",
         "Ragzrs",
         "Rehydrated",
-        "Undelete"
+        "Undelete",
+        "Aadkerb"
+      ]
+    },
+    {
+      "filename": "**/sdk/storagecache/**/*.cs",
+      "words": [
+        "Clfs"
       ]
     },
     {
@@ -508,7 +716,9 @@
         "updation",
         "usql",
         "vertica",
-        "xero"
+        "xero",
+        "Asana",
+        "Twilio"
       ]
     },
     {

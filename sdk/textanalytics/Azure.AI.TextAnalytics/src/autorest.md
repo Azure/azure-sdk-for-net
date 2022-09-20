@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/6655ded81f1f0a0ba172ae0dddf5d62898e87c96/specification/cognitiveservices/data-plane/Language/preview/2022-04-01-preview/textanalytics.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/1646226d874de6e8d36ebd3ad088c6c5f6cc6ed0/specification/cognitiveservices/data-plane/Language/stable/2022-05-01/analyzetext.json
 generation1-convenience-client: true
 ```
 
@@ -15,9 +15,10 @@ generation1-convenience-client: true
 
 ``` yaml
 directive:
-- from: swagger-document
-  where: $["paths"]["/:analyze-text"]["post"]
-  transform: $.operationId = "Analyze";
+- rename-operation:
+    from: AnalyzeText
+    to: Analyze
+
 - from: swagger-document
   where: $.paths.*
   transform: >
@@ -32,35 +33,31 @@ directive:
 
 ``` yaml
 directive:
-  from: swagger-document
+- from: swagger-document
   where: $.definitions.*
   transform: >
     $["x-accessibility"] = "internal"
 ```
 
 ### Add nullable annotations
+
 This is to guarantee that we don't introduce breaking changes now that we autogerate the code.
+
 ``` yaml
 directive:
-  from: swagger-document
+- from: swagger-document
   where: $.definitions.DetectedLanguage
   transform: >
     $.properties.name["x-nullable"] = true;
     $.properties.iso6391Name["x-nullable"] = true;
-```
 
-``` yaml
-directive:
-  from: swagger-document
+- from: swagger-document
   where: $.definitions.LanguageInput
   transform: >
     $.properties.id["x-nullable"] = true;
     $.properties.text["x-nullable"] = true;
-```
 
-``` yaml
-directive:
-  from: swagger-document
+- from: swagger-document
   where: $.definitions.MultiLanguageInput
   transform: >
     $.properties.id["x-nullable"] = true;

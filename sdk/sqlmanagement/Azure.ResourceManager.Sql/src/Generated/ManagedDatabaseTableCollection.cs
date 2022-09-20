@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Sql
 {
     /// <summary>
     /// A class representing a collection of <see cref="ManagedDatabaseTableResource" /> and their operations.
-    /// Each <see cref="ManagedDatabaseTableResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceDatabaseSchemaResource" />.
-    /// To get a <see cref="ManagedDatabaseTableCollection" /> instance call the GetManagedDatabaseTables method from an instance of <see cref="ManagedInstanceDatabaseSchemaResource" />.
+    /// Each <see cref="ManagedDatabaseTableResource" /> in the collection will belong to the same instance of <see cref="ManagedDatabaseSchemaResource" />.
+    /// To get a <see cref="ManagedDatabaseTableCollection" /> instance call the GetManagedDatabaseTables method from an instance of <see cref="ManagedDatabaseSchemaResource" />.
     /// </summary>
     public partial class ManagedDatabaseTableCollection : ArmCollection, IEnumerable<ManagedDatabaseTableResource>, IAsyncEnumerable<ManagedDatabaseTableResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Sql
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ManagedInstanceDatabaseSchemaResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedInstanceDatabaseSchemaResource.ResourceType), nameof(id));
+            if (id.ResourceType != ManagedDatabaseSchemaResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ManagedDatabaseSchemaResource.ResourceType), nameof(id));
         }
 
         /// <summary>

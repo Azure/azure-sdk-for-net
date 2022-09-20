@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="receiverBusinessIdentity"> The receiver business identity. </param>
         /// <param name="protocolSettings"> The X12 protocol settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="senderBusinessIdentity"/>, <paramref name="receiverBusinessIdentity"/> or <paramref name="protocolSettings"/> is null. </exception>
-        public X12OneWayAgreement(BusinessIdentity senderBusinessIdentity, BusinessIdentity receiverBusinessIdentity, X12ProtocolSettings protocolSettings)
+        public X12OneWayAgreement(IntegrationAccountBusinessIdentity senderBusinessIdentity, IntegrationAccountBusinessIdentity receiverBusinessIdentity, X12ProtocolSettings protocolSettings)
         {
             if (senderBusinessIdentity == null)
             {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Logic.Models
         }
 
         /// <summary> The sender business identity. </summary>
-        public BusinessIdentity SenderBusinessIdentity { get; set; }
+        public IntegrationAccountBusinessIdentity SenderBusinessIdentity { get; set; }
         /// <summary> The receiver business identity. </summary>
-        public BusinessIdentity ReceiverBusinessIdentity { get; set; }
+        public IntegrationAccountBusinessIdentity ReceiverBusinessIdentity { get; set; }
         /// <summary> The X12 protocol settings. </summary>
         public X12ProtocolSettings ProtocolSettings { get; set; }
     }

@@ -538,7 +538,7 @@ For more information on how we version see [Versioning](https://github.com/Azure
 
 ## Breaking Changes
 
-For information about breaking changes see [Breaking Change Rules](https://github.com/dotnet/corefx/blob/main/Documentation/coding-guidelines/breaking-change-rules.md).
+For information about breaking changes see [Breaking Change Rules](https://github.com/dotnet/runtime/blob/main/docs/coding-guidelines/breaking-change-rules.md).
 
 ## Debugging
 

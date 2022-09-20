@@ -107,11 +107,11 @@ namespace Azure.ResourceManager.Sql
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ManagedInstanceDatabaseSchemaResources in the ManagedDatabase. </summary>
-        /// <returns> An object representing collection of ManagedInstanceDatabaseSchemaResources and their operations over a ManagedInstanceDatabaseSchemaResource. </returns>
-        public virtual ManagedInstanceDatabaseSchemaCollection GetManagedInstanceDatabaseSchemas()
+        /// <summary> Gets a collection of ManagedDatabaseSchemaResources in the ManagedDatabase. </summary>
+        /// <returns> An object representing collection of ManagedDatabaseSchemaResources and their operations over a ManagedDatabaseSchemaResource. </returns>
+        public virtual ManagedDatabaseSchemaCollection GetManagedDatabaseSchemas()
         {
-            return GetCachedClient(Client => new ManagedInstanceDatabaseSchemaCollection(Client, Id));
+            return GetCachedClient(Client => new ManagedDatabaseSchemaCollection(Client, Id));
         }
 
         /// <summary>
@@ -124,9 +124,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedInstanceDatabaseSchemaResource>> GetManagedInstanceDatabaseSchemaAsync(string schemaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedDatabaseSchemaResource>> GetManagedDatabaseSchemaAsync(string schemaName, CancellationToken cancellationToken = default)
         {
-            return await GetManagedInstanceDatabaseSchemas().GetAsync(schemaName, cancellationToken).ConfigureAwait(false);
+            return await GetManagedDatabaseSchemas().GetAsync(schemaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagedInstanceDatabaseSchemaResource> GetManagedInstanceDatabaseSchema(string schemaName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedDatabaseSchemaResource> GetManagedDatabaseSchema(string schemaName, CancellationToken cancellationToken = default)
         {
-            return GetManagedInstanceDatabaseSchemas().Get(schemaName, cancellationToken);
+            return GetManagedDatabaseSchemas().Get(schemaName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ManagedDatabaseVulnerabilityAssessmentResources in the ManagedDatabase. </summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedDatabaseSecurityAlertPolicyResource>> GetManagedDatabaseSecurityAlertPolicyAsync(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagedDatabaseSecurityAlertPolicyResource>> GetManagedDatabaseSecurityAlertPolicyAsync(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             return await GetManagedDatabaseSecurityAlertPolicies().GetAsync(securityAlertPolicyName, cancellationToken).ConfigureAwait(false);
         }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ManagedDatabaseSecurityAlertPolicyResource> GetManagedDatabaseSecurityAlertPolicy(SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<ManagedDatabaseSecurityAlertPolicyResource> GetManagedDatabaseSecurityAlertPolicy(SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             return GetManagedDatabaseSecurityAlertPolicies().Get(securityAlertPolicyName, cancellationToken);
         }
@@ -340,6 +340,39 @@ namespace Azure.ResourceManager.Sql
         public virtual Response<ManagedInstanceLongTermRetentionPolicyResource> GetManagedInstanceLongTermRetentionPolicy(ManagedInstanceLongTermRetentionPolicyName policyName, CancellationToken cancellationToken = default)
         {
             return GetManagedInstanceLongTermRetentionPolicies().Get(policyName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ManagedDatabaseAdvancedThreatProtectionResources in the ManagedDatabase. </summary>
+        /// <returns> An object representing collection of ManagedDatabaseAdvancedThreatProtectionResources and their operations over a ManagedDatabaseAdvancedThreatProtectionResource. </returns>
+        public virtual ManagedDatabaseAdvancedThreatProtectionCollection GetManagedDatabaseAdvancedThreatProtections()
+        {
+            return GetCachedClient(Client => new ManagedDatabaseAdvancedThreatProtectionCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Gets a managed database&apos;s Advanced Threat Protection state.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
+        /// Operation Id: ManagedDatabaseAdvancedThreatProtectionSettings_Get
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagedDatabaseAdvancedThreatProtectionResource>> GetManagedDatabaseAdvancedThreatProtectionAsync(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetManagedDatabaseAdvancedThreatProtections().GetAsync(advancedThreatProtectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a managed database&apos;s Advanced Threat Protection state.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/advancedThreatProtectionSettings/{advancedThreatProtectionName}
+        /// Operation Id: ManagedDatabaseAdvancedThreatProtectionSettings_Get
+        /// </summary>
+        /// <param name="advancedThreatProtectionName"> The name of the Advanced Threat Protection state. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ManagedDatabaseAdvancedThreatProtectionResource> GetManagedDatabaseAdvancedThreatProtection(AdvancedThreatProtectionName advancedThreatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return GetManagedDatabaseAdvancedThreatProtections().Get(advancedThreatProtectionName, cancellationToken);
         }
 
         /// <summary>
@@ -1204,11 +1237,26 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues[key] = value;
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ManagedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ManagedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ManagedDatabasePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -1235,11 +1283,26 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues[key] = value;
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ManagedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new ManagedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ManagedDatabasePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -1264,12 +1327,23 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ManagedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ManagedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ManagedDatabasePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -1294,12 +1368,23 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ManagedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new ManagedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ManagedDatabasePatch();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -1324,11 +1409,26 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.Remove(key);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ManagedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _managedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new ManagedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ManagedDatabasePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {
@@ -1353,11 +1453,26 @@ namespace Azure.ResourceManager.Sql
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.Remove(key);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ManagedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _managedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new ManagedDatabaseResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ManagedDatabasePatch();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
             }
             catch (Exception e)
             {

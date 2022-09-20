@@ -50,6 +50,10 @@ rename-rules:
 
 override-operation-name:
   WebPubSub_CheckNameAvailability: CheckWebPubSubNameAvailability
+
+rename-mapping:
+  RegenerateKeyParameters: WebPubSubRegenerateKeyContent
+
 directive:
   - rename-model:
       from: PrivateLinkResource
@@ -102,6 +106,9 @@ directive:
   - rename-model:
       from: NetworkACL
       to:  PublicNetworkAcls
+  - rename-model:
+      from: EventHandler
+      to:  WebPubSubEventHandler
   - from: webpubsub.json
     where: $.definitions.ScaleType
     transform: $['x-ms-enum'].name = 'WebPubSubScaleType'
@@ -126,13 +133,8 @@ directive:
     transform: $["x-ms-client-name"] = 'isClientCertEnabled'
   - from: webpubsub.json
     where: $.definitions.WebPubSubProperties.properties.disableAadAuth
-    transform: $["x-ms-client-name"] = 'isDisableAadAuth'
+    transform: $["x-ms-client-name"] = 'isAadAuthDisabled'
   - from: webpubsub.json
     where: $.definitions.WebPubSubProperties.properties.disableLocalAuth
-    transform: $["x-ms-client-name"] = 'isDisableLocalAuth'
-
-  # Change ManagedIdentity to common identity type(ManagedServiceIdentity)
-  - from: swagger-document
-    where: $.definitions.ManagedIdentityType
-    transform: $.enum.push("SystemAssigned, UserAssigned")
+    transform: $["x-ms-client-name"] = 'isLocalAuthDisabled'
 ```

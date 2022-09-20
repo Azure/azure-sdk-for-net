@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Sql
             Optional<FailoverGroupReadOnlyEndpoint> readOnlyEndpoint = default;
             Optional<FailoverGroupReplicationRole> replicationRole = default;
             Optional<string> replicationState = default;
-            Optional<IList<PartnerInfo>> partnerServers = default;
+            Optional<IList<PartnerServerInfo>> partnerServers = default;
             Optional<IList<string>> databases = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PartnerInfo> array = new List<PartnerInfo>();
+                            List<PartnerServerInfo> array = new List<PartnerServerInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PartnerInfo.DeserializePartnerInfo(item));
+                                array.Add(PartnerServerInfo.DeserializePartnerServerInfo(item));
                             }
                             partnerServers = array;
                             continue;

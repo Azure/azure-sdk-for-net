@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeAggregation"> the criteria time aggregation types. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="metricName"/> is null. </exception>
-        public MultiMetricCriteria(string name, string metricName, AggregationTypeEnum timeAggregation)
+        public MultiMetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation)
         {
             if (name == null)
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="dimensions"> List of dimension conditions. </param>
         /// <param name="skipMetricValidation"> Allows creating an alert rule on a custom metric that isn&apos;t yet emitted, by causing the metric validation to be skipped. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal MultiMetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, AggregationTypeEnum timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties)
+        internal MultiMetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties)
         {
             CriterionType = criterionType;
             Name = name;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Namespace of the metric. </summary>
         public string MetricNamespace { get; set; }
         /// <summary> the criteria time aggregation types. </summary>
-        public AggregationTypeEnum TimeAggregation { get; set; }
+        public MetricCriteriaTimeAggregationType TimeAggregation { get; set; }
         /// <summary> List of dimension conditions. </summary>
         public IList<MetricDimension> Dimensions { get; }
         /// <summary> Allows creating an alert rule on a custom metric that isn&apos;t yet emitted, by causing the metric validation to be skipped. </summary>

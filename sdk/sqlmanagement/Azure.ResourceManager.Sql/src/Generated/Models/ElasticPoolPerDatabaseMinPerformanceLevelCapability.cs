@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="unit"> Unit type used to measure performance level. </param>
         /// <param name="status"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
-        internal ElasticPoolPerDatabaseMinPerformanceLevelCapability(double? limit, PerformanceLevelUnit? unit, CapabilityStatus? status, string reason)
+        internal ElasticPoolPerDatabaseMinPerformanceLevelCapability(double? limit, PerformanceLevelUnit? unit, SqlCapabilityStatus? status, string reason)
         {
             Limit = limit;
             Unit = unit;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Unit type used to measure performance level. </summary>
         public PerformanceLevelUnit? Unit { get; }
         /// <summary> The status of the capability. </summary>
-        public CapabilityStatus? Status { get; }
+        public SqlCapabilityStatus? Status { get; }
         /// <summary> The reason for the capability not being available. </summary>
         public string Reason { get; }
     }

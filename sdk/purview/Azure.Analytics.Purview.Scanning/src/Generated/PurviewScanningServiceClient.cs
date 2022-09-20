@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Scanning
 {
+    // Data plane generated client. The PurviewScanningService service client.
     /// <summary> The PurviewScanningService service client. </summary>
     public partial class PurviewScanningServiceClient
     {
@@ -69,6 +70,22 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetKeyVaultReferenceAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetKeyVaultReferenceAsync("<keyVaultName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -76,12 +93,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>AzureKeyVault</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     baseUrl: string, # Optional.
         ///     description: string, # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -111,6 +128,22 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetKeyVaultReference with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetKeyVaultReference("<keyVaultName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -118,12 +151,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>AzureKeyVault</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     baseUrl: string, # Optional.
         ///     description: string, # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -154,6 +187,42 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateKeyVaultReferenceAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateKeyVaultReferenceAsync("<keyVaultName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateKeyVaultReferenceAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     properties = new {
+        ///         baseUrl = "<baseUrl>",
+        ///         description = "<description>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateKeyVaultReferenceAsync("<keyVaultName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -161,12 +230,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>AzureKeyVault</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     baseUrl: string, # Optional.
         ///     description: string, # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -174,12 +243,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>AzureKeyVault</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     baseUrl: string, # Optional.
         ///     description: string, # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -211,6 +280,42 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateKeyVaultReference with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdateKeyVaultReference("<keyVaultName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateKeyVaultReference with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     properties = new {
+        ///         baseUrl = "<baseUrl>",
+        ///         description = "<description>",
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdateKeyVaultReference("<keyVaultName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -218,12 +323,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>AzureKeyVault</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     baseUrl: string, # Optional.
         ///     description: string, # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -231,12 +336,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>AzureKeyVault</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     baseUrl: string, # Optional.
         ///     description: string, # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -267,6 +372,22 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteKeyVaultReferenceAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DeleteKeyVaultReferenceAsync("<keyVaultName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -274,12 +395,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>AzureKeyVault</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     baseUrl: string, # Optional.
         ///     description: string, # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -309,6 +430,22 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="keyVaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteKeyVaultReference with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = client.DeleteKeyVaultReference("<keyVaultName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
+        /// Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -316,12 +453,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>AzureKeyVault</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     baseUrl: string, # Optional.
         ///     description: string, # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -351,6 +488,24 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetScanRulesetAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetScanRulesetAsync("<scanRulesetName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -359,12 +514,24 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionScanRuleset</summary>Schema for <c>AzureSubscriptionScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscription, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -372,17 +539,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -390,17 +557,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -408,35 +575,49 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -458,99 +639,85 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -558,17 +725,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -576,67 +743,67 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -644,17 +811,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -662,17 +829,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -680,17 +847,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -698,17 +865,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -716,17 +883,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -734,35 +901,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureStorageScanRuleset</summary>Schema for <c>AzureStorageScanRuleset</c>:
         /// <code>{
-        ///   kind: AzureStorage, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -784,17 +933,35 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: AzureStorage, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>TeradataScanRuleset</summary>Schema for <c>TeradataScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: Teradata, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -802,17 +969,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
-        /// <code>{
         ///   kind: Oracle, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -820,17 +987,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
-        /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -838,17 +1005,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
-        /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -856,24 +1023,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
-        /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -905,6 +1060,24 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetScanRuleset with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetScanRuleset("<scanRulesetName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -913,12 +1086,24 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionScanRuleset</summary>Schema for <c>AzureSubscriptionScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscription, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -926,17 +1111,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -944,17 +1129,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -962,35 +1147,49 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -1012,99 +1211,85 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1112,17 +1297,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1130,67 +1315,67 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1198,17 +1383,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1216,17 +1401,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1234,17 +1419,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1252,17 +1437,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1270,17 +1455,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1288,35 +1473,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureStorageScanRuleset</summary>Schema for <c>AzureStorageScanRuleset</c>:
         /// <code>{
-        ///   kind: AzureStorage, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -1338,17 +1505,35 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: AzureStorage, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>TeradataScanRuleset</summary>Schema for <c>TeradataScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: Teradata, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1356,17 +1541,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
-        /// <code>{
         ///   kind: Oracle, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1374,17 +1559,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
-        /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1392,17 +1577,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
-        /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1410,24 +1595,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
-        /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -1460,6 +1633,54 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateScanRulesetAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     kind = "AzureSubscription",
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateScanRulesetAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     properties = new {
+        ///         description = "<description>",
+        ///         excludedSystemClassifications = new[] {
+        ///             "<String>"
+        ///         },
+        ///         includedCustomClassificationRuleNames = new[] {
+        ///             "<String>"
+        ///         },
+        ///     },
+        ///     kind = "AzureSubscription",
+        ///     scanRulesetType = "Custom",
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateScanRulesetAsync("<scanRulesetName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -1468,12 +1689,24 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionScanRuleset</summary>Schema for <c>AzureSubscriptionScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscription, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1481,17 +1714,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1499,17 +1732,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1517,35 +1750,49 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -1567,99 +1814,85 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1667,17 +1900,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1685,67 +1918,67 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1753,17 +1986,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1771,17 +2004,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1789,17 +2022,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1807,17 +2040,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1825,17 +2058,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1843,35 +2076,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureStorageScanRuleset</summary>Schema for <c>AzureStorageScanRuleset</c>:
         /// <code>{
-        ///   kind: AzureStorage, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -1893,17 +2108,35 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: AzureStorage, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>TeradataScanRuleset</summary>Schema for <c>TeradataScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: Teradata, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1911,17 +2144,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
-        /// <code>{
         ///   kind: Oracle, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1929,17 +2162,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
-        /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1947,17 +2180,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
-        /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -1965,24 +2198,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
-        /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -1993,12 +2214,24 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionScanRuleset</summary>Schema for <c>AzureSubscriptionScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscription, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2006,17 +2239,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2024,17 +2257,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2042,35 +2275,49 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -2092,99 +2339,85 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2192,17 +2425,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2210,67 +2443,67 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2278,17 +2511,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2296,17 +2529,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2314,17 +2547,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2332,17 +2565,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2350,17 +2583,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2368,35 +2601,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureStorageScanRuleset</summary>Schema for <c>AzureStorageScanRuleset</c>:
         /// <code>{
-        ///   kind: AzureStorage, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -2418,17 +2633,35 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: AzureStorage, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>TeradataScanRuleset</summary>Schema for <c>TeradataScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: Teradata, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2436,17 +2669,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
-        /// <code>{
         ///   kind: Oracle, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2454,17 +2687,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
-        /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2472,17 +2705,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
-        /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2490,24 +2723,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
-        /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -2540,6 +2761,54 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateScanRuleset with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     kind = "AzureSubscription",
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateScanRuleset with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     properties = new {
+        ///         description = "<description>",
+        ///         excludedSystemClassifications = new[] {
+        ///             "<String>"
+        ///         },
+        ///         includedCustomClassificationRuleNames = new[] {
+        ///             "<String>"
+        ///         },
+        ///     },
+        ///     kind = "AzureSubscription",
+        ///     scanRulesetType = "Custom",
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdateScanRuleset("<scanRulesetName>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -2548,12 +2817,24 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionScanRuleset</summary>Schema for <c>AzureSubscriptionScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscription, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2561,17 +2842,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2579,17 +2860,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2597,35 +2878,49 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -2647,99 +2942,85 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2747,17 +3028,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2765,67 +3046,67 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2833,17 +3114,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2851,17 +3132,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2869,17 +3150,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2887,17 +3168,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2905,17 +3186,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2923,35 +3204,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureStorageScanRuleset</summary>Schema for <c>AzureStorageScanRuleset</c>:
         /// <code>{
-        ///   kind: AzureStorage, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -2973,17 +3236,35 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: AzureStorage, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>TeradataScanRuleset</summary>Schema for <c>TeradataScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: Teradata, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -2991,17 +3272,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
-        /// <code>{
         ///   kind: Oracle, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3009,17 +3290,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
-        /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3027,17 +3308,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
-        /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3045,24 +3326,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
-        /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -3073,12 +3342,24 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionScanRuleset</summary>Schema for <c>AzureSubscriptionScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscription, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3086,17 +3367,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3104,17 +3385,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3122,35 +3403,49 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -3172,99 +3467,85 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3272,17 +3553,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3290,67 +3571,67 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3358,17 +3639,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3376,17 +3657,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3394,17 +3675,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3412,17 +3693,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3430,17 +3711,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3448,35 +3729,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureStorageScanRuleset</summary>Schema for <c>AzureStorageScanRuleset</c>:
         /// <code>{
-        ///   kind: AzureStorage, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -3498,17 +3761,35 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: AzureStorage, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>TeradataScanRuleset</summary>Schema for <c>TeradataScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: Teradata, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3516,17 +3797,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
-        /// <code>{
         ///   kind: Oracle, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3534,17 +3815,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
-        /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3552,17 +3833,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
-        /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3570,24 +3851,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
-        /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -3619,6 +3888,24 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteScanRulesetAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = await client.DeleteScanRulesetAsync("<scanRulesetName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -3627,12 +3914,24 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionScanRuleset</summary>Schema for <c>AzureSubscriptionScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscription, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3640,17 +3939,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3658,17 +3957,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3676,35 +3975,49 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -3726,99 +4039,85 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3826,17 +4125,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3844,67 +4143,67 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3912,17 +4211,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3930,17 +4229,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3948,17 +4247,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3966,17 +4265,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -3984,17 +4283,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4002,35 +4301,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureStorageScanRuleset</summary>Schema for <c>AzureStorageScanRuleset</c>:
         /// <code>{
-        ///   kind: AzureStorage, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -4052,17 +4333,35 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: AzureStorage, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>TeradataScanRuleset</summary>Schema for <c>TeradataScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: Teradata, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4070,17 +4369,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
-        /// <code>{
         ///   kind: Oracle, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4088,17 +4387,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
-        /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4106,17 +4405,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
-        /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4124,24 +4423,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
-        /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -4173,6 +4460,24 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="scanRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteScanRuleset with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = client.DeleteScanRuleset("<scanRulesetName>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -4181,12 +4486,24 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionScanRuleset</summary>Schema for <c>AzureSubscriptionScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: AzureSubscription, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4194,17 +4511,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupScanRuleset</summary>Schema for <c>AzureResourceGroupScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureResourceGroup, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4212,17 +4529,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseWorkspaceScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapseWorkspace, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4230,35 +4547,49 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSynapseScanRuleset</summary>Schema for <c>AzureSynapseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSynapse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen1ScanRuleset</summary>Schema for <c>AdlsGen1ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen1, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -4280,99 +4611,85 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AdlsGen2ScanRuleset</summary>Schema for <c>AdlsGen2ScanRuleset</c>:
-        /// <code>{
         ///   kind: AdlsGen2, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonAccountScanRuleset</summary>Schema for <c>AmazonAccountScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonAccount, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonS3ScanRuleset</summary>Schema for <c>AmazonS3ScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonS3, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonSqlScanRuleset</summary>Schema for <c>AmazonSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4380,17 +4697,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureCosmosDbScanRuleset</summary>Schema for <c>AzureCosmosDbScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureCosmosDb, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4398,67 +4715,67 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureDataExplorerScanRuleset</summary>Schema for <c>AzureDataExplorerScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureDataExplorer, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
+        ///     scanningRule: {
+        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
+        ///       customFileExtensions: [
+        ///         {
+        ///           customFileType: {
+        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
+        ///             customDelimiter: string, # Optional.
+        ///           }, # Optional.
+        ///           description: string, # Optional.
+        ///           enabled: boolean, # Optional.
+        ///           fileExtension: string, # Optional.
+        ///         }
+        ///       ], # Optional.
+        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureFileServiceScanRuleset</summary>Schema for <c>AzureFileServiceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureFileService, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
-        ///     scanningRule: {
-        ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
-        ///       customFileExtensions: [
-        ///         {
-        ///           customFileType: {
-        ///             builtInType: &quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;, # Optional.
-        ///             customDelimiter: string, # Optional.
-        ///           }, # Optional.
-        ///           description: string, # Optional.
-        ///           enabled: boolean, # Optional.
-        ///           fileExtension: string, # Optional.
-        ///         }
-        ///       ], # Optional.
-        ///     }, # Optional.
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
         ///     excludedSystemClassifications: [string], # Optional.
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseScanRuleset</summary>Schema for <c>AzureSqlDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4466,17 +4783,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AmazonPostgreSqlScanRuleset</summary>Schema for <c>AmazonPostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AmazonPostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4484,17 +4801,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzurePostgreSqlScanRuleset</summary>Schema for <c>AzurePostgreSqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzurePostgreSql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4502,17 +4819,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SqlServerDatabaseScanRuleset</summary>Schema for <c>SqlServerDatabaseScanRuleset</c>:
-        /// <code>{
         ///   kind: SqlServerDatabase, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4520,17 +4837,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDatabaseManagedInstanceScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDatabaseManagedInstance, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4538,17 +4855,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureSqlDataWarehouseScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureSqlDataWarehouse, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4556,35 +4873,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureMySqlScanRuleset</summary>Schema for <c>AzureMySqlScanRuleset</c>:
-        /// <code>{
         ///   kind: AzureMySql, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureStorageScanRuleset</summary>Schema for <c>AzureStorageScanRuleset</c>:
         /// <code>{
-        ///   kind: AzureStorage, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -4606,17 +4905,35 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: AzureStorage, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>TeradataScanRuleset</summary>Schema for <c>TeradataScanRuleset</c>:
         /// <code>{
+        ///   properties: {
+        ///     createdAt: string (ISO 8601 Format), # Optional.
+        ///     description: string, # Optional.
+        ///     excludedSystemClassifications: [string], # Optional.
+        ///     includedCustomClassificationRuleNames: [string], # Optional.
+        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
+        ///   }, # Optional.
         ///   kind: Teradata, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4624,17 +4941,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>OracleScanRuleset</summary>Schema for <c>OracleScanRuleset</c>:
-        /// <code>{
         ///   kind: Oracle, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4642,17 +4959,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapS4HanaScanRuleset</summary>Schema for <c>SapS4HanaScanRuleset</c>:
-        /// <code>{
         ///   kind: SapS4Hana, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4660,17 +4977,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>SapEccScanRuleset</summary>Schema for <c>SapEccScanRuleset</c>:
-        /// <code>{
         ///   kind: SapEcc, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4678,24 +4995,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>PowerBIScanRuleset</summary>Schema for <c>PowerBIScanRuleset</c>:
-        /// <code>{
         ///   kind: PowerBI, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   properties: {
-        ///     createdAt: string (ISO 8601 Format), # Optional.
-        ///     description: string, # Optional.
-        ///     excludedSystemClassifications: [string], # Optional.
-        ///     includedCustomClassificationRuleNames: [string], # Optional.
-        ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
-        ///   }, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -4727,6 +5032,24 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="dataSourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSystemRulesetsForDataSourceAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetSystemRulesetsForDataSourceAsync("<dataSourceType>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -4735,12 +5058,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionSystemScanRuleset</summary>Schema for <c>AzureSubscriptionSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4748,17 +5065,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupSystemScanRuleset</summary>Schema for <c>AzureResourceGroupSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4766,17 +5083,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSynapseWorkspaceSystemScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4784,17 +5101,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSynapseSystemScanRuleset</summary>Schema for <c>AzureSynapseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4802,17 +5119,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AdlsGen1SystemScanRuleset</summary>Schema for <c>AdlsGen1SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -4834,17 +5151,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AdlsGen2SystemScanRuleset</summary>Schema for <c>AdlsGen2SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -4866,17 +5183,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonAccountSystemScanRuleset</summary>Schema for <c>AmazonAccountSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4884,17 +5201,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonS3SystemScanRuleset</summary>Schema for <c>AmazonS3SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -4916,17 +5233,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonSqlSystemScanRuleset</summary>Schema for <c>AmazonSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4934,17 +5251,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureCosmosDbSystemScanRuleset</summary>Schema for <c>AzureCosmosDbSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4952,17 +5269,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureDataExplorerSystemScanRuleset</summary>Schema for <c>AzureDataExplorerSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -4970,17 +5287,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureFileServiceSystemScanRuleset</summary>Schema for <c>AzureFileServiceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -5002,17 +5319,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDatabaseSystemScanRuleset</summary>Schema for <c>AzureSqlDatabaseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5020,17 +5337,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonPostgreSqlSystemScanRuleset</summary>Schema for <c>AmazonPostgreSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5038,17 +5355,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzurePostgreSqlSystemScanRuleset</summary>Schema for <c>AzurePostgreSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5056,17 +5373,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SqlServerDatabaseSystemScanRuleset</summary>Schema for <c>SqlServerDatabaseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5074,17 +5391,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDatabaseManagedInstanceSystemScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5092,17 +5409,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDataWarehouseSystemScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5110,17 +5427,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureMySqlSystemScanRuleset</summary>Schema for <c>AzureMySqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5128,17 +5445,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageSystemScanRuleset</summary>Schema for <c>AzureStorageSystemScanRuleset</c>:
-        /// <code>{
         ///   kind: None, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageSystemScanRuleset</summary>Schema for <c>AzureStorageSystemScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -5160,17 +5477,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>TeradataSystemScanRuleset</summary>Schema for <c>TeradataSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5178,17 +5495,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>OracleSystemScanRuleset</summary>Schema for <c>OracleSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5196,17 +5513,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SapS4HanaSystemScanRuleset</summary>Schema for <c>SapS4HanaSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5214,17 +5531,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SapEccSystemScanRuleset</summary>Schema for <c>SapEccSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5232,17 +5549,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>PowerBISystemScanRuleset</summary>Schema for <c>PowerBISystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5250,6 +5567,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -5281,6 +5604,24 @@ namespace Azure.Analytics.Purview.Scanning
         /// <exception cref="ArgumentException"> <paramref name="dataSourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSystemRulesetsForDataSource with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetSystemRulesetsForDataSource("<dataSourceType>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -5289,12 +5630,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionSystemScanRuleset</summary>Schema for <c>AzureSubscriptionSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5302,17 +5637,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupSystemScanRuleset</summary>Schema for <c>AzureResourceGroupSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5320,17 +5655,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSynapseWorkspaceSystemScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5338,17 +5673,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSynapseSystemScanRuleset</summary>Schema for <c>AzureSynapseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5356,17 +5691,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AdlsGen1SystemScanRuleset</summary>Schema for <c>AdlsGen1SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -5388,17 +5723,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AdlsGen2SystemScanRuleset</summary>Schema for <c>AdlsGen2SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -5420,17 +5755,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonAccountSystemScanRuleset</summary>Schema for <c>AmazonAccountSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5438,17 +5773,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonS3SystemScanRuleset</summary>Schema for <c>AmazonS3SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -5470,17 +5805,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonSqlSystemScanRuleset</summary>Schema for <c>AmazonSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5488,17 +5823,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureCosmosDbSystemScanRuleset</summary>Schema for <c>AzureCosmosDbSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5506,17 +5841,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureDataExplorerSystemScanRuleset</summary>Schema for <c>AzureDataExplorerSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5524,17 +5859,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureFileServiceSystemScanRuleset</summary>Schema for <c>AzureFileServiceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -5556,17 +5891,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDatabaseSystemScanRuleset</summary>Schema for <c>AzureSqlDatabaseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5574,17 +5909,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonPostgreSqlSystemScanRuleset</summary>Schema for <c>AmazonPostgreSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5592,17 +5927,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzurePostgreSqlSystemScanRuleset</summary>Schema for <c>AzurePostgreSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5610,17 +5945,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SqlServerDatabaseSystemScanRuleset</summary>Schema for <c>SqlServerDatabaseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5628,17 +5963,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDatabaseManagedInstanceSystemScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5646,17 +5981,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDataWarehouseSystemScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5664,17 +5999,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureMySqlSystemScanRuleset</summary>Schema for <c>AzureMySqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5682,17 +6017,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageSystemScanRuleset</summary>Schema for <c>AzureStorageSystemScanRuleset</c>:
-        /// <code>{
         ///   kind: None, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageSystemScanRuleset</summary>Schema for <c>AzureStorageSystemScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -5714,17 +6049,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>TeradataSystemScanRuleset</summary>Schema for <c>TeradataSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5732,17 +6067,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>OracleSystemScanRuleset</summary>Schema for <c>OracleSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5750,17 +6085,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SapS4HanaSystemScanRuleset</summary>Schema for <c>SapS4HanaSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5768,17 +6103,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SapEccSystemScanRuleset</summary>Schema for <c>SapEccSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5786,17 +6121,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>PowerBISystemScanRuleset</summary>Schema for <c>PowerBISystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5804,6 +6139,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -5829,11 +6170,41 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Get a scan ruleset by version. </summary>
-        /// <param name="version"> The Integer to use. </param>
+        /// <param name="version"> The Int32 to use. </param>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSystemRulesetsForVersionAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetSystemRulesetsForVersionAsync(1234);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetSystemRulesetsForVersionAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetSystemRulesetsForVersionAsync(1234, "<dataSourceType>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -5842,12 +6213,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionSystemScanRuleset</summary>Schema for <c>AzureSubscriptionSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5855,17 +6220,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupSystemScanRuleset</summary>Schema for <c>AzureResourceGroupSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5873,17 +6238,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSynapseWorkspaceSystemScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5891,17 +6256,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSynapseSystemScanRuleset</summary>Schema for <c>AzureSynapseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5909,17 +6274,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AdlsGen1SystemScanRuleset</summary>Schema for <c>AdlsGen1SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -5941,17 +6306,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AdlsGen2SystemScanRuleset</summary>Schema for <c>AdlsGen2SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -5973,17 +6338,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonAccountSystemScanRuleset</summary>Schema for <c>AmazonAccountSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -5991,17 +6356,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonS3SystemScanRuleset</summary>Schema for <c>AmazonS3SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -6023,17 +6388,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonSqlSystemScanRuleset</summary>Schema for <c>AmazonSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6041,17 +6406,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureCosmosDbSystemScanRuleset</summary>Schema for <c>AzureCosmosDbSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6059,17 +6424,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureDataExplorerSystemScanRuleset</summary>Schema for <c>AzureDataExplorerSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6077,17 +6442,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureFileServiceSystemScanRuleset</summary>Schema for <c>AzureFileServiceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -6109,17 +6474,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDatabaseSystemScanRuleset</summary>Schema for <c>AzureSqlDatabaseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6127,17 +6492,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonPostgreSqlSystemScanRuleset</summary>Schema for <c>AmazonPostgreSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6145,17 +6510,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzurePostgreSqlSystemScanRuleset</summary>Schema for <c>AzurePostgreSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6163,17 +6528,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SqlServerDatabaseSystemScanRuleset</summary>Schema for <c>SqlServerDatabaseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6181,17 +6546,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDatabaseManagedInstanceSystemScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6199,17 +6564,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDataWarehouseSystemScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6217,17 +6582,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureMySqlSystemScanRuleset</summary>Schema for <c>AzureMySqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6235,17 +6600,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageSystemScanRuleset</summary>Schema for <c>AzureStorageSystemScanRuleset</c>:
-        /// <code>{
         ///   kind: None, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageSystemScanRuleset</summary>Schema for <c>AzureStorageSystemScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -6267,17 +6632,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>TeradataSystemScanRuleset</summary>Schema for <c>TeradataSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6285,17 +6650,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>OracleSystemScanRuleset</summary>Schema for <c>OracleSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6303,17 +6668,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SapS4HanaSystemScanRuleset</summary>Schema for <c>SapS4HanaSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6321,17 +6686,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SapEccSystemScanRuleset</summary>Schema for <c>SapEccSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6339,17 +6704,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>PowerBISystemScanRuleset</summary>Schema for <c>PowerBISystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6357,6 +6722,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -6380,11 +6751,41 @@ namespace Azure.Analytics.Purview.Scanning
         }
 
         /// <summary> Get a scan ruleset by version. </summary>
-        /// <param name="version"> The Integer to use. </param>
+        /// <param name="version"> The Int32 to use. </param>
         /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSystemRulesetsForVersion with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetSystemRulesetsForVersion(1234);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetSystemRulesetsForVersion with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetSystemRulesetsForVersion(1234, "<dataSourceType>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -6393,12 +6794,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionSystemScanRuleset</summary>Schema for <c>AzureSubscriptionSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6406,17 +6801,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupSystemScanRuleset</summary>Schema for <c>AzureResourceGroupSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6424,17 +6819,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSynapseWorkspaceSystemScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6442,17 +6837,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSynapseSystemScanRuleset</summary>Schema for <c>AzureSynapseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6460,17 +6855,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AdlsGen1SystemScanRuleset</summary>Schema for <c>AdlsGen1SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -6492,17 +6887,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AdlsGen2SystemScanRuleset</summary>Schema for <c>AdlsGen2SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -6524,17 +6919,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonAccountSystemScanRuleset</summary>Schema for <c>AmazonAccountSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6542,17 +6937,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonS3SystemScanRuleset</summary>Schema for <c>AmazonS3SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -6574,17 +6969,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonSqlSystemScanRuleset</summary>Schema for <c>AmazonSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6592,17 +6987,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureCosmosDbSystemScanRuleset</summary>Schema for <c>AzureCosmosDbSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6610,17 +7005,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureDataExplorerSystemScanRuleset</summary>Schema for <c>AzureDataExplorerSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6628,17 +7023,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureFileServiceSystemScanRuleset</summary>Schema for <c>AzureFileServiceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -6660,17 +7055,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDatabaseSystemScanRuleset</summary>Schema for <c>AzureSqlDatabaseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6678,17 +7073,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonPostgreSqlSystemScanRuleset</summary>Schema for <c>AmazonPostgreSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6696,17 +7091,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzurePostgreSqlSystemScanRuleset</summary>Schema for <c>AzurePostgreSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6714,17 +7109,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SqlServerDatabaseSystemScanRuleset</summary>Schema for <c>SqlServerDatabaseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6732,17 +7127,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDatabaseManagedInstanceSystemScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6750,17 +7145,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDataWarehouseSystemScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6768,17 +7163,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureMySqlSystemScanRuleset</summary>Schema for <c>AzureMySqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6786,17 +7181,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageSystemScanRuleset</summary>Schema for <c>AzureStorageSystemScanRuleset</c>:
-        /// <code>{
         ///   kind: None, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageSystemScanRuleset</summary>Schema for <c>AzureStorageSystemScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -6818,17 +7213,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>TeradataSystemScanRuleset</summary>Schema for <c>TeradataSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6836,17 +7231,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>OracleSystemScanRuleset</summary>Schema for <c>OracleSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6854,17 +7249,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SapS4HanaSystemScanRuleset</summary>Schema for <c>SapS4HanaSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6872,17 +7267,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SapEccSystemScanRuleset</summary>Schema for <c>SapEccSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6890,17 +7285,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>PowerBISystemScanRuleset</summary>Schema for <c>PowerBISystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6908,6 +7303,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -6935,6 +7336,36 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetLatestSystemRulesetsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetLatestSystemRulesetsAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetLatestSystemRulesetsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = await client.GetLatestSystemRulesetsAsync("<dataSourceType>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -6943,12 +7374,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionSystemScanRuleset</summary>Schema for <c>AzureSubscriptionSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6956,17 +7381,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupSystemScanRuleset</summary>Schema for <c>AzureResourceGroupSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6974,17 +7399,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSynapseWorkspaceSystemScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -6992,17 +7417,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSynapseSystemScanRuleset</summary>Schema for <c>AzureSynapseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7010,17 +7435,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AdlsGen1SystemScanRuleset</summary>Schema for <c>AdlsGen1SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -7042,17 +7467,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AdlsGen2SystemScanRuleset</summary>Schema for <c>AdlsGen2SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -7074,17 +7499,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonAccountSystemScanRuleset</summary>Schema for <c>AmazonAccountSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7092,17 +7517,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonS3SystemScanRuleset</summary>Schema for <c>AmazonS3SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -7124,17 +7549,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonSqlSystemScanRuleset</summary>Schema for <c>AmazonSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7142,17 +7567,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureCosmosDbSystemScanRuleset</summary>Schema for <c>AzureCosmosDbSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7160,17 +7585,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureDataExplorerSystemScanRuleset</summary>Schema for <c>AzureDataExplorerSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7178,17 +7603,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureFileServiceSystemScanRuleset</summary>Schema for <c>AzureFileServiceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -7210,17 +7635,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDatabaseSystemScanRuleset</summary>Schema for <c>AzureSqlDatabaseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7228,17 +7653,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonPostgreSqlSystemScanRuleset</summary>Schema for <c>AmazonPostgreSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7246,17 +7671,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzurePostgreSqlSystemScanRuleset</summary>Schema for <c>AzurePostgreSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7264,17 +7689,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SqlServerDatabaseSystemScanRuleset</summary>Schema for <c>SqlServerDatabaseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7282,17 +7707,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDatabaseManagedInstanceSystemScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7300,17 +7725,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDataWarehouseSystemScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7318,17 +7743,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureMySqlSystemScanRuleset</summary>Schema for <c>AzureMySqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7336,17 +7761,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageSystemScanRuleset</summary>Schema for <c>AzureStorageSystemScanRuleset</c>:
-        /// <code>{
         ///   kind: None, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageSystemScanRuleset</summary>Schema for <c>AzureStorageSystemScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -7368,17 +7793,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>TeradataSystemScanRuleset</summary>Schema for <c>TeradataSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7386,17 +7811,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>OracleSystemScanRuleset</summary>Schema for <c>OracleSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7404,17 +7829,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SapS4HanaSystemScanRuleset</summary>Schema for <c>SapS4HanaSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7422,17 +7847,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SapEccSystemScanRuleset</summary>Schema for <c>SapEccSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7440,17 +7865,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>PowerBISystemScanRuleset</summary>Schema for <c>PowerBISystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7458,6 +7883,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -7485,6 +7916,36 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetLatestSystemRulesets and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetLatestSystemRulesets();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetLatestSystemRulesets with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// Response response = client.GetLatestSystemRulesets("<dataSourceType>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("kind").ToString());
+        /// Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("version").ToString());
+        /// Console.WriteLine(result.GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -7493,12 +7954,6 @@ namespace Azure.Analytics.Purview.Scanning
         /// This method takes one of the JSON objects below as a payload. Please select a JSON object to view the schema for this.
         /// <details><summary>AzureSubscriptionSystemScanRuleset</summary>Schema for <c>AzureSubscriptionSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7506,17 +7961,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>~+ 24 more JSON objects</summary><details><summary>AzureResourceGroupSystemScanRuleset</summary>Schema for <c>AzureResourceGroupSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7524,17 +7979,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSynapseWorkspaceSystemScanRuleset</summary>Schema for <c>AzureSynapseWorkspaceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7542,17 +7997,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSynapseSystemScanRuleset</summary>Schema for <c>AzureSynapseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7560,17 +8015,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AdlsGen1SystemScanRuleset</summary>Schema for <c>AdlsGen1SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -7592,17 +8047,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AdlsGen2SystemScanRuleset</summary>Schema for <c>AdlsGen2SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -7624,17 +8079,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonAccountSystemScanRuleset</summary>Schema for <c>AmazonAccountSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7642,17 +8097,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonS3SystemScanRuleset</summary>Schema for <c>AmazonS3SystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -7674,17 +8129,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonSqlSystemScanRuleset</summary>Schema for <c>AmazonSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7692,17 +8147,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureCosmosDbSystemScanRuleset</summary>Schema for <c>AzureCosmosDbSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7710,17 +8165,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureDataExplorerSystemScanRuleset</summary>Schema for <c>AzureDataExplorerSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7728,17 +8183,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureFileServiceSystemScanRuleset</summary>Schema for <c>AzureFileServiceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -7760,17 +8215,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDatabaseSystemScanRuleset</summary>Schema for <c>AzureSqlDatabaseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7778,17 +8233,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AmazonPostgreSqlSystemScanRuleset</summary>Schema for <c>AmazonPostgreSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7796,17 +8251,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzurePostgreSqlSystemScanRuleset</summary>Schema for <c>AzurePostgreSqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7814,17 +8269,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SqlServerDatabaseSystemScanRuleset</summary>Schema for <c>SqlServerDatabaseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7832,17 +8287,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDatabaseManagedInstanceSystemScanRuleset</summary>Schema for <c>AzureSqlDatabaseManagedInstanceSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7850,17 +8305,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureSqlDataWarehouseSystemScanRuleset</summary>Schema for <c>AzureSqlDataWarehouseSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7868,17 +8323,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>AzureMySqlSystemScanRuleset</summary>Schema for <c>AzureMySqlSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7886,17 +8341,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
-        /// }
-        /// </code>
-        /// </details>
-        /// <details><summary>AzureStorageSystemScanRuleset</summary>Schema for <c>AzureStorageSystemScanRuleset</c>:
-        /// <code>{
         ///   kind: None, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
+        /// }
+        /// </code>
+        /// </details>
+        /// <details><summary>AzureStorageSystemScanRuleset</summary>Schema for <c>AzureStorageSystemScanRuleset</c>:
+        /// <code>{
         ///   properties: {
         ///     scanningRule: {
         ///       fileExtensions: [&quot;AVRO&quot; | &quot;ORC&quot; | &quot;PARQUET&quot; | &quot;JSON&quot; | &quot;TXT&quot; | &quot;XML&quot; | &quot;Documents&quot; | &quot;CSV&quot; | &quot;PSV&quot; | &quot;SSV&quot; | &quot;TSV&quot; | &quot;GZ&quot; | &quot;DOC&quot; | &quot;DOCM&quot; | &quot;DOCX&quot; | &quot;DOT&quot; | &quot;ODP&quot; | &quot;ODS&quot; | &quot;ODT&quot; | &quot;PDF&quot; | &quot;POT&quot; | &quot;PPS&quot; | &quot;PPSX&quot; | &quot;PPT&quot; | &quot;PPTM&quot; | &quot;PPTX&quot; | &quot;XLC&quot; | &quot;XLS&quot; | &quot;XLSB&quot; | &quot;XLSM&quot; | &quot;XLSX&quot; | &quot;XLT&quot;], # Optional.
@@ -7918,17 +8373,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>TeradataSystemScanRuleset</summary>Schema for <c>TeradataSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7936,17 +8391,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>OracleSystemScanRuleset</summary>Schema for <c>OracleSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7954,17 +8409,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SapS4HanaSystemScanRuleset</summary>Schema for <c>SapS4HanaSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7972,17 +8427,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>SapEccSystemScanRuleset</summary>Schema for <c>SapEccSystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -7990,17 +8445,17 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
         /// <details><summary>PowerBISystemScanRuleset</summary>Schema for <c>PowerBISystemScanRuleset</c>:
         /// <code>{
-        ///   kind: None, # Required.
-        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
-        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
-        ///   version: number, # Optional.
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     createdAt: string (ISO 8601 Format), # Optional.
         ///     description: string, # Optional.
@@ -8008,6 +8463,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///     includedCustomClassificationRuleNames: [string], # Optional.
         ///     lastModifiedAt: string (ISO 8601 Format), # Optional.
         ///   }, # Optional.
+        ///   kind: None, # Required.
+        ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
+        ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
+        ///   version: number, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// </details>
@@ -8034,6 +8495,23 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetKeyVaultReferencesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetKeyVaultReferencesAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -8041,12 +8519,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>AzureKeyVaultListValue</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     baseUrl: string, # Optional.
         ///     description: string, # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -8077,6 +8555,23 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetKeyVaultReferences and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetKeyVaultReferences())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("baseUrl").ToString());
+        ///     Console.WriteLine(result.GetProperty("properties").GetProperty("description").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -8084,12 +8579,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>AzureKeyVaultListValue</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   properties: {
         ///     baseUrl: string, # Optional.
         ///     description: string, # Optional.
         ///   }, # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -8120,6 +8615,22 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetClassificationRulesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetClassificationRulesAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -8127,9 +8638,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>ClassificationRuleListValue</c>:
         /// <code>{
+        ///   kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
         /// }
         /// </code>
         /// 
@@ -8160,6 +8671,22 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetClassificationRules and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetClassificationRules())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -8167,9 +8694,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>ClassificationRuleListValue</c>:
         /// <code>{
+        ///   kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   kind: &quot;System&quot; | &quot;Custom&quot;, # Required.
         /// }
         /// </code>
         /// 
@@ -8200,6 +8727,50 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetDataSourcesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetDataSourcesAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("runType").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -8207,13 +8778,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>DataSourceListValue</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   kind: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Required.
         ///   scans: [
         ///     {
-        ///       id: string, # Optional.
-        ///       name: string, # Optional.
         ///       kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;, # Required.
         ///       scanResults: [
         ///         {
@@ -8257,8 +8824,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///           dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
         ///         }
         ///       ], # Optional.
+        ///       id: string, # Optional.
+        ///       name: string, # Optional.
         ///     }
         ///   ], # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -8289,6 +8860,50 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetDataSources and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetDataSources())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("parentId").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("resourceId").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsDiscovered").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("assetsClassified").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("notifications")[0].GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("diagnostics").GetProperty("exceptionCountMap").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("startTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("queuedTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("pipelineStartTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("endTime").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetVersion").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanRulesetType").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("scanLevelType").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("errorMessage").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("target").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("runType").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("scanResults")[0].GetProperty("dataSourceType").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("scans")[0].GetProperty("name").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -8296,13 +8911,9 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>DataSourceListValue</c>:
         /// <code>{
-        ///   id: string, # Optional.
-        ///   name: string, # Optional.
         ///   kind: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Required.
         ///   scans: [
         ///     {
-        ///       id: string, # Optional.
-        ///       name: string, # Optional.
         ///       kind: &quot;AzureSubscriptionCredential&quot; | &quot;AzureSubscriptionMsi&quot; | &quot;AzureResourceGroupCredential&quot; | &quot;AzureResourceGroupMsi&quot; | &quot;AzureSynapseWorkspaceCredential&quot; | &quot;AzureSynapseWorkspaceMsi&quot; | &quot;AzureSynapseCredential&quot; | &quot;AzureSynapseMsi&quot; | &quot;AdlsGen1Credential&quot; | &quot;AdlsGen1Msi&quot; | &quot;AdlsGen2Credential&quot; | &quot;AdlsGen2Msi&quot; | &quot;AmazonAccountCredential&quot; | &quot;AmazonS3Credential&quot; | &quot;AmazonS3RoleARN&quot; | &quot;AmazonSqlCredential&quot; | &quot;AzureCosmosDbCredential&quot; | &quot;AzureDataExplorerCredential&quot; | &quot;AzureDataExplorerMsi&quot; | &quot;AzureFileServiceCredential&quot; | &quot;AzureSqlDatabaseCredential&quot; | &quot;AzureSqlDatabaseMsi&quot; | &quot;AmazonPostgreSqlCredential&quot; | &quot;AzurePostgreSqlCredential&quot; | &quot;SqlServerDatabaseCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceCredential&quot; | &quot;AzureSqlDatabaseManagedInstanceMsi&quot; | &quot;AzureSqlDataWarehouseCredential&quot; | &quot;AzureSqlDataWarehouseMsi&quot; | &quot;AzureMySqlCredential&quot; | &quot;AzureStorageCredential&quot; | &quot;AzureStorageMsi&quot; | &quot;TeradataTeradataCredential&quot; | &quot;TeradataTeradataUserPass&quot; | &quot;TeradataUserPass&quot; | &quot;OracleOracleCredential&quot; | &quot;OracleOracleUserPass&quot; | &quot;SapS4HanaSapS4HanaCredential&quot; | &quot;SapS4HanaSapS4HanaUserPass&quot; | &quot;SapEccSapEccCredential&quot; | &quot;SapEccSapEccUserPass&quot; | &quot;PowerBIDelegated&quot; | &quot;PowerBIMsi&quot;, # Required.
         ///       scanResults: [
         ///         {
@@ -8346,8 +8957,12 @@ namespace Azure.Analytics.Purview.Scanning
         ///           dataSourceType: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Optional.
         ///         }
         ///       ], # Optional.
+        ///       id: string, # Optional.
+        ///       name: string, # Optional.
         ///     }
         ///   ], # Optional.
+        ///   id: string, # Optional.
+        ///   name: string, # Optional.
         /// }
         /// </code>
         /// 
@@ -8378,6 +8993,25 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetScanRulesetsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetScanRulesetsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -8385,12 +9019,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>ScanRulesetListValue</c>:
         /// <code>{
+        ///   kind: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   kind: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Required.
         /// }
         /// </code>
         /// 
@@ -8421,6 +9055,25 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetScanRulesets and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetScanRulesets())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -8428,12 +9081,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>ScanRulesetListValue</c>:
         /// <code>{
+        ///   kind: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   kind: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Required.
         /// }
         /// </code>
         /// 
@@ -8464,6 +9117,25 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSystemRulesetsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetSystemRulesetsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -8471,12 +9143,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>SystemScanRulesetListValue</c>:
         /// <code>{
+        ///   kind: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   kind: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Required.
         /// }
         /// </code>
         /// 
@@ -8507,6 +9179,25 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSystemRulesets and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetSystemRulesets())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -8514,12 +9205,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>SystemScanRulesetListValue</c>:
         /// <code>{
+        ///   kind: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   kind: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Required.
         /// }
         /// </code>
         /// 
@@ -8551,6 +9242,38 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSystemRulesetsVersionsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetSystemRulesetsVersionsAsync())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetSystemRulesetsVersionsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// await foreach (var data in client.GetSystemRulesetsVersionsAsync("<dataSourceType>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -8558,12 +9281,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>SystemScanRulesetListValue</c>:
         /// <code>{
+        ///   kind: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   kind: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Required.
         /// }
         /// </code>
         /// 
@@ -8595,6 +9318,38 @@ namespace Azure.Analytics.Purview.Scanning
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSystemRulesetsVersions and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetSystemRulesetsVersions())
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.ToString());
+        /// }
+        /// ]]></code>
+        /// This sample shows how to call GetSystemRulesetsVersions with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewScanningServiceClient(endpoint, credential);
+        /// 
+        /// foreach (var data in client.GetSystemRulesetsVersions("<dataSourceType>"))
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("kind").ToString());
+        ///     Console.WriteLine(result.GetProperty("scanRulesetType").ToString());
+        ///     Console.WriteLine(result.GetProperty("status").ToString());
+        ///     Console.WriteLine(result.GetProperty("version").ToString());
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("name").ToString());
+        /// }
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
         /// 
@@ -8602,12 +9357,12 @@ namespace Azure.Analytics.Purview.Scanning
         /// 
         /// Schema for <c>SystemScanRulesetListValue</c>:
         /// <code>{
+        ///   kind: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Required.
         ///   scanRulesetType: &quot;Custom&quot; | &quot;System&quot;, # Optional.
         ///   status: &quot;Enabled&quot; | &quot;Disabled&quot;, # Optional.
         ///   version: number, # Optional.
         ///   id: string, # Optional.
         ///   name: string, # Optional.
-        ///   kind: &quot;None&quot; | &quot;AzureSubscription&quot; | &quot;AzureResourceGroup&quot; | &quot;AzureSynapseWorkspace&quot; | &quot;AzureSynapse&quot; | &quot;AdlsGen1&quot; | &quot;AdlsGen2&quot; | &quot;AmazonAccount&quot; | &quot;AmazonS3&quot; | &quot;AmazonSql&quot; | &quot;AzureCosmosDb&quot; | &quot;AzureDataExplorer&quot; | &quot;AzureFileService&quot; | &quot;AzureSqlDatabase&quot; | &quot;AmazonPostgreSql&quot; | &quot;AzurePostgreSql&quot; | &quot;SqlServerDatabase&quot; | &quot;AzureSqlDatabaseManagedInstance&quot; | &quot;AzureSqlDataWarehouse&quot; | &quot;AzureMySql&quot; | &quot;AzureStorage&quot; | &quot;Teradata&quot; | &quot;Oracle&quot; | &quot;SapS4Hana&quot; | &quot;SapEcc&quot; | &quot;PowerBI&quot;, # Required.
         /// }
         /// </code>
         /// 

@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="subnetResourceId"> The Virtual Network subnet&apos;s resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </param>
-        /// <param name="swiftSupported"> A flag that specifies if the scale unit this Web App is on supports Swift integration. </param>
+        /// <param name="isSwiftSupported"> A flag that specifies if the scale unit this Web App is on supports Swift integration. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SwiftVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string subnetResourceId, bool? swiftSupported, string kind) : base(id, name, resourceType, systemData)
+        internal SwiftVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier subnetResourceId, bool? isSwiftSupported, string kind) : base(id, name, resourceType, systemData)
         {
             SubnetResourceId = subnetResourceId;
-            SwiftSupported = swiftSupported;
+            IsSwiftSupported = isSwiftSupported;
             Kind = kind;
         }
 
         /// <summary> The Virtual Network subnet&apos;s resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </summary>
-        public string SubnetResourceId { get; set; }
+        public ResourceIdentifier SubnetResourceId { get; set; }
         /// <summary> A flag that specifies if the scale unit this Web App is on supports Swift integration. </summary>
-        public bool? SwiftSupported { get; set; }
+        public bool? IsSwiftSupported { get; set; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

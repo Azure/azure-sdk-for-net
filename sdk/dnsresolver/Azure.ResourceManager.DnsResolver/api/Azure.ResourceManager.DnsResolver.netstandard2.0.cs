@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DnsResolver
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> DnsResolverOutboundEndpoints { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
     }
     public partial class DnsForwardingRulesetResource : Azure.ResourceManager.ArmResource
     {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DnsResolver
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverState? DnsResolverState { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualNetworkId { get { throw null; } set { } }
     }
     public static partial class DnsResolverExtensions
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DnsResolver
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPConfiguration> IPConfigurations { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
     }
     public partial class DnsResolverInboundEndpointResource : Azure.ResourceManager.ArmResource
     {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.DnsResolver
         public DnsResolverOutboundEndpointData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.WritableSubResource subnet) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.DnsResolver.Models.DnsResolverProvisioningState? ProvisioningState { get { throw null; } }
-        public string ResourceGuid { get { throw null; } }
+        public System.Guid? ResourceGuid { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
     public partial class DnsResolverOutboundEndpointResource : Azure.ResourceManager.ArmResource
@@ -399,14 +399,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
     public partial class InboundEndpointIPConfiguration
     {
         public InboundEndpointIPConfiguration(Azure.ResourceManager.Resources.Models.WritableSubResource subnet) { }
-        public string PrivateIPAddress { get { throw null; } set { } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.DnsResolver.Models.InboundEndpointIPAllocationMethod? PrivateIPAllocationMethod { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
     public partial class TargetDnsServer
     {
-        public TargetDnsServer(string ipAddress) { }
-        public string IPAddress { get { throw null; } set { } }
+        public TargetDnsServer(System.Net.IPAddress ipAddress) { }
+        public System.Net.IPAddress IPAddress { get { throw null; } set { } }
         public int? Port { get { throw null; } set { } }
     }
     public partial class VirtualNetworkDnsForwardingRuleset

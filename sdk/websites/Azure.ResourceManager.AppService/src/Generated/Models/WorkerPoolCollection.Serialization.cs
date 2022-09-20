@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal static WorkerPoolCollection DeserializeWorkerPoolCollection(JsonElement element)
         {
-            IReadOnlyList<WorkerPoolResourceData> value = default;
+            IReadOnlyList<WorkerPoolData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<WorkerPoolResourceData> array = new List<WorkerPoolResourceData>();
+                    List<WorkerPoolData> array = new List<WorkerPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WorkerPoolResourceData.DeserializeWorkerPoolResourceData(item));
+                        array.Add(WorkerPoolData.DeserializeWorkerPoolData(item));
                     }
                     value = array;
                     continue;

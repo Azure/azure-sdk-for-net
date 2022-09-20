@@ -26,10 +26,13 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public StorageTransferOptions TransferOptions { get; set; }
 
-        // TODO #27253
-        ///// <summary>
-        ///// Transactional hashing options for data integrity checks.
-        ///// </summary>
-        //public DownloadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        /// <summary>
+        /// Options for transfer validation settings on this operation.
+        /// When transfer validation options are set in the client, setting this parameter
+        /// acts as an override.
+        /// This operation does not allow <see cref="DownloadTransferValidationOptions.AutoValidateChecksum"/>
+        /// to be set false.
+        /// </summary>
+        public DownloadTransferValidationOptions TransferValidationOptions { get; set; }
     }
 }

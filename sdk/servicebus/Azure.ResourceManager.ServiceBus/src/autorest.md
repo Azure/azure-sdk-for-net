@@ -62,6 +62,9 @@ rename-mapping:
   CorrelationFilter.label: Subject
   CorrelationFilter.properties: ApplicationProperties
   FilterAction: ServiceBusFilterAction
+  ServiceBusNamespace.properties.zoneRedundant: IsZoneRedundant
+  ServiceBusNetworkRuleSet.properties.trustedServiceAccessEnabled: IsTrustedServiceAccessEnabled
+  ServiceBusNameAvailabilityResult.nameAvailable: IsNameAvailable
 
 directive:
     - from: swagger-document
@@ -188,6 +191,7 @@ directive:
         $.Rule['x-ms-client-name'] = 'ServiceBusRule';
         $.Action['x-ms-client-name'] = 'FilterAction';
         $.CorrelationFilter.properties.to['x-ms-client-name'] = 'sendTo';
+        $.CorrelationFilter.properties.properties.additionalProperties['x-ms-format'] = 'object';
     - from: topics.json
       where: $.definitions
       transform: >

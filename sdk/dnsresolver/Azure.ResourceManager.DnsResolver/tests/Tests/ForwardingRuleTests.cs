@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var forwardingRuleData = new DnsForwardingRuleData("test.com.", new List<TargetDnsServer>
             {
-                new TargetDnsServer("10.0.0.3")
+                new TargetDnsServer(IPAddress.Parse("10.0.0.3"))
             });
 
             var forwardingRuleName = Recording.GenerateAssetName("forwardingRule-");
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var forwardingRuleData = new DnsForwardingRuleData("test.com.", new List<TargetDnsServer>
             {
-                new TargetDnsServer("10.0.0.3")
+                new TargetDnsServer(IPAddress.Parse("10.0.0.3"))
             });
 
             var forwardingRuleName = Recording.GenerateAssetName("forwardingRule-");
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var forwardingRuleData = new DnsForwardingRuleData("test.com.", new List<TargetDnsServer>
             {
-                new TargetDnsServer("10.0.0.3")
+                new TargetDnsServer(IPAddress.Parse("10.0.0.3"))
             });
 
             var forwardingRuleName = Recording.GenerateAssetName("forwardingRule-");
@@ -150,7 +151,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             // ARRANGE
             var forwardingRuleData = new DnsForwardingRuleData("test.com.", new List<TargetDnsServer>
             {
-                new TargetDnsServer("10.0.0.3")
+                new TargetDnsServer(IPAddress.Parse("10.0.0.3"))
             });
 
             var forwardingRuleName = Recording.GenerateAssetName("forwardingRule-");

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="apiId"> API identifier path. /apis/{apiId}. </param>
         /// <param name="operationId"> Operation identifier path. /apis/{apiId}/operations/{operationId}. </param>
         /// <param name="apiRegion"> API region identifier. </param>
-        /// <param name="subscriptionId"> Subscription identifier path. /subscriptions/{subscriptionId}. </param>
+        /// <param name="subscriptionResourceId"> Subscription identifier path. /subscriptions/{subscriptionId}. </param>
         /// <param name="callCountSuccess"> Number of successful calls. This includes calls returning HttpStatusCode &lt;= 301 and HttpStatusCode.NotModified and HttpStatusCode.TemporaryRedirect. </param>
         /// <param name="callCountBlocked"> Number of calls blocked due to invalid credentials. This includes calls returning HttpStatusCode.Unauthorized and HttpStatusCode.Forbidden and HttpStatusCode.TooManyRequests. </param>
         /// <param name="callCountFailed"> Number of calls failed due to proxy or backend errors. This includes calls returning HttpStatusCode.BadRequest(400) and any Code between HttpStatusCode.InternalServerError (500) and 600. </param>
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="serviceTimeAvg"> Average time it took to process request on backend. </param>
         /// <param name="serviceTimeMin"> Minimum time it took to process request on backend. </param>
         /// <param name="serviceTimeMax"> Maximum time it took to process request on backend. </param>
-        internal ReportRecordContract(string name, DateTimeOffset? timestamp, string interval, string country, string region, string zip, string userId, string productId, string apiId, string operationId, string apiRegion, string subscriptionId, int? callCountSuccess, int? callCountBlocked, int? callCountFailed, int? callCountOther, int? callCountTotal, long? bandwidth, int? cacheHitCount, int? cacheMissCount, double? apiTimeAvg, double? apiTimeMin, double? apiTimeMax, double? serviceTimeAvg, double? serviceTimeMin, double? serviceTimeMax)
+        internal ReportRecordContract(string name, DateTimeOffset? timestamp, string interval, string country, string region, string zip, string userId, string productId, string apiId, string operationId, string apiRegion, ResourceIdentifier subscriptionResourceId, int? callCountSuccess, int? callCountBlocked, int? callCountFailed, int? callCountOther, int? callCountTotal, long? bandwidth, int? cacheHitCount, int? cacheMissCount, double? apiTimeAvg, double? apiTimeMin, double? apiTimeMax, double? serviceTimeAvg, double? serviceTimeMin, double? serviceTimeMax)
         {
             Name = name;
             Timestamp = timestamp;
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiId = apiId;
             OperationId = operationId;
             ApiRegion = apiRegion;
-            SubscriptionId = subscriptionId;
+            SubscriptionResourceId = subscriptionResourceId;
             CallCountSuccess = callCountSuccess;
             CallCountBlocked = callCountBlocked;
             CallCountFailed = callCountFailed;
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> API region identifier. </summary>
         public string ApiRegion { get; }
         /// <summary> Subscription identifier path. /subscriptions/{subscriptionId}. </summary>
-        public string SubscriptionId { get; }
+        public ResourceIdentifier SubscriptionResourceId { get; }
         /// <summary> Number of successful calls. This includes calls returning HttpStatusCode &lt;= 301 and HttpStatusCode.NotModified and HttpStatusCode.TemporaryRedirect. </summary>
         public int? CallCountSuccess { get; }
         /// <summary> Number of calls blocked due to invalid credentials. This includes calls returning HttpStatusCode.Unauthorized and HttpStatusCode.Forbidden and HttpStatusCode.TooManyRequests. </summary>

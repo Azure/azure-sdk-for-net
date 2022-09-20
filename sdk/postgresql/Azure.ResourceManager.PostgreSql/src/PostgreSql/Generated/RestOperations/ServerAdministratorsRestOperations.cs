@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServerAdministratorResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlServerAdministratorData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -77,13 +77,13 @@ namespace Azure.ResourceManager.PostgreSql
             {
                 case 200:
                     {
-                        ServerAdministratorResourceData value = default;
+                        PostgreSqlServerAdministratorData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServerAdministratorResourceData.DeserializeServerAdministratorResourceData(document.RootElement);
+                        value = PostgreSqlServerAdministratorData.DeserializePostgreSqlServerAdministratorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServerAdministratorResourceData)null, message.Response);
+                    return Response.FromValue((PostgreSqlServerAdministratorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServerAdministratorResourceData> Get(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlServerAdministratorData> Get(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -108,19 +108,19 @@ namespace Azure.ResourceManager.PostgreSql
             {
                 case 200:
                     {
-                        ServerAdministratorResourceData value = default;
+                        PostgreSqlServerAdministratorData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServerAdministratorResourceData.DeserializeServerAdministratorResourceData(document.RootElement);
+                        value = PostgreSqlServerAdministratorData.DeserializePostgreSqlServerAdministratorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ServerAdministratorResourceData)null, message.Response);
+                    return Response.FromValue((PostgreSqlServerAdministratorData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, ServerAdministratorResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlServerAdministratorData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, ServerAdministratorResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlServerAdministratorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, ServerAdministratorResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlServerAdministratorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServerAdministratorResourceListResult>> ListAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public async Task<Response<PostgreSqlServerAdministratorListResult>> ListAsync(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -312,9 +312,9 @@ namespace Azure.ResourceManager.PostgreSql
             {
                 case 200:
                     {
-                        ServerAdministratorResourceListResult value = default;
+                        PostgreSqlServerAdministratorListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServerAdministratorResourceListResult.DeserializeServerAdministratorResourceListResult(document.RootElement);
+                        value = PostgreSqlServerAdministratorListResult.DeserializePostgreSqlServerAdministratorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServerAdministratorResourceListResult> List(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
+        public Response<PostgreSqlServerAdministratorListResult> List(string subscriptionId, string resourceGroupName, string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -341,9 +341,9 @@ namespace Azure.ResourceManager.PostgreSql
             {
                 case 200:
                     {
-                        ServerAdministratorResourceListResult value = default;
+                        PostgreSqlServerAdministratorListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServerAdministratorResourceListResult.DeserializeServerAdministratorResourceListResult(document.RootElement);
+                        value = PostgreSqlServerAdministratorListResult.DeserializePostgreSqlServerAdministratorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

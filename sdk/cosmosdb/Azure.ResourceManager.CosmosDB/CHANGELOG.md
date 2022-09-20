@@ -1,17 +1,54 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Base type of `ClusterResourceData ` changed to `Azure.ResourceManager.Models.TrackedResourceData`.
-- Type `ManagedCassandraARMResourceProperties` was removed.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.1 (2022-09-13)
+
+### Breaking Changes
+
+- Changed the constructor of `CosmosDBAccountBackupPolicy` from public to protected
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
+
+## 1.0.0 (2022-07-21)
+
+This is the first stable release of the Azure CosmosDB management library.
+
+### Features Added
+
+- Added Update methods in resource classes.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `CosmosDB` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ETag` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the format of all binary type properties / parameters.
+- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters which end with units.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.2.0
+- Upgraded dependent `Azure.Core` to 1.25.0
 
 ## 1.0.0-beta.5 (2022-04-08)
 

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of ServiceBusCorrelationFilter. </summary>
         public ServiceBusCorrelationFilter()
         {
-            ApplicationProperties = new ChangeTrackingDictionary<string, string>();
+            ApplicationProperties = new ChangeTrackingDictionary<string, object>();
         }
 
         /// <summary> Initializes a new instance of ServiceBusCorrelationFilter. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="replyToSessionId"> Session identifier to reply to. </param>
         /// <param name="contentType"> Content type of the message. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
-        internal ServiceBusCorrelationFilter(IDictionary<string, string> applicationProperties, string correlationId, string messageId, string sendTo, string replyTo, string subject, string sessionId, string replyToSessionId, string contentType, bool? requiresPreprocessing)
+        internal ServiceBusCorrelationFilter(IDictionary<string, object> applicationProperties, string correlationId, string messageId, string sendTo, string replyTo, string subject, string sessionId, string replyToSessionId, string contentType, bool? requiresPreprocessing)
         {
             ApplicationProperties = applicationProperties;
             CorrelationId = correlationId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         }
 
         /// <summary> dictionary object for custom filters. </summary>
-        public IDictionary<string, string> ApplicationProperties { get; }
+        public IDictionary<string, object> ApplicationProperties { get; }
         /// <summary> Identifier of the correlation. </summary>
         public string CorrelationId { get; set; }
         /// <summary> Identifier of the message. </summary>

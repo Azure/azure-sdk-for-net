@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Monitor
         private ActivityLogsRestOperations _activityLogsRestClient;
         private ClientDiagnostics _metricAlertClientDiagnostics;
         private MetricAlertsRestOperations _metricAlertRestClient;
-        private ClientDiagnostics _logSearchRuleScheduledQueryRulesClientDiagnostics;
-        private ScheduledQueryRulesRestOperations _logSearchRuleScheduledQueryRulesRestClient;
-        private ClientDiagnostics _privateLinkScopeClientDiagnostics;
-        private PrivateLinkScopesRestOperations _privateLinkScopeRestClient;
+        private ClientDiagnostics _scheduledQueryRuleClientDiagnostics;
+        private ScheduledQueryRulesRestOperations _scheduledQueryRuleRestClient;
+        private ClientDiagnostics _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics;
+        private PrivateLinkScopesRestOperations _monitorPrivateLinkScopePrivateLinkScopesRestClient;
         private ClientDiagnostics _activityLogAlertClientDiagnostics;
         private ActivityLogAlertsRestOperations _activityLogAlertRestClient;
         private ClientDiagnostics _dataCollectionEndpointClientDiagnostics;
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.Monitor
         private ActivityLogsRestOperations ActivityLogsRestClient => _activityLogsRestClient ??= new ActivityLogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics MetricAlertClientDiagnostics => _metricAlertClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", MetricAlertResource.ResourceType.Namespace, Diagnostics);
         private MetricAlertsRestOperations MetricAlertRestClient => _metricAlertRestClient ??= new MetricAlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MetricAlertResource.ResourceType));
-        private ClientDiagnostics LogSearchRuleScheduledQueryRulesClientDiagnostics => _logSearchRuleScheduledQueryRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", LogSearchRuleResource.ResourceType.Namespace, Diagnostics);
-        private ScheduledQueryRulesRestOperations LogSearchRuleScheduledQueryRulesRestClient => _logSearchRuleScheduledQueryRulesRestClient ??= new ScheduledQueryRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(LogSearchRuleResource.ResourceType));
-        private ClientDiagnostics PrivateLinkScopeClientDiagnostics => _privateLinkScopeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", PrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
-        private PrivateLinkScopesRestOperations PrivateLinkScopeRestClient => _privateLinkScopeRestClient ??= new PrivateLinkScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PrivateLinkScopeResource.ResourceType));
+        private ClientDiagnostics ScheduledQueryRuleClientDiagnostics => _scheduledQueryRuleClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ScheduledQueryRuleResource.ResourceType.Namespace, Diagnostics);
+        private ScheduledQueryRulesRestOperations ScheduledQueryRuleRestClient => _scheduledQueryRuleRestClient ??= new ScheduledQueryRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScheduledQueryRuleResource.ResourceType));
+        private ClientDiagnostics MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics => _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", MonitorPrivateLinkScopeResource.ResourceType.Namespace, Diagnostics);
+        private PrivateLinkScopesRestOperations MonitorPrivateLinkScopePrivateLinkScopesRestClient => _monitorPrivateLinkScopePrivateLinkScopesRestClient ??= new PrivateLinkScopesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(MonitorPrivateLinkScopeResource.ResourceType));
         private ClientDiagnostics ActivityLogAlertClientDiagnostics => _activityLogAlertClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", ActivityLogAlertResource.ResourceType.Namespace, Diagnostics);
         private ActivityLogAlertsRestOperations ActivityLogAlertRestClient => _activityLogAlertRestClient ??= new ActivityLogAlertsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ActivityLogAlertResource.ResourceType));
         private ClientDiagnostics DataCollectionEndpointClientDiagnostics => _dataCollectionEndpointClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionEndpointResource.ResourceType.Namespace, Diagnostics);
@@ -231,16 +231,16 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: ActionGroups_PostTestNotifications
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<TestNotificationResponse>> PostTestNotificationsActionGroupAsync(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NotificationStatus>> CreateNotificationsAsync(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.PostTestNotificationsActionGroup");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateNotifications");
             scope.Start();
             try
             {
-                var response = await ActionGroupRestClient.PostTestNotificationsAsync(Id.SubscriptionId, notificationRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new MonitorArmOperation<TestNotificationResponse>(new TestNotificationResponseOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, notificationRequest).Request, response, OperationFinalStateVia.Location);
+                var response = await ActionGroupRestClient.PostTestNotificationsAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -258,16 +258,16 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: ActionGroups_PostTestNotifications
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="notificationRequest"> The notification request body which includes the contact details. </param>
+        /// <param name="content"> The notification request body which includes the contact details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<TestNotificationResponse> PostTestNotificationsActionGroup(WaitUntil waitUntil, NotificationRequestBody notificationRequest, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NotificationStatus> CreateNotifications(WaitUntil waitUntil, NotificationContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.PostTestNotificationsActionGroup");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CreateNotifications");
             scope.Start();
             try
             {
-                var response = ActionGroupRestClient.PostTestNotifications(Id.SubscriptionId, notificationRequest, cancellationToken);
-                var operation = new MonitorArmOperation<TestNotificationResponse>(new TestNotificationResponseOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, notificationRequest).Request, response, OperationFinalStateVia.Location);
+                var response = ActionGroupRestClient.PostTestNotifications(Id.SubscriptionId, content, cancellationToken);
+                var operation = new MonitorArmOperation<NotificationStatus>(new NotificationStatusOperationSource(), ActionGroupClientDiagnostics, Pipeline, ActionGroupRestClient.CreatePostTestNotificationsRequest(Id.SubscriptionId, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -286,9 +286,9 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TestNotificationDetailsResponse>> GetActionGroupTestNotificationsAsync(string notificationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NotificationStatus>> GetNotificationStatusAsync(string notificationId, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActionGroupTestNotifications");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNotificationStatus");
             scope.Start();
             try
             {
@@ -309,9 +309,9 @@ namespace Azure.ResourceManager.Monitor
         /// </summary>
         /// <param name="notificationId"> The notification id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TestNotificationDetailsResponse> GetActionGroupTestNotifications(string notificationId, CancellationToken cancellationToken = default)
+        public virtual Response<NotificationStatus> GetNotificationStatus(string notificationId, CancellationToken cancellationToken = default)
         {
-            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActionGroupTestNotifications");
+            using var scope = ActionGroupClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetNotificationStatus");
             scope.Start();
             try
             {
@@ -522,23 +522,22 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// List the Log Search rules within a subscription group.
+        /// Retrieve a scheduled query rule definitions in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules
         /// Operation Id: ScheduledQueryRules_ListBySubscription
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogSearchRuleResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LogSearchRuleResource> GetLogSearchRulesAsync(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScheduledQueryRuleResource> GetScheduledQueryRulesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LogSearchRuleResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ScheduledQueryRuleResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LogSearchRuleScheduledQueryRulesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLogSearchRules");
+                using var scope = ScheduledQueryRuleClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScheduledQueryRules");
                 scope.Start();
                 try
                 {
-                    var response = await LogSearchRuleScheduledQueryRulesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogSearchRuleResource(Client, value)), null, response.GetRawResponse());
+                    var response = await ScheduledQueryRuleRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ScheduledQueryRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -546,27 +545,41 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            async Task<Page<ScheduledQueryRuleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = ScheduledQueryRuleClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScheduledQueryRules");
+                scope.Start();
+                try
+                {
+                    var response = await ScheduledQueryRuleRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ScheduledQueryRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
-        /// List the Log Search rules within a subscription group.
+        /// Retrieve a scheduled query rule definitions in a subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/scheduledQueryRules
         /// Operation Id: ScheduledQueryRules_ListBySubscription
         /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. For more information please see https://msdn.microsoft.com/en-us/library/azure/dn931934.aspx. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogSearchRuleResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LogSearchRuleResource> GetLogSearchRules(string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScheduledQueryRuleResource> GetScheduledQueryRules(CancellationToken cancellationToken = default)
         {
-            Page<LogSearchRuleResource> FirstPageFunc(int? pageSizeHint)
+            Page<ScheduledQueryRuleResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = LogSearchRuleScheduledQueryRulesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetLogSearchRules");
+                using var scope = ScheduledQueryRuleClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScheduledQueryRules");
                 scope.Start();
                 try
                 {
-                    var response = LogSearchRuleScheduledQueryRulesRestClient.ListBySubscription(Id.SubscriptionId, filter, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new LogSearchRuleResource(Client, value)), null, response.GetRawResponse());
+                    var response = ScheduledQueryRuleRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ScheduledQueryRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -574,7 +587,22 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            Page<ScheduledQueryRuleResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = ScheduledQueryRuleClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetScheduledQueryRules");
+                scope.Start();
+                try
+                {
+                    var response = ScheduledQueryRuleRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ScheduledQueryRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
@@ -583,17 +611,17 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: PrivateLinkScopes_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateLinkScopeResource> GetPrivateLinkScopesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopesAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<PrivateLinkScopeResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MonitorPrivateLinkScopeResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PrivateLinkScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateLinkScopes");
+                using var scope = MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorPrivateLinkScopes");
                 scope.Start();
                 try
                 {
-                    var response = await PrivateLinkScopeRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await MonitorPrivateLinkScopePrivateLinkScopesRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -601,14 +629,14 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            async Task<Page<PrivateLinkScopeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<MonitorPrivateLinkScopeResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PrivateLinkScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateLinkScopes");
+                using var scope = MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorPrivateLinkScopes");
                 scope.Start();
                 try
                 {
-                    var response = await PrivateLinkScopeRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await MonitorPrivateLinkScopePrivateLinkScopesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -625,17 +653,17 @@ namespace Azure.ResourceManager.Monitor
         /// Operation Id: PrivateLinkScopes_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateLinkScopeResource> GetPrivateLinkScopes(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopes(CancellationToken cancellationToken = default)
         {
-            Page<PrivateLinkScopeResource> FirstPageFunc(int? pageSizeHint)
+            Page<MonitorPrivateLinkScopeResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = PrivateLinkScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateLinkScopes");
+                using var scope = MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorPrivateLinkScopes");
                 scope.Start();
                 try
                 {
-                    var response = PrivateLinkScopeRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = MonitorPrivateLinkScopePrivateLinkScopesRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -643,14 +671,14 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            Page<PrivateLinkScopeResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<MonitorPrivateLinkScopeResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = PrivateLinkScopeClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetPrivateLinkScopes");
+                using var scope = MonitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMonitorPrivateLinkScopes");
                 scope.Start();
                 try
                 {
-                    var response = PrivateLinkScopeRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new PrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = MonitorPrivateLinkScopePrivateLinkScopesRestClient.ListNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new MonitorPrivateLinkScopeResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -662,8 +690,8 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
-        /// Get a list of all activity log alerts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
+        /// Get a list of all Activity Log Alert rules in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/activityLogAlerts
         /// Operation Id: ActivityLogAlerts_ListBySubscriptionId
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -677,7 +705,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = await ActivityLogAlertRestClient.ListBySubscriptionIdAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -685,12 +713,27 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+            async Task<Page<ActivityLogAlertResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = ActivityLogAlertClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActivityLogAlerts");
+                scope.Start();
+                try
+                {
+                    var response = await ActivityLogAlertRestClient.ListBySubscriptionIdNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>
-        /// Get a list of all activity log alerts in a subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/microsoft.insights/activityLogAlerts
+        /// Get a list of all Activity Log Alert rules in a subscription.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Insights/activityLogAlerts
         /// Operation Id: ActivityLogAlerts_ListBySubscriptionId
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -704,7 +747,7 @@ namespace Azure.ResourceManager.Monitor
                 try
                 {
                     var response = ActivityLogAlertRestClient.ListBySubscriptionId(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -712,7 +755,22 @@ namespace Azure.ResourceManager.Monitor
                     throw;
                 }
             }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+            Page<ActivityLogAlertResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = ActivityLogAlertClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetActivityLogAlerts");
+                scope.Start();
+                try
+                {
+                    var response = ActivityLogAlertRestClient.ListBySubscriptionIdNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ActivityLogAlertResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
 
         /// <summary>

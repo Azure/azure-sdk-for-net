@@ -32,9 +32,8 @@ extends:
   parameters:
     SDKType: client
     ServiceDirectory: containerregistry
+    BuildSnippets: true
     ArtifactName: packages
     Artifacts:
     - name: Azure.Containers.ContainerRegistry
       safeName: AzureContainersContainerRegistry
-    - name: Azure.ResourceManager.ContainerRegistry
-      safeName: AzureResourceManagerContainerRegistry

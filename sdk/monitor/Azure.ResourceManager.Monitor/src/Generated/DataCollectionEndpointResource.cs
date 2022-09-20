@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -36,6 +37,8 @@ namespace Azure.ResourceManager.Monitor
 
         private readonly ClientDiagnostics _dataCollectionEndpointClientDiagnostics;
         private readonly DataCollectionEndpointsRestOperations _dataCollectionEndpointRestClient;
+        private readonly ClientDiagnostics _dataCollectionRuleAssociationClientDiagnostics;
+        private readonly DataCollectionRuleAssociationsRestOperations _dataCollectionRuleAssociationRestClient;
         private readonly DataCollectionEndpointData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DataCollectionEndpointResource"/> class for mocking. </summary>
@@ -60,6 +63,9 @@ namespace Azure.ResourceManager.Monitor
             _dataCollectionEndpointClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string dataCollectionEndpointApiVersion);
             _dataCollectionEndpointRestClient = new DataCollectionEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionEndpointApiVersion);
+            _dataCollectionRuleAssociationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor", DataCollectionRuleAssociationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(DataCollectionRuleAssociationResource.ResourceType, out string dataCollectionRuleAssociationApiVersion);
+            _dataCollectionRuleAssociationRestClient = new DataCollectionRuleAssociationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, dataCollectionRuleAssociationApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -242,6 +248,90 @@ namespace Azure.ResourceManager.Monitor
         }
 
         /// <summary>
+        /// Lists associations for the specified data collection endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}/associations
+        /// Operation Id: DataCollectionRuleAssociations_ListByDataCollectionEndpoint
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DataCollectionRuleAssociationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociationsAsync(CancellationToken cancellationToken = default)
+        {
+            async Task<Page<DataCollectionRuleAssociationResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetDataCollectionRuleAssociations");
+                scope.Start();
+                try
+                {
+                    var response = await _dataCollectionRuleAssociationRestClient.ListByDataCollectionEndpointAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<DataCollectionRuleAssociationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetDataCollectionRuleAssociations");
+                scope.Start();
+                try
+                {
+                    var response = await _dataCollectionRuleAssociationRestClient.ListByDataCollectionEndpointNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists associations for the specified data collection endpoint.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}/associations
+        /// Operation Id: DataCollectionRuleAssociations_ListByDataCollectionEndpoint
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DataCollectionRuleAssociationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociations(CancellationToken cancellationToken = default)
+        {
+            Page<DataCollectionRuleAssociationResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetDataCollectionRuleAssociations");
+                scope.Start();
+                try
+                {
+                    var response = _dataCollectionRuleAssociationRestClient.ListByDataCollectionEndpoint(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<DataCollectionRuleAssociationResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _dataCollectionRuleAssociationClientDiagnostics.CreateScope("DataCollectionEndpointResource.GetDataCollectionRuleAssociations");
+                scope.Start();
+                try
+                {
+                    var response = _dataCollectionRuleAssociationRestClient.ListByDataCollectionEndpointNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataCollectionRuleAssociationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
         /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionEndpoints/{dataCollectionEndpointName}
         /// Operation Id: DataCollectionEndpoints_Get
@@ -259,11 +349,26 @@ namespace Azure.ResourceManager.Monitor
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues[key] = value;
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _dataCollectionEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DataCollectionEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _dataCollectionEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DataCollectionEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ResourceForUpdate();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
+                }
             }
             catch (Exception e)
             {
@@ -290,11 +395,26 @@ namespace Azure.ResourceManager.Monitor
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues[key] = value;
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _dataCollectionEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DataCollectionEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _dataCollectionEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new DataCollectionEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ResourceForUpdate();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags[key] = value;
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
+                }
             }
             catch (Exception e)
             {
@@ -319,12 +439,23 @@ namespace Azure.ResourceManager.Monitor
             scope.Start();
             try
             {
-                await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _dataCollectionEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DataCollectionEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _dataCollectionEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DataCollectionEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ResourceForUpdate();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
+                }
             }
             catch (Exception e)
             {
@@ -349,12 +480,23 @@ namespace Azure.ResourceManager.Monitor
             scope.Start();
             try
             {
-                GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _dataCollectionEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DataCollectionEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.ReplaceWith(tags);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _dataCollectionEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new DataCollectionEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ResourceForUpdate();
+                    patch.Tags.ReplaceWith(tags);
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
+                }
             }
             catch (Exception e)
             {
@@ -379,11 +521,26 @@ namespace Azure.ResourceManager.Monitor
             scope.Start();
             try
             {
-                var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
-                originalTags.Value.Data.TagValues.Remove(key);
-                await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                var originalResponse = await _dataCollectionEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new DataCollectionEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _dataCollectionEndpointRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new DataCollectionEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var patch = new ResourceForUpdate();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return result;
+                }
             }
             catch (Exception e)
             {
@@ -408,11 +565,26 @@ namespace Azure.ResourceManager.Monitor
             scope.Start();
             try
             {
-                var originalTags = GetTagResource().Get(cancellationToken);
-                originalTags.Value.Data.TagValues.Remove(key);
-                GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                var originalResponse = _dataCollectionEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                return Response.FromValue(new DataCollectionEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues.Remove(key);
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    var originalResponse = _dataCollectionEndpointRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                    return Response.FromValue(new DataCollectionEndpointResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var patch = new ResourceForUpdate();
+                    foreach (var tag in current.Tags)
+                    {
+                        patch.Tags.Add(tag);
+                    }
+                    patch.Tags.Remove(key);
+                    var result = Update(patch, cancellationToken: cancellationToken);
+                    return result;
+                }
             }
             catch (Exception e)
             {

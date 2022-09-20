@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             JsonSerializer.Serialize(writer, Subnet); if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress");
-                writer.WriteStringValue(PrivateIPAddress);
+                writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         internal static InboundEndpointIPConfiguration DeserializeInboundEndpointIPConfiguration(JsonElement element)
         {
             WritableSubResource subnet = default;
-            Optional<string> privateIPAddress = default;
+            Optional<IPAddress> privateIPAddress = default;
             Optional<InboundEndpointIPAllocationMethod> privateIPAllocationMethod = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -44,7 +45,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 if (property.NameEquals("privateIpAddress"))
                 {
-                    privateIPAddress = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateIpAllocationMethod"))

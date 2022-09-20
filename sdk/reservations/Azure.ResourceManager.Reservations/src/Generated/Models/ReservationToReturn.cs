@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.Reservations.Models
 {
     /// <summary> Reservation to return. </summary>
@@ -16,7 +18,7 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Fully qualified identifier of the Reservation being returned. </summary>
-        public string ReservationId { get; set; }
+        public ResourceIdentifier ReservationId { get; set; }
         /// <summary> Quantity to be returned. Must be greater than zero. </summary>
         public int? Quantity { get; set; }
     }

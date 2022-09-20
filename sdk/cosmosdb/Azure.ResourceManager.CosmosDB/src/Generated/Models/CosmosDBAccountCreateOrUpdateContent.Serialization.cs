@@ -133,20 +133,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("publicNetworkAccess");
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(EnableFreeTier))
+            if (Optional.IsDefined(IsFreeTierEnabled))
             {
                 writer.WritePropertyName("enableFreeTier");
-                writer.WriteBooleanValue(EnableFreeTier.Value);
+                writer.WriteBooleanValue(IsFreeTierEnabled.Value);
             }
             if (Optional.IsDefined(ApiProperties))
             {
                 writer.WritePropertyName("apiProperties");
                 writer.WriteObjectValue(ApiProperties);
             }
-            if (Optional.IsDefined(EnableAnalyticalStorage))
+            if (Optional.IsDefined(IsAnalyticalStorageEnabled))
             {
                 writer.WritePropertyName("enableAnalyticalStorage");
-                writer.WriteBooleanValue(EnableAnalyticalStorage.Value);
+                writer.WriteBooleanValue(IsAnalyticalStorageEnabled.Value);
             }
             if (Optional.IsDefined(AnalyticalStorageConfiguration))
             {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Optional<bool> disableKeyBasedMetadataWriteAccess = default;
             Optional<Uri> keyVaultKeyUri = default;
             Optional<string> defaultIdentity = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<CosmosDBPublicNetworkAccess> publicNetworkAccess = default;
             Optional<bool> enableFreeTier = default;
             Optional<ApiProperties> apiProperties = default;
             Optional<bool> enableAnalyticalStorage = default;
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new CosmosDBPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enableFreeTier"))

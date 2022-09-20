@@ -34,7 +34,7 @@ rename-mapping:
   ValidateOperationResult.properties.reportEndTimeUtc: reportEndOn
   ValidationResultItem: LinkerValidationResultItemInfo
   ValidationResultStatus: LinkerValidationResultStatus
-
+  AzureKeyVaultProperties.connectAsKubernetesCsiDriver: DoesConnectAsKubernetesCsiDriver
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -71,6 +71,9 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   VNet: Vnet
+
+generate-arm-resource-extensions:
+  - /{resourceUri}/providers/Microsoft.ServiceLinker/linkers/{linkerName}
 
 directive:
   - from: servicelinker.json

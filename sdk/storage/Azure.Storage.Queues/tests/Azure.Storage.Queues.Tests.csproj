@@ -8,7 +8,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="SessionRecords\" />
-    <Compile Include="$(AzureStorageSharedTestSources)..\Sas\*.cs" LinkBase="Shared\Sas" />
     <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />
     <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" />
@@ -20,5 +19,8 @@
     <PackageReference Include="Microsoft.Azure.Storage.Queue" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.Queues.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="$(AzureStorageSharedTestSources)\TransferValidationTestBase.cs" />
   </ItemGroup>
 </Project>

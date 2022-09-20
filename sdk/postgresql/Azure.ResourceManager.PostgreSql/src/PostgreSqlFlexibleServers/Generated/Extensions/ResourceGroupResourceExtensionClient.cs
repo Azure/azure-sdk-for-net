@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ServerResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ServerResources and their operations over a ServerResource. </returns>
-        public virtual ServerCollection GetServers()
+        /// <summary> Gets a collection of PostgreSqlFlexibleServerResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PostgreSqlFlexibleServerResources and their operations over a PostgreSqlFlexibleServerResource. </returns>
+        public virtual PostgreSqlFlexibleServerCollection GetPostgreSqlFlexibleServers()
         {
-            return GetCachedClient(Client => new ServerCollection(Client, Id));
+            return GetCachedClient(Client => new PostgreSqlFlexibleServerCollection(Client, Id));
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Net;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of TargetDnsServer. </summary>
         /// <param name="ipAddress"> DNS server IP address. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ipAddress"/> is null. </exception>
-        public TargetDnsServer(string ipAddress)
+        public TargetDnsServer(IPAddress ipAddress)
         {
             if (ipAddress == null)
             {
@@ -28,14 +29,14 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of TargetDnsServer. </summary>
         /// <param name="ipAddress"> DNS server IP address. </param>
         /// <param name="port"> DNS server port. </param>
-        internal TargetDnsServer(string ipAddress, int? port)
+        internal TargetDnsServer(IPAddress ipAddress, int? port)
         {
             IPAddress = ipAddress;
             Port = port;
         }
 
         /// <summary> DNS server IP address. </summary>
-        public string IPAddress { get; set; }
+        public IPAddress IPAddress { get; set; }
         /// <summary> DNS server port. </summary>
         public int? Port { get; set; }
     }

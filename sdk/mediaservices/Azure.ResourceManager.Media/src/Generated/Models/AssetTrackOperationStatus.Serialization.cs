@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         internal static AssetTrackOperationStatus DeserializeAssetTrackOperationStatus(JsonElement element)
         {
             string name = default;
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset> endTime = default;
             string status = default;
@@ -31,7 +31,12 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("startTime"))

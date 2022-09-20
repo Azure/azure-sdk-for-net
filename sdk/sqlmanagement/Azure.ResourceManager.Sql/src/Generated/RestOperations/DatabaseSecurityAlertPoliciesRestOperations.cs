@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Sql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, SecurityAlertPolicyName securityAlertPolicyName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, SqlSecurityAlertPolicyName securityAlertPolicyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlDatabaseSecurityAlertPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlDatabaseSecurityAlertPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlDatabaseSecurityAlertPolicyData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, SecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        public Response<SqlDatabaseSecurityAlertPolicyData> Get(string subscriptionId, string resourceGroupName, string serverName, string databaseName, SqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, SecurityAlertPolicyName securityAlertPolicyName, SqlDatabaseSecurityAlertPolicyData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, SqlSecurityAlertPolicyName securityAlertPolicyName, SqlDatabaseSecurityAlertPolicyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SqlDatabaseSecurityAlertPolicyData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, SecurityAlertPolicyName securityAlertPolicyName, SqlDatabaseSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
+        public async Task<Response<SqlDatabaseSecurityAlertPolicyData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, string databaseName, SqlSecurityAlertPolicyName securityAlertPolicyName, SqlDatabaseSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/>, <paramref name="databaseName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SqlDatabaseSecurityAlertPolicyData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string databaseName, SecurityAlertPolicyName securityAlertPolicyName, SqlDatabaseSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
+        public Response<SqlDatabaseSecurityAlertPolicyData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, string databaseName, SqlSecurityAlertPolicyName securityAlertPolicyName, SqlDatabaseSecurityAlertPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

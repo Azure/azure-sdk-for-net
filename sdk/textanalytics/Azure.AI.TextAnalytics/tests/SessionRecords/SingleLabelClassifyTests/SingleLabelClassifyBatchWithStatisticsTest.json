@@ -1,0 +1,182 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs?api-version=2022-05-01",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "568",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-b1078eb3b7d2ecbd70e7e8ea1df00b1c-ca4dec78d3204372-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "157d7b2fb25642df32828b3feb5d57bd",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "analysisInput": {
+          "documents": [
+            {
+              "id": "1",
+              "text": "I need a reservation for an indoor restaurant in China. Please don\u0027t stop the music. Play music and add it to my playlist",
+              "language": "en"
+            },
+            {
+              "id": "2",
+              "text": "David Schmidt, senior vice president--Food Safety, International Food Information Council (IFIC), Washington, D.C., discussed the physical activity component.",
+              "language": "en"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "parameters": {
+              "projectName": "659c1851-be0b-4142-b12a-087da9785926",
+              "deploymentName": "659c1851-be0b-4142-b12a-087da9785926"
+            },
+            "kind": "CustomSingleLabelClassification"
+          }
+        ]
+      },
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "apim-request-id": "6f152999-d2a9-4f31-9d93-b5f45a9ff491",
+        "Content-Length": "0",
+        "Date": "Thu, 21 Jul 2022 23:28:51 GMT",
+        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/0805f1e6-ca8f-43cd-8f39-33e4d87055ae?api-version=2022-05-01",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "247"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/0805f1e6-ca8f-43cd-8f39-33e4d87055ae?api-version=2022-05-01\u0026showStats=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "41caa4b9c64f795c6ad762684190d855",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "224c16c6-dafe-4140-addc-2bba35b2e7c1",
+        "Content-Length": "283",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 21 Jul 2022 23:28:51 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "19"
+      },
+      "ResponseBody": {
+        "jobId": "0805f1e6-ca8f-43cd-8f39-33e4d87055ae",
+        "lastUpdatedDateTime": "2022-07-21T23:28:51Z",
+        "createdDateTime": "2022-07-21T23:28:51Z",
+        "expirationDateTime": "2022-07-22T23:28:51Z",
+        "status": "notStarted",
+        "errors": [],
+        "tasks": {
+          "completed": 0,
+          "failed": 0,
+          "inProgress": 1,
+          "total": 1,
+          "items": []
+        }
+      }
+    },
+    {
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/0805f1e6-ca8f-43cd-8f39-33e4d87055ae?api-version=2022-05-01\u0026showStats=true",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220721.1 (.NET 6.0.7; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "7964bcab08be41fe394a72e39d0b0350",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "8303eaa2-9d5f-4f39-b5d5-7b3248d0d68d",
+        "Content-Length": "949",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 21 Jul 2022 23:29:01 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "32"
+      },
+      "ResponseBody": {
+        "jobId": "0805f1e6-ca8f-43cd-8f39-33e4d87055ae",
+        "lastUpdatedDateTime": "2022-07-21T23:28:51Z",
+        "createdDateTime": "2022-07-21T23:28:51Z",
+        "expirationDateTime": "2022-07-22T23:28:51Z",
+        "status": "succeeded",
+        "errors": [],
+        "tasks": {
+          "completed": 1,
+          "failed": 0,
+          "inProgress": 0,
+          "total": 1,
+          "items": [
+            {
+              "kind": "CustomSingleLabelClassificationLROResults",
+              "lastUpdateDateTime": "2022-07-21T23:28:51.8981419Z",
+              "status": "succeeded",
+              "results": {
+                "statistics": {
+                  "documentsCount": 2,
+                  "validDocumentsCount": 2,
+                  "erroneousDocumentsCount": 0,
+                  "transactionsCount": 2
+                },
+                "documents": [
+                  {
+                    "id": "1",
+                    "class": [
+                      {
+                        "category": "BookRestaurant",
+                        "confidenceScore": 1.0
+                      }
+                    ],
+                    "statistics": {
+                      "charactersCount": 121,
+                      "transactionsCount": 1
+                    },
+                    "warnings": []
+                  },
+                  {
+                    "id": "2",
+                    "class": [
+                      {
+                        "category": "RateBook",
+                        "confidenceScore": 0.57
+                      }
+                    ],
+                    "statistics": {
+                      "charactersCount": 158,
+                      "transactionsCount": 1
+                    },
+                    "warnings": []
+                  }
+                ],
+                "errors": [],
+                "projectName": "659c1851-be0b-4142-b12a-087da9785926",
+                "deploymentName": "659c1851-be0b-4142-b12a-087da9785926"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "1454959888",
+    "TEXTANALYTICS_SINGLE_CATEGORY_CLASSIFY_DEPLOYMENT_NAME": "659c1851-be0b-4142-b12a-087da9785926",
+    "TEXTANALYTICS_SINGLE_CATEGORY_CLASSIFY_PROJECT_NAME": "659c1851-be0b-4142-b12a-087da9785926",
+    "TEXT_ANALYTICS_API_KEY": "Sanitized",
+    "TEXT_ANALYTICS_ENDPOINT": "https://javatextanalyticstestresources.cognitiveservices.azure.com"
+  }
+}

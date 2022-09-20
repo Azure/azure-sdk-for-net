@@ -70,8 +70,9 @@ namespace Azure.Storage.Queues
     }
     public partial class QueueClientOptions : Azure.Core.ClientOptions
     {
-        public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2021_08_06) { }
+        public QueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2021_10_04) { }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
+        public Azure.Storage.GeoRedundantReadMode GeoRedundantReadMode { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueMessageEncoding MessageEncoding { get { throw null; } set { } }
         public Azure.Storage.Queues.QueueClientOptions.ServiceVersion Version { get { throw null; } }
@@ -91,6 +92,7 @@ namespace Azure.Storage.Queues
             V2021_04_10 = 11,
             V2021_06_08 = 12,
             V2021_08_06 = 13,
+            V2021_10_04 = 14,
         }
     }
     public partial class QueueMessageDecodingFailedEventArgs : Azure.SyncAsyncEventArgs
@@ -382,7 +384,7 @@ namespace Azure.Storage.Queues.Specialized
     }
     public partial class SpecializedQueueClientOptions : Azure.Storage.Queues.QueueClientOptions
     {
-        public SpecializedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2021_08_06) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
+        public SpecializedQueueClientOptions(Azure.Storage.Queues.QueueClientOptions.ServiceVersion version = Azure.Storage.Queues.QueueClientOptions.ServiceVersion.V2021_10_04) : base (default(Azure.Storage.Queues.QueueClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedQueueExtensions

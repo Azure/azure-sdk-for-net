@@ -66,10 +66,10 @@ namespace Azure.AI.Personalizer
     }
     public partial class PersonalizerClientOptions : Azure.Core.ClientOptions
     {
-        public PersonalizerClientOptions(Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion version = Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion.V1_1_preview_3, bool useLocalInference = false, float subsampleRate = 1f) { }
+        public PersonalizerClientOptions(Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion version = Azure.AI.Personalizer.PersonalizerClientOptions.ServiceVersion.V1_1_Preview_3, bool useLocalInference = false, float subsampleRate = 1f) { }
         public enum ServiceVersion
         {
-            V1_1_preview_3 = 1,
+            V1_1_Preview_3 = 1,
         }
     }
     public partial class PersonalizerCreateEvaluationOperation : Azure.Operation<Azure.AI.Personalizer.PersonalizerEvaluation>

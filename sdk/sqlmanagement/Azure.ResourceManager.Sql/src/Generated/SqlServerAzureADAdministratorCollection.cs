@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The requested Azure Active Directory administrator Resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlServerAzureADAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, AdministratorName administratorName, SqlServerAzureADAdministratorData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlServerAzureADAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SqlAdministratorName administratorName, SqlServerAzureADAdministratorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The requested Azure Active Directory administrator Resource state. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SqlServerAzureADAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, AdministratorName administratorName, SqlServerAzureADAdministratorData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlServerAzureADAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, SqlAdministratorName administratorName, SqlServerAzureADAdministratorData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="administratorName"> The name of server active directory administrator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SqlServerAzureADAdministratorResource>> GetAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SqlServerAzureADAdministratorResource>> GetAsync(SqlAdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics.CreateScope("SqlServerAzureADAdministratorCollection.Get");
             scope.Start();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="administratorName"> The name of server active directory administrator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SqlServerAzureADAdministratorResource> Get(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual Response<SqlServerAzureADAdministratorResource> Get(SqlAdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics.CreateScope("SqlServerAzureADAdministratorCollection.Get");
             scope.Start();
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="administratorName"> The name of server active directory administrator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(SqlAdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics.CreateScope("SqlServerAzureADAdministratorCollection.Exists");
             scope.Start();
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="administratorName"> The name of server active directory administrator. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(AdministratorName administratorName, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(SqlAdministratorName administratorName, CancellationToken cancellationToken = default)
         {
             using var scope = _sqlServerAzureADAdministratorServerAzureADAdministratorsClientDiagnostics.CreateScope("SqlServerAzureADAdministratorCollection.Exists");
             scope.Start();

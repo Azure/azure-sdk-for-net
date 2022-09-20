@@ -172,6 +172,8 @@ request-path-to-resource-name:
 override-operation-name:
   ApplicationGateways_ListAvailableWafRuleSets: GetApplicationGatewayAvailableWafRuleSetsAsync
   VirtualNetworkGateways_VpnDeviceConfigurationScript: VpnDeviceConfigurationScript
+  VirtualHubBgpConnections_ListLearnedRoutes: GetLearnedRoutesVirtualHubBgpConnection
+  VirtualHubBgpConnections_ListAdvertisedRoutes: GetAdvertisedRoutesVirtualHubBgpConnection
 
 directive:
   - remove-operation: 'PutBastionShareableLink'

@@ -16,25 +16,25 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of CosmosDBLocationProperties. </summary>
         public CosmosDBLocationProperties()
         {
-            BackupStorageRedundancies = new ChangeTrackingList<BackupStorageRedundancy>();
+            BackupStorageRedundancies = new ChangeTrackingList<CosmosDBBackupStorageRedundancy>();
         }
 
         /// <summary> Initializes a new instance of CosmosDBLocationProperties. </summary>
-        /// <param name="supportsAvailabilityZone"> Flag indicating whether the location supports availability zones or not. </param>
+        /// <param name="doesSupportAvailabilityZone"> Flag indicating whether the location supports availability zones or not. </param>
         /// <param name="isResidencyRestricted"> Flag indicating whether the location is residency sensitive. </param>
         /// <param name="backupStorageRedundancies"> The properties of available backup storage redundancies. </param>
-        internal CosmosDBLocationProperties(bool? supportsAvailabilityZone, bool? isResidencyRestricted, IReadOnlyList<BackupStorageRedundancy> backupStorageRedundancies)
+        internal CosmosDBLocationProperties(bool? doesSupportAvailabilityZone, bool? isResidencyRestricted, IReadOnlyList<CosmosDBBackupStorageRedundancy> backupStorageRedundancies)
         {
-            SupportsAvailabilityZone = supportsAvailabilityZone;
+            DoesSupportAvailabilityZone = doesSupportAvailabilityZone;
             IsResidencyRestricted = isResidencyRestricted;
             BackupStorageRedundancies = backupStorageRedundancies;
         }
 
         /// <summary> Flag indicating whether the location supports availability zones or not. </summary>
-        public bool? SupportsAvailabilityZone { get; }
+        public bool? DoesSupportAvailabilityZone { get; }
         /// <summary> Flag indicating whether the location is residency sensitive. </summary>
         public bool? IsResidencyRestricted { get; }
         /// <summary> The properties of available backup storage redundancies. </summary>
-        public IReadOnlyList<BackupStorageRedundancy> BackupStorageRedundancies { get; }
+        public IReadOnlyList<CosmosDBBackupStorageRedundancy> BackupStorageRedundancies { get; }
     }
 }

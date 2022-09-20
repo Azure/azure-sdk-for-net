@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.Storage.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(PrefixMatch))
+            if (Optional.IsCollectionDefined(IncludePrefix))
             {
                 writer.WritePropertyName("prefixMatch");
                 writer.WriteStartArray();
-                foreach (var item in PrefixMatch)
+                foreach (var item in IncludePrefix)
                 {
                     writer.WriteStringValue(item);
                 }

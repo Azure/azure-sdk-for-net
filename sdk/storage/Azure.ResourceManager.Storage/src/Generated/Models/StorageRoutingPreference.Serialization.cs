@@ -20,15 +20,15 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("routingChoice");
                 writer.WriteStringValue(RoutingChoice.Value.ToString());
             }
-            if (Optional.IsDefined(PublishMicrosoftEndpoints))
+            if (Optional.IsDefined(IsMicrosoftEndpointsPublished))
             {
                 writer.WritePropertyName("publishMicrosoftEndpoints");
-                writer.WriteBooleanValue(PublishMicrosoftEndpoints.Value);
+                writer.WriteBooleanValue(IsMicrosoftEndpointsPublished.Value);
             }
-            if (Optional.IsDefined(PublishInternetEndpoints))
+            if (Optional.IsDefined(IsInternetEndpointsPublished))
             {
                 writer.WritePropertyName("publishInternetEndpoints");
-                writer.WriteBooleanValue(PublishInternetEndpoints.Value);
+                writer.WriteBooleanValue(IsInternetEndpointsPublished.Value);
             }
             writer.WriteEndObject();
         }

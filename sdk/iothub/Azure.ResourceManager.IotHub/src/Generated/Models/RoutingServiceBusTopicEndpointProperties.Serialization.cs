@@ -19,17 +19,17 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
+                writer.WriteStringValue(Id.Value);
             }
             if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString");
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Optional.IsDefined(EndpointUri))
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpointUri");
-                writer.WriteStringValue(EndpointUri.AbsoluteUri);
+                writer.WriteStringValue(Endpoint);
             }
             if (Optional.IsDefined(EntityPath))
             {
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.IotHub.Models
 
         internal static RoutingServiceBusTopicEndpointProperties DeserializeRoutingServiceBusTopicEndpointProperties(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<Guid> id = default;
             Optional<string> connectionString = default;
-            Optional<Uri> endpointUri = default;
+            Optional<string> endpointUri = default;
             Optional<string> entityPath = default;
-            Optional<AuthenticationType> authenticationType = default;
+            Optional<IotHubAuthenticationType> authenticationType = default;
             Optional<ManagedIdentity> identity = default;
             string name = default;
             Optional<string> subscriptionId = default;
@@ -76,7 +76,12 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("connectionString"))
@@ -86,12 +91,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (property.NameEquals("endpointUri"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        endpointUri = null;
-                        continue;
-                    }
-                    endpointUri = new Uri(property.Value.GetString());
+                    endpointUri = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("entityPath"))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    authenticationType = new AuthenticationType(property.Value.GetString());
+                    authenticationType = new IotHubAuthenticationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     continue;
                 }
             }
-            return new RoutingServiceBusTopicEndpointProperties(id.Value, connectionString.Value, endpointUri.Value, entityPath.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value);
+            return new RoutingServiceBusTopicEndpointProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, entityPath.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value);
         }
     }
 }
