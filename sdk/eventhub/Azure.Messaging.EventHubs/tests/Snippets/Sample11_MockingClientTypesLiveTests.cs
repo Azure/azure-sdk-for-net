@@ -73,7 +73,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             string eventHubName = properties.Name;
             Debug.WriteLine($"Sending Events to: {eventHubName}");
 
-            // The second half of this snippet demonstrates mocking PartitionProperties on an EventHubBufferedProducerClient, which
+            // The second part of this snippet demonstrates mocking PartitionProperties on an EventHubBufferedProducerClient, which
             // again can be done in the same way for the EventHubProducerClient and EventHubConsumerClient types.
 
             Mock<EventHubBufferedProducerClient> bufferedProducerMock = new();
@@ -121,7 +121,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     .ReturnsAsync(partition.Value);
             }
 
-            // The rest of the snippet demonstrates how to use the mocked partition Ids and PartitionProperties. This would be
+            // The next lines demonstrate how to use the mocked partition Ids and PartitionProperties. This would be
             // where application code utilizing the mocked methods could be called and verified.
 
             EventHubBufferedProducerClient bufferedProducer = bufferedProducerMock.Object;
@@ -141,6 +141,19 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             string isPartitionEmpty = firstPartitionProperties.IsEmpty.ToString();
 
             Debug.WriteLine($"Sending Events to: {isPartitionEmpty}");
+
+            // The last part of this snippet briefly demonstrates mocking Partition Ids with an EventHubConsumerClient. This
+            // illustrates how each client can mock properties in the same way.
+
+            // This sets up the consumer client to return a mocked set of partition Ids.
+
+            Mock<EventHubConsumerClient> mockConsumer = new();
+
+            string[] consumerPartitions = new string[] { "0", "1", "2" };
+
+            mockConsumer
+                .Setup(p => p.GetPartitionIdsAsync(It.IsAny<CancellationToken>()))
+                .ReturnsAsync(consumerPartitions);
             #endregion
         }
 
@@ -178,7 +191,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     // events the batch accepts.
                     eventData =>
                     {
-                        int eventCount = backingList.Count();
+                        int eventCount = backingList.Count;
                         return eventCount < batchCountThreshold;
                     });
 
@@ -208,7 +221,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             List<EventData> sourceEvents = new();
 
-            for (int index = 0; index < batchCountThreshold; index++)
+            for (int index=0; index<batchCountThreshold; index++)
             {
                 var eventData = new EventData($"Sample-Event-{ index }");
                 sourceEvents.Add(eventData);
@@ -323,9 +336,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             SendEventBatchFailedEventArgs args = new SendEventBatchFailedEventArgs(eventsInBatch, new Exception(), "0", default);
 
-            Assert.DoesNotThrowAsync(async () => await sendFailed(args));
-
             // The expected outcome of any application-specific complex processing can be asserted here.
+
+            Assert.DoesNotThrowAsync(async () => await sendFailed(args));
 
             #endregion
         }
@@ -360,33 +373,39 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             async IAsyncEnumerable<PartitionEvent> mockReturn()
             {
-                for (int index = 0; index < 3; index++)
-                {
-                    // This mocks an EventData instance using the model factory. Different arguments can mock different
-                    // potential outputs from the broker.
+                // This mocks an EventData instance using the model factory. Different arguments can mock different
+                // potential outputs from the broker.
 
-                    EventData eventData = EventHubsModelFactory.EventData(
-                        eventBody: new BinaryData($"Sample-Event-{ index }"),
-                        systemProperties: new Dictionary<string, object>(), //arbitrary value
-                        partitionKey: "sample-key",
-                        sequenceNumber: 1000,
-                        offset: 1500,
-                        enqueuedTime: DateTimeOffset.Parse("11:36 PM"));
+                EventData eventData1 = EventHubsModelFactory.EventData(
+                    eventBody: new BinaryData($"Sample-Event-1"),
+                    systemProperties: new Dictionary<string, object>(), //arbitrary value
+                    partitionKey: "sample-key",
+                    sequenceNumber: 1000,
+                    offset: 1500,
+                    enqueuedTime: DateTimeOffset.Parse("11:36 PM"));
 
-                    // This creates a mock PartitionEvent to return from the consumer client.
+                EventData eventData2 = EventHubsModelFactory.EventData(
+                    eventBody: new BinaryData($"Sample-Event-2"),
+                    systemProperties: new Dictionary<string, object>(), //arbitrary value
+                    partitionKey: "sample-key",
+                    sequenceNumber: 1000,
+                    offset: 1500,
+                    enqueuedTime: DateTimeOffset.Parse("11:36 PM"));
 
-                    PartitionEvent samplePartitionEvent = new PartitionEvent(partitionContext, eventData);
-                    List<PartitionEvent> partitionEventList = new List<PartitionEvent> { samplePartitionEvent };
+                // This creates a mock PartitionEvent to return from the consumer client.
 
-                    // IAsyncEnumerable types can only be returned by async functions, use this no-op await statement to
-                    // force the method to be async.
+                PartitionEvent samplePartitionEvent1 = new(partitionContext, eventData1);
+                PartitionEvent samplePartitionEvent2 = new(partitionContext, eventData2);
 
-                    await Task.Yield();
+                // IAsyncEnumerable types can only be returned by async functions, use this no-op await statement to
+                // force the method to be async.
 
-                    // Yield statements allow methods to emit multiple outputs. In async methods this can be over time.
+                await Task.Yield();
 
-                    yield return samplePartitionEvent;
-                }
+                // Yield statements allow methods to emit multiple outputs. In async methods this can be over time.
+
+                yield return samplePartitionEvent1;
+                yield return samplePartitionEvent2;
             }
 
             // Use the method to mock a return from the consumer. We are setting up the method to return partition events that
@@ -400,7 +419,8 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     It.IsAny<CancellationToken>()))
                 .Returns(mockReturn());
 
-            // This sets up the consumer client to return a mocked set of partition Ids.
+            // This sets up the consumer client to return a mocked set of partition Ids. Since GetPartitionIdsAsync is often
+            // used in conjunction with ReadEventsFromPartitionAsync, it may be useful for applications to mock both.
 
             string[] consumerPartitions = new string[] { "0", "1" };
 
@@ -446,14 +466,14 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             List<EventData> receivedEvents = new();
 
-            for (int i=0; i<10; i++)
+            for (int index = 0; index < 10; index++)
             {
                 // Mocking an EventData instance, different arguments can simulate different potential
                 // outputs from the broker
                 EventData eventData = EventHubsModelFactory.EventData(
-                    eventBody: new BinaryData($"Sample-Event-{i}"),
+                    eventBody: new BinaryData($"Sample-Event-{index}"),
                     systemProperties: new Dictionary<string, object>(), //arbitrary value
-                    partitionKey: $"sample-key-{i}",
+                    partitionKey: $"sample-key-{index}",
                     sequenceNumber: 1234,
                     offset: 234,
                     enqueuedTime: DateTimeOffset.Parse("9:25 AM"));
