@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             Optional<ProductDescription> description = default;
             Optional<IReadOnlyList<ImageInformation>> imageInformation = default;
             Optional<CostInformation> costInformation = default;
-            Optional<AvailabilityInformation> availabilityInformation = default;
+            Optional<ProductAvailabilityInformation> availabilityInformation = default;
             Optional<HierarchyInformation> hierarchyInformation = default;
             Optional<IReadOnlyList<FilterableProperty>> filterableProperties = default;
             Optional<IReadOnlyList<ProductLine>> productLines = default;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            availabilityInformation = AvailabilityInformation.DeserializeAvailabilityInformation(property0.Value);
+                            availabilityInformation = ProductAvailabilityInformation.DeserializeProductAvailabilityInformation(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("hierarchyInformation"))

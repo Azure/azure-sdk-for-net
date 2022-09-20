@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media
         /// <summary> Initializes a new instance of ContentKeyPolicyData. </summary>
         public ContentKeyPolicyData()
         {
-            Preferences = new ChangeTrackingList<ContentKeyPolicyPreference>();
+            Preferences = new ChangeTrackingList<ContentKeyPolicyOption>();
         }
 
         /// <summary> Initializes a new instance of ContentKeyPolicyData. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="lastModifiedOn"> The last modified date of the Policy. </param>
         /// <param name="description"> A description for the Policy. </param>
         /// <param name="preferences"> The Key Policy options. </param>
-        internal ContentKeyPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? policyId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IList<ContentKeyPolicyPreference> preferences) : base(id, name, resourceType, systemData)
+        internal ContentKeyPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? policyId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, string description, IList<ContentKeyPolicyOption> preferences) : base(id, name, resourceType, systemData)
         {
             PolicyId = policyId;
             CreatedOn = createdOn;
@@ -50,6 +50,6 @@ namespace Azure.ResourceManager.Media
         /// <summary> A description for the Policy. </summary>
         public string Description { get; set; }
         /// <summary> The Key Policy options. </summary>
-        public IList<ContentKeyPolicyPreference> Preferences { get; }
+        public IList<ContentKeyPolicyOption> Preferences { get; }
     }
 }

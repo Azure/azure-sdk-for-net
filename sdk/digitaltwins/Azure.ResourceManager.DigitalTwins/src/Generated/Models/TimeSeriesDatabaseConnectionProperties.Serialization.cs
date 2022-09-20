@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureDataExplorer": return AzureDataExplorerConnectionProperties.DeserializeAzureDataExplorerConnectionProperties(element);
+                    case "AzureDataExplorer": return DataExplorerConnectionProperties.DeserializeDataExplorerConnectionProperties(element);
                 }
             }
             ConnectionType connectionType = default;

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="exchange"> The properties that define an exchange peering. </param>
         /// <param name="peeringLocation"> The location of the peering. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal PeeringData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringSku sku, PeeringKind kind, PeeringPropertiesDirect direct, PeeringPropertiesExchange exchange, string peeringLocation, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal PeeringData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringSku sku, PeeringKind kind, DirectPeeringProperties direct, ExchangePeeringProperties exchange, string peeringLocation, PeeringProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.Peering
         /// <summary> The kind of the peering. </summary>
         public PeeringKind Kind { get; set; }
         /// <summary> The properties that define a direct peering. </summary>
-        public PeeringPropertiesDirect Direct { get; set; }
+        public DirectPeeringProperties Direct { get; set; }
         /// <summary> The properties that define an exchange peering. </summary>
-        public PeeringPropertiesExchange Exchange { get; set; }
+        public ExchangePeeringProperties Exchange { get; set; }
         /// <summary> The location of the peering. </summary>
         public string PeeringLocation { get; set; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PeeringProvisioningState? ProvisioningState { get; }
     }
 }

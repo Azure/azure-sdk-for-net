@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -28,11 +29,11 @@ namespace Azure.ResourceManager.DataShare.Models
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> dataSetId = default;
-            Optional<string> dataSetLocation = default;
+            Optional<Guid> dataSetId = default;
+            Optional<AzureLocation> dataSetLocation = default;
             Optional<string> dataSetName = default;
             Optional<string> dataSetPath = default;
-            Optional<DataSetType> dataSetType = default;
+            Optional<ShareDataSetType> dataSetType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -71,12 +72,22 @@ namespace Azure.ResourceManager.DataShare.Models
                     {
                         if (property0.NameEquals("dataSetId"))
                         {
-                            dataSetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataSetId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("dataSetLocation"))
                         {
-                            dataSetLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataSetLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dataSetName"))
@@ -96,14 +107,14 @@ namespace Azure.ResourceManager.DataShare.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            dataSetType = new DataSetType(property0.Value.GetString());
+                            dataSetType = new ShareDataSetType(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ConsumerSourceDataSet(id, name, type, systemData.Value, dataSetId.Value, dataSetLocation.Value, dataSetName.Value, dataSetPath.Value, Optional.ToNullable(dataSetType));
+            return new ConsumerSourceDataSet(id, name, type, systemData.Value, Optional.ToNullable(dataSetId), Optional.ToNullable(dataSetLocation), dataSetName.Value, dataSetPath.Value, Optional.ToNullable(dataSetType));
         }
     }
 }

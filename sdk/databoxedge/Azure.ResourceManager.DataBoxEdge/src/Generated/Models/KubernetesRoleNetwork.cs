@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of KubernetesRoleNetwork. </summary>
         /// <param name="cniConfig"> Cni configuration. </param>
         /// <param name="loadBalancerConfig"> Load balancer configuration. </param>
-        internal KubernetesRoleNetwork(CniConfig cniConfig, LoadBalancerConfig loadBalancerConfig)
+        internal KubernetesRoleNetwork(CniConfig cniConfig, DataBoxEdgeLoadBalancerConfig loadBalancerConfig)
         {
             CniConfig = cniConfig;
             LoadBalancerConfig = loadBalancerConfig;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Cni configuration. </summary>
         public CniConfig CniConfig { get; }
         /// <summary> Load balancer configuration. </summary>
-        public LoadBalancerConfig LoadBalancerConfig { get; }
+        public DataBoxEdgeLoadBalancerConfig LoadBalancerConfig { get; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     {
         internal static StorageAccountList DeserializeStorageAccountList(JsonElement element)
         {
-            Optional<IReadOnlyList<StorageAccountData>> value = default;
+            Optional<IReadOnlyList<DataBoxEdgeStorageAccountData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<StorageAccountData> array = new List<StorageAccountData>();
+                    List<DataBoxEdgeStorageAccountData> array = new List<DataBoxEdgeStorageAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageAccountData.DeserializeStorageAccountData(item));
+                        array.Add(DataBoxEdgeStorageAccountData.DeserializeDataBoxEdgeStorageAccountData(item));
                     }
                     value = array;
                     continue;

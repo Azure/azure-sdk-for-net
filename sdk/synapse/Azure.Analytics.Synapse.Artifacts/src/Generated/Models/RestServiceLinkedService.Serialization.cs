@@ -103,6 +103,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("encryptedCredential");
                 writer.WriteObjectValue(EncryptedCredential);
             }
+            if (Optional.IsDefined(ClientId))
+            {
+                writer.WritePropertyName("clientId");
+                writer.WriteObjectValue(ClientId);
+            }
+            if (Optional.IsDefined(ClientSecret))
+            {
+                writer.WritePropertyName("clientSecret");
+                writer.WriteObjectValue(ClientSecret);
+            }
+            if (Optional.IsDefined(TokenEndpoint))
+            {
+                writer.WritePropertyName("tokenEndpoint");
+                writer.WriteObjectValue(TokenEndpoint);
+            }
+            if (Optional.IsDefined(Resource))
+            {
+                writer.WritePropertyName("resource");
+                writer.WriteObjectValue(Resource);
+            }
+            if (Optional.IsDefined(Scope))
+            {
+                writer.WritePropertyName("scope");
+                writer.WriteObjectValue(Scope);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -130,6 +155,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<object> azureCloudType = default;
             Optional<object> aadResourceId = default;
             Optional<object> encryptedCredential = default;
+            Optional<object> clientId = default;
+            Optional<SecretBase> clientSecret = default;
+            Optional<object> tokenEndpoint = default;
+            Optional<object> resource = default;
+            Optional<object> scope = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -293,13 +323,63 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             encryptedCredential = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("clientId"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            clientId = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("clientSecret"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            clientSecret = SecretBase.DeserializeSecretBase(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("tokenEndpoint"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            tokenEndpoint = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("resource"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resource = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("scope"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            scope = property0.Value.GetObject();
+                            continue;
+                        }
                     }
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestServiceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, enableServerCertificateValidation.Value, authenticationType, userName.Value, password.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, aadResourceId.Value, encryptedCredential.Value);
+            return new RestServiceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, enableServerCertificateValidation.Value, authenticationType, userName.Value, password.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, azureCloudType.Value, aadResourceId.Value, encryptedCredential.Value, clientId.Value, clientSecret.Value, tokenEndpoint.Value, resource.Value, scope.Value);
         }
 
         internal partial class RestServiceLinkedServiceConverter : JsonConverter<RestServiceLinkedService>

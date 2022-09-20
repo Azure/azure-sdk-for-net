@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary>
     /// Action to be applied.
     /// Please note <see cref="AlertProcessingRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AddActionGroups"/> and <see cref="RemoveAllActionGroups"/>.
+    /// The available derived classes include <see cref="AlertProcessingRuleAddGroupsAction"/> and <see cref="AlertProcessingRuleRemoveAllGroupsAction"/>.
     /// </summary>
     public abstract partial class AlertProcessingRuleAction
     {

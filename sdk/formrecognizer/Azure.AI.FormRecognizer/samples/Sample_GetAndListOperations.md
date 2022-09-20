@@ -1,7 +1,7 @@
 # Get and List Document Model Operations
 
 This sample demonstrates how to Get and List all document model operations (succeeded, in-progress, failed) associated with the Form Recognizer resource. Note that operation information only persists for 24 hours.
-If the operation was successful, the document model can be accessed using `GetModel()` or `GetModels()` APIs.
+If the operation was successful, the document model can be accessed using `GetDocumentModel()` or `GetDocumentModels()` APIs.
 
 To get started you'll need a Cognitive Services resource or a Form Recognizer resource.  See [README][README] for prerequisites and instructions.
 
@@ -20,22 +20,31 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), credential
 
 ## Get and List Document Model Operations
 
-Note that operation information only persists for 24 hours. If the operation was successful, the document model Id is provided in the `Result` property. This Id can be used with other methods like for example, `GetModel()`.
+The method `GetOperations` returns a list of `OperationSummary` instances. `OperationSummary` contains general information about the operation, such as its ID, its status, and the `PercentCompleted` property to track progress, but it does not include details about the result or errors that happened during its execution.
+
+The method `GetOperation` can be called to get these extra properties. It returns a single `OperationDetails` instance, which also contains all information present in `OperationSummary`. However, in order to access the `Result` property, you need to cast it to one of its derived types:
+- A `DocumentModelBuildOperationDetails` for "build" operations.
+- A `DocumentModelCopyToOperationDetails` for "copy to" operations.
+- A `DocumentModelComposeOperationDetails` for "compose" operations.
+
+If the operation was successful, the document model Id is provided in the `Result` property. This Id can be used with other methods such as `GetDocumentModel`.
 If the operation failed, the error information can be accessed using the `Error` property.
+
+Note that operation information only persists for 24 hours.
 
 ```C# Snippet:FormRecognizerSampleGetAndListOperations
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
 // Make sure there is at least one operation, so we are going to build a custom model.
-Uri trainingFileUri = new Uri("<trainingFileUri>");
-BuildModelOperation operation = await client.BuildModelAsync(WaitUntil.Completed, trainingFileUri, DocumentBuildMode.Template);
+Uri blobContainerUri = new Uri("<blobContainerUri>");
+BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 
 // List the first ten or fewer operations that have been executed in the last 24h.
-AsyncPageable<DocumentModelOperationSummary> operationSummaries = client.GetOperationsAsync();
+AsyncPageable<OperationSummary> operationSummaries = client.GetOperationsAsync();
 
 string operationId = string.Empty;
 int count = 0;
-await foreach (DocumentModelOperationSummary operationSummary in operationSummaries)
+await foreach (OperationSummary operationSummary in operationSummaries)
 {
     Console.WriteLine($"Model operation summary:");
     Console.WriteLine($"  Id: {operationSummary.OperationId}");
@@ -54,13 +63,26 @@ await foreach (DocumentModelOperationSummary operationSummary in operationSummar
 }
 
 // Get an operation by ID
-DocumentModelOperationDetails operationDetails = await client.GetOperationAsync(operationId);
+OperationDetails operationDetails = await client.GetOperationAsync(operationId);
 
 if (operationDetails.Status == DocumentOperationStatus.Succeeded)
 {
     Console.WriteLine($"My {operationDetails.Kind} operation is completed.");
-    DocumentModelDetails result = operationDetails.Result;
-    Console.WriteLine($"Model ID: {result.ModelId}");
+
+    // Extract the result based on the kind of operation. Currently only Build, CopyTo, and
+    // Compose operations are supported.
+    DocumentModelDetails result = operationDetails switch
+    {
+        DocumentModelBuildOperationDetails buildOp => buildOp.Result,
+        DocumentModelCopyToOperationDetails copyToOp => copyToOp.Result,
+        DocumentModelComposeOperationDetails composeOp => composeOp.Result,
+        _ => null
+    };
+
+    if (result != null)
+    {
+        Console.WriteLine($"Model ID: {result.ModelId}");
+    }
 }
 else if (operationDetails.Status == DocumentOperationStatus.Failed)
 {

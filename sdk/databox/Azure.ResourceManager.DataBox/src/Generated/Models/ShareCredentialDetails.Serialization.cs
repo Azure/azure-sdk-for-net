@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<ShareDestinationFormatType> shareType = default;
             Optional<string> userName = default;
             Optional<string> password = default;
-            Optional<IReadOnlyList<AccessProtocol>> supportedAccessProtocols = default;
+            Optional<IReadOnlyList<DataBoxAccessProtocol>> supportedAccessProtocols = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shareName"))
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AccessProtocol> array = new List<AccessProtocol>();
+                    List<DataBoxAccessProtocol> array = new List<DataBoxAccessProtocol>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToAccessProtocol());
+                        array.Add(item.GetString().ToDataBoxAccessProtocol());
                     }
                     supportedAccessProtocols = array;
                     continue;

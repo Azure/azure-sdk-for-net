@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("accessLevel");
                 writer.WriteStringValue(AccessLevel.Value.ToString());
             }
-            if (Optional.IsDefined(ExpirationTimeStampInUTC))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTimeStampInUTC");
-                writer.WriteStringValue(ExpirationTimeStampInUTC.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WriteEndObject();
         }
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal static RemoteSupportSettings DeserializeRemoteSupportSettings(JsonElement element)
         {
             Optional<RemoteApplicationType> remoteApplicationType = default;
-            Optional<AccessLevel> accessLevel = default;
-            Optional<DateTimeOffset> expirationTimeStampInUTC = default;
+            Optional<RemoteApplicationAccessLevel> accessLevel = default;
+            Optional<DateTimeOffset> expirationTimeStampInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("remoteApplicationType"))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    accessLevel = new AccessLevel(property.Value.GetString());
+                    accessLevel = new RemoteApplicationAccessLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("expirationTimeStampInUTC"))
@@ -68,11 +68,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    expirationTimeStampInUTC = property.Value.GetDateTimeOffset("O");
+                    expirationTimeStampInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new RemoteSupportSettings(Optional.ToNullable(remoteApplicationType), Optional.ToNullable(accessLevel), Optional.ToNullable(expirationTimeStampInUTC));
+            return new RemoteSupportSettings(Optional.ToNullable(remoteApplicationType), Optional.ToNullable(accessLevel), Optional.ToNullable(expirationTimeStampInUtc));
         }
     }
 }

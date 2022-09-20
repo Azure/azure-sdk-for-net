@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Initializes a new instance of ProvisioningServiceDescriptionListResult. </summary>
         internal ProvisioningServiceDescriptionListResult()
         {
-            Value = new ChangeTrackingList<ProvisioningServiceDescriptionData>();
+            Value = new ChangeTrackingList<DeviceProvisioningServiceData>();
         }
 
         /// <summary> Initializes a new instance of ProvisioningServiceDescriptionListResult. </summary>
         /// <param name="value"> List of provisioning service descriptions. </param>
         /// <param name="nextLink"> the next link. </param>
-        internal ProvisioningServiceDescriptionListResult(IReadOnlyList<ProvisioningServiceDescriptionData> value, string nextLink)
+        internal ProvisioningServiceDescriptionListResult(IReadOnlyList<DeviceProvisioningServiceData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of provisioning service descriptions. </summary>
-        public IReadOnlyList<ProvisioningServiceDescriptionData> Value { get; }
+        public IReadOnlyList<DeviceProvisioningServiceData> Value { get; }
         /// <summary> the next link. </summary>
         public string NextLink { get; }
     }

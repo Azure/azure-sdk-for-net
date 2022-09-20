@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataBox.Models
     {
         /// <summary> Initializes a new instance of UnknownCopyLogDetails. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
-        internal UnknownCopyLogDetails(ClassDiscriminator copyLogDetailsType) : base(copyLogDetailsType)
+        internal UnknownCopyLogDetails(DataBoxOrderType copyLogDetailsType) : base(copyLogDetailsType)
         {
             CopyLogDetailsType = copyLogDetailsType;
         }

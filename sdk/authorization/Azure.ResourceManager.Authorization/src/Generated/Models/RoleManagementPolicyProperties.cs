@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of RoleManagementPolicyProperties. </summary>
         /// <param name="scopeId"> Scope id of the resource. </param>
         /// <param name="scopeDisplayName"> Display name of the resource. </param>
-        /// <param name="scopeType"> Type of the resource. </param>
-        internal RoleManagementPolicyProperties(ResourceIdentifier scopeId, string scopeDisplayName, string scopeType)
+        /// <param name="scopeType"> Type of the scope. </param>
+        internal RoleManagementPolicyProperties(ResourceIdentifier scopeId, string scopeDisplayName, RoleManagementScopeType? scopeType)
         {
             ScopeId = scopeId;
             ScopeDisplayName = scopeDisplayName;
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Authorization.Models
         public ResourceIdentifier ScopeId { get; }
         /// <summary> Display name of the resource. </summary>
         public string ScopeDisplayName { get; }
-        /// <summary> Type of the resource. </summary>
-        public string ScopeType { get; }
+        /// <summary> Type of the scope. </summary>
+        public RoleManagementScopeType? ScopeType { get; }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using Azure.Core.Pipeline;
+using Azure.Core.Shared;
 using Azure.Core.TestFramework;
 using Azure.Messaging.ServiceBus.Diagnostics;
 using Microsoft.Azure.Amqp;
@@ -337,7 +338,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                 await Task.Delay(ShortLockDuration.Add(ShortLockDuration));
 
                 var errors = _listener.EventData.Where(e => e.Level == EventLevel.Error && e.EventId != ServiceBusEventSource.ProcessorMessageHandlerExceptionEvent).ToList();
-                Assert.IsEmpty(errors, string.Join(",", errors.Select(e => e.Message)));
+                Assert.IsEmpty(errors, string.Join(",", errors.Select(EventSourceEventFormatting.Format)));
             }
         }
 
