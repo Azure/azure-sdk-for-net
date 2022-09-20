@@ -51,9 +51,12 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             // Here we are mocking a partition context using the model factory.
 
             PartitionContext partitionContext = EventHubsModelFactory.PartitionContext(
-            partitionId: "0");
+                fullyQualifiedNamespace: "sample-hub.servicebus.windows.net",
+                eventHubName: "sample-hub",
+                consumerGroup: "$Default",
+                partitionId: "0");
 
-            // Here we are mocking an event data instance using the model factory.
+            // Here we are mocking an event data instance with broker-owned properties populated.
 
             EventData eventData = EventHubsModelFactory.EventData(
                 eventBody: new BinaryData("Sample-Event"),
