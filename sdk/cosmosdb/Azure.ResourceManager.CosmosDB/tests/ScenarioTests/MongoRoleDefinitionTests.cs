@@ -81,14 +81,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(_roleDefinition.Data.Name, definition2.Data.Name);
             VerifyMongoRoleDefinitions(definition, definition2);
 
-            var updateParameters = new MongoRoleDefinitionGetResultCreateOrUpdateContent
+            var updateParameters = new MongoDBRoleDefinitionCreateOrUpdateContent
             {
                 RoleName = _roleDefinition.Data.Name,
                 DatabaseName = databaseName,
-                DefinitionType = MongoRoleDefinitionType.CustomRole,
+                DefinitionType = MongoDBRoleDefinitionType.CustomRole,
             };
 
-            Privilege privilege = new Privilege
+            MongoDBPrivilege privilege = new MongoDBPrivilege
             {
                 Resource = new PrivilegeResource
                 {
@@ -159,14 +159,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         internal async Task<MongoDBRoleDefinitionResource> CreateMongoRoleDefinition(string roleDefinitionName, string databaseName, MongoDBRoleDefinitionCollection definitionCollection)
         {
             this._roleDefinitionId = $"{databaseName}.{roleDefinitionName}";
-            var parameters = new MongoRoleDefinitionGetResultCreateOrUpdateContent
+            var parameters = new MongoDBRoleDefinitionCreateOrUpdateContent
             {
                 RoleName = roleDefinitionName,
                 DatabaseName = databaseName,
-                DefinitionType = MongoRoleDefinitionType.CustomRole,
+                DefinitionType = MongoDBRoleDefinitionType.CustomRole,
             };
 
-            Privilege privilege = new Privilege
+            MongoDBPrivilege privilege = new MongoDBPrivilege
             {
                 Resource = new PrivilegeResource
                 {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyPrivileges(expectedValue.Data.Privileges, actualValue.Data.Privileges);
         }
 
-        private void VerifyPrivileges(IList<Privilege> expected, IList<Privilege> actualValue)
+        private void VerifyPrivileges(IList<MongoDBPrivilege> expected, IList<MongoDBPrivilege> actualValue)
         {
             Assert.AreEqual(expected.Count, actualValue.Count);
             for (int i = 0; i < expected.Count; i++)

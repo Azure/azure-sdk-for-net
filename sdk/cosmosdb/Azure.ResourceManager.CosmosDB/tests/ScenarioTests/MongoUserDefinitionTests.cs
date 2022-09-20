@@ -16,13 +16,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         private MongoDBDatabaseResource _mongoDBDatabase;
         private string _userDefinitionId;
 
-        private MongoUserDefinitionGetResultResource _userDefinition;
+        private MongoDBUserDefinitionResource _userDefinition;
 
         public MongoUserDefinitionTests(bool isAsync) : base(isAsync)
         {
         }
 
-        private MongoUserDefinitionGetResultCollection MongoUserDefinitionCollection { get => _databaseAccount.GetMongoUserDefinitionGetResults(); }
+        private MongoDBUserDefinitionCollection MongoUserDefinitionCollection { get => _databaseAccount.GetMongoDBUserDefinitions(); }
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             bool ifExists = await MongoUserDefinitionCollection.ExistsAsync(this._userDefinitionId);
             Assert.True(ifExists);
 
-            MongoUserDefinitionGetResultResource definition2 = await MongoUserDefinitionCollection.GetAsync(this._userDefinitionId);
+            MongoDBUserDefinitionResource definition2 = await MongoUserDefinitionCollection.GetAsync(this._userDefinitionId);
             Assert.AreEqual(_userDefinition.Data.Name, definition2.Data.Name);
             VerifyMongoUserDefinitions(definition, definition2);
 
             var password = Recording.GenerateAssetName("mongo-user-pass-");
-            var updateParameters = new MongoUserDefinitionGetResultCreateOrUpdateContent
+            var updateParameters = new MongoDBUserDefinitionCreateOrUpdateContent
             {
                 UserName = _userDefinition.Data.Name,
                 DatabaseName = _userDefinition.Data.DatabaseName,
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 Mechanisms = _userDefinition.Data.Mechanisms
             };
 
-            Role role = new Role
+            MongoDBRole role = new MongoDBRole
             {
                 Db = databaseName,
-                RoleValue = "readWrite"
+                Role = "readWrite"
             };
             updateParameters.Roles.Add(role);
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyMongoUserDefinitions(definition, definition2);
         }
 
-        private async Task<MongoUserDefinitionGetResultResource> CreateMongoUserDefinition(string databaseName, MongoUserDefinitionGetResultCollection definitionCollection)
+        private async Task<MongoDBUserDefinitionResource> CreateMongoUserDefinition(string databaseName, MongoDBUserDefinitionCollection definitionCollection)
         {
             var userName = Recording.GenerateAssetName("mongo-user-def-");
             var password = Recording.GenerateAssetName("mongo-user-pass-");
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return _userDefinition;
         }
 
-        internal async Task<MongoUserDefinitionGetResultResource> CreateMongoUserDefinition(string userName, string password, string databaseName, MongoUserDefinitionGetResultCollection definitionCollection)
+        internal async Task<MongoDBUserDefinitionResource> CreateMongoUserDefinition(string userName, string password, string databaseName, MongoDBUserDefinitionCollection definitionCollection)
         {
             this._userDefinitionId = $"{databaseName}.{userName}";
-            var parameters = new MongoUserDefinitionGetResultCreateOrUpdateContent
+            var parameters = new MongoDBUserDefinitionCreateOrUpdateContent
             {
                 UserName  = userName,
                 Password = password,
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 Mechanisms = "SCRAM-SHA-256"
             };
 
-            Role role = new Role
+            MongoDBRole role = new MongoDBRole
             {
                 Db = databaseName,
-                RoleValue = "read"
+                Role = "read"
             };
             parameters.Roles.Add(role);
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return definition.Value;
         }
 
-        private void VerifyMongoUserDefinitions(MongoUserDefinitionGetResultResource expectedValue, MongoUserDefinitionGetResultResource actualValue)
+        private void VerifyMongoUserDefinitions(MongoDBUserDefinitionResource expectedValue, MongoDBUserDefinitionResource actualValue)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);
@@ -188,13 +188,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyRoles(expectedValue.Data.Roles, actualValue.Data.Roles);
         }
 
-        private void VerifyRoles(IList<Role> expected, IList<Role> actualValue)
+        private void VerifyRoles(IList<MongoDBRole> expected, IList<MongoDBRole> actualValue)
         {
             Assert.AreEqual(expected.Count, actualValue.Count);
             for (int i = 0; i < expected.Count; i++)
             {
                 Assert.AreEqual(expected[i].Db, actualValue[i].Db);
-                Assert.AreEqual(expected[i].RoleValue, actualValue[i].RoleValue);
+                Assert.AreEqual(expected[i].Role, actualValue[i].Role);
             }
         }
     }
