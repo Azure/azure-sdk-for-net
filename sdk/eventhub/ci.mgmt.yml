@@ -1,38 +1,14 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
-trigger:
-  branches:
-    include:
-    - main
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/eventhub/ci.mgmt.yml
-    - sdk/eventhub/service.projects
-    - sdk/eventhub/Azure.ResourceManager.EventHubs
+trigger: none
 
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/eventhub/ci.mgmt.yml
-    - sdk/eventhub/service.projects
-    - sdk/eventhub/Azure.ResourceManager.EventHubs
-    - sdk/resourcemanager/
-    - sdk/network/
+pr: none
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     SdkType: mgmtclient
     ServiceDirectory: eventhub
-    ArtifactName: packages
     Artifacts:
     - name: Azure.ResourceManager.EventHubs
       safeName: AzureResourceManagerEventHubs

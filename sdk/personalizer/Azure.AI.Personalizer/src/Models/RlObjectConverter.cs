@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Text.Json;
-using Rl.Net;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
@@ -15,10 +15,18 @@ namespace Azure.AI.Personalizer
         /// <summary>
         /// Convert PersonalizerRankOptions object to a json context string for Rl.Net
         /// </summary>
-        public static string ConvertToContextJson(IEnumerable<object> contextFeatures, List<PersonalizerRankableAction> rankableActions)
+        public static string ConvertToContextJson(IList<BinaryData> contextFeatures, List<PersonalizerRankableAction> rankableActions)
         {
             DecisionContext decisionContext = new DecisionContext(contextFeatures, rankableActions);
-            return JsonSerializer.Serialize(decisionContext);
+            var jsonSerializerOptions = new JsonSerializerOptions
+            {
+                Converters =
+                {
+                     new JsonBinaryDataConverter(),
+                },
+                IgnoreNullValues = true
+            };
+            return JsonSerializer.Serialize(decisionContext, jsonSerializerOptions);
         }
 
         /// <summary>

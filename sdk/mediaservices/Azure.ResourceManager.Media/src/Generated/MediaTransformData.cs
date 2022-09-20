@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Media
         /// <summary> Initializes a new instance of MediaTransformData. </summary>
         public MediaTransformData()
         {
-            Outputs = new ChangeTrackingList<TransformOutput>();
+            Outputs = new ChangeTrackingList<MediaTransformOutput>();
         }
 
         /// <summary> Initializes a new instance of MediaTransformData. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="description"> An optional verbose description of the Transform. </param>
         /// <param name="lastModifiedOn"> The UTC date and time when the Transform was last updated, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </param>
         /// <param name="outputs"> An array of one or more TransformOutputs that the Transform should generate. </param>
-        internal MediaTransformData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, string description, DateTimeOffset? lastModifiedOn, IList<TransformOutput> outputs) : base(id, name, resourceType, systemData)
+        internal MediaTransformData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, string description, DateTimeOffset? lastModifiedOn, IList<MediaTransformOutput> outputs) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             Description = description;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.Media
         /// <summary> The UTC date and time when the Transform was last updated, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> An array of one or more TransformOutputs that the Transform should generate. </summary>
-        public IList<TransformOutput> Outputs { get; }
+        public IList<MediaTransformOutput> Outputs { get; }
     }
 }

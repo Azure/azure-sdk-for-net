@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppConfiguration
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<AppConfigurationProvisioningState> provisioningState = default;
             Optional<WritableSubResource> privateEndpoint = default;
             Optional<AppConfigurationPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppConfiguration
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new AppConfigurationProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpoint"))

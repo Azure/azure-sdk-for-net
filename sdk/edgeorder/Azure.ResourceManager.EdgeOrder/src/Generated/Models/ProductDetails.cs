@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="count"> Quantity of the product. </param>
         /// <param name="productDoubleEncryptionStatus"> Double encryption status of the configuration. Read-only field. </param>
         /// <param name="deviceDetails"> list of device details. </param>
-        internal ProductDetails(DisplayInfo displayInfo, HierarchyInformation hierarchyInformation, int? count, DoubleEncryptionStatus? productDoubleEncryptionStatus, IReadOnlyList<DeviceDetails> deviceDetails)
+        internal ProductDetails(ProductDisplayInfo displayInfo, HierarchyInformation hierarchyInformation, int? count, DoubleEncryptionStatus? productDoubleEncryptionStatus, IReadOnlyList<DeviceDetails> deviceDetails)
         {
             DisplayInfo = displayInfo;
             HierarchyInformation = hierarchyInformation;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         }
 
         /// <summary> Display details of the product. </summary>
-        public DisplayInfo DisplayInfo { get; set; }
+        public ProductDisplayInfo DisplayInfo { get; set; }
         /// <summary> Hierarchy of the product which uniquely identifies the product. </summary>
         public HierarchyInformation HierarchyInformation { get; set; }
         /// <summary> Quantity of the product. </summary>

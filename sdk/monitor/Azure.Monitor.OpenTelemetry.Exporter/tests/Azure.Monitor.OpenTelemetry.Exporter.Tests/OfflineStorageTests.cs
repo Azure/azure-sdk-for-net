@@ -11,6 +11,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry.Extensions.PersistentStorage.Abstractions;
@@ -188,7 +189,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         private static TelemetryItem CreateTelemetryItem(Activity activity)
         {
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
-
             return new TelemetryItem(activity, ref monitorTags, null, null, null);
         }
 

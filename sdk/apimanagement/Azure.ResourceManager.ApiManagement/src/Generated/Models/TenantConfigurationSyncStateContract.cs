@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="branch"> The name of Git branch. </param>
         /// <param name="commitId"> The latest commit Id. </param>
-        /// <param name="isExport"> value indicating if last sync was save (true) or deploy (false) operation. </param>
+        /// <param name="isExported"> value indicating if last sync was save (true) or deploy (false) operation. </param>
         /// <param name="isSynced"> value indicating if last synchronization was later than the configuration change. </param>
         /// <param name="isGitEnabled"> value indicating whether Git configuration access is enabled. </param>
         /// <param name="syncOn">
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// 
         /// </param>
         /// <param name="lastOperationId"> Most recent tenant configuration operation identifier. </param>
-        internal TenantConfigurationSyncStateContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string branch, string commitId, bool? isExport, bool? isSynced, bool? isGitEnabled, DateTimeOffset? syncOn, DateTimeOffset? configurationChangeOn, string lastOperationId) : base(id, name, resourceType, systemData)
+        internal TenantConfigurationSyncStateContract(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string branch, string commitId, bool? isExported, bool? isSynced, bool? isGitEnabled, DateTimeOffset? syncOn, DateTimeOffset? configurationChangeOn, string lastOperationId) : base(id, name, resourceType, systemData)
         {
             Branch = branch;
             CommitId = commitId;
-            IsExport = isExport;
+            IsExported = isExported;
             IsSynced = isSynced;
             IsGitEnabled = isGitEnabled;
             SyncOn = syncOn;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> The latest commit Id. </summary>
         public string CommitId { get; set; }
         /// <summary> value indicating if last sync was save (true) or deploy (false) operation. </summary>
-        public bool? IsExport { get; set; }
+        public bool? IsExported { get; set; }
         /// <summary> value indicating if last synchronization was later than the configuration change. </summary>
         public bool? IsSynced { get; set; }
         /// <summary> value indicating whether Git configuration access is enabled. </summary>

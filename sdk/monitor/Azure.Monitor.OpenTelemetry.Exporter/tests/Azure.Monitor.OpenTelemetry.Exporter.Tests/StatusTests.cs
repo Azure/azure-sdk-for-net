@@ -7,8 +7,6 @@ using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
-using OpenTelemetry.Trace;
-
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
@@ -33,13 +31,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Theory]
-        [InlineData("Ok", null)]
-        [InlineData("Error", null)]
-        [InlineData("Unset", null)]
-        [InlineData("Ok", "statusdescription")]
-        [InlineData("Error", "statusdescription")]
-        [InlineData("Unset", "statusdescription")]
-        public void ValidateStatusForAzureMonitorTrace(string activityStatusCode, string activityStatusDescription)
+        [InlineData(ActivityStatusCode.Ok)]
+        [InlineData(ActivityStatusCode.Error)]
+        [InlineData(ActivityStatusCode.Unset)]
+        public void ValidateStatusForAzureMonitorTrace(ActivityStatusCode activityStatusCode)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -48,8 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
                 startTime: DateTime.UtcNow);
 
-            activity.SetTag("otel.status_code", activityStatusCode);
-            activity.SetTag("otel.status_description", activityStatusDescription);
+            activity.SetStatus(activityStatusCode);
 
             activity.SetTag(SemanticConventions.AttributeHttpUrl, "https://www.foo.bar/search");
 
@@ -58,8 +52,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var requestData = new RequestData(2, activity, ref monitorTags);
             var remoteDependencyData = new RemoteDependencyData(2, activity, ref monitorTags);
 
-            Assert.Equal(activity.GetStatus().StatusCode != StatusCode.Error, requestData.Success);
-            Assert.Equal(activity.GetStatus().StatusCode != StatusCode.Error, remoteDependencyData.Success);
+            Assert.Equal(activity.Status != ActivityStatusCode.Error, requestData.Success);
+            Assert.Equal(activity.Status != ActivityStatusCode.Error, remoteDependencyData.Success);
         }
     }
 }

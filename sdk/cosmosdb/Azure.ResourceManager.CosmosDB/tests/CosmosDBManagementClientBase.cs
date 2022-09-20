@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 IsVirtualNetworkFilterEnabled = true,
                 EnableAutomaticFailover = false,
                 ConnectorOffer = ConnectorOffer.Small,
-                DisableKeyBasedMetadataWriteAccess = false,
+                DisableKeyBasedMetadataWriteAccess = false
             };
             if (capability != null)
             {

@@ -7,6 +7,7 @@
 
 using System;
 using Azure;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -35,16 +36,16 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of AssetTrackOperationStatus. </summary>
         /// <param name="name"> Operation identifier. </param>
         /// <param name="id"> Operation resource ID. </param>
-        /// <param name="startOn"> Operation start time. </param>
-        /// <param name="endOn"> Operation end time. </param>
+        /// <param name="startsOn"> Operation start time. </param>
+        /// <param name="endsOn"> Operation end time. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="error"> The error detail. </param>
-        internal AssetTrackOperationStatus(string name, string id, DateTimeOffset? startOn, DateTimeOffset? endOn, string status, ResponseError error)
+        internal AssetTrackOperationStatus(string name, ResourceIdentifier id, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string status, ResponseError error)
         {
             Name = name;
             Id = id;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Status = status;
             Error = error;
         }
@@ -52,11 +53,11 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Operation identifier. </summary>
         public string Name { get; }
         /// <summary> Operation resource ID. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> Operation start time. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
         /// <summary> Operation end time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
         /// <summary> Operation status. </summary>
         public string Status { get; }
         /// <summary> The error detail. </summary>

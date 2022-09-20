@@ -1,10 +1,12 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This library simplifies uploading resource files for use by tasks in the Microsoft Azure Batch service.
       Visit our home page for more detail - http://azure.microsoft.com/services/batch/.
       For technical overview, see http://azure.microsoft.com/documentation/articles/batch-technical-overview/.
       API reference can be found at http://go.microsoft.com/fwlink/?LinkId=717949.</Description>
-    <Version>8.4.0-preview.1</Version>
+    <Version>9.1.0-beta.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>9.0.0</ApiCompatVersion>
     <DefineConstants>$(DefineConstants);CODESIGN</DefineConstants>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AssemblyTitle>Microsoft.Azure.Batch.FileStaging</AssemblyTitle>
@@ -17,24 +19,11 @@
     </PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="System.Text.Encodings.Web" />
-    <PackageReference Include="WindowsAzure.Storage" />
+    <PackageReference Include="System.Text.Encodings.Web" VersionOverride="4.7.2" />
     <PackageReference Include="Microsoft.Azure.Batch" />
+    <PackageReference Include="Azure.Storage.Blobs" VersionOverride="12.12.0" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <Reference Include="System.Web" />
-    <Reference Include="System" />
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
-  <!--<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <ProjectReference Include="..\..\..\DataPlane\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <Private>False</Private>
-    </ProjectReference>
-    <Analyzer Include="..\..\..\DataPlane\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\bin\Debug\netstandard1.4\ConfigureAwaitAnalyzer.dll" />
-  </ItemGroup>-->
 </Project>

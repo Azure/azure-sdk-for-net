@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <param name="diskCount"> Virtual machine disk count. </param>
         /// <param name="startingDeviceId"> Device id of the first disk to be updated. </param>
         /// <param name="diskConfigurationType"> Disk configuration to apply to SQL Server. </param>
-        internal SqlStorageUpdateSettings(int? diskCount, int? startingDeviceId, DiskConfigurationType? diskConfigurationType)
+        internal SqlStorageUpdateSettings(int? diskCount, int? startingDeviceId, SqlVmDiskConfigurationType? diskConfigurationType)
         {
             DiskCount = diskCount;
             StartingDeviceId = startingDeviceId;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
         /// <summary> Device id of the first disk to be updated. </summary>
         public int? StartingDeviceId { get; set; }
         /// <summary> Disk configuration to apply to SQL Server. </summary>
-        public DiskConfigurationType? DiskConfigurationType { get; set; }
+        public SqlVmDiskConfigurationType? DiskConfigurationType { get; set; }
     }
 }

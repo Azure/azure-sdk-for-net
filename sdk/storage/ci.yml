@@ -20,7 +20,6 @@ pr:
   paths:
     include:
     - sdk/storage/
-    - sdk/resourcemanager/
     - sdk/compute/
     - sdk/network/
 
@@ -50,7 +49,5 @@ extends:
       safeName: MicrosoftAzureWebJobsExtensionsStorageBlobs
     - name: Microsoft.Azure.WebJobs.Extensions.Storage.Queues
       safeName: MicrosoftAzureWebJobsExtensionsStorageQueues
-    - name: Azure.ResourceManager.Storage
-      safeName: AzureResourceManagerStorage
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml

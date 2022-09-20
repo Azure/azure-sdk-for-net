@@ -355,54 +355,47 @@ namespace Azure.AI.TextAnalytics.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/26528")]
-        public async Task AnalyzeHealthcareEntitiesBatchWithCancellation()
+        [ServiceVersion(Min = TextAnalyticsClientOptions.ServiceVersion.V2022_05_01)]
+        public async Task AnalyzeHealthcareEntitiesBatchWithNameTest()
         {
             TextAnalyticsClient client = GetClient();
-            string document = @"RECORD #333582770390100 | MH | 85986313 | | 054351 | 2/14/2001 12:00:00 AM | CORONARY ARTERY DISEASE | Signed | DIS |";
 
-            var batchDocuments = new List<string>();
-
-            for (var i = 0; i < 10; i++)
+            AnalyzeHealthcareEntitiesOperation operation = await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
             {
-                batchDocuments.Add(document);
-            }
+                DisplayName = "AnalyzeHealthcareEntitiesBatchWithNameTest",
+            });
 
-            AnalyzeHealthcareEntitiesOperation operation = default;
+            await operation.WaitForCompletionAsync();
 
-            await TestRetryHelper.RetryAsync(async () =>
+            ValidateOperationProperties(operation);
+            Assert.AreEqual("AnalyzeHealthcareEntitiesBatchWithNameTest", operation.DisplayName);
+
+            //Take the first page
+            AnalyzeHealthcareEntitiesResultCollection resultCollection = operation.Value.ToEnumerableAsync().Result.FirstOrDefault();
+
+            var expectedOutput = new Dictionary<string, List<string>>()
             {
-                try
-                {
-                    operation = await client.StartAnalyzeHealthcareEntitiesAsync(batchDocuments, "en");
-                    await operation.CancelAsync();
-                    await operation.WaitForCompletionAsync();
-                }
-                catch (Exception e)
-                {
-                    Assert.AreEqual(typeof(RequestFailedException), e.GetType());
-                    Assert.IsTrue(e.Message.Contains("The operation was canceled so no value is available."));
-                    return (Response)null;
-                }
+                { "1", s_document1ExpectedEntitiesOutput },
+                { "2", s_document2ExpectedEntitiesOutput },
+            };
 
-                // If we get here, that means that the operation completed successfully and didn't cancel.
-                throw new InvalidOperationException("StartAnalyzeHealthcareEntitiesAsync operation did not get cancelled.");
-            },
-            maxIterations: 15, delay: TimeSpan.FromSeconds(1));
+            ValidateBatchDocumentsResult(resultCollection, expectedOutput);
+        }
 
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsFalse(operation.HasValue);
-            Assert.AreEqual(200, operation.GetRawResponse().Status);
-            Assert.AreEqual(TextAnalyticsOperationStatus.Cancelled, operation.Status);
+        [RecordedTest]
+        [ServiceVersion(Max = TextAnalyticsClientOptions.ServiceVersion.V3_1)]
+        public void AnalyzeHealthcareEntitiesBatchWithNameThrows()
+        {
+            TestDiagnostics = false;
 
-            try
+            TextAnalyticsClient client = GetClient();
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(s_batchDocuments, new AnalyzeHealthcareEntitiesOptions
             {
-                Assert.IsNull(operation.Value);
-            }
-            catch (RequestFailedException exception)
-            {
-                Assert.IsTrue(exception.Message.Contains("The operation was canceled so no value is available."));
-            }
+                DisplayName = "AnalyzeHealthcareEntitiesBatchWithNameThrows",
+            }));
+
+            Assert.AreEqual("AnalyzeHealthcareEntitiesOptions.DisplayName is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
 
         [RecordedTest]

@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string LBSValue = "LBS";
-        private const string KGSValue = "KGS";
+        private const string LbsValue = "LBS";
+        private const string KgsValue = "KGS";
 
         /// <summary> Pounds. </summary>
-        public static WeightMeasurementUnit LBS { get; } = new WeightMeasurementUnit(LBSValue);
+        public static WeightMeasurementUnit Lbs { get; } = new WeightMeasurementUnit(LbsValue);
         /// <summary> Kilograms. </summary>
-        public static WeightMeasurementUnit KGS { get; } = new WeightMeasurementUnit(KGSValue);
+        public static WeightMeasurementUnit Kgs { get; } = new WeightMeasurementUnit(KgsValue);
         /// <summary> Determines if two <see cref="WeightMeasurementUnit"/> values are the same. </summary>
         public static bool operator ==(WeightMeasurementUnit left, WeightMeasurementUnit right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WeightMeasurementUnit"/> values are not the same. </summary>

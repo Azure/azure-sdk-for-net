@@ -234,14 +234,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<int> count = default;
             Optional<string> vmSize = default;
             Optional<int> osDiskSizeGB = default;
-            Optional<OSDiskType> osDiskType = default;
+            Optional<ContainerServiceOSDiskType> osDiskType = default;
             Optional<KubeletDiskType> kubeletDiskType = default;
             Optional<WorkloadRuntime> workloadRuntime = default;
             Optional<ResourceIdentifier> vnetSubnetId = default;
             Optional<ResourceIdentifier> podSubnetId = default;
             Optional<int> maxPods = default;
-            Optional<OSType> osType = default;
-            Optional<OSSku> osSku = default;
+            Optional<ContainerServiceOSType> osType = default;
+            Optional<ContainerServiceOSSku> osSku = default;
             Optional<int> maxCount = default;
             Optional<int> minCount = default;
             Optional<bool> enableAutoScaling = default;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<string> nodeImageVersion = default;
             Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
             Optional<string> provisioningState = default;
-            Optional<PowerState> powerState = default;
+            Optional<ContainerServicePowerState> powerState = default;
             Optional<IList<string>> availabilityZones = default;
             Optional<bool> enableNodePublicIP = default;
             Optional<ResourceIdentifier> nodePublicIPPrefixId = default;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<bool> enableUltraSsd = default;
             Optional<bool> enableFIPS = default;
             Optional<GpuInstanceProfile> gpuInstanceProfile = default;
-            Optional<CreationData> creationData = default;
+            Optional<ContainerServiceCreationData> creationData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osDiskType = new OSDiskType(property.Value.GetString());
+                    osDiskType = new ContainerServiceOSDiskType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("kubeletDiskType"))
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osType = new OSType(property.Value.GetString());
+                    osType = new ContainerServiceOSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("osSKU"))
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    osSku = new OSSku(property.Value.GetString());
+                    osSku = new ContainerServiceOSSku(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("maxCount"))
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    powerState = PowerState.DeserializePowerState(property.Value);
+                    powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property.Value);
                     continue;
                 }
                 if (property.NameEquals("availabilityZones"))
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    creationData = CreationData.DeserializeCreationData(property.Value);
+                    creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property.Value);
                     continue;
                 }
             }

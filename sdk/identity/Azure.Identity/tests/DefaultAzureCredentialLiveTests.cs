@@ -40,7 +40,7 @@ namespace Azure.Identity.Tests
             var testProcess = new TestProcess { Output = processOutput };
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(testProcess), default);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             AccessToken token;
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
@@ -79,7 +79,7 @@ namespace Azure.Identity.Tests
             var process = new TestProcess { Error = "Error" };
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(process), default);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             AccessToken token;
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
@@ -117,7 +117,7 @@ namespace Azure.Identity.Tests
             var processService = new TestProcessService { CreateHandler = psi => new TestProcess { Error = "Error" }};
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, processService, default);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             var tasks = new List<Task<AccessToken>>();
             using (await CredentialTestHelpers.CreateRefreshTokenFixtureAsync(TestEnvironment, Mode, ExpectedServiceName, cloudName))
@@ -154,7 +154,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, new TestProcessService(testProcess), vscAdapter);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             AccessToken token;
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
@@ -192,7 +192,7 @@ namespace Azure.Identity.Tests
             var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudioCode(TestEnvironment);
 
             var factory = new TestDefaultAzureCredentialFactory(options, fileSystem, processService, vscAdapter);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             var tasks = new List<Task<AccessToken>>();
             for (int i = 0; i < 10; i++)
@@ -221,8 +221,8 @@ namespace Azure.Identity.Tests
             });
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", "{}");
-            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }, new TestProcess{Error = "'PowerShell' is not recognized"}), vscAdapter);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "'az' is not recognized" }, new TestProcess{Error = "'PowerShell' is not recognized"}, new TestProcess{Error = "'PowerShell' is not recognized"}), vscAdapter);
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
 
@@ -253,7 +253,7 @@ namespace Azure.Identity.Tests
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "Error" }), vscAdapter);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
 
@@ -283,7 +283,7 @@ namespace Azure.Identity.Tests
 
             var vscAdapter = new TestVscAdapter(ExpectedServiceName, "AzureCloud", null);
             var factory = new TestDefaultAzureCredentialFactory(options, new TestFileSystemService(), new TestProcessService(new TestProcess { Error = "Error" }), vscAdapter);
-            var credential = InstrumentClient(new DefaultAzureCredential(factory, options));
+            var credential = InstrumentClient(new DefaultAzureCredential(factory));
 
             List<ClientDiagnosticListener.ProducedDiagnosticScope> scopes;
 

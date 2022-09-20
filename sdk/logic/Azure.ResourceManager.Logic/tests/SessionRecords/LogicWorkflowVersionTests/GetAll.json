@@ -1,0 +1,347 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-7520/providers/Microsoft.Logic/workflows/workflow7509?api-version=2019-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-655f976a82be5649a61ec4689722bb28-690e8f72d5e71646-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220825.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "b7fe61268440350f1c97486a51840f1a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "2042",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Aug 2022 08:58:58 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "0f6791d6-0ffd-4547-a749-0784b4ca20bd",
+        "x-ms-ratelimit-remaining-subscription-resource-requests": "19997",
+        "x-ms-request-id": "centralus:5e9a5587-5019-4aff-90fe-a305d37b9d69",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220825T085858Z:0f6791d6-0ffd-4547-a749-0784b4ca20bd"
+      },
+      "ResponseBody": {
+        "properties": {
+          "provisioningState": "Succeeded",
+          "createdTime": "2022-08-25T08:58:51.8739002Z",
+          "changedTime": "2022-08-25T08:58:51.8609204Z",
+          "state": "Enabled",
+          "version": "08585401889536307227",
+          "accessEndpoint": "https://prod-03.centralus.logic.azure.com:443/workflows/2677990d821840d5853928f6f02b7815",
+          "integrationAccount": {
+            "name": "integration7187",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-7520/providers/Microsoft.Logic/integrationAccounts/integration7187",
+            "type": "Microsoft.Logic/integrationAccounts"
+          },
+          "definition": {
+            "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {},
+            "triggers": {
+              "manual": {
+                "type": "Request",
+                "kind": "Http",
+                "inputs": {
+                  "schema": {}
+                }
+              }
+            },
+            "actions": {
+              "Response": {
+                "runAfter": {},
+                "type": "Response",
+                "kind": "Http",
+                "inputs": {
+                  "statusCode": 200
+                }
+              }
+            },
+            "outputs": {}
+          },
+          "parameters": {},
+          "endpointsConfiguration": {
+            "workflow": {
+              "outgoingIpAddresses": [
+                {
+                  "address": "13.67.236.125"
+                },
+                {
+                  "address": "104.208.25.27"
+                },
+                {
+                  "address": "40.122.170.198"
+                },
+                {
+                  "address": "40.113.218.230"
+                },
+                {
+                  "address": "23.100.86.139"
+                },
+                {
+                  "address": "23.100.87.24"
+                },
+                {
+                  "address": "23.100.87.56"
+                },
+                {
+                  "address": "23.100.82.16"
+                },
+                {
+                  "address": "52.141.221.6"
+                },
+                {
+                  "address": "52.141.218.55"
+                },
+                {
+                  "address": "20.109.202.36"
+                },
+                {
+                  "address": "20.109.202.29"
+                }
+              ],
+              "accessEndpointIpAddresses": [
+                {
+                  "address": "13.67.236.76"
+                },
+                {
+                  "address": "40.77.111.254"
+                },
+                {
+                  "address": "40.77.31.87"
+                },
+                {
+                  "address": "104.43.243.39"
+                },
+                {
+                  "address": "13.86.98.126"
+                },
+                {
+                  "address": "20.109.202.37"
+                }
+              ]
+            },
+            "connector": {
+              "outgoingIpAddresses": [
+                {
+                  "address": "52.173.241.27"
+                },
+                {
+                  "address": "52.173.245.164"
+                },
+                {
+                  "address": "13.89.171.80/28"
+                },
+                {
+                  "address": "13.89.178.64/27"
+                },
+                {
+                  "address": "40.77.68.110"
+                },
+                {
+                  "address": "20.98.144.224/27"
+                },
+                {
+                  "address": "20.98.145.0/28"
+                },
+                {
+                  "address": "20.80.123.134"
+                },
+                {
+                  "address": "20.80.123.57"
+                }
+              ]
+            }
+          }
+        },
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-7520/providers/Microsoft.Logic/workflows/workflow7509",
+        "name": "workflow7509",
+        "type": "Microsoft.Logic/workflows",
+        "location": "centralus",
+        "tags": {}
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-7520/providers/Microsoft.Logic/workflows/workflow7509/versions?api-version=2019-05-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-783206aaabe8714eb645e6103c54333b-c64a8be887f98947-00",
+        "User-Agent": "azsdk-net-ResourceManager.Logic/1.0.0-alpha.20220825.1 (.NET Core 3.1.28; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "c7d8310081c267b14827c98c5157be7e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1943",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 25 Aug 2022 08:58:58 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "5c082d16-c5bc-4186-8f5e-60eb0530ff0b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11987",
+        "x-ms-request-id": "centralus:3d3775f3-61ed-4f7c-bcbe-8822827d4f5e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220825T085858Z:5c082d16-c5bc-4186-8f5e-60eb0530ff0b"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "properties": {
+              "createdTime": "2022-08-25T08:58:51.8739002Z",
+              "changedTime": "2022-08-25T08:58:51.8609204Z",
+              "version": "08585401889536307227",
+              "integrationAccount": {
+                "name": "integration7187",
+                "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-7520/providers/Microsoft.Logic/integrationAccounts/integration7187",
+                "type": "Microsoft.Logic/integrationAccounts"
+              },
+              "definition": {
+                "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                "contentVersion": "1.0.0.0",
+                "parameters": {},
+                "triggers": {
+                  "manual": {
+                    "type": "Request",
+                    "kind": "Http",
+                    "inputs": {
+                      "schema": {}
+                    }
+                  }
+                },
+                "actions": {
+                  "Response": {
+                    "runAfter": {},
+                    "type": "Response",
+                    "kind": "Http",
+                    "inputs": {
+                      "statusCode": 200
+                    }
+                  }
+                },
+                "outputs": {}
+              },
+              "parameters": {},
+              "endpointsConfiguration": {
+                "workflow": {
+                  "outgoingIpAddresses": [
+                    {
+                      "address": "13.67.236.125"
+                    },
+                    {
+                      "address": "104.208.25.27"
+                    },
+                    {
+                      "address": "40.122.170.198"
+                    },
+                    {
+                      "address": "40.113.218.230"
+                    },
+                    {
+                      "address": "23.100.86.139"
+                    },
+                    {
+                      "address": "23.100.87.24"
+                    },
+                    {
+                      "address": "23.100.87.56"
+                    },
+                    {
+                      "address": "23.100.82.16"
+                    },
+                    {
+                      "address": "52.141.221.6"
+                    },
+                    {
+                      "address": "52.141.218.55"
+                    },
+                    {
+                      "address": "20.109.202.36"
+                    },
+                    {
+                      "address": "20.109.202.29"
+                    }
+                  ],
+                  "accessEndpointIpAddresses": [
+                    {
+                      "address": "13.67.236.76"
+                    },
+                    {
+                      "address": "40.77.111.254"
+                    },
+                    {
+                      "address": "40.77.31.87"
+                    },
+                    {
+                      "address": "104.43.243.39"
+                    },
+                    {
+                      "address": "13.86.98.126"
+                    },
+                    {
+                      "address": "20.109.202.37"
+                    }
+                  ]
+                },
+                "connector": {
+                  "outgoingIpAddresses": [
+                    {
+                      "address": "52.173.241.27"
+                    },
+                    {
+                      "address": "52.173.245.164"
+                    },
+                    {
+                      "address": "13.89.171.80/28"
+                    },
+                    {
+                      "address": "13.89.178.64/27"
+                    },
+                    {
+                      "address": "40.77.68.110"
+                    },
+                    {
+                      "address": "20.98.144.224/27"
+                    },
+                    {
+                      "address": "20.98.145.0/28"
+                    },
+                    {
+                      "address": "20.80.123.134"
+                    },
+                    {
+                      "address": "20.80.123.57"
+                    }
+                  ]
+                }
+              }
+            },
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/LogicAppRG-7520/providers/Microsoft.Logic/workflows/workflow7509/versions/08585401889536307227",
+            "name": "08585401889536307227",
+            "type": "Microsoft.Logic/workflows/versions",
+            "location": "centralus",
+            "tags": {}
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "RandomSeed": "294895372",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
+  }
+}

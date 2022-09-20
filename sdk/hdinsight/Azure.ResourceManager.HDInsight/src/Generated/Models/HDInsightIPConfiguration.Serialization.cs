@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress");
-                writer.WriteStringValue(PrivateIPAddress);
+                writer.WriteStringValue(PrivateIPAddress.ToString());
             }
             if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
@@ -48,10 +49,10 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
             Optional<ResourceIdentifier> id = default;
             string name = default;
-            Optional<ResourceIdentifier> type = default;
+            Optional<ResourceType> type = default;
             Optional<HDInsightPrivateLinkConfigurationProvisioningState> provisioningState = default;
             Optional<bool> primary = default;
-            Optional<string> privateIPAddress = default;
+            Optional<IPAddress> privateIPAddress = default;
             Optional<HDInsightPrivateIPAllocationMethod> privateIPAllocationMethod = default;
             Optional<WritableSubResource> subnet = default;
             foreach (var property in element.EnumerateObject())
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = new ResourceIdentifier(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -112,7 +113,12 @@ namespace Azure.ResourceManager.HDInsight.Models
                         }
                         if (property0.NameEquals("privateIPAddress"))
                         {
-                            privateIPAddress = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            privateIPAddress = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateIPAllocationMethod"))
@@ -139,7 +145,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     continue;
                 }
             }
-            return new HDInsightIPConfiguration(id.Value, name, type.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(primary), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet);
+            return new HDInsightIPConfiguration(id.Value, name, Optional.ToNullable(type), Optional.ToNullable(provisioningState), Optional.ToNullable(primary), privateIPAddress.Value, Optional.ToNullable(privateIPAllocationMethod), subnet);
         }
     }
 }

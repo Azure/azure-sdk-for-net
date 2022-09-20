@@ -26,23 +26,23 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="administratorType"> The type of administrator. </param>
-        /// <param name="login"> The server administrator login account name. </param>
-        /// <param name="sid"> The server administrator Sid (Secure ID). </param>
+        /// <param name="loginAccountName"> The server administrator login account name. </param>
+        /// <param name="secureId"> The server administrator Sid (Secure ID). </param>
         /// <param name="tenantId"> The server Active Directory Administrator tenant id. </param>
-        internal PostgreSqlServerAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlAdministratorType? administratorType, string login, Guid? sid, Guid? tenantId) : base(id, name, resourceType, systemData)
+        internal PostgreSqlServerAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlAdministratorType? administratorType, string loginAccountName, Guid? secureId, Guid? tenantId) : base(id, name, resourceType, systemData)
         {
             AdministratorType = administratorType;
-            Login = login;
-            Sid = sid;
+            LoginAccountName = loginAccountName;
+            SecureId = secureId;
             TenantId = tenantId;
         }
 
         /// <summary> The type of administrator. </summary>
         public PostgreSqlAdministratorType? AdministratorType { get; set; }
         /// <summary> The server administrator login account name. </summary>
-        public string Login { get; set; }
+        public string LoginAccountName { get; set; }
         /// <summary> The server administrator Sid (Secure ID). </summary>
-        public Guid? Sid { get; set; }
+        public Guid? SecureId { get; set; }
         /// <summary> The server Active Directory Administrator tenant id. </summary>
         public Guid? TenantId { get; set; }
     }

@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Please note <see cref="FactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="FactoryFlowletDefinition"/>, <see cref="FactoryMappingDataFlowDefinition"/> and <see cref="FactoryWranglingDataFlowDefinition"/>.
     /// </summary>
-    public partial class FactoryDataFlowDefinition
+    public abstract partial class FactoryDataFlowDefinition
     {
         /// <summary> Initializes a new instance of FactoryDataFlowDefinition. </summary>
-        public FactoryDataFlowDefinition()
+        protected FactoryDataFlowDefinition()
         {
             Annotations = new ChangeTrackingList<BinaryData>();
         }

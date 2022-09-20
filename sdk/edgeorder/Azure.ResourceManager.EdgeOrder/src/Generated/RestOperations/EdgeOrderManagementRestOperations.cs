@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProductFamiliesMetadata>> ListProductFamiliesMetadataAsync(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProductFamiliesMetadataListResult>> ListProductFamiliesMetadataAsync(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -321,9 +321,9 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 case 200:
                     {
-                        ProductFamiliesMetadata value = default;
+                        ProductFamiliesMetadataListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(document.RootElement);
+                        value = ProductFamiliesMetadataListResult.DeserializeProductFamiliesMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProductFamiliesMetadata> ListProductFamiliesMetadata(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ProductFamiliesMetadataListResult> ListProductFamiliesMetadata(string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -347,9 +347,9 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 case 200:
                     {
-                        ProductFamiliesMetadata value = default;
+                        ProductFamiliesMetadataListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(document.RootElement);
+                        value = ProductFamiliesMetadataListResult.DeserializeProductFamiliesMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AddressResourceData>> GetAddressByNameAsync(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
+        public async Task<Response<EdgeOrderAddressData>> GetAddressByNameAsync(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -639,13 +639,13 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 case 200:
                     {
-                        AddressResourceData value = default;
+                        EdgeOrderAddressData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AddressResourceData.DeserializeAddressResourceData(document.RootElement);
+                        value = EdgeOrderAddressData.DeserializeEdgeOrderAddressData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AddressResourceData)null, message.Response);
+                    return Response.FromValue((EdgeOrderAddressData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AddressResourceData> GetAddressByName(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
+        public Response<EdgeOrderAddressData> GetAddressByName(string subscriptionId, string resourceGroupName, string addressName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -670,19 +670,19 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 case 200:
                     {
-                        AddressResourceData value = default;
+                        EdgeOrderAddressData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AddressResourceData.DeserializeAddressResourceData(document.RootElement);
+                        value = EdgeOrderAddressData.DeserializeEdgeOrderAddressData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AddressResourceData)null, message.Response);
+                    return Response.FromValue((EdgeOrderAddressData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData data)
+        internal HttpMessage CreateCreateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -699,9 +699,9 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateAddress(string subscriptionId, string resourceGroupName, string addressName, AddressResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateAddress(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateUpdateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, AddressResourcePatch patch, string ifMatch)
+        internal HttpMessage CreateUpdateAddressRequest(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressPatch patch, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -853,9 +853,9 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(patch);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, AddressResourcePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAddressAsync(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -897,7 +897,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="addressName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="addressName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateAddress(string subscriptionId, string resourceGroupName, string addressName, AddressResourcePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response UpdateAddress(string subscriptionId, string resourceGroupName, string addressName, EdgeOrderAddressPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OrderResourceData>> GetOrderByNameAsync(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
+        public async Task<Response<EdgeOrderData>> GetOrderByNameAsync(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1037,13 +1037,13 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 case 200:
                     {
-                        OrderResourceData value = default;
+                        EdgeOrderData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OrderResourceData.DeserializeOrderResourceData(document.RootElement);
+                        value = EdgeOrderData.DeserializeEdgeOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OrderResourceData)null, message.Response);
+                    return Response.FromValue((EdgeOrderData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1057,7 +1057,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OrderResourceData> GetOrderByName(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
+        public Response<EdgeOrderData> GetOrderByName(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1069,13 +1069,13 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 case 200:
                     {
-                        OrderResourceData value = default;
+                        EdgeOrderData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OrderResourceData.DeserializeOrderResourceData(document.RootElement);
+                        value = EdgeOrderData.DeserializeEdgeOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OrderResourceData)null, message.Response);
+                    return Response.FromValue((EdgeOrderData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1204,7 +1204,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OrderItemResourceData>> GetOrderItemByNameAsync(string subscriptionId, string resourceGroupName, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EdgeOrderItemData>> GetOrderItemByNameAsync(string subscriptionId, string resourceGroupName, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1216,13 +1216,13 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 case 200:
                     {
-                        OrderItemResourceData value = default;
+                        EdgeOrderItemData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OrderItemResourceData.DeserializeOrderItemResourceData(document.RootElement);
+                        value = EdgeOrderItemData.DeserializeEdgeOrderItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OrderItemResourceData)null, message.Response);
+                    return Response.FromValue((EdgeOrderItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1236,7 +1236,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OrderItemResourceData> GetOrderItemByName(string subscriptionId, string resourceGroupName, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
+        public Response<EdgeOrderItemData> GetOrderItemByName(string subscriptionId, string resourceGroupName, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1248,19 +1248,19 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 case 200:
                     {
-                        OrderItemResourceData value = default;
+                        EdgeOrderItemData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OrderItemResourceData.DeserializeOrderItemResourceData(document.RootElement);
+                        value = EdgeOrderItemData.DeserializeEdgeOrderItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OrderItemResourceData)null, message.Response);
+                    return Response.FromValue((EdgeOrderItemData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData data)
+        internal HttpMessage CreateCreateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1277,9 +1277,9 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1292,7 +1292,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1319,7 +1319,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1410,7 +1410,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateUpdateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourcePatch patch, string ifMatch)
+        internal HttpMessage CreateUpdateOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemPatch patch, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1431,9 +1431,9 @@ namespace Azure.ResourceManager.EdgeOrder
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(patch);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1447,7 +1447,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourcePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1475,7 +1475,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, OrderItemResourcePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response UpdateOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1494,7 +1494,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateCancelOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, CancellationReason cancellationReason)
+        internal HttpMessage CreateCancelOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1512,9 +1512,9 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(cancellationReason);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(cancellationReason);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1527,7 +1527,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="cancellationReason"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CancelOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, CancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        public async Task<Response> CancelOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1554,7 +1554,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="cancellationReason"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CancelOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, CancellationReason cancellationReason, CancellationToken cancellationToken = default)
+        public Response CancelOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemCancellationReason cancellationReason, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1573,7 +1573,7 @@ namespace Azure.ResourceManager.EdgeOrder
             }
         }
 
-        internal HttpMessage CreateReturnOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, ReturnOrderItemDetails details)
+        internal HttpMessage CreateReturnOrderItemRequest(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1592,7 +1592,7 @@ namespace Azure.ResourceManager.EdgeOrder
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(details);
+            content0.JsonWriter.WriteObjectValue(content);
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -1602,18 +1602,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="details"> Return order item CurrentStatus. </param>
+        /// <param name="content"> Return order item CurrentStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> ReturnOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, ReturnOrderItemDetails details, CancellationToken cancellationToken = default)
+        public async Task<Response> ReturnOrderItemAsync(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(details, nameof(details));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateReturnOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, details);
+            using var message = CreateReturnOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1629,18 +1629,18 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="orderItemName"> The name of the order item. </param>
-        /// <param name="details"> Return order item CurrentStatus. </param>
+        /// <param name="content"> Return order item CurrentStatus. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="details"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="orderItemName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="orderItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response ReturnOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, ReturnOrderItemDetails details, CancellationToken cancellationToken = default)
+        public Response ReturnOrderItem(string subscriptionId, string resourceGroupName, string orderItemName, EdgeOrderItemReturnContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(orderItemName, nameof(orderItemName));
-            Argument.AssertNotNull(details, nameof(details));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateReturnOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, details);
+            using var message = CreateReturnOrderItemRequest(subscriptionId, resourceGroupName, orderItemName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1895,7 +1895,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ProductFamiliesMetadata>> ListProductFamiliesMetadataNextPageAsync(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ProductFamiliesMetadataListResult>> ListProductFamiliesMetadataNextPageAsync(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1906,9 +1906,9 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 case 200:
                     {
-                        ProductFamiliesMetadata value = default;
+                        ProductFamiliesMetadataListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(document.RootElement);
+                        value = ProductFamiliesMetadataListResult.DeserializeProductFamiliesMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1923,7 +1923,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ProductFamiliesMetadata> ListProductFamiliesMetadataNextPage(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
+        public Response<ProductFamiliesMetadataListResult> ListProductFamiliesMetadataNextPage(string nextLink, string subscriptionId, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1934,9 +1934,9 @@ namespace Azure.ResourceManager.EdgeOrder
             {
                 case 200:
                     {
-                        ProductFamiliesMetadata value = default;
+                        ProductFamiliesMetadataListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(document.RootElement);
+                        value = ProductFamiliesMetadataListResult.DeserializeProductFamiliesMetadataListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    /// <summary>
-    /// The request spec of checking name availability.
-    /// Serialized Name: NameAvailabilityCheckRequestParameters
-    /// </summary>
+    /// <summary> The request spec of checking name availability. </summary>
     public partial class HDInsightNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of HDInsightNameAvailabilityContent. </summary>
@@ -20,15 +17,9 @@ namespace Azure.ResourceManager.HDInsight.Models
         {
         }
 
-        /// <summary>
-        /// The resource name.
-        /// Serialized Name: NameAvailabilityCheckRequestParameters.name
-        /// </summary>
+        /// <summary> The resource name. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// The resource type
-        /// Serialized Name: NameAvailabilityCheckRequestParameters.type
-        /// </summary>
+        /// <summary> The resource type. </summary>
         public ResourceType? ResourceType { get; set; }
     }
 }

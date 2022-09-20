@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="osSku"> Specifies an OS SKU. This value must not be specified if OSType is Windows. </param>
         /// <param name="vmSize"> The size of the VM. </param>
         /// <param name="enableFips"> Whether to use a FIPS-enabled OS. </param>
-        internal AgentPoolSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CreationData creationData, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, OSType? osType, OSSku? osSku, string vmSize, bool? enableFips) : base(id, name, resourceType, systemData, tags, location)
+        internal AgentPoolSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContainerServiceCreationData creationData, SnapshotType? snapshotType, string kubernetesVersion, string nodeImageVersion, ContainerServiceOSType? osType, ContainerServiceOSSku? osSku, string vmSize, bool? enableFips) : base(id, name, resourceType, systemData, tags, location)
         {
             CreationData = creationData;
             SnapshotType = snapshotType;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> CreationData to be used to specify the source agent pool resource ID to create this snapshot. </summary>
-        internal CreationData CreationData { get; set; }
+        internal ContainerServiceCreationData CreationData { get; set; }
         /// <summary> This is the ARM ID of the source object to be used to create the target object. </summary>
         public ResourceIdentifier CreationDataSourceResourceId
         {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ContainerService
             set
             {
                 if (CreationData is null)
-                    CreationData = new CreationData();
+                    CreationData = new ContainerServiceCreationData();
                 CreationData.SourceResourceId = value;
             }
         }
@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.ContainerService
         /// <summary> The version of node image. </summary>
         public string NodeImageVersion { get; }
         /// <summary> The operating system type. The default is Linux. </summary>
-        public OSType? OSType { get; }
+        public ContainerServiceOSType? OSType { get; }
         /// <summary> Specifies an OS SKU. This value must not be specified if OSType is Windows. </summary>
-        public OSSku? OSSku { get; }
+        public ContainerServiceOSSku? OSSku { get; }
         /// <summary> The size of the VM. </summary>
         public string VmSize { get; }
         /// <summary> Whether to use a FIPS-enabled OS. </summary>

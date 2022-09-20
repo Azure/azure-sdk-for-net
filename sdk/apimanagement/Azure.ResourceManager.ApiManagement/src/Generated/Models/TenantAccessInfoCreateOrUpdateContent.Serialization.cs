@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("secondaryKey");
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsDirectAccessEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WriteBooleanValue(IsDirectAccessEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
