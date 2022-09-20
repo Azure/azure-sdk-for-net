@@ -25,6 +25,8 @@ parameters:
   default: 'not-specific'
 steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
+    parameters:
+      EnableNuGetCache: false
   - pwsh: |
       dotnet build /t:ProjectDependsOn ./eng/service.proj `
         /p:TestDependsOnDependency="${{parameters.TestDependsOnDependency}}" `
