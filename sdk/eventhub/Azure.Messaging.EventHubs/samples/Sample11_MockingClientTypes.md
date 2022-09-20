@@ -228,7 +228,7 @@ Assert.AreEqual(backingList.Count, sourceEvents.Count);
 
 The following snippet demonstrates how to mock the `EventHubBufferedProducerClient`. When using the buffered producer to publish events the  key interactions are calls to `EnqueueEventAsync` and/or `EnqueueEventsAsync`. Since the buffered producer implictly batches events passed in, mocking these calls is relatively straightforward.
 
-This snippet also demonstrates testing a send event failed handler. It is guaranteed by the library that the event handlers registered by the application will be called at the appropriate times. So fail and success handlers can be called and validated directly when testing.
+This snippet also demonstrates testing a send event failed handler. It is guaranteed by the library that the event handlers will be called at the appropriate times while the processor is running; it is recommended that handers be tested by calling them directly, rather than attempting to simulate having the buffered producer invoke them.
 
 ```C# Snippet:EventHubs_Sample11_MockingBufferedProducer
 Mock<EventHubBufferedProducerClient> bufferedProducerMock = new();
