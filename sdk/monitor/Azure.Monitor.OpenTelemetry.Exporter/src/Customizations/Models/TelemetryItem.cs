@@ -26,8 +26,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
-            // todo: update swagger to include this key.
-            Tags["ai.user.userAgent"] = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
+
+            var userAgent = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
+
+            if (userAgent != null)
+            {
+                // todo: update swagger to include this key.
+                Tags["ai.user.userAgent"] = userAgent;
+            }
 
             // we only have mapping for server spans
             // todo: non-server spans
@@ -50,8 +56,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             Tags[ContextTagKeys.AiOperationParentId.ToString()] = activitySpanId.ToHexString();
             Tags[ContextTagKeys.AiOperationId.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()];
 
-            // todo: update swagger to include this key.
-            Tags["ai.user.userAgent"] = telemetryItem.Tags["ai.user.userAgent"];
+            var userAgent = telemetryItem.Tags["ai.user.userAgent"];
+            if (userAgent != null)
+            {
+                // todo: update swagger to include this key.
+                Tags["ai.user.userAgent"] = userAgent;
+            }
 
             // we only have mapping for server spans
             // todo: non-server spans
