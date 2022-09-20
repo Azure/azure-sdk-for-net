@@ -333,29 +333,13 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// Create an outgoing call from source to target identities.
-        /// <param name="source"> The source identity. </param>
-        /// <param name="targets"> The target identities. </param>
-        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
-        /// <param name="subject"> Optional subject of the call. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
-        public virtual async Task<Response<CreateCallResult>> CreateCallAsync(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, string subject = default, CancellationToken cancellationToken = default)
-        {
-            CreateCallOptions options = new CreateCallOptions(source, targets, callbackUri)
-            {
-                Subject = subject
-            };
-            return await CreateCallAsync(options, cancellationToken).ConfigureAwait(false);
-        }
-
         /// <summary>
         /// Create an outgoing call from source to target identities.
         /// </summary>
         /// <param name="options">Options for the CreateCall request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
         /// <returns></returns>
         public virtual async Task<Response<CreateCallResult>> CreateCallAsync(CreateCallOptions options, CancellationToken cancellationToken = default)
         {
@@ -366,11 +350,16 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
+                if (!options.IsValidRepeatabilityHeaders())
+                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
+
                 CreateCallRequestInternal request = CreateCallRequest(options);
 
                 var createCallResponse = await ServerCallingRestClient.CreateCallAsync(
-                    createCallRequest: request,
-                    cancellationToken: cancellationToken
+                    request,
+                    options.RepeatabilityRequestId,
+                    options.RepeatabilityFirstSent,
+                    cancellationToken
                     ).ConfigureAwait(false);
 
                 return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),
@@ -383,29 +372,13 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        /// Create an outgoing call from source to target identities.
-        /// <param name="source"> The source identity. </param>
-        /// <param name="targets"> The target identities. </param>
-        /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
-        /// <param name="subject"> Optional subject of the call. </param>
-        /// <param name="cancellationToken"> The cancellation token. </param>
-        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="source"/> is null.</exception>
-        /// <exception cref="ArgumentNullException"><paramref name="targets"/> is null.</exception>
-        public virtual Response<CreateCallResult> CreateCall(CallSource source, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, string subject = default, CancellationToken cancellationToken = default)
-        {
-            CreateCallOptions options = new CreateCallOptions(source, targets, callbackUri)
-            {
-                Subject = subject
-            };
-            return CreateCall(options, cancellationToken);
-        }
-
         /// <summary>
         /// Create an outgoing call from source to target identities.
         /// </summary>
         /// <param name="options">Options for the CreateCall request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="options"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="options"/> Repeatability headers are set incorrectly.</exception>
         /// <returns></returns>
 
         public virtual Response<CreateCallResult> CreateCall(CreateCallOptions options, CancellationToken cancellationToken = default)
@@ -416,14 +389,19 @@ namespace Azure.Communication.CallAutomation
             {
                 if (options == null) throw new ArgumentNullException(nameof(options));
 
+                if (!options.IsValidRepeatabilityHeaders())
+                    throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
+
                 CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.CallSource.Identifier));
                 sourceDto.CallerId = options.CallSource.CallerId == null ? null : new PhoneNumberIdentifierModel(options.CallSource.CallerId.PhoneNumber);
 
                 CreateCallRequestInternal request = CreateCallRequest(options);
 
                 var createCallResponse = ServerCallingRestClient.CreateCall(
-                    createCallRequest: request,
-                    cancellationToken: cancellationToken
+                    request,
+                    options.RepeatabilityRequestId,
+                    options.RepeatabilityFirstSent,
+                    cancellationToken
                     );
 
                 return Response.FromValue(new CreateCallResult(GetCallConnection(createCallResponse.Value.CallConnectionId), new CallConnectionProperties(createCallResponse.Value)),

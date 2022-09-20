@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Options for the Create Call Request.
     /// </summary>
-    public class CreateCallOptions
+    public class CreateCallOptions: RepeatabilityHeaders
     {
         /// <summary>
         /// Creates a new CreateCallOptions object.
@@ -18,11 +18,15 @@ namespace Azure.Communication.CallAutomation
         /// <param name="targets"></param>
         /// <param name="callSource"></param>
         /// <param name="callbackUri"></param>
-        public CreateCallOptions(CallSource callSource, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
+        /// <param name="repeatabilityRequestId"></param>
+        /// <param name="repeatabilityFirstSent"></param>
+        public CreateCallOptions(CallSource callSource, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, Guid? repeatabilityRequestId = null, string repeatabilityFirstSent = default)
         {
             Targets = (IReadOnlyList<CommunicationIdentifier>)targets;
             CallSource = callSource;
             CallbackUri = callbackUri;
+            RepeatabilityRequestId = repeatabilityRequestId;
+            RepeatabilityFirstSent = repeatabilityFirstSent;
         }
 
         /// <summary>
