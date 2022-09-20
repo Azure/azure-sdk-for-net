@@ -149,11 +149,11 @@ namespace Azure.Monitor.Ingestion.Tests
         {
             var policy = new ConcurrencyCounterPolicy();
             LogsIngestionClient client = CreateClient(policy);
+            LogsIngestionClient.SingleUploadThreshold = 1000; // make batch size smaller for Uploads for test recording size
 
             // Make the request
             UploadLogsOptions options = new UploadLogsOptions();
-            options.MaxConcurrency = 2;
-            // 20,000 entries makes 2 batches
+            options.MaxConcurrency = 10;
             var tasks = client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(20000, Recording.Now.DateTime), options).ConfigureAwait(false);
             Assert.Greater(policy.Count, 1);
 
@@ -171,7 +171,8 @@ namespace Azure.Monitor.Ingestion.Tests
         {
             var policy = new ConcurrencyCounterPolicy();
             LogsIngestionClient client = CreateClient(policy);
-            // 20,000 entries makes 2 batches
+
+            LogsIngestionClient.SingleUploadThreshold = 1000; // make batch size smaller for Uploads for test recording size
             var response = client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(20000, Recording.Now.DateTime));
             Assert.AreEqual(policy.Count, 0); // 2 batches uploaded in Sequence
 

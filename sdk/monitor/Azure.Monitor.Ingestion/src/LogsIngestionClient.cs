@@ -23,7 +23,7 @@ namespace Azure.Monitor.Ingestion
 
         // The size we use to determine whether to upload as a single PUT BLOB
         // request or stage as multiple blocks.
-        private const int SingleUploadThreshold = 1000000; // 1 Mb in byte format
+        internal static int SingleUploadThreshold = 1000000; // 1 Mb in byte format
 
         // If no concurrency count is provided, default to serial upload (one block at a time).
         private int DefaultWorkerCount = 1;
