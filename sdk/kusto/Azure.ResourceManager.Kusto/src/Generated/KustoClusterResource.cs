@@ -907,10 +907,10 @@ namespace Azure.ResourceManager.Kusto
         /// Operation Id: Clusters_ListLanguageExtensions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LanguageExtension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LanguageExtension> GetLanguageExtensionsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="KustoLanguageExtension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<KustoLanguageExtension> GetLanguageExtensionsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<LanguageExtension>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<KustoLanguageExtension>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.GetLanguageExtensions");
                 scope.Start();
@@ -934,10 +934,10 @@ namespace Azure.ResourceManager.Kusto
         /// Operation Id: Clusters_ListLanguageExtensions
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LanguageExtension" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LanguageExtension> GetLanguageExtensions(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="KustoLanguageExtension" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<KustoLanguageExtension> GetLanguageExtensions(CancellationToken cancellationToken = default)
         {
-            Page<LanguageExtension> FirstPageFunc(int? pageSizeHint)
+            Page<KustoLanguageExtension> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _kustoClusterClustersClientDiagnostics.CreateScope("KustoClusterResource.GetLanguageExtensions");
                 scope.Start();
@@ -964,7 +964,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="languageExtensionsToAdd"> The language extensions to add. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToAdd"/> is null. </exception>
-        public virtual async Task<ArmOperation> AddLanguageExtensionsAsync(WaitUntil waitUntil, LanguageExtensionList languageExtensionsToAdd, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> AddLanguageExtensionsAsync(WaitUntil waitUntil, KustoLanguageExtensionList languageExtensionsToAdd, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(languageExtensionsToAdd, nameof(languageExtensionsToAdd));
 
@@ -994,7 +994,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="languageExtensionsToAdd"> The language extensions to add. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToAdd"/> is null. </exception>
-        public virtual ArmOperation AddLanguageExtensions(WaitUntil waitUntil, LanguageExtensionList languageExtensionsToAdd, CancellationToken cancellationToken = default)
+        public virtual ArmOperation AddLanguageExtensions(WaitUntil waitUntil, KustoLanguageExtensionList languageExtensionsToAdd, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(languageExtensionsToAdd, nameof(languageExtensionsToAdd));
 
@@ -1024,7 +1024,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="languageExtensionsToRemove"> The language extensions to remove. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToRemove"/> is null. </exception>
-        public virtual async Task<ArmOperation> RemoveLanguageExtensionsAsync(WaitUntil waitUntil, LanguageExtensionList languageExtensionsToRemove, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> RemoveLanguageExtensionsAsync(WaitUntil waitUntil, KustoLanguageExtensionList languageExtensionsToRemove, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(languageExtensionsToRemove, nameof(languageExtensionsToRemove));
 
@@ -1054,7 +1054,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="languageExtensionsToRemove"> The language extensions to remove. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="languageExtensionsToRemove"/> is null. </exception>
-        public virtual ArmOperation RemoveLanguageExtensions(WaitUntil waitUntil, LanguageExtensionList languageExtensionsToRemove, CancellationToken cancellationToken = default)
+        public virtual ArmOperation RemoveLanguageExtensions(WaitUntil waitUntil, KustoLanguageExtensionList languageExtensionsToRemove, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(languageExtensionsToRemove, nameof(languageExtensionsToRemove));
 

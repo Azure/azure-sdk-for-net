@@ -158,6 +158,9 @@ rename-mapping:
   VmSizeProperty.supportedByVirtualMachines: IsSupportedByVirtualMachines
   VmSizeProperty.supportedByWebWorkerRoles: IsSupportedByWebWorkerRoles
   VmSizeCompatibilityFilterV2.computeIsolationSupported: IsComputeIsolationSupported
+  SecurityProfile.ldapsUrls: LdapUris|uri
+  ApplicationProperties.createdDate: CreatedOn|datetime
+  ClusterGetProperties.createdDate: CreatedOn|datetime
 
 prepend-rp-prefix:
 - VmSizeCompatibilityFilterV2
@@ -226,7 +229,7 @@ directive:
         }
       };
 # nullable
-  - from: swagger-document
+  - from: cluster.json
     where: $.definitions
     transform: >
       $.StorageAccount.properties.msiResourceId['x-nullable'] = true;

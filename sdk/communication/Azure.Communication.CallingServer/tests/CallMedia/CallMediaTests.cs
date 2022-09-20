@@ -21,14 +21,17 @@ namespace Azure.Communication.CallingServer
             Loop = false,
             OperationContext = "context"
         };
-        private static readonly CallMediaRecognizeOptions _recognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"))
+        private static readonly CallMediaRecognizeOptions _fullRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 5)
         {
             InterruptCallMediaOperation = true,
             InterToneTimeout = TimeSpan.FromSeconds(10),
-            MaxTonesToCollect = 5,
             StopTones = new DtmfTone[] { DtmfTone.Pound },
-            InitialSilenceTimeout = TimeSpan.FromSeconds(5)
+            InitialSilenceTimeout = TimeSpan.FromSeconds(5),
+            InterruptPrompt = true,
+            OperationContext = "operationContext",
+            Prompt = new FileSource(new Uri("https://localhost"))
         };
+        private static readonly CallMediaRecognizeOptions _emptyRecognizeOptions = new CallMediaRecognizeDtmfOptions(new CommunicationUserIdentifier("targetUserId"), maxTonesToCollect: 1);
 
         private static CallMedia? _callMedia;
 
@@ -106,7 +109,11 @@ namespace Azure.Communication.CallingServer
                 },
                 new Func<CallMedia, Task<Response>>?[]
                 {
-                   callMedia => callMedia.StartRecognizingAsync(_recognizeOptions)
+                   callMedia => callMedia.StartRecognizingAsync(_fullRecognizeOptions)
+                },
+                new Func<CallMedia, Task<Response>>?[]
+                {
+                   callMedia => callMedia.StartRecognizingAsync(_emptyRecognizeOptions)
                 }
             };
         }
@@ -129,7 +136,11 @@ namespace Azure.Communication.CallingServer
                 },
                 new Func<CallMedia, Response>?[]
                 {
-                   callMedia => callMedia.StartRecognizing(_recognizeOptions)
+                   callMedia => callMedia.StartRecognizing(_fullRecognizeOptions)
+                },
+                new Func<CallMedia, Response>?[]
+                {
+                   callMedia => callMedia.StartRecognizing(_emptyRecognizeOptions)
                 }
             };
         }

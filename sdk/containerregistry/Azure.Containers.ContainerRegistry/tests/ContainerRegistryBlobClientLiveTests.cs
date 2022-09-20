@@ -54,6 +54,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
             // Arrange
             var client = CreateBlobClient("oci-artifact");
 
+            await UploadManifestPrerequisites(client);
+
             // Act
             var manifest = CreateManifest();
             var uploadResult = await client.UploadManifestAsync(manifest);
@@ -75,6 +77,8 @@ namespace Azure.Containers.ContainerRegistry.Tests
         {
             // Arrange
             var client = CreateBlobClient("oci-artifact");
+
+            await UploadManifestPrerequisites(client);
 
             // Act
             string payload = "" +

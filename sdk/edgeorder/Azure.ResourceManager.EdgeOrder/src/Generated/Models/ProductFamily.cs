@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="filterableProperties"> list of filters supported for a product. </param>
         /// <param name="productLines"> List of product lines supported in the product family. </param>
         /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
-        internal ProductFamily(string displayName, ProductDescription description, IReadOnlyList<ImageInformation> imageInformation, CostInformation costInformation, AvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductLine> productLines, IReadOnlyList<ResourceProviderDetails> resourceProviderDetails)
+        internal ProductFamily(string displayName, ProductDescription description, IReadOnlyList<ImageInformation> imageInformation, CostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<ProductLine> productLines, IReadOnlyList<ResourceProviderDetails> resourceProviderDetails)
         {
             DisplayName = displayName;
             Description = description;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Cost information for the product system. </summary>
         public CostInformation CostInformation { get; }
         /// <summary> Availability information of the product system. </summary>
-        public AvailabilityInformation AvailabilityInformation { get; }
+        public ProductAvailabilityInformation AvailabilityInformation { get; }
         /// <summary> Hierarchy information of a product. </summary>
         public HierarchyInformation HierarchyInformation { get; }
         /// <summary> list of filters supported for a product. </summary>

@@ -11,11 +11,14 @@ trigger:
     - sdk/resourcemanager/
     - common/ManagementTestShared/
     - common/ManagementCoreShared/
+    - sdk/advisor/Azure.ResourceManager.Advisor
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
+    - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
     - sdk/arc-scvmm/Azure.ResourceManager.ArcScVmm
+    - sdk/attestation/Azure.ResourceManager.Attestation
     - sdk/authorization/Azure.ResourceManager.Authorization
     - sdk/automanage/Azure.ResourceManager.Automanage
     - sdk/automation/Azure.ResourceManager.Automation
@@ -23,8 +26,11 @@ trigger:
     - sdk/azurestackhci/Azure.ResourceManager.Hci
     - sdk/batch/Azure.ResourceManager.Batch
     - sdk/billing/Azure.ResourceManager.Billing
+    - sdk/blueprint/Azure.ResourceManager.Blueprint
+    - sdk/botservice/Azure.ResourceManager.BotService
     - sdk/cdn/Azure.ResourceManager.Cdn
     - sdk/changeanalysis/Azure.ResourceManager.ChangeAnalysis
+    - sdk/chaos/Azure.ResourceManager.Chaos
     - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices
     - sdk/communication/Azure.ResourceManager.Communication
     - sdk/compute/Azure.ResourceManager.Compute
@@ -37,9 +43,13 @@ trigger:
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
+    - sdk/customer-insights/Azure.ResourceManager.CustomerInsights
     - sdk/databox/Azure.ResourceManager.DataBox
     - sdk/databoxedge/Azure.ResourceManager.DataBoxEdge
+    - sdk/datadog/Azure.ResourceManager.Datadog
     - sdk/datafactory/Azure.ResourceManager.DataFactory
+    - sdk/datalake-analytics/Azure.ResourceManager.DataLakeAnalytics
+    - sdk/datalake-store/Azure.ResourceManager.DataLakeStore
     - sdk/datashare/Azure.ResourceManager.DataShare
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
@@ -129,11 +139,14 @@ pr:
     - sdk/resourcemanager/
     - common/ManagementTestShared/
     - common/ManagementCoreShared/
+    - sdk/advisor/Azure.ResourceManager.Advisor
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
+    - sdk/applicationinsights/Azure.ResourceManager.ApplicationInsights
     - sdk/appplatform/Azure.ResourceManager.AppPlatform
     - sdk/arc-scvmm/Azure.ResourceManager.ArcScVmm
+    - sdk/attestation/Azure.ResourceManager.Attestation
     - sdk/authorization/Azure.ResourceManager.Authorization
     - sdk/automanage/Azure.ResourceManager.Automanage
     - sdk/automation/Azure.ResourceManager.Automation
@@ -141,8 +154,11 @@ pr:
     - sdk/azurestackhci/Azure.ResourceManager.Hci
     - sdk/batch/Azure.ResourceManager.Batch
     - sdk/billing/Azure.ResourceManager.Billing
+    - sdk/blueprint/Azure.ResourceManager.Blueprint
+    - sdk/botservice/Azure.ResourceManager.BotService
     - sdk/cdn/Azure.ResourceManager.Cdn
     - sdk/changeanalysis/Azure.ResourceManager.ChangeAnalysis
+    - sdk/chaos/Azure.ResourceManager.Chaos
     - sdk/cognitiveservices/Azure.ResourceManager.CognitiveServices
     - sdk/communication/Azure.ResourceManager.Communication
     - sdk/compute/Azure.ResourceManager.Compute
@@ -155,9 +171,13 @@ pr:
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerservice/Azure.ResourceManager.ContainerService
     - sdk/cosmosdb/Azure.ResourceManager.CosmosDB
+    - sdk/customer-insights/Azure.ResourceManager.CustomerInsights
     - sdk/databox/Azure.ResourceManager.DataBox
     - sdk/databoxedge/Azure.ResourceManager.DataBoxEdge
+    - sdk/datadog/Azure.ResourceManager.Datadog
     - sdk/datafactory/Azure.ResourceManager.DataFactory
+    - sdk/datalake-analytics/Azure.ResourceManager.DataLakeAnalytics
+    - sdk/datalake-store/Azure.ResourceManager.DataLakeStore
     - sdk/datashare/Azure.ResourceManager.DataShare
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices

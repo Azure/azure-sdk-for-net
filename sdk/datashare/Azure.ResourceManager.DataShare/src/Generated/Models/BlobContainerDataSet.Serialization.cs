@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             string containerName = default;
-            Optional<string> dataSetId = default;
+            Optional<Guid> dataSetId = default;
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
@@ -92,7 +93,12 @@ namespace Azure.ResourceManager.DataShare.Models
                         }
                         if (property0.NameEquals("dataSetId"))
                         {
-                            dataSetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            dataSetId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("resourceGroup"))
@@ -114,7 +120,7 @@ namespace Azure.ResourceManager.DataShare.Models
                     continue;
                 }
             }
-            return new BlobContainerDataSet(id, name, type, systemData.Value, kind, containerName, dataSetId.Value, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobContainerDataSet(id, name, type, systemData.Value, kind, containerName, Optional.ToNullable(dataSetId), resourceGroup, storageAccountName, subscriptionId);
         }
     }
 }

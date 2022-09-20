@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Tests
         {
             var rgLro = await (await GlobalClient.GetDefaultSubscriptionAsync()).GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Started, SessionRecording.GenerateAssetName(ResourceGroupNamePrefix), new ResourceGroupData(AzureLocation.WestUS2));
             var storage = await CreateStorageAccount(rgLro.Value, SessionRecording.GenerateAssetName(StorageAccountNamePrefix));
-            var mediaService = await CreateMediaService(rgLro.Value, SessionRecording.GenerateAssetName("mediaservice"), storage.Id);
+            var mediaService = await CreateMediaService(rgLro.Value, SessionRecording.GenerateAssetName("mediafortjob"), storage.Id);
             var mediaTransform = await CreateMediaTransfer(mediaService.GetMediaTransforms(), SessionRecording.GenerateAssetName("randomtransfer"));
             _mediaServiceIdentifier = mediaService.Id;
             _mediaTransformIdentifier = mediaTransform.Id;
@@ -58,55 +58,32 @@ namespace Azure.ResourceManager.Media.Tests
 
         [Test]
         [RecordedTest]
-        public async Task CreateOrUpdate()
+        public async Task MediaTransformJobBasicTests()
         {
+            // Create
             string jobName = SessionRecording.GenerateAssetName("job");
             var job = await CreateDefautMediaTransferJob(jobName);
             Assert.IsNotNull(job);
             Assert.AreEqual(jobName, job.Data.Name);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Exist()
-        {
-            string jobName = SessionRecording.GenerateAssetName("job");
-            await CreateDefautMediaTransferJob(jobName);
+            // Check exists
             bool flag = await mediaTransformJobCollection.ExistsAsync(jobName);
             Assert.IsTrue(flag);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task Get()
-        {
-            string jobName = SessionRecording.GenerateAssetName("job");
-            await CreateDefautMediaTransferJob(jobName);
-            var mediaTransfer = await mediaTransformJobCollection.GetAsync(jobName);
-            Assert.IsNotNull(mediaTransfer);
-            Assert.AreEqual(jobName, mediaTransfer.Value.Data.Name);
-        }
-
-        [Test]
-        [RecordedTest]
-        public async Task GetAll()
-        {
-            string jobName = SessionRecording.GenerateAssetName("job");
-            await CreateDefautMediaTransferJob(jobName);
+            // Get
+            var result = await mediaTransformJobCollection.GetAsync(jobName);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(jobName, result.Value.Data.Name);
+            // Get all
             var list = await mediaTransformJobCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
-        }
-
-        [Test]
-        [RecordedTest]
-        [Ignore("The job is in the 'Processing' state. Cancel the job or retry after the processing completes")]
-        public async Task Delete()
-        {
-            string jobName = SessionRecording.GenerateAssetName("job");
-            var job = await CreateDefautMediaTransferJob(jobName);
-            bool flag = await mediaTransformJobCollection.ExistsAsync(jobName);
-            Assert.IsTrue(flag);
-
+            // Cancel
+            while (result.Value.Data.State != JobState.Canceled)
+            {
+                var cancelResult = await job.CancelJobAsync();
+                Assert.IsTrue(cancelResult.Status == 200);
+                result = await mediaTransformJobCollection.GetAsync(jobName);
+                Assert.IsNotNull(result);
+            }
+            // Delete
             await job.DeleteAsync(WaitUntil.Completed);
             flag = await mediaTransformJobCollection.ExistsAsync(jobName);
             Assert.IsFalse(flag);
