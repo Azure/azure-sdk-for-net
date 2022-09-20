@@ -268,6 +268,17 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
+        public void CreateCredentialReturnsNullIfNoMatchingConfig()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+            Assert.IsNull(credential);
+        }
+
+        [Test]
         [TestCase("*")]
         [TestCase("tenantId1, tenantId2, tenantId3")]
         public void CreatesDefaultAzureCredentialWithAdditionalTenants(string additionalTenants)
