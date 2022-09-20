@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    internal partial class AccountEncryption : IUtf8JsonSerializable
+    public partial class AccountEncryption : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -18,23 +18,60 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(KeySource))
             {
                 writer.WritePropertyName("keySource");
-                writer.WriteStringValue(KeySource);
+                writer.WriteStringValue(KeySource.Value.ToString());
+            }
+            if (Optional.IsDefined(KeyVaultProperties))
+            {
+                writer.WritePropertyName("keyVaultProperties");
+                writer.WriteObjectValue(KeyVaultProperties);
+            }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity");
+                writer.WriteObjectValue(Identity);
             }
             writer.WriteEndObject();
         }
 
         internal static AccountEncryption DeserializeAccountEncryption(JsonElement element)
         {
-            Optional<string> keySource = default;
+            Optional<KeySource> keySource = default;
+            Optional<KeyVaultProperties> keyVaultProperties = default;
+            Optional<EncryptionIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keySource"))
                 {
-                    keySource = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    keySource = new KeySource(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("keyVaultProperties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("identity"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    identity = EncryptionIdentity.DeserializeEncryptionIdentity(property.Value);
                     continue;
                 }
             }
-            return new AccountEncryption(keySource.Value);
+            return new AccountEncryption(Optional.ToNullable(keySource), keyVaultProperties.Value, identity.Value);
         }
     }
 }

@@ -3,9 +3,18 @@
 ## 1.0.0-beta.2 (Unreleased)
 
 ### Features Added
+    - Added QueryRegionInfoNetAppResourceAsync
+    - NetAppAccount has new EncryptionKeySource
+
+    - Added AccountEncrhyption KeySource changed to Enum
+    - Added DisableShowmount and EncryptionKeySource to NetAppAccount
+    - Added CoolnessPeriod, CoolAccess to NetAppVolume and NetAppVolumePatch
+    - Added optional RelocateVolumeContent to NetAppVolume.RelocateAsync
+    - Added SmbAccessBasedEnumeration, keyVaultPrivateEndpointResourceId to NetAppVolumeData
 
 ### Breaking Changes
-
+    - NetAppAccount has new AccountEncryption properties, KeySource, KeyVaultProperties and Identity
+    - Removed location from NetAppVaults
 ### Bugs Fixed
 
 ### Other Changes

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Encryption settings. </summary>
-    internal partial class AccountEncryption
+    public partial class AccountEncryption
     {
         /// <summary> Initializes a new instance of AccountEncryption. </summary>
         public AccountEncryption()
@@ -16,13 +16,21 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> Initializes a new instance of AccountEncryption. </summary>
-        /// <param name="keySource"> Encryption Key Source. Possible values are: &apos;Microsoft.NetApp&apos;. </param>
-        internal AccountEncryption(string keySource)
+        /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </param>
+        /// <param name="keyVaultProperties"> Properties provided by KeVault. Applicable if keySource is &apos;Microsoft.KeyVault&apos;. </param>
+        /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is &apos;Microsoft.KeyVault&apos;. </param>
+        internal AccountEncryption(KeySource? keySource, KeyVaultProperties keyVaultProperties, EncryptionIdentity identity)
         {
             KeySource = keySource;
+            KeyVaultProperties = keyVaultProperties;
+            Identity = identity;
         }
 
-        /// <summary> Encryption Key Source. Possible values are: &apos;Microsoft.NetApp&apos;. </summary>
-        public string KeySource { get; set; }
+        /// <summary> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </summary>
+        public KeySource? KeySource { get; set; }
+        /// <summary> Properties provided by KeVault. Applicable if keySource is &apos;Microsoft.KeyVault&apos;. </summary>
+        public KeyVaultProperties KeyVaultProperties { get; set; }
+        /// <summary> Identity used to authenticate to KeyVault. Applicable if keySource is &apos;Microsoft.KeyVault&apos;. </summary>
+        public EncryptionIdentity Identity { get; set; }
     }
 }
