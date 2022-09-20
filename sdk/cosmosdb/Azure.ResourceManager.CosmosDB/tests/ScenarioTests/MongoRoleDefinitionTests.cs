@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         private MongoDBDatabaseResource _mongoDBDatabase;
         private string _roleDefinitionId;
 
-        private MongoRoleDefinitionGetResultResource _roleDefinition;
+        private MongoDBRoleDefinitionResource _roleDefinition;
 
         public MongoRoleDefinitionTests(bool isAsync) : base(isAsync)
         {
         }
 
-        private MongoRoleDefinitionGetResultCollection MongoRoleDefinitionCollection { get => _databaseAccount.GetMongoRoleDefinitionGetResults(); }
+        private MongoDBRoleDefinitionCollection MongoRoleDefinitionCollection { get => _databaseAccount.GetMongoDBRoleDefinitions(); }
 
         [OneTimeSetUp]
         public async Task GlobalSetup()
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             bool ifExists = await MongoRoleDefinitionCollection.ExistsAsync(this._roleDefinitionId);
             Assert.True(ifExists);
 
-            MongoRoleDefinitionGetResultResource definition2 = await MongoRoleDefinitionCollection.GetAsync(this._roleDefinitionId);
+            MongoDBRoleDefinitionResource definition2 = await MongoRoleDefinitionCollection.GetAsync(this._roleDefinitionId);
             Assert.AreEqual(_roleDefinition.Data.Name, definition2.Data.Name);
             VerifyMongoRoleDefinitions(definition, definition2);
 
@@ -149,14 +149,14 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             VerifyMongoRoleDefinitions(definition, definition2);
         }
 
-        private async Task<MongoRoleDefinitionGetResultResource> CreateMongoRoleDefinition(string databaseName, MongoRoleDefinitionGetResultCollection definitionCollection)
+        private async Task<MongoDBRoleDefinitionResource> CreateMongoRoleDefinition(string databaseName, MongoDBRoleDefinitionCollection definitionCollection)
         {
             var roleDefinitionName = Recording.GenerateAssetName("mongo-role-def-");
             _roleDefinition = await CreateMongoRoleDefinition(roleDefinitionName, databaseName, definitionCollection);
             return _roleDefinition;
         }
 
-        internal async Task<MongoRoleDefinitionGetResultResource> CreateMongoRoleDefinition(string roleDefinitionName, string databaseName, MongoRoleDefinitionGetResultCollection definitionCollection)
+        internal async Task<MongoDBRoleDefinitionResource> CreateMongoRoleDefinition(string roleDefinitionName, string databaseName, MongoDBRoleDefinitionCollection definitionCollection)
         {
             this._roleDefinitionId = $"{databaseName}.{roleDefinitionName}";
             var parameters = new MongoRoleDefinitionGetResultCreateOrUpdateContent
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             return definition.Value;
         }
 
-        private void VerifyMongoRoleDefinitions(MongoRoleDefinitionGetResultResource expectedValue, MongoRoleDefinitionGetResultResource actualValue)
+        private void VerifyMongoRoleDefinitions(MongoDBRoleDefinitionResource expectedValue, MongoDBRoleDefinitionResource actualValue)
         {
             Assert.AreEqual(expectedValue.Id, actualValue.Id);
             Assert.AreEqual(expectedValue.Data.Name, actualValue.Data.Name);

@@ -24,5 +24,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (string.Equals(value, "CustomRole", StringComparison.InvariantCultureIgnoreCase)) return MongoDBRoleDefinitionType.CustomRole;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MongoDBRoleDefinitionType value.");
         }
+
+        public static MongoDBRoleDefinitionType ToMongoDBRoleDefinitionType(this int value)
+        {
+            if (value == 0)
+                return MongoDBRoleDefinitionType.BuiltInRole;
+            if (value == 1)
+                return MongoDBRoleDefinitionType.CustomRole;
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown MongoDBRoleDefinitionType value.");
+        }
     }
 }
