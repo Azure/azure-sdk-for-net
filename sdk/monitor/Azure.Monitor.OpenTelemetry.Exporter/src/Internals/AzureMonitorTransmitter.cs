@@ -43,15 +43,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             {
                 try
                 {
-                    if (options.StorageDirectory == null)
-                    {
-                        _fileBlobProvider = new FileBlobProvider(StorageHelper.GetDefaultStorageDirectory());
-                    }
-                    else
-                    {
-                        // TODO: Fallback to default location if location provided via options does not work.
-                        _fileBlobProvider = new FileBlobProvider(options.StorageDirectory);
-                    }
+                    var storageDirectory = options.StorageDirectory ?? StorageHelper.GetDefaultStorageDirectory();
+
+                    // TODO: Fallback to default location if location provided via options does not work.
+                    _fileBlobProvider = new FileBlobProvider(storageDirectory);
+
+                    AzureMonitorExporterEventSource.Log.WriteInformational("InitializedPersistentStorage", storageDirectory);
                 }
                 catch (Exception ex)
                 {
