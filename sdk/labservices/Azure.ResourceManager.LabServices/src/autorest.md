@@ -29,13 +29,8 @@ rename-mapping:
   Image: LabServicesImage
   PagedImages: LabServicesImageListResult
   Image.properties.availableRegions: -|azure-location
-  Image.properties.sharedGalleryId: -|arm-id
-  Lab.properties.labPlanId: -|arm-id
-  LabUpdate.properties.labPlanId: -|arm-id
   LabPlan.properties.allowedRegions: -|azure-location
   LabPlanUpdate.properties.allowedRegions: -|azure-location
-#  LabNetworkProfile.subnetId: -|arm-id
-#  LabPlanNetworkProfile.subnetId: -|arm-id
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -73,16 +68,31 @@ directive:
     transform: >
       $['arm-id'] = {
             'type': 'string',
-            'format': 'arm-id',
+            'x-ms-format': 'arm-id',
             'description': 'A resource identifier.'
           };
+      $.url['format'] = 'url';
   - from: Skus.json
     where: $.definitions
     transform: >
       $.LabServicesSku.properties.tier['x-ms-enum']['name'] = 'AvailableLabServicesSkuTier';
       $.LabServicesSku['x-ms-client-name'] = 'AvailableLabServicesSku';
+  - from: Images.json
+    where: $.definitions
+    transform: >
+      $.ImageProperties.properties.sharedGalleryId['$ref'] = 'LabServices.json#/definitions/arm-id';
   - from: LabPlans.json
     where: $.definitions
     transform: >
       $.LabPlanNetworkProfile.properties.subnetId['$ref'] = 'LabServices.json#/definitions/arm-id';
+      $.LabPlanUpdateProperties.properties.sharedGalleryId['$ref'] = 'LabServices.json#/definitions/arm-id';
+      $.SaveImageBody.properties.labVirtualMachineId['$ref'] = 'LabServices.json#/definitions/arm-id';
+  - from: Labs.json
+    where: $.definitions
+    transform: >
+      $.LabNetworkProfile.properties.subnetId['$ref'] = 'LabServices.json#/definitions/arm-id';
+      $.LabNetworkProfile.properties.loadBalancerId['$ref'] = 'LabServices.json#/definitions/arm-id';
+      $.LabNetworkProfile.properties.publicIpId['$ref'] = 'LabServices.json#/definitions/arm-id';
+      $.LabUpdateProperties.properties.labPlanId['$ref'] = 'LabServices.json#/definitions/arm-id';
+      $.ImageReference.properties.id['$ref'] = 'LabServices.json#/definitions/arm-id';
 ```

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.Core;
+using System;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// Support instructions.
         /// Serialized Name: SupportInfo.instructions
         /// </param>
-        internal SupportInfo(ResourceIdentifier uri, string email, string phone, string instructions)
+        internal SupportInfo(Uri uri, string email, string phone, string instructions)
         {
             Uri = uri;
             Email = email;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// Support web address.
         /// Serialized Name: SupportInfo.url
         /// </summary>
-        public ResourceIdentifier Uri { get; set; }
+        public Uri Uri { get; set; }
         /// <summary>
         /// Support contact email address.
         /// Serialized Name: SupportInfo.email

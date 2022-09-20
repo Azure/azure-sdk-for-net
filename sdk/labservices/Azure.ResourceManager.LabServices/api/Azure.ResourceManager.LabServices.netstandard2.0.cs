@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.LabServices
         public Azure.ResourceManager.LabServices.Models.ConnectionProfile DefaultConnectionProfile { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DefaultNetworkSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier LinkedLmsInstance { get { throw null; } set { } }
+        public System.Uri LinkedLmsInstance { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SharedGalleryId { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.SupportInfo SupportInfo { get { throw null; } set { } }
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public Azure.ResourceManager.LabServices.Models.ConnectionProfile DefaultConnectionProfile { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DefaultNetworkSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier LinkedLmsInstance { get { throw null; } set { } }
+        public System.Uri LinkedLmsInstance { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SharedGalleryId { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.SupportInfo SupportInfo { get { throw null; } set { } }
     }
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.LabServices.Models
         public string Email { get { throw null; } set { } }
         public string Instructions { get { throw null; } set { } }
         public string Phone { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier Uri { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
     }
     public partial class TrackedResourceUpdate
     {
@@ -695,9 +695,9 @@ namespace Azure.ResourceManager.LabServices.Models
         public string NonAdminUsername { get { throw null; } }
         public string PrivateIPAddress { get { throw null; } }
         public string RdpAuthority { get { throw null; } }
-        public Azure.Core.ResourceIdentifier RdpInBrowserUri { get { throw null; } }
+        public System.Uri RdpInBrowserUri { get { throw null; } }
         public string SshAuthority { get { throw null; } }
-        public Azure.Core.ResourceIdentifier SshInBrowserUri { get { throw null; } }
+        public System.Uri SshInBrowserUri { get { throw null; } }
     }
     public partial class VirtualMachineProfile
     {

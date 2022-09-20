@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url");
-                writer.WriteStringValue(Uri);
+                writer.WriteStringValue(Uri.AbsoluteUri);
             }
             if (Optional.IsDefined(Email))
             {
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static SupportInfo DeserializeSupportInfo(JsonElement element)
         {
-            Optional<ResourceIdentifier> url = default;
+            Optional<Uri> url = default;
             Optional<string> email = default;
             Optional<string> phone = default;
             Optional<string> instructions = default;
@@ -50,10 +51,10 @@ namespace Azure.ResourceManager.LabServices.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        url = null;
                         continue;
                     }
-                    url = new ResourceIdentifier(property.Value.GetString());
+                    url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("email"))

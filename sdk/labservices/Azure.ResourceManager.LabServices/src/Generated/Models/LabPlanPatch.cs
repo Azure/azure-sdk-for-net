@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -77,6 +78,6 @@ namespace Azure.ResourceManager.LabServices.Models
         /// Base Url of the lms instance this lab plan can link lab rosters against.
         /// Serialized Name: LabPlanUpdate.properties.linkedLmsInstance
         /// </summary>
-        public ResourceIdentifier LinkedLmsInstance { get; set; }
+        public Uri LinkedLmsInstance { get; set; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(LinkedLmsInstance))
             {
                 writer.WritePropertyName("linkedLmsInstance");
-                writer.WriteStringValue(LinkedLmsInstance);
+                writer.WriteStringValue(LinkedLmsInstance.AbsoluteUri);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -97,7 +98,7 @@ namespace Azure.ResourceManager.LabServices
             Optional<IList<AzureLocation>> allowedRegions = default;
             Optional<ResourceIdentifier> sharedGalleryId = default;
             Optional<SupportInfo> supportInfo = default;
-            Optional<ResourceIdentifier> linkedLmsInstance = default;
+            Optional<Uri> linkedLmsInstance = default;
             Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -234,10 +235,10 @@ namespace Azure.ResourceManager.LabServices
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                linkedLmsInstance = null;
                                 continue;
                             }
-                            linkedLmsInstance = new ResourceIdentifier(property0.Value.GetString());
+                            linkedLmsInstance = new Uri(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

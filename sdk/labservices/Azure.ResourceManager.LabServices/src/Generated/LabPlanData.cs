@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.LabServices.Models;
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.LabServices
         /// Current provisioning state of the lab plan.
         /// Serialized Name: LabPlan.properties.provisioningState
         /// </param>
-        internal LabPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ConnectionProfile defaultConnectionProfile, AutoShutdownProfile defaultAutoShutdownProfile, LabPlanNetworkProfile defaultNetworkProfile, IList<AzureLocation> allowedRegions, ResourceIdentifier sharedGalleryId, SupportInfo supportInfo, ResourceIdentifier linkedLmsInstance, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        internal LabPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ConnectionProfile defaultConnectionProfile, AutoShutdownProfile defaultAutoShutdownProfile, LabPlanNetworkProfile defaultNetworkProfile, IList<AzureLocation> allowedRegions, ResourceIdentifier sharedGalleryId, SupportInfo supportInfo, Uri linkedLmsInstance, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             DefaultConnectionProfile = defaultConnectionProfile;
@@ -132,7 +133,7 @@ namespace Azure.ResourceManager.LabServices
         /// Base Url of the lms instance this lab plan can link lab rosters against.
         /// Serialized Name: LabPlan.properties.linkedLmsInstance
         /// </summary>
-        public ResourceIdentifier LinkedLmsInstance { get; set; }
+        public Uri LinkedLmsInstance { get; set; }
         /// <summary>
         /// Current provisioning state of the lab plan.
         /// Serialized Name: LabPlan.properties.provisioningState

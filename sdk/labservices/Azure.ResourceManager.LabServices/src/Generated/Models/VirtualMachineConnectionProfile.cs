@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.Core;
+using System;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// The username used to log on to the virtual machine as non-admin, if one exists.
         /// Serialized Name: VirtualMachineConnectionProfile.nonAdminUsername
         /// </param>
-        internal VirtualMachineConnectionProfile(string privateIPAddress, string sshAuthority, ResourceIdentifier sshInBrowserUri, string rdpAuthority, ResourceIdentifier rdpInBrowserUri, string adminUsername, string nonAdminUsername)
+        internal VirtualMachineConnectionProfile(string privateIPAddress, string sshAuthority, Uri sshInBrowserUri, string rdpAuthority, Uri rdpInBrowserUri, string adminUsername, string nonAdminUsername)
         {
             PrivateIPAddress = privateIPAddress;
             SshAuthority = sshAuthority;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// URL for connecting via SSH protocol to the virtual machine in browser.
         /// Serialized Name: VirtualMachineConnectionProfile.sshInBrowserUrl
         /// </summary>
-        public ResourceIdentifier SshInBrowserUri { get; }
+        public Uri SshInBrowserUri { get; }
         /// <summary>
         /// Port and host name separated by semicolon for connecting via RDP protocol to the virtual machine.
         /// Serialized Name: VirtualMachineConnectionProfile.rdpAuthority
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.LabServices.Models
         /// URL for connecting via RDP protocol to the virtual machine in browser.
         /// Serialized Name: VirtualMachineConnectionProfile.rdpInBrowserUrl
         /// </summary>
-        public ResourceIdentifier RdpInBrowserUri { get; }
+        public Uri RdpInBrowserUri { get; }
         /// <summary>
         /// The username used to log on to the virtual machine as admin.
         /// Serialized Name: VirtualMachineConnectionProfile.adminUsername
