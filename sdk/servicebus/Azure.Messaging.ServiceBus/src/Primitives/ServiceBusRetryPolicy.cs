@@ -30,7 +30,7 @@ namespace Azure.Messaging.ServiceBus
         /// Represents a state flag that is used to make sure the server busy value can be observed with
         /// reasonable fresh values without having to acquire a lock.
         /// </summary>
-        private volatile int serverBusyState;
+        private volatile int _serverBusyState;
 
         private const int ServerNotBusyState = 0; // default value of serverBusy
         private const int ServerBusyState = 1;
@@ -38,7 +38,7 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         /// Determines whether or not the server returned a busy error.
         /// </summary>
-        internal bool IsServerBusy => serverBusyState == ServerBusyState;
+        internal bool IsServerBusy => _serverBusyState == ServerBusyState;
 
         /// <summary>
         /// Gets the exception message when a server busy error is returned.
@@ -195,26 +195,26 @@ namespace Azure.Messaging.ServiceBus
         private void SetServerBusy(string exceptionMessage, CancellationToken cancellationToken)
         {
             // multiple call to this method will not prolong the timer.
-            if (serverBusyState == ServerBusyState)
+            if (_serverBusyState == ServerBusyState)
             {
                 return;
             }
 
             ServerBusyExceptionMessage = string.IsNullOrWhiteSpace(exceptionMessage) ?
                 Resources.DefaultServerBusyException : exceptionMessage;
-            Interlocked.Exchange(ref serverBusyState, ServerBusyState);
+            Interlocked.Exchange(ref _serverBusyState, ServerBusyState);
             _ = ScheduleResetServerBusy(cancellationToken);
         }
 
         private void ResetServerBusy()
         {
-            if (serverBusyState == ServerNotBusyState)
+            if (_serverBusyState == ServerNotBusyState)
             {
                 return;
             }
 
             ServerBusyExceptionMessage = Resources.DefaultServerBusyException;
-            Interlocked.Exchange(ref serverBusyState, ServerNotBusyState);
+            Interlocked.Exchange(ref _serverBusyState, ServerNotBusyState);
         }
 
         private async Task ScheduleResetServerBusy(CancellationToken cancellationToken)
