@@ -8,17 +8,21 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The answer call operation options.
     /// </summary>
-    public class AnswerCallOptions
+    public class AnswerCallOptions: RepeatabilityHeaders
     {
         /// <summary>
         /// Creates a new AnswerCallOptions object.
         /// </summary>
         /// <param name="incomingCallContext"></param>
         /// <param name="callbackUri"></param>
-        public AnswerCallOptions(string incomingCallContext, Uri callbackUri)
+        /// <param name="repeatabilityRequestId"></param>
+        /// <param name="repeatablityFirstSent"></param>
+        public AnswerCallOptions(string incomingCallContext, Uri callbackUri, Guid? repeatabilityRequestId = null, string repeatablityFirstSent = default)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
+            RepeatabilityRequestId = repeatabilityRequestId;
+            RepeatabilityFirstSent = repeatablityFirstSent;
         }
 
         /// <summary>
