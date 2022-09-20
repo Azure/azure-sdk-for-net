@@ -85,9 +85,12 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Disconnect the current caller in a group-call or end a p2p-call.</summary>
         /// <param name="forEveryone"> If true, this will terminate the call and hang up on all participants in this call. </param>
+        /// <param name="repeatabilityRequestId"> Only used if terminating a call. If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> Only used if terminating a call. If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual async Task<Response> HangUpAsync(bool forEveryone, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"><paramref name="repeatabilityRequestId"/> <paramref name="repeatabilityFirstSent"/> Repeatability headers are set incorrectly.</exception>
+        public virtual async Task<Response> HangUpAsync(bool forEveryone, Guid? repeatabilityRequestId = null, string repeatabilityFirstSent = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(HangUp)}");
             scope.Start();
@@ -95,9 +98,19 @@ namespace Azure.Communication.CallAutomation
             {
                 if (forEveryone)
                 {
+                    var repeatabilityHeaders = new RepeatabilityHeaders
+                    {
+                        RepeatabilityRequestId = repeatabilityRequestId,
+                        RepeatabilityFirstSent = repeatabilityFirstSent
+                    };
+                    if (!repeatabilityHeaders.IsValidRepeatabilityHeaders())
+                        throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
+
                     return await RestClient.TerminateCallAsync(
-                        callConnectionId: CallConnectionId,
-                        cancellationToken: cancellationToken
+                        CallConnectionId,
+                        repeatabilityRequestId,
+                        repeatabilityFirstSent,
+                        cancellationToken
                         ).ConfigureAwait(false);
                 }
                 else
@@ -117,9 +130,12 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Disconnect the current caller in a group-call or end a p2p-call. </summary>
         /// <param name="forEveryone"> If true, this will terminate the call and hang up on all participants in this call. </param>
+        /// <param name="repeatabilityRequestId"> Only used if terminating a call. If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> Only used if terminating a call. If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT.</param>
         /// <param name="cancellationToken"> The cancellation token. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        public virtual Response HangUp(bool forEveryone, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"><paramref name="repeatabilityRequestId"/> <paramref name="repeatabilityFirstSent"/> Repeatability headers are set incorrectly.</exception>
+        public virtual Response HangUp(bool forEveryone, Guid? repeatabilityRequestId = null, string repeatabilityFirstSent = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(HangUp)}");
             scope.Start();
@@ -127,9 +143,19 @@ namespace Azure.Communication.CallAutomation
             {
                 if (forEveryone)
                 {
+                    var repeatabilityHeaders = new RepeatabilityHeaders
+                    {
+                        RepeatabilityRequestId = repeatabilityRequestId,
+                        RepeatabilityFirstSent = repeatabilityFirstSent
+                    };
+                    if (!repeatabilityHeaders.IsValidRepeatabilityHeaders())
+                        throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
+
                     return RestClient.TerminateCall(
-                        callConnectionId: CallConnectionId,
-                        cancellationToken: cancellationToken
+                        CallConnectionId,
+                        repeatabilityRequestId,
+                        repeatabilityFirstSent,
+                        cancellationToken
                         );
                 }
                 else
