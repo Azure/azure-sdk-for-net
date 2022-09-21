@@ -39,6 +39,37 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [InlineData("somestring")]
         [InlineData(null)]
         [InlineData("")]
+        public void ValidateSampleRateForEventException(object SampleRate)
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+
+            // Valid SampleRate.
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                parentContext: default,
+                startTime: DateTime.UtcNow,
+                tags: new Dictionary<string, object>() { ["sampleRate"] = SampleRate });
+
+            var monitorTags = TraceHelper.EnumerateActivityTags(activity);
+            var telemetryItem = new TelemetryItem(activity, ref monitorTags, "RoleName", "RoleInstance", "00000000-0000-0000-0000-000000000000");
+            var expTelemetryItem = new TelemetryItem(telemetryItem, default, default, default);
+
+            if (SampleRate is float)
+            {
+                Assert.Equal(SampleRate, expTelemetryItem.SampleRate);
+            }
+            else
+            {
+                Assert.Null(expTelemetryItem.SampleRate);
+            }
+        }
+
+        [Theory]
+        [InlineData(50.0F)]
+        [InlineData("somestring")]
+        [InlineData(null)]
+        [InlineData("")]
         public void ValidateSampleRateInTelemetry(object SampleRate)
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
