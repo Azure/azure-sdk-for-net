@@ -24,8 +24,8 @@ namespace Azure.Communication.CallAutomation
              * 4. hang up the call.
              * 5. once call is hung up, verify that call connection cannot be found.
             */
-            if (SkipCallingServerInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+            if (SkipCallAutomationInteractionLiveTests)
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             bool wasConnected = false;
@@ -75,8 +75,8 @@ namespace Azure.Communication.CallAutomation
              * 5. once call is hung up, verify that call connection cannot be found.
             */
 
-            if (SkipCallingServerInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+            if (SkipCallAutomationInteractionLiveTests)
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             bool wasConnected = false;
