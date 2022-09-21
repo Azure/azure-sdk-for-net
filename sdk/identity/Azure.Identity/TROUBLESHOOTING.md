@@ -21,6 +21,7 @@ This troubleshooting guide covers failure investigation techniques, common error
 - [Troubleshoot VisualStudioCredential Authentication Issues](#troubleshoot-visualstudiocredential-authenticaton-issues)
 - [Troubleshoot AzureCliCredential Authentication Issues](#troubleshoot-azureclicredential-authentication-issues)
 - [Troubleshoot AzurePowerShellCredential Authentication Issues](#troubleshoot-azurepowershellcredential-authentication-issues)
+- [Troubleshoot Multi Tenant Authentication Issues](#troubleshoot-multi-tenant-authentication-issues)
 - [Get Additional Help](#get-additional-help)
 
 ## Handle Azure Identity Exceptions
@@ -245,6 +246,13 @@ Once you've verified Azure PowerShell is using correct account, you can validate
 Get-AzAccessToken -ResourceUrl "https://management.core.windows.net"
 ```
 >Note that output of this command will contain a valid access token, and SHOULD NOT BE SHARED to avoid compromising account security.
+
+## Troubleshoot Multi Tenant Authentication Issues
+`AuthenticationFailedException`
+
+| Error Message |Description| Mitigation |
+|---|---|---|
+|The current credential is not configured to acquire tokens for tenant <tenant ID>|The application must configure the credential to allow acquiring tokens from the requested tenant.|Add the requested tenant ID it to the AdditionallyAllowedTenants on the credential options, or add \"*\" to AdditionallyAllowedTenants to allow acquiring tokens for any tenant.</p>This exception was added as part of functional a breaking change to multi tenant authentication in version `1.7.0`. Users experiencing this error after upgrading can find details on the change and migration in [BREAKING_CHANGES.md](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/BREAKING_CHANGES.md#170) |
 
 ## Get Additional Help
 

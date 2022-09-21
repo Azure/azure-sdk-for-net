@@ -20,7 +20,6 @@ pr:
   paths:
     include:
     - sdk/cognitiveservices/
-    - sdk/resourcemanager/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -94,6 +93,3 @@ extends:
     - name: Microsoft.Azure.CognitiveServices.Vision.Face
       safeName: MicrosoftAzureCognitiveServicesVisionFace
       directoryName: Vision.Face
-    - name: Azure.ResourceManager.CognitiveServices
-      safeName: AzureResourceManagerCognitiveServices
-      directoryName: Azure.ResourceManager.CognitiveServices

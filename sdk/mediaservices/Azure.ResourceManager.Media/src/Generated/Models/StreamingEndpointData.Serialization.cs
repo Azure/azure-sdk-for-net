@@ -56,13 +56,27 @@ namespace Azure.ResourceManager.Media
             }
             if (Optional.IsDefined(AccessControl))
             {
-                writer.WritePropertyName("accessControl");
-                writer.WriteObjectValue(AccessControl);
+                if (AccessControl != null)
+                {
+                    writer.WritePropertyName("accessControl");
+                    writer.WriteObjectValue(AccessControl);
+                }
+                else
+                {
+                    writer.WriteNull("accessControl");
+                }
             }
             if (Optional.IsDefined(MaxCacheAge))
             {
-                writer.WritePropertyName("maxCacheAge");
-                writer.WriteNumberValue(MaxCacheAge.Value);
+                if (MaxCacheAge != null)
+                {
+                    writer.WritePropertyName("maxCacheAge");
+                    writer.WriteNumberValue(MaxCacheAge.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxCacheAge");
+                }
             }
             if (Optional.IsCollectionDefined(CustomHostNames))
             {
@@ -91,8 +105,15 @@ namespace Azure.ResourceManager.Media
             }
             if (Optional.IsDefined(CrossSiteAccessPolicies))
             {
-                writer.WritePropertyName("crossSiteAccessPolicies");
-                writer.WriteObjectValue(CrossSiteAccessPolicies);
+                if (CrossSiteAccessPolicies != null)
+                {
+                    writer.WritePropertyName("crossSiteAccessPolicies");
+                    writer.WriteObjectValue(CrossSiteAccessPolicies);
+                }
+                else
+                {
+                    writer.WriteNull("crossSiteAccessPolicies");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -111,7 +132,7 @@ namespace Azure.ResourceManager.Media
             Optional<int> scaleUnits = default;
             Optional<string> availabilitySetName = default;
             Optional<StreamingEndpointAccessControl> accessControl = default;
-            Optional<long> maxCacheAge = default;
+            Optional<long?> maxCacheAge = default;
             Optional<IList<string>> customHostNames = default;
             Optional<string> hostName = default;
             Optional<bool> cdnEnabled = default;
@@ -213,7 +234,7 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                accessControl = null;
                                 continue;
                             }
                             accessControl = StreamingEndpointAccessControl.DeserializeStreamingEndpointAccessControl(property0.Value);
@@ -223,7 +244,7 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                maxCacheAge = null;
                                 continue;
                             }
                             maxCacheAge = property0.Value.GetInt64();
@@ -288,7 +309,7 @@ namespace Azure.ResourceManager.Media
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                crossSiteAccessPolicies = null;
                                 continue;
                             }
                             crossSiteAccessPolicies = CrossSiteAccessPolicies.DeserializeCrossSiteAccessPolicies(property0.Value);

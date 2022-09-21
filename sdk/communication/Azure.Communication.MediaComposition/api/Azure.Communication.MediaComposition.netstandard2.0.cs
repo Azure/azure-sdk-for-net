@@ -25,6 +25,11 @@ namespace Azure.Communication.MediaComposition
         public static bool operator !=(Azure.Communication.MediaComposition.AudiencePosition left, Azure.Communication.MediaComposition.AudiencePosition right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class AutoGridInputGroup : Azure.Communication.MediaComposition.InputGroup
+    {
+        public AutoGridInputGroup(System.Collections.Generic.IEnumerable<string> inputIds) { }
+        public System.Collections.Generic.IList<string> InputIds { get { throw null; } }
+    }
     public partial class AutoGridLayout : Azure.Communication.MediaComposition.Models.MediaCompositionLayout
     {
         public AutoGridLayout(System.Collections.Generic.IEnumerable<string> inputIds) { }
@@ -67,6 +72,13 @@ namespace Azure.Communication.MediaComposition
         public DominantSpeaker(string call) { }
         public string Call { get { throw null; } set { } }
     }
+    public partial class GridInputGroup : Azure.Communication.MediaComposition.InputGroup
+    {
+        public GridInputGroup(System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> inputIds, int rows, int columns) { }
+        public int Columns { get { throw null; } set { } }
+        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> InputIds { get { throw null; } }
+        public int Rows { get { throw null; } set { } }
+    }
     public partial class GridLayout : Azure.Communication.MediaComposition.Models.MediaCompositionLayout
     {
         public GridLayout(int rows, int columns, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> inputIds) { }
@@ -87,13 +99,28 @@ namespace Azure.Communication.MediaComposition
     public partial class InputGroup
     {
         public InputGroup() { }
-        public int? Columns { get { throw null; } set { } }
         public string Height { get { throw null; } set { } }
-        public System.Collections.Generic.IList<System.Collections.Generic.IList<string>> InputIds { get { throw null; } }
         public string Layer { get { throw null; } set { } }
         public Azure.Communication.MediaComposition.Models.InputPosition Position { get { throw null; } set { } }
-        public int? Rows { get { throw null; } set { } }
         public string Width { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct InputGroupType : System.IEquatable<Azure.Communication.MediaComposition.InputGroupType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public InputGroupType(string value) { throw null; }
+        public static Azure.Communication.MediaComposition.InputGroupType AutoGridBased { get { throw null; } }
+        public static Azure.Communication.MediaComposition.InputGroupType GridBased { get { throw null; } }
+        public bool Equals(Azure.Communication.MediaComposition.InputGroupType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.MediaComposition.InputGroupType left, Azure.Communication.MediaComposition.InputGroupType right) { throw null; }
+        public static implicit operator Azure.Communication.MediaComposition.InputGroupType (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.MediaComposition.InputGroupType left, Azure.Communication.MediaComposition.InputGroupType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LayerVisibility : System.IEquatable<Azure.Communication.MediaComposition.LayerVisibility>

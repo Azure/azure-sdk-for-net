@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <summary> Initializes a new instance of RoleManagementPrincipal. </summary>
         /// <param name="id"> The id of the principal made changes. </param>
         /// <param name="displayName"> The name of the principal made changes. </param>
-        /// <param name="principalType"> Type of principal such as user , group etc. </param>
+        /// <param name="principalType"> Type of the principal. </param>
         /// <param name="email"> Email of principal. </param>
-        internal RoleManagementPrincipal(string id, string displayName, string principalType, string email)
+        internal RoleManagementPrincipal(string id, string displayName, RoleManagementPrincipalType? principalType, string email)
         {
             Id = id;
             DisplayName = displayName;
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Authorization.Models
         public string Id { get; }
         /// <summary> The name of the principal made changes. </summary>
         public string DisplayName { get; }
-        /// <summary> Type of principal such as user , group etc. </summary>
-        public string PrincipalType { get; }
+        /// <summary> Type of the principal. </summary>
+        public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> Email of principal. </summary>
         public string Email { get; }
     }

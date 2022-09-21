@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.0 (2022-08-24)
+
+### Bugs Fixed
+
+- Hiding the new `AddAzureClientsCore` overload from IntelliSense, as its usage is not intuitive.
 
 ## 1.4.0 (2022-08-11)
 

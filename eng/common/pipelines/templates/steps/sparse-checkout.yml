@@ -8,13 +8,13 @@ parameters:
       - Name: $(Build.Repository.Name)
         Commitish: $(Build.SourceVersion)
         WorkingDirectory: $(System.DefaultWorkingDirectory)
-  - name: SkipDefaultCheckout
+  - name: SkipCheckoutNone
     type: boolean
     default: false
 
 steps:
-  - ${{ if not(parameters.SkipDefaultCheckout) }}:
-    - checkout: none
+  - ${{ if not(parameters.SkipCheckoutNone) }}:
+      - checkout: none
 
   - task: PowerShell@2
     displayName: 'Sparse checkout repositories'
@@ -38,8 +38,13 @@ steps:
             } else {
               Write-Host "Repository $($repository.Name) is being initialized."
 
-              Write-Host "git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) ."
-              git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
+              if ($repository.Commitish -match '^refs/pull/\d+/merge$') {
+                Write-Host "git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)' https://github.com/$($repository.Name) ."
+                git clone --no-checkout --filter=tree:0 -c remote.origin.fetch=''+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)'' https://github.com/$($repository.Name) .
+              } else {
+                Write-Host "git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) ."
+                git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
+              }
 
               Write-Host "git sparse-checkout init"
               git sparse-checkout init

@@ -19,10 +19,6 @@
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Azure.ResourceManager.*\**\*.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(SDKType)' == 'data'">
-    <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.ContainerRegistry*\**\*.csproj" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(SDKType)' == 'mgmt'">
     <ProjectsToIncludeBySDKType Include="$(MSBuildThisFileDirectory)Microsoft.Azure.Management.ContainerRegistry*\**\*.csproj" />
   </ItemGroup>

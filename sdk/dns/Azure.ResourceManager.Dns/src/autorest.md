@@ -59,33 +59,41 @@ rename-rules:
   GET: Get
   PUT: Put
   RecordType: DnsRecordType
+  ARecord: ARecordInfo
+  AaaaRecord: AaaaRecordInfo
+  MxRecord: MXRecordInfo
+  NsRecord: NSRecordInfo
+  PtrRecord: PtrRecordInfo
+  SrvRecord: SrvRecordInfo
+  TxtRecord: TxtRecordInfo
+  CnameRecord: CnameRecordInfo
+  SoaRecord: SoaRecordInfo
+  CaaRecord: CaaRecordInfo
 
 override-operation-name:
   RecordSets_ListByDnsZone: GetRecordSets
   RecordSets_ListAllByDnsZone: GetAllRecordSets
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/A: RecordSetA
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/AAAA: RecordSetAaaa
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/CAA: RecordSetCaa
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/CNAME: RecordSetCname
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/MX: RecordSetMX
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/NS: RecordSetNS
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/PTR: RecordSetPtr
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SOA: RecordSetSoa
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SRV: RecordSetSrv
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/TXT: RecordSetTxt
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/A: ARecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/AAAA: AaaaRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/CAA: CaaRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/CNAME: CnameRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/MX: MXRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/NS: NSRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/PTR: PtrRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SOA: SoaRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/SRV: SrvRecord
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/TXT: TxtRecord
 # Add nullable annotations
 directive:
   - from: swagger-document
     where: $.definitions.ZoneProperties
-    transform: >
-      $.properties.maxNumberOfRecordsPerRecordSet["x-nullable"] = true;
+    transform: $.properties.maxNumberOfRecordsPerRecordSet["x-nullable"] = true;
 # Rename models
   - from: swagger-document
     where: $.definitions.ZoneUpdate
-    transform: >
-      $["x-ms-client-name"] = "ZoneUpdateOptions";
+    transform: $["x-ms-client-name"] = "ZoneUpdateOptions";
 
   - from: swagger-document
     where: $.definitions.NsRecord.properties.nsdname
@@ -124,38 +132,6 @@ directive:
   - from: swagger-document
     where: $.definitions.ZoneListResult
     transform: $["x-ms-client-name"] = "DnsZoneListResult";
-
-# Add prepend name to 10 RecordSet
-  - from: swagger-document
-    where: $.definitions.ARecord
-    transform: $["x-ms-client-name"] = "DnsARecord";
-  - from: swagger-document
-    where: $.definitions.AaaaRecord
-    transform: $["x-ms-client-name"] = "DnsAaaaRecord";
-  - from: swagger-document
-    where: $.definitions.MxRecord
-    transform: $["x-ms-client-name"] = "DnsMXRecord";
-  - from: swagger-document
-    where: $.definitions.NsRecord
-    transform: $["x-ms-client-name"] = "DnsNSRecord";
-  - from: swagger-document
-    where: $.definitions.PtrRecord
-    transform: $["x-ms-client-name"] = "DnsPtrRecord";
-  - from: swagger-document
-    where: $.definitions.SrvRecord
-    transform: $["x-ms-client-name"] = "DnsSrvRecord";
-  - from: swagger-document
-    where: $.definitions.TxtRecord
-    transform: $["x-ms-client-name"] = "DnsTxtRecord";
-  - from: swagger-document
-    where: $.definitions.CnameRecord
-    transform: $["x-ms-client-name"] = "DnsCnameRecord";
-  - from: swagger-document
-    where: $.definitions.SoaRecord
-    transform: $["x-ms-client-name"] = "DnsSoaRecord";
-  - from: swagger-document
-    where: $.definitions.CaaRecord
-    transform: $["x-ms-client-name"] = "DnsCaaRecord";
 
 # Mx Ns => MX NS
   - from: swagger-document

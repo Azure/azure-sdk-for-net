@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="resourceLocation"> the location of the resource. </param>
         /// <param name="metricNamespace"> the namespace of the metric. </param>
         /// <param name="metricName"> the name of the metric that defines what the rule monitors. </param>
-        internal RuleMetricDataSource(string odataType, ResourceIdentifier resourceId, string legacyResourceId, string resourceLocation, string metricNamespace, string metricName) : base(odataType, resourceId, legacyResourceId, resourceLocation, metricNamespace)
+        internal RuleMetricDataSource(string odataType, ResourceIdentifier resourceId, ResourceIdentifier legacyResourceId, string resourceLocation, string metricNamespace, string metricName) : base(odataType, resourceId, legacyResourceId, resourceLocation, metricNamespace)
         {
             MetricName = metricName;
             OdataType = odataType ?? "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource";

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId");
-                writer.WriteStringValue(PrincipalId);
+                writer.WriteStringValue(PrincipalId.Value);
             }
             if (Optional.IsDefined(TenantId))
             {
@@ -36,14 +36,19 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
 
         internal static AadBasedSecurityPrincipal DeserializeAadBasedSecurityPrincipal(JsonElement element)
         {
-            Optional<string> principalId = default;
+            Optional<Guid> principalId = default;
             Optional<Guid> tenantId = default;
-            Optional<LedgerRoleName> ledgerRoleName = default;
+            Optional<ConfidentialLedgerRoleName> ledgerRoleName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
                 {
-                    principalId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("tenantId"))
@@ -63,11 +68,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ledgerRoleName = new LedgerRoleName(property.Value.GetString());
+                    ledgerRoleName = new ConfidentialLedgerRoleName(property.Value.GetString());
                     continue;
                 }
             }
-            return new AadBasedSecurityPrincipal(principalId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(ledgerRoleName));
+            return new AadBasedSecurityPrincipal(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), Optional.ToNullable(ledgerRoleName));
         }
     }
 }
