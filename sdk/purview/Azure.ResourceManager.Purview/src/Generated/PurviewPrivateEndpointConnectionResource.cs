@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Purview
     /// A Class representing a PurviewPrivateEndpointConnection along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PurviewPrivateEndpointConnectionResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetPurviewPrivateEndpointConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AccountResource" /> using the GetPurviewPrivateEndpointConnection method.
+    /// Otherwise you can get one from its parent resource <see cref="PurviewAccountResource" /> using the GetPurviewPrivateEndpointConnection method.
     /// </summary>
     public partial class PurviewPrivateEndpointConnectionResource : ArmResource
     {
