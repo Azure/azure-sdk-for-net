@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public DeploymentsRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments/", false);
             uri.AppendPath(deploymentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -131,6 +132,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments/", false);
             uri.AppendPath(deploymentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -208,6 +210,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments/", false);
             uri.AppendPath(deploymentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -285,6 +288,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments/", false);
             uri.AppendPath(deploymentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -353,6 +357,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -421,6 +426,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Nginx.NginxPlus/nginxDeployments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

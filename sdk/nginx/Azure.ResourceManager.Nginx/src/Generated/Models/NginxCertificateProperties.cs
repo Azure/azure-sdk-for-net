@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Nginx.Models
             KeyVaultSecretId = keyVaultSecretId;
         }
 
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        /// <summary> Gets the provisioning state. </summary>
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> Gets or sets the key virtual path. </summary>
         public string KeyVirtualPath { get; set; }
         /// <summary> Gets or sets the certificate virtual path. </summary>

@@ -52,6 +52,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -139,6 +140,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -222,6 +224,7 @@ namespace Azure.ResourceManager.Nginx
             uri.AppendPath(deploymentName, true);
             uri.AppendPath("/certificates/", false);
             uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);

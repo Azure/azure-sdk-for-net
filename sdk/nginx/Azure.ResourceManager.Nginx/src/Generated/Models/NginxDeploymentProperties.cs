@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Nginx.Models
             Logging = logging;
         }
 
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        /// <summary> Gets the provisioning state. </summary>
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the nginx version. </summary>
         public string NginxVersion { get; }
         /// <summary> The managed resource group to deploy VNet injection related network resources. </summary>

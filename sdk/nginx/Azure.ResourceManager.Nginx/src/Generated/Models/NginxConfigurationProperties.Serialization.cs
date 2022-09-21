@@ -16,16 +16,21 @@ namespace Azure.ResourceManager.Nginx.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
             if (Optional.IsCollectionDefined(Files))
             {
                 writer.WritePropertyName("files");
                 writer.WriteStartArray();
                 foreach (var item in Files)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ProtectedFiles))
+            {
+                writer.WritePropertyName("protectedFiles");
+                writer.WriteStartArray();
+                foreach (var item in ProtectedFiles)
                 {
                     writer.WriteObjectValue(item);
                 }
@@ -48,6 +53,7 @@ namespace Azure.ResourceManager.Nginx.Models
         {
             Optional<ProvisioningState> provisioningState = default;
             Optional<IList<NginxConfigurationFile>> files = default;
+            Optional<IList<NginxConfigurationFile>> protectedFiles = default;
             Optional<NginxConfigurationPackage> package = default;
             Optional<string> rootFile = default;
             foreach (var property in element.EnumerateObject())
@@ -77,6 +83,21 @@ namespace Azure.ResourceManager.Nginx.Models
                     files = array;
                     continue;
                 }
+                if (property.NameEquals("protectedFiles"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    List<NginxConfigurationFile> array = new List<NginxConfigurationFile>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(NginxConfigurationFile.DeserializeNginxConfigurationFile(item));
+                    }
+                    protectedFiles = array;
+                    continue;
+                }
                 if (property.NameEquals("package"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -93,7 +114,7 @@ namespace Azure.ResourceManager.Nginx.Models
                     continue;
                 }
             }
-            return new NginxConfigurationProperties(Optional.ToNullable(provisioningState), Optional.ToList(files), package.Value, rootFile.Value);
+            return new NginxConfigurationProperties(Optional.ToNullable(provisioningState), Optional.ToList(files), Optional.ToList(protectedFiles), package.Value, rootFile.Value);
         }
     }
 }

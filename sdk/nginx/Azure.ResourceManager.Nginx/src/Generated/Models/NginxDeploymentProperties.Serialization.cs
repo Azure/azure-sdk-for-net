@@ -15,11 +15,6 @@ namespace Azure.ResourceManager.Nginx.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState");
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
             if (Optional.IsDefined(ManagedResourceGroup))
             {
                 writer.WritePropertyName("managedResourceGroup");

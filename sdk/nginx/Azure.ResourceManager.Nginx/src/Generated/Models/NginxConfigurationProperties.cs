@@ -17,25 +17,30 @@ namespace Azure.ResourceManager.Nginx.Models
         public NginxConfigurationProperties()
         {
             Files = new ChangeTrackingList<NginxConfigurationFile>();
+            ProtectedFiles = new ChangeTrackingList<NginxConfigurationFile>();
         }
 
         /// <summary> Initializes a new instance of NginxConfigurationProperties. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="files"></param>
+        /// <param name="protectedFiles"></param>
         /// <param name="package"></param>
         /// <param name="rootFile"></param>
-        internal NginxConfigurationProperties(ProvisioningState? provisioningState, IList<NginxConfigurationFile> files, NginxConfigurationPackage package, string rootFile)
+        internal NginxConfigurationProperties(ProvisioningState? provisioningState, IList<NginxConfigurationFile> files, IList<NginxConfigurationFile> protectedFiles, NginxConfigurationPackage package, string rootFile)
         {
             ProvisioningState = provisioningState;
             Files = files;
+            ProtectedFiles = protectedFiles;
             Package = package;
             RootFile = rootFile;
         }
 
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; set; }
+        /// <summary> Gets the provisioning state. </summary>
+        public ProvisioningState? ProvisioningState { get; }
         /// <summary> Gets the files. </summary>
         public IList<NginxConfigurationFile> Files { get; }
+        /// <summary> Gets the protected files. </summary>
+        public IList<NginxConfigurationFile> ProtectedFiles { get; }
         /// <summary> Gets or sets the package. </summary>
         internal NginxConfigurationPackage Package { get; set; }
         /// <summary> Gets or sets the package data. </summary>
