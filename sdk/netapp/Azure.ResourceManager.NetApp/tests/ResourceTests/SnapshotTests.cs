@@ -248,9 +248,10 @@ namespace Azure.ResourceManager.NetApp.Tests
             List<string> fileList = new() { "/dir1/file1" };
             NetAppVolumeSnapshotRestoreFilesContent body = new(fileList);
             body.DestinationPath = "/dataStore";
-            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await snapshotResource2.RestoreFilesAsync(WaitUntil.Completed, body); });
-            Assert.AreEqual(200, exception.Status);
-            Assert.AreEqual("Conflict", exception.ErrorCode);
+            InvalidOperationException exception = Assert.ThrowsAsync<InvalidOperationException>(async () => { await snapshotResource2.RestoreFilesAsync(WaitUntil.Completed, body); });
+            StringAssert.Contains("SingleFileSnapshotRestoreInvalidStatusForOperation", exception.Message);
+            //Assert.AreEqual(200, exception.Status);
+            //Assert.AreEqual("Conflict", exception.ErrorCode);
         }
     }
 }
