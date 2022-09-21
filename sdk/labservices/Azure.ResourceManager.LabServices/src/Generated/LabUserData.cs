@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="invitationState"> State of the invitation message for the user. </param>
         /// <param name="invitationSentOn"> Date and time when the invitation message was sent to the user. </param>
         /// <param name="totalUsage"> How long the user has used their virtual machines in this lab. </param>
-        internal LabUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan? additionalUsageQuota, LabServicesProvisioningState? provisioningState, string displayName, string email, LabRegistrationState? registrationState, LabUserInvitationState? invitationState, DateTimeOffset? invitationSentOn, TimeSpan? totalUsage) : base(id, name, resourceType, systemData)
+        internal LabUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan? additionalUsageQuota, LabServicesProvisioningState? provisioningState, string displayName, string email, LabUserRegistrationState? registrationState, LabUserInvitationState? invitationState, DateTimeOffset? invitationSentOn, TimeSpan? totalUsage) : base(id, name, resourceType, systemData)
         {
             AdditionalUsageQuota = additionalUsageQuota;
             ProvisioningState = provisioningState;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.LabServices
         /// <summary> Email address of the user. </summary>
         public string Email { get; set; }
         /// <summary> State of the user&apos;s registration within the lab. </summary>
-        public LabRegistrationState? RegistrationState { get; }
+        public LabUserRegistrationState? RegistrationState { get; }
         /// <summary> State of the invitation message for the user. </summary>
         public LabUserInvitationState? InvitationState { get; }
         /// <summary> Date and time when the invitation message was sent to the user. </summary>

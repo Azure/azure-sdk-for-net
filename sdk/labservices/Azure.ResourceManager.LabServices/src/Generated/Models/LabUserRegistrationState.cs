@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.LabServices.Models
 {
     /// <summary> The user lab registration state. </summary>
-    public enum LabRegistrationState
+    public enum LabUserRegistrationState
     {
         /// <summary> User has not yet registered with the lab. </summary>
         Registered,

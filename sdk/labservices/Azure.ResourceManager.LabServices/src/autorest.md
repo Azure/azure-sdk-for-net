@@ -45,7 +45,7 @@ rename-mapping:
   OsState: LabVirtualMachineImageOSState
   OsType: LabVirtualMachineImageOSType
   ResetPasswordBody: LabVirtualMachineResetPasswordContent
-  RegistrationState: LabRegistrationState
+  RegistrationState: LabUserRegistrationState
   RestrictionReasonCode: LabServicesSkuRestrictionReasonCode
   RestrictionType: LabServicesSkuRestrictionType
   RosterProfile: LabRosterProfile

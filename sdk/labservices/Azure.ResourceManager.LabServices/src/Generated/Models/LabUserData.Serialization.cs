@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.LabServices
             Optional<LabServicesProvisioningState> provisioningState = default;
             Optional<string> displayName = default;
             string email = default;
-            Optional<LabRegistrationState> registrationState = default;
+            Optional<LabUserRegistrationState> registrationState = default;
             Optional<LabUserInvitationState> invitationState = default;
             Optional<DateTimeOffset> invitationSent = default;
             Optional<TimeSpan> totalUsage = default;
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            registrationState = property0.Value.GetString().ToLabRegistrationState();
+                            registrationState = property0.Value.GetString().ToLabUserRegistrationState();
                             continue;
                         }
                         if (property0.NameEquals("invitationState"))

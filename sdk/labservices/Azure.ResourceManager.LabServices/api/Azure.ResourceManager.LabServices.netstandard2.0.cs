@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.LabServices
         public System.DateTimeOffset? InvitationSentOn { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabUserInvitationState? InvitationState { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabServicesProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.LabRegistrationState? RegistrationState { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabUserRegistrationState? RegistrationState { get { throw null; } }
         public System.TimeSpan? TotalUsage { get { throw null; } }
     }
     public partial class LabUserResource : Azure.ResourceManager.ArmResource
@@ -418,11 +418,6 @@ namespace Azure.ResourceManager.LabServices.Models
         public string Phone { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
     }
-    public enum LabRegistrationState
-    {
-        Registered = 0,
-        NotRegistered = 1,
-    }
     public partial class LabRosterProfile
     {
         public LabRosterProfile() { }
@@ -616,6 +611,11 @@ namespace Azure.ResourceManager.LabServices.Models
     {
         public LabUserPatch() { }
         public System.TimeSpan? AdditionalUsageQuota { get { throw null; } set { } }
+    }
+    public enum LabUserRegistrationState
+    {
+        Registered = 0,
+        NotRegistered = 1,
     }
     public partial class LabVirtualMachineConnectionProfile
     {
