@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
         [Test]
         public async Task PlayAudio()
         {
-            if (SkipCallingServerInteractionLiveTests)
+            if (SkipCallAutomationInteractionLiveTests)
                 Assert.Ignore("Skip callingserver interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation
         [Test]
         public async Task RecognizeDtmf()
         {
-            if (SkipCallingServerInteractionLiveTests)
+            if (SkipCallAutomationInteractionLiveTests)
                 Assert.Ignore("Skip callingserver interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
