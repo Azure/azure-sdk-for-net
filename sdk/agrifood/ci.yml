@@ -8,6 +8,7 @@ trigger:
   paths:
     include:
     - sdk/agrifood/
+    - sdk/resourcemanager/
 
 pr:
   branches:
@@ -28,3 +29,5 @@ extends:
     Artifacts:
     - name: Azure.Verticals.AgriFood.Farming
       safeName: AzureVerticalsAgriFoodFarming
+    - name: Azure.ResourceManager.AgFoodPlatform
+      safeName: AzureResourceManagerAgFoodPlatform
