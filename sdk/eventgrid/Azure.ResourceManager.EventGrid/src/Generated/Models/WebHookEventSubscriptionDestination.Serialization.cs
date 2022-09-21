@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(EndpointType.ToString());
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(EndpointUri))
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpointUrl");
-                writer.WriteStringValue(EndpointUri.AbsoluteUri);
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
             if (Optional.IsDefined(MaxEventsPerBatch))
             {
