@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
     public class EventSubscriptionTests : EventGridManagementTestBase
     {
         public EventSubscriptionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Get the created topic
             var getTopicResponse = (await TopicCollection.GetAsync(topicName)).Value;
             Assert.NotNull(getTopicResponse);
-            Assert.AreEqual(EventGridTopicProvisioningState.Succeeded , getTopicResponse.Data.ProvisioningState);
+            Assert.AreEqual(EventGridTopicProvisioningState.Succeeded, getTopicResponse.Data.ProvisioningState);
             Assert.AreEqual(DefaultLocation, getTopicResponse.Data.Location);
 
             // Create an event subscription to this topic
@@ -117,7 +117,8 @@ namespace Azure.ResourceManager.EventGrid.Tests
                             }
                         }
                 },
-                Filter = {
+                Filter = new EventSubscriptionFilter()
+                {
                     IncludedEventTypes = {
                             "Event1",
                             "Event2"
@@ -291,7 +292,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual("TestSuffix", eventSubscriptionResponse.Data.Filter.SubjectEndsWith);
 
             // List event subscriptions
-            var eventSubscriptionsPage = await ResourceGroup.GetRegionalEventSubscriptionsAsync(DefaultLocation).ToEnumerableAsync();
+            var eventSubscriptionsPage = await subscriptionCollection.GetAllAsync().ToEnumerableAsync();
             Assert.NotNull(eventSubscriptionsPage.FirstOrDefault(x => x.Data.Name.Equals(eventSubscriptionName)));
 
             // Delete the event subscription
