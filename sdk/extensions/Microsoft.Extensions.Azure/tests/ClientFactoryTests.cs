@@ -195,7 +195,7 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
             var managedIdentityCredential = (ManagedIdentityCredential)credential;
 
-            var client = (ManagedIdentityClient)typeof(ManagedIdentityCredential).GetField("_client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
+            var client = (ManagedIdentityClient)typeof(ManagedIdentityCredential).GetField("Client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
             var clientId = typeof(ManagedIdentityClient).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(client);
 
             Assert.AreEqual("ConfigurationClientId", clientId);
@@ -213,7 +213,7 @@ namespace Azure.Core.Extensions.Tests
             Assert.IsInstanceOf<ManagedIdentityCredential>(credential);
             var managedIdentityCredential = (ManagedIdentityCredential)credential;
 
-            var client = (ManagedIdentityClient)typeof(ManagedIdentityCredential).GetField("_client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
+            var client = (ManagedIdentityClient)typeof(ManagedIdentityCredential).GetField("Client", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(managedIdentityCredential);
             var clientId = typeof(ManagedIdentityClient).GetProperty("ClientId", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(client);
 
             Assert.Null(clientId);
