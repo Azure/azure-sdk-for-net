@@ -31,6 +31,8 @@ namespace Azure.Communication.CallAutomation
                 var callResponse = await client.CreateCallAsync(new CallSource(user), targets, new Uri(ngrok)).ConfigureAwait(false);
                 Assert.NotNull(callResponse);
                 Assert.NotNull(callResponse.Value);
+                await WaitForOperationCompletion().ConfigureAwait(false);
+
                 var callConnection = callResponse.Value.CallConnection;
                 callConnectionId = callConnection.CallConnectionId;
                 var playResponse = await callConnection.GetCallMedia().PlayAsync(

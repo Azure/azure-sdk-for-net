@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -17,20 +16,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of ManagedVmSizesResult. </summary>
         internal ManagedVmSizesResult()
         {
-            Value = new ChangeTrackingList<ManagedVmSizeData>();
+            Value = new ChangeTrackingList<ServiceFabricManagedUnsupportedVmSize>();
         }
 
         /// <summary> Initializes a new instance of ManagedVmSizesResult. </summary>
         /// <param name="value"> List of Managed VM Sizes for Service Fabric Managed Clusters. </param>
         /// <param name="nextLink"> URL to get the next set of Managed VM Sizes if there are any. </param>
-        internal ManagedVmSizesResult(IReadOnlyList<ManagedVmSizeData> value, string nextLink)
+        internal ManagedVmSizesResult(IReadOnlyList<ServiceFabricManagedUnsupportedVmSize> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> List of Managed VM Sizes for Service Fabric Managed Clusters. </summary>
-        public IReadOnlyList<ManagedVmSizeData> Value { get; }
+        public IReadOnlyList<ServiceFabricManagedUnsupportedVmSize> Value { get; }
         /// <summary> URL to get the next set of Managed VM Sizes if there are any. </summary>
         public string NextLink { get; }
     }

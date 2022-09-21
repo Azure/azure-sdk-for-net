@@ -259,7 +259,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void AiUserAgentIsNullByDefault()
+        public void AiUserAgentIsNotTransmittedByDefault()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -271,7 +271,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var monitorTags = TraceHelper.EnumerateActivityTags(activity);
             var telemetryItem = new TelemetryItem(activity, ref monitorTags, null, null, null);
 
-            Assert.Null(telemetryItem.Tags["ai.user.userAgent"]);
+            Assert.False(telemetryItem.Tags.TryGetValue("ai.user.userAgent", out var userAgent));
         }
 
         [Fact]
