@@ -467,8 +467,8 @@ namespace Compute.Tests
                     Trace.TraceInformation("Got the gallery");
                     Assert.NotNull(galleryOutWithSharingProfile);
                     //CommunityGalleryInfo communityGalleryInfo = JsonConvert.DeserializeObject<CommunityGalleryInfo>(galleryOutWithSharingProfile.SharingProfile.CommunityGalleryInfo.ToString());
-                    CommunityGalleryInfo communityGalleryInfo = galleryOutWithSharingProfile.SharingProfile.CommunityGalleryInfo;
-                    Assert.True(communityGalleryInfo.CommunityGalleryEnabled);
+                    //Assert.True(communityGalleryInfo.CommunityGalleryEnabled);
+                    Assert.True(galleryOutWithSharingProfile.SharingProfile.CommunityGalleryInfo.CommunityGalleryEnabled);
 
                     Trace.TraceInformation("Reset this gallery to private before deleting it.");
                     SharingUpdate resetPrivateUpdate = new SharingUpdate()

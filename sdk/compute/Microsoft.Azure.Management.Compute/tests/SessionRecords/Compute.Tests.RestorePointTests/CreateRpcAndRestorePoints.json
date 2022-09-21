@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/centraluseuap/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?$top=1&api-version=2022-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvY2VudHJhbHVzZXVhcC9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zPyR0b3A9MSZhcGktdmVyc2lvbj0yMDIyLTAzLTAx",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/centraluseuap/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?$top=1&api-version=2022-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvY2VudHJhbHVzZXVhcC9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zPyR0b3A9MSZhcGktdmVyc2lvbj0yMDIyLTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -43,7 +43,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11990"
         ],
         "x-ms-correlation-request-id": [
           "5397229b-e6ae-4df3-bfc7-a1a0ca40445c"
@@ -103,7 +103,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1196"
         ],
         "x-ms-request-id": [
           "18895ec1-be78-4009-8dfd-0cb0d4a608e3"
@@ -169,7 +169,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1195"
         ],
         "x-ms-request-id": [
           "69f44967-4614-40e6-b846-60e367ef5af1"
@@ -297,6 +297,12 @@
         "Pragma": [
           "no-cache"
         ],
+        "Location": [
+          "https://management.azure.com/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Storage/locations/centraluseuap/asyncoperations/5570a385-1607-4dff-9440-9dfcc816c2d5?monitor=true&api-version=2015-06-15"
+        ],
+        "Retry-After": [
+          "3"
+        ],
         "x-ms-request-id": [
           "841c76e5-230b-4689-99a2-814ace329234"
         ],
@@ -320,6 +326,63 @@
         ],
         "Date": [
           "Fri, 19 Aug 2022 17:27:47 GMT"
+        ],
+        "Content-Type": [
+          "text/plain; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Storage/locations/centraluseuap/asyncoperations/5570a385-1607-4dff-9440-9dfcc816c2d5?monitor=true&api-version=2015-06-15",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuU3RvcmFnZS9sb2NhdGlvbnMvY2VudHJhbHVzZXVhcC9hc3luY29wZXJhdGlvbnMvNTU3MGEzODUtMTYwNy00ZGZmLTk0NDAtOWRmY2M4MTZjMmQ1P21vbml0b3I9dHJ1ZSZhcGktdmVyc2lvbj0yMDE1LTA2LTE1",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.700.22.36202",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.22000",
+          "Microsoft.Azure.Management.Storage.StorageManagementClient/4.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "522cd399-4253-4094-9431-0b9e0808da7a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "Server": [
+          "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "c87214cf-1831-45bc-916a-fdfe931064ef"
+        ],
+        "x-ms-routing-request-id": [
+          "CANADACENTRAL:20220811T225107Z:c87214cf-1831-45bc-916a-fdfe931064ef"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Thu, 11 Aug 2022 22:51:06 GMT"
         ],
         "Content-Length": [
           "95"
@@ -370,7 +433,7 @@
           "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11997"
         ],
         "x-ms-correlation-request-id": [
           "1ec9662c-1b80-49fa-8722-0a0ee696df40"
@@ -433,7 +496,7 @@
           "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
+          "11996"
         ],
         "x-ms-correlation-request-id": [
           "a7a96c49-1e1b-40b1-9e16-a6b872e9a07e"
@@ -562,9 +625,6 @@
         "Pragma": [
           "no-cache"
         ],
-        "Retry-After": [
-          "2"
-        ],
         "x-ms-request-id": [
           "c11e478c-8750-4699-9078-ab28b9e92594"
         ],
@@ -594,7 +654,7 @@
           "Fri, 19 Aug 2022 17:28:01 GMT"
         ],
         "Content-Length": [
-          "30"
+          "29"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -603,7 +663,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"InProgress\"\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
       "StatusCode": 200
     },
     {
@@ -625,6 +685,9 @@
         ],
         "Pragma": [
           "no-cache"
+        ],
+        "ETag": [
+          "W/\"b2571414-a6b7-47ae-b954-f123ff915e5b\""
         ],
         "x-ms-request-id": [
           "05b3b89c-44bb-4cbe-83fc-f0d6340ef6a5"
@@ -655,7 +718,7 @@
           "Fri, 19 Aug 2022 17:28:03 GMT"
         ],
         "Content-Length": [
-          "29"
+          "770"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -664,7 +727,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"pip2131\",\r\n  \"id\": \"/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/resourceGroups/crptestar3170/providers/Microsoft.Network/publicIPAddresses/pip2131\",\r\n  \"etag\": \"W/\\\"b2571414-a6b7-47ae-b954-f123ff915e5b\\\"\",\r\n  \"location\": \"centraluseuap\",\r\n  \"tags\": {\r\n    \"key\": \"value\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"resourceGuid\": \"4d04214f-d7d4-462c-9f30-e39e8d578dac\",\r\n    \"publicIPAddressVersion\": \"IPv4\",\r\n    \"publicIPAllocationMethod\": \"Dynamic\",\r\n    \"idleTimeoutInMinutes\": 4,\r\n    \"dnsSettings\": {\r\n      \"domainNameLabel\": \"dn6054\",\r\n      \"fqdn\": \"dn6054.centraluseuap.cloudapp.azure.com\"\r\n    },\r\n    \"ipTags\": []\r\n  },\r\n  \"type\": \"Microsoft.Network/publicIPAddresses\",\r\n  \"sku\": {\r\n    \"name\": \"Basic\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -673,6 +736,12 @@
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "06172c7a-632f-4fd0-a039-1c5179af8b1b"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
         "User-Agent": [
           "FxVersion/4.700.22.36202",
           "OSName/Windows",
@@ -748,6 +817,12 @@
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
           "Microsoft.Azure.Management.Network.NetworkManagementClient/19.17.1.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "298"
         ]
       },
       "ResponseHeaders": {
@@ -763,8 +838,14 @@
         "x-ms-request-id": [
           "50f5ba39-adef-487c-8235-047b54090e0c"
         ],
+        "azure-asyncoperation": [
+          "https://management.azure.com/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Network/locations/centraluseuap/operations/7f7d3875-46cf-44ef-97b5-2ca196adb2c1?api-version=2019-09-01"
+        ],
         "x-ms-correlation-request-id": [
           "8fcfc6b1-1527-4fef-8a26-e39e5dc68ab6"
+        ],
+        "azure-asyncnotification": [
+          "Enabled"
         ],
         "x-ms-arm-service-request-id": [
           "0e0624c9-18b4-42d5-8604-d7cddea0a334"
@@ -776,8 +857,8 @@
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
         ],
         "x-ms-routing-request-id": [
           "CENTRALUS:20220819T172804Z:8fcfc6b1-1527-4fef-8a26-e39e5dc68ab6"
@@ -789,7 +870,7 @@
           "Fri, 19 Aug 2022 17:28:03 GMT"
         ],
         "Content-Length": [
-          "770"
+          "1217"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -818,12 +899,6 @@
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.22000",
           "Microsoft.Azure.Management.Network.NetworkManagementClient/19.17.1.0"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "299"
         ]
       },
       "ResponseHeaders": {
@@ -834,7 +909,7 @@
           "no-cache"
         ],
         "Retry-After": [
-          "3"
+          "10"
         ],
         "x-ms-request-id": [
           "1dbe0961-697b-4f39-bce1-8d83fa87f070"
@@ -844,9 +919,6 @@
         ],
         "x-ms-correlation-request-id": [
           "8f117ad0-af43-40bd-8579-221abf798c46"
-        ],
-        "azure-asyncnotification": [
-          "Enabled"
         ],
         "x-ms-arm-service-request-id": [
           "22b79a21-8622-4b8c-b897-9a3dd0c44f49"
@@ -858,8 +930,8 @@
           "Microsoft-HTTPAPI/2.0",
           "Microsoft-HTTPAPI/2.0"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
         ],
         "x-ms-routing-request-id": [
           "CENTRALUS:20220819T172804Z:8f117ad0-af43-40bd-8579-221abf798c46"
@@ -1066,7 +1138,7 @@
           "Fri, 19 Aug 2022 17:28:07 GMT"
         ],
         "Content-Length": [
-          "523"
+          "522"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1100,7 +1172,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "748"
+          "747"
         ]
       },
       "ResponseHeaders": {
@@ -1419,7 +1491,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
           "ea71ed40-2936-4150-af1f-4a4c8dbb6b61"
@@ -1483,7 +1555,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11989"
         ],
         "x-ms-correlation-request-id": [
           "7d420139-3c1d-4184-9ec2-6f5c46e2f56e"
@@ -1605,7 +1677,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11996"
+          "11988"
         ],
         "x-ms-correlation-request-id": [
           "a8adb841-2a3b-4c9d-b1c6-eb0e71169a52"
@@ -1666,7 +1738,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11995"
+          "11987"
         ],
         "x-ms-correlation-request-id": [
           "d32ac341-bb98-4791-bd68-30b53a020ee4"
@@ -1867,7 +1939,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
           "b94fdc65-68ef-4bf0-8093-e0e21c5b8621"
@@ -1940,7 +2012,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1194"
         ],
         "x-ms-correlation-request-id": [
           "aebff8c5-f371-49fc-a367-4718deb67aba"
@@ -2013,7 +2085,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1193"
         ],
         "x-ms-correlation-request-id": [
           "59764e49-0482-4b54-8d4a-684a049daa39"
@@ -2086,7 +2158,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+          "1192"
         ],
         "x-ms-correlation-request-id": [
           "2ff0e30a-235a-4938-875b-939d3f49c83a"
@@ -2178,8 +2250,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/restorePointCollections?api-version=2022-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9yZXN0b3JlUG9pbnRDb2xsZWN0aW9ucz9hcGktdmVyc2lvbj0yMDIyLTAzLTAx",
+      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/restorePointCollections?api-version=2022-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9yZXN0b3JlUG9pbnRDb2xsZWN0aW9ucz9hcGktdmVyc2lvbj0yMDIyLTA4LTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -2291,7 +2363,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1193"
+          "1191"
         ],
         "x-ms-correlation-request-id": [
           "e8713709-ba24-420e-94ea-2c643e02c8f3"
@@ -2306,7 +2378,7 @@
           "Fri, 19 Aug 2022 17:30:56 GMT"
         ],
         "Content-Length": [
-          "1881"
+          "1882"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2672,7 +2744,7 @@
           "Fri, 19 Aug 2022 17:33:57 GMT"
         ],
         "Content-Length": [
-          "134"
+          "183"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -2778,7 +2850,7 @@
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
+          "14997"
         ],
         "x-ms-request-id": [
           "d9e9b380-315f-4eb4-a722-f526bf0592a8"
