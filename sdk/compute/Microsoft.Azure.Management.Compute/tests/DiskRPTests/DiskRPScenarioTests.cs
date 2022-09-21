@@ -133,13 +133,13 @@ namespace Compute.Tests.DiskRPTests
             Disk_CRUD_WithArchitecture_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithArchitecture_EmptyDisk", diskSizeGB: 5);
         }
 
-        [Fact]
+        [Fact(Skip = "operation not supported in region")]
         public void Disk_CRUD_WithDiskControllerType()
         {
             Disk_CRUD_WithDiskControllerType_Execute(DiskCreateOption.Empty, "Disk_CRUD_WithDiskControllerType", diskSizeGB: 5);
         }
 
-        [Fact]
+        [Fact(Skip = "Operation not supported in region")]
         public void Disk_CRUD_OptimizeFrequentAttach()
         {
             Disk_OptimizeFrequentAttach_Execute(DiskCreateOption.Empty, "Disk_CRUD_OptimizeFrequentAttach", diskSizeGB: 32, location: "eastus2euap");

@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     public partial class SupportedCapabilities
     {
 
-        public SupportedCapabilities(bool? acceleratedNetwork = default(bool?), string architecture = default(string))
+        public SupportedCapabilities(bool? acceleratedNetwork , string architecture = default(string))
         {
             AcceleratedNetwork = acceleratedNetwork;
             Architecture = architecture;
