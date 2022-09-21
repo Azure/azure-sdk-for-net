@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Active Directories. </summary>
         public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
         /// <summary> Encryption settings. </summary>
-        public AccountEncryption Encryption { get; set; }
+        public NetAppAccountEncryption Encryption { get; set; }
         /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
         public bool? DisableShowmount { get; }
     }

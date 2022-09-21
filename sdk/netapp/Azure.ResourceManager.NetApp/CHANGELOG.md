@@ -3,6 +3,7 @@
 ## 1.0.0-beta.2 (Unreleased)
 
 ### Features Added
+    - Upgrading to support new service api version 2022-05-01
     - Added QueryRegionInfoNetAppResourceAsync
     - NetAppAccount has new EncryptionKeySource    
     - Added AccountEncryption KeySource changed to Enum

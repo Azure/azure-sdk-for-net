@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class AccountEncryption : IUtf8JsonSerializable
+    public partial class NetAppAccountEncryption : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteEndObject();
         }
 
-        internal static AccountEncryption DeserializeAccountEncryption(JsonElement element)
+        internal static NetAppAccountEncryption DeserializeNetAppAccountEncryption(JsonElement element)
         {
-            Optional<KeySource> keySource = default;
-            Optional<KeyVaultProperties> keyVaultProperties = default;
+            Optional<NetAppKeySource> keySource = default;
+            Optional<NetAppKeyVaultProperties> keyVaultProperties = default;
             Optional<EncryptionIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keySource = new KeySource(property.Value.GetString());
+                    keySource = new NetAppKeySource(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyVaultProperties"))
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    keyVaultProperties = KeyVaultProperties.DeserializeKeyVaultProperties(property.Value);
+                    keyVaultProperties = NetAppKeyVaultProperties.DeserializeNetAppKeyVaultProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("identity"))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new AccountEncryption(Optional.ToNullable(keySource), keyVaultProperties.Value, identity.Value);
+            return new NetAppAccountEncryption(Optional.ToNullable(keySource), keyVaultProperties.Value, identity.Value);
         }
     }
 }

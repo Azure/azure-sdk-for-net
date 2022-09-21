@@ -250,8 +250,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             body.DestinationPath = "/dataStore";
             InvalidOperationException exception = Assert.ThrowsAsync<InvalidOperationException>(async () => { await snapshotResource2.RestoreFilesAsync(WaitUntil.Completed, body); });
             StringAssert.Contains("SingleFileSnapshotRestoreInvalidStatusForOperation", exception.Message);
-            //Assert.AreEqual(200, exception.Status);
-            //Assert.AreEqual("Conflict", exception.ErrorCode);
         }
     }
 }

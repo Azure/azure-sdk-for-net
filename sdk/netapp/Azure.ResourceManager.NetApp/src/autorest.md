@@ -63,6 +63,7 @@ override-operation-name:
   Backups_GetStatus: GetBackupStatus
   Backups_GetVolumeRestoreStatus: GetRestoreStatus
   VolumeGroups_ListByNetAppAccount: GetVolumeGroups
+  QueryRegionInfoNetAppResource: QueryRegionInfoNetApp
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits/{quotaLimitName}
@@ -86,6 +87,9 @@ prepend-rp-prefix:
   - ReplicationObject
   - ReplicationSchedule
   - VolumeStorageToNetworkProximity
+  - AccountEncryption
+  - KeySource
+  - KeyVaultProperties
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid

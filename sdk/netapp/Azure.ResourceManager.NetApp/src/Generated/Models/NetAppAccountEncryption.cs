@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Encryption settings. </summary>
-    public partial class AccountEncryption
+    public partial class NetAppAccountEncryption
     {
-        /// <summary> Initializes a new instance of AccountEncryption. </summary>
-        public AccountEncryption()
+        /// <summary> Initializes a new instance of NetAppAccountEncryption. </summary>
+        public NetAppAccountEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of AccountEncryption. </summary>
+        /// <summary> Initializes a new instance of NetAppAccountEncryption. </summary>
         /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </param>
         /// <param name="keyVaultProperties"> Properties provided by KeVault. Applicable if keySource is &apos;Microsoft.KeyVault&apos;. </param>
         /// <param name="identity"> Identity used to authenticate to KeyVault. Applicable if keySource is &apos;Microsoft.KeyVault&apos;. </param>
-        internal AccountEncryption(KeySource? keySource, KeyVaultProperties keyVaultProperties, EncryptionIdentity identity)
+        internal NetAppAccountEncryption(NetAppKeySource? keySource, NetAppKeyVaultProperties keyVaultProperties, EncryptionIdentity identity)
         {
             KeySource = keySource;
             KeyVaultProperties = keyVaultProperties;
@@ -27,9 +27,9 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.NetApp, Microsoft.KeyVault. </summary>
-        public KeySource? KeySource { get; set; }
+        public NetAppKeySource? KeySource { get; set; }
         /// <summary> Properties provided by KeVault. Applicable if keySource is &apos;Microsoft.KeyVault&apos;. </summary>
-        public KeyVaultProperties KeyVaultProperties { get; set; }
+        public NetAppKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> Identity used to authenticate to KeyVault. Applicable if keySource is &apos;Microsoft.KeyVault&apos;. </summary>
         public EncryptionIdentity Identity { get; set; }
     }

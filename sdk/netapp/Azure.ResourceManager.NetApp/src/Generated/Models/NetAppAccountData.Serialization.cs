@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetApp
             Optional<SystemData> systemData = default;
             Optional<string> provisioningState = default;
             Optional<IList<NetAppAccountActiveDirectory>> activeDirectories = default;
-            Optional<AccountEncryption> encryption = default;
+            Optional<NetAppAccountEncryption> encryption = default;
             Optional<bool?> disableShowmount = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.NetApp
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = AccountEncryption.DeserializeAccountEncryption(property0.Value);
+                            encryption = NetAppAccountEncryption.DeserializeNetAppAccountEncryption(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("disableShowmount"))

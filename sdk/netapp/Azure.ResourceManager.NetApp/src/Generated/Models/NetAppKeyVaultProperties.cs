@@ -10,14 +10,14 @@ using System;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Properties of key vault. </summary>
-    public partial class KeyVaultProperties
+    public partial class NetAppKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of NetAppKeyVaultProperties. </summary>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="keyVaultUri"/>, <paramref name="keyName"/> or <paramref name="keyVaultResourceId"/> is null. </exception>
-        public KeyVaultProperties(Uri keyVaultUri, string keyName, string keyVaultResourceId)
+        public NetAppKeyVaultProperties(Uri keyVaultUri, string keyName, string keyVaultResourceId)
         {
             if (keyVaultUri == null)
             {
@@ -37,13 +37,13 @@ namespace Azure.ResourceManager.NetApp.Models
             KeyVaultResourceId = keyVaultResourceId;
         }
 
-        /// <summary> Initializes a new instance of KeyVaultProperties. </summary>
+        /// <summary> Initializes a new instance of NetAppKeyVaultProperties. </summary>
         /// <param name="keyVaultId"> UUID v4 used to identify the Azure Key Vault configuration. </param>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
         /// <param name="status"> Status of the KeyVault connection. </param>
-        internal KeyVaultProperties(string keyVaultId, Uri keyVaultUri, string keyName, string keyVaultResourceId, KeyVaultStatus? status)
+        internal NetAppKeyVaultProperties(string keyVaultId, Uri keyVaultUri, string keyName, string keyVaultResourceId, KeyVaultStatus? status)
         {
             KeyVaultId = keyVaultId;
             KeyVaultUri = keyVaultUri;
