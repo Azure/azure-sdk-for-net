@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,34 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0-beta.2 (2022-09-14)
+
+### Breaking Changes
+
+Modified the following classes to abstract classes and changed their constructors from public to protected:
+- `ContainerRegistryRunContent`
+- `ContainerRegistryTaskStepProperties`
+- `ContainerRegistryTaskStepUpdateContent`
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
+
+## 1.0.1 (2022-09-13)
+
+### Breaking Changes
+
+Modified the following classes to abstract classes and changed their constructors from public to protected:
+- `ContainerRegistryRunContent`
+- `ContainerRegistryTaskStepProperties`
+- `ContainerRegistryTaskStepUpdateContent`
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.1.0-beta.1 (2022-08-26)
 

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of RemoteSupportSettings. </summary>
         /// <param name="remoteApplicationType"> Remote application type. </param>
         /// <param name="accessLevel"> Access level allowed for this remote application type. </param>
-        /// <param name="expirationTimeStampInUTC"> Expiration time stamp. </param>
-        internal RemoteSupportSettings(RemoteApplicationType? remoteApplicationType, AccessLevel? accessLevel, DateTimeOffset? expirationTimeStampInUTC)
+        /// <param name="expireOn"> Expiration time stamp. </param>
+        internal RemoteSupportSettings(RemoteApplicationType? remoteApplicationType, RemoteApplicationAccessLevel? accessLevel, DateTimeOffset? expireOn)
         {
             RemoteApplicationType = remoteApplicationType;
             AccessLevel = accessLevel;
-            ExpirationTimeStampInUTC = expirationTimeStampInUTC;
+            ExpireOn = expireOn;
         }
 
         /// <summary> Remote application type. </summary>
         public RemoteApplicationType? RemoteApplicationType { get; set; }
         /// <summary> Access level allowed for this remote application type. </summary>
-        public AccessLevel? AccessLevel { get; set; }
+        public RemoteApplicationAccessLevel? AccessLevel { get; set; }
         /// <summary> Expiration time stamp. </summary>
-        public DateTimeOffset? ExpirationTimeStampInUTC { get; set; }
+        public DateTimeOffset? ExpireOn { get; set; }
     }
 }

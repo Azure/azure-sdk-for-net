@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Purview.Models
         {
             Optional<long> count = default;
             Optional<string> nextLink = default;
-            IReadOnlyList<AccountData> value = default;
+            IReadOnlyList<PurviewAccountData> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"))
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Purview.Models
                 }
                 if (property.NameEquals("value"))
                 {
-                    List<AccountData> array = new List<AccountData>();
+                    List<PurviewAccountData> array = new List<PurviewAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccountData.DeserializeAccountData(item));
+                        array.Add(PurviewAccountData.DeserializePurviewAccountData(item));
                     }
                     value = array;
                     continue;

@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Media.Tests
         protected MediaManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
-            JsonPathSanitizers.Add("$.properties.input.accessToken");
-            JsonPathSanitizers.Add("$.value.[*].properties.input.accessToken");
+            JsonPathSanitizers.Add("$..accessToken");
         }
 
         protected MediaManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            JsonPathSanitizers.Add("$..accessToken");
         }
 
         [SetUp]

@@ -40,9 +40,9 @@ rename-mapping:
   MoveResourceInputType.MoveResourceSourceId: MoverResourceSourceId
   NicIpConfigurationResourceSettings.primary: IsPrimary
   NicIpConfigurationResourceSettings.privateIpAddress: -|ip-address
-  OperationStatus.endTime: EndOn|datetime
+  OperationStatus.endTime: EndOn
   OperationStatus.id: -|arm-id
-  OperationStatus.startTime: startOn|datetime
+  OperationStatus.startTime: startOn
   PrepareRequest.moveResourceInputType: MoverResourceInputType
   PrepareRequest.moveResources: MoverResources
   ResourceMoveRequest.moveResourceInputType: MoverResourceInputType
@@ -164,6 +164,8 @@ directive:
       $.OperationStatusError.properties.additionalInfo['x-nullable'] = true;
       $.MoveResourceProperties.properties.resourceSettings['x-nullable'] = true;
       $.MoveResourceProperties.properties.sourceResourceSettings['x-nullable'] = true;
+      $.OperationStatus.properties.startTime['format'] = 'date-time';
+      $.OperationStatus.properties.endTime['format'] = 'date-time';
   - from: resourcemovercollection.json
     where: $.parameters
     transform: >

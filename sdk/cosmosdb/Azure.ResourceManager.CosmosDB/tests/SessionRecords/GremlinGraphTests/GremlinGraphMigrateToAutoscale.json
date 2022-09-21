@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -48,7 +48,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184?api-version=2022-05-15",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -138,7 +138,7 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/408ea9e8-69a9-4f85-a682-4d72d0baa666?api-version=2021-10-15",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/408ea9e8-69a9-4f85-a682-4d72d0baa666?api-version=2022-05-15",
         "Cache-Control": [
           "no-store",
           "no-cache"
@@ -146,7 +146,7 @@
         "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Sat, 04 Dec 2021 13:35:57 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184/operationResults/408ea9e8-69a9-4f85-a682-4d72d0baa666?api-version=2021-10-15",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184/operationResults/408ea9e8-69a9-4f85-a682-4d72d0baa666?api-version=2022-05-15",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -162,7 +162,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/408ea9e8-69a9-4f85-a682-4d72d0baa666?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/408ea9e8-69a9-4f85-a682-4d72d0baa666?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -195,7 +195,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -326,7 +326,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184/throughputSettings/default?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184/throughputSettings/default?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -368,7 +368,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184/throughputSettings/default/migrateToAutoscale?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184/throughputSettings/default/migrateToAutoscale?api-version=2022-05-15",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -380,7 +380,7 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/8524ada1-4672-402c-9784-ce7b7619933d?api-version=2021-10-15",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/8524ada1-4672-402c-9784-ce7b7619933d?api-version=2022-05-15",
         "Cache-Control": [
           "no-store",
           "no-cache"
@@ -388,7 +388,7 @@
         "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Sat, 04 Dec 2021 13:36:26 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184/throughputSettings/default/migrateToAutoscale/operationResults/8524ada1-4672-402c-9784-ce7b7619933d?api-version=2021-10-15",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184/throughputSettings/default/migrateToAutoscale/operationResults/8524ada1-4672-402c-9784-ce7b7619933d?api-version=2022-05-15",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -404,7 +404,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/8524ada1-4672-402c-9784-ce7b7619933d?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/8524ada1-4672-402c-9784-ce7b7619933d?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -437,7 +437,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184/throughputSettings/default/migrateToAutoscale/operationResults/8524ada1-4672-402c-9784-ce7b7619933d?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184/throughputSettings/default/migrateToAutoscale/operationResults/8524ada1-4672-402c-9784-ce7b7619933d?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -481,7 +481,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/8524ada1-4672-402c-9784-ce7b7619933d?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/8524ada1-4672-402c-9784-ce7b7619933d?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -514,7 +514,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184/throughputSettings/default/migrateToAutoscale/operationResults/8524ada1-4672-402c-9784-ce7b7619933d?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184/throughputSettings/default/migrateToAutoscale/operationResults/8524ada1-4672-402c-9784-ce7b7619933d?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -558,7 +558,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -690,7 +690,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184?api-version=2022-05-15",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -701,7 +701,7 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/16361f5f-c746-4771-b06b-4524aba74857?api-version=2021-10-15",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/16361f5f-c746-4771-b06b-4524aba74857?api-version=2022-05-15",
         "Cache-Control": [
           "no-store",
           "no-cache"
@@ -709,7 +709,7 @@
         "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Sat, 04 Dec 2021 13:36:42 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184/operationResults/16361f5f-c746-4771-b06b-4524aba74857?api-version=2021-10-15",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-2287/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-9410/gremlinDatabases/gremlin-db-6649/graphs/gremlin-graph-4184/operationResults/16361f5f-c746-4771-b06b-4524aba74857?api-version=2022-05-15",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -725,7 +725,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/16361f5f-c746-4771-b06b-4524aba74857?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/16361f5f-c746-4771-b06b-4524aba74857?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",

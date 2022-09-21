@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Purview.Models
         internal static PurviewAccountSku DeserializePurviewAccountSku(JsonElement element)
         {
             Optional<int> capacity = default;
-            Optional<Name> name = default;
+            Optional<PurviewAccountSkuName> name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("capacity"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Purview.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = new Name(property.Value.GetString());
+                    name = new PurviewAccountSkuName(property.Value.GetString());
                     continue;
                 }
             }

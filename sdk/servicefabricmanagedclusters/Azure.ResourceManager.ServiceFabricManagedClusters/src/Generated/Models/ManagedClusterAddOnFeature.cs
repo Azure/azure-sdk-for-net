@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         private const string BackupRestoreServiceValue = "BackupRestoreService";
         private const string ResourceMonitorServiceValue = "ResourceMonitorService";
 
-        /// <summary> Dns service. </summary>
+        /// <summary> DnsService. </summary>
         public static ManagedClusterAddOnFeature DnsService { get; } = new ManagedClusterAddOnFeature(DnsServiceValue);
-        /// <summary> Backup and restore service. </summary>
+        /// <summary> BackupRestoreService. </summary>
         public static ManagedClusterAddOnFeature BackupRestoreService { get; } = new ManagedClusterAddOnFeature(BackupRestoreServiceValue);
-        /// <summary> Resource monitor service. </summary>
+        /// <summary> ResourceMonitorService. </summary>
         public static ManagedClusterAddOnFeature ResourceMonitorService { get; } = new ManagedClusterAddOnFeature(ResourceMonitorServiceValue);
         /// <summary> Determines if two <see cref="ManagedClusterAddOnFeature"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterAddOnFeature left, ManagedClusterAddOnFeature right) => left.Equals(right);

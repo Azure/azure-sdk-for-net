@@ -18,8 +18,8 @@ namespace Azure.Communication.CallingServer
         /// The recognition type.
         /// </summary>
         [CodeGenMember("RecognitionType")]
-        [JsonConverter(typeof(EquatableEnumJsonConverter<RecognitionType>))]
-        public RecognitionType RecognitionType { get; set; }
+        [JsonConverter(typeof(EquatableEnumJsonConverter<CallMediaRecognitionType>))]
+        public CallMediaRecognitionType RecognitionType { get; set; }
 
         /// <summary>
         /// Deserialize <see cref="RecognizeCompleted"/> event.

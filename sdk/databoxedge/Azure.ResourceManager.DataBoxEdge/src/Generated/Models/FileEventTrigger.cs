@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Trigger details. </summary>
-    public partial class FileEventTrigger : TriggerData
+    public partial class FileEventTrigger : DataBoxEdgeTriggerData
     {
         /// <summary> Initializes a new instance of FileEventTrigger. </summary>
         /// <param name="sourceInfo"> File event source details. </param>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> File event source details. </summary>
         internal FileSourceInfo SourceInfo { get; set; }
         /// <summary> File share ID. </summary>
-        public string SourceInfoShareId
+        public ResourceIdentifier SourceInfoShareId
         {
             get => SourceInfo is null ? default : SourceInfo.ShareId;
             set => SourceInfo = new FileSourceInfo(value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Role sink info. </summary>
         internal RoleSinkInfo SinkInfo { get; set; }
         /// <summary> Compute role ID. </summary>
-        public string SinkInfoRoleId
+        public ResourceIdentifier SinkInfoRoleId
         {
             get => SinkInfo is null ? default : SinkInfo.RoleId;
             set => SinkInfo = new RoleSinkInfo(value);

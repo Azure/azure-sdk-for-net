@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of FileSourceInfo. </summary>
         /// <param name="shareId"> File share ID. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="shareId"/> is null. </exception>
-        public FileSourceInfo(string shareId)
+        public FileSourceInfo(ResourceIdentifier shareId)
         {
             if (shareId == null)
             {
@@ -26,6 +27,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> File share ID. </summary>
-        public string ShareId { get; set; }
+        public ResourceIdentifier ShareId { get; set; }
     }
 }

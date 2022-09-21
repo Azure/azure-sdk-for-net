@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: ApiManagement
 namespace: Azure.ResourceManager.ApiManagement
-require: https://github.com/Azure/azure-rest-api-specs/blob/b9b91929c304f8fb44002267b6c98d9fb9dde014/specification/apimanagement/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/2f28b5026a4b44adefd0237087acb0c48cfe31a6/specification/apimanagement/resource-manager/readme.md
 tag: package-2021-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -320,7 +320,8 @@ directive:
   - from: apimdeployment.json
     where: $.definitions
     transform: >
-      $.Operation['x-ms-client-name'] = 'RestApiOperation';
+      delete $.Operation;
+      delete $.OperationListResult;
       $.VirtualNetworkConfiguration.properties.vnetid['format'] = 'uuid';
       $.VirtualNetworkConfiguration.properties.subnetResourceId['x-ms-format'] = 'arm-id';
       $.ResourceSkuResult.properties.resourceType['x-ms-format'] = 'resource-type';

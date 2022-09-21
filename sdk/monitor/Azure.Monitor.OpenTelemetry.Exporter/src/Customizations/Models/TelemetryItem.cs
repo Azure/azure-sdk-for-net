@@ -16,14 +16,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     internal partial class TelemetryItem
     {
         private const string DateTimeFormat = "yyyy-MM-ddTHH:mm:ss.fffffffZ";
-        private static readonly IReadOnlyDictionary<TelemetryType, string> s_telemetryItem_Name_Mapping = new Dictionary<TelemetryType, string>
-        {
-            [TelemetryType.Request] = "Request",
-            [TelemetryType.Dependency] = "RemoteDependency",
-        };
 
         public TelemetryItem(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey) :
-            this(s_telemetryItem_Name_Mapping[activity.GetTelemetryType()], FormatUtcTimestamp(activity.StartTimeUtc))
+            this(activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency", FormatUtcTimestamp(activity.StartTimeUtc))
         {
             if (activity.ParentSpanId != default)
             {
@@ -31,8 +26,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             Tags[ContextTagKeys.AiOperationId.ToString()] = activity.TraceId.ToHexString();
-            // todo: update swagger to include this key.
-            Tags["ai.user.userAgent"] = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
+
+            var userAgent = AzMonList.GetTagValue(ref monitorTags.MappedTags, SemanticConventions.AttributeHttpUserAgent)?.ToString();
+
+            if (userAgent != null)
+            {
+                // todo: update swagger to include this key.
+                Tags["ai.user.userAgent"] = userAgent;
+            }
 
             // we only have mapping for server spans
             // todo: non-server spans
@@ -43,6 +44,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
 
             SetResourceSdkVersionAndIkey(roleName, roleInstance, instrumentationKey);
+            if (AzMonList.GetTagValue(ref monitorTags.MappedTags, "sampleRate") is float sampleRate)
+            {
+                SampleRate = sampleRate;
+            }
+        }
+
+        public TelemetryItem(TelemetryItem telemetryItem, ActivitySpanId activitySpanId, ActivityKind kind, DateTimeOffset activityEventTimeStamp) :
+                        this("Exception", FormatUtcTimestamp(activityEventTimeStamp.DateTime))
+        {
+            Tags[ContextTagKeys.AiOperationParentId.ToString()] = activitySpanId.ToHexString();
+            Tags[ContextTagKeys.AiOperationId.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationId.ToString()];
+
+            if (telemetryItem.Tags.TryGetValue("ai.user.userAgent", out string userAgent))
+            {
+                // todo: update swagger to include this key.
+                Tags["ai.user.userAgent"] = userAgent;
+            }
+
+            // we only have mapping for server spans
+            // todo: non-server spans
+            if (kind == ActivityKind.Server)
+            {
+                Tags[ContextTagKeys.AiOperationName.ToString()] = telemetryItem.Tags[ContextTagKeys.AiOperationName.ToString()];
+                Tags[ContextTagKeys.AiLocationIp.ToString()] = telemetryItem.Tags[ContextTagKeys.AiLocationIp.ToString()];
+            }
+
+            Tags[ContextTagKeys.AiCloudRole.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()];
+            Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()];
+            Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion;
+            InstrumentationKey = telemetryItem.InstrumentationKey;
         }
 
         public TelemetryItem (LogRecord logRecord, string roleName, string roleInstance, string instrumentationKey) :

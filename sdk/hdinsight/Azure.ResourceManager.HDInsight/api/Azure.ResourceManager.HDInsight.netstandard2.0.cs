@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string ApplicationState { get { throw null; } }
         public string ApplicationType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole> ComputeRoles { get { throw null; } }
-        public string CreatedDate { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightApplicationHttpsEndpoint> HttpsEndpoints { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.RuntimeScriptAction> InstallScriptActions { get { throw null; } }
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public Azure.ResourceManager.HDInsight.Models.HDInsightComputeIsolationProperties ComputeIsolationProperties { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.HDInsightClusterRole> ComputeRoles { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HDInsight.Models.ConnectivityEndpoint> ConnectivityEndpoints { get { throw null; } }
-        public string CreatedDate { get { throw null; } set { } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public Azure.ResourceManager.HDInsight.Models.HDInsightDiskEncryptionProperties DiskEncryptionProperties { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
         public Azure.ResourceManager.HDInsight.Models.ExcludedServicesConfig ExcludedServicesConfig { get { throw null; } set { } }
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.HDInsight.Models
         public string Domain { get { throw null; } set { } }
         public string DomainUsername { get { throw null; } set { } }
         public string DomainUserPassword { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> LdapsUrls { get { throw null; } }
+        public System.Collections.Generic.IList<System.Uri> LdapUris { get { throw null; } }
         public Azure.Core.ResourceIdentifier MsiResourceId { get { throw null; } set { } }
         public string OrganizationalUnitDN { get { throw null; } set { } }
     }

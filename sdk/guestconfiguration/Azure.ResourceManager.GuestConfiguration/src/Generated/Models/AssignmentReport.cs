@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Initializes a new instance of AssignmentReport. </summary>
         public AssignmentReport()
         {
-            Resources = new ChangeTrackingList<AssignmentReportResource>();
+            Resources = new ChangeTrackingList<AssignmentReportResourceInfo>();
         }
 
         /// <summary> Initializes a new instance of AssignmentReport. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
         /// <param name="operationType"> Type of report, Consistency or Initial. </param>
         /// <param name="resources"> The list of resources for which guest configuration assignment compliance is checked. </param>
-        internal AssignmentReport(string id, string reportId, AssignmentInfo assignment, VmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, ComplianceStatus? complianceStatus, Type? operationType, IList<AssignmentReportResource> resources)
+        internal AssignmentReport(ResourceIdentifier id, Guid? reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, GuestConfigurationAssignmentReportType? operationType, IList<AssignmentReportResourceInfo> resources)
         {
             Id = id;
             ReportId = reportId;
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> ARM resource id of the report for the guest configuration assignment. </summary>
-        public string Id { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> GUID that identifies the guest configuration assignment report under a subscription, resource group. </summary>
-        public string ReportId { get; }
+        public Guid? ReportId { get; }
         /// <summary> Configuration details of the guest configuration assignment. </summary>
-        public AssignmentInfo Assignment { get; set; }
+        public GuestConfigurationAssignmentInfo Assignment { get; set; }
         /// <summary> Information about the VM. </summary>
-        public VmInfo Vm { get; set; }
+        public GuestConfigurationVmInfo Vm { get; set; }
         /// <summary> Start date and time of the guest configuration assignment compliance status check. </summary>
         public DateTimeOffset? StartOn { get; }
         /// <summary> End date and time of the guest configuration assignment compliance status check. </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
-        public ComplianceStatus? ComplianceStatus { get; }
+        public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
         /// <summary> Type of report, Consistency or Initial. </summary>
-        public Type? OperationType { get; }
+        public GuestConfigurationAssignmentReportType? OperationType { get; }
         /// <summary> The list of resources for which guest configuration assignment compliance is checked. </summary>
-        public IList<AssignmentReportResource> Resources { get; }
+        public IList<AssignmentReportResourceInfo> Resources { get; }
     }
 }

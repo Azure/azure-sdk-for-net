@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> An Azure storage blob folder data set. </summary>
-    public partial class BlobFolderDataSet : DataSetData
+    public partial class BlobFolderDataSet : ShareDataSetData
     {
         /// <summary> Initializes a new instance of BlobFolderDataSet. </summary>
         /// <param name="containerName"> Container that has the file path. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceGroup"> Resource group of storage account. </param>
         /// <param name="storageAccountName"> Storage account name of the source data set. </param>
         /// <param name="subscriptionId"> Subscription id of storage account. </param>
-        internal BlobFolderDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string containerName, string dataSetId, string prefix, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        internal BlobFolderDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string containerName, Guid? dataSetId, string prefix, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
         {
             ContainerName = containerName;
             DataSetId = dataSetId;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Container that has the file path. </summary>
         public string ContainerName { get; set; }
         /// <summary> Unique id for identifying a data set resource. </summary>
-        public string DataSetId { get; }
+        public Guid? DataSetId { get; }
         /// <summary> Prefix for blob folder. </summary>
         public string Prefix { get; set; }
         /// <summary> Resource group of storage account. </summary>

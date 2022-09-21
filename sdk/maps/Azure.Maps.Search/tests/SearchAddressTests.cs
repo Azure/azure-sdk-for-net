@@ -96,7 +96,7 @@ namespace Azure.Maps.Search.Tests
             Assert.AreEqual("15127 Northeast 24th Street, Redmond, WA 98052", searchResult.Value.Results[0].Address.FreeformAddress);
         }
 
-                [RecordedTest]
+        [RecordedTest]
         public void InvalidSearchStructuredAddressTest()
         {
             var client = CreateClient();
@@ -140,6 +140,8 @@ namespace Azure.Maps.Search.Tests
                 new SearchAddressQuery("Millenium", new SearchAddressOptions { CountryFilter = new[] { "US" }}),
             });
 
+            // delay 400 ms for the task to complete
+            await Task.Delay(400);
             var searchResult = operation.WaitForCompletion();
             Assert.AreEqual("Redmond", searchResult.Value.Results[0].Results[0].Address.Municipality);
             Assert.AreEqual("Tucson", searchResult.Value.Results[1].Results[0].Address.Municipality);
