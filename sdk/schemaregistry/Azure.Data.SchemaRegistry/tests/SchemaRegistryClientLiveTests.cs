@@ -97,7 +97,7 @@ namespace Azure.Data.SchemaRegistry.Tests
         }
 
         [RecordedTest]
-        public async Task CanGetSchemaVersion()
+        public async Task CanGetSchemaByVersion()
         {
             var client = CreateClient();
             var schemaName = GenerateSchemaName();
