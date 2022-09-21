@@ -240,6 +240,8 @@ namespace Azure.Core.Extensions.Tests
         [Test]
         [TestCase("*")]
         [TestCase("tenantId1;tenantId2;tenantId3")]
+        [TestCase("tenantId1;tenantId2;;tenantId3")]
+        [TestCase("tenantId1;tenantId2; ;tenantId3")]
         [TestCase("tenantId1; tenantId2; tenantId3")]
         public void CreatesClientSecretCredentials_AdditionalTenants(string additionalTenants)
         {

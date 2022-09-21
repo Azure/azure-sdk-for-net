@@ -101,7 +101,7 @@ namespace Microsoft.Extensions.Azure
                 // not relying on StringSplitOptions.RemoveEmptyEntries as we want to remove leading/trailing whitespace between entries
                 additionallyAllowedTenantsList = additionallyAllowedTenants.Split(TenantDelimiter)
                     .Select(t => t.Trim())
-                    .Where(t => !string.IsNullOrWhiteSpace(t));
+                    .Where(t => !string.IsNullOrEmpty(t));
             }
 
             if (string.Equals(credentialType, "managedidentity", StringComparison.OrdinalIgnoreCase))
@@ -123,16 +123,15 @@ namespace Microsoft.Extensions.Azure
                 !string.IsNullOrWhiteSpace(clientId) &&
                 !string.IsNullOrWhiteSpace(clientSecret))
             {
+                var options = new ClientSecretCredentialOptions();
                 if (additionallyAllowedTenantsList != null)
                 {
-                    var options = new ClientSecretCredentialOptions();
                     foreach (string tenant in additionallyAllowedTenantsList)
                     {
                         options.AdditionallyAllowedTenants.Add(tenant);
                     }
-                    return new ClientSecretCredential(tenantId, clientId, clientSecret, options);
                 }
-                return new ClientSecretCredential(tenantId, clientId, clientSecret);
+                return new ClientSecretCredential(tenantId, clientId, clientSecret, options);
             }
 
             if (!string.IsNullOrWhiteSpace(tenantId) &&
@@ -160,20 +159,16 @@ namespace Microsoft.Extensions.Azure
                     throw new InvalidOperationException($"Unable to find a certificate with thumbprint '{certificate}'");
                 }
 
-                ClientCertificateCredential credential;
+                var options = new ClientCertificateCredentialOptions();
+
                 if (additionallyAllowedTenantsList != null)
                 {
-                    var options = new ClientCertificateCredentialOptions();
                     foreach (string tenant in additionallyAllowedTenantsList)
                     {
                         options.AdditionallyAllowedTenants.Add(tenant);
                     }
-                    credential = new ClientCertificateCredential(tenantId, clientId, certs[0], options);
                 }
-                else
-                {
-                    credential = new ClientCertificateCredential(tenantId, clientId, certs[0]);
-                }
+                var credential = new ClientCertificateCredential(tenantId, clientId, certs[0], options);
 
                 store.Close();
 
