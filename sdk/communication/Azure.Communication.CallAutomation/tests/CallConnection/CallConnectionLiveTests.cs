@@ -25,8 +25,8 @@ namespace Azure.Communication.CallAutomation
              * 5. verify existing call is still ongoing and has 2 participants now.
             */
 
-            if (SkipCallingServerInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+            if (SkipCallAutomationInteractionLiveTests)
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             string callConnectionId = "";
@@ -81,8 +81,8 @@ namespace Azure.Communication.CallAutomation
              * 5. verify existing call is still ongoing and has 2 participants now.
             */
 
-            if (SkipCallingServerInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+            if (SkipCallAutomationInteractionLiveTests)
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             string callConnectionId = "";
@@ -139,8 +139,8 @@ namespace Azure.Communication.CallAutomation
              * 5. verify that call connection cannot be found.
             */
 
-            if (SkipCallingServerInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+            if (SkipCallAutomationInteractionLiveTests)
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             var callConnectionId = "";
@@ -203,8 +203,8 @@ namespace Azure.Communication.CallAutomation
              * 5. verify that call connection cannot be found.
             */
 
-            if (SkipCallingServerInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+            if (SkipCallAutomationInteractionLiveTests)
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             var callConnectionId = "";
@@ -266,8 +266,8 @@ namespace Azure.Communication.CallAutomation
              * 4. transfer the call to another target.
             */
 
-            if (SkipCallingServerInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+            if (SkipCallAutomationInteractionLiveTests)
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
 

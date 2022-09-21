@@ -35,7 +35,8 @@ namespace Azure.Identity
         private static readonly string DefaultWorkingDirWindows = Environment.GetFolderPath(Environment.SpecialFolder.System);
         private const string DefaultWorkingDirNonWindows = "/bin/";
         private static readonly string DefaultWorkingDir = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? DefaultWorkingDirWindows : DefaultWorkingDirNonWindows;
-        private readonly string _tenantId;
+        internal string TenantId { get; }
+        internal string[] AdditionallyAllowedTenantIds { get; }
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
         internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
@@ -62,9 +63,10 @@ namespace Azure.Identity
             UseLegacyPowerShell = false;
             _logPII = options?.IsLoggingPIIEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
-            _tenantId = options?.TenantId;
+            TenantId = options?.TenantId;
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenantsCore);
             PowerShellProcessTimeout = options?.PowerShellProcessTimeout ?? TimeSpan.FromSeconds(10);
         }
 
@@ -100,7 +102,7 @@ namespace Azure.Identity
                 if (_logAccountDetails)
                 {
                     var accountDetails = TokenHelper.ParseAccountInfoFromToken(token.Token);
-                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? _tenantId, accountDetails.Upn, accountDetails.ObjectId);
+                    AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId, accountDetails.TenantId ?? TenantId, accountDetails.Upn, accountDetails.ObjectId);
                 }
                 return scope.Succeeded(token);
             }
@@ -116,7 +118,7 @@ namespace Azure.Identity
 
                     if (_logAccountDetails)
                     {
-                        AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(null, _tenantId, null, null);
+                        AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(null, TenantId, null, null);
                     }
 
                     return scope.Succeeded(token);
@@ -137,7 +139,7 @@ namespace Azure.Identity
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
 
             ScopeUtilities.ValidateScope(resource);
-            var tenantId = TenantIdResolver.Resolve(_tenantId, context);
+            var tenantId = TenantIdResolver.Resolve(TenantId, context, AdditionallyAllowedTenantIds);
 
             GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzurePowerShellProcessStartInfo(fileName, argument);
