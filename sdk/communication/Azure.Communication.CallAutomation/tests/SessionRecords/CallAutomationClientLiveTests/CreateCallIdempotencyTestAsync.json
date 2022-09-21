@@ -39,20 +39,20 @@
     {
       "RequestUri": "https://sanitized.skype.com/calling/callConnections?api-version=2022-04-07-preview",
       "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "241",
-        "Content-Type": "application/json",
-        "Repeatability-First-Sent": "Wed, 21 Sep 2022 04:40:39 GMT",
-        "Repeatability-Request-ID": "badac9e3-00f4-410e-9b15-8037cc02f030",
-        "traceparent": "00-bcc09d3834fd3b4da9fb4d9ef15172e8-1e88c9c9d367794f-00",
-        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220920.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "e7ca3e6a2de0d92a927d9da85e3f4b4b",
-        "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 21 Sep 2022 04:40:39 GMT",
-        "x-ms-return-client-request-id": "true"
-      },
+        "RequestHeaders": {
+            "Accept": "application/json",
+            "Authorization": "Sanitized",
+            "Content-Length": "241",
+            "Content-Type": "application/json",
+            "Repeatability-First-Sent": "Wed, 21 Sep 2022 04:40:28 GMT",
+            "Repeatability-Request-ID": "61460096-a0cc-4f65-8cec-b61cc24e646c",
+            "traceparent": "00-bcc09d3834fd3b4da9fb4d9ef15172e8-1e88c9c9d367794f-00",
+            "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220920.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
+            "x-ms-client-request-id": "e7ca3e6a2de0d92a927d9da85e3f4b4b",
+            "x-ms-content-sha256": "Sanitized",
+            "x-ms-date": "Wed, 21 Sep 2022 04:40:39 GMT",
+            "x-ms-return-client-request-id": "true"
+        },
       "RequestBody": {
         "targets": [
           {
@@ -111,20 +111,20 @@
     {
       "RequestUri": "https://sanitized.skype.com/calling/callConnections?api-version=2022-04-07-preview",
       "RequestMethod": "POST",
-      "RequestHeaders": {
-        "Accept": "application/json",
-        "Authorization": "Sanitized",
-        "Content-Length": "241",
-        "Content-Type": "application/json",
-        "Repeatability-First-Sent": "Wed, 21 Sep 2022 04:40:39 GMT",
-        "Repeatability-Request-ID": "badac9e3-00f4-410e-9b15-8037cc02f030",
-        "traceparent": "00-34fedbff4861b946b02b112995aa54aa-8cfcfbdd9b0b4e41-00",
-        "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220920.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
-        "x-ms-client-request-id": "78140f0dae888bcd329a01a7e29092d5",
-        "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 21 Sep 2022 04:40:49 GMT",
-        "x-ms-return-client-request-id": "true"
-      },
+        "RequestHeaders": {
+            "Accept": "application/json",
+            "Authorization": "Sanitized",
+            "Content-Length": "241",
+            "Content-Type": "application/json",
+            "Repeatability-First-Sent": "Wed, 21 Sep 2022 04:40:28 GMT",
+            "Repeatability-Request-ID": "61460096-a0cc-4f65-8cec-b61cc24e646c",
+            "traceparent": "00-34fedbff4861b946b02b112995aa54aa-8cfcfbdd9b0b4e41-00",
+            "User-Agent": "azsdk-net-Communication.CallAutomation/1.0.0-alpha.20220920.1 (.NET Framework 4.8.4515.0; Microsoft Windows 10.0.19044 )",
+            "x-ms-client-request-id": "78140f0dae888bcd329a01a7e29092d5",
+            "x-ms-content-sha256": "Sanitized",
+            "x-ms-date": "Wed, 21 Sep 2022 04:40:49 GMT",
+            "x-ms-return-client-request-id": "true"
+        },
       "RequestBody": {
         "targets": [
           {
