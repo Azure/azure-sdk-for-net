@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.CallAutomation;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Models.Events
 {
-    public partial class RecognizeFailed
+    public partial class RecognizeFailedInternal
     {
-        internal static RecognizeFailed DeserializeRecognizeFailed(JsonElement element)
+        internal static RecognizeFailedInternal DeserializeRecognizeFailedInternal(JsonElement element)
         {
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
@@ -64,7 +65,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecognizeFailed(operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new RecognizeFailedInternal(operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }

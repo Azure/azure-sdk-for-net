@@ -5,17 +5,19 @@
 
 #nullable disable
 
-namespace Azure.Communication.CallAutomation
+using Azure.Communication.CallAutomation;
+
+namespace Azure.Communication.CallAutomation.Models.Events
 {
     /// <summary> The RecognizeFailed. </summary>
-    public partial class RecognizeFailed
+    public partial class RecognizeFailedInternal
     {
-        /// <summary> Initializes a new instance of RecognizeFailed. </summary>
-        internal RecognizeFailed()
+        /// <summary> Initializes a new instance of RecognizeFailedInternal. </summary>
+        internal RecognizeFailedInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of RecognizeFailed. </summary>
+        /// <summary> Initializes a new instance of RecognizeFailedInternal. </summary>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>
         /// <param name="version"> Used to determine the version of the event. </param>
@@ -23,7 +25,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        internal RecognizeFailed(string operationContext, ResultInformation resultInformation, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
+        internal RecognizeFailedInternal(string operationContext, ResultInformation resultInformation, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
         {
             OperationContext = operationContext;
             ResultInformation = resultInformation;

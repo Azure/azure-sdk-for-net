@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Azure.Communication.CallAutomation.Models.Events;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -138,6 +139,20 @@ namespace Azure.Communication.CallAutomation
                 );
 
             return new ParticipantsUpdated(internalObject);
+        }
+
+        /// <summary> Initializes a new instance of RecognizeFailedInternal. </summary>
+        /// <param name="operationContext"></param>
+        /// <param name="resultInformation"></param>
+        /// <param name="version"> Used to determine the version of the event. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
+        /// <returns> A new <see cref="Models.Events.RecognizeFailedInternal"/> instance for mocking. </returns>
+        public static RecognizeFailed RecognizeFailed(string operationContext = null, ResultInformation resultInformation = null, string version = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string publicEventType = null)
+        {
+            return new RecognizeFailed(operationContext, resultInformation, version, callConnectionId, serverCallId, correlationId, publicEventType);
         }
     }
 }
