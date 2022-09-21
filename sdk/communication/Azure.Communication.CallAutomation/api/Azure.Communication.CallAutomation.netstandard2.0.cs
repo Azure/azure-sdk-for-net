@@ -372,13 +372,6 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CallConnection CallConnection { get { throw null; } }
         public Azure.Communication.CallAutomation.CallConnectionProperties CallConnectionProperties { get { throw null; } }
     }
-    public partial class DtmfOptionsInternal
-    {
-        public DtmfOptionsInternal() { }
-        public int? InterToneTimeoutInSeconds { get { throw null; } set { } }
-        public int? MaxTonesToCollect { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.DtmfTone> StopTones { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DtmfTone : System.IEquatable<Azure.Communication.CallAutomation.DtmfTone>
     {
