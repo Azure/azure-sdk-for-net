@@ -6,7 +6,10 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -22,7 +25,7 @@ namespace Azure.ResourceManager.DataShare
     /// Each <see cref="DataShareConsumerInvitationResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
     /// To get a <see cref="DataShareConsumerInvitationCollection" /> instance call the GetDataShareConsumerInvitations method from an instance of <see cref="TenantResource" />.
     /// </summary>
-    public partial class DataShareConsumerInvitationCollection : ArmCollection
+    public partial class DataShareConsumerInvitationCollection : ArmCollection, IEnumerable<DataShareConsumerInvitationResource>, IAsyncEnumerable<DataShareConsumerInvitationResource>
     {
         private readonly ClientDiagnostics _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics;
         private readonly ConsumerInvitationsRestOperations _dataShareConsumerInvitationConsumerInvitationsRestClient;
@@ -104,6 +107,92 @@ namespace Azure.ResourceManager.DataShare
         }
 
         /// <summary>
+        /// Lists invitations
+        /// Request Path: /providers/Microsoft.DataShare/listInvitations
+        /// Operation Id: ConsumerInvitations_ListInvitations
+        /// </summary>
+        /// <param name="skipToken"> The continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DataShareConsumerInvitationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataShareConsumerInvitationResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<DataShareConsumerInvitationResource>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("DataShareConsumerInvitationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _dataShareConsumerInvitationConsumerInvitationsRestClient.ListInvitationsAsync(skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataShareConsumerInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<DataShareConsumerInvitationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("DataShareConsumerInvitationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = await _dataShareConsumerInvitationConsumerInvitationsRestClient.ListInvitationsNextPageAsync(nextLink, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataShareConsumerInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Lists invitations
+        /// Request Path: /providers/Microsoft.DataShare/listInvitations
+        /// Operation Id: ConsumerInvitations_ListInvitations
+        /// </summary>
+        /// <param name="skipToken"> The continuation token. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DataShareConsumerInvitationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataShareConsumerInvitationResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
+        {
+            Page<DataShareConsumerInvitationResource> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("DataShareConsumerInvitationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _dataShareConsumerInvitationConsumerInvitationsRestClient.ListInvitations(skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataShareConsumerInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<DataShareConsumerInvitationResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = _dataShareConsumerInvitationConsumerInvitationsClientDiagnostics.CreateScope("DataShareConsumerInvitationCollection.GetAll");
+                scope.Start();
+                try
+                {
+                    var response = _dataShareConsumerInvitationConsumerInvitationsRestClient.ListInvitationsNextPage(nextLink, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataShareConsumerInvitationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /providers/Microsoft.DataShare/locations/{location}/consumerInvitations/{invitationId}
         /// Operation Id: ConsumerInvitations_Get
@@ -149,6 +238,21 @@ namespace Azure.ResourceManager.DataShare
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<DataShareConsumerInvitationResource> IEnumerable<DataShareConsumerInvitationResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IAsyncEnumerator<DataShareConsumerInvitationResource> IAsyncEnumerable<DataShareConsumerInvitationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

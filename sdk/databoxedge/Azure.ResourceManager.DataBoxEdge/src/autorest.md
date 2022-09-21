@@ -105,6 +105,7 @@ rename-mapping:
   ClusterStorageViewData.clusterFreeStorageMb: ClusterFreeStorageInMB
   ClusterStorageViewData.clusterTotalStorageMb: ClusterTotalStorageInMB
   GenerateCertResponse: GenerateCertResult
+  GenerateCertResponse.expiryTimeInUTC: ExpireOn
   HostCapacity.effectiveAvailableMemoryMbOnHost: EffectiveAvailableMemoryInMBOnHost
   NodeInfo: KubernetesNodeInfo
   NumaNodeData.effectiveAvailableMemoryInMb: EffectiveAvailableMemoryInMB
@@ -126,6 +127,7 @@ rename-mapping:
   ContainerStatus: DataBoxEdgeStorageContainerStatus
   ComputeResource: EdgeComputeResourceInfo
   MonitoringStatus: DataBoxEdgeShareMonitoringStatus
+  MetricConfiguration.resourceId: -|arm-id
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -214,4 +216,8 @@ directive:
     where: $.definitions.DataBoxEdgeSku.properties
     transform: >
       $.locations.items['x-ms-format'] = 'azure-location';
+  - from: databoxedge.json
+    where: $.definitions.GenerateCertResponse.properties.expiryTimeInUTC
+    transform: >
+      $.format = 'date-time';
 ```
