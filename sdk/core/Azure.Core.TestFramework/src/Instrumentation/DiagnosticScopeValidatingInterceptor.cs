@@ -181,7 +181,7 @@ namespace Azure.Core.TestFramework
 
             var expectedName = declaringType.Name + "." + methodNameWithoutSuffix;
             var forwardAttribute = methodInfo.GetCustomAttributes(true).FirstOrDefault(a => a.GetType().FullName == "Azure.Core.ForwardsClientCallsAttribute");
-            bool strict = forwardAttribute is null;
+            bool strict = forwardAttribute is null && !methodInfo.IsAbstract;
 
             Exception lastException = null;
             bool skipChecks = false;
