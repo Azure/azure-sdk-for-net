@@ -120,5 +120,42 @@ namespace Azure.Communication.CallAutomation
                 Assert.Fail($"Unexpected error: {ex}");
             }
         }
+
+        [Test]
+        public async Task CreateCallIdempotencyTest()
+        {
+            /* Test case: Create call is idempotent
+             * 1. create a CallAutomationClient.
+             * 2. create a call from source to one ACS target with RepeatabilityHeaders set.
+             * 3. send the exact same create call request again.
+             * 4. compare call properties for both call results (should be the same).
+             * 5. hang up the call.
+            */
+            if (SkipCallAutomationInteractionLiveTests)
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
+
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
+
+            try
+            {
+                var user = await CreateIdentityUserAsync().ConfigureAwait(false);
+                var targets = new CommunicationIdentifier[] { new CommunicationUserIdentifier(TestEnvironment.TargetUserId) };
+                var repeatabilityRequestId = Guid.NewGuid();
+                var repeatabilityFirstSent = DateTimeOffset.Now.ToString("R");
+                var options = new CreateCallOptions(new CallSource(user), targets, new Uri(TestEnvironment.AppCallbackUrl), repeatabilityRequestId, repeatabilityFirstSent);
+                CreateCallResult response1 = await client.CreateCallAsync(options).ConfigureAwait(false);
+                await WaitForOperationCompletion().ConfigureAwait(false);
+                CreateCallResult response2 = await client.CreateCallAsync(options).ConfigureAwait(false);
+
+                Assert.AreEqual(response1.CallConnectionProperties.CallConnectionId, response2.CallConnectionProperties.CallConnectionId);
+                Assert.AreEqual(response1.CallConnectionProperties.MediaSubscriptionId, response2.CallConnectionProperties.MediaSubscriptionId);
+
+                await response1.CallConnection.HangUpAsync(true).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
     }
 }
