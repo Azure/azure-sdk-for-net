@@ -182,13 +182,36 @@ namespace Microsoft.Extensions.Azure
 
             // TODO: More logging
 
-            if (additionallyAllowedTenantsList != null)
+            if (additionallyAllowedTenantsList != null
+                || !string.IsNullOrWhiteSpace(tenantId)
+                || !string.IsNullOrWhiteSpace(clientId)
+                || !string.IsNullOrWhiteSpace(resourceId))
             {
                 var options = new DefaultAzureCredentialOptions();
-                foreach (string tenant in additionallyAllowedTenantsList)
+                if (additionallyAllowedTenantsList != null)
                 {
-                    options.AdditionallyAllowedTenants.Add(tenant);
+                    foreach (string tenant in additionallyAllowedTenantsList)
+                    {
+                        options.AdditionallyAllowedTenants.Add(tenant);
+                    }
                 }
+
+                if (!string.IsNullOrWhiteSpace(tenantId))
+                {
+                    options.TenantId = tenantId;
+                }
+
+                if (!string.IsNullOrWhiteSpace(clientId))
+                {
+                    options.ManagedIdentityClientId = clientId;
+                }
+
+                // validation that both clientId and ResourceId are not set happens in Azure.Identity
+                if (!string.IsNullOrWhiteSpace(resourceId))
+                {
+                    options.ManagedIdentityResourceId = new ResourceIdentifier(resourceId);
+                }
+
                 return new DefaultAzureCredential(options);
             }
             return null;

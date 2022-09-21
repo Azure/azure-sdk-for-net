@@ -269,44 +269,86 @@ namespace Azure.Core.Extensions.Tests
             Assert.AreEqual(expectedTenants, actualTenants);
         }
 
-        [Test]
-        public void CreateCredentialReturnsNullIfNoMatchingConfig()
+        public static IEnumerable<object> DefaultAzureCredentialTestCases()
         {
-            IConfiguration configuration = GetConfiguration(
-                new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId")
-            );
+            // enumerate all combinations of bits from 0 to 16 (thank you Copilot!)
+            for (int i = 0; i < 16; i++)
+            {
+                var environmentCredential = (i & 1) != 0;
+                var managedIdentityCredential = (i & 2) != 0;
+                var sharedTokenCacheCredential = (i & 4) != 0;
+                var visualStudioCredential = (i & 8) != 0;
 
-            var credential = ClientFactory.CreateCredential(configuration);
-            Assert.IsNull(credential);
+                yield return new TestCaseData(environmentCredential, managedIdentityCredential, sharedTokenCacheCredential, visualStudioCredential);
+            }
         }
 
         [Test]
-        [TestCase("*")]
-        [TestCase("tenantId1;tenantId2;tenantId3")]
-        [TestCase("tenantId1; tenantId2; tenantId3")]
-        public void CreatesDefaultAzureCredentialWithAdditionalTenants(string additionalTenants)
+        [TestCaseSource(nameof(DefaultAzureCredentialTestCases))]
+        public void CreatesDefaultAzureCredential(bool additionalTenants, bool clientId, bool tenantId, bool resourceId)
         {
-            IConfiguration configuration = GetConfiguration(
-                new KeyValuePair<string, string>("additionallyAllowedTenants", additionalTenants)
-            );
+            List<KeyValuePair<string, string>> configEntries= new();
+            string resourceIdValue = $"/subscriptions/{Guid.NewGuid()}";
+
+            if (additionalTenants)
+            {
+                configEntries.Add(new KeyValuePair<string, string>("additionallyAllowedTenants", "tenantId2"));
+            }
+            if (clientId)
+            {
+                configEntries.Add(new KeyValuePair<string, string>("clientId", "clientId"));
+            }
+            if (tenantId)
+            {
+                configEntries.Add(new KeyValuePair<string, string>("tenantId", "tenantId"));
+            }
+            if (resourceId)
+            {
+                configEntries.Add(new KeyValuePair<string, string>("managedIdentityResourceId", resourceIdValue));
+            }
+            IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(configEntries).Build();
+
+            // if both clientId and resourceId set, we expect an ArgumentException
+            if (clientId && resourceId)
+            {
+                Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
+                return;
+            }
 
             var credential = ClientFactory.CreateCredential(configuration);
+
+            // if all parameters were false we expect null
+            if (!additionalTenants && !clientId && !tenantId && !resourceId)
+            {
+                Assert.IsNull(credential);
+                return;
+            }
 
             Assert.IsInstanceOf<DefaultAzureCredential>(credential);
             var defaultAzureCredential = (DefaultAzureCredential)credential;
 
-            EnvironmentCredential firstCredentialInChain = (EnvironmentCredential)((TokenCredential[]) typeof(DefaultAzureCredential)
+            EnvironmentCredential firstCredentialInChain = (EnvironmentCredential)((TokenCredential[])typeof(DefaultAzureCredential)
                 .GetField("_sources", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(defaultAzureCredential))[0];
             DefaultAzureCredentialOptions actualOptions = (DefaultAzureCredentialOptions)typeof(EnvironmentCredential)
                 .GetField("_options", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(firstCredentialInChain);
-
-            var expectedTenants = additionalTenants.Split(';')
-                .Select(t => t.Trim())
-                .Where(t => !string.IsNullOrWhiteSpace(t))
-                .ToList();
-            Assert.AreEqual(expectedTenants, actualOptions.AdditionallyAllowedTenants);
+            if (additionalTenants)
+            {
+                Assert.AreEqual("tenantId2", actualOptions.AdditionallyAllowedTenants.Single());
+            }
+            if (tenantId)
+            {
+                Assert.AreEqual("tenantId", actualOptions.TenantId);
+            }
+            if (clientId)
+            {
+                Assert.AreEqual("clientId", actualOptions.ManagedIdentityClientId);
+            }
+            if (resourceId)
+            {
+                Assert.AreEqual(resourceIdValue, actualOptions.ManagedIdentityResourceId.ToString());
+            }
         }
 
         [Test]
