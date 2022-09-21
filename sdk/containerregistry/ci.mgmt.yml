@@ -7,7 +7,7 @@ pr: none
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SDKType: client
+    SDKType: mgmtclient
     ServiceDirectory: containerregistry
     BuildSnippets: true
     Artifacts:
