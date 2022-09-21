@@ -110,9 +110,13 @@ namespace Azure.Data.SchemaRegistry.Tests
             var registerPropertiesv2 = await client.RegisterSchemaAsync(groupName, schemaName, SchemaContent_V2, format);
             AssertSchemaProperties(registerPropertiesv2, schemaName);
 
-            SchemaRegistrySchema schema = await client.GetSchemaAsync(groupName, schemaName, 2);
-            AssertSchema(schema, schemaName, SchemaContent_V2);
-            AssertPropertiesAreEqual(registerPropertiesv2, schema.Properties);
+            SchemaRegistrySchema schemav1 = await client.GetSchemaAsync(groupName, schemaName, 1);
+            AssertSchema(schemav1, schemaName, SchemaContent);
+            AssertPropertiesAreEqual(registerPropertiesv1, schemav1.Properties);
+
+            SchemaRegistrySchema schemav2 = await client.GetSchemaAsync(groupName, schemaName, 2);
+            AssertSchema(schemav2, schemaName, SchemaContent_V2);
+            AssertPropertiesAreEqual(registerPropertiesv2, schemav2.Properties);
         }
 
         [RecordedTest]
@@ -163,11 +167,11 @@ namespace Azure.Data.SchemaRegistry.Tests
                     .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("ItemNotFound"));
         }
 
-        private void AssertSchema(SchemaRegistrySchema schema, string schemaName, string schemaContent)
+        private void AssertSchema(SchemaRegistrySchema schema, string expectedSchemaName, string expectedSchemaContent)
         {
-            AssertSchemaProperties(schema.Properties, schemaName);
+            AssertSchemaProperties(schema.Properties, expectedSchemaName);
             Assert.AreEqual(
-                Regex.Replace(schemaContent, @"\s+", string.Empty),
+                Regex.Replace(expectedSchemaContent, @"\s+", string.Empty),
                 Regex.Replace(schema.Definition, @"\s+", string.Empty));
         }
 
