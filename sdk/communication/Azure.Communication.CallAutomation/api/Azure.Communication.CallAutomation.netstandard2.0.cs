@@ -571,11 +571,32 @@ namespace Azure.Communication.CallAutomation
     public partial class RecognizeFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal RecognizeFailed() { }
+        public Azure.Communication.CallAutomation.RecognizeFailureReason FailureReason { get { throw null; } }
         public string OperationContext { get { throw null; } }
         public string PublicEventType { get { throw null; } }
         public Azure.Communication.CallAutomation.ResultInformation ResultInformation { get { throw null; } }
         public string Version { get { throw null; } }
         public static Azure.Communication.CallAutomation.RecognizeFailed Deserialize(string content) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecognizeFailureReason : System.IEquatable<Azure.Communication.CallAutomation.RecognizeFailureReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecognizeFailureReason(string value) { throw null; }
+        public static Azure.Communication.CallAutomation.RecognizeFailureReason InitialSilenceTimeout { get { throw null; } }
+        public static Azure.Communication.CallAutomation.RecognizeFailureReason InterDigitTimeout { get { throw null; } }
+        public static Azure.Communication.CallAutomation.RecognizeFailureReason PlayPromptFailed { get { throw null; } }
+        public static Azure.Communication.CallAutomation.RecognizeFailureReason UspecifiedError { get { throw null; } }
+        public bool Equals(Azure.Communication.CallAutomation.RecognizeFailureReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallAutomation.RecognizeFailureReason left, Azure.Communication.CallAutomation.RecognizeFailureReason right) { throw null; }
+        public static implicit operator Azure.Communication.CallAutomation.RecognizeFailureReason (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallAutomation.RecognizeFailureReason left, Azure.Communication.CallAutomation.RecognizeFailureReason right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecognizeInputType : System.IEquatable<Azure.Communication.CallAutomation.RecognizeInputType>
