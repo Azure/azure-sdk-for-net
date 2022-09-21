@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AlertsManagement
     public partial class AlertProcessingRuleData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public AlertProcessingRuleData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.AlertsManagement.Models.ServiceAlertProcessingRuleProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleProperties Properties { get { throw null; } set { } }
     }
     public partial class AlertProcessingRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -141,14 +141,14 @@ namespace Azure.ResourceManager.AlertsManagement
 }
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
-    public partial class AddActionGroups : Azure.ResourceManager.AlertsManagement.Models.AlertProcessingAction
+    public abstract partial class AlertProcessingRuleAction
     {
-        public AddActionGroups(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> actionGroupIds) { }
-        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ActionGroupIds { get { throw null; } }
+        protected AlertProcessingRuleAction() { }
     }
-    public abstract partial class AlertProcessingAction
+    public partial class AlertProcessingRuleAddGroupsAction : Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction
     {
-        protected AlertProcessingAction() { }
+        public AlertProcessingRuleAddGroupsAction(System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> actionGroupIds) { }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ActionGroupIds { get { throw null; } }
     }
     public partial class AlertProcessingRuleCondition
     {
@@ -215,11 +215,25 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public bool? IsEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
+    public partial class AlertProcessingRuleProperties
+    {
+        public AlertProcessingRuleProperties(System.Collections.Generic.IEnumerable<string> scopes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction> actions) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction> Actions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleCondition> Conditions { get { throw null; } }
+        public string Description { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleSchedule Schedule { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
+    }
     public abstract partial class AlertProcessingRuleRecurrence
     {
         protected AlertProcessingRuleRecurrence() { }
         public System.TimeSpan? EndOn { get { throw null; } set { } }
         public System.TimeSpan? StartOn { get { throw null; } set { } }
+    }
+    public partial class AlertProcessingRuleRemoveAllGroupsAction : Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleAction
+    {
+        public AlertProcessingRuleRemoveAllGroupsAction() { }
     }
     public partial class AlertProcessingRuleSchedule
     {
@@ -386,10 +400,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public static bool operator !=(Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert left, Azure.ResourceManager.AlertsManagement.Models.MonitorServiceSourceForAlert right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RemoveAllActionGroups : Azure.ResourceManager.AlertsManagement.Models.AlertProcessingAction
-    {
-        public RemoveAllActionGroups() { }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RetrievedInformationIdentifier : System.IEquatable<Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier>
     {
@@ -472,16 +482,6 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public ServiceAlertModificationProperties() { }
         public System.Guid? AlertId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertModificationItemInfo> Modifications { get { throw null; } }
-    }
-    public partial class ServiceAlertProcessingRuleProperties
-    {
-        public ServiceAlertProcessingRuleProperties(System.Collections.Generic.IEnumerable<string> scopes, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingAction> actions) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingAction> Actions { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleCondition> Conditions { get { throw null; } }
-        public string Description { get { throw null; } set { } }
-        public bool? IsEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.AlertsManagement.Models.AlertProcessingRuleSchedule Schedule { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Scopes { get { throw null; } }
     }
     public partial class ServiceAlertProperties
     {

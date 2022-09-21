@@ -27,8 +27,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             foreach (var activity in batchActivity)
             {
                 var monitorTags = EnumerateActivityTags(activity);
-                var telemetryName = activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency";
-                telemetryItem = new TelemetryItem(telemetryName, activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                telemetryItem = new TelemetryItem(activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+
+                // Check for Exceptions events
+                if (activity.Events.Any())
+                {
+                    AddExceptionTelemetryFromActivityExceptionEvents(activity, telemetryItem, telemetryItems);
+                }
 
                 switch (activity.GetTelemetryType())
                 {
@@ -50,12 +55,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 monitorTags.Return();
                 telemetryItems.Add(telemetryItem);
-
-                // Check for Exceptions events
-                if (activity.Events.Any())
-                {
-                    AddExceptionTelemetryFromActivityExceptionEvents(activity, ref monitorTags, roleName, roleInstance, instrumentationKey, telemetryItems);
-                }
             }
 
             return telemetryItems;
@@ -176,7 +175,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return activity.DisplayName;
         }
 
-        private static void AddExceptionTelemetryFromActivityExceptionEvents(Activity activity, ref TagEnumerationState monitorTags, string roleName, string roleInstance, string instrumentationKey, List<TelemetryItem> telemetryItems)
+        private static void AddExceptionTelemetryFromActivityExceptionEvents(Activity activity, TelemetryItem telemetryItem, List<TelemetryItem> telemetryItems)
         {
             foreach (var evnt in activity.Events)
             {
@@ -187,7 +186,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         var exceptionData = GetExceptionDataDetailsOnTelemetryItem(evnt.Tags);
                         if (exceptionData != null)
                         {
-                            var exceptionTelemetryItem = new TelemetryItem("Exception", activity, ref monitorTags, roleName, roleInstance, instrumentationKey);
+                            var exceptionTelemetryItem = new TelemetryItem(telemetryItem, activity.SpanId, activity.Kind, evnt.Timestamp);
                             exceptionTelemetryItem.Data = exceptionData;
                             telemetryItems.Add(exceptionTelemetryItem);
                         }
@@ -232,12 +231,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 return null;
             }
 
-            TelemetryExceptionDetails exceptionDetails = new(exceptionMessage)
+            TelemetryExceptionDetails exceptionDetails = new(exceptionMessage.Truncate(SchemaConstants.ExceptionDetails_Message_MaxLength))
             {
-                Stack = exceptionStackTrace,
+                Stack = exceptionStackTrace.Truncate(SchemaConstants.ExceptionDetails_Stack_MaxLength),
+
+                HasFullStack = exceptionStackTrace.Length <= SchemaConstants.ExceptionDetails_Stack_MaxLength,
 
                 // TODO: Update swagger schema to mandate typename.
-                TypeName = exceptionType
+                TypeName = exceptionType.Truncate(SchemaConstants.ExceptionDetails_TypeName_MaxLength),
             };
 
             List<TelemetryExceptionDetails> exceptions = new()

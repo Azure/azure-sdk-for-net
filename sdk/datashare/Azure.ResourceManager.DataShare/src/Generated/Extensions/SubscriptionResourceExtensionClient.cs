@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DataShare
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _accountClientDiagnostics;
-        private AccountsRestOperations _accountRestClient;
+        private ClientDiagnostics _dataShareAccountAccountsClientDiagnostics;
+        private AccountsRestOperations _dataShareAccountAccountsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.DataShare
         {
         }
 
-        private ClientDiagnostics AccountClientDiagnostics => _accountClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataShare", AccountResource.ResourceType.Namespace, Diagnostics);
-        private AccountsRestOperations AccountRestClient => _accountRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(AccountResource.ResourceType));
+        private ClientDiagnostics DataShareAccountAccountsClientDiagnostics => _dataShareAccountAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DataShare", DataShareAccountResource.ResourceType.Namespace, Diagnostics);
+        private AccountsRestOperations DataShareAccountAccountsRestClient => _dataShareAccountAccountsRestClient ??= new AccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(DataShareAccountResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -50,17 +50,17 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AccountResource> GetAccountsAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="DataShareAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DataShareAccountResource> GetDataShareAccountsAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AccountResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<DataShareAccountResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
+                using var scope = DataShareAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataShareAccounts");
                 scope.Start();
                 try
                 {
-                    var response = await AccountRestClient.ListBySubscriptionAsync(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await DataShareAccountAccountsRestClient.ListBySubscriptionAsync(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataShareAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -68,14 +68,14 @@ namespace Azure.ResourceManager.DataShare
                     throw;
                 }
             }
-            async Task<Page<AccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<DataShareAccountResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
+                using var scope = DataShareAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataShareAccounts");
                 scope.Start();
                 try
                 {
-                    var response = await AccountRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await DataShareAccountAccountsRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataShareAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -93,17 +93,17 @@ namespace Azure.ResourceManager.DataShare
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AccountResource> GetAccounts(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="DataShareAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DataShareAccountResource> GetDataShareAccounts(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            Page<AccountResource> FirstPageFunc(int? pageSizeHint)
+            Page<DataShareAccountResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = AccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
+                using var scope = DataShareAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataShareAccounts");
                 scope.Start();
                 try
                 {
-                    var response = AccountRestClient.ListBySubscription(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = DataShareAccountAccountsRestClient.ListBySubscription(Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataShareAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.DataShare
                     throw;
                 }
             }
-            Page<AccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<DataShareAccountResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = AccountClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAccounts");
+                using var scope = DataShareAccountAccountsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetDataShareAccounts");
                 scope.Start();
                 try
                 {
-                    var response = AccountRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = DataShareAccountAccountsRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, skipToken, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new DataShareAccountResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

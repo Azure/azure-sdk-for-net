@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Kusto
         /// <param name="attachedDatabaseNames"> The list of databases from the clusterResourceId which are currently attached to the cluster. </param>
         /// <param name="defaultPrincipalsModificationKind"> The default principals modification kind. </param>
         /// <param name="tableLevelSharingProperties"> Table level sharing specifications. </param>
-        internal KustoAttachedDatabaseConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoProvisioningState? provisioningState, string databaseName, ResourceIdentifier clusterResourceId, IReadOnlyList<string> attachedDatabaseNames, DefaultPrincipalsModificationKind? defaultPrincipalsModificationKind, TableLevelSharingProperties tableLevelSharingProperties) : base(id, name, resourceType, systemData)
+        internal KustoAttachedDatabaseConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoProvisioningState? provisioningState, string databaseName, ResourceIdentifier clusterResourceId, IReadOnlyList<string> attachedDatabaseNames, KustoDatabaseDefaultPrincipalsModificationKind? defaultPrincipalsModificationKind, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Kusto
         /// <summary> The list of databases from the clusterResourceId which are currently attached to the cluster. </summary>
         public IReadOnlyList<string> AttachedDatabaseNames { get; }
         /// <summary> The default principals modification kind. </summary>
-        public DefaultPrincipalsModificationKind? DefaultPrincipalsModificationKind { get; set; }
+        public KustoDatabaseDefaultPrincipalsModificationKind? DefaultPrincipalsModificationKind { get; set; }
         /// <summary> Table level sharing specifications. </summary>
-        public TableLevelSharingProperties TableLevelSharingProperties { get; set; }
+        public KustoDatabaseTableLevelSharingProperties TableLevelSharingProperties { get; set; }
     }
 }

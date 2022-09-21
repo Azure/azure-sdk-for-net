@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StorageSync
     /// A Class representing a CloudEndpoint along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CloudEndpointResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetCloudEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SyncGroupResource" /> using the GetCloudEndpoint method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageSyncGroupResource" /> using the GetCloudEndpoint method.
     /// </summary>
     public partial class CloudEndpointResource : ArmResource
     {
@@ -253,19 +253,19 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: CloudEndpoints_PreBackup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="backupRequest"> Body of Backup request. </param>
+        /// <param name="content"> Body of Backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupRequest"/> is null. </exception>
-        public virtual async Task<ArmOperation> PreBackupAsync(WaitUntil waitUntil, BackupRequest backupRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> PreBackupAsync(WaitUntil waitUntil, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(backupRequest, nameof(backupRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.PreBackup");
             scope.Start();
             try
             {
-                var response = await _cloudEndpointRestClient.PreBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, backupRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation(_cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreatePreBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, backupRequest).Request, response, OperationFinalStateVia.Location);
+                var response = await _cloudEndpointRestClient.PreBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageSyncArmOperation(_cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreatePreBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -283,19 +283,19 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: CloudEndpoints_PreBackup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="backupRequest"> Body of Backup request. </param>
+        /// <param name="content"> Body of Backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupRequest"/> is null. </exception>
-        public virtual ArmOperation PreBackup(WaitUntil waitUntil, BackupRequest backupRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation PreBackup(WaitUntil waitUntil, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(backupRequest, nameof(backupRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.PreBackup");
             scope.Start();
             try
             {
-                var response = _cloudEndpointRestClient.PreBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, backupRequest, cancellationToken);
-                var operation = new StorageSyncArmOperation(_cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreatePreBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, backupRequest).Request, response, OperationFinalStateVia.Location);
+                var response = _cloudEndpointRestClient.PreBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new StorageSyncArmOperation(_cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreatePreBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -313,19 +313,19 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: CloudEndpoints_PostBackup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="backupRequest"> Body of Backup request. </param>
+        /// <param name="content"> Body of Backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupRequest"/> is null. </exception>
-        public virtual async Task<ArmOperation<PostBackupResponse>> PostBackupAsync(WaitUntil waitUntil, BackupRequest backupRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<CloudEndpointPostBackupResult>> PostBackupAsync(WaitUntil waitUntil, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(backupRequest, nameof(backupRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.PostBackup");
             scope.Start();
             try
             {
-                var response = await _cloudEndpointRestClient.PostBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, backupRequest, cancellationToken).ConfigureAwait(false);
-                var operation = new StorageSyncArmOperation<PostBackupResponse>(new PostBackupResponseOperationSource(), _cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreatePostBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, backupRequest).Request, response, OperationFinalStateVia.Location);
+                var response = await _cloudEndpointRestClient.PostBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new StorageSyncArmOperation<CloudEndpointPostBackupResult>(new CloudEndpointPostBackupResultOperationSource(), _cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreatePostBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -343,19 +343,19 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: CloudEndpoints_PostBackup
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="backupRequest"> Body of Backup request. </param>
+        /// <param name="content"> Body of Backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="backupRequest"/> is null. </exception>
-        public virtual ArmOperation<PostBackupResponse> PostBackup(WaitUntil waitUntil, BackupRequest backupRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<CloudEndpointPostBackupResult> PostBackup(WaitUntil waitUntil, CloudEndpointBackupContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(backupRequest, nameof(backupRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.PostBackup");
             scope.Start();
             try
             {
-                var response = _cloudEndpointRestClient.PostBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, backupRequest, cancellationToken);
-                var operation = new StorageSyncArmOperation<PostBackupResponse>(new PostBackupResponseOperationSource(), _cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreatePostBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, backupRequest).Request, response, OperationFinalStateVia.Location);
+                var response = _cloudEndpointRestClient.PostBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content, cancellationToken);
+                var operation = new StorageSyncArmOperation<CloudEndpointPostBackupResult>(new CloudEndpointPostBackupResultOperationSource(), _cloudEndpointClientDiagnostics, Pipeline, _cloudEndpointRestClient.CreatePostBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -433,9 +433,9 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: CloudEndpoints_restoreheartbeat
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RestoreheartbeatAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RestoreHeartbeatAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.Restoreheartbeat");
+            using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.RestoreHeartbeat");
             scope.Start();
             try
             {
@@ -455,9 +455,9 @@ namespace Azure.ResourceManager.StorageSync
         /// Operation Id: CloudEndpoints_restoreheartbeat
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Restoreheartbeat(CancellationToken cancellationToken = default)
+        public virtual Response RestoreHeartbeat(CancellationToken cancellationToken = default)
         {
-            using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.Restoreheartbeat");
+            using var scope = _cloudEndpointClientDiagnostics.CreateScope("CloudEndpointResource.RestoreHeartbeat");
             scope.Start();
             try
             {

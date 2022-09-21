@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 
         internal static DeviceProvisioningServicesPrivateLinkServiceConnectionState DeserializeDeviceProvisioningServicesPrivateLinkServiceConnectionState(JsonElement element)
         {
-            PrivateLinkServiceConnectionStatus status = default;
+            DeviceProvisioningServicesPrivateLinkServiceConnectionStatus status = default;
             string description = default;
             Optional<string> actionsRequired = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"))
                 {
-                    status = new PrivateLinkServiceConnectionStatus(property.Value.GetString());
+                    status = new DeviceProvisioningServicesPrivateLinkServiceConnectionStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"))

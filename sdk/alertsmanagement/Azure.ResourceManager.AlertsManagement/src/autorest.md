@@ -35,7 +35,9 @@ rename-mapping:
   TimeRange.1h: OneHour
   TimeRange.1d: OneDay
   TimeRange.7d: SevenDays
-  TimeRange.30d: ThirtyDays 
+  TimeRange.30d: ThirtyDays
+  AddActionGroups: AlertProcessingRuleAddGroupsAction
+  RemoveAllActionGroups: AlertProcessingRuleRemoveAllGroupsAction
   AlertModificationEvent: ServiceAlertModificationEvent
   AlertModificationItem: ServiceAlertModificationItemInfo
   Severity: ServiceAlertSeverity
@@ -46,8 +48,8 @@ rename-mapping:
   MonthlyRecurrence: AlertProcessingRuleMonthlyRecurrence
   WeeklyRecurrence:  AlertProcessingRuleWeeklyRecurrence
   SortOrder: AlertsManagementQuerySortOrder
-  Action: AlertProcessingAction
-  ActionType: AlertProcessingActionType
+  Action: AlertProcessingRuleAction
+  ActionType: AlertProcessingRuleActionType
   Alert: ServiceAlert
   AlertsList: ServiceAlertListResult
   AlertState: ServiceAlertState
@@ -69,7 +71,6 @@ rename-mapping:
   AlertsSummaryGroupItem: ServiceAlertSummaryGroupItemInfo
   MetadataIdentifier: ServiceAlertMetadataIdentifier
   AlertModificationProperties: ServiceAlertModificationProperties
-  AlertProcessingRuleProperties: ServiceAlertProcessingRuleProperties
   AlertProperties: ServiceAlertProperties
   AlertsSummaryGroup: ServiceAlertSummaryGroup
 

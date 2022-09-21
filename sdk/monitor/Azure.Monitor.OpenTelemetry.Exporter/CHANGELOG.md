@@ -16,6 +16,7 @@
 * [Change AzureMonitorExporterLoggingExtensions from internal to public](https://github.com/Azure/azure-sdk-for-net/pull/26355)
 * [Support for exporting Activity exception
   event](https://github.com/Azure/azure-sdk-for-net/pull/29676)
+* [Update SampleRate in Request/Dependency telemetry](https://github.com/Azure/azure-sdk-for-net/pull/31118)
 
 ### Breaking Changes
 

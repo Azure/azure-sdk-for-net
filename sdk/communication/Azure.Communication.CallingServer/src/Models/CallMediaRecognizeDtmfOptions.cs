@@ -14,9 +14,10 @@ namespace Azure.Communication.CallingServer
         private static readonly TimeSpan _defaultInterToneTimeout = TimeSpan.FromSeconds(2);
 
         /// <summary> Initializes a new instance of CallMediaRecognizeDtmfOptions. </summary>
-        public CallMediaRecognizeDtmfOptions(CommunicationIdentifier targetParticipant) : base(RecognizeInputType.Dtmf, targetParticipant)
+        public CallMediaRecognizeDtmfOptions(CommunicationIdentifier targetParticipant, int maxTonesToCollect) : base(RecognizeInputType.Dtmf, targetParticipant)
         {
             StopTones = Array.Empty<DtmfTone>();
+            MaxTonesToCollect = maxTonesToCollect;
         }
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Maximum number of DTMF tones to be collected.
         /// </summary>
-        public int MaxTonesToCollect { get; set; }
+        public int MaxTonesToCollect { get; }
 
         /// <summary>
         /// List of tones that will stop recognizing.

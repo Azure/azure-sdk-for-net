@@ -33,8 +33,8 @@ namespace Azure.Identity.Tests
             [Values(null, TenantId)] string explicitTenantId)
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            var options = new AzureCliCredentialOptions { TenantId = explicitTenantId };
-            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context);
+            var options = new AzureCliCredentialOptions { TenantId = explicitTenantId, AdditionallyAllowedTenants = { TenantIdHint } };
+            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, TenantIdResolver.AllTenants);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
 
             var testProcess = new TestProcess { Output = processOutput };
@@ -54,6 +54,25 @@ namespace Azure.Identity.Tests
             {
                 Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("-tenant"));
             }
+        }
+
+        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        {
+            Console.WriteLine(parameters.ToDebugString());
+
+            var options = new AzureCliCredentialOptions { TenantId = parameters.TenantId};
+
+            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+
+            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
+            var testProcess = new TestProcess { Output = processOutput };
+            AzureCliCredential credential =
+                InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess, true), options));
+
+            await AssertAllowedTenantIdsEnforcedAsync(parameters, credential);
         }
 
         [Test]

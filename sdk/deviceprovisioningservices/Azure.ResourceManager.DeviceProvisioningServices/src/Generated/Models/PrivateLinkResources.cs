@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
         internal PrivateLinkResources()
         {
-            Value = new ChangeTrackingList<GroupIdInformationData>();
+            Value = new ChangeTrackingList<DeviceProvisioningServicesPrivateLinkResourceData>();
         }
 
         /// <summary> Initializes a new instance of PrivateLinkResources. </summary>
         /// <param name="value"> The list of available private link resources for a provisioning service. </param>
-        internal PrivateLinkResources(IReadOnlyList<GroupIdInformationData> value)
+        internal PrivateLinkResources(IReadOnlyList<DeviceProvisioningServicesPrivateLinkResourceData> value)
         {
             Value = value;
         }
 
         /// <summary> The list of available private link resources for a provisioning service. </summary>
-        public IReadOnlyList<GroupIdInformationData> Value { get; }
+        public IReadOnlyList<DeviceProvisioningServicesPrivateLinkResourceData> Value { get; }
     }
 }

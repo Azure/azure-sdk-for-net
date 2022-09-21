@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -44,10 +45,10 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             string containerName = default;
-            string dataSetId = default;
+            Guid dataSetId = default;
             Optional<DataSetMappingStatus> dataSetMappingStatus = default;
             string prefix = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<DataShareProvisioningState> provisioningState = default;
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         }
                         if (property0.NameEquals("dataSetId"))
                         {
-                            dataSetId = property0.Value.GetString();
+                            dataSetId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("dataSetMappingStatus"))
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.DataShare.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new DataShareProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("resourceGroup"))

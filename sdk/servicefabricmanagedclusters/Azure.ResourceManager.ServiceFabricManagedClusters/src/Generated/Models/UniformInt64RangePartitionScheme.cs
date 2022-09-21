@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes a partitioning scheme where an integer range is allocated evenly across a number of partitions. </summary>
-    public partial class UniformInt64RangePartitionScheme : Partition
+    public partial class UniformInt64RangePartitionScheme : ManagedServicePartitionScheme
     {
         /// <summary> Initializes a new instance of UniformInt64RangePartitionScheme. </summary>
         /// <param name="count"> The number of partitions. </param>

@@ -60,17 +60,23 @@ The exception includes some contextual information to assist in understanding th
 
 - `Reason` : Provides a set of well-known reasons for the failure that help to categorize and clarify the root cause. These are intended to allow for applying exception filtering and other logic where inspecting the text of an exception message wouldn't be ideal. Some key failure reasons are:
 
-  - **Service Timeout** : This indicates that the Service Bus service did not respond to an operation within the expected amount of time. This may have been caused by a transient network issue or service problem. The Service Bus service may or may not have successfully completed the request; the status is not known. In the case of accepting the next available session, this exception indicates that there were no unlocked sessions available in the entity.
+  - **ServiceTimeout** : This indicates that the Service Bus service did not respond to an operation within the expected amount of time. This may have been caused by a transient network issue or service problem. The Service Bus service may or may not have successfully completed the request; the status is not known. In the case of accepting the next available session, this exception indicates that there were no unlocked sessions available in the entity. These are transient errors that will be automatically retried.
 
-  - **Quota Exceeded** : This typically indicates that there are too many active receive operations for a single entity. In order to avoid this error, reduce the number of potential concurrent receives. You can use batch receives to attempt to receive multiple messages per receive request. Please see [Service Bus quotas][ServiceBusQuotas] for more information.
+  - **QuotaExceeded** : This typically indicates that there are too many active receive operations for a single entity. In order to avoid this error, reduce the number of potential concurrent receives. You can use batch receives to attempt to receive multiple messages per receive request. Please see [Service Bus quotas][ServiceBusQuotas] for more information.
 
-  - **Message Size Exceeded** : This indicates that the max message size has been exceeded. The message size includes the body of the message, as well as any associated metadata and system overhead. The best approach for resolving this error is to reduce the number of messages being sent in a batch or the size of the body included in the message. Because size limits are subject to change, please refer to [Service Bus quotas][ServiceBusQuotas] for specifics.  
+  - **MessageSizeExceeded** : This indicates that the max message size has been exceeded. The message size includes the body of the message, as well as any associated metadata and system overhead. The best approach for resolving this error is to reduce the number of messages being sent in a batch or the size of the body included in the message. Because size limits are subject to change, please refer to [Service Bus quotas][ServiceBusQuotas] for specifics.  
   
-  - **MessageLockLost** : This indicates that the lock on the message is lost. Callers should attempt to receive and process the message again. This only applies to non-session entities. This error occurs if processing takes longer than the lock duration and the message lock is not renewed. Note that this error can also occur when the link is detached due to a transient network issue or when the link is idle for 10 minutes.
+  - **MessageLockLost** : This indicates that the lock on the message is lost. Callers should attempt to receive and process the message again. This only applies to non-session entities. This error occurs if processing takes longer than the lock duration and the message lock is not renewed. Note that this error can also occur when the link is detached due to a transient network issue or when the link is idle for 10 minutes. See [Message or session lock is lost before lock expiration time](#message-or-session-lock-is-lost-before-lock-expiration-time) for more information.
   
-  - **SessionLockLost**: This indicates that the lock on the session has expired. Callers should attempt to accept the session again. This only applies to session-enabled entities. This error occurs if processing takes longer than the lock duration and the session lock is not renewed. Note that this error can also occur when the link is detached due to a transient network issue or when the link is idle for 10 minutes.
+  - **SessionLockLost**: This indicates that the lock on the session has expired. Callers should attempt to accept the session again. This only applies to session-enabled entities. This error occurs if processing takes longer than the lock duration and the session lock is not renewed. Note that this error can also occur when the link is detached due to a transient network issue or when the link is idle for 10 minutes. See [Message or session lock is lost before lock expiration time](#message-or-session-lock-is-lost-before-lock-expiration-time) for more information.
 
+  - **MessageNotFound**: This occurs when attempting to receive a deferred message by sequence number for a message that either doesn't exist in the entity, or is currently locked. 
+  
   - **SessionCannotBeLocked**: This indicates that the requested session cannot be locked because the lock is already held elsewhere. Once the lock expires, the session can be accepted.
+
+  - **GeneralError**: This indicates that the Service Bus service encountered an error while processing the request. This is often caused by service upgrades and restarts. These are transient errors that will be automatically retried.
+
+  - **ServiceCommunicationProblem**: This indicates that there was an error communicating with the service. The issue may stem from a transient network problem, or a service problem. These are transient errors that will be automatically retried.
 
 ### Other common exceptions
 
@@ -181,7 +187,7 @@ The library creates the following spans:
 
 Most of the spans are self-explanatory and are started and stopped during the operation that bears its name. The span that ties the others together is `Message`. The way that the message is traced is via the the `Diagnostic-Id` that is set in the [ServiceBusMessage.ApplicationProperties][ApplicationProperties] property by the library during send and schedule operations. In Application Insights, `Message` spans will be displayed as linking out to the various other spans that were used to interact with the message, e.g. the `ServiceBusReceiver.Receive` span, the `ServiceBusSender.Send` span, and the `ServiceBusReceiver.Complete` span would all be linked from the `Message` span. Here is an example of what this looks like in Application Insights:
 
-![image](assets/Tracing.png)
+![image](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/assets/Tracing.png)
 
 In the above screenshot, we see the end-to-end transaction that can be viewed in Application Insights in the portal. In this scenario, the application is sending messages and using the [ServiceBusSessionProcessor][ServiceBusSessionProcessor] to process them. The `Message` activity is linked to `ServiceBusSender.Send`, `ServiceBusReceiver.Receive`, `ServiceBusSessionProcessor.ProcessSessionMessage`, and `ServiceBusReceiver.Complete`. 
 
@@ -236,7 +242,7 @@ This can be configured using the [SessionIdleTimeout][SessionIdleTimeout], which
 
 ### Processor stops immediately
 
-This often is observed for demo or testing scenarios.  `StartProcessingAsync` returns immediately after the processor has started. Calling this method will not block and keep your application alive while the processor is running, so you'll need some other mechanism to do so.  For demos or testing, it may be sufficient to just add a `Console.ReadKey()` call after you start the processor. For production scenarios, you will likely want to use some sort of framework integration like [BackgroundService][BackgroundService] to provide convenient application lifecycle hooks that can be used for starting and disposing the processor.
+This is often observed for demo or testing scenarios.  `StartProcessingAsync` returns immediately after the processor has started. Calling this method will not block and keep your application alive while the processor is running, so you'll need some other mechanism to do so.  For demos or testing, it may be sufficient to just add a `Console.ReadKey()` call after you start the processor. For production scenarios, you will likely want to use some sort of framework integration like [BackgroundService][BackgroundService] to provide convenient application lifecycle hooks that can be used for starting and disposing the processor.
 
 ## Troubleshoot transactions
 
