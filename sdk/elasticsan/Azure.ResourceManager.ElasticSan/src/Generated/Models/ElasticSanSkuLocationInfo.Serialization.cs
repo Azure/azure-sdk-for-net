@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class SkuLocationInfo
+    public partial class ElasticSanSkuLocationInfo
     {
-        internal static SkuLocationInfo DeserializeSkuLocationInfo(JsonElement element)
+        internal static ElasticSanSkuLocationInfo DeserializeElasticSanSkuLocationInfo(JsonElement element)
         {
             Optional<AzureLocation> location = default;
             Optional<IReadOnlyList<string>> zones = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new SkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones));
+            return new ElasticSanSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones));
         }
     }
 }

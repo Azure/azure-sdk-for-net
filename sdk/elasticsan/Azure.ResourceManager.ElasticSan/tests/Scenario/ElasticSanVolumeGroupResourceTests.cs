@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Resources;
@@ -64,14 +65,14 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             string volumeGroupName = Recording.GenerateAssetName("testvolgroup-");
             ElasticSanVolumeGroupResource volGroup = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName, new ElasticSanVolumeGroupData())).Value;
 
-            ElasticSanElasticSanVolumeGroupPatch patch = new ElasticSanElasticSanVolumeGroupPatch()
+            ElasticSanVolumeGroupPatch patch = new ElasticSanVolumeGroupPatch()
             {
                 ProtocolType = StorageTargetType.Iscsi,
                 Encryption = ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey
             };
             patch.Tags.Add("tag1", "value1");
-            string vnetResourceId = "/subscriptions/" + DefaultSubscription.Data.Id.Name + "/resourceGroups/" + ResourceGroupName + "/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/subnet1";
-            patch.VirtualNetworkRules.Add(new VirtualNetworkRule(vnetResourceId));
+            var vnetResourceId = new ResourceIdentifier("/subscriptions/" + DefaultSubscription.Data.Id.Name + "/resourceGroups/" + ResourceGroupName + "/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/subnet1");
+            patch.VirtualNetworkRules.Add(new ElasticSanVirtualNetworkRule(vnetResourceId));
 
             ElasticSanVolumeGroupResource volGroup1 = (await volGroup.UpdateAsync(WaitUntil.Completed, patch)).Value;
             Assert.AreEqual(volumeGroupName, volGroup1.Id.Name);

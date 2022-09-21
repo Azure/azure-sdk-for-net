@@ -11,13 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
-    public partial class SourceCreationData : IUtf8JsonSerializable
+    public partial class ElasticSanVolumeDataSourceInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("createSource");
-            writer.WriteStringValue(CreateSource.ToString());
+            if (Optional.IsDefined(CreateSource))
+            {
+                writer.WritePropertyName("createSource");
+                writer.WriteStringValue(CreateSource.Value.ToString());
+            }
             if (Optional.IsDefined(SourceUri))
             {
                 writer.WritePropertyName("sourceUri");
@@ -26,14 +29,19 @@ namespace Azure.ResourceManager.ElasticSan.Models
             writer.WriteEndObject();
         }
 
-        internal static SourceCreationData DeserializeSourceCreationData(JsonElement element)
+        internal static ElasticSanVolumeDataSourceInfo DeserializeElasticSanVolumeDataSourceInfo(JsonElement element)
         {
-            ElasticSanVolumeCreateOption createSource = default;
+            Optional<ElasticSanVolumeCreateOption> createSource = default;
             Optional<Uri> sourceUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createSource"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     createSource = new ElasticSanVolumeCreateOption(property.Value.GetString());
                     continue;
                 }
@@ -48,7 +56,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     continue;
                 }
             }
-            return new SourceCreationData(createSource, sourceUri.Value);
+            return new ElasticSanVolumeDataSourceInfo(Optional.ToNullable(createSource), sourceUri.Value);
         }
     }
 }
