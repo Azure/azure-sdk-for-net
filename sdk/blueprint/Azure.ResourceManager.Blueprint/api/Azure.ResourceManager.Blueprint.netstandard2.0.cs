@@ -4,6 +4,16 @@ namespace Azure.ResourceManager.Blueprint
     {
         public ArtifactData() { }
     }
+    public abstract partial class ArtifactResource : Azure.ResourceManager.ArmResource
+    {
+        protected ArtifactResource() { }
+        public virtual Azure.ResourceManager.Blueprint.ArtifactData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public Azure.Response<Azure.ResourceManager.Blueprint.ArtifactResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.ArtifactResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected abstract Azure.Response<Azure.ResourceManager.Blueprint.ArtifactResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected abstract System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.ArtifactResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
     public partial class AssignmentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Blueprint.AssignmentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Blueprint.AssignmentResource>, System.Collections.IEnumerable
     {
         protected AssignmentCollection() { }
@@ -101,17 +111,17 @@ namespace Azure.ResourceManager.Blueprint
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Blueprint.BlueprintArtifactResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Blueprint.BlueprintArtifactResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class BlueprintArtifactResource : Azure.ResourceManager.ArmResource
+    public partial class BlueprintArtifactResource : Azure.ResourceManager.Blueprint.ArtifactResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected BlueprintArtifactResource() { }
-        public virtual Azure.ResourceManager.Blueprint.ArtifactData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceScope, string blueprintName, string artifactName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Blueprint.BlueprintArtifactResource> Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Blueprint.BlueprintArtifactResource>> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Blueprint.BlueprintArtifactResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.BlueprintArtifactResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new Azure.Response<Azure.ResourceManager.Blueprint.BlueprintArtifactResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.BlueprintArtifactResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.Blueprint.ArtifactResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.ArtifactResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Blueprint.BlueprintArtifactResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Blueprint.ArtifactData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Blueprint.BlueprintArtifactResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Blueprint.ArtifactData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -192,15 +202,15 @@ namespace Azure.ResourceManager.Blueprint
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class BlueprintVersionArtifactResource : Azure.ResourceManager.ArmResource
+    public partial class BlueprintVersionArtifactResource : Azure.ResourceManager.Blueprint.ArtifactResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected BlueprintVersionArtifactResource() { }
-        public virtual Azure.ResourceManager.Blueprint.ArtifactData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string resourceScope, string blueprintName, string versionId, string artifactName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new Azure.Response<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.BlueprintVersionArtifactResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.Blueprint.ArtifactResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.ArtifactResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PublishedBlueprintCollection : Azure.ResourceManager.ArmCollection
     {

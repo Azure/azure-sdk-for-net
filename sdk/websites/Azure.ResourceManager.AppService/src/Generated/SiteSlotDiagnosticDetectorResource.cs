@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetSiteSlotDiagnosticDetectorResource method.
     /// Otherwise you can get one from its parent resource <see cref="SiteSlotDiagnosticResource" /> using the GetSiteSlotDiagnosticDetector method.
     /// </summary>
-    public partial class SiteSlotDiagnosticDetectorResource : ArmResource
+    public partial class SiteSlotDiagnosticDetectorResource : DetectorDefinitionResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteSlotDiagnosticDetectorResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string slot, string diagnosticCategory, string detectorName)
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics;
         private readonly DiagnosticsRestOperations _siteSlotDiagnosticDetectorDiagnosticsRestClient;
-        private readonly DetectorDefinitionResourceData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotDiagnosticDetectorResource"/> class for mocking. </summary>
         protected SiteSlotDiagnosticDetectorResource()
@@ -44,10 +43,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotDiagnosticDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotDiagnosticDetectorResource(ArmClient client, DetectorDefinitionResourceData data) : this(client, data.Id)
+        internal SiteSlotDiagnosticDetectorResource(ArmClient client, DetectorDefinitionResourceData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string siteSlotDiagnosticDetectorDiagnosticsApiVersion);
+            _siteSlotDiagnosticDetectorDiagnosticsRestClient = new DiagnosticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteSlotDiagnosticDetectorDiagnosticsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotDiagnosticDetectorResource"/> class. </summary>
@@ -66,21 +69,6 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/slots/diagnostics/detectors";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DetectorDefinitionResourceData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -88,21 +76,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Description for Get Detector
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
         /// Operation Id: Diagnostics_GetSiteDetectorSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SiteSlotDiagnosticDetectorResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<DetectorDefinitionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorResource.Get");
+            using var scope = _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _siteSlotDiagnosticDetectorDiagnosticsRestClient.GetSiteDetectorSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnosticDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,22 +106,49 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: Diagnostics_GetSiteDetectorSlot
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteSlotDiagnosticDetectorResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<SiteSlotDiagnosticDetectorResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SiteSlotDiagnosticDetectorResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Description for Get Detector
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
+        /// Operation Id: Diagnostics_GetSiteDetectorSlot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<DetectorDefinitionResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _siteSlotDiagnosticDetectorDiagnosticsClientDiagnostics.CreateScope("SiteSlotDiagnosticDetectorResource.GetCore");
             scope.Start();
             try
             {
                 var response = _siteSlotDiagnosticDetectorDiagnosticsRestClient.GetSiteDetectorSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteSlotDiagnosticDetectorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Description for Get Detector
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/slots/{slot}/diagnostics/{diagnosticCategory}/detectors/{detectorName}
+        /// Operation Id: Diagnostics_GetSiteDetectorSlot
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<SiteSlotDiagnosticDetectorResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((SiteSlotDiagnosticDetectorResource)value.Value, value.GetRawResponse());
         }
 
         /// <summary>

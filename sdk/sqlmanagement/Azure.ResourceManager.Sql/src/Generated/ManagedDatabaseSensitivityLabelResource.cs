@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql
     /// from an instance of <see cref="ArmClient" /> using the GetManagedDatabaseSensitivityLabelResource method.
     /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseColumnResource" /> using the GetManagedDatabaseSensitivityLabel method.
     /// </summary>
-    public partial class ManagedDatabaseSensitivityLabelResource : ArmResource
+    public partial class ManagedDatabaseSensitivityLabelResource : SensitivityLabelResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedDatabaseSensitivityLabelResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName, string columnName, SensitivityLabelSource sensitivityLabelSource)
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _managedDatabaseSensitivityLabelClientDiagnostics;
         private readonly ManagedDatabaseSensitivityLabelsRestOperations _managedDatabaseSensitivityLabelRestClient;
-        private readonly SensitivityLabelData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseSensitivityLabelResource"/> class for mocking. </summary>
         protected ManagedDatabaseSensitivityLabelResource()
@@ -44,10 +43,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref = "ManagedDatabaseSensitivityLabelResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedDatabaseSensitivityLabelResource(ArmClient client, SensitivityLabelData data) : this(client, data.Id)
+        internal ManagedDatabaseSensitivityLabelResource(ArmClient client, SensitivityLabelData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _managedDatabaseSensitivityLabelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string managedDatabaseSensitivityLabelApiVersion);
+            _managedDatabaseSensitivityLabelRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseSensitivityLabelApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseSensitivityLabelResource"/> class. </summary>
@@ -66,21 +69,6 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/schemas/tables/columns/sensitivityLabels";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SensitivityLabelData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -88,21 +76,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Gets the sensitivity label of a given column
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
         /// Operation Id: ManagedDatabaseSensitivityLabels_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedDatabaseSensitivityLabelResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<SensitivityLabelResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelResource.Get");
+            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _managedDatabaseSensitivityLabelRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name.ToSensitivityLabelSource(), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseSensitivityLabelResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +106,30 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabaseSensitivityLabels_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedDatabaseSensitivityLabelResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<ManagedDatabaseSensitivityLabelResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ManagedDatabaseSensitivityLabelResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Gets the sensitivity label of a given column
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
+        /// Operation Id: ManagedDatabaseSensitivityLabels_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<SensitivityLabelResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelResource.GetCore");
             scope.Start();
             try
             {
                 var response = _managedDatabaseSensitivityLabelRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name.ToSensitivityLabelSource(), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseSensitivityLabelResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,15 +139,29 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// Gets the sensitivity label of a given column
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
+        /// Operation Id: ManagedDatabaseSensitivityLabels_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<ManagedDatabaseSensitivityLabelResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((ManagedDatabaseSensitivityLabelResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Delete
         /// Deletes the sensitivity label of a given column
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
         /// Operation Id: ManagedDatabaseSensitivityLabels_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelResource.Delete");
+            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelResource.DeleteCore");
             scope.Start();
             try
             {
@@ -162,15 +179,16 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// The core implementation for operation Delete
         /// Deletes the sensitivity label of a given column
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
         /// Operation Id: ManagedDatabaseSensitivityLabels_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelResource.Delete");
+            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelResource.DeleteCore");
             scope.Start();
             try
             {
@@ -188,6 +206,7 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// The core implementation for operation Update
         /// Creates or updates the sensitivity label of a given column
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
         /// Operation Id: ManagedDatabaseSensitivityLabels_CreateOrUpdate
@@ -196,16 +215,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The column sensitivity label resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagedDatabaseSensitivityLabelResource>> UpdateAsync(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation<SensitivityLabelResource>> UpdateCoreAsync(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelResource.Update");
+            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelResource.UpdateCore");
             scope.Start();
             try
             {
                 var response = await _managedDatabaseSensitivityLabelRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedDatabaseSensitivityLabelResource>(Response.FromValue(new ManagedDatabaseSensitivityLabelResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<SensitivityLabelResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -226,16 +245,33 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The column sensitivity label resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ManagedDatabaseSensitivityLabelResource> Update(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<ArmOperation<ManagedDatabaseSensitivityLabelResource>> UpdateAsync(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        {
+            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return new SqlArmOperation<ManagedDatabaseSensitivityLabelResource>(Response.FromValue((ManagedDatabaseSensitivityLabelResource)value.Value, value.GetRawResponse()));
+        }
+
+        /// <summary>
+        /// The core implementation for operation Update
+        /// Creates or updates the sensitivity label of a given column
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
+        /// Operation Id: ManagedDatabaseSensitivityLabels_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The column sensitivity label resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        protected override ArmOperation<SensitivityLabelResource> UpdateCore(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelResource.Update");
+            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelResource.UpdateCore");
             scope.Start();
             try
             {
                 var response = _managedDatabaseSensitivityLabelRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedDatabaseSensitivityLabelResource>(Response.FromValue(new ManagedDatabaseSensitivityLabelResource(Client, response), response.GetRawResponse()));
+                var operation = new SqlArmOperation<SensitivityLabelResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -245,6 +281,22 @@ namespace Azure.ResourceManager.Sql
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Creates or updates the sensitivity label of a given column
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
+        /// Operation Id: ManagedDatabaseSensitivityLabels_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The column sensitivity label resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual ArmOperation<ManagedDatabaseSensitivityLabelResource> Update(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        {
+            var value = UpdateCore(waitUntil, data, cancellationToken);
+            return new SqlArmOperation<ManagedDatabaseSensitivityLabelResource>(Response.FromValue((ManagedDatabaseSensitivityLabelResource)value.Value, value.GetRawResponse()));
         }
     }
 }

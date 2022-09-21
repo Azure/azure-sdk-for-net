@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// from an instance of <see cref="ArmClient" /> using the GetApiManagementSubscriptionResource method.
     /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementSubscription method.
     /// </summary>
-    public partial class ApiManagementSubscriptionResource : ArmResource
+    public partial class ApiManagementSubscriptionResource : SubscriptionContractResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementSubscriptionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string sid)
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _apiManagementSubscriptionSubscriptionClientDiagnostics;
         private readonly SubscriptionRestOperations _apiManagementSubscriptionSubscriptionRestClient;
-        private readonly SubscriptionContractData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ApiManagementSubscriptionResource"/> class for mocking. </summary>
         protected ApiManagementSubscriptionResource()
@@ -44,10 +43,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of the <see cref = "ApiManagementSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiManagementSubscriptionResource(ArmClient client, SubscriptionContractData data) : this(client, data.Id)
+        internal ApiManagementSubscriptionResource(ArmClient client, SubscriptionContractData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _apiManagementSubscriptionSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string apiManagementSubscriptionSubscriptionApiVersion);
+            _apiManagementSubscriptionSubscriptionRestClient = new SubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementSubscriptionSubscriptionApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApiManagementSubscriptionResource"/> class. </summary>
@@ -66,21 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/subscriptions";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SubscriptionContractData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -88,21 +76,22 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Gets the specified Subscription entity.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}
         /// Operation Id: Subscription_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiManagementSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<SubscriptionContractResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionResource.Get");
+            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _apiManagementSubscriptionSubscriptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,22 +106,49 @@ namespace Azure.ResourceManager.ApiManagement
         /// Operation Id: Subscription_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiManagementSubscriptionResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<ApiManagementSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ApiManagementSubscriptionResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Gets the specified Subscription entity.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}
+        /// Operation Id: Subscription_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<SubscriptionContractResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiManagementSubscriptionSubscriptionClientDiagnostics.CreateScope("ApiManagementSubscriptionResource.GetCore");
             scope.Start();
             try
             {
                 var response = _apiManagementSubscriptionSubscriptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets the specified Subscription entity.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/subscriptions/{sid}
+        /// Operation Id: Subscription_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<ApiManagementSubscriptionResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((ApiManagementSubscriptionResource)value.Value, value.GetRawResponse());
         }
 
         /// <summary>

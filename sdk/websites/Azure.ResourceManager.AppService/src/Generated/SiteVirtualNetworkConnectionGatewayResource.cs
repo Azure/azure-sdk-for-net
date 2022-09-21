@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetSiteVirtualNetworkConnectionGatewayResource method.
     /// Otherwise you can get one from its parent resource <see cref="SiteVirtualNetworkConnectionResource" /> using the GetSiteVirtualNetworkConnectionGateway method.
     /// </summary>
-    public partial class SiteVirtualNetworkConnectionGatewayResource : ArmResource
+    public partial class SiteVirtualNetworkConnectionGatewayResource : VnetGatewayResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteVirtualNetworkConnectionGatewayResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteVirtualNetworkConnectionGatewayWebAppsRestClient;
-        private readonly VnetGatewayData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteVirtualNetworkConnectionGatewayResource"/> class for mocking. </summary>
         protected SiteVirtualNetworkConnectionGatewayResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteVirtualNetworkConnectionGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteVirtualNetworkConnectionGatewayResource(ArmClient client, VnetGatewayData data) : this(client, data.Id)
+        internal SiteVirtualNetworkConnectionGatewayResource(ArmClient client, VnetGatewayData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string siteVirtualNetworkConnectionGatewayWebAppsApiVersion);
+            _siteVirtualNetworkConnectionGatewayWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteVirtualNetworkConnectionGatewayWebAppsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteVirtualNetworkConnectionGatewayResource"/> class. </summary>
@@ -65,21 +68,6 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/virtualNetworkConnections/gateways";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual VnetGatewayData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -87,21 +75,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Description for Gets an app&apos;s Virtual Network gateway.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
         /// Operation Id: WebApps_GetVnetConnectionGateway
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SiteVirtualNetworkConnectionGatewayResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<VnetGatewayResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayResource.Get");
+            using var scope = _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _siteVirtualNetworkConnectionGatewayWebAppsRestClient.GetVnetConnectionGatewayAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,22 +105,49 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetVnetConnectionGateway
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteVirtualNetworkConnectionGatewayResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<SiteVirtualNetworkConnectionGatewayResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SiteVirtualNetworkConnectionGatewayResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Description for Gets an app&apos;s Virtual Network gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
+        /// Operation Id: WebApps_GetVnetConnectionGateway
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<VnetGatewayResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _siteVirtualNetworkConnectionGatewayWebAppsClientDiagnostics.CreateScope("SiteVirtualNetworkConnectionGatewayResource.GetCore");
             scope.Start();
             try
             {
                 var response = _siteVirtualNetworkConnectionGatewayWebAppsRestClient.GetVnetConnectionGateway(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteVirtualNetworkConnectionGatewayResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Description for Gets an app&apos;s Virtual Network gateway.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}
+        /// Operation Id: WebApps_GetVnetConnectionGateway
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<SiteVirtualNetworkConnectionGatewayResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((SiteVirtualNetworkConnectionGatewayResource)value.Value, value.GetRawResponse());
         }
 
         /// <summary>

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventGrid
     /// from an instance of <see cref="ArmClient" /> using the GetDomainEventSubscriptionResource method.
     /// Otherwise you can get one from its parent resource <see cref="EventGridDomainResource" /> using the GetDomainEventSubscription method.
     /// </summary>
-    public partial class DomainEventSubscriptionResource : ArmResource
+    public partial class DomainEventSubscriptionResource : BaseEventSubscriptionResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DomainEventSubscriptionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string domainName, string eventSubscriptionName)
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.EventGrid
 
         private readonly ClientDiagnostics _domainEventSubscriptionClientDiagnostics;
         private readonly DomainEventSubscriptionsRestOperations _domainEventSubscriptionRestClient;
-        private readonly EventSubscriptionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DomainEventSubscriptionResource"/> class for mocking. </summary>
         protected DomainEventSubscriptionResource()
@@ -44,10 +43,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of the <see cref = "DomainEventSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DomainEventSubscriptionResource(ArmClient client, EventSubscriptionData data) : this(client, data.Id)
+        internal DomainEventSubscriptionResource(ArmClient client, EventSubscriptionData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _domainEventSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventGrid", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string domainEventSubscriptionApiVersion);
+            _domainEventSubscriptionRestClient = new DomainEventSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, domainEventSubscriptionApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="DomainEventSubscriptionResource"/> class. </summary>
@@ -66,21 +69,6 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.EventGrid/domains/eventSubscriptions";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual EventSubscriptionData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -88,21 +76,22 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Get properties of an event subscription of a domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: DomainEventSubscriptions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DomainEventSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseEventSubscriptionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.Get");
+            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _domainEventSubscriptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DomainEventSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +106,30 @@ namespace Azure.ResourceManager.EventGrid
         /// Operation Id: DomainEventSubscriptions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DomainEventSubscriptionResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<DomainEventSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((DomainEventSubscriptionResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Get properties of an event subscription of a domain.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/eventSubscriptions/{eventSubscriptionName}
+        /// Operation Id: DomainEventSubscriptions_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<BaseEventSubscriptionResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetCore");
             scope.Start();
             try
             {
                 var response = _domainEventSubscriptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DomainEventSubscriptionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,15 +139,29 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
+        /// Get properties of an event subscription of a domain.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/eventSubscriptions/{eventSubscriptionName}
+        /// Operation Id: DomainEventSubscriptions_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<DomainEventSubscriptionResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((DomainEventSubscriptionResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Delete
         /// Delete an existing event subscription for a domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: DomainEventSubscriptions_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.Delete");
+            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.DeleteCore");
             scope.Start();
             try
             {
@@ -162,15 +179,16 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
+        /// The core implementation for operation Delete
         /// Delete an existing event subscription for a domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: DomainEventSubscriptions_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.Delete");
+            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.DeleteCore");
             scope.Start();
             try
             {
@@ -188,6 +206,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
+        /// The core implementation for operation Update
         /// Update an existing event subscription for a topic.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: DomainEventSubscriptions_Update
@@ -196,16 +215,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<DomainEventSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation<BaseEventSubscriptionResource>> UpdateCoreAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.Update");
+            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.UpdateCore");
             scope.Start();
             try
             {
                 var response = await _domainEventSubscriptionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new EventGridArmOperation<DomainEventSubscriptionResource>(new DomainEventSubscriptionOperationSource(Client), _domainEventSubscriptionClientDiagnostics, Pipeline, _domainEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<BaseEventSubscriptionResource>(new BaseEventSubscriptionOperationSource(Client), _domainEventSubscriptionClientDiagnostics, Pipeline, _domainEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -226,16 +245,38 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="patch"> Updated event subscription information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<DomainEventSubscriptionResource> Update(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<ArmOperation<DomainEventSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        {
+            var value = await UpdateCoreAsync(waitUntil, patch, cancellationToken).ConfigureAwait(false);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new EventGridArmOperation<DomainEventSubscriptionResource>(Response.FromValue((DomainEventSubscriptionResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new EventGridArmOperation<DomainEventSubscriptionResource>(new DomainEventSubscriptionOperationSource(Client), _domainEventSubscriptionClientDiagnostics, Pipeline, _domainEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
+        }
+
+        /// <summary>
+        /// The core implementation for operation Update
+        /// Update an existing event subscription for a topic.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/eventSubscriptions/{eventSubscriptionName}
+        /// Operation Id: DomainEventSubscriptions_Update
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Updated event subscription information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        protected override ArmOperation<BaseEventSubscriptionResource> UpdateCore(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.Update");
+            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.UpdateCore");
             scope.Start();
             try
             {
                 var response = _domainEventSubscriptionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new EventGridArmOperation<DomainEventSubscriptionResource>(new DomainEventSubscriptionOperationSource(Client), _domainEventSubscriptionClientDiagnostics, Pipeline, _domainEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                var operation = new EventGridArmOperation<BaseEventSubscriptionResource>(new BaseEventSubscriptionOperationSource(Client), _domainEventSubscriptionClientDiagnostics, Pipeline, _domainEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -248,17 +289,38 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
+        /// Update an existing event subscription for a topic.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/eventSubscriptions/{eventSubscriptionName}
+        /// Operation Id: DomainEventSubscriptions_Update
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="patch"> Updated event subscription information. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual ArmOperation<DomainEventSubscriptionResource> Update(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        {
+            var value = UpdateCore(waitUntil, patch, cancellationToken);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new EventGridArmOperation<DomainEventSubscriptionResource>(Response.FromValue((DomainEventSubscriptionResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new EventGridArmOperation<DomainEventSubscriptionResource>(new DomainEventSubscriptionOperationSource(Client), _domainEventSubscriptionClientDiagnostics, Pipeline, _domainEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
+        }
+
+        /// <summary>
+        /// The core implementation for operation GetDeliveryAttributes
         /// Get all delivery attributes for an event subscription for domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes
         /// Operation Id: DomainEventSubscriptions_GetDeliveryAttributes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesAsync(CancellationToken cancellationToken = default)
+        protected override AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesCoreAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DeliveryAttributeMapping>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetDeliveryAttributes");
+                using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetDeliveryAttributesCore");
                 scope.Start();
                 try
                 {
@@ -275,17 +337,17 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
+        /// The core implementation for operation GetDeliveryAttributes
         /// Get all delivery attributes for an event subscription for domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes
         /// Operation Id: DomainEventSubscriptions_GetDeliveryAttributes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeliveryAttributeMapping> GetDeliveryAttributes(CancellationToken cancellationToken = default)
+        protected override Pageable<DeliveryAttributeMapping> GetDeliveryAttributesCore(CancellationToken cancellationToken = default)
         {
             Page<DeliveryAttributeMapping> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetDeliveryAttributes");
+                using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetDeliveryAttributesCore");
                 scope.Start();
                 try
                 {
@@ -302,14 +364,15 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
+        /// The core implementation for operation GetFullUri
         /// Get the full endpoint URL for an event subscription for domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/eventSubscriptions/{eventSubscriptionName}/getFullUrl
         /// Operation Id: DomainEventSubscriptions_GetFullUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<EventSubscriptionFullUri>> GetFullUriAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<EventSubscriptionFullUri>> GetFullUriCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetFullUri");
+            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetFullUriCore");
             scope.Start();
             try
             {
@@ -324,14 +387,15 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
+        /// The core implementation for operation GetFullUri
         /// Get the full endpoint URL for an event subscription for domain.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/eventSubscriptions/{eventSubscriptionName}/getFullUrl
         /// Operation Id: DomainEventSubscriptions_GetFullUrl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<EventSubscriptionFullUri> GetFullUri(CancellationToken cancellationToken = default)
+        protected override Response<EventSubscriptionFullUri> GetFullUriCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetFullUri");
+            using var scope = _domainEventSubscriptionClientDiagnostics.CreateScope("DomainEventSubscriptionResource.GetFullUriCore");
             scope.Start();
             try
             {

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetSiteDomainOwnershipIdentifierResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteDomainOwnershipIdentifier method.
     /// </summary>
-    public partial class SiteDomainOwnershipIdentifierResource : ArmResource
+    public partial class SiteDomainOwnershipIdentifierResource : IdentifierResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteDomainOwnershipIdentifierResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteDomainOwnershipIdentifierWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteDomainOwnershipIdentifierWebAppsRestClient;
-        private readonly IdentifierData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteDomainOwnershipIdentifierResource"/> class for mocking. </summary>
         protected SiteDomainOwnershipIdentifierResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteDomainOwnershipIdentifierResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteDomainOwnershipIdentifierResource(ArmClient client, IdentifierData data) : this(client, data.Id)
+        internal SiteDomainOwnershipIdentifierResource(ArmClient client, IdentifierData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _siteDomainOwnershipIdentifierWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string siteDomainOwnershipIdentifierWebAppsApiVersion);
+            _siteDomainOwnershipIdentifierWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteDomainOwnershipIdentifierWebAppsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteDomainOwnershipIdentifierResource"/> class. </summary>
@@ -65,21 +68,6 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/domainOwnershipIdentifiers";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual IdentifierData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -87,21 +75,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Description for Get domain ownership identifier for web app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_GetDomainOwnershipIdentifier
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SiteDomainOwnershipIdentifierResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<IdentifierResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierResource.Get");
+            using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _siteDomainOwnershipIdentifierWebAppsRestClient.GetDomainOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +105,30 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetDomainOwnershipIdentifier
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteDomainOwnershipIdentifierResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<SiteDomainOwnershipIdentifierResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SiteDomainOwnershipIdentifierResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Description for Get domain ownership identifier for web app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
+        /// Operation Id: WebApps_GetDomainOwnershipIdentifier
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<IdentifierResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierResource.GetCore");
             scope.Start();
             try
             {
                 var response = _siteDomainOwnershipIdentifierWebAppsRestClient.GetDomainOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,15 +138,29 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Description for Get domain ownership identifier for web app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
+        /// Operation Id: WebApps_GetDomainOwnershipIdentifier
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<SiteDomainOwnershipIdentifierResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((SiteDomainOwnershipIdentifierResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Delete
         /// Description for Deletes a domain ownership identifier for a web app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_DeleteDomainOwnershipIdentifier
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierResource.Delete");
+            using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierResource.DeleteCore");
             scope.Start();
             try
             {
@@ -161,15 +178,16 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// The core implementation for operation Delete
         /// Description for Deletes a domain ownership identifier for a web app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_DeleteDomainOwnershipIdentifier
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierResource.Delete");
+            using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierResource.DeleteCore");
             scope.Start();
             try
             {
@@ -187,6 +205,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// The core implementation for operation Update
         /// Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
         /// Operation Id: WebApps_UpdateDomainOwnershipIdentifier
@@ -194,16 +213,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<SiteDomainOwnershipIdentifierResource>> UpdateAsync(IdentifierData data, CancellationToken cancellationToken = default)
+        protected override async Task<Response<IdentifierResource>> UpdateCoreAsync(IdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierResource.Update");
+            using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierResource.UpdateCore");
             scope.Start();
             try
             {
                 var response = await _siteDomainOwnershipIdentifierWebAppsRestClient.UpdateDomainOwnershipIdentifierAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -220,22 +239,53 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> A JSON representation of the domain ownership properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<SiteDomainOwnershipIdentifierResource> Update(IdentifierData data, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<SiteDomainOwnershipIdentifierResource>> UpdateAsync(IdentifierData data, CancellationToken cancellationToken = default)
+        {
+            var value = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SiteDomainOwnershipIdentifierResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Update
+        /// Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
+        /// Operation Id: WebApps_UpdateDomainOwnershipIdentifier
+        /// </summary>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        protected override Response<IdentifierResource> UpdateCore(IdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierResource.Update");
+            using var scope = _siteDomainOwnershipIdentifierWebAppsClientDiagnostics.CreateScope("SiteDomainOwnershipIdentifierResource.UpdateCore");
             scope.Start();
             try
             {
                 var response = _siteDomainOwnershipIdentifierWebAppsRestClient.UpdateDomainOwnershipIdentifier(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                return Response.FromValue(new SiteDomainOwnershipIdentifierResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Description for Creates a domain ownership identifier for web app, or updates an existing ownership identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/domainOwnershipIdentifiers/{domainOwnershipIdentifierName}
+        /// Operation Id: WebApps_UpdateDomainOwnershipIdentifier
+        /// </summary>
+        /// <param name="data"> A JSON representation of the domain ownership properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual Response<SiteDomainOwnershipIdentifierResource> Update(IdentifierData data, CancellationToken cancellationToken = default)
+        {
+            var value = UpdateCore(data, cancellationToken);
+            return Response.FromValue((SiteDomainOwnershipIdentifierResource)value.Value, value.GetRawResponse());
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -842,17 +843,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionContractData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionContractData> GetProductSubscriptionsAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SubscriptionContractResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SubscriptionContractResource> GetProductSubscriptionsAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SubscriptionContractData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<SubscriptionContractResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _productSubscriptionsClientDiagnostics.CreateScope("ApiManagementProductResource.GetProductSubscriptions");
                 scope.Start();
                 try
                 {
                     var response = await _productSubscriptionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => SubscriptionContractResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -860,14 +861,14 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            async Task<Page<SubscriptionContractData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<SubscriptionContractResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _productSubscriptionsClientDiagnostics.CreateScope("ApiManagementProductResource.GetProductSubscriptions");
                 scope.Start();
                 try
                 {
                     var response = await _productSubscriptionsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => SubscriptionContractResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -887,17 +888,17 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionContractData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionContractData> GetProductSubscriptions(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SubscriptionContractResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SubscriptionContractResource> GetProductSubscriptions(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
-            Page<SubscriptionContractData> FirstPageFunc(int? pageSizeHint)
+            Page<SubscriptionContractResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _productSubscriptionsClientDiagnostics.CreateScope("ApiManagementProductResource.GetProductSubscriptions");
                 scope.Start();
                 try
                 {
                     var response = _productSubscriptionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => SubscriptionContractResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -905,14 +906,14 @@ namespace Azure.ResourceManager.ApiManagement
                     throw;
                 }
             }
-            Page<SubscriptionContractData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<SubscriptionContractResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = _productSubscriptionsClientDiagnostics.CreateScope("ApiManagementProductResource.GetProductSubscriptions");
                 scope.Start();
                 try
                 {
                     var response = _productSubscriptionsRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top, skip, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => SubscriptionContractResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

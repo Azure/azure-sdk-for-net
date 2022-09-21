@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetWebSiteSourceControlResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteSourceControl method.
     /// </summary>
-    public partial class WebSiteSourceControlResource : ArmResource
+    public partial class WebSiteSourceControlResource : SiteSourceControlResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteSourceControlResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _webSiteSourceControlWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _webSiteSourceControlWebAppsRestClient;
-        private readonly SiteSourceControlData _data;
 
         /// <summary> Initializes a new instance of the <see cref="WebSiteSourceControlResource"/> class for mocking. </summary>
         protected WebSiteSourceControlResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "WebSiteSourceControlResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebSiteSourceControlResource(ArmClient client, SiteSourceControlData data) : this(client, data.Id)
+        internal WebSiteSourceControlResource(ArmClient client, SiteSourceControlData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _webSiteSourceControlWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string webSiteSourceControlWebAppsApiVersion);
+            _webSiteSourceControlWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSourceControlWebAppsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="WebSiteSourceControlResource"/> class. </summary>
@@ -65,21 +68,6 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/sourcecontrols";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SiteSourceControlData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -87,21 +75,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Description for Gets the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
         /// Operation Id: WebApps_GetSourceControl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WebSiteSourceControlResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<SiteSourceControlResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.Get");
+            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _webSiteSourceControlWebAppsRestClient.GetSourceControlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSourceControlResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +105,30 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSourceControl
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WebSiteSourceControlResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<WebSiteSourceControlResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((WebSiteSourceControlResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Description for Gets the source control configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
+        /// Operation Id: WebApps_GetSourceControl
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<SiteSourceControlResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.GetCore");
             scope.Start();
             try
             {
                 var response = _webSiteSourceControlWebAppsRestClient.GetSourceControl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteSourceControlResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,6 +138,20 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Description for Gets the source control configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
+        /// Operation Id: WebApps_GetSourceControl
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<WebSiteSourceControlResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((WebSiteSourceControlResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Delete
         /// Description for Deletes the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
         /// Operation Id: WebApps_DeleteSourceControl
@@ -142,9 +159,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string additionalFlags = null, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.Delete");
+            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.DeleteCore");
             scope.Start();
             try
             {
@@ -162,6 +179,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// The core implementation for operation Delete
         /// Description for Deletes the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
         /// Operation Id: WebApps_DeleteSourceControl
@@ -169,9 +187,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="additionalFlags"> The String to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, string additionalFlags = null, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.Delete");
+            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.DeleteCore");
             scope.Start();
             try
             {
@@ -189,6 +207,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// The core implementation for operation Update
         /// Description for Updates the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
         /// Operation Id: WebApps_UpdateSourceControl
@@ -196,16 +215,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<WebSiteSourceControlResource>> UpdateAsync(SiteSourceControlData data, CancellationToken cancellationToken = default)
+        protected override async Task<Response<SiteSourceControlResource>> UpdateCoreAsync(SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.Update");
+            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.UpdateCore");
             scope.Start();
             try
             {
                 var response = await _webSiteSourceControlWebAppsRestClient.UpdateSourceControlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new WebSiteSourceControlResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,16 +241,32 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<WebSiteSourceControlResource> Update(SiteSourceControlData data, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<WebSiteSourceControlResource>> UpdateAsync(SiteSourceControlData data, CancellationToken cancellationToken = default)
+        {
+            var value = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((WebSiteSourceControlResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Update
+        /// Description for Updates the source control configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
+        /// Operation Id: WebApps_UpdateSourceControl
+        /// </summary>
+        /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        protected override Response<SiteSourceControlResource> UpdateCore(SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.Update");
+            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.UpdateCore");
             scope.Start();
             try
             {
                 var response = _webSiteSourceControlWebAppsRestClient.UpdateSourceControl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                return Response.FromValue(new WebSiteSourceControlResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -241,6 +276,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Description for Updates the source control configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
+        /// Operation Id: WebApps_UpdateSourceControl
+        /// </summary>
+        /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual Response<WebSiteSourceControlResource> Update(SiteSourceControlData data, CancellationToken cancellationToken = default)
+        {
+            var value = UpdateCore(data, cancellationToken);
+            return Response.FromValue((WebSiteSourceControlResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation CreateOrUpdate
         /// Description for Updates the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
         /// Operation Id: WebApps_CreateOrUpdateSourceControl
@@ -249,16 +300,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<WebSiteSourceControlResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteSourceControlData data, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation<SiteSourceControlResource>> CreateOrUpdateCoreAsync(WaitUntil waitUntil, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.CreateOrUpdate");
+            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.CreateOrUpdateCore");
             scope.Start();
             try
             {
                 var response = await _webSiteSourceControlWebAppsRestClient.CreateOrUpdateSourceControlAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteSourceControlResource>(new WebSiteSourceControlOperationSource(Client), _webSiteSourceControlWebAppsClientDiagnostics, Pipeline, _webSiteSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<SiteSourceControlResource>(new SiteSourceControlOperationSource(Client), _webSiteSourceControlWebAppsClientDiagnostics, Pipeline, _webSiteSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -279,16 +330,38 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<WebSiteSourceControlResource> CreateOrUpdate(WaitUntil waitUntil, SiteSourceControlData data, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<ArmOperation<WebSiteSourceControlResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteSourceControlData data, CancellationToken cancellationToken = default)
+        {
+            var value = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new AppServiceArmOperation<WebSiteSourceControlResource>(Response.FromValue((WebSiteSourceControlResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new AppServiceArmOperation<WebSiteSourceControlResource>(new WebSiteSourceControlOperationSource(Client), _webSiteSourceControlWebAppsClientDiagnostics, Pipeline, _webSiteSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
+        }
+
+        /// <summary>
+        /// The core implementation for operation CreateOrUpdate
+        /// Description for Updates the source control configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
+        /// Operation Id: WebApps_CreateOrUpdateSourceControl
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        protected override ArmOperation<SiteSourceControlResource> CreateOrUpdateCore(WaitUntil waitUntil, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.CreateOrUpdate");
+            using var scope = _webSiteSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSourceControlResource.CreateOrUpdateCore");
             scope.Start();
             try
             {
                 var response = _webSiteSourceControlWebAppsRestClient.CreateOrUpdateSourceControl(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteSourceControlResource>(new WebSiteSourceControlOperationSource(Client), _webSiteSourceControlWebAppsClientDiagnostics, Pipeline, _webSiteSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<SiteSourceControlResource>(new SiteSourceControlOperationSource(Client), _webSiteSourceControlWebAppsClientDiagnostics, Pipeline, _webSiteSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -298,6 +371,27 @@ namespace Azure.ResourceManager.AppService
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Description for Updates the source control configuration of an app.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/sourcecontrols/web
+        /// Operation Id: WebApps_CreateOrUpdateSourceControl
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> JSON representation of a SiteSourceControl object. See example. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual ArmOperation<WebSiteSourceControlResource> CreateOrUpdate(WaitUntil waitUntil, SiteSourceControlData data, CancellationToken cancellationToken = default)
+        {
+            var value = CreateOrUpdateCore(waitUntil, data, cancellationToken);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new AppServiceArmOperation<WebSiteSourceControlResource>(Response.FromValue((WebSiteSourceControlResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new AppServiceArmOperation<WebSiteSourceControlResource>(new WebSiteSourceControlOperationSource(Client), _webSiteSourceControlWebAppsClientDiagnostics, Pipeline, _webSiteSourceControlWebAppsRestClient.CreateCreateOrUpdateSourceControlRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
         }
     }
 }

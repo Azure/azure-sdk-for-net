@@ -142,20 +142,153 @@ namespace Azure.ResourceManager.PrivateDns
         }
         #endregion
 
-        #region RecordSetResource
+        #region PrivateDnsZoneAResource
         /// <summary>
-        /// Gets an object representing a <see cref="RecordSetResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RecordSetResource.CreateResourceIdentifier" /> to create a <see cref="RecordSetResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PrivateDnsZoneAResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateDnsZoneAResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsZoneAResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RecordSetResource" /> object. </returns>
-        public static RecordSetResource GetRecordSetResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateDnsZoneAResource" /> object. </returns>
+        public static PrivateDnsZoneAResource GetPrivateDnsZoneAResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RecordSetResource.ValidateResourceId(id);
-                return new RecordSetResource(client, id);
+                PrivateDnsZoneAResource.ValidateResourceId(id);
+                return new PrivateDnsZoneAResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region PrivateDnsZoneAAAAResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateDnsZoneAAAAResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateDnsZoneAAAAResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsZoneAAAAResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateDnsZoneAAAAResource" /> object. </returns>
+        public static PrivateDnsZoneAAAAResource GetPrivateDnsZoneAAAAResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                PrivateDnsZoneAAAAResource.ValidateResourceId(id);
+                return new PrivateDnsZoneAAAAResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region PrivateDnsZoneCNAMEResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateDnsZoneCNAMEResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateDnsZoneCNAMEResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsZoneCNAMEResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateDnsZoneCNAMEResource" /> object. </returns>
+        public static PrivateDnsZoneCNAMEResource GetPrivateDnsZoneCNAMEResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                PrivateDnsZoneCNAMEResource.ValidateResourceId(id);
+                return new PrivateDnsZoneCNAMEResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region PrivateDnsZoneMXResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateDnsZoneMXResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateDnsZoneMXResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsZoneMXResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateDnsZoneMXResource" /> object. </returns>
+        public static PrivateDnsZoneMXResource GetPrivateDnsZoneMXResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                PrivateDnsZoneMXResource.ValidateResourceId(id);
+                return new PrivateDnsZoneMXResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region PrivateDnsZonePTRResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateDnsZonePTRResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateDnsZonePTRResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsZonePTRResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateDnsZonePTRResource" /> object. </returns>
+        public static PrivateDnsZonePTRResource GetPrivateDnsZonePTRResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                PrivateDnsZonePTRResource.ValidateResourceId(id);
+                return new PrivateDnsZonePTRResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region PrivateDnsZoneSOAResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateDnsZoneSOAResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateDnsZoneSOAResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsZoneSOAResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateDnsZoneSOAResource" /> object. </returns>
+        public static PrivateDnsZoneSOAResource GetPrivateDnsZoneSOAResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                PrivateDnsZoneSOAResource.ValidateResourceId(id);
+                return new PrivateDnsZoneSOAResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region PrivateDnsZoneSRVResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateDnsZoneSRVResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateDnsZoneSRVResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsZoneSRVResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateDnsZoneSRVResource" /> object. </returns>
+        public static PrivateDnsZoneSRVResource GetPrivateDnsZoneSRVResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                PrivateDnsZoneSRVResource.ValidateResourceId(id);
+                return new PrivateDnsZoneSRVResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region PrivateDnsZoneTXTResource
+        /// <summary>
+        /// Gets an object representing a <see cref="PrivateDnsZoneTXTResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateDnsZoneTXTResource.CreateResourceIdentifier" /> to create a <see cref="PrivateDnsZoneTXTResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateDnsZoneTXTResource" /> object. </returns>
+        public static PrivateDnsZoneTXTResource GetPrivateDnsZoneTXTResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                PrivateDnsZoneTXTResource.ValidateResourceId(id);
+                return new PrivateDnsZoneTXTResource(client, id);
             }
             );
         }

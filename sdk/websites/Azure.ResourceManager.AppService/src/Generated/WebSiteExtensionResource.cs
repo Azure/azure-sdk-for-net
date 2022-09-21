@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetWebSiteExtensionResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteExtension method.
     /// </summary>
-    public partial class WebSiteExtensionResource : ArmResource
+    public partial class WebSiteExtensionResource : SiteExtensionInfoResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteExtensionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string siteExtensionId)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _webSiteExtensionWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _webSiteExtensionWebAppsRestClient;
-        private readonly SiteExtensionInfoData _data;
 
         /// <summary> Initializes a new instance of the <see cref="WebSiteExtensionResource"/> class for mocking. </summary>
         protected WebSiteExtensionResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "WebSiteExtensionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WebSiteExtensionResource(ArmClient client, SiteExtensionInfoData data) : this(client, data.Id)
+        internal WebSiteExtensionResource(ArmClient client, SiteExtensionInfoData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _webSiteExtensionWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string webSiteExtensionWebAppsApiVersion);
+            _webSiteExtensionWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteExtensionWebAppsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="WebSiteExtensionResource"/> class. </summary>
@@ -65,21 +68,6 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/siteextensions";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SiteExtensionInfoData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -87,21 +75,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Description for Get site extension information by its ID for a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_GetSiteExtension
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WebSiteExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<SiteExtensionInfoResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionResource.Get");
+            using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _webSiteExtensionWebAppsRestClient.GetSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteExtensionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +105,30 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSiteExtension
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WebSiteExtensionResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<WebSiteExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((WebSiteExtensionResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Description for Get site extension information by its ID for a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
+        /// Operation Id: WebApps_GetSiteExtension
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<SiteExtensionInfoResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionResource.GetCore");
             scope.Start();
             try
             {
                 var response = _webSiteExtensionWebAppsRestClient.GetSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WebSiteExtensionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,15 +138,29 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Description for Get site extension information by its ID for a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
+        /// Operation Id: WebApps_GetSiteExtension
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<WebSiteExtensionResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((WebSiteExtensionResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Delete
         /// Description for Remove a site extension from a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_DeleteSiteExtension
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionResource.Delete");
+            using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionResource.DeleteCore");
             scope.Start();
             try
             {
@@ -161,15 +178,16 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// The core implementation for operation Delete
         /// Description for Remove a site extension from a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_DeleteSiteExtension
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionResource.Delete");
+            using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionResource.DeleteCore");
             scope.Start();
             try
             {
@@ -187,20 +205,21 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// The core implementation for operation Update
         /// Description for Install site extension on a web site, or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
         /// Operation Id: WebApps_InstallSiteExtension
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<WebSiteExtensionResource>> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation<SiteExtensionInfoResource>> UpdateCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionResource.Update");
+            using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionResource.UpdateCore");
             scope.Start();
             try
             {
                 var response = await _webSiteExtensionWebAppsRestClient.InstallSiteExtensionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSiteExtensionResource>(new WebSiteExtensionOperationSource(Client), _webSiteExtensionWebAppsClientDiagnostics, Pipeline, _webSiteExtensionWebAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<SiteExtensionInfoResource>(new SiteExtensionInfoOperationSource(Client), _webSiteExtensionWebAppsClientDiagnostics, Pipeline, _webSiteExtensionWebAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -219,14 +238,34 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<WebSiteExtensionResource> Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<ArmOperation<WebSiteExtensionResource>> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionResource.Update");
+            var value = await UpdateCoreAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new AppServiceArmOperation<WebSiteExtensionResource>(Response.FromValue((WebSiteExtensionResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new AppServiceArmOperation<WebSiteExtensionResource>(new WebSiteExtensionOperationSource(Client), _webSiteExtensionWebAppsClientDiagnostics, Pipeline, _webSiteExtensionWebAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
+        }
+
+        /// <summary>
+        /// The core implementation for operation Update
+        /// Description for Install site extension on a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
+        /// Operation Id: WebApps_InstallSiteExtension
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override ArmOperation<SiteExtensionInfoResource> UpdateCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using var scope = _webSiteExtensionWebAppsClientDiagnostics.CreateScope("WebSiteExtensionResource.UpdateCore");
             scope.Start();
             try
             {
                 var response = _webSiteExtensionWebAppsRestClient.InstallSiteExtension(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSiteExtensionResource>(new WebSiteExtensionOperationSource(Client), _webSiteExtensionWebAppsClientDiagnostics, Pipeline, _webSiteExtensionWebAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var operation = new AppServiceArmOperation<SiteExtensionInfoResource>(new SiteExtensionInfoOperationSource(Client), _webSiteExtensionWebAppsClientDiagnostics, Pipeline, _webSiteExtensionWebAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -236,6 +275,25 @@ namespace Azure.ResourceManager.AppService
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Description for Install site extension on a web site, or a deployment slot.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/siteextensions/{siteExtensionId}
+        /// Operation Id: WebApps_InstallSiteExtension
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual ArmOperation<WebSiteExtensionResource> Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            var value = UpdateCore(waitUntil, cancellationToken);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new AppServiceArmOperation<WebSiteExtensionResource>(Response.FromValue((WebSiteExtensionResource)value.Value, value.GetRawResponse()));
+            }
+            var operation = new AppServiceArmOperation<WebSiteExtensionResource>(new WebSiteExtensionOperationSource(Client), _webSiteExtensionWebAppsClientDiagnostics, Pipeline, _webSiteExtensionWebAppsRestClient.CreateInstallSiteExtensionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
         }
     }
 }

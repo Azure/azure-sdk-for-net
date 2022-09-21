@@ -145,15 +145,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceFabricManagedClusters.LocationEnvironmentManagedClusterVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.LocationEnvironmentManagedClusterVersionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LocationEnvironmentManagedClusterVersionResource : Azure.ResourceManager.ArmResource
+    public partial class LocationEnvironmentManagedClusterVersionResource : Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterCodeVersionResultResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LocationEnvironmentManagedClusterVersionResource() { }
-        public virtual Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterCodeVersionResultData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterVersionEnvironment environment, string clusterVersion) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.LocationEnvironmentManagedClusterVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.LocationEnvironmentManagedClusterVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.LocationEnvironmentManagedClusterVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.LocationEnvironmentManagedClusterVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterCodeVersionResultResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterCodeVersionResultResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LocationManagedClusterVersionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.LocationManagedClusterVersionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.LocationManagedClusterVersionResource>, System.Collections.IEnumerable
     {
@@ -168,15 +168,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceFabricManagedClusters.LocationManagedClusterVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.LocationManagedClusterVersionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class LocationManagedClusterVersionResource : Azure.ResourceManager.ArmResource
+    public partial class LocationManagedClusterVersionResource : Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterCodeVersionResultResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected LocationManagedClusterVersionResource() { }
-        public virtual Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterCodeVersionResultData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Azure.Core.AzureLocation location, string clusterVersion) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.LocationManagedClusterVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.LocationManagedClusterVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.LocationManagedClusterVersionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.LocationManagedClusterVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterCodeVersionResultResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterCodeVersionResultResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ManagedClusterCodeVersionResultData : Azure.ResourceManager.Models.ResourceData
     {
@@ -184,6 +184,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public string ClusterCodeVersion { get { throw null; } }
         public Azure.ResourceManager.ServiceFabricManagedClusters.Models.OSType? OSType { get { throw null; } }
         public string SupportExpiryUtc { get { throw null; } }
+    }
+    public abstract partial class ManagedClusterCodeVersionResultResource : Azure.ResourceManager.ArmResource
+    {
+        protected ManagedClusterCodeVersionResultResource() { }
+        public virtual Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterCodeVersionResultData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterCodeVersionResultResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterCodeVersionResultResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected abstract Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterCodeVersionResultResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected abstract System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterCodeVersionResultResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public partial class ManagedClusterCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceFabricManagedClusters.ManagedClusterResource>, System.Collections.IEnumerable
     {

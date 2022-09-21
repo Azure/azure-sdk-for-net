@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic
     /// from an instance of <see cref="ArmClient" /> using the GetLogicWorkflowRunOperationResource method.
     /// Otherwise you can get one from its parent resource <see cref="LogicWorkflowRunResource" /> using the GetLogicWorkflowRunOperation method.
     /// </summary>
-    public partial class LogicWorkflowRunOperationResource : ArmResource
+    public partial class LogicWorkflowRunOperationResource : BaseLogicWorkflowRunResource
     {
         /// <summary> Generate the resource identifier of a <see cref="LogicWorkflowRunOperationResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workflowName, string runName, string operationId)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Logic
 
         private readonly ClientDiagnostics _logicWorkflowRunOperationWorkflowRunOperationsClientDiagnostics;
         private readonly WorkflowRunRestOperations _logicWorkflowRunOperationWorkflowRunOperationsRestClient;
-        private readonly LogicWorkflowRunData _data;
 
         /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunOperationResource"/> class for mocking. </summary>
         protected LogicWorkflowRunOperationResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Initializes a new instance of the <see cref = "LogicWorkflowRunOperationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal LogicWorkflowRunOperationResource(ArmClient client, LogicWorkflowRunData data) : this(client, data.Id)
+        internal LogicWorkflowRunOperationResource(ArmClient client, LogicWorkflowRunData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _logicWorkflowRunOperationWorkflowRunOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Logic", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string logicWorkflowRunOperationWorkflowRunOperationsApiVersion);
+            _logicWorkflowRunOperationWorkflowRunOperationsRestClient = new WorkflowRunRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, logicWorkflowRunOperationWorkflowRunOperationsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunOperationResource"/> class. </summary>
@@ -65,21 +68,6 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/operations";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual LogicWorkflowRunData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -87,21 +75,22 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Gets an operation for a run.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/operations/{operationId}
         /// Operation Id: WorkflowRunOperations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LogicWorkflowRunOperationResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseLogicWorkflowRunResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _logicWorkflowRunOperationWorkflowRunOperationsClientDiagnostics.CreateScope("LogicWorkflowRunOperationResource.Get");
+            using var scope = _logicWorkflowRunOperationWorkflowRunOperationsClientDiagnostics.CreateScope("LogicWorkflowRunOperationResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _logicWorkflowRunOperationWorkflowRunOperationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicWorkflowRunOperationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,22 +105,49 @@ namespace Azure.ResourceManager.Logic
         /// Operation Id: WorkflowRunOperations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LogicWorkflowRunOperationResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<LogicWorkflowRunOperationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _logicWorkflowRunOperationWorkflowRunOperationsClientDiagnostics.CreateScope("LogicWorkflowRunOperationResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((LogicWorkflowRunOperationResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Gets an operation for a run.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/operations/{operationId}
+        /// Operation Id: WorkflowRunOperations_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<BaseLogicWorkflowRunResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _logicWorkflowRunOperationWorkflowRunOperationsClientDiagnostics.CreateScope("LogicWorkflowRunOperationResource.GetCore");
             scope.Start();
             try
             {
                 var response = _logicWorkflowRunOperationWorkflowRunOperationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new LogicWorkflowRunOperationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets an operation for a run.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/operations/{operationId}
+        /// Operation Id: WorkflowRunOperations_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<LogicWorkflowRunOperationResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((LogicWorkflowRunOperationResource)value.Value, value.GetRawResponse());
         }
     }
 }

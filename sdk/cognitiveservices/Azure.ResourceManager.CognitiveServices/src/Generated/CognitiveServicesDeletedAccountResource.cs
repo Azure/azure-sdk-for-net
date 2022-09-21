@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CognitiveServices
     /// from an instance of <see cref="ArmClient" /> using the GetCognitiveServicesDeletedAccountResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetCognitiveServicesDeletedAccount method.
     /// </summary>
-    public partial class CognitiveServicesDeletedAccountResource : ArmResource
+    public partial class CognitiveServicesDeletedAccountResource : BaseCognitiveServicesAccountResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CognitiveServicesDeletedAccountResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string resourceGroupName, string accountName)
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.CognitiveServices
 
         private readonly ClientDiagnostics _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics;
         private readonly DeletedAccountsRestOperations _cognitiveServicesDeletedAccountDeletedAccountsRestClient;
-        private readonly CognitiveServicesAccountData _data;
 
         /// <summary> Initializes a new instance of the <see cref="CognitiveServicesDeletedAccountResource"/> class for mocking. </summary>
         protected CognitiveServicesDeletedAccountResource()
@@ -44,10 +43,14 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> Initializes a new instance of the <see cref = "CognitiveServicesDeletedAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CognitiveServicesDeletedAccountResource(ArmClient client, CognitiveServicesAccountData data) : this(client, data.Id)
+        internal CognitiveServicesDeletedAccountResource(ArmClient client, CognitiveServicesAccountData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CognitiveServices", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string cognitiveServicesDeletedAccountDeletedAccountsApiVersion);
+            _cognitiveServicesDeletedAccountDeletedAccountsRestClient = new DeletedAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cognitiveServicesDeletedAccountDeletedAccountsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="CognitiveServicesDeletedAccountResource"/> class. </summary>
@@ -66,21 +69,6 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.CognitiveServices/locations/resourceGroups/deletedAccounts";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual CognitiveServicesAccountData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -88,21 +76,22 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Returns a Cognitive Services account specified by the parameters.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
         /// Operation Id: DeletedAccounts_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CognitiveServicesDeletedAccountResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseCognitiveServicesAccountResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.Get");
+            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _cognitiveServicesDeletedAccountDeletedAccountsRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CognitiveServicesDeletedAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +106,30 @@ namespace Azure.ResourceManager.CognitiveServices
         /// Operation Id: DeletedAccounts_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CognitiveServicesDeletedAccountResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<CognitiveServicesDeletedAccountResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((CognitiveServicesDeletedAccountResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Returns a Cognitive Services account specified by the parameters.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
+        /// Operation Id: DeletedAccounts_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<BaseCognitiveServicesAccountResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.GetCore");
             scope.Start();
             try
             {
                 var response = _cognitiveServicesDeletedAccountDeletedAccountsRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CognitiveServicesDeletedAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,15 +139,29 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
+        /// Returns a Cognitive Services account specified by the parameters.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
+        /// Operation Id: DeletedAccounts_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<CognitiveServicesDeletedAccountResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((CognitiveServicesDeletedAccountResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Delete
         /// Deletes a Cognitive Services account from the resource group. 
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
         /// Operation Id: DeletedAccounts_Purge
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.Delete");
+            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.DeleteCore");
             scope.Start();
             try
             {
@@ -162,15 +179,16 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
+        /// The core implementation for operation Delete
         /// Deletes a Cognitive Services account from the resource group. 
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
         /// Operation Id: DeletedAccounts_Purge
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.Delete");
+            using var scope = _cognitiveServicesDeletedAccountDeletedAccountsClientDiagnostics.CreateScope("CognitiveServicesDeletedAccountResource.DeleteCore");
             scope.Start();
             try
             {

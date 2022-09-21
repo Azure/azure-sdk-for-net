@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql
     /// from an instance of <see cref="ArmClient" /> using the GetManagedDatabaseTableResource method.
     /// Otherwise you can get one from its parent resource <see cref="ManagedDatabaseSchemaResource" /> using the GetManagedDatabaseTable method.
     /// </summary>
-    public partial class ManagedDatabaseTableResource : ArmResource
+    public partial class ManagedDatabaseTableResource : DatabaseTableResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ManagedDatabaseTableResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, string schemaName, string tableName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _managedDatabaseTableClientDiagnostics;
         private readonly ManagedDatabaseTablesRestOperations _managedDatabaseTableRestClient;
-        private readonly DatabaseTableData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseTableResource"/> class for mocking. </summary>
         protected ManagedDatabaseTableResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref = "ManagedDatabaseTableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ManagedDatabaseTableResource(ArmClient client, DatabaseTableData data) : this(client, data.Id)
+        internal ManagedDatabaseTableResource(ArmClient client, DatabaseTableData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _managedDatabaseTableClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string managedDatabaseTableApiVersion);
+            _managedDatabaseTableRestClient = new ManagedDatabaseTablesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseTableApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseTableResource"/> class. </summary>
@@ -64,21 +67,6 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/databases/schemas/tables";
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DatabaseTableData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -124,21 +112,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Get managed database table
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
         /// Operation Id: ManagedDatabaseTables_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedDatabaseTableResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<DatabaseTableResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseTableClientDiagnostics.CreateScope("ManagedDatabaseTableResource.Get");
+            using var scope = _managedDatabaseTableClientDiagnostics.CreateScope("ManagedDatabaseTableResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _managedDatabaseTableRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseTableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,22 +142,49 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: ManagedDatabaseTables_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedDatabaseTableResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<ManagedDatabaseTableResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseTableClientDiagnostics.CreateScope("ManagedDatabaseTableResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ManagedDatabaseTableResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Get managed database table
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
+        /// Operation Id: ManagedDatabaseTables_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<DatabaseTableResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedDatabaseTableClientDiagnostics.CreateScope("ManagedDatabaseTableResource.GetCore");
             scope.Start();
             try
             {
                 var response = _managedDatabaseTableRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ManagedDatabaseTableResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get managed database table
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}
+        /// Operation Id: ManagedDatabaseTables_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<ManagedDatabaseTableResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((ManagedDatabaseTableResource)value.Value, value.GetRawResponse());
         }
     }
 }

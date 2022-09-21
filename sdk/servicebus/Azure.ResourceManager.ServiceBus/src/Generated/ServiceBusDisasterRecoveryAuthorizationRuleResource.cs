@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ServiceBus
     /// from an instance of <see cref="ArmClient" /> using the GetServiceBusDisasterRecoveryAuthorizationRuleResource method.
     /// Otherwise you can get one from its parent resource <see cref="ServiceBusDisasterRecoveryResource" /> using the GetServiceBusDisasterRecoveryAuthorizationRule method.
     /// </summary>
-    public partial class ServiceBusDisasterRecoveryAuthorizationRuleResource : ArmResource
+    public partial class ServiceBusDisasterRecoveryAuthorizationRuleResource : ServiceBusAuthorizationRuleResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string namespaceName, string @alias, string authorizationRuleName)
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.ServiceBus
 
         private readonly ClientDiagnostics _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics;
         private readonly DisasterRecoveryAuthorizationRulesRestOperations _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient;
-        private readonly ServiceBusAuthorizationRuleData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> class for mocking. </summary>
         protected ServiceBusDisasterRecoveryAuthorizationRuleResource()
@@ -44,10 +43,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Initializes a new instance of the <see cref = "ServiceBusDisasterRecoveryAuthorizationRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServiceBusDisasterRecoveryAuthorizationRuleResource(ArmClient client, ServiceBusAuthorizationRuleData data) : this(client, data.Id)
+        internal ServiceBusDisasterRecoveryAuthorizationRuleResource(ArmClient client, ServiceBusAuthorizationRuleData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceBus", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesApiVersion);
+            _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient = new DisasterRecoveryAuthorizationRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource"/> class. </summary>
@@ -66,21 +69,6 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceBus/namespaces/disasterRecoveryConfigs/authorizationRules";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ServiceBusAuthorizationRuleData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -88,21 +76,22 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Gets an authorization rule for a namespace by rule name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
         /// Operation Id: DisasterRecoveryAuthorizationRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceBusDisasterRecoveryAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<ServiceBusAuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.Get");
+            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +106,30 @@ namespace Azure.ResourceManager.ServiceBus
         /// Operation Id: DisasterRecoveryAuthorizationRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceBusDisasterRecoveryAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<ServiceBusDisasterRecoveryAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ServiceBusDisasterRecoveryAuthorizationRuleResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Gets an authorization rule for a namespace by rule name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
+        /// Operation Id: DisasterRecoveryAuthorizationRules_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<ServiceBusAuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.GetCore");
             scope.Start();
             try
             {
                 var response = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceBusDisasterRecoveryAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,14 +139,28 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
+        /// Gets an authorization rule for a namespace by rule name.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
+        /// Operation Id: DisasterRecoveryAuthorizationRules_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<ServiceBusDisasterRecoveryAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((ServiceBusDisasterRecoveryAuthorizationRuleResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation GetKeys
         /// Gets the primary and secondary connection strings for the namespace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}/listKeys
         /// Operation Id: DisasterRecoveryAuthorizationRules_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceBusAccessKeys>> GetKeysAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<ServiceBusAccessKeys>> GetKeysCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.GetKeys");
+            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.GetKeysCore");
             scope.Start();
             try
             {
@@ -158,14 +175,15 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
+        /// The core implementation for operation GetKeys
         /// Gets the primary and secondary connection strings for the namespace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}/listKeys
         /// Operation Id: DisasterRecoveryAuthorizationRules_ListKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceBusAccessKeys> GetKeys(CancellationToken cancellationToken = default)
+        protected override Response<ServiceBusAccessKeys> GetKeysCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.GetKeys");
+            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.GetKeysCore");
             scope.Start();
             try
             {

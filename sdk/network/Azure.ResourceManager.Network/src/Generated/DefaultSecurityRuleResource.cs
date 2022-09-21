@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network
     /// from an instance of <see cref="ArmClient" /> using the GetDefaultSecurityRuleResource method.
     /// Otherwise you can get one from its parent resource <see cref="NetworkSecurityGroupResource" /> using the GetDefaultSecurityRule method.
     /// </summary>
-    public partial class DefaultSecurityRuleResource : ArmResource
+    public partial class DefaultSecurityRuleResource : BaseSecurityRuleResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DefaultSecurityRuleResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkSecurityGroupName, string defaultSecurityRuleName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Network
 
         private readonly ClientDiagnostics _defaultSecurityRuleClientDiagnostics;
         private readonly DefaultSecurityRulesRestOperations _defaultSecurityRuleRestClient;
-        private readonly SecurityRuleData _data;
 
         /// <summary> Initializes a new instance of the <see cref="DefaultSecurityRuleResource"/> class for mocking. </summary>
         protected DefaultSecurityRuleResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of the <see cref = "DefaultSecurityRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DefaultSecurityRuleResource(ArmClient client, SecurityRuleData data) : this(client, data.Id)
+        internal DefaultSecurityRuleResource(ArmClient client, SecurityRuleData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _defaultSecurityRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string defaultSecurityRuleApiVersion);
+            _defaultSecurityRuleRestClient = new DefaultSecurityRulesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, defaultSecurityRuleApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="DefaultSecurityRuleResource"/> class. </summary>
@@ -65,21 +68,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Network/networkSecurityGroups/defaultSecurityRules";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SecurityRuleData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -87,21 +75,22 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Get the specified default network security rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}
         /// Operation Id: DefaultSecurityRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DefaultSecurityRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseSecurityRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleResource.Get");
+            using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _defaultSecurityRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DefaultSecurityRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,22 +105,49 @@ namespace Azure.ResourceManager.Network
         /// Operation Id: DefaultSecurityRules_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DefaultSecurityRuleResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<DefaultSecurityRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((DefaultSecurityRuleResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Get the specified default network security rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}
+        /// Operation Id: DefaultSecurityRules_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<BaseSecurityRuleResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleResource.GetCore");
             scope.Start();
             try
             {
                 var response = _defaultSecurityRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new DefaultSecurityRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get the specified default network security rule.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}
+        /// Operation Id: DefaultSecurityRules_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<DefaultSecurityRuleResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((DefaultSecurityRuleResource)value.Value, value.GetRawResponse());
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -120,17 +121,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LongTermRetentionBackupResource> GetLongTermRetentionBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<LongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<LongTermRetentionBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithLocation");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionBackupsRestClient.ListByResourceGroupLocationAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => LongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -138,14 +139,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<LongTermRetentionBackupData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<LongTermRetentionBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithLocation");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionBackupsRestClient.ListByResourceGroupLocationNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => LongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -165,17 +166,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LongTermRetentionBackupResource> GetLongTermRetentionBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Page<LongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
+            Page<LongTermRetentionBackupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithLocation");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionBackupsRestClient.ListByResourceGroupLocation(Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => LongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -183,14 +184,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<LongTermRetentionBackupData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<LongTermRetentionBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithLocation");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionBackupsRestClient.ListByResourceGroupLocationNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => LongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -211,17 +212,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="LongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LongTermRetentionBackupResource> GetLongTermRetentionBackupsWithServerAsync(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<LongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<LongTermRetentionBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithServer");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionBackupsRestClient.ListByResourceGroupServerAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => LongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,14 +230,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<LongTermRetentionBackupData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<LongTermRetentionBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithServer");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionBackupsRestClient.ListByResourceGroupServerNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => LongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -257,17 +258,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LongTermRetentionBackupData> GetLongTermRetentionBackupsWithServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="LongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LongTermRetentionBackupResource> GetLongTermRetentionBackupsWithServer(AzureLocation locationName, string longTermRetentionServerName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Page<LongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
+            Page<LongTermRetentionBackupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithServer");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionBackupsRestClient.ListByResourceGroupServer(Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => LongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -275,14 +276,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<LongTermRetentionBackupData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<LongTermRetentionBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionBackupsWithServer");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionBackupsRestClient.ListByResourceGroupServerNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, longTermRetentionServerName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => LongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -303,17 +304,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupResource> GetLongTermRetentionManagedInstanceBackupsWithInstanceAsync(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedInstanceLongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagedInstanceLongTermRetentionBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupInstanceAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => ManagedInstanceLongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -321,14 +322,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ManagedInstanceLongTermRetentionBackupData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagedInstanceLongTermRetentionBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupInstanceNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => ManagedInstanceLongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -349,17 +350,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedInstanceLongTermRetentionBackupResource> GetLongTermRetentionManagedInstanceBackupsWithInstance(AzureLocation locationName, string managedInstanceName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedInstanceLongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
+            Page<ManagedInstanceLongTermRetentionBackupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupInstance(Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => ManagedInstanceLongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -367,14 +368,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ManagedInstanceLongTermRetentionBackupData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagedInstanceLongTermRetentionBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithInstance");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupInstanceNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, managedInstanceName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => ManagedInstanceLongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -394,17 +395,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagedInstanceLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagedInstanceLongTermRetentionBackupResource> GetLongTermRetentionManagedInstanceBackupsWithLocationAsync(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedInstanceLongTermRetentionBackupData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ManagedInstanceLongTermRetentionBackupResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupLocationAsync(Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => ManagedInstanceLongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -412,14 +413,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<ManagedInstanceLongTermRetentionBackupData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ManagedInstanceLongTermRetentionBackupResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation");
                 scope.Start();
                 try
                 {
                     var response = await LongTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupLocationNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => ManagedInstanceLongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -439,17 +440,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="onlyLatestPerDatabase"> Whether or not to only get the latest backup for each database. </param>
         /// <param name="databaseState"> Whether to query against just live databases, just deleted databases, or all databases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedInstanceLongTermRetentionBackupData> GetLongTermRetentionManagedInstanceBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagedInstanceLongTermRetentionBackupResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagedInstanceLongTermRetentionBackupResource> GetLongTermRetentionManagedInstanceBackupsWithLocation(AzureLocation locationName, bool? onlyLatestPerDatabase = null, SqlDatabaseState? databaseState = null, CancellationToken cancellationToken = default)
         {
-            Page<ManagedInstanceLongTermRetentionBackupData> FirstPageFunc(int? pageSizeHint)
+            Page<ManagedInstanceLongTermRetentionBackupResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupLocation(Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => ManagedInstanceLongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -457,14 +458,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<ManagedInstanceLongTermRetentionBackupData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ManagedInstanceLongTermRetentionBackupResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = LongTermRetentionManagedInstanceBackupsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetLongTermRetentionManagedInstanceBackupsWithLocation");
                 scope.Start();
                 try
                 {
                     var response = LongTermRetentionManagedInstanceBackupsRestClient.ListByResourceGroupLocationNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, locationName, onlyLatestPerDatabase, databaseState, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => ManagedInstanceLongTermRetentionBackupResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

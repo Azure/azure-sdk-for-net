@@ -683,9 +683,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<EventGridPrivateEndpointConnectionData>> GetEventGridTopicPrivateEndpointConnectionAsync(this ResourceGroupResource resourceGroupResource, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EventGridTopicPrivateEndpointConnectionResource>> GetEventGridTopicPrivateEndpointConnectionAsync(this ResourceGroupResource resourceGroupResource, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetEventGridTopicPrivateEndpointConnections(parentName).GetAsync(parentName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetEventGridTopicPrivateEndpointConnections(parentName).GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -700,9 +700,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<EventGridPrivateEndpointConnectionData> GetEventGridTopicPrivateEndpointConnection(this ResourceGroupResource resourceGroupResource, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public static Response<EventGridTopicPrivateEndpointConnectionResource> GetEventGridTopicPrivateEndpointConnection(this ResourceGroupResource resourceGroupResource, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetEventGridTopicPrivateEndpointConnections(parentName).Get(parentName, privateEndpointConnectionName, cancellationToken);
+            return resourceGroupResource.GetEventGridTopicPrivateEndpointConnections(parentName).Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EventGridDomainPrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
@@ -730,9 +730,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<EventGridPrivateEndpointConnectionData>> GetEventGridDomainPrivateEndpointConnectionAsync(this ResourceGroupResource resourceGroupResource, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EventGridDomainPrivateEndpointConnectionResource>> GetEventGridDomainPrivateEndpointConnectionAsync(this ResourceGroupResource resourceGroupResource, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetEventGridDomainPrivateEndpointConnections(parentName).GetAsync(parentName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetEventGridDomainPrivateEndpointConnections(parentName).GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -747,9 +747,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<EventGridPrivateEndpointConnectionData> GetEventGridDomainPrivateEndpointConnection(this ResourceGroupResource resourceGroupResource, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public static Response<EventGridDomainPrivateEndpointConnectionResource> GetEventGridDomainPrivateEndpointConnection(this ResourceGroupResource resourceGroupResource, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetEventGridDomainPrivateEndpointConnections(parentName).Get(parentName, privateEndpointConnectionName, cancellationToken);
+            return resourceGroupResource.GetEventGridDomainPrivateEndpointConnections(parentName).Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EventGridPartnerNamespacePrivateEndpointConnectionResources in the ResourceGroupResource. </summary>
@@ -777,9 +777,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<EventGridPrivateEndpointConnectionData>> GetEventGridPartnerNamespacePrivateEndpointConnectionAsync(this ResourceGroupResource resourceGroupResource, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EventGridPartnerNamespacePrivateEndpointConnectionResource>> GetEventGridPartnerNamespacePrivateEndpointConnectionAsync(this ResourceGroupResource resourceGroupResource, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetEventGridPartnerNamespacePrivateEndpointConnections(parentName).GetAsync(parentName, privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetEventGridPartnerNamespacePrivateEndpointConnections(parentName).GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -794,9 +794,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateEndpointConnectionName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<EventGridPrivateEndpointConnectionData> GetEventGridPartnerNamespacePrivateEndpointConnection(this ResourceGroupResource resourceGroupResource, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public static Response<EventGridPartnerNamespacePrivateEndpointConnectionResource> GetEventGridPartnerNamespacePrivateEndpointConnection(this ResourceGroupResource resourceGroupResource, string parentName, string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetEventGridPartnerNamespacePrivateEndpointConnections(parentName).Get(parentName, privateEndpointConnectionName, cancellationToken);
+            return resourceGroupResource.GetEventGridPartnerNamespacePrivateEndpointConnections(parentName).Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EventGridTopicPrivateLinkResources in the ResourceGroupResource. </summary>
@@ -824,9 +824,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<EventGridPrivateLinkResourceData>> GetEventGridTopicPrivateLinkResourceAsync(this ResourceGroupResource resourceGroupResource, string parentName, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EventGridTopicPrivateLinkResource>> GetEventGridTopicPrivateLinkResourceAsync(this ResourceGroupResource resourceGroupResource, string parentName, string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetEventGridTopicPrivateLinkResources(parentName).GetAsync(parentName, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetEventGridTopicPrivateLinkResources(parentName).GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -841,9 +841,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<EventGridPrivateLinkResourceData> GetEventGridTopicPrivateLinkResource(this ResourceGroupResource resourceGroupResource, string parentName, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public static Response<EventGridTopicPrivateLinkResource> GetEventGridTopicPrivateLinkResource(this ResourceGroupResource resourceGroupResource, string parentName, string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetEventGridTopicPrivateLinkResources(parentName).Get(parentName, privateLinkResourceName, cancellationToken);
+            return resourceGroupResource.GetEventGridTopicPrivateLinkResources(parentName).Get(privateLinkResourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of EventGridDomainPrivateLinkResources in the ResourceGroupResource. </summary>
@@ -871,9 +871,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<EventGridPrivateLinkResourceData>> GetEventGridDomainPrivateLinkResourceAsync(this ResourceGroupResource resourceGroupResource, string parentName, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<EventGridDomainPrivateLinkResource>> GetEventGridDomainPrivateLinkResourceAsync(this ResourceGroupResource resourceGroupResource, string parentName, string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetEventGridDomainPrivateLinkResources(parentName).GetAsync(parentName, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetEventGridDomainPrivateLinkResources(parentName).GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -888,9 +888,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<EventGridPrivateLinkResourceData> GetEventGridDomainPrivateLinkResource(this ResourceGroupResource resourceGroupResource, string parentName, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public static Response<EventGridDomainPrivateLinkResource> GetEventGridDomainPrivateLinkResource(this ResourceGroupResource resourceGroupResource, string parentName, string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetEventGridDomainPrivateLinkResources(parentName).Get(parentName, privateLinkResourceName, cancellationToken);
+            return resourceGroupResource.GetEventGridDomainPrivateLinkResources(parentName).Get(privateLinkResourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PartnerNamespacePrivateLinkResources in the ResourceGroupResource. </summary>
@@ -918,9 +918,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<EventGridPrivateLinkResourceData>> GetPartnerNamespacePrivateLinkResourceAsync(this ResourceGroupResource resourceGroupResource, string parentName, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<PartnerNamespacePrivateLinkResource>> GetPartnerNamespacePrivateLinkResourceAsync(this ResourceGroupResource resourceGroupResource, string parentName, string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetPartnerNamespacePrivateLinkResources(parentName).GetAsync(parentName, privateLinkResourceName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetPartnerNamespacePrivateLinkResources(parentName).GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -935,9 +935,9 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentException"> <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="parentName"/> or <paramref name="privateLinkResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<EventGridPrivateLinkResourceData> GetPartnerNamespacePrivateLinkResource(this ResourceGroupResource resourceGroupResource, string parentName, string privateLinkResourceName, CancellationToken cancellationToken = default)
+        public static Response<PartnerNamespacePrivateLinkResource> GetPartnerNamespacePrivateLinkResource(this ResourceGroupResource resourceGroupResource, string parentName, string privateLinkResourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetPartnerNamespacePrivateLinkResources(parentName).Get(parentName, privateLinkResourceName, cancellationToken);
+            return resourceGroupResource.GetPartnerNamespacePrivateLinkResources(parentName).Get(privateLinkResourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of SystemTopicResources in the ResourceGroupResource. </summary>

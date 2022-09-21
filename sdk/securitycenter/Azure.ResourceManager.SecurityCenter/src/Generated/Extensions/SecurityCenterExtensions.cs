@@ -755,8 +755,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityTaskData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SecurityTaskData> GetTasksAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="SecurityTaskResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SecurityTaskResource> GetTasksAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetTasksAsync(filter, cancellationToken);
         }
@@ -769,8 +769,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityTaskData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SecurityTaskData> GetTasks(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SecurityTaskResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SecurityTaskResource> GetTasks(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetTasks(filter, cancellationToken);
         }
@@ -1074,8 +1074,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AlertData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AlertData> GetAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AlertResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AlertResource> GetAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAlertsAsync(cancellationToken);
         }
@@ -1087,8 +1087,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AlertData> GetAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AlertResource> GetAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetAlerts(cancellationToken);
         }
@@ -1901,8 +1901,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AlertData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AlertData> GetAlertsByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AlertResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AlertResource> GetAlertsByResourceGroupAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetAlertsByResourceGroupAsync(cancellationToken);
         }
@@ -1914,8 +1914,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AlertData> GetAlertsByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AlertResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AlertResource> GetAlertsByResourceGroup(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetAlertsByResourceGroup(cancellationToken);
         }

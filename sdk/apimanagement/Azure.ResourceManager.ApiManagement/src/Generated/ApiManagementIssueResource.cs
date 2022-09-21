@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// from an instance of <see cref="ArmClient" /> using the GetApiManagementIssueResource method.
     /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementIssue method.
     /// </summary>
-    public partial class ApiManagementIssueResource : ArmResource
+    public partial class ApiManagementIssueResource : IssueContractResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementIssueResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string issueId)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _apiManagementIssueIssueClientDiagnostics;
         private readonly IssueRestOperations _apiManagementIssueIssueRestClient;
-        private readonly IssueContractData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ApiManagementIssueResource"/> class for mocking. </summary>
         protected ApiManagementIssueResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of the <see cref = "ApiManagementIssueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiManagementIssueResource(ArmClient client, IssueContractData data) : this(client, data.Id)
+        internal ApiManagementIssueResource(ArmClient client, IssueContractData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _apiManagementIssueIssueClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string apiManagementIssueIssueApiVersion);
+            _apiManagementIssueIssueRestClient = new IssueRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementIssueIssueApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApiManagementIssueResource"/> class. </summary>
@@ -64,21 +67,6 @@ namespace Azure.ResourceManager.ApiManagement
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/issues";
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual IssueContractData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {

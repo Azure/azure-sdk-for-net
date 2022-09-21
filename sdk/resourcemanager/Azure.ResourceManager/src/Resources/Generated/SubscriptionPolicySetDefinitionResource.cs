@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Resources
     /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionPolicySetDefinitionResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionPolicySetDefinition method.
     /// </summary>
-    public partial class SubscriptionPolicySetDefinitionResource : ArmResource
+    public partial class SubscriptionPolicySetDefinitionResource : PolicySetDefinitionResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SubscriptionPolicySetDefinitionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string policySetDefinitionName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Resources
 
         private readonly ClientDiagnostics _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics;
         private readonly PolicySetDefinitionsRestOperations _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient;
-        private readonly PolicySetDefinitionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicySetDefinitionResource"/> class for mocking. </summary>
         protected SubscriptionPolicySetDefinitionResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Initializes a new instance of the <see cref = "SubscriptionPolicySetDefinitionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SubscriptionPolicySetDefinitionResource(ArmClient client, PolicySetDefinitionData data) : this(client, data.Id)
+        internal SubscriptionPolicySetDefinitionResource(ArmClient client, PolicySetDefinitionData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string subscriptionPolicySetDefinitionPolicySetDefinitionsApiVersion);
+            _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient = new PolicySetDefinitionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionPolicySetDefinitionPolicySetDefinitionsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicySetDefinitionResource"/> class. </summary>
@@ -65,21 +68,6 @@ namespace Azure.ResourceManager.Resources
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Authorization/policySetDefinitions";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PolicySetDefinitionData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -87,21 +75,22 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// This operation retrieves the policy set definition in the given subscription with the given name.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SubscriptionPolicySetDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<PolicySetDefinitionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResource.Get");
+            using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(PolicySetDefinitionResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,22 +105,49 @@ namespace Azure.ResourceManager.Resources
         /// Operation Id: PolicySetDefinitions_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SubscriptionPolicySetDefinitionResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<SubscriptionPolicySetDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SubscriptionPolicySetDefinitionResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// This operation retrieves the policy set definition in the given subscription with the given name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
+        /// Operation Id: PolicySetDefinitions_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<PolicySetDefinitionResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _subscriptionPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionResource.GetCore");
             scope.Start();
             try
             {
                 var response = _subscriptionPolicySetDefinitionPolicySetDefinitionsRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionPolicySetDefinitionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(PolicySetDefinitionResource.GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// This operation retrieves the policy set definition in the given subscription with the given name.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
+        /// Operation Id: PolicySetDefinitions_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<SubscriptionPolicySetDefinitionResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((SubscriptionPolicySetDefinitionResource)value.Value, value.GetRawResponse());
         }
 
         /// <summary>

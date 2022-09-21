@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Sql
     /// from an instance of <see cref="ArmClient" /> using the GetSqlDatabaseSchemaResource method.
     /// Otherwise you can get one from its parent resource <see cref="SqlDatabaseResource" /> using the GetSqlDatabaseSchema method.
     /// </summary>
-    public partial class SqlDatabaseSchemaResource : ArmResource
+    public partial class SqlDatabaseSchemaResource : DatabaseSchemaResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SqlDatabaseSchemaResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string schemaName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics;
         private readonly DatabaseSchemasRestOperations _sqlDatabaseSchemaDatabaseSchemasRestClient;
-        private readonly DatabaseSchemaData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SqlDatabaseSchemaResource"/> class for mocking. </summary>
         protected SqlDatabaseSchemaResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref = "SqlDatabaseSchemaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlDatabaseSchemaResource(ArmClient client, DatabaseSchemaData data) : this(client, data.Id)
+        internal SqlDatabaseSchemaResource(ArmClient client, DatabaseSchemaData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string sqlDatabaseSchemaDatabaseSchemasApiVersion);
+            _sqlDatabaseSchemaDatabaseSchemasRestClient = new DatabaseSchemasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseSchemaDatabaseSchemasApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SqlDatabaseSchemaResource"/> class. </summary>
@@ -64,21 +67,6 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/schemas";
-
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DatabaseSchemaData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
@@ -124,21 +112,22 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Get database schema
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}
         /// Operation Id: DatabaseSchemas_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SqlDatabaseSchemaResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<DatabaseSchemaResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("SqlDatabaseSchemaResource.Get");
+            using var scope = _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("SqlDatabaseSchemaResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _sqlDatabaseSchemaDatabaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabaseSchemaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -153,22 +142,49 @@ namespace Azure.ResourceManager.Sql
         /// Operation Id: DatabaseSchemas_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SqlDatabaseSchemaResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<SqlDatabaseSchemaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("SqlDatabaseSchemaResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SqlDatabaseSchemaResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Get database schema
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}
+        /// Operation Id: DatabaseSchemas_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<DatabaseSchemaResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("SqlDatabaseSchemaResource.GetCore");
             scope.Start();
             try
             {
                 var response = _sqlDatabaseSchemaDatabaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SqlDatabaseSchemaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get database schema
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}
+        /// Operation Id: DatabaseSchemas_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<SqlDatabaseSchemaResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((SqlDatabaseSchemaResource)value.Value, value.GetRawResponse());
         }
     }
 }

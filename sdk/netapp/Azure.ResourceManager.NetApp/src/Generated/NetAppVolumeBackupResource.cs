@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp
     /// from an instance of <see cref="ArmClient" /> using the GetNetAppVolumeBackupResource method.
     /// Otherwise you can get one from its parent resource <see cref="NetAppVolumeResource" /> using the GetNetAppVolumeBackup method.
     /// </summary>
-    public partial class NetAppVolumeBackupResource : ArmResource
+    public partial class NetAppVolumeBackupResource : NetAppBackupResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetAppVolumeBackupResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string poolName, string volumeName, string backupName)
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.NetApp
 
         private readonly ClientDiagnostics _netAppVolumeBackupBackupsClientDiagnostics;
         private readonly BackupsRestOperations _netAppVolumeBackupBackupsRestClient;
-        private readonly NetAppBackupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="NetAppVolumeBackupResource"/> class for mocking. </summary>
         protected NetAppVolumeBackupResource()
@@ -44,10 +43,14 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Initializes a new instance of the <see cref = "NetAppVolumeBackupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal NetAppVolumeBackupResource(ArmClient client, NetAppBackupData data) : this(client, data.Id)
+        internal NetAppVolumeBackupResource(ArmClient client, NetAppBackupData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _netAppVolumeBackupBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string netAppVolumeBackupBackupsApiVersion);
+            _netAppVolumeBackupBackupsRestClient = new BackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppVolumeBackupBackupsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="NetAppVolumeBackupResource"/> class. </summary>
@@ -66,21 +69,6 @@ namespace Azure.ResourceManager.NetApp
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.NetApp/netAppAccounts/capacityPools/volumes/backups";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual NetAppBackupData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -88,21 +76,22 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Gets the specified backup of the volume
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backups/{backupName}
         /// Operation Id: Backups_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NetAppVolumeBackupResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<NetAppBackupResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.Get");
+            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _netAppVolumeBackupBackupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetAppVolumeBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,16 +106,30 @@ namespace Azure.ResourceManager.NetApp
         /// Operation Id: Backups_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NetAppVolumeBackupResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<NetAppVolumeBackupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((NetAppVolumeBackupResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Gets the specified backup of the volume
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backups/{backupName}
+        /// Operation Id: Backups_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<NetAppBackupResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.GetCore");
             scope.Start();
             try
             {
                 var response = _netAppVolumeBackupBackupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new NetAppVolumeBackupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -136,15 +139,29 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
+        /// Gets the specified backup of the volume
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backups/{backupName}
+        /// Operation Id: Backups_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<NetAppVolumeBackupResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((NetAppVolumeBackupResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Delete
         /// Delete a backup of the volume
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backups/{backupName}
         /// Operation Id: Backups_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.Delete");
+            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.DeleteCore");
             scope.Start();
             try
             {
@@ -162,15 +179,16 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
+        /// The core implementation for operation Delete
         /// Delete a backup of the volume
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backups/{backupName}
         /// Operation Id: Backups_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.Delete");
+            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.DeleteCore");
             scope.Start();
             try
             {

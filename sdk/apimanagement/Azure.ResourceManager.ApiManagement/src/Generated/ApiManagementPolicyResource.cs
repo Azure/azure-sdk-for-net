@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement
     /// from an instance of <see cref="ArmClient" /> using the GetApiManagementPolicyResource method.
     /// Otherwise you can get one from its parent resource <see cref="ApiManagementServiceResource" /> using the GetApiManagementPolicy method.
     /// </summary>
-    public partial class ApiManagementPolicyResource : ArmResource
+    public partial class ApiManagementPolicyResource : PolicyContractResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ApiManagementPolicyResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, PolicyName policyId)
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _apiManagementPolicyPolicyClientDiagnostics;
         private readonly PolicyRestOperations _apiManagementPolicyPolicyRestClient;
-        private readonly PolicyContractData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ApiManagementPolicyResource"/> class for mocking. </summary>
         protected ApiManagementPolicyResource()
@@ -44,10 +43,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Initializes a new instance of the <see cref = "ApiManagementPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ApiManagementPolicyResource(ArmClient client, PolicyContractData data) : this(client, data.Id)
+        internal ApiManagementPolicyResource(ArmClient client, PolicyContractData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _apiManagementPolicyPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string apiManagementPolicyPolicyApiVersion);
+            _apiManagementPolicyPolicyRestClient = new PolicyRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementPolicyPolicyApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ApiManagementPolicyResource"/> class. </summary>
@@ -66,21 +69,6 @@ namespace Azure.ResourceManager.ApiManagement
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ApiManagement/service/policies";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PolicyContractData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -88,22 +76,23 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Get the Global policy definition of the Api Management service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
         /// Operation Id: Policy_Get
         /// </summary>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiManagementPolicyResource>> GetAsync(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        protected override async Task<Response<PolicyContractResource>> GetCoreAsync(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.Get");
+            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _apiManagementPolicyPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, format, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -119,16 +108,31 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiManagementPolicyResource> Get(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<ApiManagementPolicyResource>> GetAsync(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.Get");
+            var value = await GetCoreAsync(format, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ApiManagementPolicyResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Get the Global policy definition of the Api Management service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
+        /// Operation Id: Policy_Get
+        /// </summary>
+        /// <param name="format"> Policy Export Format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<PolicyContractResource> GetCore(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.GetCore");
             scope.Start();
             try
             {
                 var response = _apiManagementPolicyPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, format, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -138,6 +142,21 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Get the Global policy definition of the Api Management service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
+        /// Operation Id: Policy_Get
+        /// </summary>
+        /// <param name="format"> Policy Export Format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<ApiManagementPolicyResource> Get(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(format, cancellationToken);
+            return Response.FromValue((ApiManagementPolicyResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Delete
         /// Deletes the global policy configuration of the Api Management Service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
         /// Operation Id: Policy_Delete
@@ -145,9 +164,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.Delete");
+            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.DeleteCore");
             scope.Start();
             try
             {
@@ -165,6 +184,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// The core implementation for operation Delete
         /// Deletes the global policy configuration of the Api Management Service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
         /// Operation Id: Policy_Delete
@@ -172,9 +192,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.Delete");
+            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.DeleteCore");
             scope.Start();
             try
             {
@@ -192,6 +212,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// The core implementation for operation Update
         /// Creates or updates the global policy configuration of the Api Management service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
         /// Operation Id: Policy_CreateOrUpdate
@@ -201,16 +222,16 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementPolicyResource>> UpdateAsync(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation<PolicyContractResource>> UpdateCoreAsync(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.Update");
+            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.UpdateCore");
             scope.Start();
             try
             {
                 var response = await _apiManagementPolicyPolicyRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<ApiManagementPolicyResource>(Response.FromValue(new ApiManagementPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<PolicyContractResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -232,16 +253,34 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementPolicyResource> Update(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<ArmOperation<ApiManagementPolicyResource>> UpdateAsync(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            var value = await UpdateCoreAsync(waitUntil, data, ifMatch, cancellationToken).ConfigureAwait(false);
+            return new ApiManagementArmOperation<ApiManagementPolicyResource>(Response.FromValue((ApiManagementPolicyResource)value.Value, value.GetRawResponse()));
+        }
+
+        /// <summary>
+        /// The core implementation for operation Update
+        /// Creates or updates the global policy configuration of the Api Management service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
+        /// Operation Id: Policy_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The policy contents to apply. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        protected override ArmOperation<PolicyContractResource> UpdateCore(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.Update");
+            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.UpdateCore");
             scope.Start();
             try
             {
                 var response = _apiManagementPolicyPolicyRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
-                var operation = new ApiManagementArmOperation<ApiManagementPolicyResource>(Response.FromValue(new ApiManagementPolicyResource(Client, response), response.GetRawResponse()));
+                var operation = new ApiManagementArmOperation<PolicyContractResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -254,14 +293,32 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// Creates or updates the global policy configuration of the Api Management service.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
+        /// Operation Id: Policy_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The policy contents to apply. </param>
+        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual ArmOperation<ApiManagementPolicyResource> Update(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        {
+            var value = UpdateCore(waitUntil, data, ifMatch, cancellationToken);
+            return new ApiManagementArmOperation<ApiManagementPolicyResource>(Response.FromValue((ApiManagementPolicyResource)value.Value, value.GetRawResponse()));
+        }
+
+        /// <summary>
+        /// The core implementation for operation GetEntityTag
         /// Gets the entity state (Etag) version of the Global policy definition in the Api Management service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
         /// Operation Id: Policy_GetEntityTag
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> GetEntityTagAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<bool>> GetEntityTagCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.GetEntityTag");
+            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.GetEntityTagCore");
             scope.Start();
             try
             {
@@ -276,14 +333,15 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// The core implementation for operation GetEntityTag
         /// Gets the entity state (Etag) version of the Global policy definition in the Api Management service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
         /// Operation Id: Policy_GetEntityTag
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> GetEntityTag(CancellationToken cancellationToken = default)
+        protected override Response<bool> GetEntityTagCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.GetEntityTag");
+            using var scope = _apiManagementPolicyPolicyClientDiagnostics.CreateScope("ApiManagementPolicyResource.GetEntityTagCore");
             scope.Start();
             try
             {

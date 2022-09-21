@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppService
     /// from an instance of <see cref="ArmClient" /> using the GetSiteNetworkConfigResource method.
     /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteNetworkConfig method.
     /// </summary>
-    public partial class SiteNetworkConfigResource : ArmResource
+    public partial class SiteNetworkConfigResource : SwiftVirtualNetworkResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteNetworkConfigResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteNetworkConfigWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteNetworkConfigWebAppsRestClient;
-        private readonly SwiftVirtualNetworkData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteNetworkConfigResource"/> class for mocking. </summary>
         protected SiteNetworkConfigResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteNetworkConfigResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteNetworkConfigResource(ArmClient client, SwiftVirtualNetworkData data) : this(client, data.Id)
+        internal SiteNetworkConfigResource(ArmClient client, SwiftVirtualNetworkData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _siteNetworkConfigWebAppsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string siteNetworkConfigWebAppsApiVersion);
+            _siteNetworkConfigWebAppsRestClient = new WebAppsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, siteNetworkConfigWebAppsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="SiteNetworkConfigResource"/> class. </summary>
@@ -65,21 +68,6 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Web/sites/networkConfig";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SwiftVirtualNetworkData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -87,21 +75,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Description for Gets a Swift Virtual Network connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork
         /// Operation Id: WebApps_GetSwiftVirtualNetworkConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SiteNetworkConfigResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<SwiftVirtualNetworkResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.Get");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _siteNetworkConfigWebAppsRestClient.GetSwiftVirtualNetworkConnectionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteNetworkConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +105,30 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: WebApps_GetSwiftVirtualNetworkConnection
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SiteNetworkConfigResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<SiteNetworkConfigResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SiteNetworkConfigResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Description for Gets a Swift Virtual Network connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork
+        /// Operation Id: WebApps_GetSwiftVirtualNetworkConnection
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<SwiftVirtualNetworkResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.GetCore");
             scope.Start();
             try
             {
                 var response = _siteNetworkConfigWebAppsRestClient.GetSwiftVirtualNetworkConnection(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SiteNetworkConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,15 +138,29 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Description for Gets a Swift Virtual Network connection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork
+        /// Operation Id: WebApps_GetSwiftVirtualNetworkConnection
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<SiteNetworkConfigResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((SiteNetworkConfigResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Delete
         /// Description for Deletes a Swift Virtual Network connection from an app (or deployment slot).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork
         /// Operation Id: WebApps_DeleteSwiftVirtualNetwork
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.Delete");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.DeleteCore");
             scope.Start();
             try
             {
@@ -161,15 +178,16 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// The core implementation for operation Delete
         /// Description for Deletes a Swift Virtual Network connection from an app (or deployment slot).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork
         /// Operation Id: WebApps_DeleteSwiftVirtualNetwork
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.Delete");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.DeleteCore");
             scope.Start();
             try
             {
@@ -187,6 +205,7 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// The core implementation for operation Update
         /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork
@@ -195,16 +214,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<SiteNetworkConfigResource>> UpdateAsync(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
+        protected override async Task<Response<SwiftVirtualNetworkResource>> UpdateCoreAsync(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.Update");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.UpdateCore");
             scope.Start();
             try
             {
                 var response = await _siteNetworkConfigWebAppsRestClient.UpdateSwiftVirtualNetworkConnectionWithCheckAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SiteNetworkConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -222,16 +241,33 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<SiteNetworkConfigResource> Update(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<SiteNetworkConfigResource>> UpdateAsync(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
+        {
+            var value = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SiteNetworkConfigResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Update
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// in use by another App Service Plan other than the one this App is in.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork
+        /// Operation Id: WebApps_UpdateSwiftVirtualNetworkConnectionWithCheck
+        /// </summary>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        protected override Response<SwiftVirtualNetworkResource> UpdateCore(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.Update");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.UpdateCore");
             scope.Start();
             try
             {
                 var response = _siteNetworkConfigWebAppsRestClient.UpdateSwiftVirtualNetworkConnectionWithCheck(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                return Response.FromValue(new SiteNetworkConfigResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -241,6 +277,23 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// in use by another App Service Plan other than the one this App is in.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork
+        /// Operation Id: WebApps_UpdateSwiftVirtualNetworkConnectionWithCheck
+        /// </summary>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual Response<SiteNetworkConfigResource> Update(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
+        {
+            var value = UpdateCore(data, cancellationToken);
+            return Response.FromValue((SiteNetworkConfigResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation CreateOrUpdate
         /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork
@@ -250,16 +303,16 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SiteNetworkConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation<SwiftVirtualNetworkResource>> CreateOrUpdateCoreAsync(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.CreateOrUpdate");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.CreateOrUpdateCore");
             scope.Start();
             try
             {
                 var response = await _siteNetworkConfigWebAppsRestClient.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheckAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<SiteNetworkConfigResource>(Response.FromValue(new SiteNetworkConfigResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SwiftVirtualNetworkResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -281,16 +334,34 @@ namespace Azure.ResourceManager.AppService
         /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SiteNetworkConfigResource> CreateOrUpdate(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<ArmOperation<SiteNetworkConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
+        {
+            var value = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return new AppServiceArmOperation<SiteNetworkConfigResource>(Response.FromValue((SiteNetworkConfigResource)value.Value, value.GetRawResponse()));
+        }
+
+        /// <summary>
+        /// The core implementation for operation CreateOrUpdate
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// in use by another App Service Plan other than the one this App is in.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork
+        /// Operation Id: WebApps_CreateOrUpdateSwiftVirtualNetworkConnectionWithCheck
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        protected override ArmOperation<SwiftVirtualNetworkResource> CreateOrUpdateCore(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.CreateOrUpdate");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.CreateOrUpdateCore");
             scope.Start();
             try
             {
                 var response = _siteNetworkConfigWebAppsRestClient.CreateOrUpdateSwiftVirtualNetworkConnectionWithCheck(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, data, cancellationToken);
-                var operation = new AppServiceArmOperation<SiteNetworkConfigResource>(Response.FromValue(new SiteNetworkConfigResource(Client, response), response.GetRawResponse()));
+                var operation = new AppServiceArmOperation<SwiftVirtualNetworkResource>(Response.FromValue(GetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -300,6 +371,23 @@ namespace Azure.ResourceManager.AppService
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
+        /// in use by another App Service Plan other than the one this App is in.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkConfig/virtualNetwork
+        /// Operation Id: WebApps_CreateOrUpdateSwiftVirtualNetworkConnectionWithCheck
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> Properties of the Virtual Network connection. See example. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new virtual ArmOperation<SiteNetworkConfigResource> CreateOrUpdate(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
+        {
+            var value = CreateOrUpdateCore(waitUntil, data, cancellationToken);
+            return new AppServiceArmOperation<SiteNetworkConfigResource>(Response.FromValue((SiteNetworkConfigResource)value.Value, value.GetRawResponse()));
         }
     }
 }

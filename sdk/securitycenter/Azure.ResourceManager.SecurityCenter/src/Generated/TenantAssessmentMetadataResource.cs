@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter
     /// from an instance of <see cref="ArmClient" /> using the GetTenantAssessmentMetadataResource method.
     /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetTenantAssessmentMetadata method.
     /// </summary>
-    public partial class TenantAssessmentMetadataResource : ArmResource
+    public partial class TenantAssessmentMetadataResource : SecurityAssessmentMetadataResponseResource
     {
         /// <summary> Generate the resource identifier of a <see cref="TenantAssessmentMetadataResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string assessmentMetadataName)
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.SecurityCenter
 
         private readonly ClientDiagnostics _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics;
         private readonly AssessmentsMetadataRestOperations _tenantAssessmentMetadataAssessmentsMetadataRestClient;
-        private readonly SecurityAssessmentMetadataResponseData _data;
 
         /// <summary> Initializes a new instance of the <see cref="TenantAssessmentMetadataResource"/> class for mocking. </summary>
         protected TenantAssessmentMetadataResource()
@@ -44,10 +43,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Initializes a new instance of the <see cref = "TenantAssessmentMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal TenantAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataResponseData data) : this(client, data.Id)
+        internal TenantAssessmentMetadataResource(ArmClient client, SecurityAssessmentMetadataResponseData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string tenantAssessmentMetadataAssessmentsMetadataApiVersion);
+            _tenantAssessmentMetadataAssessmentsMetadataRestClient = new AssessmentsMetadataRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantAssessmentMetadataAssessmentsMetadataApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="TenantAssessmentMetadataResource"/> class. </summary>
@@ -66,21 +69,6 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Security/assessmentMetadata";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SecurityAssessmentMetadataResponseData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -88,21 +76,22 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Get metadata information on an assessment type
         /// Request Path: /providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}
         /// Operation Id: AssessmentsMetadata_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TenantAssessmentMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<SecurityAssessmentMetadataResponseResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataResource.Get");
+            using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataResource.GetCore");
             scope.Start();
             try
             {
                 var response = await _tenantAssessmentMetadataAssessmentsMetadataRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,22 +106,49 @@ namespace Azure.ResourceManager.SecurityCenter
         /// Operation Id: AssessmentsMetadata_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TenantAssessmentMetadataResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new virtual async Task<Response<TenantAssessmentMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataResource.Get");
+            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((TenantAssessmentMetadataResource)value.Value, value.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Get metadata information on an assessment type
+        /// Request Path: /providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}
+        /// Operation Id: AssessmentsMetadata_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<SecurityAssessmentMetadataResponseResource> GetCore(CancellationToken cancellationToken = default)
+        {
+            using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataResource.GetCore");
             scope.Start();
             try
             {
                 var response = _tenantAssessmentMetadataAssessmentsMetadataRestClient.Get(Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new TenantAssessmentMetadataResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get metadata information on an assessment type
+        /// Request Path: /providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}
+        /// Operation Id: AssessmentsMetadata_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new virtual Response<TenantAssessmentMetadataResource> Get(CancellationToken cancellationToken = default)
+        {
+            var value = GetCore(cancellationToken);
+            return Response.FromValue((TenantAssessmentMetadataResource)value.Value, value.GetRawResponse());
         }
     }
 }
