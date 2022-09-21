@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.Communication.CallAutomation;
-
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
     /// <summary> The RecognizeFailed. </summary>
-    public partial class RecognizeFailedInternal
+    internal partial class RecognizeFailedInternal
     {
         /// <summary> Initializes a new instance of RecognizeFailedInternal. </summary>
         internal RecognizeFailedInternal()

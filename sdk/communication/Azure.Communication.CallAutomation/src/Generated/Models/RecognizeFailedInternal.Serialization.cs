@@ -6,12 +6,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.CallAutomation;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
-    public partial class RecognizeFailedInternal
+    internal partial class RecognizeFailedInternal
     {
         internal static RecognizeFailedInternal DeserializeRecognizeFailedInternal(JsonElement element)
         {

@@ -4,13 +4,13 @@
 using Azure.Core;
 using System.Text.Json;
 
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// The play completed event.
     /// </summary>
     [CodeGenModel("RecognizeFailed", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
-    public partial class RecognizeFailedInternal : CallAutomationEventBase
+    internal partial class RecognizeFailedInternal : CallAutomationEventBase
     {
         /// <summary>
         /// Deserialize <see cref="RecognizeFailed"/> event.
