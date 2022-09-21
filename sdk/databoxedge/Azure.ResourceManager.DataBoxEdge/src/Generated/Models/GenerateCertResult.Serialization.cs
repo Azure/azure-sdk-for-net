@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    expiryTimeInUtc = property.Value.GetDateTimeOffset();
+                    expiryTimeInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
