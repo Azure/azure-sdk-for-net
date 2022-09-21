@@ -289,7 +289,28 @@ namespace Azure.ResourceManager.Purview.Models
         public PurviewPrivateLinkServiceConnectionState() { }
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.Purview.Models.Status? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus? Status { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PurviewPrivateLinkServiceStatus : System.IEquatable<Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PurviewPrivateLinkServiceStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus Approved { get { throw null; } }
+        public static Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus Disconnected { get { throw null; } }
+        public static Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus Pending { get { throw null; } }
+        public static Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus Rejected { get { throw null; } }
+        public static Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus left, Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus left, Azure.ResourceManager.Purview.Models.PurviewPrivateLinkServiceStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PurviewProvisioningState : System.IEquatable<Azure.ResourceManager.Purview.Models.PurviewProvisioningState>
@@ -333,27 +354,6 @@ namespace Azure.ResourceManager.Purview.Models
         public static bool operator ==(Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess left, Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess right) { throw null; }
         public static implicit operator Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess left, Azure.ResourceManager.Purview.Models.PurviewPublicNetworkAccess right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.Purview.Models.Status>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Status(string value) { throw null; }
-        public static Azure.ResourceManager.Purview.Models.Status Approved { get { throw null; } }
-        public static Azure.ResourceManager.Purview.Models.Status Disconnected { get { throw null; } }
-        public static Azure.ResourceManager.Purview.Models.Status Pending { get { throw null; } }
-        public static Azure.ResourceManager.Purview.Models.Status Rejected { get { throw null; } }
-        public static Azure.ResourceManager.Purview.Models.Status Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Purview.Models.Status other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Purview.Models.Status left, Azure.ResourceManager.Purview.Models.Status right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Purview.Models.Status (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Purview.Models.Status left, Azure.ResourceManager.Purview.Models.Status right) { throw null; }
         public override string ToString() { throw null; }
     }
 }
