@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// policy should be set.
     /// 
     /// </summary>
-    public partial class ServicePlacementRequireDomainDistributionPolicy : ManagedClusterServicePlacementPolicy
+    public partial class ServicePlacementRequireDomainDistributionPolicy : ManagedServicePlacementPolicy
     {
         /// <summary> Initializes a new instance of ServicePlacementRequireDomainDistributionPolicy. </summary>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>

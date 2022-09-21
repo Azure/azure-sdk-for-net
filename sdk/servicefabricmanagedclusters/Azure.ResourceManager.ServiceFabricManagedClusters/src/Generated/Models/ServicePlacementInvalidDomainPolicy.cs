@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes the policy to be used for placement of a Service Fabric service where a particular fault or upgrade domain should not be used for placement of the instances or replicas of that service. </summary>
-    public partial class ServicePlacementInvalidDomainPolicy : ManagedClusterServicePlacementPolicy
+    public partial class ServicePlacementInvalidDomainPolicy : ManagedServicePlacementPolicy
     {
         /// <summary> Initializes a new instance of ServicePlacementInvalidDomainPolicy. </summary>
         /// <param name="domainName"> The name of the domain that should not be used for placement. </param>

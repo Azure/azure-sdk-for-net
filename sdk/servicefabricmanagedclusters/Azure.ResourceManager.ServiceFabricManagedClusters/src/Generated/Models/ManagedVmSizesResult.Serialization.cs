@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         internal static ManagedVmSizesResult DeserializeManagedVmSizesResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ServiceFabricManagedClustersVmSize>> value = default;
+            Optional<IReadOnlyList<ServiceFabricManagedUnsupportedVmSize>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceFabricManagedClustersVmSize> array = new List<ServiceFabricManagedClustersVmSize>();
+                    List<ServiceFabricManagedUnsupportedVmSize> array = new List<ServiceFabricManagedUnsupportedVmSize>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricManagedClustersVmSize.DeserializeServiceFabricManagedClustersVmSize(item));
+                        array.Add(ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize(item));
                     }
                     value = array;
                     continue;

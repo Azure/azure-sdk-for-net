@@ -61,9 +61,9 @@ override-operation-name:
   ManagedClusterVersion_GetByEnvironment: GetManagedClusterVersionByEnvironment
 
 rename-mapping:
-  ApplicationResource: ServiceFabricManagedClusterApplication
-  ApplicationTypeResource: ServiceFabricManagedClusterApplicationType
-  ApplicationTypeVersionResource: ServiceFabricManagedClusterApplicationTypeVersion
+  ApplicationResource: ServiceFabricManagedApplication
+  ApplicationTypeResource: ServiceFabricManagedApplicationType
+  ApplicationTypeVersionResource: ServiceFabricManagedApplicationTypeVersion
   ApplicationUserAssignedIdentity: ApplicationUserAssignedIdentityInfo
   ManagedClusterCodeVersionResult: ServiceFabricManagedClusterVersion
   ManagedClusterCodeVersionResult.properties.supportExpiryUtc: VersionSupportExpireOn
@@ -93,13 +93,13 @@ rename-mapping:
   SettingsParameterDescription: ClusterFabricSettingsParameterDescription
   IPTag: ManagedClusterIPTag
   LoadBalancingRule: ManagedClusterLoadBalancingRule
-  NetworkSecurityRule: ServiceFabricManagedClustersNetworkSecurityRule
-  Direction: ServiceFabricManagedClustersNetworkSecurityRuleDirection
-  Access: ServiceFabricManagedClustersNetworkTrafficAccess
+  NetworkSecurityRule: ServiceFabricManagedNetworkSecurityRule
+  Direction: ServiceFabricManagedNetworkSecurityRuleDirection
+  Access: ServiceFabricManagedNetworkTrafficAccess
   ManagedResourceProvisioningState: ServiceFabricManagedResourceProvisioningState
   ServiceEndpoint: ManagedClusterServiceEndpoint
   ServiceEndpoint.locations: -|azure-location
-  NodeType: ServiceFabricManagedClusterNodeType
+  NodeType: ServiceFabricManagedNodeType
   NodeType.properties.dataDiskSizeGB: DataDiskSizeInGB
   NodeType.properties.enableAcceleratedNetworking: IsAcceleratedNetworkingEnabled
   NodeType.properties.enableEncryptionAtHost: IsEncryptionAtHostEnabled
@@ -118,32 +118,32 @@ rename-mapping:
   VmManagedIdentity.userAssignedIdentities: -|arm-id
   NodeTypeActionParameters: NodeTypeActionContent
   NodeTypeActionParameters.force: IsForced
-  ServiceResource: ServiceFabricManagedClusterService
-  ServiceResourceProperties: ManagedClusterServiceProperties
-  ServiceResourcePropertiesBase: ManagedClusterServiceBaseProperties
-  ServiceCorrelation: ManagedClusterServiceCorrelation
-  ServiceCorrelationScheme: ManagedClusterServiceCorrelationScheme
-  ScalingPolicy: ManagedClusterServiceScalingPolicy
-  ScalingMechanism: ManagedClusterServiceScalingMechanism
-  ScalingTrigger: ManagedClusterServiceScalingTrigger
-  MoveCost: ServiceFabricManagedClusterServiceMoveCost
+  ServiceResource: ServiceFabricManagedService
+  ServiceResourceProperties: ManagedServiceProperties
+  ServiceResourcePropertiesBase: ManagedServiceBaseProperties
+  ServiceCorrelation: ManagedServiceCorrelation
+  ServiceCorrelationScheme: ManagedServiceCorrelationScheme
+  ScalingPolicy: ManagedServiceScalingPolicy
+  ScalingMechanism: ManagedServiceScalingMechanism
+  ScalingTrigger: ManagedServiceScalingTrigger
+  MoveCost: ServiceFabricManagedServiceMoveCost
   ApplicationUpgradePolicy.instanceCloseDelayDuration: InstanceCloseDelayDurationInSeconds
   FailureAction: PolicyViolationCompensationAction
   IPAddressType: NodeTypeFrontendConfigurationIPAddressType
   ProbeProtocol: ManagedClusterLoadBalanceProbeProtocol
   Protocol: ManagedClusterLoadBalancingRuleTransportProtocol
-  Partition: ManagedClusterServicePartitionScheme
-  NsgProtocol: ServiceFabricManagedClustersNsgProtocol
+  Partition: ManagedServicePartitionScheme
+  NsgProtocol: ServiceFabricManagedNsgProtocol
   NsgProtocol.ah: AH
   NodeTypeAvailableSku.resourceType: -|resource-type
   PartitionInstanceCountScaleMechanism: PartitionInstanceCountScalingMechanism
   PrivateEndpointNetworkPolicies: ManagedClusterSubnetPrivateEndpointNetworkPoliciesState
   PrivateLinkServiceNetworkPolicies: ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState
-  ServiceLoadMetric: ManagedClusterServiceLoadMetric
-  ServiceLoadMetricWeight: ManagedClusterServiceLoadMetricWeight
-  ServicePackageActivationMode: ManagedClusterServicePackageActivationMode
-  ServicePlacementPolicy: ManagedClusterServicePlacementPolicy
-  ManagedVMSize: ServiceFabricManagedClustersVmSize
+  ServiceLoadMetric: ManagedServiceLoadMetric
+  ServiceLoadMetricWeight: ManagedServiceLoadMetricWeight
+  ServicePackageActivationMode: ManagedServicePackageActivationMode
+  ServicePlacementPolicy: ManagedServicePlacementPolicy
+  ManagedVMSize: ServiceFabricManagedUnsupportedVmSize
 
 directive:
   - remove-operation: OperationStatus_Get

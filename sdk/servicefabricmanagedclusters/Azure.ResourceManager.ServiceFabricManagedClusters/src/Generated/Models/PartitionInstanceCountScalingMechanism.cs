@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Represents a scaling mechanism for adding or removing instances of stateless service partition. </summary>
-    public partial class PartitionInstanceCountScalingMechanism : ManagedClusterServiceScalingMechanism
+    public partial class PartitionInstanceCountScalingMechanism : ManagedServiceScalingMechanism
     {
         /// <summary> Initializes a new instance of PartitionInstanceCountScalingMechanism. </summary>
         /// <param name="minInstanceCount"> Minimum number of instances of the partition. </param>

@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="vmSize"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ServiceFabricManagedClustersVmSize>> GetAsync(string subscriptionId, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceFabricManagedUnsupportedVmSize>> GetAsync(string subscriptionId, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        ServiceFabricManagedClustersVmSize value = default;
+                        ServiceFabricManagedUnsupportedVmSize value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ServiceFabricManagedClustersVmSize.DeserializeServiceFabricManagedClustersVmSize(document.RootElement);
+                        value = ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="vmSize"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ServiceFabricManagedClustersVmSize> Get(string subscriptionId, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        public Response<ServiceFabricManagedUnsupportedVmSize> Get(string subscriptionId, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 case 200:
                     {
-                        ServiceFabricManagedClustersVmSize value = default;
+                        ServiceFabricManagedUnsupportedVmSize value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ServiceFabricManagedClustersVmSize.DeserializeServiceFabricManagedClustersVmSize(document.RootElement);
+                        value = ServiceFabricManagedUnsupportedVmSize.DeserializeServiceFabricManagedUnsupportedVmSize(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

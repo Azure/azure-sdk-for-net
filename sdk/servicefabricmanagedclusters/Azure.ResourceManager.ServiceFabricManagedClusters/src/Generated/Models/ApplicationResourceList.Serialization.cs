@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         internal static ApplicationResourceList DeserializeApplicationResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<ServiceFabricManagedClusterApplicationData>> value = default;
+            Optional<IReadOnlyList<ServiceFabricManagedApplicationData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ServiceFabricManagedClusterApplicationData> array = new List<ServiceFabricManagedClusterApplicationData>();
+                    List<ServiceFabricManagedApplicationData> array = new List<ServiceFabricManagedApplicationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceFabricManagedClusterApplicationData.DeserializeServiceFabricManagedClusterApplicationData(item));
+                        array.Add(ServiceFabricManagedApplicationData.DeserializeServiceFabricManagedApplicationData(item));
                     }
                     value = array;
                     continue;

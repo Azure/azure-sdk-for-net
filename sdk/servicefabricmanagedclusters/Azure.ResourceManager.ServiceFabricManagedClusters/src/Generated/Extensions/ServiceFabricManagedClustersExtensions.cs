@@ -194,8 +194,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceFabricManagedClustersVmSize" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ServiceFabricManagedClustersVmSize> GetManagedUnsupportedVmSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServiceFabricManagedUnsupportedVmSize" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetManagedUnsupportedVmSizesAsync(location, cancellationToken);
         }
@@ -208,8 +208,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceFabricManagedClustersVmSize" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ServiceFabricManagedClustersVmSize> GetManagedUnsupportedVmSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceFabricManagedUnsupportedVmSize" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetManagedUnsupportedVmSizes(location, cancellationToken);
         }
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
-        public static async Task<Response<ServiceFabricManagedClustersVmSize>> GetManagedUnsupportedVmSizeAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        public static async Task<Response<ServiceFabricManagedUnsupportedVmSize>> GetManagedUnsupportedVmSizeAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vmSize"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/> is null. </exception>
-        public static Response<ServiceFabricManagedClustersVmSize> GetManagedUnsupportedVmSize(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        public static Response<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSize(this SubscriptionResource subscriptionResource, AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vmSize, nameof(vmSize));
 
@@ -299,77 +299,77 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             return resourceGroupResource.GetServiceFabricManagedClusters().Get(clusterName, cancellationToken);
         }
 
-        #region ServiceFabricManagedClusterApplicationTypeResource
+        #region ServiceFabricManagedApplicationTypeResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedClusterApplicationTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedClusterApplicationTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterApplicationTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceFabricManagedApplicationTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedApplicationTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceFabricManagedClusterApplicationTypeResource" /> object. </returns>
-        public static ServiceFabricManagedClusterApplicationTypeResource GetServiceFabricManagedClusterApplicationTypeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricManagedApplicationTypeResource" /> object. </returns>
+        public static ServiceFabricManagedApplicationTypeResource GetServiceFabricManagedApplicationTypeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceFabricManagedClusterApplicationTypeResource.ValidateResourceId(id);
-                return new ServiceFabricManagedClusterApplicationTypeResource(client, id);
+                ServiceFabricManagedApplicationTypeResource.ValidateResourceId(id);
+                return new ServiceFabricManagedApplicationTypeResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServiceFabricManagedClusterApplicationTypeVersionResource
+        #region ServiceFabricManagedApplicationTypeVersionResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedClusterApplicationTypeVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedClusterApplicationTypeVersionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterApplicationTypeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceFabricManagedApplicationTypeVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedApplicationTypeVersionResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationTypeVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceFabricManagedClusterApplicationTypeVersionResource" /> object. </returns>
-        public static ServiceFabricManagedClusterApplicationTypeVersionResource GetServiceFabricManagedClusterApplicationTypeVersionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricManagedApplicationTypeVersionResource" /> object. </returns>
+        public static ServiceFabricManagedApplicationTypeVersionResource GetServiceFabricManagedApplicationTypeVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceFabricManagedClusterApplicationTypeVersionResource.ValidateResourceId(id);
-                return new ServiceFabricManagedClusterApplicationTypeVersionResource(client, id);
+                ServiceFabricManagedApplicationTypeVersionResource.ValidateResourceId(id);
+                return new ServiceFabricManagedApplicationTypeVersionResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServiceFabricManagedClusterApplicationResource
+        #region ServiceFabricManagedApplicationResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedClusterApplicationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedClusterApplicationResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceFabricManagedApplicationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedApplicationResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceFabricManagedClusterApplicationResource" /> object. </returns>
-        public static ServiceFabricManagedClusterApplicationResource GetServiceFabricManagedClusterApplicationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricManagedApplicationResource" /> object. </returns>
+        public static ServiceFabricManagedApplicationResource GetServiceFabricManagedApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceFabricManagedClusterApplicationResource.ValidateResourceId(id);
-                return new ServiceFabricManagedClusterApplicationResource(client, id);
+                ServiceFabricManagedApplicationResource.ValidateResourceId(id);
+                return new ServiceFabricManagedApplicationResource(client, id);
             }
             );
         }
         #endregion
 
-        #region ServiceFabricManagedClusterServiceResource
+        #region ServiceFabricManagedServiceResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedClusterServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedClusterServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceFabricManagedServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedServiceResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceFabricManagedClusterServiceResource" /> object. </returns>
-        public static ServiceFabricManagedClusterServiceResource GetServiceFabricManagedClusterServiceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricManagedServiceResource" /> object. </returns>
+        public static ServiceFabricManagedServiceResource GetServiceFabricManagedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceFabricManagedClusterServiceResource.ValidateResourceId(id);
-                return new ServiceFabricManagedClusterServiceResource(client, id);
+                ServiceFabricManagedServiceResource.ValidateResourceId(id);
+                return new ServiceFabricManagedServiceResource(client, id);
             }
             );
         }
@@ -394,20 +394,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
         #endregion
 
-        #region ServiceFabricManagedClusterNodeTypeResource
+        #region ServiceFabricManagedNodeTypeResource
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceFabricManagedClusterNodeTypeResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceFabricManagedClusterNodeTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedClusterNodeTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServiceFabricManagedNodeTypeResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServiceFabricManagedNodeTypeResource.CreateResourceIdentifier" /> to create a <see cref="ServiceFabricManagedNodeTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServiceFabricManagedClusterNodeTypeResource" /> object. </returns>
-        public static ServiceFabricManagedClusterNodeTypeResource GetServiceFabricManagedClusterNodeTypeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServiceFabricManagedNodeTypeResource" /> object. </returns>
+        public static ServiceFabricManagedNodeTypeResource GetServiceFabricManagedNodeTypeResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                ServiceFabricManagedClusterNodeTypeResource.ValidateResourceId(id);
-                return new ServiceFabricManagedClusterNodeTypeResource(client, id);
+                ServiceFabricManagedNodeTypeResource.ValidateResourceId(id);
+                return new ServiceFabricManagedNodeTypeResource(client, id);
             }
             );
         }

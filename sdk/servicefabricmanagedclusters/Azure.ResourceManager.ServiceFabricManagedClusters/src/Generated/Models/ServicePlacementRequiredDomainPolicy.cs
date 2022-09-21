@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes the policy to be used for placement of a Service Fabric service where the instances or replicas of that service must be placed in a particular domain. </summary>
-    public partial class ServicePlacementRequiredDomainPolicy : ManagedClusterServicePlacementPolicy
+    public partial class ServicePlacementRequiredDomainPolicy : ManagedServicePlacementPolicy
     {
         /// <summary> Initializes a new instance of ServicePlacementRequiredDomainPolicy. </summary>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>

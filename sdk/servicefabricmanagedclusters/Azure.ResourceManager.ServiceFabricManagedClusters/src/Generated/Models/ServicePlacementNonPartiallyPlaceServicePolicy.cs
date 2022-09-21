@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> ServicePlacementNonPartiallyPlaceServicePolicy. </summary>
-    public partial class ServicePlacementNonPartiallyPlaceServicePolicy : ManagedClusterServicePlacementPolicy
+    public partial class ServicePlacementNonPartiallyPlaceServicePolicy : ManagedServicePlacementPolicy
     {
         /// <summary> Initializes a new instance of ServicePlacementNonPartiallyPlaceServicePolicy. </summary>
         public ServicePlacementNonPartiallyPlaceServicePolicy()

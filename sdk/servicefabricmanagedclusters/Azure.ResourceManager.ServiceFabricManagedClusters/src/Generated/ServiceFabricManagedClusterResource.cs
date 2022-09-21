@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ServiceFabricManagedClusterApplicationTypeResources in the ServiceFabricManagedCluster. </summary>
-        /// <returns> An object representing collection of ServiceFabricManagedClusterApplicationTypeResources and their operations over a ServiceFabricManagedClusterApplicationTypeResource. </returns>
-        public virtual ServiceFabricManagedClusterApplicationTypeCollection GetServiceFabricManagedClusterApplicationTypes()
+        /// <summary> Gets a collection of ServiceFabricManagedApplicationTypeResources in the ServiceFabricManagedCluster. </summary>
+        /// <returns> An object representing collection of ServiceFabricManagedApplicationTypeResources and their operations over a ServiceFabricManagedApplicationTypeResource. </returns>
+        public virtual ServiceFabricManagedApplicationTypeCollection GetServiceFabricManagedApplicationTypes()
         {
-            return GetCachedClient(Client => new ServiceFabricManagedClusterApplicationTypeCollection(Client, Id));
+            return GetCachedClient(Client => new ServiceFabricManagedApplicationTypeCollection(Client, Id));
         }
 
         /// <summary>
@@ -106,9 +106,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceFabricManagedClusterApplicationTypeResource>> GetServiceFabricManagedClusterApplicationTypeAsync(string applicationTypeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceFabricManagedApplicationTypeResource>> GetServiceFabricManagedApplicationTypeAsync(string applicationTypeName, CancellationToken cancellationToken = default)
         {
-            return await GetServiceFabricManagedClusterApplicationTypes().GetAsync(applicationTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetServiceFabricManagedApplicationTypes().GetAsync(applicationTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,31 +121,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="applicationTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationTypeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceFabricManagedClusterApplicationTypeResource> GetServiceFabricManagedClusterApplicationType(string applicationTypeName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceFabricManagedApplicationTypeResource> GetServiceFabricManagedApplicationType(string applicationTypeName, CancellationToken cancellationToken = default)
         {
-            return GetServiceFabricManagedClusterApplicationTypes().Get(applicationTypeName, cancellationToken);
+            return GetServiceFabricManagedApplicationTypes().Get(applicationTypeName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServiceFabricManagedClusterApplicationResources in the ServiceFabricManagedCluster. </summary>
-        /// <returns> An object representing collection of ServiceFabricManagedClusterApplicationResources and their operations over a ServiceFabricManagedClusterApplicationResource. </returns>
-        public virtual ServiceFabricManagedClusterApplicationCollection GetServiceFabricManagedClusterApplications()
+        /// <summary> Gets a collection of ServiceFabricManagedApplicationResources in the ServiceFabricManagedCluster. </summary>
+        /// <returns> An object representing collection of ServiceFabricManagedApplicationResources and their operations over a ServiceFabricManagedApplicationResource. </returns>
+        public virtual ServiceFabricManagedApplicationCollection GetServiceFabricManagedApplications()
         {
-            return GetCachedClient(Client => new ServiceFabricManagedClusterApplicationCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Get a Service Fabric managed application resource created or in the process of being created in the Service Fabric cluster resource.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}
-        /// Operation Id: Applications_Get
-        /// </summary>
-        /// <param name="applicationName"> The name of the application resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceFabricManagedClusterApplicationResource>> GetServiceFabricManagedClusterApplicationAsync(string applicationName, CancellationToken cancellationToken = default)
-        {
-            return await GetServiceFabricManagedClusterApplications().GetAsync(applicationName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new ServiceFabricManagedApplicationCollection(Client, Id));
         }
 
         /// <summary>
@@ -158,16 +143,31 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceFabricManagedClusterApplicationResource> GetServiceFabricManagedClusterApplication(string applicationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceFabricManagedApplicationResource>> GetServiceFabricManagedApplicationAsync(string applicationName, CancellationToken cancellationToken = default)
         {
-            return GetServiceFabricManagedClusterApplications().Get(applicationName, cancellationToken);
+            return await GetServiceFabricManagedApplications().GetAsync(applicationName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of ServiceFabricManagedClusterNodeTypeResources in the ServiceFabricManagedCluster. </summary>
-        /// <returns> An object representing collection of ServiceFabricManagedClusterNodeTypeResources and their operations over a ServiceFabricManagedClusterNodeTypeResource. </returns>
-        public virtual ServiceFabricManagedClusterNodeTypeCollection GetServiceFabricManagedClusterNodeTypes()
+        /// <summary>
+        /// Get a Service Fabric managed application resource created or in the process of being created in the Service Fabric cluster resource.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}
+        /// Operation Id: Applications_Get
+        /// </summary>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ServiceFabricManagedApplicationResource> GetServiceFabricManagedApplication(string applicationName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new ServiceFabricManagedClusterNodeTypeCollection(Client, Id));
+            return GetServiceFabricManagedApplications().Get(applicationName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServiceFabricManagedNodeTypeResources in the ServiceFabricManagedCluster. </summary>
+        /// <returns> An object representing collection of ServiceFabricManagedNodeTypeResources and their operations over a ServiceFabricManagedNodeTypeResource. </returns>
+        public virtual ServiceFabricManagedNodeTypeCollection GetServiceFabricManagedNodeTypes()
+        {
+            return GetCachedClient(Client => new ServiceFabricManagedNodeTypeCollection(Client, Id));
         }
 
         /// <summary>
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceFabricManagedClusterNodeTypeResource>> GetServiceFabricManagedClusterNodeTypeAsync(string nodeTypeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceFabricManagedNodeTypeResource>> GetServiceFabricManagedNodeTypeAsync(string nodeTypeName, CancellationToken cancellationToken = default)
         {
-            return await GetServiceFabricManagedClusterNodeTypes().GetAsync(nodeTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetServiceFabricManagedNodeTypes().GetAsync(nodeTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -195,9 +195,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <exception cref="ArgumentException"> <paramref name="nodeTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="nodeTypeName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceFabricManagedClusterNodeTypeResource> GetServiceFabricManagedClusterNodeType(string nodeTypeName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceFabricManagedNodeTypeResource> GetServiceFabricManagedNodeType(string nodeTypeName, CancellationToken cancellationToken = default)
         {
-            return GetServiceFabricManagedClusterNodeTypes().Get(nodeTypeName, cancellationToken);
+            return GetServiceFabricManagedNodeTypes().Get(nodeTypeName, cancellationToken);
         }
 
         /// <summary>

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// may not end up located in this domain due to failures, capacity limits, or other constraints.
     /// 
     /// </summary>
-    public partial class ServicePlacementPreferPrimaryDomainPolicy : ManagedClusterServicePlacementPolicy
+    public partial class ServicePlacementPreferPrimaryDomainPolicy : ManagedServicePlacementPolicy
     {
         /// <summary> Initializes a new instance of ServicePlacementPreferPrimaryDomainPolicy. </summary>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>

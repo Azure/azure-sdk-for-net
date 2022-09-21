@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
             ClusterCertificateThumbprints = new ChangeTrackingList<BinaryData>();
             LoadBalancingRules = new ChangeTrackingList<ManagedClusterLoadBalancingRule>();
-            NetworkSecurityRules = new ChangeTrackingList<ServiceFabricManagedClustersNetworkSecurityRule>();
+            NetworkSecurityRules = new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>();
             Clients = new ChangeTrackingList<ManagedClusterClientCertificate>();
             FabricSettings = new ChangeTrackingList<ClusterFabricSettingsSection>();
             AddOnFeatures = new ChangeTrackingList<ManagedClusterAddOnFeature>();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="auxiliarySubnets"> Auxiliary subnets for the cluster. </param>
         /// <param name="serviceEndpoints"> Service endpoints for subnets in the cluster. </param>
         /// <param name="etag"> Azure resource etag. </param>
-        internal ServiceFabricManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceFabricManagedClustersSku sku, string dnsName, string fqdn, IPAddress ipv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IReadOnlyList<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IList<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IList<ServiceFabricManagedClustersNetworkSecurityRule> networkSecurityRules, IList<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IList<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IList<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, bool? isIPv6Enabled, string subnetId, IList<ManagedClusterIPTag> ipTags, IPAddress ipv6Address, bool? isServicePublicIPEnabled, IList<ManagedClusterSubnet> auxiliarySubnets, IList<ManagedClusterServiceEndpoint> serviceEndpoints, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceFabricManagedClustersSku sku, string dnsName, string fqdn, IPAddress ipv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IReadOnlyList<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IList<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IList<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IList<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, bool? isIPv6Enabled, string subnetId, IList<ManagedClusterIPTag> ipTags, IPAddress ipv6Address, bool? isServicePublicIPEnabled, IList<ManagedClusterSubnet> auxiliarySubnets, IList<ManagedClusterServiceEndpoint> serviceEndpoints, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             DnsName = dnsName;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <summary> Setting this to true enables RDP access to the VM. The default NSG rule opens RDP port to Internet which can be overridden with custom Network Security Rules. The default value for this setting is false. </summary>
         public bool? IsRdpAccessAllowed { get; set; }
         /// <summary> Custom Network Security Rules that are applied to the Virtual Network of the cluster. </summary>
-        public IList<ServiceFabricManagedClustersNetworkSecurityRule> NetworkSecurityRules { get; }
+        public IList<ServiceFabricManagedNetworkSecurityRule> NetworkSecurityRules { get; }
         /// <summary> Client certificates that are allowed to manage the cluster. </summary>
         public IList<ManagedClusterClientCertificate> Clients { get; }
         /// <summary> The AAD authentication settings of the cluster. </summary>

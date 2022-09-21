@@ -355,10 +355,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceFabricManagedClustersVmSize" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceFabricManagedClustersVmSize> GetManagedUnsupportedVmSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServiceFabricManagedUnsupportedVmSize" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ServiceFabricManagedClustersVmSize>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServiceFabricManagedUnsupportedVmSize>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = managedUnsupportedVMSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSizes");
                 scope.Start();
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     throw;
                 }
             }
-            async Task<Page<ServiceFabricManagedClustersVmSize>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ServiceFabricManagedUnsupportedVmSize>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = managedUnsupportedVMSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSizes");
                 scope.Start();
@@ -398,10 +398,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceFabricManagedClustersVmSize" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceFabricManagedClustersVmSize> GetManagedUnsupportedVmSizes(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceFabricManagedUnsupportedVmSize" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSizes(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            Page<ServiceFabricManagedClustersVmSize> FirstPageFunc(int? pageSizeHint)
+            Page<ServiceFabricManagedUnsupportedVmSize> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = managedUnsupportedVMSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSizes");
                 scope.Start();
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     throw;
                 }
             }
-            Page<ServiceFabricManagedClustersVmSize> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ServiceFabricManagedUnsupportedVmSize> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = managedUnsupportedVMSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSizes");
                 scope.Start();
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="vmSize"> VM Size name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceFabricManagedClustersVmSize>> GetManagedUnsupportedVmSizeAsync(AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceFabricManagedUnsupportedVmSize>> GetManagedUnsupportedVmSizeAsync(AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
             using var scope = managedUnsupportedVMSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSize");
             scope.Start();
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
         /// <param name="vmSize"> VM Size name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceFabricManagedClustersVmSize> GetManagedUnsupportedVmSize(AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceFabricManagedUnsupportedVmSize> GetManagedUnsupportedVmSize(AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
         {
             using var scope = managedUnsupportedVMSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSize");
             scope.Start();

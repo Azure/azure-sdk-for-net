@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<string> adminPassword = default;
             Optional<IList<ManagedClusterLoadBalancingRule>> loadBalancingRules = default;
             Optional<bool> allowRdpAccess = default;
-            Optional<IList<ServiceFabricManagedClustersNetworkSecurityRule>> networkSecurityRules = default;
+            Optional<IList<ServiceFabricManagedNetworkSecurityRule>> networkSecurityRules = default;
             Optional<IList<ManagedClusterClientCertificate>> clients = default;
             Optional<ManagedClusterAzureActiveDirectory> azureActiveDirectory = default;
             Optional<IList<ClusterFabricSettingsSection>> fabricSettings = default;
@@ -439,10 +439,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServiceFabricManagedClustersNetworkSecurityRule> array = new List<ServiceFabricManagedClustersNetworkSecurityRule>();
+                            List<ServiceFabricManagedNetworkSecurityRule> array = new List<ServiceFabricManagedNetworkSecurityRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceFabricManagedClustersNetworkSecurityRule.DeserializeServiceFabricManagedClustersNetworkSecurityRule(item));
+                                array.Add(ServiceFabricManagedNetworkSecurityRule.DeserializeServiceFabricManagedNetworkSecurityRule(item));
                             }
                             networkSecurityRules = array;
                             continue;
