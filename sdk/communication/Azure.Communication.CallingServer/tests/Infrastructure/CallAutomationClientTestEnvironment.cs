@@ -61,12 +61,12 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// Dispatcher endpoint for automated testing
         /// </summary>
-        public string DispatcherEndpoint => GetRecordedOptionalVariable(dispatcherEndpoint, options => options.IsSecret("https://sanitized.com"));
+        public string DispatcherEndpoint => GetRecordedVariable(dispatcherEndpoint, options => options.IsSecret("https://sanitized.com"));
 
         /// <summary>
         /// ServiceBus string
         /// </summary>
-        public string ServicebusString => GetRecordedOptionalVariable(servicebusString, options => options.IsSecret("https://sanitized.com"));
+        public string ServicebusString => GetRecordedVariable(servicebusString, options => options.IsSecret("https://sanitized.com"));
 
         /// <summary>
         /// The callback url of the application where notification would be received.

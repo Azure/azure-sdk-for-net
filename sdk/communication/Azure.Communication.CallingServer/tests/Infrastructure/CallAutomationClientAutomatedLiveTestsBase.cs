@@ -31,18 +31,11 @@ namespace Azure.Communication.CallingServer
         private ConcurrentDictionary<string, string> _incomingcontextstore;
         private ConcurrentDictionary<string, ServiceBusProcessor> _processorStore;
 
-        private ServiceBusClient _serviceBusClient;
-        private HttpClient _httpClient;
-
         public CallAutomationClientAutomatedLiveTestsBase(bool isAsync) : base(isAsync)
         {
             _eventstore = new Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventBase>>();
             _incomingcontextstore = new ConcurrentDictionary<string, string>();
             _processorStore = new ConcurrentDictionary<string, ServiceBusProcessor>();
-
-            var clientOptions = new ServiceBusClientOptions() { TransportType = ServiceBusTransportType.AmqpWebSockets };
-            _serviceBusClient = new ServiceBusClient(TestEnvironment.ServicebusString, clientOptions);
-            _httpClient = new HttpClient();
 
             SanitizedHeaders.Add("x-ms-content-sha256");
             SanitizedHeaders.Add("X-FORWARDED-HOST");
@@ -50,22 +43,6 @@ namespace Azure.Communication.CallingServer
             JsonPathSanitizers.Add("$..rawId");
             JsonPathSanitizers.Add("$..value");
             UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx, "https://sanitized.skype.com"));
-        }
-
-        [TearDown]
-        public async Task CleanUp()
-        {
-            // cleanup servicebus
-            List<string> unsubList = new List<string>();
-            foreach (var processor in _processorStore)
-            {
-                unsubList.Add(processor.Key);
-            }
-
-            // unsubscribe;
-            var jsonString = JsonConvert.SerializeObject(unsubList);
-            var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-            _ = await _httpClient.PostAsync(TestEnvironment.DispatcherEndpoint + $"/api/servicebuscallback/unsubscribe", content);
         }
 
         public bool SkipCallingServerInteractionLiveTests
@@ -99,10 +76,14 @@ namespace Azure.Communication.CallingServer
             string uniqueId = callerId + recieverId;
 
             // subscribe;
+            var _httpClient = new HttpClient();
             HttpResponseMessage response = await _httpClient.PostAsync(TestEnvironment.DispatcherEndpoint + $"/api/servicebuscallback/subscribe?q={uniqueId}", null);
             response.EnsureSuccessStatusCode();
 
             // create a processor that we can use to process the messages
+            var clientOptions = new ServiceBusClientOptions() { TransportType = ServiceBusTransportType.AmqpWebSockets };
+            var _serviceBusClient = new ServiceBusClient(TestEnvironment.ServicebusString, clientOptions);
+
             var processor = _serviceBusClient.CreateProcessor(uniqueId, new ServiceBusProcessorOptions());
 
             // add handler to process messages

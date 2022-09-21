@@ -1,0 +1,11 @@
+{
+    "Entries": [
+    ],
+    "Variables": {
+        "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://ACS-CallAutomationTestSupporter.communication.azure.com/;accesskey=Kg==",
+        "PMA_Endpoint": "https://sanitized.com",
+        "RandomSeed": "1850712382",
+        "DISPATCHER_ENDPOINT": "https://sanitized.com",
+        "SERVICEBUS_STRING": "https://sanitized.com"
+    }
+}
