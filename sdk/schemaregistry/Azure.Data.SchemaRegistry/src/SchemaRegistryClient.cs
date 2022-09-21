@@ -69,6 +69,7 @@ namespace Azure.Data.SchemaRegistry
         private const string RegisterSchemaScopeName = "SchemaRegistryClient.RegisterSchema";
         private const string GetSchemaIdScopeName = "SchemaRegistryClient.GetSchemaId";
         private const string GetSchemaScopeName = "SchemaRegistryClient.GetSchema";
+        private const string GetSchemaByVersionScopeName = "SchemaRegistryClient.GetSchemaByVersion";
 
         /// <summary>
         /// Registers a schema with the SchemaRegistry service.
@@ -130,7 +131,7 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.Register(groupName, schemaName,format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
                 }
 
-                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName);
+                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion);
 
                 return Response.FromValue(properties, response);
             }
@@ -202,7 +203,7 @@ namespace Azure.Data.SchemaRegistry
                     response = RestClient.QueryIdByContent(groupName, schemaName, format.ContentType, new BinaryData(schemaDefinition).ToStream(), cancellationToken);
                 }
 
-                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName);
+                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion);
 
                 return Response.FromValue(properties, response);
             }
@@ -263,7 +264,7 @@ namespace Azure.Data.SchemaRegistry
 
         private async Task<Response<SchemaRegistrySchema>> GetSchemaInternalAsync(string groupName, string schemaName, int version, bool async, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(GetSchemaScopeName);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(GetSchemaByVersionScopeName);
             scope.Start();
             try
             {
@@ -278,7 +279,7 @@ namespace Azure.Data.SchemaRegistry
                 }
 
                 SchemaFormat format = new SchemaFormat(response.Headers.ContentType.Split('=')[1]);
-                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName);
+                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion);
                 var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
 
                 return Response.FromValue(schema, response);
@@ -307,7 +308,7 @@ namespace Azure.Data.SchemaRegistry
                 }
 
                 SchemaFormat format = new SchemaFormat(response.Headers.ContentType.Split('=')[1]);
-                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName);
+                var properties = new SchemaProperties(format, response.Headers.SchemaId, response.Headers.SchemaGroupName, response.Headers.SchemaName, response.Headers.SchemaVersion);
                 var schema = new SchemaRegistrySchema(properties, BinaryData.FromStream(response.Value).ToString());
 
                 return Response.FromValue(schema, response);
