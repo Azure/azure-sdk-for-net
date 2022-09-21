@@ -7,46 +7,22 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary>
-    /// Days of the week.
-    /// Serialized Name: WeekDay
-    /// </summary>
+    /// <summary> Days of the week. </summary>
     public enum LabServicesDayOfWeek
     {
-        /// <summary>
-        /// Schedule will run on Sunday
-        /// Serialized Name: WeekDay.Sunday
-        /// </summary>
+        /// <summary> Schedule will run on Sunday. </summary>
         Sunday,
-        /// <summary>
-        /// Schedule will run on Monday
-        /// Serialized Name: WeekDay.Monday
-        /// </summary>
+        /// <summary> Schedule will run on Monday. </summary>
         Monday,
-        /// <summary>
-        /// Schedule will run on Tuesday
-        /// Serialized Name: WeekDay.Tuesday
-        /// </summary>
+        /// <summary> Schedule will run on Tuesday. </summary>
         Tuesday,
-        /// <summary>
-        /// Schedule will run on Wednesday
-        /// Serialized Name: WeekDay.Wednesday
-        /// </summary>
+        /// <summary> Schedule will run on Wednesday. </summary>
         Wednesday,
-        /// <summary>
-        /// Schedule will run on Thursday
-        /// Serialized Name: WeekDay.Thursday
-        /// </summary>
+        /// <summary> Schedule will run on Thursday. </summary>
         Thursday,
-        /// <summary>
-        /// Schedule will run on Friday
-        /// Serialized Name: WeekDay.Friday
-        /// </summary>
+        /// <summary> Schedule will run on Friday. </summary>
         Friday,
-        /// <summary>
-        /// Schedule will run on Saturday
-        /// Serialized Name: WeekDay.Saturday
-        /// </summary>
+        /// <summary> Schedule will run on Saturday. </summary>
         Saturday
     }
 }

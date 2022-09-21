@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary>
-    /// Body for a user invite request
-    /// Serialized Name: InviteBody
-    /// </summary>
+    /// <summary> Body for a user invite request. </summary>
     public partial class LabUserInviteRequestContent
     {
         /// <summary> Initializes a new instance of LabUserInviteRequestContent. </summary>
@@ -22,7 +19,6 @@ namespace Azure.ResourceManager.LabServices.Models
 
         /// <summary>
         /// Custom text for the invite email.
-        /// Serialized Name: InviteBody.text
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

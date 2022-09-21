@@ -27,71 +27,23 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="enabledState">
-        /// Is the image enabled
-        /// Serialized Name: Image.properties.enabledState
-        /// </param>
-        /// <param name="provisioningState">
-        /// Current provisioning state of the image.
-        /// Serialized Name: Image.properties.provisioningState
-        /// </param>
-        /// <param name="displayName">
-        /// The image display name.
-        /// Serialized Name: Image.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// A description of the image.
-        /// Serialized Name: Image.properties.description
-        /// </param>
-        /// <param name="iconUri">
-        /// URL of the image icon.
-        /// Serialized Name: Image.properties.iconUrl
-        /// </param>
-        /// <param name="author">
-        /// The image author.
-        /// Serialized Name: Image.properties.author
-        /// </param>
-        /// <param name="osType">
-        /// The OS Type of the image.
-        /// Serialized Name: Image.properties.osType
-        /// </param>
-        /// <param name="plan">
-        /// The ID of marketplace plan associated with the image (optional).
-        /// Serialized Name: Image.properties.plan
-        /// </param>
-        /// <param name="termsStatus">
-        /// The status of image terms of use (enabled = accepted, disabled = not accepted).
-        /// Serialized Name: Image.properties.termsStatus
-        /// </param>
-        /// <param name="offer">
-        /// The ID of an offer associated with the image.
-        /// Serialized Name: Image.properties.offer
-        /// </param>
-        /// <param name="publisher">
-        /// The ID of the publisher of the image.
-        /// Serialized Name: Image.properties.publisher
-        /// </param>
-        /// <param name="sku">
-        /// The image SKU.
-        /// Serialized Name: Image.properties.sku
-        /// </param>
-        /// <param name="version">
-        /// The image version.
-        /// Serialized Name: Image.properties.version
-        /// </param>
-        /// <param name="sharedGalleryId">
-        /// The ID for the image in the shared gallery.
-        /// Serialized Name: Image.properties.sharedGalleryId
-        /// </param>
-        /// <param name="availableRegions">
-        /// The available regions of the image in the shared gallery.
-        /// Serialized Name: Image.properties.availableRegions
-        /// </param>
-        /// <param name="osState">
-        /// The OS State of the image.
-        /// Serialized Name: Image.properties.osState
-        /// </param>
-        internal LabVirtualMachineImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EnableState? enabledState, ProvisioningState? provisioningState, string displayName, string description, Uri iconUri, string author, OSType? osType, string plan, EnableState? termsStatus, string offer, string publisher, string sku, string version, ResourceIdentifier sharedGalleryId, IList<AzureLocation> availableRegions, OSState? osState) : base(id, name, resourceType, systemData)
+        /// <param name="enabledState"> Is the image enabled. </param>
+        /// <param name="provisioningState"> Current provisioning state of the image. </param>
+        /// <param name="displayName"> The image display name. </param>
+        /// <param name="description"> A description of the image. </param>
+        /// <param name="iconUri"> URL of the image icon. </param>
+        /// <param name="author"> The image author. </param>
+        /// <param name="osType"> The OS Type of the image. </param>
+        /// <param name="plan"> The ID of marketplace plan associated with the image (optional). </param>
+        /// <param name="termsStatus"> The status of image terms of use (enabled = accepted, disabled = not accepted). </param>
+        /// <param name="offer"> The ID of an offer associated with the image. </param>
+        /// <param name="publisher"> The ID of the publisher of the image. </param>
+        /// <param name="sku"> The image SKU. </param>
+        /// <param name="version"> The image version. </param>
+        /// <param name="sharedGalleryId"> The ID for the image in the shared gallery. </param>
+        /// <param name="availableRegions"> The available regions of the image in the shared gallery. </param>
+        /// <param name="osState"> The OS State of the image. </param>
+        internal LabVirtualMachineImageData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, LabServicesEnableState? enabledState, LabServicesProvisioningState? provisioningState, string displayName, string description, Uri iconUri, string author, LabVirtualMachineImageOSType? osType, string plan, LabServicesEnableState? termsStatus, string offer, string publisher, string sku, string version, ResourceIdentifier sharedGalleryId, IList<AzureLocation> availableRegions, LabVirtualMachineImageOSState? osState) : base(id, name, resourceType, systemData)
         {
             EnabledState = enabledState;
             ProvisioningState = provisioningState;
@@ -111,85 +63,37 @@ namespace Azure.ResourceManager.LabServices
             OSState = osState;
         }
 
-        /// <summary>
-        /// Is the image enabled
-        /// Serialized Name: Image.properties.enabledState
-        /// </summary>
-        public EnableState? EnabledState { get; set; }
-        /// <summary>
-        /// Current provisioning state of the image.
-        /// Serialized Name: Image.properties.provisioningState
-        /// </summary>
-        public ProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// The image display name.
-        /// Serialized Name: Image.properties.displayName
-        /// </summary>
+        /// <summary> Is the image enabled. </summary>
+        public LabServicesEnableState? EnabledState { get; set; }
+        /// <summary> Current provisioning state of the image. </summary>
+        public LabServicesProvisioningState? ProvisioningState { get; }
+        /// <summary> The image display name. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// A description of the image.
-        /// Serialized Name: Image.properties.description
-        /// </summary>
+        /// <summary> A description of the image. </summary>
         public string Description { get; }
-        /// <summary>
-        /// URL of the image icon.
-        /// Serialized Name: Image.properties.iconUrl
-        /// </summary>
+        /// <summary> URL of the image icon. </summary>
         public Uri IconUri { get; }
-        /// <summary>
-        /// The image author.
-        /// Serialized Name: Image.properties.author
-        /// </summary>
+        /// <summary> The image author. </summary>
         public string Author { get; }
-        /// <summary>
-        /// The OS Type of the image.
-        /// Serialized Name: Image.properties.osType
-        /// </summary>
-        public OSType? OSType { get; }
-        /// <summary>
-        /// The ID of marketplace plan associated with the image (optional).
-        /// Serialized Name: Image.properties.plan
-        /// </summary>
+        /// <summary> The OS Type of the image. </summary>
+        public LabVirtualMachineImageOSType? OSType { get; }
+        /// <summary> The ID of marketplace plan associated with the image (optional). </summary>
         public string Plan { get; }
-        /// <summary>
-        /// The status of image terms of use (enabled = accepted, disabled = not accepted).
-        /// Serialized Name: Image.properties.termsStatus
-        /// </summary>
-        public EnableState? TermsStatus { get; }
-        /// <summary>
-        /// The ID of an offer associated with the image.
-        /// Serialized Name: Image.properties.offer
-        /// </summary>
+        /// <summary> The status of image terms of use (enabled = accepted, disabled = not accepted). </summary>
+        public LabServicesEnableState? TermsStatus { get; }
+        /// <summary> The ID of an offer associated with the image. </summary>
         public string Offer { get; }
-        /// <summary>
-        /// The ID of the publisher of the image.
-        /// Serialized Name: Image.properties.publisher
-        /// </summary>
+        /// <summary> The ID of the publisher of the image. </summary>
         public string Publisher { get; }
-        /// <summary>
-        /// The image SKU.
-        /// Serialized Name: Image.properties.sku
-        /// </summary>
+        /// <summary> The image SKU. </summary>
         public string Sku { get; }
-        /// <summary>
-        /// The image version.
-        /// Serialized Name: Image.properties.version
-        /// </summary>
+        /// <summary> The image version. </summary>
         public string Version { get; }
-        /// <summary>
-        /// The ID for the image in the shared gallery.
-        /// Serialized Name: Image.properties.sharedGalleryId
-        /// </summary>
+        /// <summary> The ID for the image in the shared gallery. </summary>
         public ResourceIdentifier SharedGalleryId { get; }
-        /// <summary>
-        /// The available regions of the image in the shared gallery.
-        /// Serialized Name: Image.properties.availableRegions
-        /// </summary>
+        /// <summary> The available regions of the image in the shared gallery. </summary>
         public IList<AzureLocation> AvailableRegions { get; }
-        /// <summary>
-        /// The OS State of the image.
-        /// Serialized Name: Image.properties.osState
-        /// </summary>
-        public OSState? OSState { get; }
+        /// <summary> The OS State of the image. </summary>
+        public LabVirtualMachineImageOSState? OSState { get; }
     }
 }

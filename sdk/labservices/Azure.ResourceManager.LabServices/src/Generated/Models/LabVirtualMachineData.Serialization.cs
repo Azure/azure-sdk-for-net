@@ -29,11 +29,11 @@ namespace Azure.ResourceManager.LabServices
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<VirtualMachineState> state = default;
-            Optional<VirtualMachineConnectionProfile> connectionProfile = default;
+            Optional<LabServicesProvisioningState> provisioningState = default;
+            Optional<LabVirtualMachineState> state = default;
+            Optional<LabVirtualMachineConnectionProfile> connectionProfile = default;
             Optional<string> claimedByUserId = default;
-            Optional<VirtualMachineType> vmType = default;
+            Optional<LabVirtualMachineType> vmType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToProvisioningState();
+                            provisioningState = property0.Value.GetString().ToLabServicesProvisioningState();
                             continue;
                         }
                         if (property0.NameEquals("state"))
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = property0.Value.GetString().ToVirtualMachineState();
+                            state = property0.Value.GetString().ToLabVirtualMachineState();
                             continue;
                         }
                         if (property0.NameEquals("connectionProfile"))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            connectionProfile = VirtualMachineConnectionProfile.DeserializeVirtualMachineConnectionProfile(property0.Value);
+                            connectionProfile = LabVirtualMachineConnectionProfile.DeserializeLabVirtualMachineConnectionProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("claimedByUserId"))
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            vmType = property0.Value.GetString().ToVirtualMachineType();
+                            vmType = property0.Value.GetString().ToLabVirtualMachineType();
                             continue;
                         }
                     }

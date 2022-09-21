@@ -43,7 +43,11 @@ namespace Azure.ResourceManager.LabServices
             if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes");
-                writer.WriteStringValue(Notes);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Notes);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Notes.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -59,8 +63,8 @@ namespace Azure.ResourceManager.LabServices
             Optional<DateTimeOffset> stopAt = default;
             Optional<LabServicesRecurrencePattern> recurrencePattern = default;
             Optional<string> timeZoneId = default;
-            Optional<string> notes = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<BinaryData> notes = default;
+            Optional<LabServicesProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -134,7 +138,12 @@ namespace Azure.ResourceManager.LabServices
                         }
                         if (property0.NameEquals("notes"))
                         {
-                            notes = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            notes = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -144,7 +153,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToProvisioningState();
+                            provisioningState = property0.Value.GetString().ToLabServicesProvisioningState();
                             continue;
                         }
                     }

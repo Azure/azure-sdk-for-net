@@ -11,10 +11,7 @@ using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary>
-    /// Paged list of schedules.
-    /// Serialized Name: PagedSchedules
-    /// </summary>
+    /// <summary> Paged list of schedules. </summary>
     internal partial class PagedSchedules
     {
         /// <summary> Initializes a new instance of PagedSchedules. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of PagedSchedules. </summary>
-        /// <param name="value">
-        /// The array page of schedule results.
-        /// Serialized Name: PagedSchedules.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to get the next page of schedule results.
-        /// Serialized Name: PagedSchedules.nextLink
-        /// </param>
+        /// <param name="value"> The array page of schedule results. </param>
+        /// <param name="nextLink"> The link to get the next page of schedule results. </param>
         internal PagedSchedules(IReadOnlyList<LabServicesScheduleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The array page of schedule results.
-        /// Serialized Name: PagedSchedules.value
-        /// </summary>
+        /// <summary> The array page of schedule results. </summary>
         public IReadOnlyList<LabServicesScheduleData> Value { get; }
-        /// <summary>
-        /// The link to get the next page of schedule results.
-        /// Serialized Name: PagedSchedules.nextLink
-        /// </summary>
+        /// <summary> The link to get the next page of schedule results. </summary>
         public string NextLink { get; }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary>
-    /// Lab services virtual machine image for updates.
-    /// Serialized Name: ImageUpdate
-    /// </summary>
+    /// <summary> Lab services virtual machine image for updates. </summary>
     public partial class LabVirtualMachineImagePatch
     {
         /// <summary> Initializes a new instance of LabVirtualMachineImagePatch. </summary>
@@ -18,10 +15,7 @@ namespace Azure.ResourceManager.LabServices.Models
         {
         }
 
-        /// <summary>
-        /// Is the image enabled
-        /// Serialized Name: ImageUpdate.properties.enabledState
-        /// </summary>
-        public EnableState? EnabledState { get; set; }
+        /// <summary> Is the image enabled. </summary>
+        public LabServicesEnableState? EnabledState { get; set; }
     }
 }

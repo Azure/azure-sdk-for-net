@@ -25,31 +25,13 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="startOn">
-        /// When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead.
-        /// Serialized Name: Schedule.properties.startAt
-        /// </param>
-        /// <param name="stopOn">
-        /// When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead.
-        /// Serialized Name: Schedule.properties.stopAt
-        /// </param>
-        /// <param name="recurrencePattern">
-        /// The recurrence pattern of the scheduled actions.
-        /// Serialized Name: Schedule.properties.recurrencePattern
-        /// </param>
-        /// <param name="timeZoneId">
-        /// The IANA timezone id for the schedule.
-        /// Serialized Name: Schedule.properties.timeZoneId
-        /// </param>
-        /// <param name="notes">
-        /// Notes for this schedule.
-        /// Serialized Name: Schedule.properties.notes
-        /// </param>
-        /// <param name="provisioningState">
-        /// Current provisioning state of the schedule.
-        /// Serialized Name: Schedule.properties.provisioningState
-        /// </param>
-        internal LabServicesScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? stopOn, LabServicesRecurrencePattern recurrencePattern, string timeZoneId, string notes, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="startOn"> When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead. </param>
+        /// <param name="stopOn"> When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead. </param>
+        /// <param name="recurrencePattern"> The recurrence pattern of the scheduled actions. </param>
+        /// <param name="timeZoneId"> The IANA timezone id for the schedule. </param>
+        /// <param name="notes"> Notes for this schedule. </param>
+        /// <param name="provisioningState"> Current provisioning state of the schedule. </param>
+        internal LabServicesScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? stopOn, LabServicesRecurrencePattern recurrencePattern, string timeZoneId, BinaryData notes, LabServicesProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             StartOn = startOn;
             StopOn = stopOn;
@@ -59,35 +41,46 @@ namespace Azure.ResourceManager.LabServices
             ProvisioningState = provisioningState;
         }
 
-        /// <summary>
-        /// When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead.
-        /// Serialized Name: Schedule.properties.startAt
-        /// </summary>
+        /// <summary> When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead. </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead.
-        /// Serialized Name: Schedule.properties.stopAt
-        /// </summary>
+        /// <summary> When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead. </summary>
         public DateTimeOffset? StopOn { get; set; }
-        /// <summary>
-        /// The recurrence pattern of the scheduled actions.
-        /// Serialized Name: Schedule.properties.recurrencePattern
-        /// </summary>
+        /// <summary> The recurrence pattern of the scheduled actions. </summary>
         public LabServicesRecurrencePattern RecurrencePattern { get; set; }
-        /// <summary>
-        /// The IANA timezone id for the schedule.
-        /// Serialized Name: Schedule.properties.timeZoneId
-        /// </summary>
+        /// <summary> The IANA timezone id for the schedule. </summary>
         public string TimeZoneId { get; set; }
         /// <summary>
         /// Notes for this schedule.
-        /// Serialized Name: Schedule.properties.notes
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
         /// </summary>
-        public string Notes { get; set; }
-        /// <summary>
-        /// Current provisioning state of the schedule.
-        /// Serialized Name: Schedule.properties.provisioningState
-        /// </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public BinaryData Notes { get; set; }
+        /// <summary> Current provisioning state of the schedule. </summary>
+        public LabServicesProvisioningState? ProvisioningState { get; }
     }
 }

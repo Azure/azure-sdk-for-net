@@ -16,10 +16,7 @@ namespace Azure.ResourceManager.LabServices
     public partial class LabUserData : ResourceData
     {
         /// <summary> Initializes a new instance of LabUserData. </summary>
-        /// <param name="email">
-        /// Email address of the user.
-        /// Serialized Name: User.properties.email
-        /// </param>
+        /// <param name="email"> Email address of the user. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="email"/> is null. </exception>
         public LabUserData(string email)
         {
@@ -36,39 +33,15 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="additionalUsageQuota">
-        /// The amount of usage quota time the user gets in addition to the lab usage quota.
-        /// Serialized Name: User.properties.additionalUsageQuota
-        /// </param>
-        /// <param name="provisioningState">
-        /// Current provisioning state of the user resource.
-        /// Serialized Name: User.properties.provisioningState
-        /// </param>
-        /// <param name="displayName">
-        /// Display name of the user, for example user&apos;s full name.
-        /// Serialized Name: User.properties.displayName
-        /// </param>
-        /// <param name="email">
-        /// Email address of the user.
-        /// Serialized Name: User.properties.email
-        /// </param>
-        /// <param name="registrationState">
-        /// State of the user&apos;s registration within the lab.
-        /// Serialized Name: User.properties.registrationState
-        /// </param>
-        /// <param name="invitationState">
-        /// State of the invitation message for the user.
-        /// Serialized Name: User.properties.invitationState
-        /// </param>
-        /// <param name="invitationSentOn">
-        /// Date and time when the invitation message was sent to the user.
-        /// Serialized Name: User.properties.invitationSent
-        /// </param>
-        /// <param name="totalUsage">
-        /// How long the user has used their virtual machines in this lab.
-        /// Serialized Name: User.properties.totalUsage
-        /// </param>
-        internal LabUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan? additionalUsageQuota, ProvisioningState? provisioningState, string displayName, string email, RegistrationState? registrationState, InvitationState? invitationState, DateTimeOffset? invitationSentOn, TimeSpan? totalUsage) : base(id, name, resourceType, systemData)
+        /// <param name="additionalUsageQuota"> The amount of usage quota time the user gets in addition to the lab usage quota. </param>
+        /// <param name="provisioningState"> Current provisioning state of the user resource. </param>
+        /// <param name="displayName"> Display name of the user, for example user&apos;s full name. </param>
+        /// <param name="email"> Email address of the user. </param>
+        /// <param name="registrationState"> State of the user&apos;s registration within the lab. </param>
+        /// <param name="invitationState"> State of the invitation message for the user. </param>
+        /// <param name="invitationSentOn"> Date and time when the invitation message was sent to the user. </param>
+        /// <param name="totalUsage"> How long the user has used their virtual machines in this lab. </param>
+        internal LabUserData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TimeSpan? additionalUsageQuota, LabServicesProvisioningState? provisioningState, string displayName, string email, LabRegistrationState? registrationState, LabUserInvitationState? invitationState, DateTimeOffset? invitationSentOn, TimeSpan? totalUsage) : base(id, name, resourceType, systemData)
         {
             AdditionalUsageQuota = additionalUsageQuota;
             ProvisioningState = provisioningState;
@@ -80,45 +53,21 @@ namespace Azure.ResourceManager.LabServices
             TotalUsage = totalUsage;
         }
 
-        /// <summary>
-        /// The amount of usage quota time the user gets in addition to the lab usage quota.
-        /// Serialized Name: User.properties.additionalUsageQuota
-        /// </summary>
+        /// <summary> The amount of usage quota time the user gets in addition to the lab usage quota. </summary>
         public TimeSpan? AdditionalUsageQuota { get; set; }
-        /// <summary>
-        /// Current provisioning state of the user resource.
-        /// Serialized Name: User.properties.provisioningState
-        /// </summary>
-        public ProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// Display name of the user, for example user&apos;s full name.
-        /// Serialized Name: User.properties.displayName
-        /// </summary>
+        /// <summary> Current provisioning state of the user resource. </summary>
+        public LabServicesProvisioningState? ProvisioningState { get; }
+        /// <summary> Display name of the user, for example user&apos;s full name. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// Email address of the user.
-        /// Serialized Name: User.properties.email
-        /// </summary>
+        /// <summary> Email address of the user. </summary>
         public string Email { get; set; }
-        /// <summary>
-        /// State of the user&apos;s registration within the lab.
-        /// Serialized Name: User.properties.registrationState
-        /// </summary>
-        public RegistrationState? RegistrationState { get; }
-        /// <summary>
-        /// State of the invitation message for the user.
-        /// Serialized Name: User.properties.invitationState
-        /// </summary>
-        public InvitationState? InvitationState { get; }
-        /// <summary>
-        /// Date and time when the invitation message was sent to the user.
-        /// Serialized Name: User.properties.invitationSent
-        /// </summary>
+        /// <summary> State of the user&apos;s registration within the lab. </summary>
+        public LabRegistrationState? RegistrationState { get; }
+        /// <summary> State of the invitation message for the user. </summary>
+        public LabUserInvitationState? InvitationState { get; }
+        /// <summary> Date and time when the invitation message was sent to the user. </summary>
         public DateTimeOffset? InvitationSentOn { get; }
-        /// <summary>
-        /// How long the user has used their virtual machines in this lab.
-        /// Serialized Name: User.properties.totalUsage
-        /// </summary>
+        /// <summary> How long the user has used their virtual machines in this lab. </summary>
         public TimeSpan? TotalUsage { get; }
     }
 }

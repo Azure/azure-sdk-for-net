@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labPlanName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabVirtualMachineListResult>> ListByLabPlanAsync(string subscriptionId, string resourceGroupName, string labPlanName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PagedImages>> ListByLabPlanAsync(string subscriptionId, string resourceGroupName, string labPlanName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        LabVirtualMachineListResult value = default;
+                        PagedImages value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LabVirtualMachineListResult.DeserializeLabVirtualMachineListResult(document.RootElement);
+                        value = PagedImages.DeserializePagedImages(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labPlanName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabVirtualMachineListResult> ListByLabPlan(string subscriptionId, string resourceGroupName, string labPlanName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<PagedImages> ListByLabPlan(string subscriptionId, string resourceGroupName, string labPlanName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        LabVirtualMachineListResult value = default;
+                        PagedImages value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LabVirtualMachineListResult.DeserializeLabVirtualMachineListResult(document.RootElement);
+                        value = PagedImages.DeserializePagedImages(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labPlanName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<LabVirtualMachineListResult>> ListByLabPlanNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string labPlanName, string filter = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PagedImages>> ListByLabPlanNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string labPlanName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -430,9 +430,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        LabVirtualMachineListResult value = default;
+                        PagedImages value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = LabVirtualMachineListResult.DeserializeLabVirtualMachineListResult(document.RootElement);
+                        value = PagedImages.DeserializePagedImages(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labPlanName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="labPlanName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<LabVirtualMachineListResult> ListByLabPlanNextPage(string nextLink, string subscriptionId, string resourceGroupName, string labPlanName, string filter = null, CancellationToken cancellationToken = default)
+        public Response<PagedImages> ListByLabPlanNextPage(string nextLink, string subscriptionId, string resourceGroupName, string labPlanName, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -462,9 +462,9 @@ namespace Azure.ResourceManager.LabServices
             {
                 case 200:
                     {
-                        LabVirtualMachineListResult value = default;
+                        PagedImages value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = LabVirtualMachineListResult.DeserializeLabVirtualMachineListResult(document.RootElement);
+                        value = PagedImages.DeserializePagedImages(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

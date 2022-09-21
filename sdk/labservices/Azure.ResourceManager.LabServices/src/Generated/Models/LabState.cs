@@ -7,36 +7,18 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary>
-    /// The state of a virtual machine.
-    /// Serialized Name: LabState
-    /// </summary>
+    /// <summary> The state of a virtual machine. </summary>
     public enum LabState
     {
-        /// <summary>
-        /// The lab is currently in draft (has not been published).
-        /// Serialized Name: LabState.Draft
-        /// </summary>
+        /// <summary> The lab is currently in draft (has not been published). </summary>
         Draft,
-        /// <summary>
-        /// The lab is publishing.
-        /// Serialized Name: LabState.Publishing
-        /// </summary>
+        /// <summary> The lab is publishing. </summary>
         Publishing,
-        /// <summary>
-        /// The lab is scaling.
-        /// Serialized Name: LabState.Scaling
-        /// </summary>
+        /// <summary> The lab is scaling. </summary>
         Scaling,
-        /// <summary>
-        /// The lab is syncing users.
-        /// Serialized Name: LabState.Syncing
-        /// </summary>
+        /// <summary> The lab is syncing users. </summary>
         Syncing,
-        /// <summary>
-        /// The lab has been published.
-        /// Serialized Name: LabState.Published
-        /// </summary>
+        /// <summary> The lab has been published. </summary>
         Published
     }
 }

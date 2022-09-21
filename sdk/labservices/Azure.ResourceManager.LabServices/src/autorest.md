@@ -16,37 +16,63 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug: 
-  show-serialized-names: true
-
 rename-mapping:
   AvailableLabServicesSku.locations: -|azure-location
   Image.properties.availableRegions: -|azure-location
   InviteBody.text: -|any
   LabPlan.properties.allowedRegions: -|azure-location
   LabPlanUpdate.properties.allowedRegions: -|azure-location
+  RosterProfile.lmsInstance: -|uri
+  RosterProfile.ltiRosterEndpoint: -|uri
+  ScheduleUpdate.properties.notes: -|any
   Usage.id: -|arm-id
   User.properties.invitationSent: InvitationSentOn
-  ConnectionProfile: LabVirtualMachineConnectionProfile
+  VirtualMachineConnectionProfile.privateIpAddress: -|ip-address
+  AutoShutdownProfile: LabAutoShutdownProfile
+  ConnectionProfile: LabConnectionProfile
+  ConnectionType: LabVirtualMachineConnectionType
+  CreateOption: LabVirtualMachineCreateOption
   Credentials: LabVirtualMachineCredential
   Image: LabVirtualMachineImage
   ImageReference: LabVirtualMachineImageReference
   InviteBody: LabUserInviteRequestContent
+  InvitationState: LabUserInvitationState
   LabServicesSkuCapacity: AvailableLabServicesSkuCapacity
-  LabServicesSkuCapabilities: AvailableLabServicesSkuCapabilities
+  LabServicesSkuCapabilities: AvailableLabServicesSkuCapability
   LabServicesSkuCost: AvailableLabServicesSkuCost
   LabServicesSkuRestrictions: AvailableLabServicesSkuRestrictions
-  PagedLabServicesSkus: AvailableLabServicesSkuList
+  ListUsagesResult: LabServicesUsageListResult
+  OsState: LabVirtualMachineImageOSState
+  OsType: LabVirtualMachineImageOSType
+  ResetPasswordBody: LabVirtualMachineResetPasswordContent
+  RegistrationState: LabRegistrationState
+  RestrictionReasonCode: LabServicesSkuRestrictionReasonCode
+  RestrictionType: LabServicesSkuRestrictionType
+  RosterProfile: LabRosterProfile
+  SaveImageBody: LabVirtualMachineImageContent
   ScaleType: LabServicesSkuCapacityScaleType
-  PagedImages: LabVirtualMachineListResult
+  SecurityProfile: LabSecurityProfile
+  ShutdownOnIdleMode: LabVirtualMachineShutdownOnIdleMode
+  SupportInfo: LabPlanSupportInfo
+  TrackedResourceUpdate: LabServicesPatchBaseInfo
   User: LabUser
   VirtualMachine: LabVirtualMachine
+  VirtualMachineAdditionalCapabilities: LabVirtualMachineAdditionalCapability
+  VirtualMachineConnectionProfile: LabVirtualMachineConnectionProfile
+  VirtualMachineProfile: LabVirtualMachineProfile
+  VirtualMachineState: LabVirtualMachineState
+  VirtualMachineType: LabVirtualMachineType
   WeekDay: LabServicesDayOfWeek
 
 prepend-rp-prefix:
+  - EnableState
   - Image
-  - Schedule
+  - ProvisioningState
+  - RecurrenceFrequency
   - RecurrencePattern
+  - Schedule
+  - UsageName
+  - UsageUnit
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -77,6 +103,9 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+override-operation-name:
+  Usages_ListByLocation: GetUsages
 
 directive:
   - remove-operation: OperationResults_Get

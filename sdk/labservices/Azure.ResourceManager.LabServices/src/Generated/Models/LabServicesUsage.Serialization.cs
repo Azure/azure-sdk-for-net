@@ -16,8 +16,8 @@ namespace Azure.ResourceManager.LabServices.Models
         {
             Optional<long> currentValue = default;
             Optional<long> limit = default;
-            Optional<UsageUnit> unit = default;
-            Optional<UsageName> name = default;
+            Optional<LabServicesUsageUnit> unit = default;
+            Optional<LabServicesUsageName> name = default;
             Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    unit = new UsageUnit(property.Value.GetString());
+                    unit = new LabServicesUsageUnit(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    name = UsageName.DeserializeUsageName(property.Value);
+                    name = LabServicesUsageName.DeserializeLabServicesUsageName(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

@@ -5,63 +5,51 @@
 
 #nullable disable
 
+using System;
+using System.Net;
+
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary>
-    /// Connection profile for how users connect to lab virtual machines.
-    /// Serialized Name: ConnectionProfile
-    /// </summary>
+    /// <summary> The connection information for the virtual machine. </summary>
     public partial class LabVirtualMachineConnectionProfile
     {
         /// <summary> Initializes a new instance of LabVirtualMachineConnectionProfile. </summary>
-        public LabVirtualMachineConnectionProfile()
+        internal LabVirtualMachineConnectionProfile()
         {
         }
 
         /// <summary> Initializes a new instance of LabVirtualMachineConnectionProfile. </summary>
-        /// <param name="webSshAccess">
-        /// The enabled access level for Web Access over SSH.
-        /// Serialized Name: ConnectionProfile.webSshAccess
-        /// </param>
-        /// <param name="webRdpAccess">
-        /// The enabled access level for Web Access over RDP.
-        /// Serialized Name: ConnectionProfile.webRdpAccess
-        /// </param>
-        /// <param name="clientSshAccess">
-        /// The enabled access level for Client Access over SSH.
-        /// Serialized Name: ConnectionProfile.clientSshAccess
-        /// </param>
-        /// <param name="clientRdpAccess">
-        /// The enabled access level for Client Access over RDP.
-        /// Serialized Name: ConnectionProfile.clientRdpAccess
-        /// </param>
-        internal LabVirtualMachineConnectionProfile(ConnectionType? webSshAccess, ConnectionType? webRdpAccess, ConnectionType? clientSshAccess, ConnectionType? clientRdpAccess)
+        /// <param name="privateIPAddress"> The private IP address of the virtual machine. </param>
+        /// <param name="sshAuthority"> Port and host name separated by semicolon for connecting via SSH protocol to the virtual machine. </param>
+        /// <param name="sshInBrowserUri"> URL for connecting via SSH protocol to the virtual machine in browser. </param>
+        /// <param name="rdpAuthority"> Port and host name separated by semicolon for connecting via RDP protocol to the virtual machine. </param>
+        /// <param name="rdpInBrowserUri"> URL for connecting via RDP protocol to the virtual machine in browser. </param>
+        /// <param name="adminUsername"> The username used to log on to the virtual machine as admin. </param>
+        /// <param name="nonAdminUsername"> The username used to log on to the virtual machine as non-admin, if one exists. </param>
+        internal LabVirtualMachineConnectionProfile(IPAddress privateIPAddress, string sshAuthority, Uri sshInBrowserUri, string rdpAuthority, Uri rdpInBrowserUri, string adminUsername, string nonAdminUsername)
         {
-            WebSshAccess = webSshAccess;
-            WebRdpAccess = webRdpAccess;
-            ClientSshAccess = clientSshAccess;
-            ClientRdpAccess = clientRdpAccess;
+            PrivateIPAddress = privateIPAddress;
+            SshAuthority = sshAuthority;
+            SshInBrowserUri = sshInBrowserUri;
+            RdpAuthority = rdpAuthority;
+            RdpInBrowserUri = rdpInBrowserUri;
+            AdminUsername = adminUsername;
+            NonAdminUsername = nonAdminUsername;
         }
 
-        /// <summary>
-        /// The enabled access level for Web Access over SSH.
-        /// Serialized Name: ConnectionProfile.webSshAccess
-        /// </summary>
-        public ConnectionType? WebSshAccess { get; set; }
-        /// <summary>
-        /// The enabled access level for Web Access over RDP.
-        /// Serialized Name: ConnectionProfile.webRdpAccess
-        /// </summary>
-        public ConnectionType? WebRdpAccess { get; set; }
-        /// <summary>
-        /// The enabled access level for Client Access over SSH.
-        /// Serialized Name: ConnectionProfile.clientSshAccess
-        /// </summary>
-        public ConnectionType? ClientSshAccess { get; set; }
-        /// <summary>
-        /// The enabled access level for Client Access over RDP.
-        /// Serialized Name: ConnectionProfile.clientRdpAccess
-        /// </summary>
-        public ConnectionType? ClientRdpAccess { get; set; }
+        /// <summary> The private IP address of the virtual machine. </summary>
+        public IPAddress PrivateIPAddress { get; }
+        /// <summary> Port and host name separated by semicolon for connecting via SSH protocol to the virtual machine. </summary>
+        public string SshAuthority { get; }
+        /// <summary> URL for connecting via SSH protocol to the virtual machine in browser. </summary>
+        public Uri SshInBrowserUri { get; }
+        /// <summary> Port and host name separated by semicolon for connecting via RDP protocol to the virtual machine. </summary>
+        public string RdpAuthority { get; }
+        /// <summary> URL for connecting via RDP protocol to the virtual machine in browser. </summary>
+        public Uri RdpInBrowserUri { get; }
+        /// <summary> The username used to log on to the virtual machine as admin. </summary>
+        public string AdminUsername { get; }
+        /// <summary> The username used to log on to the virtual machine as non-admin, if one exists. </summary>
+        public string NonAdminUsername { get; }
     }
 }

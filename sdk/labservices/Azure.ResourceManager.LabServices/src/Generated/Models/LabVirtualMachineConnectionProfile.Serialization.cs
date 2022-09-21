@@ -5,89 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabVirtualMachineConnectionProfile : IUtf8JsonSerializable
+    public partial class LabVirtualMachineConnectionProfile
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(WebSshAccess))
-            {
-                writer.WritePropertyName("webSshAccess");
-                writer.WriteStringValue(WebSshAccess.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(WebRdpAccess))
-            {
-                writer.WritePropertyName("webRdpAccess");
-                writer.WriteStringValue(WebRdpAccess.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(ClientSshAccess))
-            {
-                writer.WritePropertyName("clientSshAccess");
-                writer.WriteStringValue(ClientSshAccess.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(ClientRdpAccess))
-            {
-                writer.WritePropertyName("clientRdpAccess");
-                writer.WriteStringValue(ClientRdpAccess.Value.ToSerialString());
-            }
-            writer.WriteEndObject();
-        }
-
         internal static LabVirtualMachineConnectionProfile DeserializeLabVirtualMachineConnectionProfile(JsonElement element)
         {
-            Optional<ConnectionType> webSshAccess = default;
-            Optional<ConnectionType> webRdpAccess = default;
-            Optional<ConnectionType> clientSshAccess = default;
-            Optional<ConnectionType> clientRdpAccess = default;
+            Optional<IPAddress> privateIPAddress = default;
+            Optional<string> sshAuthority = default;
+            Optional<Uri> sshInBrowserUrl = default;
+            Optional<string> rdpAuthority = default;
+            Optional<Uri> rdpInBrowserUrl = default;
+            Optional<string> adminUsername = default;
+            Optional<string> nonAdminUsername = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("webSshAccess"))
+                if (property.NameEquals("privateIpAddress"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    webSshAccess = property.Value.GetString().ToConnectionType();
+                    privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("webRdpAccess"))
+                if (property.NameEquals("sshAuthority"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    webRdpAccess = property.Value.GetString().ToConnectionType();
+                    sshAuthority = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("clientSshAccess"))
+                if (property.NameEquals("sshInBrowserUrl"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        sshInBrowserUrl = null;
                         continue;
                     }
-                    clientSshAccess = property.Value.GetString().ToConnectionType();
+                    sshInBrowserUrl = new Uri(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("clientRdpAccess"))
+                if (property.NameEquals("rdpAuthority"))
+                {
+                    rdpAuthority = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("rdpInBrowserUrl"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        rdpInBrowserUrl = null;
                         continue;
                     }
-                    clientRdpAccess = property.Value.GetString().ToConnectionType();
+                    rdpInBrowserUrl = new Uri(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("adminUsername"))
+                {
+                    adminUsername = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("nonAdminUsername"))
+                {
+                    nonAdminUsername = property.Value.GetString();
                     continue;
                 }
             }
-            return new LabVirtualMachineConnectionProfile(Optional.ToNullable(webSshAccess), Optional.ToNullable(webRdpAccess), Optional.ToNullable(clientSshAccess), Optional.ToNullable(clientRdpAccess));
+            return new LabVirtualMachineConnectionProfile(privateIPAddress.Value, sshAuthority.Value, sshInBrowserUrl.Value, rdpAuthority.Value, rdpInBrowserUrl.Value, adminUsername.Value, nonAdminUsername.Value);
         }
     }
 }

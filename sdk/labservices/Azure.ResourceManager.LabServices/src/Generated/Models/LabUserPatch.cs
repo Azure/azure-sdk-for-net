@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary>
-    /// User of a lab that can register for and use virtual machines within the lab. Used for updates.
-    /// Serialized Name: UserUpdate
-    /// </summary>
+    /// <summary> User of a lab that can register for and use virtual machines within the lab. Used for updates. </summary>
     public partial class LabUserPatch
     {
         /// <summary> Initializes a new instance of LabUserPatch. </summary>
@@ -20,10 +17,7 @@ namespace Azure.ResourceManager.LabServices.Models
         {
         }
 
-        /// <summary>
-        /// The amount of usage quota time the user gets in addition to the lab usage quota.
-        /// Serialized Name: UserUpdate.properties.additionalUsageQuota
-        /// </summary>
+        /// <summary> The amount of usage quota time the user gets in addition to the lab usage quota. </summary>
         public TimeSpan? AdditionalUsageQuota { get; set; }
     }
 }

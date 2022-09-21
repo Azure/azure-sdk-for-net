@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.LabServices
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<TimeSpan> additionalUsageQuota = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<LabServicesProvisioningState> provisioningState = default;
             Optional<string> displayName = default;
             string email = default;
-            Optional<RegistrationState> registrationState = default;
-            Optional<InvitationState> invitationState = default;
+            Optional<LabRegistrationState> registrationState = default;
+            Optional<LabUserInvitationState> invitationState = default;
             Optional<DateTimeOffset> invitationSent = default;
             Optional<TimeSpan> totalUsage = default;
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToProvisioningState();
+                            provisioningState = property0.Value.GetString().ToLabServicesProvisioningState();
                             continue;
                         }
                         if (property0.NameEquals("displayName"))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            registrationState = property0.Value.GetString().ToRegistrationState();
+                            registrationState = property0.Value.GetString().ToLabRegistrationState();
                             continue;
                         }
                         if (property0.NameEquals("invitationState"))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            invitationState = property0.Value.GetString().ToInvitationState();
+                            invitationState = property0.Value.GetString().ToLabUserInvitationState();
                             continue;
                         }
                         if (property0.NameEquals("invitationSent"))

@@ -323,11 +323,11 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="LabServicesUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LabServicesUsage> GetUsagesByLocationAsync(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<LabServicesUsage> GetUsagesAsync(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<LabServicesUsage>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.LabServices
             }
             async Task<Page<LabServicesUsage>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {
@@ -367,11 +367,11 @@ namespace Azure.ResourceManager.LabServices
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="LabServicesUsage" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LabServicesUsage> GetUsagesByLocation(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<LabServicesUsage> GetUsages(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
             Page<LabServicesUsage> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.LabServices
             }
             Page<LabServicesUsage> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsagesByLocation");
+                using var scope = UsagesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetUsages");
                 scope.Start();
                 try
                 {

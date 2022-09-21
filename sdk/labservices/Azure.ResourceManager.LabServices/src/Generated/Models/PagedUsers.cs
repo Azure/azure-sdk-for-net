@@ -11,10 +11,7 @@ using Azure.ResourceManager.LabServices;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary>
-    /// Paged list of users.
-    /// Serialized Name: PagedUsers
-    /// </summary>
+    /// <summary> Paged list of users. </summary>
     internal partial class PagedUsers
     {
         /// <summary> Initializes a new instance of PagedUsers. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of PagedUsers. </summary>
-        /// <param name="value">
-        /// The array page of user results.
-        /// Serialized Name: PagedUsers.value
-        /// </param>
-        /// <param name="nextLink">
-        /// The link to get the next page of image results.
-        /// Serialized Name: PagedUsers.nextLink
-        /// </param>
+        /// <param name="value"> The array page of user results. </param>
+        /// <param name="nextLink"> The link to get the next page of image results. </param>
         internal PagedUsers(IReadOnlyList<LabUserData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary>
-        /// The array page of user results.
-        /// Serialized Name: PagedUsers.value
-        /// </summary>
+        /// <summary> The array page of user results. </summary>
         public IReadOnlyList<LabUserData> Value { get; }
-        /// <summary>
-        /// The link to get the next page of image results.
-        /// Serialized Name: PagedUsers.nextLink
-        /// </summary>
+        /// <summary> The link to get the next page of image results. </summary>
         public string NextLink { get; }
     }
 }

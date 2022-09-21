@@ -18,17 +18,17 @@ namespace Azure.ResourceManager.LabServices
     public partial class LabData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public LabData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.LabServices.Models.AutoShutdownProfile AutoShutdownProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile ConnectionProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile AutoShutdownProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabConnectionProfile ConnectionProfile { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LabPlanId { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabNetworkProfile NetworkProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.RosterProfile RosterProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabRosterProfile RosterProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabSecurityProfile SecurityProfile { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabState? State { get { throw null; } }
         public string Title { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.VirtualMachineProfile VirtualMachineProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile VirtualMachineProfile { get { throw null; } set { } }
     }
     public partial class LabPlanCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LabServices.LabPlanResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabPlanResource>, System.Collections.IEnumerable
     {
@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.LabServices
     {
         public LabPlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> AllowedRegions { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.AutoShutdownProfile DefaultAutoShutdownProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile DefaultConnectionProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile DefaultAutoShutdownProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabConnectionProfile DefaultConnectionProfile { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DefaultNetworkSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Uri LinkedLmsInstance { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SharedGalleryId { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.SupportInfo SupportInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo SupportInfo { get { throw null; } set { } }
     }
     public partial class LabPlanResource : Azure.ResourceManager.ArmResource
     {
@@ -72,8 +72,8 @@ namespace Azure.ResourceManager.LabServices
         public virtual Azure.Response<Azure.ResourceManager.LabServices.LabVirtualMachineImageResource> GetLabVirtualMachineImage(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LabServices.LabVirtualMachineImageResource>> GetLabVirtualMachineImageAsync(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.LabServices.LabVirtualMachineImageCollection GetLabVirtualMachineImages() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation SaveImage(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.SaveImageBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SaveImageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.SaveImageBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation SaveImage(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> SaveImageAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LabServices.LabPlanResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabPlanPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.LabServices.LabPlanResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabPlanPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.LabServices
         public static Azure.ResourceManager.LabServices.LabVirtualMachineResource GetLabVirtualMachineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku> GetSkus(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSku> GetSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.LabServices.Models.LabServicesUsage> GetUsagesByLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.LabServices.Models.LabServicesUsage> GetUsagesByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.LabServices.Models.LabServicesUsage> GetUsages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.LabServices.Models.LabServicesUsage> GetUsagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LabServicesScheduleCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LabServices.LabServicesScheduleResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabServicesScheduleResource>, System.Collections.IEnumerable
     {
@@ -145,8 +145,8 @@ namespace Azure.ResourceManager.LabServices
     public partial class LabServicesScheduleData : Azure.ResourceManager.Models.ResourceData
     {
         public LabServicesScheduleData() { }
-        public string Notes { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public System.BinaryData Notes { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern RecurrencePattern { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.DateTimeOffset? StopOn { get { throw null; } set { } }
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.LabServices
         public string DisplayName { get { throw null; } }
         public string Email { get { throw null; } set { } }
         public System.DateTimeOffset? InvitationSentOn { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.InvitationState? InvitationState { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.RegistrationState? RegistrationState { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabUserInvitationState? InvitationState { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabRegistrationState? RegistrationState { get { throw null; } }
         public System.TimeSpan? TotalUsage { get { throw null; } }
     }
     public partial class LabUserResource : Azure.ResourceManager.ArmResource
@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.LabServices
     {
         public LabVirtualMachineData() { }
         public string ClaimedByUserId { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.VirtualMachineConnectionProfile ConnectionProfile { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.VirtualMachineState? State { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.VirtualMachineType? VmType { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile ConnectionProfile { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineState? State { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineType? VmType { get { throw null; } }
     }
     public partial class LabVirtualMachineImageCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.LabServices.LabVirtualMachineImageResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.LabServices.LabVirtualMachineImageResource>, System.Collections.IEnumerable
     {
@@ -253,17 +253,17 @@ namespace Azure.ResourceManager.LabServices
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> AvailableRegions { get { throw null; } }
         public string Description { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.EnableState? EnabledState { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? EnabledState { get { throw null; } set { } }
         public System.Uri IconUri { get { throw null; } }
         public string Offer { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.OSState? OSState { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.OSType? OSType { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageOSState? OSState { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageOSType? OSType { get { throw null; } }
         public string Plan { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesProvisioningState? ProvisioningState { get { throw null; } }
         public string Publisher { get { throw null; } }
         public Azure.Core.ResourceIdentifier SharedGalleryId { get { throw null; } }
         public string Sku { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.EnableState? TermsStatus { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? TermsStatus { get { throw null; } }
         public string Version { get { throw null; } }
     }
     public partial class LabVirtualMachineImageResource : Azure.ResourceManager.ArmResource
@@ -291,8 +291,8 @@ namespace Azure.ResourceManager.LabServices
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RedeployAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Reimage(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ReimageAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation ResetPassword(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.ResetPasswordBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ResetPasswordAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.ResetPasswordBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation ResetPassword(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> ResetPasswordAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.LabServices.Models.LabVirtualMachineResetPasswordContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Start(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> StartAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Stop(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -301,20 +301,10 @@ namespace Azure.ResourceManager.LabServices
 }
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class AutoShutdownProfile
-    {
-        public AutoShutdownProfile() { }
-        public System.TimeSpan? DisconnectDelay { get { throw null; } set { } }
-        public System.TimeSpan? IdleDelay { get { throw null; } set { } }
-        public System.TimeSpan? NoConnectDelay { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.EnableState? ShutdownOnDisconnect { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.ShutdownOnIdleMode? ShutdownOnIdle { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.EnableState? ShutdownWhenNotConnected { get { throw null; } set { } }
-    }
     public partial class AvailableLabServicesSku
     {
         internal AvailableLabServicesSku() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapabilities> Capabilities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapability> Capabilities { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCapacity Capacity { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuCost> Costs { get { throw null; } }
         public string Family { get { throw null; } }
@@ -325,9 +315,9 @@ namespace Azure.ResourceManager.LabServices.Models
         public string Size { get { throw null; } }
         public Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuTier? Tier { get { throw null; } }
     }
-    public partial class AvailableLabServicesSkuCapabilities
+    public partial class AvailableLabServicesSkuCapability
     {
-        internal AvailableLabServicesSkuCapabilities() { }
+        internal AvailableLabServicesSkuCapability() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
     }
@@ -349,8 +339,8 @@ namespace Azure.ResourceManager.LabServices.Models
     public partial class AvailableLabServicesSkuRestrictions
     {
         internal AvailableLabServicesSkuRestrictions() { }
-        public Azure.ResourceManager.LabServices.Models.RestrictionReasonCode? ReasonCode { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.RestrictionType? RestrictionType { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType? LabServicesSkuRestrictionType { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode? ReasonCode { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -371,28 +361,23 @@ namespace Azure.ResourceManager.LabServices.Models
         public static bool operator !=(Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuTier left, Azure.ResourceManager.LabServices.Models.AvailableLabServicesSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public enum ConnectionType
+    public partial class LabAutoShutdownProfile
     {
-        None = 0,
-        Public = 1,
-        Private = 2,
+        public LabAutoShutdownProfile() { }
+        public System.TimeSpan? DisconnectDelay { get { throw null; } set { } }
+        public System.TimeSpan? IdleDelay { get { throw null; } set { } }
+        public System.TimeSpan? NoConnectDelay { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? ShutdownOnDisconnect { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineShutdownOnIdleMode? ShutdownOnIdle { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? ShutdownWhenNotConnected { get { throw null; } set { } }
     }
-    public enum CreateOption
+    public partial class LabConnectionProfile
     {
-        Image = 0,
-        TemplateVm = 1,
-    }
-    public enum EnableState
-    {
-        Enabled = 0,
-        Disabled = 1,
-    }
-    public enum InvitationState
-    {
-        NotSent = 0,
-        Sending = 1,
-        Sent = 2,
-        Failed = 3,
+        public LabConnectionProfile() { }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionType? ClientRdpAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionType? ClientSshAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionType? WebRdpAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionType? WebSshAccess { get { throw null; } set { } }
     }
     public partial class LabNetworkProfile
     {
@@ -401,29 +386,57 @@ namespace Azure.ResourceManager.LabServices.Models
         public Azure.Core.ResourceIdentifier PublicIPId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
     }
-    public partial class LabPatch : Azure.ResourceManager.LabServices.Models.TrackedResourceUpdate
+    public partial class LabPatch : Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo
     {
         public LabPatch() { }
-        public Azure.ResourceManager.LabServices.Models.AutoShutdownProfile AutoShutdownProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile ConnectionProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile AutoShutdownProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabConnectionProfile ConnectionProfile { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LabPlanId { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.RosterProfile RosterProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.SecurityProfile SecurityProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabRosterProfile RosterProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabSecurityProfile SecurityProfile { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.VirtualMachineProfile VirtualMachineProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineProfile VirtualMachineProfile { get { throw null; } set { } }
     }
-    public partial class LabPlanPatch : Azure.ResourceManager.LabServices.Models.TrackedResourceUpdate
+    public partial class LabPlanPatch : Azure.ResourceManager.LabServices.Models.LabServicesPatchBaseInfo
     {
         public LabPlanPatch() { }
         public System.Collections.Generic.IList<Azure.Core.AzureLocation> AllowedRegions { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.AutoShutdownProfile DefaultAutoShutdownProfile { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineConnectionProfile DefaultConnectionProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabAutoShutdownProfile DefaultAutoShutdownProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabConnectionProfile DefaultConnectionProfile { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DefaultNetworkSubnetId { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Uri LinkedLmsInstance { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SharedGalleryId { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.SupportInfo SupportInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabPlanSupportInfo SupportInfo { get { throw null; } set { } }
+    }
+    public partial class LabPlanSupportInfo
+    {
+        public LabPlanSupportInfo() { }
+        public string Email { get { throw null; } set { } }
+        public string Instructions { get { throw null; } set { } }
+        public string Phone { get { throw null; } set { } }
+        public System.Uri Uri { get { throw null; } set { } }
+    }
+    public enum LabRegistrationState
+    {
+        Registered = 0,
+        NotRegistered = 1,
+    }
+    public partial class LabRosterProfile
+    {
+        public LabRosterProfile() { }
+        public string ActiveDirectoryGroupId { get { throw null; } set { } }
+        public System.Uri LmsInstance { get { throw null; } set { } }
+        public string LtiClientId { get { throw null; } set { } }
+        public string LtiContextId { get { throw null; } set { } }
+        public System.Uri LtiRosterEndpoint { get { throw null; } set { } }
+    }
+    public partial class LabSecurityProfile
+    {
+        public LabSecurityProfile() { }
+        public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? OpenAccess { get { throw null; } set { } }
+        public string RegistrationCode { get { throw null; } }
     }
     public enum LabServicesDayOfWeek
     {
@@ -435,18 +448,42 @@ namespace Azure.ResourceManager.LabServices.Models
         Friday = 5,
         Saturday = 6,
     }
+    public enum LabServicesEnableState
+    {
+        Enabled = 0,
+        Disabled = 1,
+    }
+    public partial class LabServicesPatchBaseInfo
+    {
+        public LabServicesPatchBaseInfo() { }
+        public System.Collections.Generic.IList<string> Tags { get { throw null; } }
+    }
+    public enum LabServicesProvisioningState
+    {
+        Creating = 0,
+        Updating = 1,
+        Deleting = 2,
+        Succeeded = 3,
+        Failed = 4,
+        Locked = 5,
+    }
+    public enum LabServicesRecurrenceFrequency
+    {
+        Daily = 0,
+        Weekly = 1,
+    }
     public partial class LabServicesRecurrencePattern
     {
-        public LabServicesRecurrencePattern(Azure.ResourceManager.LabServices.Models.RecurrenceFrequency frequency, System.DateTimeOffset expireOn) { }
+        public LabServicesRecurrencePattern(Azure.ResourceManager.LabServices.Models.LabServicesRecurrenceFrequency frequency, System.DateTimeOffset expireOn) { }
         public System.DateTimeOffset ExpireOn { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.RecurrenceFrequency Frequency { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesRecurrenceFrequency Frequency { get { throw null; } set { } }
         public int? Interval { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.LabServices.Models.LabServicesDayOfWeek> WeekDays { get { throw null; } }
     }
     public partial class LabServicesSchedulePatch
     {
         public LabServicesSchedulePatch() { }
-        public string Notes { get { throw null; } set { } }
+        public System.BinaryData Notes { get { throw null; } set { } }
         public Azure.ResourceManager.LabServices.Models.LabServicesRecurrencePattern RecurrencePattern { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.DateTimeOffset? StopOn { get { throw null; } set { } }
@@ -480,6 +517,41 @@ namespace Azure.ResourceManager.LabServices.Models
         public static bool operator !=(Azure.ResourceManager.LabServices.Models.LabServicesSkuCapacityScaleType left, Azure.ResourceManager.LabServices.Models.LabServicesSkuCapacityScaleType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LabServicesSkuRestrictionReasonCode : System.IEquatable<Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LabServicesSkuRestrictionReasonCode(string value) { throw null; }
+        public static Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode NotAvailableForSubscription { get { throw null; } }
+        public static Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode QuotaId { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode left, Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode left, Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionReasonCode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LabServicesSkuRestrictionType : System.IEquatable<Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LabServicesSkuRestrictionType(string value) { throw null; }
+        public static Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType Location { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType left, Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType left, Azure.ResourceManager.LabServices.Models.LabServicesSkuRestrictionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public enum LabServicesSkuTier
     {
         Free = 0,
@@ -493,8 +565,32 @@ namespace Azure.ResourceManager.LabServices.Models
         public long? CurrentValue { get { throw null; } }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public long? Limit { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.UsageName Name { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.UsageUnit? Unit { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesUsageName Name { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit? Unit { get { throw null; } }
+    }
+    public partial class LabServicesUsageName
+    {
+        internal LabServicesUsageName() { }
+        public string LocalizedValue { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> SkuInstances { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct LabServicesUsageUnit : System.IEquatable<Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public LabServicesUsageUnit(string value) { throw null; }
+        public static Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit Count { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit left, Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit right) { throw null; }
+        public static implicit operator Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit left, Azure.ResourceManager.LabServices.Models.LabServicesUsageUnit right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public enum LabState
     {
@@ -503,6 +599,13 @@ namespace Azure.ResourceManager.LabServices.Models
         Scaling = 2,
         Syncing = 3,
         Published = 4,
+    }
+    public enum LabUserInvitationState
+    {
+        NotSent = 0,
+        Sending = 1,
+        Sent = 2,
+        Failed = 3,
     }
     public partial class LabUserInviteRequestContent
     {
@@ -516,11 +619,25 @@ namespace Azure.ResourceManager.LabServices.Models
     }
     public partial class LabVirtualMachineConnectionProfile
     {
-        public LabVirtualMachineConnectionProfile() { }
-        public Azure.ResourceManager.LabServices.Models.ConnectionType? ClientRdpAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.ConnectionType? ClientSshAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.ConnectionType? WebRdpAccess { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.ConnectionType? WebSshAccess { get { throw null; } set { } }
+        internal LabVirtualMachineConnectionProfile() { }
+        public string AdminUsername { get { throw null; } }
+        public string NonAdminUsername { get { throw null; } }
+        public System.Net.IPAddress PrivateIPAddress { get { throw null; } }
+        public string RdpAuthority { get { throw null; } }
+        public System.Uri RdpInBrowserUri { get { throw null; } }
+        public string SshAuthority { get { throw null; } }
+        public System.Uri SshInBrowserUri { get { throw null; } }
+    }
+    public enum LabVirtualMachineConnectionType
+    {
+        None = 0,
+        Public = 1,
+        Private = 2,
+    }
+    public enum LabVirtualMachineCreateOption
+    {
+        Image = 0,
+        TemplateVm = 1,
     }
     public partial class LabVirtualMachineCredential
     {
@@ -528,10 +645,26 @@ namespace Azure.ResourceManager.LabServices.Models
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
     }
+    public partial class LabVirtualMachineImageContent
+    {
+        public LabVirtualMachineImageContent() { }
+        public Azure.Core.ResourceIdentifier LabVirtualMachineId { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+    }
+    public enum LabVirtualMachineImageOSState
+    {
+        Generalized = 0,
+        Specialized = 1,
+    }
+    public enum LabVirtualMachineImageOSType
+    {
+        Windows = 0,
+        Linux = 1,
+    }
     public partial class LabVirtualMachineImagePatch
     {
         public LabVirtualMachineImagePatch() { }
-        public Azure.ResourceManager.LabServices.Models.EnableState? EnabledState { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? EnabledState { get { throw null; } set { } }
     }
     public partial class LabVirtualMachineImageReference
     {
@@ -543,165 +676,32 @@ namespace Azure.ResourceManager.LabServices.Models
         public string Sku { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
     }
-    public enum OSState
+    public partial class LabVirtualMachineProfile
     {
-        Generalized = 0,
-        Specialized = 1,
+        public LabVirtualMachineProfile(Azure.ResourceManager.LabServices.Models.LabVirtualMachineCreateOption createOption, Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference imageReference, Azure.ResourceManager.LabServices.Models.LabServicesSku sku, System.TimeSpan usageQuota, Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential adminUser) { }
+        public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? AdditionalCapabilitiesInstallGpuDrivers { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential AdminUser { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineCreateOption CreateOption { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference ImageReference { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential NonAdminUser { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageOSType? OSType { get { throw null; } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesSku Sku { get { throw null; } set { } }
+        public System.TimeSpan UsageQuota { get { throw null; } set { } }
+        public Azure.ResourceManager.LabServices.Models.LabServicesEnableState? UseSharedPassword { get { throw null; } set { } }
     }
-    public enum OSType
+    public partial class LabVirtualMachineResetPasswordContent
     {
-        Windows = 0,
-        Linux = 1,
-    }
-    public enum ProvisioningState
-    {
-        Creating = 0,
-        Updating = 1,
-        Deleting = 2,
-        Succeeded = 3,
-        Failed = 4,
-        Locked = 5,
-    }
-    public enum RecurrenceFrequency
-    {
-        Daily = 0,
-        Weekly = 1,
-    }
-    public enum RegistrationState
-    {
-        Registered = 0,
-        NotRegistered = 1,
-    }
-    public partial class ResetPasswordBody
-    {
-        public ResetPasswordBody(string username, string password) { }
+        public LabVirtualMachineResetPasswordContent(string username, string password) { }
         public string Password { get { throw null; } }
         public string Username { get { throw null; } }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RestrictionReasonCode : System.IEquatable<Azure.ResourceManager.LabServices.Models.RestrictionReasonCode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RestrictionReasonCode(string value) { throw null; }
-        public static Azure.ResourceManager.LabServices.Models.RestrictionReasonCode NotAvailableForSubscription { get { throw null; } }
-        public static Azure.ResourceManager.LabServices.Models.RestrictionReasonCode QuotaId { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.LabServices.Models.RestrictionReasonCode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.LabServices.Models.RestrictionReasonCode left, Azure.ResourceManager.LabServices.Models.RestrictionReasonCode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.LabServices.Models.RestrictionReasonCode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.LabServices.Models.RestrictionReasonCode left, Azure.ResourceManager.LabServices.Models.RestrictionReasonCode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RestrictionType : System.IEquatable<Azure.ResourceManager.LabServices.Models.RestrictionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RestrictionType(string value) { throw null; }
-        public static Azure.ResourceManager.LabServices.Models.RestrictionType Location { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.LabServices.Models.RestrictionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.LabServices.Models.RestrictionType left, Azure.ResourceManager.LabServices.Models.RestrictionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.LabServices.Models.RestrictionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.LabServices.Models.RestrictionType left, Azure.ResourceManager.LabServices.Models.RestrictionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class RosterProfile
-    {
-        public RosterProfile() { }
-        public string ActiveDirectoryGroupId { get { throw null; } set { } }
-        public string LmsInstance { get { throw null; } set { } }
-        public string LtiClientId { get { throw null; } set { } }
-        public string LtiContextId { get { throw null; } set { } }
-        public string LtiRosterEndpoint { get { throw null; } set { } }
-    }
-    public partial class SaveImageBody
-    {
-        public SaveImageBody() { }
-        public Azure.Core.ResourceIdentifier LabVirtualMachineId { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-    }
-    public partial class SecurityProfile
-    {
-        public SecurityProfile() { }
-        public Azure.ResourceManager.LabServices.Models.EnableState? OpenAccess { get { throw null; } set { } }
-        public string RegistrationCode { get { throw null; } }
-    }
-    public enum ShutdownOnIdleMode
+    public enum LabVirtualMachineShutdownOnIdleMode
     {
         None = 0,
         UserAbsence = 1,
         LowUsage = 2,
     }
-    public partial class SupportInfo
-    {
-        public SupportInfo() { }
-        public string Email { get { throw null; } set { } }
-        public string Instructions { get { throw null; } set { } }
-        public string Phone { get { throw null; } set { } }
-        public System.Uri Uri { get { throw null; } set { } }
-    }
-    public partial class TrackedResourceUpdate
-    {
-        public TrackedResourceUpdate() { }
-        public System.Collections.Generic.IList<string> Tags { get { throw null; } }
-    }
-    public partial class UsageName
-    {
-        internal UsageName() { }
-        public string LocalizedValue { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> SkuInstances { get { throw null; } }
-        public string Value { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct UsageUnit : System.IEquatable<Azure.ResourceManager.LabServices.Models.UsageUnit>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public UsageUnit(string value) { throw null; }
-        public static Azure.ResourceManager.LabServices.Models.UsageUnit Count { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.LabServices.Models.UsageUnit other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.LabServices.Models.UsageUnit left, Azure.ResourceManager.LabServices.Models.UsageUnit right) { throw null; }
-        public static implicit operator Azure.ResourceManager.LabServices.Models.UsageUnit (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.LabServices.Models.UsageUnit left, Azure.ResourceManager.LabServices.Models.UsageUnit right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class VirtualMachineConnectionProfile
-    {
-        internal VirtualMachineConnectionProfile() { }
-        public string AdminUsername { get { throw null; } }
-        public string NonAdminUsername { get { throw null; } }
-        public string PrivateIPAddress { get { throw null; } }
-        public string RdpAuthority { get { throw null; } }
-        public System.Uri RdpInBrowserUri { get { throw null; } }
-        public string SshAuthority { get { throw null; } }
-        public System.Uri SshInBrowserUri { get { throw null; } }
-    }
-    public partial class VirtualMachineProfile
-    {
-        public VirtualMachineProfile(Azure.ResourceManager.LabServices.Models.CreateOption createOption, Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference imageReference, Azure.ResourceManager.LabServices.Models.LabServicesSku sku, System.TimeSpan usageQuota, Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential adminUser) { }
-        public Azure.ResourceManager.LabServices.Models.EnableState? AdditionalCapabilitiesInstallGpuDrivers { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential AdminUser { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.CreateOption CreateOption { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineImageReference ImageReference { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.LabVirtualMachineCredential NonAdminUser { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.OSType? OSType { get { throw null; } }
-        public Azure.ResourceManager.LabServices.Models.LabServicesSku Sku { get { throw null; } set { } }
-        public System.TimeSpan UsageQuota { get { throw null; } set { } }
-        public Azure.ResourceManager.LabServices.Models.EnableState? UseSharedPassword { get { throw null; } set { } }
-    }
-    public enum VirtualMachineState
+    public enum LabVirtualMachineState
     {
         Stopped = 0,
         Starting = 1,
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.LabServices.Models
         Reimaging = 5,
         Redeploying = 6,
     }
-    public enum VirtualMachineType
+    public enum LabVirtualMachineType
     {
         User = 0,
         Template = 1,

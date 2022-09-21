@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary>
-    /// The core usage details.
-    /// Serialized Name: Usage
-    /// </summary>
+    /// <summary> The core usage details. </summary>
     public partial class LabServicesUsage
     {
         /// <summary> Initializes a new instance of LabServicesUsage. </summary>
@@ -21,27 +18,12 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of LabServicesUsage. </summary>
-        /// <param name="currentValue">
-        /// The current usage.
-        /// Serialized Name: Usage.currentValue
-        /// </param>
-        /// <param name="limit">
-        /// The limit integer.
-        /// Serialized Name: Usage.limit
-        /// </param>
-        /// <param name="unit">
-        /// The unit details.
-        /// Serialized Name: Usage.unit
-        /// </param>
-        /// <param name="name">
-        /// The name.
-        /// Serialized Name: Usage.name
-        /// </param>
-        /// <param name="id">
-        /// The fully qualified arm resource id.
-        /// Serialized Name: Usage.id
-        /// </param>
-        internal LabServicesUsage(long? currentValue, long? limit, UsageUnit? unit, UsageName name, ResourceIdentifier id)
+        /// <param name="currentValue"> The current usage. </param>
+        /// <param name="limit"> The limit integer. </param>
+        /// <param name="unit"> The unit details. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="id"> The fully qualified arm resource id. </param>
+        internal LabServicesUsage(long? currentValue, long? limit, LabServicesUsageUnit? unit, LabServicesUsageName name, ResourceIdentifier id)
         {
             CurrentValue = currentValue;
             Limit = limit;
@@ -50,30 +32,15 @@ namespace Azure.ResourceManager.LabServices.Models
             Id = id;
         }
 
-        /// <summary>
-        /// The current usage.
-        /// Serialized Name: Usage.currentValue
-        /// </summary>
+        /// <summary> The current usage. </summary>
         public long? CurrentValue { get; }
-        /// <summary>
-        /// The limit integer.
-        /// Serialized Name: Usage.limit
-        /// </summary>
+        /// <summary> The limit integer. </summary>
         public long? Limit { get; }
-        /// <summary>
-        /// The unit details.
-        /// Serialized Name: Usage.unit
-        /// </summary>
-        public UsageUnit? Unit { get; }
-        /// <summary>
-        /// The name.
-        /// Serialized Name: Usage.name
-        /// </summary>
-        public UsageName Name { get; }
-        /// <summary>
-        /// The fully qualified arm resource id.
-        /// Serialized Name: Usage.id
-        /// </summary>
+        /// <summary> The unit details. </summary>
+        public LabServicesUsageUnit? Unit { get; }
+        /// <summary> The name. </summary>
+        public LabServicesUsageName Name { get; }
+        /// <summary> The fully qualified arm resource id. </summary>
         public ResourceIdentifier Id { get; }
     }
 }

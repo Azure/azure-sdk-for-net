@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary>
-    /// Schedule for automatically turning virtual machines in a lab on and off at specified times. Used for updates.
-    /// Serialized Name: ScheduleUpdate
-    /// </summary>
+    /// <summary> Schedule for automatically turning virtual machines in a lab on and off at specified times. Used for updates. </summary>
     public partial class LabServicesSchedulePatch
     {
         /// <summary> Initializes a new instance of LabServicesSchedulePatch. </summary>
@@ -20,30 +17,44 @@ namespace Azure.ResourceManager.LabServices.Models
         {
         }
 
-        /// <summary>
-        /// When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead.
-        /// Serialized Name: ScheduleUpdate.properties.startAt
-        /// </summary>
+        /// <summary> When lab user virtual machines will be started. Timestamp offsets will be ignored and timeZoneId is used instead. </summary>
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary>
-        /// When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead.
-        /// Serialized Name: ScheduleUpdate.properties.stopAt
-        /// </summary>
+        /// <summary> When lab user virtual machines will be stopped. Timestamp offsets will be ignored and timeZoneId is used instead. </summary>
         public DateTimeOffset? StopOn { get; set; }
-        /// <summary>
-        /// The recurrence pattern of the scheduled actions.
-        /// Serialized Name: ScheduleUpdate.properties.recurrencePattern
-        /// </summary>
+        /// <summary> The recurrence pattern of the scheduled actions. </summary>
         public LabServicesRecurrencePattern RecurrencePattern { get; set; }
-        /// <summary>
-        /// The IANA timezone id for the schedule.
-        /// Serialized Name: ScheduleUpdate.properties.timeZoneId
-        /// </summary>
+        /// <summary> The IANA timezone id for the schedule. </summary>
         public string TimeZoneId { get; set; }
         /// <summary>
         /// Notes for this schedule.
-        /// Serialized Name: ScheduleUpdate.properties.notes
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
         /// </summary>
-        public string Notes { get; set; }
+        public BinaryData Notes { get; set; }
     }
 }

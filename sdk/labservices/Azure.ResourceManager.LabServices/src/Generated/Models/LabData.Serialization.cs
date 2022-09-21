@@ -90,15 +90,15 @@ namespace Azure.ResourceManager.LabServices
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<AutoShutdownProfile> autoShutdownProfile = default;
-            Optional<LabVirtualMachineConnectionProfile> connectionProfile = default;
-            Optional<VirtualMachineProfile> virtualMachineProfile = default;
-            Optional<SecurityProfile> securityProfile = default;
-            Optional<RosterProfile> rosterProfile = default;
+            Optional<LabAutoShutdownProfile> autoShutdownProfile = default;
+            Optional<LabConnectionProfile> connectionProfile = default;
+            Optional<LabVirtualMachineProfile> virtualMachineProfile = default;
+            Optional<LabSecurityProfile> securityProfile = default;
+            Optional<LabRosterProfile> rosterProfile = default;
             Optional<ResourceIdentifier> labPlanId = default;
             Optional<string> title = default;
             Optional<string> description = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<LabServicesProvisioningState> provisioningState = default;
             Optional<LabNetworkProfile> networkProfile = default;
             Optional<LabState> state = default;
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            autoShutdownProfile = AutoShutdownProfile.DeserializeAutoShutdownProfile(property0.Value);
+                            autoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("connectionProfile"))
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            connectionProfile = LabVirtualMachineConnectionProfile.DeserializeLabVirtualMachineConnectionProfile(property0.Value);
+                            connectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("virtualMachineProfile"))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            virtualMachineProfile = VirtualMachineProfile.DeserializeVirtualMachineProfile(property0.Value);
+                            virtualMachineProfile = LabVirtualMachineProfile.DeserializeLabVirtualMachineProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            securityProfile = SecurityProfile.DeserializeSecurityProfile(property0.Value);
+                            securityProfile = LabSecurityProfile.DeserializeLabSecurityProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("rosterProfile"))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            rosterProfile = RosterProfile.DeserializeRosterProfile(property0.Value);
+                            rosterProfile = LabRosterProfile.DeserializeLabRosterProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("labPlanId"))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToProvisioningState();
+                            provisioningState = property0.Value.GetString().ToLabServicesProvisioningState();
                             continue;
                         }
                         if (property0.NameEquals("networkProfile"))

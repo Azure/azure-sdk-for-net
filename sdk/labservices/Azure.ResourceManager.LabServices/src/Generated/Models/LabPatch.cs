@@ -9,56 +9,29 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary>
-    /// The lab resource for updates.
-    /// Serialized Name: LabUpdate
-    /// </summary>
-    public partial class LabPatch : TrackedResourceUpdate
+    /// <summary> The lab resource for updates. </summary>
+    public partial class LabPatch : LabServicesPatchBaseInfo
     {
         /// <summary> Initializes a new instance of LabPatch. </summary>
         public LabPatch()
         {
         }
 
-        /// <summary>
-        /// The resource auto shutdown configuration for the lab. This controls whether actions are taken on resources that are sitting idle.
-        /// Serialized Name: LabUpdate.properties.autoShutdownProfile
-        /// </summary>
-        public AutoShutdownProfile AutoShutdownProfile { get; set; }
-        /// <summary>
-        /// The connection profile for the lab. This controls settings such as web access to lab resources or whether RDP or SSH ports are open.
-        /// Serialized Name: LabUpdate.properties.connectionProfile
-        /// </summary>
-        public LabVirtualMachineConnectionProfile ConnectionProfile { get; set; }
-        /// <summary>
-        /// The profile used for creating lab virtual machines.
-        /// Serialized Name: LabUpdate.properties.virtualMachineProfile
-        /// </summary>
-        public VirtualMachineProfile VirtualMachineProfile { get; set; }
-        /// <summary>
-        /// The lab security profile.
-        /// Serialized Name: LabUpdate.properties.securityProfile
-        /// </summary>
-        public SecurityProfile SecurityProfile { get; set; }
-        /// <summary>
-        /// The lab user list management profile.
-        /// Serialized Name: LabUpdate.properties.rosterProfile
-        /// </summary>
-        public RosterProfile RosterProfile { get; set; }
-        /// <summary>
-        /// The ID of the lab plan. Used during resource creation to provide defaults and acts as a permission container when creating a lab via labs.azure.com. Setting a labPlanId on an existing lab provides organization..
-        /// Serialized Name: LabUpdate.properties.labPlanId
-        /// </summary>
+        /// <summary> The resource auto shutdown configuration for the lab. This controls whether actions are taken on resources that are sitting idle. </summary>
+        public LabAutoShutdownProfile AutoShutdownProfile { get; set; }
+        /// <summary> The connection profile for the lab. This controls settings such as web access to lab resources or whether RDP or SSH ports are open. </summary>
+        public LabConnectionProfile ConnectionProfile { get; set; }
+        /// <summary> The profile used for creating lab virtual machines. </summary>
+        public LabVirtualMachineProfile VirtualMachineProfile { get; set; }
+        /// <summary> The lab security profile. </summary>
+        public LabSecurityProfile SecurityProfile { get; set; }
+        /// <summary> The lab user list management profile. </summary>
+        public LabRosterProfile RosterProfile { get; set; }
+        /// <summary> The ID of the lab plan. Used during resource creation to provide defaults and acts as a permission container when creating a lab via labs.azure.com. Setting a labPlanId on an existing lab provides organization.. </summary>
         public ResourceIdentifier LabPlanId { get; set; }
-        /// <summary>
-        /// The title of the lab.
-        /// Serialized Name: LabUpdate.properties.title
-        /// </summary>
+        /// <summary> The title of the lab. </summary>
         public string Title { get; set; }
-        /// <summary>
-        /// The description of the lab.
-        /// Serialized Name: LabUpdate.properties.description
-        /// </summary>
+        /// <summary> The description of the lab. </summary>
         public string Description { get; set; }
     }
 }

@@ -40,7 +40,11 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes");
-                writer.WriteStringValue(Notes);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Notes);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Notes.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

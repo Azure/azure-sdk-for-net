@@ -46,22 +46,22 @@ namespace Azure.ResourceManager.LabServices
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<EnableState> enabledState = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<LabServicesEnableState> enabledState = default;
+            Optional<LabServicesProvisioningState> provisioningState = default;
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<Uri> iconUrl = default;
             Optional<string> author = default;
-            Optional<OSType> osType = default;
+            Optional<LabVirtualMachineImageOSType> osType = default;
             Optional<string> plan = default;
-            Optional<EnableState> termsStatus = default;
+            Optional<LabServicesEnableState> termsStatus = default;
             Optional<string> offer = default;
             Optional<string> publisher = default;
             Optional<string> sku = default;
             Optional<string> version = default;
             Optional<ResourceIdentifier> sharedGalleryId = default;
             Optional<IList<AzureLocation>> availableRegions = default;
-            Optional<OSState> osState = default;
+            Optional<LabVirtualMachineImageOSState> osState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            enabledState = property0.Value.GetString().ToEnableState();
+                            enabledState = property0.Value.GetString().ToLabServicesEnableState();
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToProvisioningState();
+                            provisioningState = property0.Value.GetString().ToLabServicesProvisioningState();
                             continue;
                         }
                         if (property0.NameEquals("displayName"))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osType = property0.Value.GetString().ToOSType();
+                            osType = property0.Value.GetString().ToLabVirtualMachineImageOSType();
                             continue;
                         }
                         if (property0.NameEquals("plan"))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            termsStatus = property0.Value.GetString().ToEnableState();
+                            termsStatus = property0.Value.GetString().ToLabServicesEnableState();
                             continue;
                         }
                         if (property0.NameEquals("offer"))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            osState = property0.Value.GetString().ToOSState();
+                            osState = property0.Value.GetString().ToLabVirtualMachineImageOSState();
                             continue;
                         }
                     }

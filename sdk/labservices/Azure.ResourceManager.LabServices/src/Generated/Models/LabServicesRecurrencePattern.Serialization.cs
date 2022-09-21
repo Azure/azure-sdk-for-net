@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabServicesRecurrencePattern DeserializeLabServicesRecurrencePattern(JsonElement element)
         {
-            RecurrenceFrequency frequency = default;
+            LabServicesRecurrenceFrequency frequency = default;
             Optional<IList<LabServicesDayOfWeek>> weekDays = default;
             Optional<int> interval = default;
             DateTimeOffset expirationDate = default;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 if (property.NameEquals("frequency"))
                 {
-                    frequency = property.Value.GetString().ToRecurrenceFrequency();
+                    frequency = property.Value.GetString().ToLabServicesRecurrenceFrequency();
                     continue;
                 }
                 if (property.NameEquals("weekDays"))

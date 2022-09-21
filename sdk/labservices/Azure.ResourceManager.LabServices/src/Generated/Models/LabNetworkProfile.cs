@@ -9,10 +9,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary>
-    /// Profile for how to handle networking for Labs.
-    /// Serialized Name: LabNetworkProfile
-    /// </summary>
+    /// <summary> Profile for how to handle networking for Labs. </summary>
     public partial class LabNetworkProfile
     {
         /// <summary> Initializes a new instance of LabNetworkProfile. </summary>
@@ -21,18 +18,9 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of LabNetworkProfile. </summary>
-        /// <param name="subnetId">
-        /// The external subnet resource id
-        /// Serialized Name: LabNetworkProfile.subnetId
-        /// </param>
-        /// <param name="loadBalancerId">
-        /// The external load balancer resource id
-        /// Serialized Name: LabNetworkProfile.loadBalancerId
-        /// </param>
-        /// <param name="publicIPId">
-        /// The external public IP resource id
-        /// Serialized Name: LabNetworkProfile.publicIpId
-        /// </param>
+        /// <param name="subnetId"> The external subnet resource id. </param>
+        /// <param name="loadBalancerId"> The external load balancer resource id. </param>
+        /// <param name="publicIPId"> The external public IP resource id. </param>
         internal LabNetworkProfile(ResourceIdentifier subnetId, ResourceIdentifier loadBalancerId, ResourceIdentifier publicIPId)
         {
             SubnetId = subnetId;
@@ -40,20 +28,11 @@ namespace Azure.ResourceManager.LabServices.Models
             PublicIPId = publicIPId;
         }
 
-        /// <summary>
-        /// The external subnet resource id
-        /// Serialized Name: LabNetworkProfile.subnetId
-        /// </summary>
+        /// <summary> The external subnet resource id. </summary>
         public ResourceIdentifier SubnetId { get; set; }
-        /// <summary>
-        /// The external load balancer resource id
-        /// Serialized Name: LabNetworkProfile.loadBalancerId
-        /// </summary>
+        /// <summary> The external load balancer resource id. </summary>
         public ResourceIdentifier LoadBalancerId { get; set; }
-        /// <summary>
-        /// The external public IP resource id
-        /// Serialized Name: LabNetworkProfile.publicIpId
-        /// </summary>
+        /// <summary> The external public IP resource id. </summary>
         public ResourceIdentifier PublicIPId { get; set; }
     }
 }

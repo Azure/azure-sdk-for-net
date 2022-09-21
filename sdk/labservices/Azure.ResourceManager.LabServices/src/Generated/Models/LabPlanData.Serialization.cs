@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.LabServices
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<LabVirtualMachineConnectionProfile> defaultConnectionProfile = default;
-            Optional<AutoShutdownProfile> defaultAutoShutdownProfile = default;
+            Optional<LabConnectionProfile> defaultConnectionProfile = default;
+            Optional<LabAutoShutdownProfile> defaultAutoShutdownProfile = default;
             Optional<LabPlanNetworkProfile> defaultNetworkProfile = default;
             Optional<IList<AzureLocation>> allowedRegions = default;
             Optional<ResourceIdentifier> sharedGalleryId = default;
-            Optional<SupportInfo> supportInfo = default;
+            Optional<LabPlanSupportInfo> supportInfo = default;
             Optional<Uri> linkedLmsInstance = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<LabServicesProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultConnectionProfile = LabVirtualMachineConnectionProfile.DeserializeLabVirtualMachineConnectionProfile(property0.Value);
+                            defaultConnectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultAutoShutdownProfile"))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultAutoShutdownProfile = AutoShutdownProfile.DeserializeAutoShutdownProfile(property0.Value);
+                            defaultAutoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("defaultNetworkProfile"))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            supportInfo = SupportInfo.DeserializeSupportInfo(property0.Value);
+                            supportInfo = LabPlanSupportInfo.DeserializeLabPlanSupportInfo(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("linkedLmsInstance"))
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.LabServices
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToProvisioningState();
+                            provisioningState = property0.Value.GetString().ToLabServicesProvisioningState();
                             continue;
                         }
                     }

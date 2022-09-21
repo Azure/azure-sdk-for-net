@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary>
-    /// The array of costs of a lab services SKU.
-    /// Serialized Name: LabServicesSkuCost
-    /// </summary>
+    /// <summary> The array of costs of a lab services SKU. </summary>
     public partial class AvailableLabServicesSkuCost
     {
         /// <summary> Initializes a new instance of AvailableLabServicesSkuCost. </summary>
@@ -19,18 +16,9 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of AvailableLabServicesSkuCost. </summary>
-        /// <param name="meterId">
-        /// The meter id.
-        /// Serialized Name: LabServicesSkuCost.meterId
-        /// </param>
-        /// <param name="quantity">
-        /// The quantity of units charged.
-        /// Serialized Name: LabServicesSkuCost.quantity
-        /// </param>
-        /// <param name="extendedUnit">
-        /// The extended unit.
-        /// Serialized Name: LabServicesSkuCost.extendedUnit
-        /// </param>
+        /// <param name="meterId"> The meter id. </param>
+        /// <param name="quantity"> The quantity of units charged. </param>
+        /// <param name="extendedUnit"> The extended unit. </param>
         internal AvailableLabServicesSkuCost(string meterId, float? quantity, string extendedUnit)
         {
             MeterId = meterId;
@@ -38,20 +26,11 @@ namespace Azure.ResourceManager.LabServices.Models
             ExtendedUnit = extendedUnit;
         }
 
-        /// <summary>
-        /// The meter id.
-        /// Serialized Name: LabServicesSkuCost.meterId
-        /// </summary>
+        /// <summary> The meter id. </summary>
         public string MeterId { get; }
-        /// <summary>
-        /// The quantity of units charged.
-        /// Serialized Name: LabServicesSkuCost.quantity
-        /// </summary>
+        /// <summary> The quantity of units charged. </summary>
         public float? Quantity { get; }
-        /// <summary>
-        /// The extended unit.
-        /// Serialized Name: LabServicesSkuCost.extendedUnit
-        /// </summary>
+        /// <summary> The extended unit. </summary>
         public string ExtendedUnit { get; }
     }
 }

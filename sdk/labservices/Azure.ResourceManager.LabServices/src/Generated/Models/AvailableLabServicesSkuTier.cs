@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    /// <summary>
-    /// The tier of the SKU.
-    /// Serialized Name: AvailableLabServicesSkuTier
-    /// </summary>
+    /// <summary> The tier of the SKU. </summary>
     public readonly partial struct AvailableLabServicesSkuTier : IEquatable<AvailableLabServicesSkuTier>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.LabServices.Models
         private const string StandardValue = "Standard";
         private const string PremiumValue = "Premium";
 
-        /// <summary>
-        /// Standard
-        /// Serialized Name: AvailableLabServicesSkuTier.Standard
-        /// </summary>
+        /// <summary> Standard. </summary>
         public static AvailableLabServicesSkuTier Standard { get; } = new AvailableLabServicesSkuTier(StandardValue);
-        /// <summary>
-        /// Premium
-        /// Serialized Name: AvailableLabServicesSkuTier.Premium
-        /// </summary>
+        /// <summary> Premium. </summary>
         public static AvailableLabServicesSkuTier Premium { get; } = new AvailableLabServicesSkuTier(PremiumValue);
         /// <summary> Determines if two <see cref="AvailableLabServicesSkuTier"/> values are the same. </summary>
         public static bool operator ==(AvailableLabServicesSkuTier left, AvailableLabServicesSkuTier right) => left.Equals(right);
