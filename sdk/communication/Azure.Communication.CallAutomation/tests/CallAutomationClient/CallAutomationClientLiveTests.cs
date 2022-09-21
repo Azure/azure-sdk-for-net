@@ -123,7 +123,7 @@ namespace Azure.Communication.CallAutomation
         public async Task CreateCallWithMediaStreaming()
         {
             if (SkipCallAutomationInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             bool wasConnected = false;
