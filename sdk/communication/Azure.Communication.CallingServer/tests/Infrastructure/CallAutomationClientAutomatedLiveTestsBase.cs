@@ -31,7 +31,7 @@ namespace Azure.Communication.CallingServer
         private ConcurrentDictionary<string, string> _incomingcontextstore;
         private ConcurrentDictionary<string, ServiceBusProcessor> _processorStore;
 
-        public CallAutomationClientAutomatedLiveTestsBase(bool isAsync) : base(isAsync)
+        public CallAutomationClientAutomatedLiveTestsBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
             _eventstore = new Dictionary<string, ConcurrentDictionary<Type, CallAutomationEventBase>>();
             _incomingcontextstore = new ConcurrentDictionary<string, string>();
