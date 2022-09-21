@@ -45,6 +45,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubsDisasterRecoveryAuthorizationRuleResource(ArmClient client, EventHubsAuthorizationRuleData data) : base(client, data)
         {
+            _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsApiVersion);
+            _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient = new DisasterRecoveryConfigsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> class. </summary>

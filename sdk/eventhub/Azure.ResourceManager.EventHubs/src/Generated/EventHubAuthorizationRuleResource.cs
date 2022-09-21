@@ -45,6 +45,12 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EventHubAuthorizationRuleResource(ArmClient client, EventHubsAuthorizationRuleData data) : base(client, data)
         {
+            _eventHubAuthorizationRuleEventHubsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string eventHubAuthorizationRuleEventHubsApiVersion);
+            _eventHubAuthorizationRuleEventHubsRestClient = new EventHubsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubAuthorizationRuleEventHubsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="EventHubAuthorizationRuleResource"/> class. </summary>
