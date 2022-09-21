@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> SingletonPartitionScheme. </summary>
-    public partial class SingletonPartitionScheme : Partition
+    public partial class SingletonPartitionScheme : ManagedClusterServicePartitionScheme
     {
         /// <summary> Initializes a new instance of SingletonPartitionScheme. </summary>
         public SingletonPartitionScheme()

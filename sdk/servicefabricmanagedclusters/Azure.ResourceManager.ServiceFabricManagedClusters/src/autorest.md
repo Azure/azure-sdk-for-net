@@ -16,7 +16,10 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+request-path-is-non-resource:
+- /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}
+- /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions/{clusterVersion}
+- /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes/{vmSize}
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -47,20 +50,119 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  LRS: Lrs
+  SSD: Ssd
 
 override-operation-name:
   managedAzResiliencyStatus_get: GetManagedAzResiliencyStatus
+  NodeTypeSkus_List: GetAvailableSkus
+  managedUnsupportedVMSizes_Get: GetManagedUnsupportedVmSize
+  managedUnsupportedVMSizes_List: GetManagedUnsupportedVmSizes
+  ManagedClusterVersion_GetByEnvironment: GetManagedClusterVersionByEnvironment
+
+rename-mapping:
+  ApplicationResource: ServiceFabricManagedClusterApplication
+  ApplicationTypeResource: ServiceFabricManagedClusterApplicationType
+  ApplicationTypeVersionResource: ServiceFabricManagedClusterApplicationTypeVersion
+  ApplicationUserAssignedIdentity: ApplicationUserAssignedIdentityInfo
+  ManagedClusterCodeVersionResult: ServiceFabricManagedClusterVersion
+  ManagedClusterCodeVersionResult.properties.supportExpiryUtc: VersionSupportExpireOn
+  OsType: ServiceFabricManagedClusterOSType
+  ManagedCluster: ServiceFabricManagedCluster
+  ManagedCluster.properties.addonFeatures: AddOnFeatures
+  ManagedCluster.properties.allowRdpAccess: IsRdpAccessAllowed
+  ManagedCluster.properties.clusterCertificateThumbprints: -|any
+  ManagedCluster.properties.clusterId: -|uuid
+  ManagedCluster.properties.enableAutoOSUpgrade: IsAutoOSUpgradeEnabled
+  ManagedCluster.properties.enableIpv6: IsIPv6Enabled
+  ManagedCluster.properties.enableServicePublicIP: IsServicePublicIPEnabled
+  ManagedCluster.properties.ipv4Address: -|ip-address
+  ManagedCluster.properties.ipv6Address: -|ip-address
+  ManagedCluster.properties.zonalResiliency: HasZoneResiliency
+  Subnet: ManagedClusterSubnet
+  Subnet.enableIpv6: IsIPv6Enabled
+  Subnet.networkSecurityGroupId: -|arm-id
+  AzureActiveDirectory: ManagedClusterAzureActiveDirectory
+  ClientCertificate: ManagedClusterClientCertificate
+  ClientCertificate.thumbprint: -|any
+  ClientCertificate.issuerThumbprint: -|any
+  ClusterState: ServiceFabricManagedClusterState
+  ClusterUpgradeCadence: ManagedClusterUpgradeCadence
+  ClusterUpgradeMode: ManagedClusterUpgradeMode
+  SettingsSectionDescription: ClusterFabricSettingsSection
+  SettingsParameterDescription: ClusterFabricSettingsParameterDescription
+  IPTag: ManagedClusterIPTag
+  LoadBalancingRule: ManagedClusterLoadBalancingRule
+  NetworkSecurityRule: ServiceFabricManagedClustersNetworkSecurityRule
+  Direction: ServiceFabricManagedClustersNetworkSecurityRuleDirection
+  Access: ServiceFabricManagedClustersNetworkTrafficAccess
+  ManagedResourceProvisioningState: ServiceFabricManagedResourceProvisioningState
+  ServiceEndpoint: ManagedClusterServiceEndpoint
+  ServiceEndpoint.locations: -|azure-location
+  NodeType: ServiceFabricManagedClusterNodeType
+  NodeType.properties.dataDiskSizeGB: DataDiskSizeInGB
+  NodeType.properties.enableAcceleratedNetworking: IsAcceleratedNetworkingEnabled
+  NodeType.properties.enableEncryptionAtHost: IsEncryptionAtHostEnabled
+  NodeType.properties.enableOverProvisioning: IsOverProvisioningEnabled
+  NodeType.properties.multiplePlacementGroups: HasMultiplePlacementGroups
+  VmssDataDisk: NodeTypeVmssDataDisk
+  VmssDataDisk.diskSizeGB: DiskSizeInGB
+  VMSSExtension: NodeTypeVmssExtension
+  VMSSExtension.properties.enableAutomaticUpgrade: IsAutomaticUpgradeEnabled
+  VaultSecretGroup: NodeTypeVaultSecretGroup
+  VaultCertificate: NodeTypeVaultCertificate
+  DiskType: ServiceFabricManagedDataDiskType
+  FrontendConfiguration: NodeTypeFrontendConfiguration
+  FrontendConfiguration.loadBalancerBackendAddressPoolId: -|arm-id
+  FrontendConfiguration.loadBalancerInboundNatPoolId: -|arm-id
+  VmManagedIdentity.userAssignedIdentities: -|arm-id
+  NodeTypeActionParameters: NodeTypeActionContent
+  NodeTypeActionParameters.force: IsForced
+  ServiceResource: ServiceFabricManagedClusterService
+  ServiceResourceProperties: ManagedClusterServiceProperties
+  ServiceResourcePropertiesBase: ManagedClusterServiceBaseProperties
+  ServiceCorrelation: ManagedClusterServiceCorrelation
+  ServiceCorrelationScheme: ManagedClusterServiceCorrelationScheme
+  ScalingPolicy: ManagedClusterServiceScalingPolicy
+  ScalingMechanism: ManagedClusterServiceScalingMechanism
+  ScalingTrigger: ManagedClusterServiceScalingTrigger
+  MoveCost: ServiceFabricManagedClusterServiceMoveCost
+  ApplicationUpgradePolicy.instanceCloseDelayDuration: InstanceCloseDelayDurationInSeconds
+  FailureAction: PolicyViolationCompensationAction
+  IPAddressType: NodeTypeFrontendConfigurationIPAddressType
+  ProbeProtocol: ManagedClusterLoadBalanceProbeProtocol
+  Protocol: ManagedClusterLoadBalancingRuleTransportProtocol
+  Partition: ManagedClusterServicePartitionScheme
+  NsgProtocol: ServiceFabricManagedClustersNsgProtocol
+  NsgProtocol.ah: AH
+  NodeTypeAvailableSku.resourceType: -|resource-type
+  PartitionInstanceCountScaleMechanism: PartitionInstanceCountScalingMechanism
+  PrivateEndpointNetworkPolicy: ManagedClusterSubnetPrivateEndpointNetworkPolicy
+  PrivateLinkServiceNetworkPolicy: ManagedClusterSubnetPrivateLinkServiceNetworkPolicy
+  ServiceLoadMetric: ManagedClusterServiceLoadMetric
+  ServiceLoadMetricWeight: ManagedClusterServiceLoadMetricWeight
+  ServicePackageActivationMode: ManagedClusterServicePackageActivationMode
+  ServicePlacementPolicy: ManagedClusterServicePlacementPolicy
+  ManagedVMSize: ServiceFabricManagedClustersVmSize
 
 directive:
   - remove-operation: OperationStatus_Get
+  - remove-operation: OperationResults_Get
   - from: managedapplication.json
     where: $.definitions
     transform: >
       $.HealthCheckWaitDuration['x-ms-format'] = 'duration-constant';
       $.HealthCheckStableDuration['x-ms-format'] = 'duration-constant';
+      $.HealthCheckRetryTimeout['x-ms-format'] = 'duration-constant';
+      $.UpgradeDomainTimeout['x-ms-format'] = 'duration-constant';
+      $.UpgradeTimeout['x-ms-format'] = 'duration-constant';
       $.StatefulServiceProperties.properties.replicaRestartWaitDuration['x-ms-format'] = 'duration-constant';
       $.StatefulServiceProperties.properties.quorumLossWaitDuration['x-ms-format'] = 'duration-constant';
       $.StatefulServiceProperties.properties.standByReplicaKeepDuration['x-ms-format'] = 'duration-constant';
       $.StatefulServiceProperties.properties.servicePlacementTimeLimit['x-ms-format'] = 'duration-constant';
+  - from: managedcluster.json
+    where: $.definitions
+    transform: >
+      $.ManagedClusterVersionDetails.properties.supportExpiryUtc['format'] = 'date-time';
 
 ```

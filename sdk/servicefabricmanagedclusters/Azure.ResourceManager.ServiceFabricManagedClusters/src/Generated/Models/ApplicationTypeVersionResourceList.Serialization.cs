@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         internal static ApplicationTypeVersionResourceList DeserializeApplicationTypeVersionResourceList(JsonElement element)
         {
-            Optional<IReadOnlyList<ApplicationTypeVersionResourceData>> value = default;
+            Optional<IReadOnlyList<ServiceFabricManagedClusterApplicationTypeVersionData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ApplicationTypeVersionResourceData> array = new List<ApplicationTypeVersionResourceData>();
+                    List<ServiceFabricManagedClusterApplicationTypeVersionData> array = new List<ServiceFabricManagedClusterApplicationTypeVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationTypeVersionResourceData.DeserializeApplicationTypeVersionResourceData(item));
+                        array.Add(ServiceFabricManagedClusterApplicationTypeVersionData.DeserializeServiceFabricManagedClusterApplicationTypeVersionData(item));
                     }
                     value = array;
                     continue;

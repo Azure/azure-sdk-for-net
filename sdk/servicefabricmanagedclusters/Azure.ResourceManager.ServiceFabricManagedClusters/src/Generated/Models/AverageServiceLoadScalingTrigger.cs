@@ -10,7 +10,7 @@ using System;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Represents a scaling policy related to an average load of a metric/resource of a service. </summary>
-    public partial class AverageServiceLoadScalingTrigger : ScalingTrigger
+    public partial class AverageServiceLoadScalingTrigger : ManagedClusterServiceScalingTrigger
     {
         /// <summary> Initializes a new instance of AverageServiceLoadScalingTrigger. </summary>
         /// <param name="metricName"> The name of the metric for which usage should be tracked. </param>

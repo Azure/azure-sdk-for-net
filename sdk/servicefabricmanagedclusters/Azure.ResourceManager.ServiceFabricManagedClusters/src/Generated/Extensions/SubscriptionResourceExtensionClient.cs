@@ -20,10 +20,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _managedClusterClientDiagnostics;
-        private ManagedClustersRestOperations _managedClusterRestClient;
-        private ClientDiagnostics _operationResultsClientDiagnostics;
-        private OperationResultsRestOperations _operationResultsRestClient;
+        private ClientDiagnostics _serviceFabricManagedClusterManagedClustersClientDiagnostics;
+        private ManagedClustersRestOperations _serviceFabricManagedClusterManagedClustersRestClient;
+        private ClientDiagnostics _managedClusterVersionClientDiagnostics;
+        private ManagedClusterVersionRestOperations _managedClusterVersionRestClient;
+        private ClientDiagnostics _managedUnsupportedVmSizesClientDiagnostics;
+        private ManagedUnsupportedVMSizesRestOperations _managedUnsupportedVmSizesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -37,40 +39,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
         }
 
-        private ClientDiagnostics ManagedClusterClientDiagnostics => _managedClusterClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ManagedClusterResource.ResourceType.Namespace, Diagnostics);
-        private ManagedClustersRestOperations ManagedClusterRestClient => _managedClusterRestClient ??= new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedClusterResource.ResourceType));
-        private ClientDiagnostics OperationResultsClientDiagnostics => _operationResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationResultsRestOperations OperationResultsRestClient => _operationResultsRestClient ??= new OperationResultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics ServiceFabricManagedClusterManagedClustersClientDiagnostics => _serviceFabricManagedClusterManagedClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ServiceFabricManagedClusterResource.ResourceType.Namespace, Diagnostics);
+        private ManagedClustersRestOperations ServiceFabricManagedClusterManagedClustersRestClient => _serviceFabricManagedClusterManagedClustersRestClient ??= new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServiceFabricManagedClusterResource.ResourceType));
+        private ClientDiagnostics ManagedClusterVersionClientDiagnostics => _managedClusterVersionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ManagedClusterVersionRestOperations ManagedClusterVersionRestClient => _managedClusterVersionRestClient ??= new ManagedClusterVersionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics managedUnsupportedVMSizesClientDiagnostics => _managedUnsupportedVmSizesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ServiceFabricManagedClusters", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ManagedUnsupportedVMSizesRestOperations managedUnsupportedVMSizesRestClient => _managedUnsupportedVmSizesRestClient ??= new ManagedUnsupportedVMSizesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary> Gets a collection of LocationManagedClusterVersionResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <returns> An object representing collection of LocationManagedClusterVersionResources and their operations over a LocationManagedClusterVersionResource. </returns>
-        public virtual LocationManagedClusterVersionCollection GetLocationManagedClusterVersions(AzureLocation location)
-        {
-            return new LocationManagedClusterVersionCollection(Client, Id, location);
-        }
-
-        /// <summary> Gets a collection of LocationEnvironmentManagedClusterVersionResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <param name="environment"> The operating system of the cluster. The default means all. </param>
-        /// <returns> An object representing collection of LocationEnvironmentManagedClusterVersionResources and their operations over a LocationEnvironmentManagedClusterVersionResource. </returns>
-        public virtual LocationEnvironmentManagedClusterVersionCollection GetLocationEnvironmentManagedClusterVersions(AzureLocation location, ManagedClusterVersionEnvironment environment)
-        {
-            return new LocationEnvironmentManagedClusterVersionCollection(Client, Id, location, environment);
-        }
-
-        /// <summary> Gets a collection of ManagedVmSizeResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <returns> An object representing collection of ManagedVmSizeResources and their operations over a ManagedVmSizeResource. </returns>
-        public virtual ManagedVmSizeCollection GetManagedVmSizes(AzureLocation location)
-        {
-            return new ManagedVmSizeCollection(Client, Id, location);
         }
 
         /// <summary>
@@ -79,17 +58,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Operation Id: ManagedClusters_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagedClusterResource> GetManagedClustersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServiceFabricManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceFabricManagedClusterResource> GetServiceFabricManagedClustersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<ManagedClusterResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<ServiceFabricManagedClusterResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ManagedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusters");
+                using var scope = ServiceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceFabricManagedClusters");
                 scope.Start();
                 try
                 {
-                    var response = await ManagedClusterRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ServiceFabricManagedClusterManagedClustersRestClient.ListBySubscriptionAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -97,14 +76,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     throw;
                 }
             }
-            async Task<Page<ManagedClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<ServiceFabricManagedClusterResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ManagedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusters");
+                using var scope = ServiceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceFabricManagedClusters");
                 scope.Start();
                 try
                 {
-                    var response = await ManagedClusterRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await ServiceFabricManagedClusterManagedClustersRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -121,17 +100,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// Operation Id: ManagedClusters_ListBySubscription
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagedClusterResource> GetManagedClusters(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceFabricManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceFabricManagedClusterResource> GetServiceFabricManagedClusters(CancellationToken cancellationToken = default)
         {
-            Page<ManagedClusterResource> FirstPageFunc(int? pageSizeHint)
+            Page<ServiceFabricManagedClusterResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ManagedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusters");
+                using var scope = ServiceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceFabricManagedClusters");
                 scope.Start();
                 try
                 {
-                    var response = ManagedClusterRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ServiceFabricManagedClusterManagedClustersRestClient.ListBySubscription(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -139,14 +118,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                     throw;
                 }
             }
-            Page<ManagedClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<ServiceFabricManagedClusterResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ManagedClusterClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusters");
+                using var scope = ServiceFabricManagedClusterManagedClustersClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetServiceFabricManagedClusters");
                 scope.Start();
                 try
                 {
-                    var response = ManagedClusterRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = ServiceFabricManagedClusterManagedClustersRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new ServiceFabricManagedClusterResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -158,20 +137,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// Get long running operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterOperationResults/{operationId}
-        /// Operation Id: OperationResults_Get
+        /// Gets information about an available Service Fabric managed cluster code version.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions/{clusterVersion}
+        /// Operation Id: ManagedClusterVersion_Get
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <param name="operationId"> operation identifier. </param>
+        /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> GetOperationResultAsync(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceFabricManagedClusterVersion>> GetManagedClusterVersionAsync(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = OperationResultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationResult");
+            using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusterVersion");
             scope.Start();
             try
             {
-                var response = await OperationResultsRestClient.GetAsync(Id.SubscriptionId, location, operationId, cancellationToken).ConfigureAwait(false);
+                var response = await ManagedClusterVersionRestClient.GetAsync(Id.SubscriptionId, location, clusterVersion, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -182,20 +161,318 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary>
-        /// Get long running operation result.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterOperationResults/{operationId}
-        /// Operation Id: OperationResults_Get
+        /// Gets information about an available Service Fabric managed cluster code version.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions/{clusterVersion}
+        /// Operation Id: ManagedClusterVersion_Get
         /// </summary>
         /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
-        /// <param name="operationId"> operation identifier. </param>
+        /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response GetOperationResult(AzureLocation location, string operationId, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceFabricManagedClusterVersion> GetManagedClusterVersion(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
-            using var scope = OperationResultsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetOperationResult");
+            using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusterVersion");
             scope.Start();
             try
             {
-                var response = OperationResultsRestClient.Get(Id.SubscriptionId, location, operationId, cancellationToken);
+                var response = ManagedClusterVersionRestClient.Get(Id.SubscriptionId, location, clusterVersion, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets information about an available Service Fabric cluster code version by environment.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}
+        /// Operation Id: ManagedClusterVersion_GetByEnvironment
+        /// </summary>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="environment"> The operating system of the cluster. The default means all. </param>
+        /// <param name="clusterVersion"> The cluster code version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ServiceFabricManagedClusterVersion>> GetManagedClusterVersionByEnvironmentAsync(AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
+        {
+            using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusterVersionByEnvironment");
+            scope.Start();
+            try
+            {
+                var response = await ManagedClusterVersionRestClient.GetByEnvironmentAsync(Id.SubscriptionId, location, environment, clusterVersion, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets information about an available Service Fabric cluster code version by environment.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions/{clusterVersion}
+        /// Operation Id: ManagedClusterVersion_GetByEnvironment
+        /// </summary>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="environment"> The operating system of the cluster. The default means all. </param>
+        /// <param name="clusterVersion"> The cluster code version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ServiceFabricManagedClusterVersion> GetManagedClusterVersionByEnvironment(AzureLocation location, ManagedClusterVersionEnvironment environment, string clusterVersion, CancellationToken cancellationToken = default)
+        {
+            using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusterVersionByEnvironment");
+            scope.Start();
+            try
+            {
+                var response = ManagedClusterVersionRestClient.GetByEnvironment(Id.SubscriptionId, location, environment, clusterVersion, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets all available code versions for Service Fabric cluster resources by location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions
+        /// Operation Id: ManagedClusterVersion_List
+        /// </summary>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ServiceFabricManagedClusterVersion>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusterVersions");
+                scope.Start();
+                try
+                {
+                    var response = await ManagedClusterVersionRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// Gets all available code versions for Service Fabric cluster resources by location.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedClusterVersions
+        /// Operation Id: ManagedClusterVersion_List
+        /// </summary>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersions(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Page<ServiceFabricManagedClusterVersion> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusterVersions");
+                scope.Start();
+                try
+                {
+                    var response = ManagedClusterVersionRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// Gets all available code versions for Service Fabric cluster resources by environment.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions
+        /// Operation Id: ManagedClusterVersion_ListByEnvironment
+        /// </summary>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="environment"> The operating system of the cluster. The default means all. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironmentAsync(AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ServiceFabricManagedClusterVersion>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusterVersionsByEnvironment");
+                scope.Start();
+                try
+                {
+                    var response = await ManagedClusterVersionRestClient.ListByEnvironmentAsync(Id.SubscriptionId, location, environment, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// Gets all available code versions for Service Fabric cluster resources by environment.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/managedClusterVersions
+        /// Operation Id: ManagedClusterVersion_ListByEnvironment
+        /// </summary>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="environment"> The operating system of the cluster. The default means all. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceFabricManagedClusterVersion" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceFabricManagedClusterVersion> GetManagedClusterVersionsByEnvironment(AzureLocation location, ManagedClusterVersionEnvironment environment, CancellationToken cancellationToken = default)
+        {
+            Page<ServiceFabricManagedClusterVersion> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = ManagedClusterVersionClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedClusterVersionsByEnvironment");
+                scope.Start();
+                try
+                {
+                    var response = ManagedClusterVersionRestClient.ListByEnvironment(Id.SubscriptionId, location, environment, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
+        }
+
+        /// <summary>
+        /// Get the lists of unsupported vm sizes for Service Fabric Managed Clusters.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes
+        /// Operation Id: managedUnsupportedVMSizes_List
+        /// </summary>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="ServiceFabricManagedClustersVmSize" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceFabricManagedClustersVmSize> GetManagedUnsupportedVmSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            async Task<Page<ServiceFabricManagedClustersVmSize>> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = managedUnsupportedVMSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSizes");
+                scope.Start();
+                try
+                {
+                    var response = await managedUnsupportedVMSizesRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            async Task<Page<ServiceFabricManagedClustersVmSize>> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = managedUnsupportedVMSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSizes");
+                scope.Start();
+                try
+                {
+                    var response = await managedUnsupportedVMSizesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Get the lists of unsupported vm sizes for Service Fabric Managed Clusters.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes
+        /// Operation Id: managedUnsupportedVMSizes_List
+        /// </summary>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceFabricManagedClustersVmSize" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceFabricManagedClustersVmSize> GetManagedUnsupportedVmSizes(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Page<ServiceFabricManagedClustersVmSize> FirstPageFunc(int? pageSizeHint)
+            {
+                using var scope = managedUnsupportedVMSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSizes");
+                scope.Start();
+                try
+                {
+                    var response = managedUnsupportedVMSizesRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            Page<ServiceFabricManagedClustersVmSize> NextPageFunc(string nextLink, int? pageSizeHint)
+            {
+                using var scope = managedUnsupportedVMSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSizes");
+                scope.Start();
+                try
+                {
+                    var response = managedUnsupportedVMSizesRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Get unsupported vm size for Service Fabric Managed Clusters.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes/{vmSize}
+        /// Operation Id: managedUnsupportedVMSizes_Get
+        /// </summary>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="vmSize"> VM Size name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ServiceFabricManagedClustersVmSize>> GetManagedUnsupportedVmSizeAsync(AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        {
+            using var scope = managedUnsupportedVMSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSize");
+            scope.Start();
+            try
+            {
+                var response = await managedUnsupportedVMSizesRestClient.GetAsync(Id.SubscriptionId, location, vmSize, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get unsupported vm size for Service Fabric Managed Clusters.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/managedUnsupportedVMSizes/{vmSize}
+        /// Operation Id: managedUnsupportedVMSizes_Get
+        /// </summary>
+        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="vmSize"> VM Size name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ServiceFabricManagedClustersVmSize> GetManagedUnsupportedVmSize(AzureLocation location, string vmSize, CancellationToken cancellationToken = default)
+        {
+            using var scope = managedUnsupportedVMSizesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetManagedUnsupportedVmSize");
+            scope.Start();
+            try
+            {
+                var response = managedUnsupportedVMSizesRestClient.Get(Id.SubscriptionId, location, vmSize, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         internal static ManagedVmSizesResult DeserializeManagedVmSizesResult(JsonElement element)
         {
-            Optional<IReadOnlyList<ManagedVmSizeData>> value = default;
+            Optional<IReadOnlyList<ServiceFabricManagedClustersVmSize>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +26,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<ManagedVmSizeData> array = new List<ManagedVmSizeData>();
+                    List<ServiceFabricManagedClustersVmSize> array = new List<ServiceFabricManagedClustersVmSize>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedVmSizeData.DeserializeManagedVmSizeData(item));
+                        array.Add(ServiceFabricManagedClustersVmSize.DeserializeServiceFabricManagedClustersVmSize(item));
                     }
                     value = array;
                     continue;

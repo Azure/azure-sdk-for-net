@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> The properties of a stateful service resource. </summary>
-    public partial class StatefulServiceProperties : ServiceResourceProperties
+    public partial class StatefulServiceProperties : ManagedClusterServiceProperties
     {
         /// <summary> Initializes a new instance of StatefulServiceProperties. </summary>
         /// <param name="serviceTypeName"> The name of the service type. </param>
         /// <param name="partitionDescription">
         /// Describes how the service is partitioned.
-        /// Please note <see cref="Partition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ManagedClusterServicePartitionScheme"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="NamedPartitionScheme"/>, <see cref="SingletonPartitionScheme"/> and <see cref="UniformInt64RangePartitionScheme"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceTypeName"/> or <paramref name="partitionDescription"/> is null. </exception>
-        public StatefulServiceProperties(string serviceTypeName, Partition partitionDescription) : base(serviceTypeName, partitionDescription)
+        public StatefulServiceProperties(string serviceTypeName, ManagedClusterServicePartitionScheme partitionDescription) : base(serviceTypeName, partitionDescription)
         {
             if (serviceTypeName == null)
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
         /// <param name="servicePlacementPolicies">
         /// A list that describes the correlation of the service with other services.
-        /// Please note <see cref="ServicePlacementPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ManagedClusterServicePlacementPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ServicePlacementInvalidDomainPolicy"/>, <see cref="ServicePlacementNonPartiallyPlaceServicePolicy"/>, <see cref="ServicePlacementPreferPrimaryDomainPolicy"/>, <see cref="ServicePlacementRequiredDomainPolicy"/> and <see cref="ServicePlacementRequireDomainDistributionPolicy"/>.
         /// </param>
         /// <param name="defaultMoveCost"> Specifies the move cost for the service. </param>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="serviceTypeName"> The name of the service type. </param>
         /// <param name="partitionDescription">
         /// Describes how the service is partitioned.
-        /// Please note <see cref="Partition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="ManagedClusterServicePartitionScheme"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="NamedPartitionScheme"/>, <see cref="SingletonPartitionScheme"/> and <see cref="UniformInt64RangePartitionScheme"/>.
         /// </param>
         /// <param name="servicePackageActivationMode"> The activation Mode of the service package. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="quorumLossWaitDuration"> The maximum duration for which a partition is allowed to be in a state of quorum loss, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
         /// <param name="standByReplicaKeepDuration"> The definition on how long StandBy replicas should be maintained before being removed, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
         /// <param name="servicePlacementTimeLimit"> The duration for which replicas can stay InBuild before reporting that build is stuck, represented in ISO 8601 format &quot;hh:mm:ss&quot;. </param>
-        internal StatefulServiceProperties(string placementConstraints, IList<ServiceCorrelation> correlationScheme, IList<ServiceLoadMetric> serviceLoadMetrics, IList<ServicePlacementPolicy> servicePlacementPolicies, MoveCost? defaultMoveCost, IList<ScalingPolicy> scalingPolicies, string provisioningState, ServiceKind serviceKind, string serviceTypeName, Partition partitionDescription, ServicePackageActivationMode? servicePackageActivationMode, bool? hasPersistedState, int? targetReplicaSetSize, int? minReplicaSetSize, TimeSpan? replicaRestartWaitDuration, TimeSpan? quorumLossWaitDuration, TimeSpan? standByReplicaKeepDuration, TimeSpan? servicePlacementTimeLimit) : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, scalingPolicies, provisioningState, serviceKind, serviceTypeName, partitionDescription, servicePackageActivationMode)
+        internal StatefulServiceProperties(string placementConstraints, IList<ManagedClusterServiceCorrelation> correlationScheme, IList<ManagedClusterServiceLoadMetric> serviceLoadMetrics, IList<ManagedClusterServicePlacementPolicy> servicePlacementPolicies, ServiceFabricManagedClusterServiceMoveCost? defaultMoveCost, IList<ManagedClusterServiceScalingPolicy> scalingPolicies, string provisioningState, ServiceKind serviceKind, string serviceTypeName, ManagedClusterServicePartitionScheme partitionDescription, ManagedClusterServicePackageActivationMode? servicePackageActivationMode, bool? hasPersistedState, int? targetReplicaSetSize, int? minReplicaSetSize, TimeSpan? replicaRestartWaitDuration, TimeSpan? quorumLossWaitDuration, TimeSpan? standByReplicaKeepDuration, TimeSpan? servicePlacementTimeLimit) : base(placementConstraints, correlationScheme, serviceLoadMetrics, servicePlacementPolicies, defaultMoveCost, scalingPolicies, provisioningState, serviceKind, serviceTypeName, partitionDescription, servicePackageActivationMode)
         {
             HasPersistedState = hasPersistedState;
             TargetReplicaSetSize = targetReplicaSetSize;
