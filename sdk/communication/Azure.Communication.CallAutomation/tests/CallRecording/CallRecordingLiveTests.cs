@@ -15,9 +15,9 @@ namespace Azure.Communication.CallAutomation
         [Test]
         public async Task RecordingOperations()
         {
-            if (SkipCallingServerInteractionLiveTests)
+            if (SkipCallAutomationInteractionLiveTests)
             {
-                Assert.Ignore("Skip callingserver interaction live tests flag is on");
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on");
             }
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
@@ -32,10 +32,16 @@ namespace Azure.Communication.CallAutomation
                 var callResponse = await client.CreateCallAsync(new CallSource(user), targets, new Uri(ngrok)).ConfigureAwait(false);
                 Assert.NotNull(callResponse);
                 Assert.NotNull(callResponse.Value);
-                string callId = "serverCallId";
-                callConnectionId = callResponse.Value.CallConnection.CallConnectionId;
+                await WaitForOperationCompletion().ConfigureAwait(false);
+
+                var callProperties = await client.GetCallConnection(callResponse.Value.CallConnectionProperties.CallConnectionId).GetCallConnectionPropertiesAsync();
+                Assert.NotNull(callProperties);
+                Assert.NotNull(callProperties.Value);
+
+                string serverCallId = callProperties.Value.ServerCallId;
+                callConnectionId = callProperties.Value.CallConnectionId;
                 CallRecording callRecording = client.GetCallRecording();
-                StartRecordingOptions recordingOptions = new StartRecordingOptions(new ServerCallLocator(callId))
+                StartRecordingOptions recordingOptions = new StartRecordingOptions(new ServerCallLocator(serverCallId))
                 {
                     RecordingStateCallbackEndpoint = new Uri(ngrok)
                 };
