@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ContainerService.Tests.Scenario
     public class ContainerServiceManagedClusterCollectionTests : ContainerServiceManagementTestBase
     {
         public ContainerServiceManagedClusterCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         { }
 
         [RecordedTest]
