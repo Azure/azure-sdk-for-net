@@ -18,15 +18,11 @@ namespace Azure.Communication.CallAutomation
         /// <param name="targets"></param>
         /// <param name="callSource"></param>
         /// <param name="callbackUri"></param>
-        /// <param name="repeatabilityRequestId"></param>
-        /// <param name="repeatabilityFirstSent"></param>
-        public CreateCallOptions(CallSource callSource, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri, Guid? repeatabilityRequestId = null, string repeatabilityFirstSent = default)
+        public CreateCallOptions(CallSource callSource, IEnumerable<CommunicationIdentifier> targets, Uri callbackUri)
         {
             Targets = (IReadOnlyList<CommunicationIdentifier>)targets;
             CallSource = callSource;
             CallbackUri = callbackUri;
-            RepeatabilityRequestId = repeatabilityRequestId;
-            RepeatabilityFirstSent = repeatabilityFirstSent;
         }
 
         /// <summary>

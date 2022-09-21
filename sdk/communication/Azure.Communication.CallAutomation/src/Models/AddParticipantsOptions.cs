@@ -15,13 +15,9 @@ namespace Azure.Communication.CallAutomation
         /// Creates a new AddParticipantsOptions object.
         /// </summary>
         /// <param name="participantsToAdd"></param>
-        /// <param name="repeatabilityRequestId"></param>
-        /// <param name="repeatablityFirstSent"></param>
-        public AddParticipantsOptions(IEnumerable<CommunicationIdentifier> participantsToAdd, Guid? repeatabilityRequestId = null, string repeatablityFirstSent = default)
+        public AddParticipantsOptions(IEnumerable<CommunicationIdentifier> participantsToAdd)
         {
             ParticipantsToAdd = participantsToAdd;
-            RepeatabilityRequestId = repeatabilityRequestId;
-            RepeatabilityFirstSent = repeatablityFirstSent;
         }
 
         /// <summary>

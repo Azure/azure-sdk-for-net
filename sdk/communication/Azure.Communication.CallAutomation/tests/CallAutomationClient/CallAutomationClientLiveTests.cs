@@ -196,7 +196,10 @@ namespace Azure.Communication.CallAutomation
                 var targets = new CommunicationIdentifier[] { new CommunicationUserIdentifier(TestEnvironment.TargetUserId) };
                 var repeatabilityRequestId = new Guid("61460096-a0cc-4f65-8cec-b61cc24e646c");
                 var repeatabilityFirstSent = "Wed, 21 Sep 2022 04:40:28 GMT";
-                var options = new CreateCallOptions(new CallSource(user), targets, new Uri(TestEnvironment.AppCallbackUrl), repeatabilityRequestId, repeatabilityFirstSent);
+                var options = new CreateCallOptions(new CallSource(user), targets, new Uri(TestEnvironment.AppCallbackUrl)) {
+                    RepeatabilityRequestId = repeatabilityRequestId,
+                    RepeatabilityFirstSent = repeatabilityFirstSent
+                };
                 CreateCallResult response1 = await client.CreateCallAsync(options).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
                 CreateCallResult response2 = await client.CreateCallAsync(options).ConfigureAwait(false);

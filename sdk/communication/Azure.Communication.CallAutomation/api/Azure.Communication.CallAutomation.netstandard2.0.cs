@@ -13,7 +13,7 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class AddParticipantsOptions : Azure.Communication.CallAutomation.RepeatabilityHeaders
     {
-        public AddParticipantsOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> participantsToAdd, System.Guid? repeatabilityRequestId = default(System.Guid?), string repeatablityFirstSent = null) { }
+        public AddParticipantsOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> participantsToAdd) { }
         public int? InvitationTimeoutInSeconds { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> ParticipantsToAdd { get { throw null; } }
@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class AnswerCallOptions : Azure.Communication.CallAutomation.RepeatabilityHeaders
     {
-        public AnswerCallOptions(string incomingCallContext, System.Uri callbackUri, System.Guid? repeatabilityRequestId = default(System.Guid?), string repeatablityFirstSent = null) { }
+        public AnswerCallOptions(string incomingCallContext, System.Uri callbackUri) { }
         public System.Uri CallbackUri { get { throw null; } }
         public string IncomingCallContext { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
@@ -369,7 +369,7 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class CreateCallOptions : Azure.Communication.CallAutomation.RepeatabilityHeaders
     {
-        public CreateCallOptions(Azure.Communication.CallAutomation.CallSource callSource, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Uri callbackUri, System.Guid? repeatabilityRequestId = default(System.Guid?), string repeatabilityFirstSent = null) { }
+        public CreateCallOptions(Azure.Communication.CallAutomation.CallSource callSource, System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> targets, System.Uri callbackUri) { }
         public System.Uri CallbackUri { get { throw null; } }
         public Azure.Communication.CallAutomation.CallSource CallSource { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
@@ -698,8 +698,8 @@ namespace Azure.Communication.CallAutomation
     public partial class RepeatabilityHeaders
     {
         public RepeatabilityHeaders() { }
-        public string RepeatabilityFirstSent { get { throw null; } }
-        public System.Guid? RepeatabilityRequestId { get { throw null; } }
+        public string RepeatabilityFirstSent { get { throw null; } set { } }
+        public System.Guid? RepeatabilityRequestId { get { throw null; } set { } }
         public bool IsValidRepeatabilityHeaders() { throw null; }
     }
     public partial class ResultInformation

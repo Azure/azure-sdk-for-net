@@ -13,12 +13,12 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Repeatabiity Request Id.
         /// </summary>
-        public Guid? RepeatabilityRequestId { get; internal set; }
+        public Guid? RepeatabilityRequestId { get; set; }
 
         /// <summary>
         /// Repeatability First Sent.
         /// </summary>
-        public string RepeatabilityFirstSent { get; internal set; }
+        public string RepeatabilityFirstSent { get; set; }
 
         /// <summary>
         /// Function that checks the validility of the repeatability header set.

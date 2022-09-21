@@ -68,7 +68,7 @@ namespace Azure.Communication.CallAutomation
                 string callbackUri = TestEnvironment.AppCallbackUrl;
                 string promptUrl = "https://localhost/audio/bot-hold-music-2.wav";
                 var targets = new CommunicationIdentifier[] { targetUser };
-                var callResponse = await client.CreateCallAsync(new CallSource(user), targets, new Uri(callbackUri)).ConfigureAwait(false);
+                var callResponse = await client.CreateCallAsync(new CreateCallOptions(new CallSource(user), targets, new Uri(callbackUri))).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
                 Assert.NotNull(callResponse);
                 Assert.NotNull(callResponse.Value);

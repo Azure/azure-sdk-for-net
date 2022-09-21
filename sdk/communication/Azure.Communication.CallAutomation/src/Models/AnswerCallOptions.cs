@@ -15,14 +15,10 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="incomingCallContext"></param>
         /// <param name="callbackUri"></param>
-        /// <param name="repeatabilityRequestId"></param>
-        /// <param name="repeatablityFirstSent"></param>
-        public AnswerCallOptions(string incomingCallContext, Uri callbackUri, Guid? repeatabilityRequestId = null, string repeatablityFirstSent = default)
+        public AnswerCallOptions(string incomingCallContext, Uri callbackUri)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
-            RepeatabilityRequestId = repeatabilityRequestId;
-            RepeatabilityFirstSent = repeatablityFirstSent;
         }
 
         /// <summary>

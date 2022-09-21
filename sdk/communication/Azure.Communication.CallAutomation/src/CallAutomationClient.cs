@@ -124,7 +124,10 @@ namespace Azure.Communication.CallAutomation
             if (!repeatabilityHeaders.IsValidRepeatabilityHeaders())
                 throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
-            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext, callbackUri, repeatabilityRequestId, repeatabilityFirstSent);
+            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext, callbackUri) {
+                RepeatabilityRequestId = repeatabilityRequestId,
+                RepeatabilityFirstSent = repeatabilityFirstSent
+            };
 
             return await AnswerCallAsync(options, cancellationToken).ConfigureAwait(false);
         }
@@ -180,7 +183,10 @@ namespace Azure.Communication.CallAutomation
             if (!repeatabilityHeaders.IsValidRepeatabilityHeaders())
                 throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
-            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext, callbackUri, repeatabilityRequestId, repeatabilityFirstSent);
+            AnswerCallOptions options = new AnswerCallOptions(incomingCallContext, callbackUri) {
+                RepeatabilityRequestId = repeatabilityRequestId,
+                RepeatabilityFirstSent = repeatabilityFirstSent
+            };
 
             return AnswerCall(options, cancellationToken);
         }
