@@ -732,7 +732,7 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class TransferToParticipantOptions : Azure.Communication.CallAutomation.RepeatabilityHeaders
     {
-        public TransferToParticipantOptions(Azure.Communication.CommunicationIdentifier targetParticipant, System.Guid? repeatabilityRequestId = default(System.Guid?), string repeatablityFirstSent = null) { }
+        public TransferToParticipantOptions(Azure.Communication.CommunicationIdentifier targetParticipant) { }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerId { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }

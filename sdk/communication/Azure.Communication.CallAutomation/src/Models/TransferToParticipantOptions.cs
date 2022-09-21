@@ -14,13 +14,9 @@ namespace Azure.Communication.CallAutomation
         /// Creates a new TransferToParticipantOptions object.
         /// </summary>
         /// <param name="targetParticipant"></param>
-        /// <param name="repeatabilityRequestId"></param>
-        /// <param name="repeatablityFirstSent"></param>
-        public TransferToParticipantOptions(CommunicationIdentifier targetParticipant, Guid? repeatabilityRequestId = null, string repeatablityFirstSent = default)
+        public TransferToParticipantOptions(CommunicationIdentifier targetParticipant)
         {
             TargetParticipant = targetParticipant;
-            RepeatabilityRequestId = repeatabilityRequestId;
-            RepeatabilityFirstSent = repeatablityFirstSent;
         }
 
         /// <summary>
