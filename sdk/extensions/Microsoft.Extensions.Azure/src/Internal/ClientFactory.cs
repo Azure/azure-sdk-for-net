@@ -17,7 +17,7 @@ namespace Microsoft.Extensions.Azure
     {
         private const string ServiceVersionParameterTypeName = "ServiceVersion";
         private const string ConnectionStringParameterName = "connectionString";
-        private const char TenantDelimiter = ',';
+        private const char TenantDelimiter = ';';
 
         public static object CreateClient(Type clientType, Type optionsType, object options, IConfiguration configuration, TokenCredential credential)
         {

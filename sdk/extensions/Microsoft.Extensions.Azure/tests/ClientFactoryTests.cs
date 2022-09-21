@@ -171,7 +171,8 @@ namespace Azure.Core.Extensions.Tests
 
         [Test]
         [TestCase("*")]
-        [TestCase("tenantId1, tenantId2, tenantId3")]
+        [TestCase("tenantId1;tenantId2;tenantId3")]
+        [TestCase("tenantId1; tenantId2; tenantId3")]
         public void CreatesCertificateCredentialsAdditionalTenants(string additionalTenants)
         {
             var storeLocation = "currentUser";
@@ -205,7 +206,7 @@ namespace Azure.Core.Extensions.Tests
             var actualTenants = (string[]) typeof(ClientCertificateCredential)
                 .GetField("_additionallyAllowedTenantIds", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(clientCertificateCredential);
-            var expectedTenants = additionalTenants.Split(',')
+            var expectedTenants = additionalTenants.Split(';')
                 .Select(t => t.Trim())
                 .Where(t => !string.IsNullOrWhiteSpace(t))
                 .ToList();
@@ -238,7 +239,8 @@ namespace Azure.Core.Extensions.Tests
 
         [Test]
         [TestCase("*")]
-        [TestCase("tenantId1, tenantId2, tenantId3")]
+        [TestCase("tenantId1;tenantId2;tenantId3")]
+        [TestCase("tenantId1; tenantId2; tenantId3")]
         public void CreatesClientSecretCredentials_AdditionalTenants(string additionalTenants)
         {
             IConfiguration configuration = GetConfiguration(
@@ -260,7 +262,7 @@ namespace Azure.Core.Extensions.Tests
             var actualTenants = typeof(ClientSecretCredential)
                 .GetField("_additionallyAllowedTenantIds", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(clientSecretCredential);
-            var expectedTenants = additionalTenants.Split(',')
+            var expectedTenants = additionalTenants.Split(';')
                 .Select(t => t.Trim())
                 .Where(t => !string.IsNullOrWhiteSpace(t))
                 .ToList();
@@ -280,7 +282,8 @@ namespace Azure.Core.Extensions.Tests
 
         [Test]
         [TestCase("*")]
-        [TestCase("tenantId1, tenantId2, tenantId3")]
+        [TestCase("tenantId1;tenantId2;tenantId3")]
+        [TestCase("tenantId1; tenantId2; tenantId3")]
         public void CreatesDefaultAzureCredentialWithAdditionalTenants(string additionalTenants)
         {
             IConfiguration configuration = GetConfiguration(
@@ -299,7 +302,7 @@ namespace Azure.Core.Extensions.Tests
                 .GetField("_options", BindingFlags.NonPublic | BindingFlags.Instance)
                 .GetValue(firstCredentialInChain);
 
-            var expectedTenants = additionalTenants.Split(',')
+            var expectedTenants = additionalTenants.Split(';')
                 .Select(t => t.Trim())
                 .Where(t => !string.IsNullOrWhiteSpace(t))
                 .ToList();
