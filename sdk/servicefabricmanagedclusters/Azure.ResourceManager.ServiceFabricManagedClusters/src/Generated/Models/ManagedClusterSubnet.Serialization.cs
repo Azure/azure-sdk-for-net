@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             string name = default;
             Optional<bool> enableIPv6 = default;
-            Optional<PrivateEndpointNetworkPolicy> privateEndpointNetworkPolicies = default;
-            Optional<PrivateLinkServiceNetworkPolicy> privateLinkServiceNetworkPolicies = default;
+            Optional<ManagedClusterSubnetPrivateEndpointNetworkPoliciesState> privateEndpointNetworkPolicies = default;
+            Optional<ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState> privateLinkServiceNetworkPolicies = default;
             Optional<ResourceIdentifier> networkSecurityGroupId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateEndpointNetworkPolicies = new PrivateEndpointNetworkPolicy(property.Value.GetString());
+                    privateEndpointNetworkPolicies = new ManagedClusterSubnetPrivateEndpointNetworkPoliciesState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateLinkServiceNetworkPolicies"))
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    privateLinkServiceNetworkPolicies = new PrivateLinkServiceNetworkPolicy(property.Value.GetString());
+                    privateLinkServiceNetworkPolicies = new ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("networkSecurityGroupId"))

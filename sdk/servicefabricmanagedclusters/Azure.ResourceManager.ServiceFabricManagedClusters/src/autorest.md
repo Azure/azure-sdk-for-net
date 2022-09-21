@@ -107,8 +107,8 @@ rename-mapping:
   NodeType.properties.multiplePlacementGroups: HasMultiplePlacementGroups
   VmssDataDisk: NodeTypeVmssDataDisk
   VmssDataDisk.diskSizeGB: DiskSizeInGB
-  VMSSExtension: NodeTypeVmssExtension
-  VMSSExtension.properties.enableAutomaticUpgrade: IsAutomaticUpgradeEnabled
+  VmssExtension: NodeTypeVmssExtension
+  VmssExtension.properties.enableAutomaticUpgrade: IsAutomaticUpgradeEnabled
   VaultSecretGroup: NodeTypeVaultSecretGroup
   VaultCertificate: NodeTypeVaultCertificate
   DiskType: ServiceFabricManagedDataDiskType
@@ -137,8 +137,8 @@ rename-mapping:
   NsgProtocol.ah: AH
   NodeTypeAvailableSku.resourceType: -|resource-type
   PartitionInstanceCountScaleMechanism: PartitionInstanceCountScalingMechanism
-  PrivateEndpointNetworkPolicy: ManagedClusterSubnetPrivateEndpointNetworkPolicy
-  PrivateLinkServiceNetworkPolicy: ManagedClusterSubnetPrivateLinkServiceNetworkPolicy
+  PrivateEndpointNetworkPolicies: ManagedClusterSubnetPrivateEndpointNetworkPoliciesState
+  PrivateLinkServiceNetworkPolicies: ManagedClusterSubnetPrivateLinkServiceNetworkPoliciesState
   ServiceLoadMetric: ManagedClusterServiceLoadMetric
   ServiceLoadMetricWeight: ManagedClusterServiceLoadMetricWeight
   ServicePackageActivationMode: ManagedClusterServicePackageActivationMode

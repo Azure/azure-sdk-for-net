@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             PlacementProperties = new ChangeTrackingDictionary<string, string>();
             Capacities = new ChangeTrackingDictionary<string, string>();
             VmSecrets = new ChangeTrackingList<NodeTypeVaultSecretGroup>();
-            VmExtensions = new ChangeTrackingList<VmssExtension>();
+            VmExtensions = new ChangeTrackingList<NodeTypeVmssExtension>();
             FrontendConfigurations = new ChangeTrackingList<NodeTypeFrontendConfiguration>();
             NetworkSecurityRules = new ChangeTrackingList<ServiceFabricManagedClustersNetworkSecurityRule>();
             AdditionalDataDisks = new ChangeTrackingList<NodeTypeVmssDataDisk>();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="useTempDataDisk"> Specifies whether to use the temporary disk for the service fabric data root, in which case no managed data disk will be attached and the temporary disk will be used. It is only allowed for stateless node types. </param>
         /// <param name="isOverProvisioningEnabled"> Specifies whether the node type should be overprovisioned. It is only allowed for stateless node types. </param>
         /// <param name="tags"> Azure resource tags. </param>
-        internal ServiceFabricManagedClusterNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<VmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedClustersNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal ServiceFabricManagedClusterNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedClustersNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             IsPrimary = isPrimary;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <summary> The secrets to install in the virtual machines. </summary>
         public IList<NodeTypeVaultSecretGroup> VmSecrets { get; }
         /// <summary> Set of extensions that should be installed onto the virtual machines. </summary>
-        public IList<VmssExtension> VmExtensions { get; }
+        public IList<NodeTypeVmssExtension> VmExtensions { get; }
         /// <summary> Identities to assign to the virtual machine scale set under the node type. </summary>
         internal VmManagedIdentity VmManagedIdentity { get; set; }
         /// <summary> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}&apos;. </summary>

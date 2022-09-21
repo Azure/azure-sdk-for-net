@@ -12,15 +12,15 @@ using Azure.Core;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Specifies set of extensions that should be installed onto the virtual machines. </summary>
-    public partial class VmssExtension
+    public partial class NodeTypeVmssExtension
     {
-        /// <summary> Initializes a new instance of VmssExtension. </summary>
+        /// <summary> Initializes a new instance of NodeTypeVmssExtension. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/>, <paramref name="vmssExtensionPropertiesType"/> or <paramref name="typeHandlerVersion"/> is null. </exception>
-        public VmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion)
+        public NodeTypeVmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion)
         {
             if (name == null)
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ProvisionAfterExtensions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VmssExtension. </summary>
+        /// <summary> Initializes a new instance of NodeTypeVmssExtension. </summary>
         /// <param name="name"> The name of the extension. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="vmssExtensionPropertiesType"> Specifies the type of the extension; an example is &quot;CustomScriptExtension&quot;. </param>
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="forceUpdateTag"> If a value is provided and is different from the previous value, the extension handler will be forced to update even if the extension configuration has not changed. </param>
         /// <param name="provisionAfterExtensions"> Collection of extension names after which this extension needs to be provisioned. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="enableAutomaticUpgrade"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
-        internal VmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string forceUpdateTag, IList<string> provisionAfterExtensions, string provisioningState, bool? enableAutomaticUpgrade)
+        /// <param name="isAutomaticUpgradeEnabled"> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </param>
+        internal NodeTypeVmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, BinaryData settings, BinaryData protectedSettings, string forceUpdateTag, IList<string> provisionAfterExtensions, string provisioningState, bool? isAutomaticUpgradeEnabled)
         {
             Name = name;
             Publisher = publisher;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ForceUpdateTag = forceUpdateTag;
             ProvisionAfterExtensions = provisionAfterExtensions;
             ProvisioningState = provisioningState;
-            EnableAutomaticUpgrade = enableAutomaticUpgrade;
+            IsAutomaticUpgradeEnabled = isAutomaticUpgradeEnabled;
         }
 
         /// <summary> The name of the extension. </summary>
@@ -152,6 +152,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. </summary>
-        public bool? EnableAutomaticUpgrade { get; set; }
+        public bool? IsAutomaticUpgradeEnabled { get; set; }
     }
 }

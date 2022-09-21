@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class VmssExtension : IUtf8JsonSerializable
+    public partial class NodeTypeVmssExtension : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -65,16 +65,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(EnableAutomaticUpgrade))
+            if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade");
-                writer.WriteBooleanValue(EnableAutomaticUpgrade.Value);
+                writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static VmssExtension DeserializeVmssExtension(JsonElement element)
+        internal static NodeTypeVmssExtension DeserializeNodeTypeVmssExtension(JsonElement element)
         {
             string name = default;
             string publisher = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new VmssExtension(name, publisher, type, typeHandlerVersion, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, forceUpdateTag.Value, Optional.ToList(provisionAfterExtensions), provisioningState.Value, Optional.ToNullable(enableAutomaticUpgrade));
+            return new NodeTypeVmssExtension(name, publisher, type, typeHandlerVersion, Optional.ToNullable(autoUpgradeMinorVersion), settings.Value, protectedSettings.Value, forceUpdateTag.Value, Optional.ToList(provisionAfterExtensions), provisioningState.Value, Optional.ToNullable(enableAutomaticUpgrade));
         }
     }
 }

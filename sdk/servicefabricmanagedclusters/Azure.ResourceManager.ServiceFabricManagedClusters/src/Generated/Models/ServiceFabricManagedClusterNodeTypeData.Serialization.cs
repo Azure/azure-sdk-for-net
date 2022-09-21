@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             Optional<string> vmImageSku = default;
             Optional<string> vmImageVersion = default;
             Optional<IList<NodeTypeVaultSecretGroup>> vmSecrets = default;
-            Optional<IList<VmssExtension>> vmExtensions = default;
+            Optional<IList<NodeTypeVmssExtension>> vmExtensions = default;
             Optional<VmManagedIdentity> vmManagedIdentity = default;
             Optional<bool> isStateless = default;
             Optional<bool> multiplePlacementGroups = default;
@@ -451,10 +451,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VmssExtension> array = new List<VmssExtension>();
+                            List<NodeTypeVmssExtension> array = new List<NodeTypeVmssExtension>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VmssExtension.DeserializeVmssExtension(item));
+                                array.Add(NodeTypeVmssExtension.DeserializeNodeTypeVmssExtension(item));
                             }
                             vmExtensions = array;
                             continue;
