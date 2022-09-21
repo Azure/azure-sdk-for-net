@@ -80,6 +80,7 @@ jobs:
   pool:
     name: $(Pool)
     vmImage: $(OSVmImage)
+    demands: ImageVersionOverride -equals 66.0.0
   steps:
 
   - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
