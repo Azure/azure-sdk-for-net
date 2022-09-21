@@ -126,7 +126,7 @@ namespace Azure.Communication.CallAutomation.Tests
         {
             var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
 
-            var response = await callConnection.TransferCallToParticipantAsync(targetParticipant).ConfigureAwait(false);
+            var response = await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(targetParticipant)).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
@@ -136,7 +136,7 @@ namespace Azure.Communication.CallAutomation.Tests
         {
             var callConnection = CreateMockCallConnection(202, TransferCallOrRemoveParticipantsPayload);
 
-            var response = callConnection.TransferCallToParticipant(targetParticipant);
+            var response = callConnection.TransferCallToParticipant(new TransferToParticipantOptions(targetParticipant));
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyOperationContext(response);
         }
@@ -146,7 +146,7 @@ namespace Azure.Communication.CallAutomation.Tests
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallToParticipantAsync(targetParticipant).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.TransferCallToParticipantAsync(new TransferToParticipantOptions(targetParticipant)).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -156,7 +156,7 @@ namespace Azure.Communication.CallAutomation.Tests
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCallToParticipant(targetParticipant));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.TransferCallToParticipant(new TransferToParticipantOptions(targetParticipant)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -166,7 +166,7 @@ namespace Azure.Communication.CallAutomation.Tests
         {
             var callConnection = CreateMockCallConnection(202, AddParticipantsPayload);
 
-            var response = await callConnection.AddParticipantsAsync(participantsToAdd).ConfigureAwait(false);
+            var response = await callConnection.AddParticipantsAsync(new AddParticipantsOptions(participantsToAdd)).ConfigureAwait(false);
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyAddParticipantsResult(response);
         }
@@ -176,7 +176,7 @@ namespace Azure.Communication.CallAutomation.Tests
         {
             var callConnection = CreateMockCallConnection(202, AddParticipantsPayload);
 
-            var response = callConnection.AddParticipants(participantsToAdd);
+            var response = callConnection.AddParticipants(new AddParticipantsOptions(participantsToAdd));
             Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
             verifyAddParticipantsResult(response);
         }
@@ -186,7 +186,7 @@ namespace Azure.Communication.CallAutomation.Tests
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.AddParticipantsAsync(participantsToAdd).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callConnection.AddParticipantsAsync(new AddParticipantsOptions(participantsToAdd)).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -196,7 +196,7 @@ namespace Azure.Communication.CallAutomation.Tests
         {
             var callConnection = CreateMockCallConnection(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.AddParticipants(participantsToAdd));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callConnection.AddParticipants(new AddParticipantsOptions(participantsToAdd)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
