@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation
                 string ngrok = "https://localhost";
                 string playAudioUri = "https://localhost/bot-hold-music-2.wav";
                 var targets = new CommunicationIdentifier[] { targetUser };
-                var callResponse = await client.CreateCallAsync(new CallSource(user), targets, new Uri(ngrok)).ConfigureAwait(false);
+                var callResponse = await client.CreateCallAsync(new CreateCallOptions(new CallSource(user), targets, new Uri(ngrok))).ConfigureAwait(false);
                 Assert.NotNull(callResponse);
                 Assert.NotNull(callResponse.Value);
                 var callConnection = callResponse.Value.CallConnection;

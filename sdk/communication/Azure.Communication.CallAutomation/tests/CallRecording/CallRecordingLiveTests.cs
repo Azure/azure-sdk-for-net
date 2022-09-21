@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
                 var targetUser = TestEnvironment.TargetUserId;
                 string ngrok = "https://localhost";
                 var targets = new CommunicationIdentifier[] { new CommunicationUserIdentifier(targetUser) };
-                var callResponse = await client.CreateCallAsync(new CallSource(user), targets, new Uri(ngrok)).ConfigureAwait(false);
+                var callResponse = await client.CreateCallAsync(new CreateCallOptions(new CallSource(user), targets, new Uri(ngrok))).ConfigureAwait(false);
                 Assert.NotNull(callResponse);
                 Assert.NotNull(callResponse.Value);
                 string callId = "serverCallId";

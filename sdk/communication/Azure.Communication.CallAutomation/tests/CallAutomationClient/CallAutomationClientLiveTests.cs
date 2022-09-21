@@ -34,7 +34,8 @@ namespace Azure.Communication.CallAutomation
             {
                 var user = await CreateIdentityUserAsync().ConfigureAwait(false);
                 var targets = new CommunicationIdentifier[] { new CommunicationUserIdentifier(TestEnvironment.TargetUserId) };
-                CreateCallResult response = await client.CreateCallAsync(new CallSource(user), targets, new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
+                var options = new CreateCallOptions(new CallSource(user), targets, new Uri(TestEnvironment.AppCallbackUrl));
+                CreateCallResult response = await client.CreateCallAsync(options).ConfigureAwait(false);
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
                 Assert.AreEqual(CallConnectionState.Connecting, response.CallConnectionProperties.CallConnectionState);
                 await WaitForOperationCompletion().ConfigureAwait(false);
@@ -89,7 +90,8 @@ namespace Azure.Communication.CallAutomation
                 };
 
                 var targets = new CommunicationIdentifier[] { new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber) };
-                CreateCallResult response = await client.CreateCallAsync(source, targets, new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
+                var options = new CreateCallOptions(new CallSource(user), targets, new Uri(TestEnvironment.AppCallbackUrl));
+                CreateCallResult response = await client.CreateCallAsync(options).ConfigureAwait(false);
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
                 Assert.AreEqual("connecting", response.CallConnectionProperties.CallConnectionState.ToString());
                 await WaitForOperationCompletion().ConfigureAwait(false);
