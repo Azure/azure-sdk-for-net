@@ -31,9 +31,9 @@ namespace Azure.ResourceManager.ContainerService
             _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
         }
 
-        internal ContainerServiceArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia)
+        internal ContainerServiceArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, string interimApiVersion = null)
         {
-            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia);
+            var nextLinkOperation = NextLinkOperationImplementation.Create(source, pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, interimApiVersion);
             _operation = new OperationInternal<T>(clientDiagnostics, nextLinkOperation, response, "ContainerServiceArmOperation", fallbackStrategy: new ExponentialDelayStrategy());
         }
 

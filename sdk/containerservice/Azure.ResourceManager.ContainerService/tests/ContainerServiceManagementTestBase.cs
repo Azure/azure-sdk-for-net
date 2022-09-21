@@ -13,6 +13,8 @@ namespace Azure.ResourceManager.ContainerService.Tests
     public class ContainerServiceManagementTestBase : ManagementRecordedTestBase<ContainerServiceManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
+        protected ResourceGroupResource ResourceGroup { get; private set; }
+        protected AzureLocation DefaultLocation = AzureLocation.WestUS;
 
         protected ContainerServiceManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -25,17 +27,11 @@ namespace Azure.ResourceManager.ContainerService.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        public async Task CreateCommonClient()
         {
             Client = GetArmClient();
-        }
-
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
-        {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
-            return lro.Value;
+            var sub = await Client.GetDefaultSubscriptionAsync();
+            ResourceGroup = (await sub.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("rg-"), new ResourceGroupData(DefaultLocation))).Value;
         }
     }
 }
