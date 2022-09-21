@@ -19,11 +19,13 @@ namespace Azure.ResourceManager.ContainerService.Tests
         protected ContainerServiceManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            JsonPathSanitizers.Add("$..secret");
         }
 
         protected ContainerServiceManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            JsonPathSanitizers.Add("$..secret");
         }
 
         [SetUp]
