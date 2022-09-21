@@ -24,12 +24,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 case MetricType.DoubleSum:
                     metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetSumDouble())
                     {
+                        Namespace = metric.MeterName,
                         DataPointType = DataPointType.Aggregation
                     };
                     break;
                 case MetricType.DoubleGauge:
                     metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetGaugeLastValueDouble())
                     {
+                        Namespace = metric.MeterName,
                         DataPointType = DataPointType.Measurement
                     };
                     break;
@@ -38,6 +40,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     // see: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions#implicit-numeric-conversions
                     metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetSumLong())
                     {
+                        Namespace = metric.MeterName,
                         DataPointType = DataPointType.Aggregation
                     };
                     break;
@@ -46,12 +49,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     // see: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions#implicit-numeric-conversions
                     metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetGaugeLastValueLong())
                     {
+                        Namespace = metric.MeterName,
                         DataPointType = DataPointType.Measurement
                     };
                     break;
                 case MetricType.Histogram:
-                    metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetHistogramSum());
-                    metricDataPoint.DataPointType = DataPointType.Aggregation;
+                    metricDataPoint = new MetricDataPoint(metric.Name, metricPoint.GetHistogramSum())
+                    {
+                        Namespace = metric.MeterName,
+                        DataPointType = DataPointType.Aggregation
+                    };
+
                     long histogramCount = metricPoint.GetHistogramCount();
                     // Current schema only supports int values for count
                     // if the value is within integer range we will use it otherwise ignore it.
