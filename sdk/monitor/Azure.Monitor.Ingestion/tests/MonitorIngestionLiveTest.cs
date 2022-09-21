@@ -83,7 +83,7 @@ namespace Azure.Monitor.Ingestion.Tests
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
-            Assert.AreEqual(0, response.Value.Errors.Count());
+            Assert.IsEmpty(response.Value.Errors);
         }
 
         private static List<Object> GenerateEntries(int numEntries, DateTime recordingNow)
@@ -112,7 +112,7 @@ namespace Azure.Monitor.Ingestion.Tests
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
-            Assert.AreEqual(0, response.Value.Errors.Count());
+            Assert.IsEmpty(response.Value.Errors);
         }
 
         [LiveOnly]
@@ -126,7 +126,7 @@ namespace Azure.Monitor.Ingestion.Tests
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
-            Assert.AreEqual(0, response.Value.Errors.Count());
+            Assert.IsEmpty(response.Value.Errors);
         }
 
         [LiveOnly]
@@ -144,6 +144,7 @@ namespace Azure.Monitor.Ingestion.Tests
 
         [AsyncOnly]
         [Test]
+        [LiveOnly]
         public async Task ConcurrencyMultiThread()
         {
             var policy = new ConcurrencyCounterPolicy();
@@ -153,14 +154,18 @@ namespace Azure.Monitor.Ingestion.Tests
             // Make the request
             UploadLogsOptions options = new UploadLogsOptions();
             options.MaxConcurrency = 10;
-            var tasks = client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(500, Recording.Now.DateTime), options).ConfigureAwait(false);
+            System.Runtime.CompilerServices.ConfiguredTaskAwaitable<Response<UploadLogsResult>> tasks;
+            using (Recording.DisableRecording())
+            {
+                tasks = client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(500, Recording.Now.DateTime), options).ConfigureAwait(false);
+            }
             Assert.Greater(policy.Count, 1);
 
             var response = await tasks;
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
-            Assert.AreEqual(0, response.Value.Errors.Count());
+            Assert.IsEmpty(response.Value.Errors);
         }
 
         [SyncOnly]
@@ -176,7 +181,7 @@ namespace Azure.Monitor.Ingestion.Tests
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
-            Assert.AreEqual(0, response.Value.Errors.Count());
+            Assert.IsEmpty(response.Value.Errors);
         }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -40,9 +41,9 @@ namespace Azure.Monitor.Ingestion
             public BinaryData LogsData { get; }
         }
 
-        internal readonly struct RunningTask<T>
+        internal readonly struct BatchUploadTask
         {
-            public RunningTask(Response response, UploadLogsError error)
+            public BatchUploadTask(Response response, UploadLogsError error)
             {
                 Response = response;
                 Error = error;
@@ -102,16 +103,15 @@ namespace Azure.Monitor.Ingestion
             foreach (var log in logEntries)
             {
                 BinaryData entry;
-                // Default Serializer is System.Text.Json
-                if (options == null || options.Serializer == null)
-                {
-                    entry = log is BinaryData d ? d : BinaryData.FromObjectAsJson(log);
-                }
+                // If log is already BinaryData, no need to serialize it
+                if (log is BinaryData d)
+                    entry = d;
+                // If log is not BinaryData, serialize it. Default Serializer is System.Text.Json
+                else if (options == null || options.Serializer == null)
+                    entry = BinaryData.FromObjectAsJson(log);
                 // Otherwise use Serializer specified in options
                 else
-                {
                     entry = options.Serializer.Serialize(log);
-                }
 
                 var memory = entry.ToMemory();
                 if (memory.Length > SingleUploadThreshold) // if single log is > 1 Mb send to be gzipped by itself
@@ -206,7 +206,7 @@ namespace Azure.Monitor.Ingestion
                 foreach (BatchedLogs<T> batch in Batch(logs, options))
                 {
                     // Because we are uploading in sequence, wait for each batch to upload before starting the next batch
-                    RunningTask<T> task = CommitBatchListSyncOrAsync(
+                    BatchUploadTask task = CommitBatchListSyncOrAsync(
                         batch,
                         ruleId,
                         streamName,
@@ -225,7 +225,7 @@ namespace Azure.Monitor.Ingestion
             }
 
             // Calculate the status using the helper method Status
-            UploadLogsResult finalResult = new UploadLogsResult(errors, Status(logs, errors));
+            UploadLogsResult finalResult = new UploadLogsResult(errors, GetStatus(logs, errors));
             return Response.FromValue(finalResult, response);
         }
 
@@ -275,12 +275,12 @@ namespace Azure.Monitor.Ingestion
                 scope.Start();
                 // A list of tasks that are currently executing which will
                 // always be smaller than or equal to MaxWorkerCount
-                List<Task<RunningTask<T>>> runningTasks = new();
+                List<Task<BatchUploadTask>> runningTasks = new();
                 // Partition the stream into individual blocks
                 foreach (BatchedLogs<T> batch in Batch(logs, options))
                 {
                     // Start staging the next batch (but don't await the Task!)
-                    Task<RunningTask<T>> task = CommitBatchListSyncOrAsync(
+                    Task<BatchUploadTask> task = CommitBatchListSyncOrAsync(
                         batch,
                         ruleId,
                         streamName,
@@ -294,17 +294,21 @@ namespace Azure.Monitor.Ingestion
                     if (runningTasks.Count >= _maxWorkerCount)
                     {
                         // Wait for at least one of them to finish
-                        Task<RunningTask<T>> finished = await Task.WhenAny(runningTasks).ConfigureAwait(false);
+                        await Task.WhenAny(runningTasks).ConfigureAwait(false);
                         // Clear any completed blocks from the task list
                         for (int i = 0; i < runningTasks.Count; i++)
                         {
-                            Task runningTask = runningTasks[i];
+                            Task<BatchUploadTask> runningTask = runningTasks[i];
                             if (!runningTask.IsCompleted)
                             {
                                 continue;
                             }
 
-                            await runningTask.ConfigureAwait(false);
+                            // Before removing runningTask - check if it has any errors and add to error list
+                            if (runningTask.Result.Error != null)
+                                errors.Add(runningTask.Result.Error);
+
+                            // Remove completed task from task list
                             runningTasks.RemoveAt(i);
                             i--;
                         }
@@ -316,7 +320,7 @@ namespace Azure.Monitor.Ingestion
 
                 // Process all errors after tasks are done to determine status
                 // Will run on a single thread
-                foreach (Task<RunningTask<T>> task in runningTasks)
+                foreach (Task<BatchUploadTask> task in runningTasks)
                 {
                     // Go through errors from each task and if we have an error, add error from response into errors list which represents the errors from all the batches
                     if (task.Result.Error != null)
@@ -330,13 +334,13 @@ namespace Azure.Monitor.Ingestion
             }
 
             // Calculate the status using the helper method Status
-            UploadLogsResult finalResult = new UploadLogsResult(errors, Status(logs, errors));
+            UploadLogsResult finalResult = new UploadLogsResult(errors, GetStatus(logs, errors));
             return Response.FromValue(finalResult, response);
         }
 
-        private async Task<RunningTask<T>> CommitBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
+        private async Task<BatchUploadTask> CommitBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
         {
-            UploadLogsError error;
+            UploadLogsError error = null;
             RequestContext requestContext = GenerateRequestContext(cancellationToken);
             Response response = null;
 
@@ -355,10 +359,9 @@ namespace Azure.Monitor.Ingestion
             {
                 RequestFailedException requestFailedException = new RequestFailedException(response);
                 ResponseError responseError = new ResponseError(requestFailedException.ErrorCode, requestFailedException.Message);
-                List<Object> objectLogs = new List<Object>((IEnumerable<object>)batch.LogsList);
-                error = new UploadLogsError(responseError, objectLogs);
+                error = new UploadLogsError(responseError, (IReadOnlyList<BinaryData>)batch.LogsList);
             }
-            return new RunningTask<T>(response, null);
+            return new BatchUploadTask(response, error);
         }
 
         private static RequestContext GenerateRequestContext(CancellationToken cancellationToken)
@@ -372,14 +375,14 @@ namespace Azure.Monitor.Ingestion
             return requestContext;
         }
 
-        private static UploadLogsStatus Status<T>(IEnumerable<T> logEntries, List<UploadLogsError> errors)
+        private static UploadLogsStatus GetStatus<T>(IEnumerable<T> logEntries, List<UploadLogsError> errors)
         {
             UploadLogsStatus status;
             // Errors holds the lists of all failed logs per batch so summing up these gives us the total number of failed logs
             int totalLogsFailed = 0;
-            foreach (var x in errors)
+            foreach (UploadLogsError error in errors)
             {
-                totalLogsFailed += x.FailedLogs.Count();
+                totalLogsFailed += error.FailedLogs.Count;
             }
 
             // If there are no errors, all entries were successfully uploaded
