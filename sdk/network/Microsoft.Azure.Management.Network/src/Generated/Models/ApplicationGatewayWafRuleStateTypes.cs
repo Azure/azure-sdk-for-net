@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for DdosCustomPolicyTriggerSensitivityOverride.
+    /// Defines values for ApplicationGatewayWafRuleStateTypes.
     /// </summary>
-    public static class DdosCustomPolicyTriggerSensitivityOverride
+    public static class ApplicationGatewayWafRuleStateTypes
     {
-        public const string Relaxed = "Relaxed";
-        public const string Low = "Low";
-        public const string Default = "Default";
-        public const string High = "High";
+        public const string Enabled = "Enabled";
+        public const string Disabled = "Disabled";
     }
 }

@@ -17,5 +17,6 @@ namespace Microsoft.Azure.Management.Network.Models
     public static class ManagedRuleEnabledState
     {
         public const string Disabled = "Disabled";
+        public const string Enabled = "Enabled";
     }
 }
