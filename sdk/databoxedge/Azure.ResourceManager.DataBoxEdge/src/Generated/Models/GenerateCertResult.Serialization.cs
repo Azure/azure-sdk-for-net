@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             Optional<string> publicKey = default;
             Optional<string> privateKey = default;
-            Optional<string> expiryTimeInUtc = default;
+            Optional<DateTimeOffset> expiryTimeInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicKey"))
@@ -31,11 +32,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 if (property.NameEquals("expiryTimeInUTC"))
                 {
-                    expiryTimeInUtc = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    expiryTimeInUtc = property.Value.GetDateTimeOffset();
                     continue;
                 }
             }
-            return new GenerateCertResult(publicKey.Value, privateKey.Value, expiryTimeInUtc.Value);
+            return new GenerateCertResult(publicKey.Value, privateKey.Value, Optional.ToNullable(expiryTimeInUtc));
         }
     }
 }

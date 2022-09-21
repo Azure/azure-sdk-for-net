@@ -105,6 +105,7 @@ rename-mapping:
   ClusterStorageViewData.clusterFreeStorageMb: ClusterFreeStorageInMB
   ClusterStorageViewData.clusterTotalStorageMb: ClusterTotalStorageInMB
   GenerateCertResponse: GenerateCertResult
+  GenerateCertResponse.expiryTimeInUTC: ExpireOn|datetime
   HostCapacity.effectiveAvailableMemoryMbOnHost: EffectiveAvailableMemoryInMBOnHost
   NodeInfo: KubernetesNodeInfo
   NumaNodeData.effectiveAvailableMemoryInMb: EffectiveAvailableMemoryInMB
@@ -126,6 +127,7 @@ rename-mapping:
   ContainerStatus: DataBoxEdgeStorageContainerStatus
   ComputeResource: EdgeComputeResourceInfo
   MonitoringStatus: DataBoxEdgeShareMonitoringStatus
+  MetricConfiguration.resourceId: -|arm-id
 
 format-by-name-rules:
   'tenantId': 'uuid'
