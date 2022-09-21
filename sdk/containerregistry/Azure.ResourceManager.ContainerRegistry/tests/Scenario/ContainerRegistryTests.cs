@@ -439,6 +439,7 @@ key2: value2
 
         [TestCase]
         [RecordedTest]
+        [PlaybackOnly("Temporarily disable live tests as it takes long time")]
         public async Task ContainerRegistryAgentPool()
         {
             AzureLocation location = AzureLocation.EastUS;
