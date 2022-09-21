@@ -14,9 +14,6 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
-- name: ServiceToTest
-  type: string
-  default: ''
 - name: BuildSnippets
   type: boolean
   default: false
@@ -198,7 +195,7 @@ jobs:
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
           arguments: >
-           -ServiceDirectory ${{ parameters.ServiceToTest }}
+           -ServiceDirectory ${{ parameters.ServiceDirectory }}
            -SDKType ${{ parameters.SDKType }}
            -SpellCheckPublicApiSurface
           pwsh: true

@@ -2203,7 +2203,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         public System.Collections.Generic.IList<int> FreeVCpuIndexesForHpn { get { throw null; } }
         public int? LogicalCoreCountPerCore { get { throw null; } set { } }
         public int? NumaNodeIndex { get { throw null; } set { } }
-        public long? TotalMemoryInMb { get { throw null; } set { } }
+        public long? TotalMemoryInMB { get { throw null; } set { } }
         public System.Collections.Generic.IList<int> VCpuIndexesForHpn { get { throw null; } }
         public System.Collections.Generic.IList<int> VCpuIndexesForRoot { get { throw null; } }
     }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Subscription.Models
     {
         internal static SubscriptionAliasListResult DeserializeSubscriptionAliasListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SubscriptionAliasResponseData>> value = default;
+            Optional<IReadOnlyList<SubscriptionAliasData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Subscription.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SubscriptionAliasResponseData> array = new List<SubscriptionAliasResponseData>();
+                    List<SubscriptionAliasData> array = new List<SubscriptionAliasData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SubscriptionAliasResponseData.DeserializeSubscriptionAliasResponseData(item));
+                        array.Add(SubscriptionAliasData.DeserializeSubscriptionAliasData(item));
                     }
                     value = array;
                     continue;
