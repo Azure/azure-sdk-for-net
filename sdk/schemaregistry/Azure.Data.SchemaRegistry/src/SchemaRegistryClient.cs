@@ -225,19 +225,6 @@ namespace Azure.Data.SchemaRegistry
             await GetSchemaInternalAsync(schemaId, true, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
-        /// Gets the schema content associated with the group name, schema name, and version from the SchemaRegistry service.
-        /// </summary>
-        /// <param name="groupName"> Schema group under which schema is registered.  Group's serialization type should match the serialization type specified in the request </param>
-        /// <param name="schemaName"> Name of schema. </param>
-        /// <param name="schemaVersion"> Version number of specific schema. </param>
-        /// <param name="cancellationToken">The cancellation token for the operation.</param>
-        /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<Response<SchemaRegistrySchema>> GetSchemaAsync(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default) =>
-#pragma warning restore AZC0015 // Unexpected client method return type.
-            await GetSchemaInternalAsync(groupName, schemaName, schemaVersion, true, cancellationToken).ConfigureAwait(false);
-
-        /// <summary>
         /// Gets the schema content associated with the schema ID from the SchemaRegistry service.
         /// </summary>
         /// <param name="schemaId">The schema ID of the the schema from the SchemaRegistry.</param>
@@ -251,17 +238,30 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// Gets the schema content associated with the group name, schema name, and version from the SchemaRegistry service.
         /// </summary>
+        /// <param name="groupName"> Schema group under which schema is registered.  Group's serialization type should match the serialization type specified in the request </param>
+        /// <param name="schemaName"> Name of schema. </param>
+        /// <param name="schemaVersion"> Version number of specific schema. </param>
+        /// <param name="cancellationToken">The cancellation token for the operation.</param>
+        /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+        public virtual async Task<Response<SchemaRegistrySchema>> GetSchemaByVersionAsync(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default) =>
+#pragma warning restore AZC0015 // Unexpected client method return type.
+            await GetSchemaByVersionInternalAsync(groupName, schemaName, schemaVersion, true, cancellationToken).ConfigureAwait(false);
+
+        /// <summary>
+        /// Gets the schema content associated with the group name, schema name, and version from the SchemaRegistry service.
+        /// </summary>
         /// <param name="groupName"> Schema group under which schema is registered.  Group's serialization type should match the serialization type specified in the request.  </param>
         /// <param name="schemaName"> Name of schema. </param>
         /// <param name="schemaVersion"> Version number of specific schema. </param>
         /// <param name="cancellationToken">The cancellation token for the operation.</param>
         /// <returns>The properties of the schema, including the schema content provided by the service.</returns>
 #pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual Response<SchemaRegistrySchema> GetSchema(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default) =>
+        public virtual Response<SchemaRegistrySchema> GetSchemaByVersion(string groupName, string schemaName, int schemaVersion, CancellationToken cancellationToken = default) =>
 #pragma warning restore AZC0015 // Unexpected client method return type.
-            GetSchemaInternalAsync(groupName, schemaName, schemaVersion, false, cancellationToken).EnsureCompleted();
+            GetSchemaByVersionInternalAsync(groupName, schemaName, schemaVersion, false, cancellationToken).EnsureCompleted();
 
-        private async Task<Response<SchemaRegistrySchema>> GetSchemaInternalAsync(string groupName, string schemaName, int version, bool async, CancellationToken cancellationToken)
+        private async Task<Response<SchemaRegistrySchema>> GetSchemaByVersionInternalAsync(string groupName, string schemaName, int version, bool async, CancellationToken cancellationToken)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(GetSchemaScopeName);
             scope.Start();
