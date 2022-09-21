@@ -101,7 +101,7 @@ namespace Microsoft.Extensions.Azure
                 // not relying on StringSplitOptions.RemoveEmptyEntries as we want to remove leading/trailing whitespace between entries
                 additionallyAllowedTenantsList = additionallyAllowedTenants.Split(TenantDelimiter)
                     .Select(t => t.Trim())
-                    .Where(t => !string.IsNullOrEmpty(t));
+                    .Where(t => t.Length > 0);
             }
 
             if (string.Equals(credentialType, "managedidentity", StringComparison.OrdinalIgnoreCase))
