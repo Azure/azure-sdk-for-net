@@ -37,6 +37,7 @@ rename-mapping:
   AttachedDatabaseConfiguration.properties.clusterResourceId: -|arm-id
   ProvisioningState: KustoProvisioningState
   Cluster: KustoCluster
+  Cluster.properties.uri: ClusterUri
   Cluster.properties.enableAutoStop: IsAutoStopEnabled
   Cluster.properties.enableDiskEncryption: IsDiskEncryptionEnabled
   Cluster.properties.enableDoubleEncryption: IsDoubleEncryptionEnabled
@@ -62,7 +63,9 @@ rename-mapping:
   ClusterPrincipalAssignment.properties.principalId: -|uuid
   PrincipalType: KustoPrincipalAssignmentType
   ClusterPrincipalRole: KustoClusterPrincipalRole
-  LanguageExtensionsList: LanguageExtensionList
+  LanguageExtension: KustoLanguageExtension
+  LanguageExtensionsList: KustoLanguageExtensionList
+  LanguageExtensionName: KustoLanguageExtensionName
   AttachedDatabaseConfigurationsCheckNameRequest: KustoAttachedDatabaseConfigurationNameAvailabilityContent
   ClusterPrincipalAssignmentCheckNameRequest: KustoClusterPrincipalAssignmentNameAvailabilityContent
   ManagedPrivateEndpointsCheckNameRequest: KustoManagedPrivateEndpointNameAvailabilityContent
@@ -188,6 +191,11 @@ rename-mapping:
   SkuDescription: KustoSkuDescription
   SkuDescription.locations: -|azure-location
   SkuLocationInfoItem: KustoSkuLocationInfoItem
+  PrincipalsModificationKind: KustoDatabasePrincipalsModificationKind
+  DefaultPrincipalsModificationKind: KustoDatabaseDefaultPrincipalsModificationKind
+  TableLevelSharingProperties: KustoDatabaseTableLevelSharingProperties
+  TrustedExternalTenant: KustoClusterTrustedExternalTenant
+
 
 format-by-name-rules:
   'tenantId': 'uuid'
