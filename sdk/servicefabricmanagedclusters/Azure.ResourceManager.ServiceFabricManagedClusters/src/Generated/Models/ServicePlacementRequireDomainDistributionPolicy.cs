@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// policy should be set.
     /// 
     /// </summary>
-    public partial class ServicePlacementRequireDomainDistributionPolicy : ServicePlacementPolicy
+    public partial class ServicePlacementRequireDomainDistributionPolicy : ManagedServicePlacementPolicy
     {
         /// <summary> Initializes a new instance of ServicePlacementRequireDomainDistributionPolicy. </summary>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
@@ -34,16 +34,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
 
             DomainName = domainName;
-            PolicyType = ServicePlacementPolicyType.RequiredDomainDistribution;
+            ServicePlacementPolicyType = ServicePlacementPolicyType.RequiredDomainDistribution;
         }
 
         /// <summary> Initializes a new instance of ServicePlacementRequireDomainDistributionPolicy. </summary>
-        /// <param name="policyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
+        /// <param name="servicePlacementPolicyType"> The type of placement policy for a service fabric service. Following are the possible values. </param>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
-        internal ServicePlacementRequireDomainDistributionPolicy(ServicePlacementPolicyType policyType, string domainName) : base(policyType)
+        internal ServicePlacementRequireDomainDistributionPolicy(ServicePlacementPolicyType servicePlacementPolicyType, string domainName) : base(servicePlacementPolicyType)
         {
             DomainName = domainName;
-            PolicyType = policyType;
+            ServicePlacementPolicyType = servicePlacementPolicyType;
         }
 
         /// <summary> The name of the domain that should used for placement as per this policy. </summary>
