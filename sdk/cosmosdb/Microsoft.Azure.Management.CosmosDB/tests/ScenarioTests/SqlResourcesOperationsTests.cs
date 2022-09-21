@@ -270,6 +270,7 @@ namespace CosmosDB.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
+                fixture.Location = "west us";
                 fixture.Init(context);
                 var client = this.fixture.CosmosDBManagementClient.SqlResources;
 
@@ -497,6 +498,7 @@ namespace CosmosDB.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
+                fixture.Location = "west us";
                 fixture.Init(context);
                 var client = this.fixture.CosmosDBManagementClient.SqlResources;
 
@@ -684,8 +686,8 @@ namespace CosmosDB.Tests.ScenarioTests
             {
                 fixture.Init(context);
                 var client = this.fixture.CosmosDBManagementClient.SqlResources;
-                this.fixture.ResourceGroupName = "canary-sdk-test";
-                var databaseAccountName = "canary-sdk-test-account";
+                this.fixture.ResourceGroupName = "cosmosTest";
+                var databaseAccountName = "mergetest2";
 
                 var databaseName = TestUtilities.GenerateName("database");
                 SqlDatabaseCreateUpdateParameters sqlDatabaseCreateUpdateParameters = new SqlDatabaseCreateUpdateParameters
@@ -742,7 +744,7 @@ namespace CosmosDB.Tests.ScenarioTests
 
                 MergeParameters mergeParameters = new MergeParameters(isDryRun: true);
                 PhysicalPartitionStorageInfoCollection physicalPartitionStorageInfoCollection = client.ListSqlContainerPartitionMerge(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName, mergeParameters);
-                Assert.Equal(2, physicalPartitionStorageInfoCollection.PhysicalPartitionStorageInfoCollectionProperty.Count);
+                Assert.True( physicalPartitionStorageInfoCollection.PhysicalPartitionStorageInfoCollectionProperty.Count > 1);
 
                 client.DeleteSqlContainerWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, containerName).Wait();
                 client.DeleteSqlDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).Wait();

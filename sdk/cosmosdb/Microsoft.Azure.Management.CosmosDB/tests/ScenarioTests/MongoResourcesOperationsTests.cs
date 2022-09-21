@@ -129,8 +129,8 @@ namespace CosmosDB.Tests.ScenarioTests
             using (var context = MockContext.Start(this.GetType()))
             {
                 fixture.Init(context);
-                this.fixture.ResourceGroupName = "canary-sdk-test";
-                var databaseAccountName = "canary-sdk-test-mongo-account";
+                this.fixture.ResourceGroupName = "cosmosTest";
+                var databaseAccountName = "mergetest3";
 
                 var mongoClient = this.fixture.CosmosDBManagementClient.MongoDBResources;
 
@@ -173,7 +173,7 @@ namespace CosmosDB.Tests.ScenarioTests
                 PhysicalPartitionStorageInfoCollection physicalPartitionStorageInfoCollection =
                     mongoClient.ListMongoDBCollectionPartitionMerge(fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName, new MergeParameters(isDryRun: true));
 
-                Assert.Equal(2, physicalPartitionStorageInfoCollection.PhysicalPartitionStorageInfoCollectionProperty.Count);
+                Assert.True(physicalPartitionStorageInfoCollection.PhysicalPartitionStorageInfoCollectionProperty.Count > 1);
 
                 mongoClient.DeleteMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName);                
                 mongoClient.DeleteMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName);
@@ -186,7 +186,7 @@ namespace CosmosDB.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                fixture.Location = "west us 2";
+                fixture.Location = "west us";
                 fixture.Init(context);
                 string databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Mongo32);
                 var mongoClient = this.fixture.CosmosDBManagementClient.MongoDBResources;
@@ -355,7 +355,7 @@ namespace CosmosDB.Tests.ScenarioTests
         {
             using (var context = MockContext.Start(this.GetType()))
             {
-                fixture.Location = "west us 2";
+                fixture.Location = "west us";
                 fixture.Init(context);
                 string databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Mongo32);
                 var mongoClient = this.fixture.CosmosDBManagementClient.MongoDBResources;
