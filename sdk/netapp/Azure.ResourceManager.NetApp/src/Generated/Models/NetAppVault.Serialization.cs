@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         internal static NetAppVault DeserializeNetAppVault(JsonElement element)
         {
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -23,11 +22,6 @@ namespace Azure.ResourceManager.NetApp.Models
             Optional<string> vaultName = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("location"))
-                {
-                    location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -71,7 +65,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new NetAppVault(id, name, type, systemData.Value, location, vaultName.Value);
+            return new NetAppVault(id, name, type, systemData.Value, vaultName.Value);
         }
     }
 }

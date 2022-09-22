@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of CloudEdgeManagementRole. </summary>
         public CloudEdgeManagementRole()
         {
-            Kind = RoleType.CloudEdgeManagement;
+            Kind = DataBoxEdgeRoleType.CloudEdgeManagement;
         }
 
         /// <summary> Initializes a new instance of CloudEdgeManagementRole. </summary>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="localManagementStatus"> Local Edge Management Status. </param>
         /// <param name="edgeProfile"> Edge Profile of the resource. </param>
         /// <param name="roleStatus"> Role status. </param>
-        internal CloudEdgeManagementRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RoleType kind, DataBoxEdgeRoleStatus? localManagementStatus, EdgeProfile edgeProfile, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
+        internal CloudEdgeManagementRole(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataBoxEdgeRoleType kind, DataBoxEdgeRoleStatus? localManagementStatus, EdgeProfile edgeProfile, DataBoxEdgeRoleStatus? roleStatus) : base(id, name, resourceType, systemData, kind)
         {
             LocalManagementStatus = localManagementStatus;
             EdgeProfile = edgeProfile;

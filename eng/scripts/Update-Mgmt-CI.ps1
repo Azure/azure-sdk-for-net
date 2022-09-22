@@ -6,7 +6,7 @@ function Update-CIFile() {
     param(
         [string]$mgmtCiFile = ""
     )
-    
+
     $shouldRemove = $false
 
     $lines = Get-Content $mgmtCiFile
@@ -36,10 +36,10 @@ function Update-CIFile() {
             }
             $shouldRemove = $false
         }
-        
+
         $newLines.Add($line) | Out-Null
     }
-    
+
     Set-Content -Path $mgmtCiFile $newLines
 }
 
@@ -77,7 +77,7 @@ foreach($mgmtDir in $track2MgmtDirs) {
 
 Write-Host "Updating mgmt core client ci.mgmt.yml"
 #add path for each mgmt library into Azure.ResourceManager
-$armCiFile = "$packagesPath/resourceManager/ci.mgmt.yml"
+$armCiFile = "$packagesPath/resourcemanager/ci.mgmt.yml"
 $armLines = Get-Content $armCiFile
 $newLines = [System.Collections.ArrayList]::new()
 $startIndex = $track2MgmtDirs[0].FullName.IndexOf(("\sdk\")) + 1
@@ -86,9 +86,9 @@ foreach($line in $armLines) {
     if($line.StartsWith("  paths:")) {
         $newLines.Add($line) | Out-Null
         $newLines.Add("    include:") | Out-Null
-        $newLines.Add("    - sdk/resourcemanager/") | Out-Null
-        $newLines.Add("    - common/ManagementTestShared/") | Out-Null
-        $newLines.Add("    - common/ManagementCoreShared/") | Out-Null
+        $newLines.Add("    - sdk/resourcemanager") | Out-Null
+        $newLines.Add("    - common/ManagementTestShared") | Out-Null
+        $newLines.Add("    - common/ManagementCoreShared") | Out-Null
         foreach($dir in $track2MgmtDirs) {
             $newLine = "    - $($dir.FullName.Substring($startIndex, $dir.FullName.Length - $startIndex).Replace('\', '/'))"
             $newLines.Add($newLine) | Out-Null

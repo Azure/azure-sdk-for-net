@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// Options for the Create Call Request.
     /// </summary>
-    public class CreateCallOptions
+    public class CreateCallOptions: RepeatabilityHeaders
     {
         /// <summary>
         /// Creates a new CreateCallOptions object.

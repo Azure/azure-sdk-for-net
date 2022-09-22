@@ -8,7 +8,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The answer call operation options.
     /// </summary>
-    public class AnswerCallOptions
+    public class AnswerCallOptions: RepeatabilityHeaders
     {
         /// <summary>
         /// Creates a new AnswerCallOptions object.
