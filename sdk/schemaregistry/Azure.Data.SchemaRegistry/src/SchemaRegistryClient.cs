@@ -69,7 +69,6 @@ namespace Azure.Data.SchemaRegistry
         private const string RegisterSchemaScopeName = "SchemaRegistryClient.RegisterSchema";
         private const string GetSchemaIdScopeName = "SchemaRegistryClient.GetSchemaId";
         private const string GetSchemaScopeName = "SchemaRegistryClient.GetSchema";
-        private const string GetSchemaByVersionScopeName = "SchemaRegistryClient.GetSchemaByVersion";
 
         /// <summary>
         /// Registers a schema with the SchemaRegistry service.
@@ -264,7 +263,7 @@ namespace Azure.Data.SchemaRegistry
 
         private async Task<Response<SchemaRegistrySchema>> GetSchemaInternalAsync(string groupName, string schemaName, int version, bool async, CancellationToken cancellationToken)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(GetSchemaByVersionScopeName);
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope(GetSchemaScopeName);
             scope.Start();
             try
             {
