@@ -5806,7 +5806,7 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get a list of all device import operations. Completed operations are kept for 7 days before auto-deleted. </summary>
         /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
-        /// <param name="maxCount"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
+        /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -5881,12 +5881,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = null, int? maxCount = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetOperationStatusesAsync(string filter = null, int? top = null, RequestContext context = null)
         {
-            return GetOperationStatusesImplementationAsync("DeviceManagementClient.GetOperationStatuses", filter, maxCount, context);
+            return GetOperationStatusesImplementationAsync("DeviceManagementClient.GetOperationStatuses", filter, top, context);
         }
 
-        private AsyncPageable<BinaryData> GetOperationStatusesImplementationAsync(string diagnosticsScopeName, string filter, int? maxCount, RequestContext context)
+        private AsyncPageable<BinaryData> GetOperationStatusesImplementationAsync(string diagnosticsScopeName, string filter, int? top, RequestContext context)
         {
             return PageableHelpers.CreateAsyncPageable(CreateEnumerableAsync, ClientDiagnostics, diagnosticsScopeName);
             async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
@@ -5894,8 +5894,8 @@ namespace Azure.IoT.DeviceUpdate
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetOperationStatusesRequest(filter, maxCount, context)
-                        : CreateGetOperationStatusesNextPageRequest(nextLink, filter, maxCount, context);
+                        ? CreateGetOperationStatusesRequest(filter, top, context)
+                        : CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
                     var page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -5905,7 +5905,7 @@ namespace Azure.IoT.DeviceUpdate
 
         /// <summary> Get a list of all device import operations. Completed operations are kept for 7 days before auto-deleted. </summary>
         /// <param name="filter"> Restricts the set of operations returned. Only one specific filter is supported: &quot;status eq &apos;NotStarted&apos; or status eq &apos;Running&apos;&quot;. </param>
-        /// <param name="maxCount"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
+        /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -5980,12 +5980,12 @@ namespace Azure.IoT.DeviceUpdate
         /// </code>
         /// 
         /// </remarks>
-        public virtual Pageable<BinaryData> GetOperationStatuses(string filter = null, int? maxCount = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetOperationStatuses(string filter = null, int? top = null, RequestContext context = null)
         {
-            return GetOperationStatusesImplementation("DeviceManagementClient.GetOperationStatuses", filter, maxCount, context);
+            return GetOperationStatusesImplementation("DeviceManagementClient.GetOperationStatuses", filter, top, context);
         }
 
-        private Pageable<BinaryData> GetOperationStatusesImplementation(string diagnosticsScopeName, string filter, int? maxCount, RequestContext context)
+        private Pageable<BinaryData> GetOperationStatusesImplementation(string diagnosticsScopeName, string filter, int? top, RequestContext context)
         {
             return PageableHelpers.CreatePageable(CreateEnumerable, ClientDiagnostics, diagnosticsScopeName);
             IEnumerable<Page<BinaryData>> CreateEnumerable(string nextLink, int? pageSizeHint)
@@ -5993,8 +5993,8 @@ namespace Azure.IoT.DeviceUpdate
                 do
                 {
                     var message = string.IsNullOrEmpty(nextLink)
-                        ? CreateGetOperationStatusesRequest(filter, maxCount, context)
-                        : CreateGetOperationStatusesNextPageRequest(nextLink, filter, maxCount, context);
+                        ? CreateGetOperationStatusesRequest(filter, top, context)
+                        : CreateGetOperationStatusesNextPageRequest(nextLink, filter, top, context);
                     var page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
                     nextLink = page.ContinuationToken;
                     yield return page;
@@ -7042,7 +7042,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationStatusesRequest(string filter, int? maxCount, RequestContext context)
+        internal HttpMessage CreateGetOperationStatusesRequest(string filter, int? top, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -7057,9 +7057,9 @@ namespace Azure.IoT.DeviceUpdate
             {
                 uri.AppendQuery("filter", filter, true);
             }
-            if (maxCount != null)
+            if (top != null)
             {
-                uri.AppendQuery("top", maxCount.Value, true);
+                uri.AppendQuery("top", top.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -7285,7 +7285,7 @@ namespace Azure.IoT.DeviceUpdate
             return message;
         }
 
-        internal HttpMessage CreateGetOperationStatusesNextPageRequest(string nextLink, string filter, int? maxCount, RequestContext context)
+        internal HttpMessage CreateGetOperationStatusesNextPageRequest(string nextLink, string filter, int? top, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
