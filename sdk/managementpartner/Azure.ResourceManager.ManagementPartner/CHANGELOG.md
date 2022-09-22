@@ -8,7 +8,7 @@ New design of track 2 initial commit.
 
 ### Package Name
 
-The package name has been changed from `Microsoft.Azure.Management.ManagedNetwork` to `Azure.ResourceManager.ManagedNetwork`.
+The package name has been changed from `Microsoft.Azure.Management.ManagementPartner` to `Azure.ResourceManager.ManagementPartner`.
 
 ### General New Features
 
