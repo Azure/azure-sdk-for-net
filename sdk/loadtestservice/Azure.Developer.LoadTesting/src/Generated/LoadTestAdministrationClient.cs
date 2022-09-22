@@ -13,9 +13,9 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Developer.LoadTesting
 {
-    // Data plane generated client. The Test service client.
-    /// <summary> The Test service client. </summary>
-    public partial class TestClient
+    // Data plane generated client. The LoadTestAdministration service client.
+    /// <summary> The LoadTestAdministration service client. </summary>
+    public partial class LoadTestAdministrationClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://loadtest.azure-dev.com/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -29,9 +29,1311 @@ namespace Azure.Developer.LoadTesting
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of TestClient for mocking. </summary>
-        protected TestClient()
+        /// <summary> Initializes a new instance of LoadTestAdministrationClient for mocking. </summary>
+        protected LoadTestAdministrationClient()
         {
+        }
+
+        /// <summary> Associate an App Component (Azure resource) to a test or test run. </summary>
+        /// <param name="name"> Unique name of the App Component, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAppComponentsAsync with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     value = new {
+        ///         key = new {
+        ///             resourceId = "<resourceId>",
+        ///             resourceName = "<resourceName>",
+        ///             resourceType = "<resourceType>",
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAppComponentsAsync("<name>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateAppComponentsAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     testId = "<testId>",
+        ///     testRunId = "<testRunId>",
+        ///     value = new {
+        ///         key = new {
+        ///             resourceId = "<resourceId>",
+        ///             resourceName = "<resourceName>",
+        ///             resourceType = "<resourceType>",
+        ///             displayName = "<displayName>",
+        ///             kind = "<kind>",
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateAppComponentsAsync("<name>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("testId").ToString());
+        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceGroup").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("subscriptionId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("kind").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AppComponentsMap</c>:
+        /// <code>{
+        ///   resourceId: string, # Optional. Azure Load Testing resource Id
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
+        ///   name: string, # Optional. AppComponent name
+        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
+        /// }
+        /// </code>
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AppComponentsMap</c>:
+        /// <code>{
+        ///   resourceId: string, # Optional. Azure Load Testing resource Id
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
+        ///   name: string, # Optional. AppComponent name
+        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> CreateOrUpdateAppComponentsAsync(string name, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateAppComponents");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateAppComponentsRequest(name, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Associate an App Component (Azure resource) to a test or test run. </summary>
+        /// <param name="name"> Unique name of the App Component, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateAppComponents with required parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     value = new {
+        ///         key = new {
+        ///             resourceId = "<resourceId>",
+        ///             resourceName = "<resourceName>",
+        ///             resourceType = "<resourceType>",
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdateAppComponents("<name>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateAppComponents with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     testId = "<testId>",
+        ///     testRunId = "<testRunId>",
+        ///     value = new {
+        ///         key = new {
+        ///             resourceId = "<resourceId>",
+        ///             resourceName = "<resourceName>",
+        ///             resourceType = "<resourceType>",
+        ///             displayName = "<displayName>",
+        ///             kind = "<kind>",
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdateAppComponents("<name>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("testId").ToString());
+        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceGroup").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("subscriptionId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("kind").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>AppComponentsMap</c>:
+        /// <code>{
+        ///   resourceId: string, # Optional. Azure Load Testing resource Id
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
+        ///   name: string, # Optional. AppComponent name
+        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
+        /// }
+        /// </code>
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AppComponentsMap</c>:
+        /// <code>{
+        ///   resourceId: string, # Optional. Azure Load Testing resource Id
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
+        ///   name: string, # Optional. AppComponent name
+        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response CreateOrUpdateAppComponents(string name, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateAppComponents");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateAppComponentsRequest(name, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete an App Component. </summary>
+        /// <param name="name"> Unique name of the App Component, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteAppComponentAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.DeleteAppComponentAsync("<name>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+        public virtual async Task<Response> DeleteAppComponentAsync(string name, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteAppComponent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteAppComponentRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete an App Component. </summary>
+        /// <param name="name"> Unique name of the App Component, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteAppComponent with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.DeleteAppComponent("<name>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+        public virtual Response DeleteAppComponent(string name, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteAppComponent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteAppComponentRequest(name, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get App Component details by App Component name. </summary>
+        /// <param name="name"> Unique name of the App Component, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAppComponentByNameAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.GetAppComponentByNameAsync("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("testId").ToString());
+        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceGroup").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("subscriptionId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("kind").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AppComponentsMap</c>:
+        /// <code>{
+        ///   resourceId: string, # Optional. Azure Load Testing resource Id
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
+        ///   name: string, # Optional. AppComponent name
+        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetAppComponentByNameAsync(string name, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponentByName");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAppComponentByNameRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get App Component details by App Component name. </summary>
+        /// <param name="name"> Unique name of the App Component, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAppComponentByName with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.GetAppComponentByName("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("testId").ToString());
+        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceGroup").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("subscriptionId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("kind").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AppComponentsMap</c>:
+        /// <code>{
+        ///   resourceId: string, # Optional. Azure Load Testing resource Id
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
+        ///   name: string, # Optional. AppComponent name
+        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetAppComponentByName(string name, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponentByName");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAppComponentByNameRequest(name, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get App Components for a test or a test run by its name. </summary>
+        /// <param name="testRunId"> [Required, if testId is not provided] Test run Id. </param>
+        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAppComponentAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.GetAppComponentAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetAppComponentAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.GetAppComponentAsync("<testRunId>", "<testId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("testId").ToString());
+        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceGroup").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("subscriptionId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("kind").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AppComponentsMap</c>:
+        /// <code>{
+        ///   resourceId: string, # Optional. Azure Load Testing resource Id
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
+        ///   name: string, # Optional. AppComponent name
+        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetAppComponentAsync(string testRunId = null, string testId = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAppComponentRequest(testRunId, testId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get App Components for a test or a test run by its name. </summary>
+        /// <param name="testRunId"> [Required, if testId is not provided] Test run Id. </param>
+        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetAppComponent and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.GetAppComponent();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetAppComponent with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.GetAppComponent("<testRunId>", "<testId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("testId").ToString());
+        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("resourceGroup").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("subscriptionId").ToString());
+        /// Console.WriteLine(result.GetProperty("value").GetProperty("<test>").GetProperty("kind").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>AppComponentsMap</c>:
+        /// <code>{
+        ///   resourceId: string, # Optional. Azure Load Testing resource Id
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required if testId is not given] Load test run unique identifier
+        ///   name: string, # Optional. AppComponent name
+        ///   value: Dictionary&lt;string, AppComponent&gt;, # Required. AppComponents Map { resource id (Fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}) : resource object } 
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetAppComponent(string testRunId = null, string testId = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAppComponent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetAppComponentRequest(testRunId, testId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Configure server metrics for a test or test run. </summary>
+        /// <param name="name"> Unique name for server metrics, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<name>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     testId = "<testId>",
+        ///     testRunId = "<testRunId>",
+        ///     metrics = new {
+        ///         key = new {
+        ///             resourceId = "<resourceId>",
+        ///             metricnamespace = "<metricnamespace>",
+        ///             displayDescription = "<displayDescription>",
+        ///             name = new {
+        ///                 value = "<value>",
+        ///                 localizedValue = "<localizedValue>",
+        ///             },
+        ///             aggregation = "<aggregation>",
+        ///             unit = "<unit>",
+        ///             resourceType = "<resourceType>",
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<name>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("testId").ToString());
+        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricnamespace").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ServerMetricsModel</c>:
+        /// <code>{
+        ///   name: string, # Optional. Server metrics config name.
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
+        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
+        /// }
+        /// </code>
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ServerMetricsModel</c>:
+        /// <code>{
+        ///   name: string, # Optional. Server metrics config name.
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
+        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> CreateOrUpdateServerMetricsConfigAsync(string name, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateServerMetricsConfig");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateServerMetricsConfigRequest(name, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Configure server metrics for a test or test run. </summary>
+        /// <param name="name"> Unique name for server metrics, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call CreateOrUpdateServerMetricsConfig with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.CreateOrUpdateServerMetricsConfig("<name>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call CreateOrUpdateServerMetricsConfig with all parameters and request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// var data = new {
+        ///     testId = "<testId>",
+        ///     testRunId = "<testRunId>",
+        ///     metrics = new {
+        ///         key = new {
+        ///             resourceId = "<resourceId>",
+        ///             metricnamespace = "<metricnamespace>",
+        ///             displayDescription = "<displayDescription>",
+        ///             name = new {
+        ///                 value = "<value>",
+        ///                 localizedValue = "<localizedValue>",
+        ///             },
+        ///             aggregation = "<aggregation>",
+        ///             unit = "<unit>",
+        ///             resourceType = "<resourceType>",
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.CreateOrUpdateServerMetricsConfig("<name>", RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("testId").ToString());
+        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricnamespace").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the request and response payloads.
+        /// 
+        /// Request Body:
+        /// 
+        /// Schema for <c>ServerMetricsModel</c>:
+        /// <code>{
+        ///   name: string, # Optional. Server metrics config name.
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
+        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
+        /// }
+        /// </code>
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ServerMetricsModel</c>:
+        /// <code>{
+        ///   name: string, # Optional. Server metrics config name.
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
+        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response CreateOrUpdateServerMetricsConfig(string name, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateServerMetricsConfig");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateServerMetricsConfigRequest(name, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get server metrics configuration by its name. </summary>
+        /// <param name="name"> Unique name for server metrics, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetServerMetricsByNameAsync with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.GetServerMetricsByNameAsync("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("testId").ToString());
+        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricnamespace").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ServerMetricsModel</c>:
+        /// <code>{
+        ///   name: string, # Optional. Server metrics config name.
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
+        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetServerMetricsByNameAsync(string name, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsByName");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetServerMetricsByNameRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get server metrics configuration by its name. </summary>
+        /// <param name="name"> Unique name for server metrics, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetServerMetricsByName with required parameters and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.GetServerMetricsByName("<name>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("testId").ToString());
+        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricnamespace").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ServerMetricsModel</c>:
+        /// <code>{
+        ///   name: string, # Optional. Server metrics config name.
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
+        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetServerMetricsByName(string name, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetricsByName");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetServerMetricsByNameRequest(name, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete server metrics configuration by its name. </summary>
+        /// <param name="name"> Unique name for server metrics, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteServerMetricsAsync with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.DeleteServerMetricsAsync("<name>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+        public virtual async Task<Response> DeleteServerMetricsAsync(string name, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteServerMetrics");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteServerMetricsRequest(name, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Delete server metrics configuration by its name. </summary>
+        /// <param name="name"> Unique name for server metrics, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call DeleteServerMetrics with required parameters.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.DeleteServerMetrics("<name>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
+        public virtual Response DeleteServerMetrics(string name, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteServerMetrics");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteServerMetricsRequest(name, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get server metrics configuration for a test or test run by its name. </summary>
+        /// <param name="testRunId"> [Required, if testId is not provided] Test run Id. </param>
+        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetServerMetricsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.GetServerMetricsAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetServerMetricsAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.GetServerMetricsAsync("<testRunId>", "<testId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("testId").ToString());
+        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricnamespace").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ServerMetricsModel</c>:
+        /// <code>{
+        ///   name: string, # Optional. Server metrics config name.
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
+        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetServerMetricsAsync(string testRunId = null, string testId = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetrics");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetServerMetricsRequest(testRunId, testId, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get server metrics configuration for a test or test run by its name. </summary>
+        /// <param name="testRunId"> [Required, if testId is not provided] Test run Id. </param>
+        /// <param name="testId"> Unique name for load test, must be a valid URL character ^[a-z0-9_-]*$. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetServerMetrics and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.GetServerMetrics();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GetServerMetrics with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.GetServerMetrics("<testRunId>", "<testId>");
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("testId").ToString());
+        /// Console.WriteLine(result.GetProperty("testRunId").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricnamespace").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").GetProperty("localizedValue").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>ServerMetricsModel</c>:
+        /// <code>{
+        ///   name: string, # Optional. Server metrics config name.
+        ///   testId: string, # Optional. [Required, if testRunId is not given] Load test unique identifier
+        ///   testRunId: string, # Optional. [Required, if testId is not given] Load test run unique identifier
+        ///   metrics: Dictionary&lt;string, ResourceMetricModel&gt;, # Optional. Metrics map {metric id : metrics object} (Refer : https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition for metric id).
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetServerMetrics(string testRunId = null, string testId = null, RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerMetrics");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetServerMetricsRequest(testRunId, testId, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get all default server metrics configuration for supported resource types. </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetServerDefaultMetricsAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.GetServerDefaultMetricsAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("metricnamespace").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("aggregation").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("name").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("name").GetProperty("localizedValue").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("displayDescription").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DefaultServerMetricsConfigListModel</c>:
+        /// <code>{
+        ///   defaultMetrics: Dictionary&lt;string, DefaultServerMetricsConfigModel[]&gt;, # Optional. Default metrics map {resourceType : list of metrics config} (Refer for metrics structure: https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition)
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetServerDefaultMetricsAsync(RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerDefaultMetrics");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetServerDefaultMetricsRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get all default server metrics configuration for supported resource types. </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetServerDefaultMetrics and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.GetServerDefaultMetrics();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("metricnamespace").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("aggregation").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("name").GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("name").GetProperty("localizedValue").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("unit").ToString());
+        /// Console.WriteLine(result.GetProperty("defaultMetrics").GetProperty("<test>")[0].GetProperty("displayDescription").ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>DefaultServerMetricsConfigListModel</c>:
+        /// <code>{
+        ///   defaultMetrics: Dictionary&lt;string, DefaultServerMetricsConfigModel[]&gt;, # Optional. Default metrics map {resourceType : list of metrics config} (Refer for metrics structure: https://docs.microsoft.com/en-us/rest/api/monitor/metric-definitions/list#metricdefinition)
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetServerDefaultMetrics(RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetServerDefaultMetrics");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetServerDefaultMetricsRequest(context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get all supported resource types for App Components(Azure resource types). </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSupportedResourceTypesAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = await client.GetSupportedResourceTypesAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("value")[0].ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SupportedResourceType</c>:
+        /// <code>{
+        ///   value: [string], # Optional.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual async Task<Response> GetSupportedResourceTypesAsync(RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetSupportedResourceTypes");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSupportedResourceTypesRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get all supported resource types for App Components(Azure resource types). </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GetSupportedResourceTypes and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
+        /// 
+        /// Response response = client.GetSupportedResourceTypes();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("value")[0].ToString());
+        /// ]]></code>
+        /// </example>
+        /// <remarks>
+        /// Below is the JSON schema for the response payload.
+        /// 
+        /// Response Body:
+        /// 
+        /// Schema for <c>SupportedResourceType</c>:
+        /// <code>{
+        ///   value: [string], # Optional.
+        /// }
+        /// </code>
+        /// 
+        /// </remarks>
+        public virtual Response GetSupportedResourceTypes(RequestContext context = null)
+        {
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetSupportedResourceTypes");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSupportedResourceTypesRequest(context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Create a new test or Update an existing test. </summary>
@@ -43,22 +1345,22 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
+        /// This sample shows how to call CreateOrUpdateTestAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {};
         /// 
-        /// Response response = await client.CreateOrUpdateAsync("<testId>", RequestContent.Create(data));
+        /// Response response = await client.CreateOrUpdateTestAsync("<testId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdateTestAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
         ///     description = "<description>",
@@ -93,7 +1395,7 @@ namespace Azure.Developer.LoadTesting
         ///     keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
         /// };
         /// 
-        /// Response response = await client.CreateOrUpdateAsync("<testId>", RequestContent.Create(data));
+        /// Response response = await client.CreateOrUpdateTestAsync("<testId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("testId").ToString());
@@ -238,16 +1540,16 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> CreateOrUpdateAsync(string testId, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateOrUpdateTestAsync(string testId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(testId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateTestRequest(testId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -266,22 +1568,22 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call CreateOrUpdate with required parameters and parse the result.
+        /// This sample shows how to call CreateOrUpdateTest with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {};
         /// 
-        /// Response response = client.CreateOrUpdate("<testId>", RequestContent.Create(data));
+        /// Response response = client.CreateOrUpdateTest("<testId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call CreateOrUpdateTest with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = new {
         ///     description = "<description>",
@@ -316,7 +1618,7 @@ namespace Azure.Developer.LoadTesting
         ///     keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
         /// };
         /// 
-        /// Response response = client.CreateOrUpdate("<testId>", RequestContent.Create(data));
+        /// Response response = client.CreateOrUpdateTest("<testId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("testId").ToString());
@@ -461,16 +1763,16 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response CreateOrUpdate(string testId, RequestContent content, RequestContext context = null)
+        public virtual Response CreateOrUpdateTest(string testId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.CreateOrUpdate");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.CreateOrUpdateTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCreateOrUpdateRequest(testId, content, context);
+                using HttpMessage message = CreateCreateOrUpdateTestRequest(testId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -488,24 +1790,24 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call DeleteAsync with required parameters.
+        /// This sample shows how to call DeleteLoadTestAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.DeleteAsync("<testId>");
+        /// Response response = await client.DeleteLoadTestAsync("<testId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> DeleteAsync(string testId, RequestContext context = null)
+        public virtual async Task<Response> DeleteLoadTestAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteLoadTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(testId, context);
+                using HttpMessage message = CreateDeleteLoadTestRequest(testId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -523,24 +1825,24 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call Delete with required parameters.
+        /// This sample shows how to call DeleteLoadTest with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.Delete("<testId>");
+        /// Response response = client.DeleteLoadTest("<testId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual Response Delete(string testId, RequestContext context = null)
+        public virtual Response DeleteLoadTest(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.Delete");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteLoadTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteRequest(testId, context);
+                using HttpMessage message = CreateDeleteLoadTestRequest(testId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -558,12 +1860,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetTestAsync with required parameters and parse the result.
+        /// This sample shows how to call GetLoadTestAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.GetTestAsync("<testId>");
+        /// Response response = await client.GetLoadTestAsync("<testId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("testId").ToString());
@@ -667,15 +1969,15 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetTestAsync(string testId, RequestContext context = null)
+        public virtual async Task<Response> GetLoadTestAsync(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.GetTest");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTestRequest(testId, context);
+                using HttpMessage message = CreateGetLoadTestRequest(testId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -693,12 +1995,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetTest with required parameters and parse the result.
+        /// This sample shows how to call GetLoadTest with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.GetTest("<testId>");
+        /// Response response = client.GetLoadTest("<testId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("testId").ToString());
@@ -802,15 +2104,15 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetTest(string testId, RequestContext context = null)
+        public virtual Response GetLoadTest(string testId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.GetTest");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTest");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetTestRequest(testId, context);
+                using HttpMessage message = CreateGetLoadTestRequest(testId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -831,22 +2133,22 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call SearchAsync and parse the result.
+        /// This sample shows how to call GetLoadTestSearchesAsync and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.SearchAsync();
+        /// Response response = await client.GetLoadTestSearchesAsync();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].ToString());
         /// ]]></code>
-        /// This sample shows how to call SearchAsync with all parameters, and how to parse the result.
+        /// This sample shows how to call GetLoadTestSearchesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.SearchAsync("<orderBy>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234);
+        /// Response response = await client.GetLoadTestSearchesAsync("<orderBy>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("testId").ToString());
@@ -956,13 +2258,13 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> SearchAsync(string orderBy = null, string search = null, DateTimeOffset? lastUpdatedStartTime = null, DateTimeOffset? lastUpdatedEndTime = null, string continuationToken = null, int? maxPageSize = null, RequestContext context = null)
+        public virtual async Task<Response> GetLoadTestSearchesAsync(string orderBy = null, string search = null, DateTimeOffset? lastUpdatedStartTime = null, DateTimeOffset? lastUpdatedEndTime = null, string continuationToken = null, int? maxPageSize = null, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("TestClient.Search");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTestSearches");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchRequest(orderBy, search, lastUpdatedStartTime, lastUpdatedEndTime, continuationToken, maxPageSize, context);
+                using HttpMessage message = CreateGetLoadTestSearchesRequest(orderBy, search, lastUpdatedStartTime, lastUpdatedEndTime, continuationToken, maxPageSize, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -983,22 +2285,22 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call Search and parse the result.
+        /// This sample shows how to call GetLoadTestSearches and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.Search();
+        /// Response response = client.GetLoadTestSearches();
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].ToString());
         /// ]]></code>
-        /// This sample shows how to call Search with all parameters, and how to parse the result.
+        /// This sample shows how to call GetLoadTestSearches with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.Search("<orderBy>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234);
+        /// Response response = client.GetLoadTestSearches("<orderBy>", "<search>", DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, "<continuationToken>", 1234);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("testId").ToString());
@@ -1108,13 +2410,13 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response Search(string orderBy = null, string search = null, DateTimeOffset? lastUpdatedStartTime = null, DateTimeOffset? lastUpdatedEndTime = null, string continuationToken = null, int? maxPageSize = null, RequestContext context = null)
+        public virtual Response GetLoadTestSearches(string orderBy = null, string search = null, DateTimeOffset? lastUpdatedStartTime = null, DateTimeOffset? lastUpdatedEndTime = null, string continuationToken = null, int? maxPageSize = null, RequestContext context = null)
         {
-            using var scope = ClientDiagnostics.CreateScope("TestClient.Search");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetLoadTestSearches");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateSearchRequest(orderBy, search, lastUpdatedStartTime, lastUpdatedEndTime, continuationToken, maxPageSize, context);
+                using HttpMessage message = CreateGetLoadTestSearchesRequest(orderBy, search, lastUpdatedStartTime, lastUpdatedEndTime, continuationToken, maxPageSize, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1135,26 +2437,26 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call UploadFileAsync with required parameters and request content, and how to parse the result.
+        /// This sample shows how to call UploadTestFileAsync with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
-        /// Response response = await client.UploadFileAsync("<testId>", "<fileId>", RequestContent.Create(data));
+        /// Response response = await client.UploadTestFileAsync("<testId>", "<fileId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call UploadFileAsync with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call UploadTestFileAsync with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
-        /// Response response = await client.UploadFileAsync("<testId>", "<fileId>", RequestContent.Create(data), 1234);
+        /// Response response = await client.UploadTestFileAsync("<testId>", "<fileId>", RequestContent.Create(data), 1234);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("url").ToString());
@@ -1182,17 +2484,17 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> UploadFileAsync(string testId, string fileId, RequestContent content, int? fileType = null, RequestContext context = null)
+        public virtual async Task<Response> UploadTestFileAsync(string testId, string fileId, RequestContent content, int? fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.UploadFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadTestFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadFileRequest(testId, fileId, content, fileType, context);
+                using HttpMessage message = CreateUploadTestFileRequest(testId, fileId, content, fileType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1213,26 +2515,26 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call UploadFile with required parameters and request content, and how to parse the result.
+        /// This sample shows how to call UploadTestFile with required parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
-        /// Response response = client.UploadFile("<testId>", "<fileId>", RequestContent.Create(data));
+        /// Response response = client.UploadTestFile("<testId>", "<fileId>", RequestContent.Create(data));
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.ToString());
         /// ]]></code>
-        /// This sample shows how to call UploadFile with all parameters and request content, and how to parse the result.
+        /// This sample shows how to call UploadTestFile with all parameters and request content, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
         /// var data = File.OpenRead("<filePath>");
         /// 
-        /// Response response = client.UploadFile("<testId>", "<fileId>", RequestContent.Create(data), 1234);
+        /// Response response = client.UploadTestFile("<testId>", "<fileId>", RequestContent.Create(data), 1234);
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("url").ToString());
@@ -1260,17 +2562,17 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response UploadFile(string testId, string fileId, RequestContent content, int? fileType = null, RequestContext context = null)
+        public virtual Response UploadTestFile(string testId, string fileId, RequestContent content, int? fileType = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.UploadFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.UploadTestFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadFileRequest(testId, fileId, content, fileType, context);
+                using HttpMessage message = CreateUploadTestFileRequest(testId, fileId, content, fileType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1289,12 +2591,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetFileAsync with required parameters and parse the result.
+        /// This sample shows how to call GetTestFileAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.GetFileAsync("<testId>", "<fileId>");
+        /// Response response = await client.GetTestFileAsync("<testId>", "<fileId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("url").ToString());
@@ -1322,16 +2624,16 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetFileAsync(string testId, string fileId, RequestContext context = null)
+        public virtual async Task<Response> GetTestFileAsync(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateGetTestFileRequest(testId, fileId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1350,12 +2652,12 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetFile with required parameters and parse the result.
+        /// This sample shows how to call GetTestFile with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.GetFile("<testId>", "<fileId>");
+        /// Response response = client.GetTestFile("<testId>", "<fileId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("url").ToString());
@@ -1383,16 +2685,16 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetFile(string testId, string fileId, RequestContext context = null)
+        public virtual Response GetTestFile(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.GetFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetTestFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateGetTestFileRequest(testId, fileId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1411,25 +2713,25 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call DeleteFileAsync with required parameters.
+        /// This sample shows how to call DeleteTestFileAsync with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.DeleteFileAsync("<testId>", "<fileId>");
+        /// Response response = await client.DeleteTestFileAsync("<testId>", "<fileId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual async Task<Response> DeleteFileAsync(string testId, string fileId, RequestContext context = null)
+        public virtual async Task<Response> DeleteTestFileAsync(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.DeleteFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateDeleteTestFileRequest(testId, fileId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1448,25 +2750,25 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <example>
-        /// This sample shows how to call DeleteFile with required parameters.
+        /// This sample shows how to call DeleteTestFile with required parameters.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.DeleteFile("<testId>", "<fileId>");
+        /// Response response = client.DeleteTestFile("<testId>", "<fileId>");
         /// Console.WriteLine(response.Status);
         /// ]]></code>
         /// </example>
-        public virtual Response DeleteFile(string testId, string fileId, RequestContext context = null)
+        public virtual Response DeleteTestFile(string testId, string fileId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.DeleteFile");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.DeleteTestFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateDeleteFileRequest(testId, fileId, context);
+                using HttpMessage message = CreateDeleteTestFileRequest(testId, fileId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1485,22 +2787,22 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetAllFilesAsync with required parameters and parse the result.
+        /// This sample shows how to call GetAllTestFilesAsync with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.GetAllFilesAsync("<testId>");
+        /// Response response = await client.GetAllTestFilesAsync("<testId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].ToString());
         /// ]]></code>
-        /// This sample shows how to call GetAllFilesAsync with all parameters, and how to parse the result.
+        /// This sample shows how to call GetAllTestFilesAsync with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = await client.GetAllFilesAsync("<testId>", "<continuationToken>");
+        /// Response response = await client.GetAllTestFilesAsync("<testId>", "<continuationToken>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
@@ -1534,15 +2836,15 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual async Task<Response> GetAllFilesAsync(string testId, string continuationToken = null, RequestContext context = null)
+        public virtual async Task<Response> GetAllTestFilesAsync(string testId, string continuationToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.GetAllFiles");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAllTestFiles");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAllFilesRequest(testId, continuationToken, context);
+                using HttpMessage message = CreateGetAllTestFilesRequest(testId, continuationToken, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1561,22 +2863,22 @@ namespace Azure.Developer.LoadTesting
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
         /// <example>
-        /// This sample shows how to call GetAllFiles with required parameters and parse the result.
+        /// This sample shows how to call GetAllTestFiles with required parameters and parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.GetAllFiles("<testId>");
+        /// Response response = client.GetAllTestFiles("<testId>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].ToString());
         /// ]]></code>
-        /// This sample shows how to call GetAllFiles with all parameters, and how to parse the result.
+        /// This sample shows how to call GetAllTestFiles with all parameters, and how to parse the result.
         /// <code><![CDATA[
         /// var credential = new DefaultAzureCredential();
-        /// var client = new TestClient("<https://my-service.azure.com>", credential);
+        /// var client = new LoadTestAdministrationClient("<https://my-service.azure.com>", credential);
         /// 
-        /// Response response = client.GetAllFiles("<testId>", "<continuationToken>");
+        /// Response response = client.GetAllTestFiles("<testId>", "<continuationToken>");
         /// 
         /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
         /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("url").ToString());
@@ -1610,15 +2912,15 @@ namespace Azure.Developer.LoadTesting
         /// </code>
         /// 
         /// </remarks>
-        public virtual Response GetAllFiles(string testId, string continuationToken = null, RequestContext context = null)
+        public virtual Response GetAllTestFiles(string testId, string continuationToken = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(testId, nameof(testId));
 
-            using var scope = ClientDiagnostics.CreateScope("TestClient.GetAllFiles");
+            using var scope = ClientDiagnostics.CreateScope("LoadTestAdministrationClient.GetAllTestFiles");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAllFilesRequest(testId, continuationToken, context);
+                using HttpMessage message = CreateGetAllTestFilesRequest(testId, continuationToken, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1628,7 +2930,183 @@ namespace Azure.Developer.LoadTesting
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string testId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateAppComponentsRequest(string name, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/appcomponents/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteAppComponentRequest(string name, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/appcomponents/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetAppComponentByNameRequest(string name, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/appcomponents/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetAppComponentRequest(string testRunId, string testId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/appcomponents", false);
+            if (testRunId != null)
+            {
+                uri.AppendQuery("testRunId", testRunId, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (testId != null)
+            {
+                uri.AppendQuery("testId", testId, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateServerMetricsConfigRequest(string name, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/serverMetricsConfig/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/merge-patch+json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGetServerMetricsByNameRequest(string name, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/serverMetricsConfig/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteServerMetricsRequest(string name, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/serverMetricsConfig/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetServerMetricsRequest(string testRunId, string testId, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/serverMetricsConfig", false);
+            if (testRunId != null)
+            {
+                uri.AppendQuery("testRunId", testRunId, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (testId != null)
+            {
+                uri.AppendQuery("testId", testId, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetServerDefaultMetricsRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/serverMetricsConfig/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSupportedResourceTypesRequest(RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw("https://", false);
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/serverMetricsConfig/supportedResourceTypes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateTestRequest(string testId, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200201);
             var request = message.Request;
@@ -1646,7 +3124,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string testId, RequestContext context)
+        internal HttpMessage CreateDeleteLoadTestRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -1662,7 +3140,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTestRequest(string testId, RequestContext context)
+        internal HttpMessage CreateGetLoadTestRequest(string testId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1678,7 +3156,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateSearchRequest(string orderBy, string search, DateTimeOffset? lastUpdatedStartTime, DateTimeOffset? lastUpdatedEndTime, string continuationToken, int? maxPageSize, RequestContext context)
+        internal HttpMessage CreateGetLoadTestSearchesRequest(string orderBy, string search, DateTimeOffset? lastUpdatedStartTime, DateTimeOffset? lastUpdatedEndTime, string continuationToken, int? maxPageSize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1717,7 +3195,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateUploadFileRequest(string testId, string fileId, RequestContent content, int? fileType, RequestContext context)
+        internal HttpMessage CreateUploadTestFileRequest(string testId, string fileId, RequestContent content, int? fileType, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
@@ -1741,7 +3219,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetFileRequest(string testId, string fileId, RequestContext context)
+        internal HttpMessage CreateGetTestFileRequest(string testId, string fileId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1759,7 +3237,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateDeleteFileRequest(string testId, string fileId, RequestContext context)
+        internal HttpMessage CreateDeleteTestFileRequest(string testId, string fileId, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier204);
             var request = message.Request;
@@ -1777,7 +3255,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetAllFilesRequest(string testId, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetAllTestFilesRequest(string testId, string continuationToken, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

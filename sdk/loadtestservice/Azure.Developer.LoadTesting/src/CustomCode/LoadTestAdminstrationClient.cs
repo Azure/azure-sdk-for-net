@@ -1,9 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-#nullable disable
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Azure.Core.Pipeline;
@@ -11,13 +6,13 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    public partial class AppComponentClient
+    public partial class LoadTestAdministrationClient
     {
-        internal AppComponentClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
+        internal LoadTestAdministrationClient(string endpoint, TokenCredential credential) : this(endpoint, credential, new AzureLoadTestingClientOptions())
         {
         }
 
-        internal AppComponentClient(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
+        internal LoadTestAdministrationClient(string endpoint, TokenCredential credential, AzureLoadTestingClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));

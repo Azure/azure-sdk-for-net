@@ -23,7 +23,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// Adminstration Client for LoadTest
         /// </summary>
-        public LoadTestAdministration Administration;
+        public LoadTestAdministrationClient LoadTestAdministration;
 
         /// <summary>
         /// TestRun Client
@@ -64,7 +64,7 @@ namespace Azure.Developer.LoadTesting
             _endpoint = endpoint;
             _apiVersion = options.Version;
 
-            Administration = new LoadTestAdministration(endpoint, credential, options);
+            LoadTestAdministration = new LoadTestAdministrationClient(endpoint, credential, options);
             LoadTestRun = new TestRunClient(endpoint, credential, options);
         }
     }
