@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Defines the type of sku available for a node type. </summary>
@@ -19,7 +21,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="resourceType"> The type of resource the sku applies to.  &lt;br /&gt;&lt;br /&gt;Value: Microsoft.ServiceFabric/managedClusters/nodeTypes. </param>
         /// <param name="sku"> The supported SKU for a for node type. </param>
         /// <param name="capacity"> Provides information about how the node count can be scaled. </param>
-        internal NodeTypeAvailableSku(string resourceType, NodeTypeSupportedSku sku, NodeTypeSkuCapacity capacity)
+        internal NodeTypeAvailableSku(ResourceType? resourceType, NodeTypeSupportedSku sku, NodeTypeSkuCapacity capacity)
         {
             ResourceType = resourceType;
             Sku = sku;
@@ -27,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> The type of resource the sku applies to.  &lt;br /&gt;&lt;br /&gt;Value: Microsoft.ServiceFabric/managedClusters/nodeTypes. </summary>
-        public string ResourceType { get; }
+        public ResourceType? ResourceType { get; }
         /// <summary> The supported SKU for a for node type. </summary>
         public NodeTypeSupportedSku Sku { get; }
         /// <summary> Provides information about how the node count can be scaled. </summary>

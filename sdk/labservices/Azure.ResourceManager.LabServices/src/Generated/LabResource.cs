@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.LabServices
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of ScheduleResources in the Lab. </summary>
-        /// <returns> An object representing collection of ScheduleResources and their operations over a ScheduleResource. </returns>
-        public virtual ScheduleCollection GetSchedules()
+        /// <summary> Gets a collection of LabServicesScheduleResources in the Lab. </summary>
+        /// <returns> An object representing collection of LabServicesScheduleResources and their operations over a LabServicesScheduleResource. </returns>
+        public virtual LabServicesScheduleCollection GetLabServicesSchedules()
         {
-            return GetCachedClient(Client => new ScheduleCollection(Client, Id));
+            return GetCachedClient(Client => new LabServicesScheduleCollection(Client, Id));
         }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ScheduleResource>> GetScheduleAsync(string scheduleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabServicesScheduleResource>> GetLabServicesScheduleAsync(string scheduleName, CancellationToken cancellationToken = default)
         {
-            return await GetSchedules().GetAsync(scheduleName, cancellationToken).ConfigureAwait(false);
+            return await GetLabServicesSchedules().GetAsync(scheduleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -120,31 +120,16 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="scheduleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduleName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ScheduleResource> GetSchedule(string scheduleName, CancellationToken cancellationToken = default)
+        public virtual Response<LabServicesScheduleResource> GetLabServicesSchedule(string scheduleName, CancellationToken cancellationToken = default)
         {
-            return GetSchedules().Get(scheduleName, cancellationToken);
+            return GetLabServicesSchedules().Get(scheduleName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of UserResources in the Lab. </summary>
-        /// <returns> An object representing collection of UserResources and their operations over a UserResource. </returns>
-        public virtual UserCollection GetUsers()
+        /// <summary> Gets a collection of LabUserResources in the Lab. </summary>
+        /// <returns> An object representing collection of LabUserResources and their operations over a LabUserResource. </returns>
+        public virtual LabUserCollection GetLabUsers()
         {
-            return GetCachedClient(Client => new UserCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Returns the properties of a lab user.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}
-        /// Operation Id: Users_Get
-        /// </summary>
-        /// <param name="userName"> The name of the user that uniquely identifies it within containing lab. Used in resource URIs. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<UserResource>> GetUserAsync(string userName, CancellationToken cancellationToken = default)
-        {
-            return await GetUsers().GetAsync(userName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new LabUserCollection(Client, Id));
         }
 
         /// <summary>
@@ -157,16 +142,31 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<UserResource> GetUser(string userName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabUserResource>> GetLabUserAsync(string userName, CancellationToken cancellationToken = default)
         {
-            return GetUsers().Get(userName, cancellationToken);
+            return await GetLabUsers().GetAsync(userName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Gets a collection of VirtualMachineResources in the Lab. </summary>
-        /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
-        public virtual VirtualMachineCollection GetVirtualMachines()
+        /// <summary>
+        /// Returns the properties of a lab user.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/users/{userName}
+        /// Operation Id: Users_Get
+        /// </summary>
+        /// <param name="userName"> The name of the user that uniquely identifies it within containing lab. Used in resource URIs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="userName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<LabUserResource> GetLabUser(string userName, CancellationToken cancellationToken = default)
         {
-            return GetCachedClient(Client => new VirtualMachineCollection(Client, Id));
+            return GetLabUsers().Get(userName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of LabVirtualMachineResources in the Lab. </summary>
+        /// <returns> An object representing collection of LabVirtualMachineResources and their operations over a LabVirtualMachineResource. </returns>
+        public virtual LabVirtualMachineCollection GetLabVirtualMachines()
+        {
+            return GetCachedClient(Client => new LabVirtualMachineCollection(Client, Id));
         }
 
         /// <summary>
@@ -179,9 +179,9 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(string virtualMachineName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LabVirtualMachineResource>> GetLabVirtualMachineAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return await GetVirtualMachines().GetAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
+            return await GetLabVirtualMachines().GetAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -194,9 +194,9 @@ namespace Azure.ResourceManager.LabServices
         /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VirtualMachineResource> GetVirtualMachine(string virtualMachineName, CancellationToken cancellationToken = default)
+        public virtual Response<LabVirtualMachineResource> GetLabVirtualMachine(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return GetVirtualMachines().Get(virtualMachineName, cancellationToken);
+            return GetLabVirtualMachines().Get(virtualMachineName, cancellationToken);
         }
 
         /// <summary>

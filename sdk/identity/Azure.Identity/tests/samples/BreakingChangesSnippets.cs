@@ -14,5 +14,25 @@ namespace Azure.Identity.Tests.samples
             });
             #endregion
         }
+
+        public void AddExplicitAdditionallyAllowedTenants()
+        {
+            #region Snippet:Identity_BreakingChanges_AddExplicitAdditionallyAllowedTenants
+            var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+            {
+                AdditionallyAllowedTenants = { "<tenant_id_1>", "<tenant_id_2>" }
+            });
+            #endregion
+        }
+
+        public void AddAllAdditionallyAllowedTenants()
+        {
+            #region Snippet:Identity_BreakingChanges_AddAllAdditionallyAllowedTenants
+            var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions
+            {
+                AdditionallyAllowedTenants = { "*" }
+            });
+            #endregion
+        }
     }
 }

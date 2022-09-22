@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes the named partition scheme of the service. </summary>
-    public partial class NamedPartitionScheme : Partition
+    public partial class NamedPartitionScheme : ManagedServicePartitionScheme
     {
         /// <summary> Initializes a new instance of NamedPartitionScheme. </summary>
         /// <param name="names"> Array for the names of the partitions. </param>
