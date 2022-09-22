@@ -2783,7 +2783,7 @@
           "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryReadonlyMasterKey\": \"2SGjBwPN2b18IYkEh2PPznosxvOsSRNlPz8SLafxbwUSRDysHc2pwaKLm3DodB8F18HLgHigGrWDiPt1T7OeHg==\",\r\n  \"secondaryReadonlyMasterKey\": \"gdqNOKfMu778fthh0L5Sq5XRB7y2IIFJ5XsQVPd5MGkXYQcoOV2Z3gn9b4YxDo1ASb25CT0cN6eO1FDtbGIveg==\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryReadonlyMasterKey\": \"Sanitized\",\r\n  \"secondaryReadonlyMasterKey\": \"Sanitized\"\r\n}",
       "StatusCode": 200
     },
     {
