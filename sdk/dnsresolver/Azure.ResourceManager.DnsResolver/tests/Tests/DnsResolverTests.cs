@@ -8,7 +8,6 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources.Models;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
-using System.Linq;
 
 namespace Azure.ResourceManager.DnsResolver.Tests
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
     {
         private DnsResolverCollection dnsResolverCollection;
 
-        public DnsResolverTests(bool async) : base(async)
+        public DnsResolverTests(bool async) : base(async, RecordedTestMode.Playback)
         {
         }
 
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         {
             // ARRANGE
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
-            var vnetName = Recording.GenerateAssetName("dnsResolver-");
+            var vnetName = Recording.GenerateAssetName("vnet-");
             var vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
             var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
             {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         {
             // ARRANGE
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
-            var vnetName = Recording.GenerateAssetName("dnsResolver-");
+            var vnetName = Recording.GenerateAssetName("vnet-");
             var vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
             var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         {
             // ARRANGE
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
-            var vnetName = Recording.GenerateAssetName("dnsResolver-");
+            var vnetName = Recording.GenerateAssetName("vnet-");
             var vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
             var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
             {
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         {
             // ARRANGE
             var dnsResolverName = Recording.GenerateAssetName("dnsResolver-");
-            var vnetName = Recording.GenerateAssetName("dnsResolver-");
+            var vnetName = Recording.GenerateAssetName("vnet-");
             var vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
             var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
             {
