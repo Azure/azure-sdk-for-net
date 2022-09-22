@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class RegionInfoAvailabilityZoneMappingsItem
+    public partial class AvailabilityZoneMapping
     {
-        internal static RegionInfoAvailabilityZoneMappingsItem DeserializeRegionInfoAvailabilityZoneMappingsItem(JsonElement element)
+        internal static AvailabilityZoneMapping DeserializeAvailabilityZoneMapping(JsonElement element)
         {
             Optional<string> availabilityZone = default;
             Optional<bool> isAvailable = default;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new RegionInfoAvailabilityZoneMappingsItem(availabilityZone.Value, Optional.ToNullable(isAvailable));
+            return new AvailabilityZoneMapping(availabilityZone.Value, Optional.ToNullable(isAvailable));
         }
     }
 }

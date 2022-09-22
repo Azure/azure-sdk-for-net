@@ -90,6 +90,9 @@ prepend-rp-prefix:
   - AccountEncryption
   - KeySource
   - KeyVaultProperties
+  - KeyVaultStatus
+  - RegionInfo
+  - EncryptionIdentity
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
@@ -209,6 +212,7 @@ rename-mapping:
   VolumeBackupProperties: NetAppVolumeBackupConfiguration
   VolumeGroupMetaData: NetAppVolumeGroupMetadata
   VolumeGroup: NetAppVolumeGroupResult
+  RegionInfoAvailabilityZoneMappingsItem: AvailabilityZoneMapping
 
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}

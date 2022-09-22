@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<RegionInfo>> QueryRegionInfoNetAppResourceAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.QueryRegionInfoNetAppResource");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         /// <param name="location"> The location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<RegionInfo> QueryRegionInfoNetAppResource(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppRegionInfo> QueryRegionInfoNetAppResource(AzureLocation location, CancellationToken cancellationToken = default)
         {
             using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.QueryRegionInfoNetAppResource");
             scope.Start();

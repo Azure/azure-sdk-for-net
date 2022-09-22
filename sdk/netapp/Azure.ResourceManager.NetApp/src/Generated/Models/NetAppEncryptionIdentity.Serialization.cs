@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class EncryptionIdentity : IUtf8JsonSerializable
+    public partial class NetAppEncryptionIdentity : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp.Models
             writer.WriteEndObject();
         }
 
-        internal static EncryptionIdentity DeserializeEncryptionIdentity(JsonElement element)
+        internal static NetAppEncryptionIdentity DeserializeNetAppEncryptionIdentity(JsonElement element)
         {
             Optional<string> principalId = default;
             Optional<string> userAssignedIdentity = default;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     continue;
                 }
             }
-            return new EncryptionIdentity(principalId.Value, userAssignedIdentity.Value);
+            return new NetAppEncryptionIdentity(principalId.Value, userAssignedIdentity.Value);
         }
     }
 }
