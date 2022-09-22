@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<int> availableGpuCount = default;
             Optional<IDictionary<string, DataBoxEdgeVmMemory>> vmUsedMemory = default;
             Optional<string> gpuType = default;
-            Optional<IList<NumaNodeData>> numaNodesData = default;
+            Optional<IList<NumaNodeInfo>> numaNodesData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostName"))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NumaNodeData> array = new List<NumaNodeData>();
+                    List<NumaNodeInfo> array = new List<NumaNodeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NumaNodeData.DeserializeNumaNodeData(item));
+                        array.Add(NumaNodeInfo.DeserializeNumaNodeInfo(item));
                     }
                     numaNodesData = array;
                     continue;

@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary>
     /// Describes the mechanism for performing a scaling operation.
     /// Please note <see cref="ManagedServiceScalingMechanism"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AddRemoveIncrementalNamedPartitionScalingMechanism"/> and <see cref="PartitionInstanceCountScalingMechanism"/>.
+    /// The available derived classes include <see cref="NamedPartitionAddOrRemoveScalingMechanism"/> and <see cref="PartitionInstanceCountScalingMechanism"/>.
     /// </summary>
     public abstract partial class ManagedServiceScalingMechanism
     {
