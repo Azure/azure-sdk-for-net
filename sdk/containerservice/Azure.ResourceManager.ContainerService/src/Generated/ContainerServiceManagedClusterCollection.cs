@@ -35,19 +35,6 @@ namespace Azure.ResourceManager.ContainerService
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerServiceManagedClusterCollection"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ContainerServiceManagedClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
-        {
-            _containerServiceManagedClusterManagedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceManagedClusterResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ContainerServiceManagedClusterResource.ResourceType, out string containerServiceManagedClusterManagedClustersApiVersion);
-            _containerServiceManagedClusterManagedClustersRestClient = new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceManagedClusterManagedClustersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
