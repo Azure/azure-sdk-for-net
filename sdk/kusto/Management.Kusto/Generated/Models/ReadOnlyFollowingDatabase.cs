@@ -55,7 +55,14 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <param name="principalsModificationKind">The principals
         /// modification kind of the database. Possible values include:
         /// 'Union', 'Replace', 'None'</param>
-        public ReadOnlyFollowingDatabase(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), System.TimeSpan? softDeletePeriod = default(System.TimeSpan?), System.TimeSpan? hotCachePeriod = default(System.TimeSpan?), DatabaseStatistics statistics = default(DatabaseStatistics), string leaderClusterResourceId = default(string), string attachedDatabaseConfigurationName = default(string), string principalsModificationKind = default(string))
+        /// <param name="tableLevelSharingProperties">Table level sharing
+        /// specifications</param>
+        /// <param name="originalDatabaseName">The original database name,
+        /// before databaseNameOverride or databaseNamePrefix where
+        /// applied.</param>
+        /// <param name="databaseShareOrigin">Possible values include:
+        /// 'Direct', 'DataShare', 'Other'</param>
+        public ReadOnlyFollowingDatabase(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), System.TimeSpan? softDeletePeriod = default(System.TimeSpan?), System.TimeSpan? hotCachePeriod = default(System.TimeSpan?), DatabaseStatistics statistics = default(DatabaseStatistics), string leaderClusterResourceId = default(string), string attachedDatabaseConfigurationName = default(string), string principalsModificationKind = default(string), TableLevelSharingProperties tableLevelSharingProperties = default(TableLevelSharingProperties), string originalDatabaseName = default(string), string databaseShareOrigin = default(string))
             : base(id, name, type, location)
         {
             ProvisioningState = provisioningState;
@@ -65,6 +72,9 @@ namespace Microsoft.Azure.Management.Kusto.Models
             LeaderClusterResourceId = leaderClusterResourceId;
             AttachedDatabaseConfigurationName = attachedDatabaseConfigurationName;
             PrincipalsModificationKind = principalsModificationKind;
+            TableLevelSharingProperties = tableLevelSharingProperties;
+            OriginalDatabaseName = originalDatabaseName;
+            DatabaseShareOrigin = databaseShareOrigin;
             CustomInit();
         }
 
@@ -119,6 +129,26 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.principalsModificationKind")]
         public string PrincipalsModificationKind { get; private set; }
+
+        /// <summary>
+        /// Gets table level sharing specifications
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.tableLevelSharingProperties")]
+        public TableLevelSharingProperties TableLevelSharingProperties { get; private set; }
+
+        /// <summary>
+        /// Gets the original database name, before databaseNameOverride or
+        /// databaseNamePrefix where applied.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.originalDatabaseName")]
+        public string OriginalDatabaseName { get; private set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Direct', 'DataShare',
+        /// 'Other'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.databaseShareOrigin")]
+        public string DatabaseShareOrigin { get; set; }
 
     }
 }

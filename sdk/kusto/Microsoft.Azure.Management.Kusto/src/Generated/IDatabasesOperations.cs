@@ -120,6 +120,11 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='parameters'>
         /// The database parameters supplied to the CreateOrUpdate operation.
         /// </param>
+        /// <param name='callerRole'>
+        /// By default, any user who run operation on a database become an
+        /// Admin on it. This property allows the caller to exclude the caller
+        /// from Admins list. Possible values include: 'Admin', 'None'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -135,7 +140,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Database>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Database>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates a database.
         /// </summary>
@@ -151,6 +156,11 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='parameters'>
         /// The database parameters supplied to the Update operation.
         /// </param>
+        /// <param name='callerRole'>
+        /// By default, any user who run operation on a database become an
+        /// Admin on it. This property allows the caller to exclude the caller
+        /// from Admins list. Possible values include: 'Admin', 'None'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -166,7 +176,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Database,DatabasesUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Database,DatabasesUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the database with the given name.
         /// </summary>
@@ -298,6 +308,11 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='parameters'>
         /// The database parameters supplied to the CreateOrUpdate operation.
         /// </param>
+        /// <param name='callerRole'>
+        /// By default, any user who run operation on a database become an
+        /// Admin on it. This property allows the caller to exclude the caller
+        /// from Admins list. Possible values include: 'Admin', 'None'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -313,7 +328,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Database>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Database>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates a database.
         /// </summary>
@@ -329,6 +344,11 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='parameters'>
         /// The database parameters supplied to the Update operation.
         /// </param>
+        /// <param name='callerRole'>
+        /// By default, any user who run operation on a database become an
+        /// Admin on it. This property allows the caller to exclude the caller
+        /// from Admins list. Possible values include: 'Admin', 'None'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -344,7 +364,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Database,DatabasesUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Database,DatabasesUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the database with the given name.
         /// </summary>

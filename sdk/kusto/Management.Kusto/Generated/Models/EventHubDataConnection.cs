@@ -72,7 +72,11 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// information from the data connection, by default only database
         /// routing information is allowed. Possible values include: 'Single',
         /// 'Multi'</param>
-        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>), string compression = default(string), string provisioningState = default(string), string managedIdentityResourceId = default(string), string managedIdentityObjectId = default(string), string databaseRouting = default(string))
+        /// <param name="retrievalStartDate">When defined, the data connection
+        /// retrieves existing Event hub events created since the Retrieval
+        /// start date. It can only retrieve events retained by the Event hub,
+        /// based on its retention period.</param>
+        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string), IList<string> eventSystemProperties = default(IList<string>), string compression = default(string), string provisioningState = default(string), string managedIdentityResourceId = default(string), string managedIdentityObjectId = default(string), string databaseRouting = default(string), System.DateTime? retrievalStartDate = default(System.DateTime?))
             : base(id, name, type, location)
         {
             EventHubResourceId = eventHubResourceId;
@@ -86,6 +90,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             ManagedIdentityResourceId = managedIdentityResourceId;
             ManagedIdentityObjectId = managedIdentityObjectId;
             DatabaseRouting = databaseRouting;
+            RetrievalStartDate = retrievalStartDate;
             CustomInit();
         }
 
@@ -172,6 +177,15 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.databaseRouting")]
         public string DatabaseRouting { get; set; }
+
+        /// <summary>
+        /// Gets or sets when defined, the data connection retrieves existing
+        /// Event hub events created since the Retrieval start date. It can
+        /// only retrieve events retained by the Event hub, based on its
+        /// retention period.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.retrievalStartDate")]
+        public System.DateTime? RetrievalStartDate { get; set; }
 
         /// <summary>
         /// Validate the object.

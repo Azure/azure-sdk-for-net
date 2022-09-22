@@ -173,9 +173,14 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The database parameters supplied to the CreateOrUpdate operation.
             /// </param>
-            public static Database CreateOrUpdate(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters)
+            /// <param name='callerRole'>
+            /// By default, any user who run operation on a database become an Admin on it.
+            /// This property allows the caller to exclude the caller from Admins list.
+            /// Possible values include: 'Admin', 'None'
+            /// </param>
+            public static Database CreateOrUpdate(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, clusterName, databaseName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, clusterName, databaseName, parameters, callerRole).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -196,12 +201,17 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The database parameters supplied to the CreateOrUpdate operation.
             /// </param>
+            /// <param name='callerRole'>
+            /// By default, any user who run operation on a database become an Admin on it.
+            /// This property allows the caller to exclude the caller from Admins list.
+            /// Possible values include: 'Admin', 'None'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Database> CreateOrUpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Database> CreateOrUpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, callerRole, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -225,9 +235,14 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The database parameters supplied to the Update operation.
             /// </param>
-            public static Database Update(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters)
+            /// <param name='callerRole'>
+            /// By default, any user who run operation on a database become an Admin on it.
+            /// This property allows the caller to exclude the caller from Admins list.
+            /// Possible values include: 'Admin', 'None'
+            /// </param>
+            public static Database Update(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string))
             {
-                return operations.UpdateAsync(resourceGroupName, clusterName, databaseName, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, clusterName, databaseName, parameters, callerRole).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -248,12 +263,17 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The database parameters supplied to the Update operation.
             /// </param>
+            /// <param name='callerRole'>
+            /// By default, any user who run operation on a database become an Admin on it.
+            /// This property allows the caller to exclude the caller from Admins list.
+            /// Possible values include: 'Admin', 'None'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Database> UpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Database> UpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, callerRole, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -472,9 +492,14 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The database parameters supplied to the CreateOrUpdate operation.
             /// </param>
-            public static Database BeginCreateOrUpdate(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters)
+            /// <param name='callerRole'>
+            /// By default, any user who run operation on a database become an Admin on it.
+            /// This property allows the caller to exclude the caller from Admins list.
+            /// Possible values include: 'Admin', 'None'
+            /// </param>
+            public static Database BeginCreateOrUpdate(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string))
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, clusterName, databaseName, parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, clusterName, databaseName, parameters, callerRole).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -495,12 +520,17 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The database parameters supplied to the CreateOrUpdate operation.
             /// </param>
+            /// <param name='callerRole'>
+            /// By default, any user who run operation on a database become an Admin on it.
+            /// This property allows the caller to exclude the caller from Admins list.
+            /// Possible values include: 'Admin', 'None'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Database> BeginCreateOrUpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Database> BeginCreateOrUpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, callerRole, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -524,9 +554,14 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The database parameters supplied to the Update operation.
             /// </param>
-            public static Database BeginUpdate(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters)
+            /// <param name='callerRole'>
+            /// By default, any user who run operation on a database become an Admin on it.
+            /// This property allows the caller to exclude the caller from Admins list.
+            /// Possible values include: 'Admin', 'None'
+            /// </param>
+            public static Database BeginUpdate(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string))
             {
-                return operations.BeginUpdateAsync(resourceGroupName, clusterName, databaseName, parameters).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, clusterName, databaseName, parameters, callerRole).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -547,12 +582,17 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The database parameters supplied to the Update operation.
             /// </param>
+            /// <param name='callerRole'>
+            /// By default, any user who run operation on a database become an Admin on it.
+            /// This property allows the caller to exclude the caller from Admins list.
+            /// Possible values include: 'Admin', 'None'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Database> BeginUpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Database> BeginUpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, callerRole, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

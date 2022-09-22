@@ -5,17 +5,17 @@
 
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Kusto</PackageId>
-    <Version>10.0.0</Version>
+    <Version>11.0.0</Version>
     <AssemblyName>Microsoft.Azure.Management.Kusto</AssemblyName>
     <PackageTags>management;kusto</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
         The C# client provides management capabilities for Azure Data Explorer (Kusto) entities. The following capabilities are included with this release:
-        - Create script resource with content instead of url
-        - Add managed identity support to eventgrid
-        - Add databaseRouting (Single/Multi) to all data connections
-        - Add PrivateEndpointConnections to cluster response
-        - Add PublicIPType to cluster
+        - Ability to exclude caller from being an admin on Database create/update.
+        - EH and IoT hub data connection new property for lookback – start collecting data that was generated a while ago.
+        - Follower name override/prefix – ability to define either different name for Read-Only-Following DB, or define prefix name for all DBs (in case of full cluster following scenario).
+        - Enhancing Follower GET-related APIs to improve demonstration of follower-leader linage in Azure portal.
+        - New API has the following new SKUs: Standard_L8s_v3, Standard_L16s_v3, Standard_L8as_v3, Standard_L16as_v3, Standard_E16s_v5+4TB_PS, Standard_E2d_v4, Standard_E4d_v4, Standard_E8d_v4, Standard_E16d_v4, Standard_E2d_v5, Standard_E4d_v5, Standard_E8d_v5, Standard_E16d_v5.
       ]]>
 </PackageReleaseNotes>
   </PropertyGroup>

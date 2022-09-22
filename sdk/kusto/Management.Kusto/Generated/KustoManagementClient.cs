@@ -399,7 +399,7 @@ namespace Microsoft.Azure.Management.Kusto
             OperationsResults = new OperationsResults(this);
             OperationsResultsLocation = new OperationsResultsLocation(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2022-02-01";
+            ApiVersion = "2022-07-07";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

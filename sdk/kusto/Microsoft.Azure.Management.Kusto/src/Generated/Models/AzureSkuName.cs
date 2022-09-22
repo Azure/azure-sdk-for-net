@@ -34,6 +34,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public const string StandardL16s = "Standard_L16s";
         public const string StandardL8sV2 = "Standard_L8s_v2";
         public const string StandardL16sV2 = "Standard_L16s_v2";
+        public const string StandardL8sV3 = "Standard_L8s_v3";
+        public const string StandardL16sV3 = "Standard_L16s_v3";
+        public const string StandardL8asV3 = "Standard_L8as_v3";
+        public const string StandardL16asV3 = "Standard_L16as_v3";
         public const string StandardE64iV3 = "Standard_E64i_v3";
         public const string StandardE80idsV4 = "Standard_E80ids_v4";
         public const string StandardE2aV4 = "Standard_E2a_v4";
@@ -52,6 +56,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public const string StandardE4adsV5 = "Standard_E4ads_v5";
         public const string StandardE8adsV5 = "Standard_E8ads_v5";
         public const string StandardE16adsV5 = "Standard_E16ads_v5";
+        public const string StandardEC8asV51TBPS = "Standard_EC8as_v5+1TB_PS";
+        public const string StandardEC8asV52TBPS = "Standard_EC8as_v5+2TB_PS";
+        public const string StandardEC16asV53TBPS = "Standard_EC16as_v5+3TB_PS";
+        public const string StandardEC16asV54TBPS = "Standard_EC16as_v5+4TB_PS";
+        public const string StandardEC8adsV5 = "Standard_EC8ads_v5";
+        public const string StandardEC16adsV5 = "Standard_EC16ads_v5";
         public const string StandardE8sV41TBPS = "Standard_E8s_v4+1TB_PS";
         public const string StandardE8sV42TBPS = "Standard_E8s_v4+2TB_PS";
         public const string StandardE16sV43TBPS = "Standard_E16s_v4+3TB_PS";
@@ -60,5 +70,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public const string StandardE8sV52TBPS = "Standard_E8s_v5+2TB_PS";
         public const string StandardE16sV53TBPS = "Standard_E16s_v5+3TB_PS";
         public const string StandardE16sV54TBPS = "Standard_E16s_v5+4TB_PS";
+        public const string StandardE2dV4 = "Standard_E2d_v4";
+        public const string StandardE4dV4 = "Standard_E4d_v4";
+        public const string StandardE8dV4 = "Standard_E8d_v4";
+        public const string StandardE16dV4 = "Standard_E16d_v4";
+        public const string StandardE2dV5 = "Standard_E2d_v5";
+        public const string StandardE4dV5 = "Standard_E4d_v5";
+        public const string StandardE8dV5 = "Standard_E8d_v5";
+        public const string StandardE16dV5 = "Standard_E16d_v5";
     }
 }

@@ -37,11 +37,17 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// cluster.</param>
         /// <param name="databaseName">The database name owned by this cluster
         /// that was followed. * in case following all databases.</param>
-        public FollowerDatabaseDefinition(string clusterResourceId, string attachedDatabaseConfigurationName, string databaseName = default(string))
+        /// <param name="tableLevelSharingProperties">Table level sharing
+        /// specifications</param>
+        /// <param name="databaseShareOrigin">Possible values include:
+        /// 'Direct', 'DataShare', 'Other'</param>
+        public FollowerDatabaseDefinition(string clusterResourceId, string attachedDatabaseConfigurationName, string databaseName = default(string), TableLevelSharingProperties tableLevelSharingProperties = default(TableLevelSharingProperties), string databaseShareOrigin = default(string))
         {
             ClusterResourceId = clusterResourceId;
             AttachedDatabaseConfigurationName = attachedDatabaseConfigurationName;
             DatabaseName = databaseName;
+            TableLevelSharingProperties = tableLevelSharingProperties;
+            DatabaseShareOrigin = databaseShareOrigin;
             CustomInit();
         }
 
@@ -70,6 +76,19 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; private set; }
+
+        /// <summary>
+        /// Gets table level sharing specifications
+        /// </summary>
+        [JsonProperty(PropertyName = "tableLevelSharingProperties")]
+        public TableLevelSharingProperties TableLevelSharingProperties { get; private set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Direct', 'DataShare',
+        /// 'Other'
+        /// </summary>
+        [JsonProperty(PropertyName = "databaseShareOrigin")]
+        public string DatabaseShareOrigin { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -23,7 +23,6 @@ namespace Kusto.Tests.ScenarioTests
         public bool continueOnErrors = false;
 
         public string clientIdForPrincipal = "713c3475-5021-4f3b-a650-eaa9a83f25a4";
-        private string dBprincipalMail = "safranke@microsoft.com";
         public string consumerGroupName = "$Default";
         public readonly string tableName = "MyTest";
         public readonly string resourceGroupForTest = "test-clients-rg";
@@ -46,6 +45,8 @@ namespace Kusto.Tests.ScenarioTests
         public readonly string principalType = "App";
         public readonly string runningState = "Running";
         public readonly string stoppedState = "Stopped";
+        public readonly string databaseShareOrigin = "Direct";
+        public readonly DateTime retrievalStartDate = DateTime.MinValue;
         public string tenantId { get; }
         public string location { get; }
         private string subscriptionId { get; }
@@ -68,6 +69,8 @@ namespace Kusto.Tests.ScenarioTests
         public string eventHubNamespaceResourceId { get; internal set; }
         public string clusterForEventGridTestResourceId { get; internal set; }
         public string storageAccountForEventGridResourceId { get; internal set; }
+        public string leaderClusterResourceId { get; internal set; }
+        public string followerClusterResourceId { get; internal set; }
         public AzureSku sku1 { get; set; }
         public AzureSku sku2 { get; set; }
         public TimeSpan? softDeletePeriod1 { get; set; }
@@ -83,9 +86,8 @@ namespace Kusto.Tests.ScenarioTests
         public IotHubDataConnection iotHubDataConnection { get; set; }
         public Script script { get; set; }
         public List<TrustedExternalTenant> trustedExternalTenants { get; set; }
-        public List<DatabasePrincipal> databasePrincipals { get; set; }
-        public DatabasePrincipal databasePrincipal { get; set; }
         public KeyVaultProperties keyVaultProperties { get; set; }
+        public TableLevelSharingProperties tableLevelSharingProperties { get; set; }
 
         public KustoTestBase(MockContext context)
         {
@@ -101,7 +103,7 @@ namespace Kusto.Tests.ScenarioTests
                 subscriptionId = testEnv.SubscriptionId;
                 HttpMockServer.Variables[TenantIdKey] = tenantId;
                 HttpMockServer.Variables[SubIdKey] = subscriptionId;
-                
+
                 var provider = resourcesClient.Providers.Get("Microsoft.Kusto");
                 location = provider.ResourceTypes.Where(
                     (resType) =>
@@ -126,13 +128,6 @@ namespace Kusto.Tests.ScenarioTests
 
         private void Initialize()
         {
-            clusterForEventGridTestResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupForTest}/providers/Microsoft.Kusto/Clusters/{clusterForEventGridTest}";
-            eventHubNamespaceResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns22";
-            eventHubResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns22/eventhubs/testclientseh";
-            storageAccountForEventGridResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.Storage/storageAccounts/testclients";
-            iotHubResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.Devices/IotHubs/test-clients-iot";
-            privateNetworkSubnetId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.Network/virtualNetworks/test-clients-vnet/subnets/default";
-            
             rgName = TestUtilities.GenerateName("sdktestrg");
             resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
 
@@ -145,7 +140,16 @@ namespace Kusto.Tests.ScenarioTests
             iotHubConnectionName = TestUtilities.GenerateName("iothubConnection");
             privateEndpointConnectionName = TestUtilities.GenerateName("privateendpointname");
             managedPrivateEndpointName = TestUtilities.GenerateName("managedprivateendpointname");
-           
+
+            clusterForEventGridTestResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupForTest}/providers/Microsoft.Kusto/Clusters/{clusterForEventGridTest}";
+            eventHubNamespaceResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns22";
+            eventHubResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.EventHub/namespaces/testclientsns22/eventhubs/testclientseh";
+            storageAccountForEventGridResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.Storage/storageAccounts/testclients";
+            iotHubResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.Devices/IotHubs/test-clients-iot";
+            privateNetworkSubnetId = $"/subscriptions/{subscriptionId}/resourceGroups/test-clients-rg/providers/Microsoft.Network/virtualNetworks/test-clients-vnet/subnets/default";
+            leaderClusterResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Kusto/Clusters/{clusterName}";
+            followerClusterResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Kusto/Clusters/{followerClusterName}";
+
             sku1 = new AzureSku(name: "Standard_D13_v2", "Standard", capacity: 2);
             sku2 = new AzureSku(name: "Standard_D14_v2", "Standard", capacity: 2);
 
@@ -165,25 +169,12 @@ namespace Kusto.Tests.ScenarioTests
             iotHubDataConnection = new IotHubDataConnection(iotHubResourceId, consumerGroupName, sharedAccessPolicyNameForIotHub, location: location);
             script = new Script( scriptUrl: scriptUrl, scriptUrlSasToken: scriptUrlSasToken, forceUpdateTag: forceUpdateTag, continueOnErrors: continueOnErrors);
 
-            databasePrincipal = GetDatabasePrincipalList(dBprincipalMail, "Admin");
-            databasePrincipals = new List<DatabasePrincipal> {databasePrincipal};
-
-            var leaderClusterResourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{rgName}/providers/Microsoft.Kusto/Clusters/{clusterName}";
-            attachedDatabaseConfiguration = new AttachedDatabaseConfiguration(location: this.location, databaseName: databaseName, clusterResourceId: leaderClusterResourceId, defaultPrincipalsModificationKind: defaultPrincipalsModificationKind);
+            attachedDatabaseConfiguration = new AttachedDatabaseConfiguration(databaseName, leaderClusterResourceId, defaultPrincipalsModificationKind, location: location);
             keyVaultProperties = new KeyVaultProperties(KeyNameForKeyVaultPropertiesTest, KeyVersionForKeyVaultPropertiesTest, KeyVaultUriForKeyVaultPropertiesTest);
-        }
-
-        private DatabasePrincipal GetDatabasePrincipalList(string userEmail, string role)
-        {
-            return new DatabasePrincipal()
-            {
-                Name = "User1",
-                Email = userEmail,
-                Fqn = $"aaduser={userEmail}",
-                Role = role,
-                Type = "User",
-                AppId = ""
-            };
+            tableLevelSharingProperties = new TableLevelSharingProperties(
+                new List<string> {"tableToInclude"}, new List<string> {"tableToExclude"},
+                new List<string> {"externalTableToInclude"}, new List<string> {"externalTableToExclude"},
+                new List<string> {"materializedViewToInclude"}, new List<string> {"materializedViewToExclude"});
         }
     }
 }

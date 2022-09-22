@@ -59,7 +59,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// cluster.</param>
         /// <param name="tableLevelSharingProperties">Table level sharing
         /// specifications</param>
-        public AttachedDatabaseConfiguration(string databaseName, string clusterResourceId, string defaultPrincipalsModificationKind, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), IList<string> attachedDatabaseNames = default(IList<string>), TableLevelSharingProperties tableLevelSharingProperties = default(TableLevelSharingProperties))
+        /// <param name="databaseNameOverride">Overrides the original database
+        /// name. Relevant only when attaching to a specific database.</param>
+        /// <param name="databaseNamePrefix">Adds a prefix to the attached
+        /// databases name. When following an entire cluster, that prefix would
+        /// be added to all of the databases original names from leader
+        /// cluster.</param>
+        public AttachedDatabaseConfiguration(string databaseName, string clusterResourceId, string defaultPrincipalsModificationKind, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), IList<string> attachedDatabaseNames = default(IList<string>), TableLevelSharingProperties tableLevelSharingProperties = default(TableLevelSharingProperties), string databaseNameOverride = default(string), string databaseNamePrefix = default(string))
             : base(id, name, type)
         {
             Location = location;
@@ -69,6 +75,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
             AttachedDatabaseNames = attachedDatabaseNames;
             DefaultPrincipalsModificationKind = defaultPrincipalsModificationKind;
             TableLevelSharingProperties = tableLevelSharingProperties;
+            DatabaseNameOverride = databaseNameOverride;
+            DatabaseNamePrefix = databaseNamePrefix;
             CustomInit();
         }
 
@@ -125,6 +133,21 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.tableLevelSharingProperties")]
         public TableLevelSharingProperties TableLevelSharingProperties { get; set; }
+
+        /// <summary>
+        /// Gets or sets overrides the original database name. Relevant only
+        /// when attaching to a specific database.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.databaseNameOverride")]
+        public string DatabaseNameOverride { get; set; }
+
+        /// <summary>
+        /// Gets or sets adds a prefix to the attached databases name. When
+        /// following an entire cluster, that prefix would be added to all of
+        /// the databases original names from leader cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.databaseNamePrefix")]
+        public string DatabaseNamePrefix { get; set; }
 
         /// <summary>
         /// Validate the object.

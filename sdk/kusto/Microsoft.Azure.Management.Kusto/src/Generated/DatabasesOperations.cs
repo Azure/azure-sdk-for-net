@@ -680,16 +680,21 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='parameters'>
         /// The database parameters supplied to the CreateOrUpdate operation.
         /// </param>
+        /// <param name='callerRole'>
+        /// By default, any user who run operation on a database become an Admin on it.
+        /// This property allows the caller to exclude the caller from Admins list.
+        /// Possible values include: 'Admin', 'None'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Database>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Database>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Database> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Database> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, callerRole, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -708,16 +713,21 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='parameters'>
         /// The database parameters supplied to the Update operation.
         /// </param>
+        /// <param name='callerRole'>
+        /// By default, any user who run operation on a database become an Admin on it.
+        /// This property allows the caller to exclude the caller from Admins list.
+        /// Possible values include: 'Admin', 'None'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Database,DatabasesUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Database,DatabasesUpdateHeaders>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<Database,DatabasesUpdateHeaders> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<Database,DatabasesUpdateHeaders> _response = await BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, callerRole, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -1405,6 +1415,11 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='parameters'>
         /// The database parameters supplied to the CreateOrUpdate operation.
         /// </param>
+        /// <param name='callerRole'>
+        /// By default, any user who run operation on a database become an Admin on it.
+        /// This property allows the caller to exclude the caller from Admins list.
+        /// Possible values include: 'Admin', 'None'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1426,7 +1441,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Database>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Database>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1463,6 +1478,7 @@ namespace Microsoft.Azure.Management.Kusto
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("callerRole", callerRole);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
@@ -1477,6 +1493,10 @@ namespace Microsoft.Azure.Management.Kusto
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (callerRole != null)
+            {
+                _queryParameters.Add(string.Format("callerRole={0}", System.Uri.EscapeDataString(callerRole)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1660,6 +1680,11 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='parameters'>
         /// The database parameters supplied to the Update operation.
         /// </param>
+        /// <param name='callerRole'>
+        /// By default, any user who run operation on a database become an Admin on it.
+        /// This property allows the caller to exclude the caller from Admins list.
+        /// Possible values include: 'Admin', 'None'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1681,7 +1706,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Database,DatabasesUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Database,DatabasesUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Database parameters, string callerRole = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1718,6 +1743,7 @@ namespace Microsoft.Azure.Management.Kusto
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("databaseName", databaseName);
                 tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("callerRole", callerRole);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
@@ -1732,6 +1758,10 @@ namespace Microsoft.Azure.Management.Kusto
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (callerRole != null)
+            {
+                _queryParameters.Add(string.Format("callerRole={0}", System.Uri.EscapeDataString(callerRole)));
             }
             if (_queryParameters.Count > 0)
             {

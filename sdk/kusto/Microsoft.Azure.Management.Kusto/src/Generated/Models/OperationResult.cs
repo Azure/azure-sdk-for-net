@@ -145,16 +145,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (PercentComplete != null)
+            if (PercentComplete > 100)
             {
-                if (PercentComplete > 100)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMaximum, "PercentComplete", 100);
-                }
-                if (PercentComplete < 0)
-                {
-                    throw new ValidationException(ValidationRules.InclusiveMinimum, "PercentComplete", 0);
-                }
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "PercentComplete", 100);
+            }
+            if (PercentComplete < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "PercentComplete", 0);
             }
         }
     }
