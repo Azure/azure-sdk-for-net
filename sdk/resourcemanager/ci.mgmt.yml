@@ -8,9 +8,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/resourcemanager/
-    - common/ManagementTestShared/
-    - common/ManagementCoreShared/
+    - sdk/resourcemanager
+    - common/ManagementTestShared
+    - common/ManagementCoreShared
     - sdk/advisor/Azure.ResourceManager.Advisor
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
@@ -143,9 +143,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/resourcemanager/
-    - common/ManagementTestShared/
-    - common/ManagementCoreShared/
+    - sdk/resourcemanager
+    - common/ManagementTestShared
+    - common/ManagementCoreShared
     - sdk/advisor/Azure.ResourceManager.Advisor
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
