@@ -7,18 +7,18 @@
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> The RegionInfoAvailabilityZoneMappingsItem. </summary>
-    public partial class RegionInfoAvailabilityZoneMappingsItem
+    /// <summary> The AvailabilityZoneMapping. </summary>
+    public partial class AvailabilityZoneMapping
     {
-        /// <summary> Initializes a new instance of RegionInfoAvailabilityZoneMappingsItem. </summary>
-        internal RegionInfoAvailabilityZoneMappingsItem()
+        /// <summary> Initializes a new instance of AvailabilityZoneMapping. </summary>
+        internal AvailabilityZoneMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of RegionInfoAvailabilityZoneMappingsItem. </summary>
+        /// <summary> Initializes a new instance of AvailabilityZoneMapping. </summary>
         /// <param name="availabilityZone"> Logical availability zone. </param>
         /// <param name="isAvailable"> Available availability zone. </param>
-        internal RegionInfoAvailabilityZoneMappingsItem(string availabilityZone, bool? isAvailable)
+        internal AvailabilityZoneMapping(string availabilityZone, bool? isAvailable)
         {
             AvailabilityZone = availabilityZone;
             IsAvailable = isAvailable;

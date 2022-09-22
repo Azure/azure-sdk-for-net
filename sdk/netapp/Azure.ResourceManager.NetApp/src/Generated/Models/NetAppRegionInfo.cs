@@ -11,18 +11,18 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Provides region specific information. </summary>
-    public partial class RegionInfo
+    public partial class NetAppRegionInfo
     {
-        /// <summary> Initializes a new instance of RegionInfo. </summary>
-        internal RegionInfo()
+        /// <summary> Initializes a new instance of NetAppRegionInfo. </summary>
+        internal NetAppRegionInfo()
         {
-            AvailabilityZoneMappings = new ChangeTrackingList<RegionInfoAvailabilityZoneMappingsItem>();
+            AvailabilityZoneMappings = new ChangeTrackingList<AvailabilityZoneMapping>();
         }
 
-        /// <summary> Initializes a new instance of RegionInfo. </summary>
+        /// <summary> Initializes a new instance of NetAppRegionInfo. </summary>
         /// <param name="storageToNetworkProximity"> Provides storage to network proximity information in the region. </param>
         /// <param name="availabilityZoneMappings"> Provides logical availability zone mappings for the subscription for a region. </param>
-        internal RegionInfo(RegionStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<RegionInfoAvailabilityZoneMappingsItem> availabilityZoneMappings)
+        internal NetAppRegionInfo(RegionStorageToNetworkProximity? storageToNetworkProximity, IReadOnlyList<AvailabilityZoneMapping> availabilityZoneMappings)
         {
             StorageToNetworkProximity = storageToNetworkProximity;
             AvailabilityZoneMappings = availabilityZoneMappings;
@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Provides storage to network proximity information in the region. </summary>
         public RegionStorageToNetworkProximity? StorageToNetworkProximity { get; }
         /// <summary> Provides logical availability zone mappings for the subscription for a region. </summary>
-        public IReadOnlyList<RegionInfoAvailabilityZoneMappingsItem> AvailabilityZoneMappings { get; }
+        public IReadOnlyList<AvailabilityZoneMapping> AvailabilityZoneMappings { get; }
     }
 }

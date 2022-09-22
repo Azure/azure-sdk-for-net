@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetApp.Tests
         [RecordedTest]
         public async Task QueryRegionInfoTest()
         {
-            Response<RegionInfo> regionInfo = await DefaultSubscription.QueryRegionInfoNetAppResourceAsync(DefaultLocation);
+            Response<NetAppRegionInfo> regionInfo = await DefaultSubscription.QueryRegionInfoNetAppResourceAsync(DefaultLocation);
             Assert.IsNotNull(regionInfo);
             Assert.IsNotNull(regionInfo.Value.StorageToNetworkProximity);
             Assert.IsNotNull(regionInfo.Value.AvailabilityZoneMappings);
