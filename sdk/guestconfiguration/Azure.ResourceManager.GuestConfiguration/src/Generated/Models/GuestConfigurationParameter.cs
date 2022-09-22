@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     /// <summary> Represents a configuration parameter. </summary>
-    public partial class ConfigurationParameter
+    public partial class GuestConfigurationParameter
     {
-        /// <summary> Initializes a new instance of ConfigurationParameter. </summary>
-        public ConfigurationParameter()
+        /// <summary> Initializes a new instance of GuestConfigurationParameter. </summary>
+        public GuestConfigurationParameter()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationParameter. </summary>
+        /// <summary> Initializes a new instance of GuestConfigurationParameter. </summary>
         /// <param name="name"> Name of the configuration parameter. </param>
         /// <param name="value"> Value of the configuration parameter. </param>
-        internal ConfigurationParameter(string name, string value)
+        internal GuestConfigurationParameter(string name, string value)
         {
             Name = name;
             Value = value;

@@ -11,16 +11,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    /// <summary> The AssignmentReport. </summary>
-    public partial class AssignmentReport
+    /// <summary> The GuestConfigurationAssignmentReportInfo. </summary>
+    public partial class GuestConfigurationAssignmentReportInfo
     {
-        /// <summary> Initializes a new instance of AssignmentReport. </summary>
-        public AssignmentReport()
+        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportInfo. </summary>
+        public GuestConfigurationAssignmentReportInfo()
         {
             Resources = new ChangeTrackingList<AssignmentReportResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of AssignmentReport. </summary>
+        /// <summary> Initializes a new instance of GuestConfigurationAssignmentReportInfo. </summary>
         /// <param name="id"> ARM resource id of the report for the guest configuration assignment. </param>
         /// <param name="reportId"> GUID that identifies the guest configuration assignment report under a subscription, resource group. </param>
         /// <param name="assignment"> Configuration details of the guest configuration assignment. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
         /// <param name="operationType"> Type of report, Consistency or Initial. </param>
         /// <param name="resources"> The list of resources for which guest configuration assignment compliance is checked. </param>
-        internal AssignmentReport(ResourceIdentifier id, Guid? reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, GuestConfigurationAssignmentReportType? operationType, IList<AssignmentReportResourceInfo> resources)
+        internal GuestConfigurationAssignmentReportInfo(ResourceIdentifier id, Guid? reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, GuestConfigurationAssignmentReportType? operationType, IList<AssignmentReportResourceInfo> resources)
         {
             Id = id;
             ReportId = reportId;
