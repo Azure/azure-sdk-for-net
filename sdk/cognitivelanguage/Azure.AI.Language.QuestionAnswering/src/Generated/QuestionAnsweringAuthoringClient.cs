@@ -15,11 +15,11 @@ using Azure.AI.Language.QuestionAnswering;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.Language.QuestionAnswering.Projects
+namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    // Data plane generated client. The QuestionAnsweringProjects service client.
-    /// <summary> The QuestionAnsweringProjects service client. </summary>
-    public partial class QuestionAnsweringProjectsClient
+    // Data plane generated client. The QuestionAnsweringAuthoring service client.
+    /// <summary> The QuestionAnsweringAuthoring service client. </summary>
+    public partial class QuestionAnsweringAuthoringClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -33,25 +33,25 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of QuestionAnsweringProjectsClient for mocking. </summary>
-        protected QuestionAnsweringProjectsClient()
+        /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClient for mocking. </summary>
+        protected QuestionAnsweringAuthoringClient()
         {
         }
 
-        /// <summary> Initializes a new instance of QuestionAnsweringProjectsClient. </summary>
+        /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public QuestionAnsweringProjectsClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new QuestionAnsweringClientOptions())
+        public QuestionAnsweringAuthoringClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new QuestionAnsweringClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of QuestionAnsweringProjectsClient. </summary>
+        /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public QuestionAnsweringProjectsClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringClientOptions options)
+        public QuestionAnsweringAuthoringClient(Uri endpoint, AzureKeyCredential credential, QuestionAnsweringClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
@@ -76,7 +76,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetProjectDetailsAsync("<projectName>");
         /// 
@@ -116,7 +116,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetProjectDetails");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetProjectDetails");
             scope.Start();
             try
             {
@@ -142,7 +142,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetProjectDetails("<projectName>");
         /// 
@@ -182,7 +182,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetProjectDetails");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetProjectDetails");
             scope.Start();
             try
             {
@@ -209,7 +209,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     language = "<language>",
@@ -224,7 +224,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     description = "<description>",
@@ -287,7 +287,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.CreateProject");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.CreateProject");
             scope.Start();
             try
             {
@@ -314,7 +314,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     language = "<language>",
@@ -329,7 +329,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     description = "<description>",
@@ -392,7 +392,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.CreateProject");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.CreateProject");
             scope.Start();
             try
             {
@@ -418,7 +418,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDeleteStatusAsync("<jobId>");
         /// 
@@ -451,7 +451,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeleteStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetDeleteStatus");
             scope.Start();
             try
             {
@@ -477,7 +477,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetDeleteStatus("<jobId>");
         /// 
@@ -510,7 +510,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeleteStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetDeleteStatus");
             scope.Start();
             try
             {
@@ -537,7 +537,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
         /// 
@@ -570,7 +570,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetExportStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetExportStatus");
             scope.Start();
             try
             {
@@ -597,7 +597,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetExportStatus("<projectName>", "<jobId>");
         /// 
@@ -630,7 +630,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetExportStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetExportStatus");
             scope.Start();
             try
             {
@@ -657,7 +657,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
         /// 
@@ -691,7 +691,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetImportStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetImportStatus");
             scope.Start();
             try
             {
@@ -718,7 +718,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetImportStatus("<projectName>", "<jobId>");
         /// 
@@ -752,7 +752,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetImportStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetImportStatus");
             scope.Start();
             try
             {
@@ -780,7 +780,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetDeployStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         /// 
@@ -815,7 +815,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeployStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetDeployStatus");
             scope.Start();
             try
             {
@@ -843,7 +843,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetDeployStatus("<projectName>", "<deploymentName>", "<jobId>");
         /// 
@@ -878,7 +878,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetDeployStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetDeployStatus");
             scope.Start();
             try
             {
@@ -905,7 +905,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {};
         /// 
@@ -916,7 +916,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     value = new[] {
@@ -955,7 +955,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSynonyms");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.UpdateSynonyms");
             scope.Start();
             try
             {
@@ -982,7 +982,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {};
         /// 
@@ -993,7 +993,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     value = new[] {
@@ -1032,7 +1032,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSynonyms");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.UpdateSynonyms");
             scope.Start();
             try
             {
@@ -1059,7 +1059,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetUpdateSourcesStatusAsync("<projectName>", "<jobId>");
         /// 
@@ -1093,7 +1093,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateSourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetUpdateSourcesStatus");
             scope.Start();
             try
             {
@@ -1120,7 +1120,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetUpdateSourcesStatus("<projectName>", "<jobId>");
         /// 
@@ -1154,7 +1154,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateSourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetUpdateSourcesStatus");
             scope.Start();
             try
             {
@@ -1181,7 +1181,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// Response response = await client.GetUpdateQnasStatusAsync("<projectName>", "<jobId>");
         /// 
@@ -1215,7 +1215,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateQnasStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetUpdateQnasStatus");
             scope.Start();
             try
             {
@@ -1242,7 +1242,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// Response response = client.GetUpdateQnasStatus("<projectName>", "<jobId>");
         /// 
@@ -1276,7 +1276,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.GetUpdateQnasStatus");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.GetUpdateQnasStatus");
             scope.Start();
             try
             {
@@ -1303,7 +1303,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {};
         /// 
@@ -1314,7 +1314,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     records = new[] {
@@ -1353,7 +1353,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.AddFeedback");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.AddFeedback");
             scope.Start();
             try
             {
@@ -1380,7 +1380,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {};
         /// 
@@ -1391,7 +1391,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     records = new[] {
@@ -1430,7 +1430,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.AddFeedback");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.AddFeedback");
             scope.Start();
             try
             {
@@ -1456,7 +1456,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetProjectsAsync())
         /// {
@@ -1468,7 +1468,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetProjectsAsync(1234, 1234, 1234))
         /// {
@@ -1507,7 +1507,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </remarks>
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetProjectsImplementationAsync("QuestionAnsweringProjectsClient.GetProjects", maxCount, skip, maxpagesize, context);
+            return GetProjectsImplementationAsync("QuestionAnsweringAuthoringClient.GetProjects", maxCount, skip, maxpagesize, context);
         }
 
         private AsyncPageable<BinaryData> GetProjectsImplementationAsync(string diagnosticsScopeName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
@@ -1539,7 +1539,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetProjects())
         /// {
@@ -1551,7 +1551,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetProjects(1234, 1234, 1234))
         /// {
@@ -1590,7 +1590,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// </remarks>
         public virtual Pageable<BinaryData> GetProjects(int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
-            return GetProjectsImplementation("QuestionAnsweringProjectsClient.GetProjects", maxCount, skip, maxpagesize, context);
+            return GetProjectsImplementation("QuestionAnsweringAuthoringClient.GetProjects", maxCount, skip, maxpagesize, context);
         }
 
         private Pageable<BinaryData> GetProjectsImplementation(string diagnosticsScopeName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
@@ -1625,7 +1625,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetDeploymentsAsync("<projectName>"))
         /// {
@@ -1637,7 +1637,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetDeploymentsAsync("<projectName>", 1234, 1234, 1234))
         /// {
@@ -1664,7 +1664,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentsImplementationAsync("QuestionAnsweringProjectsClient.GetDeployments", projectName, maxCount, skip, maxpagesize, context);
+            return GetDeploymentsImplementationAsync("QuestionAnsweringAuthoringClient.GetDeployments", projectName, maxCount, skip, maxpagesize, context);
         }
 
         private AsyncPageable<BinaryData> GetDeploymentsImplementationAsync(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
@@ -1699,7 +1699,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetDeployments("<projectName>"))
         /// {
@@ -1711,7 +1711,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetDeployments("<projectName>", 1234, 1234, 1234))
         /// {
@@ -1738,7 +1738,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetDeploymentsImplementation("QuestionAnsweringProjectsClient.GetDeployments", projectName, maxCount, skip, maxpagesize, context);
+            return GetDeploymentsImplementation("QuestionAnsweringAuthoringClient.GetDeployments", projectName, maxCount, skip, maxpagesize, context);
         }
 
         private Pageable<BinaryData> GetDeploymentsImplementation(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
@@ -1773,7 +1773,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSynonymsAsync("<projectName>"))
         /// {
@@ -1785,7 +1785,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSynonymsAsync("<projectName>", 1234, 1234, 1234))
         /// {
@@ -1810,7 +1810,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSynonymsImplementationAsync("QuestionAnsweringProjectsClient.GetSynonyms", projectName, maxCount, skip, maxpagesize, context);
+            return GetSynonymsImplementationAsync("QuestionAnsweringAuthoringClient.GetSynonyms", projectName, maxCount, skip, maxpagesize, context);
         }
 
         private AsyncPageable<BinaryData> GetSynonymsImplementationAsync(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
@@ -1845,7 +1845,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSynonyms("<projectName>"))
         /// {
@@ -1857,7 +1857,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSynonyms("<projectName>", 1234, 1234, 1234))
         /// {
@@ -1882,7 +1882,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSynonymsImplementation("QuestionAnsweringProjectsClient.GetSynonyms", projectName, maxCount, skip, maxpagesize, context);
+            return GetSynonymsImplementation("QuestionAnsweringAuthoringClient.GetSynonyms", projectName, maxCount, skip, maxpagesize, context);
         }
 
         private Pageable<BinaryData> GetSynonymsImplementation(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
@@ -1917,7 +1917,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSourcesAsync("<projectName>"))
         /// {
@@ -1930,7 +1930,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetSourcesAsync("<projectName>", 1234, 1234, 1234))
         /// {
@@ -1963,7 +1963,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSourcesImplementationAsync("QuestionAnsweringProjectsClient.GetSources", projectName, maxCount, skip, maxpagesize, context);
+            return GetSourcesImplementationAsync("QuestionAnsweringAuthoringClient.GetSources", projectName, maxCount, skip, maxpagesize, context);
         }
 
         private AsyncPageable<BinaryData> GetSourcesImplementationAsync(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
@@ -1998,7 +1998,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSources("<projectName>"))
         /// {
@@ -2011,7 +2011,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetSources("<projectName>", 1234, 1234, 1234))
         /// {
@@ -2044,7 +2044,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetSourcesImplementation("QuestionAnsweringProjectsClient.GetSources", projectName, maxCount, skip, maxpagesize, context);
+            return GetSourcesImplementation("QuestionAnsweringAuthoringClient.GetSources", projectName, maxCount, skip, maxpagesize, context);
         }
 
         private Pageable<BinaryData> GetSourcesImplementation(string diagnosticsScopeName, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
@@ -2080,7 +2080,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetQnasAsync("<projectName>"))
         /// {
@@ -2092,7 +2092,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// await foreach (var data in client.GetQnasAsync("<projectName>", "<source>", 1234, 1234, 1234))
         /// {
@@ -2173,7 +2173,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetQnasImplementationAsync("QuestionAnsweringProjectsClient.GetQnas", projectName, source, maxCount, skip, maxpagesize, context);
+            return GetQnasImplementationAsync("QuestionAnsweringAuthoringClient.GetQnas", projectName, source, maxCount, skip, maxpagesize, context);
         }
 
         private AsyncPageable<BinaryData> GetQnasImplementationAsync(string diagnosticsScopeName, string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
@@ -2209,7 +2209,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetQnas("<projectName>"))
         /// {
@@ -2221,7 +2221,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// foreach (var data in client.GetQnas("<projectName>", "<source>", 1234, 1234, 1234))
         /// {
@@ -2302,7 +2302,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            return GetQnasImplementation("QuestionAnsweringProjectsClient.GetQnas", projectName, source, maxCount, skip, maxpagesize, context);
+            return GetQnasImplementation("QuestionAnsweringAuthoringClient.GetQnas", projectName, source, maxCount, skip, maxpagesize, context);
         }
 
         private Pageable<BinaryData> GetQnasImplementation(string diagnosticsScopeName, string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
@@ -2335,7 +2335,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
         /// 
@@ -2369,12 +2369,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeleteProject");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.DeleteProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2396,7 +2396,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
         /// 
@@ -2430,12 +2430,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeleteProject");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.DeleteProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeleteProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2459,7 +2459,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>");
         /// 
@@ -2474,7 +2474,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
         /// 
@@ -2507,12 +2507,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Export");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.Export");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2536,7 +2536,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var operation = client.Export(WaitUntil.Completed, "<projectName>");
         /// 
@@ -2551,7 +2551,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var operation = client.Export(WaitUntil.Completed, "<projectName>", "<format>", "<assetKind>");
         /// 
@@ -2584,12 +2584,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Export");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.Export");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, format, assetKind, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Export", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Export", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -2614,7 +2614,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {};
         /// 
@@ -2631,7 +2631,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     metadata = new {
@@ -2807,12 +2807,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Import");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.Import");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -2837,7 +2837,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {};
         /// 
@@ -2854,7 +2854,7 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new {
         ///     metadata = new {
@@ -3030,12 +3030,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.Import");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.Import");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, format, assetKind, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.Import", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.Import", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3058,17 +3058,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>");
         /// 
         /// BinaryData data = await operation.WaitForCompletionAsync();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("deploymentName").ToString());
+        /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3076,16 +3073,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response Body:
         /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// Schema for <c>ProjectDeployment</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   deploymentName: string, # Optional. Name of the deployment.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
         /// }
         /// </code>
-        /// </details>
         /// 
         /// </remarks>
         public virtual async Task<Operation<BinaryData>> DeployProjectAsync(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
@@ -3093,12 +3086,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeployProject");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.DeployProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -3121,17 +3114,14 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>");
         /// 
         /// BinaryData data = operation.WaitForCompletion();
         /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// Console.WriteLine(result.GetProperty("deploymentName").ToString());
+        /// Console.WriteLine(result.GetProperty("lastDeployedDateTime").ToString());
         /// ]]></code>
         /// </example>
         /// <remarks>
@@ -3139,16 +3129,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response Body:
         /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// Schema for <c>ProjectDeployment</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   deploymentName: string, # Optional. Name of the deployment.
+        ///   lastDeployedDateTime: string (ISO 8601 Format), # Optional. Represents the project last deployment date-time.
         /// }
         /// </code>
-        /// </details>
         /// 
         /// </remarks>
         public virtual Operation<BinaryData> DeployProject(WaitUntil waitUntil, string projectName, string deploymentName, RequestContext context = null)
@@ -3156,12 +3142,12 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.DeployProject");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.DeployProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeployProjectRequest(projectName, deploymentName, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.DeployProject", OperationFinalStateVia.Location, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -3178,13 +3164,13 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="AsyncPageable{T}"/> containing a list of <see cref="BinaryData"/> objects once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call UpdateSourcesAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new[] {
         ///     new {
@@ -3201,17 +3187,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = await client.UpdateSourcesAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
         /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// var response = await operation.WaitForCompletionAsync();
+        /// await foreach (var data in response.Value)
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("displayName").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
+        ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
+        ///     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
+        /// Below is the JSON schema for the request payload and one item in the pageable response.
         /// 
         /// Request Body:
         /// 
@@ -3230,34 +3219,51 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response Body:
         /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// Schema for <c>QnaSourcesMetadata</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   displayName: string, # Optional. Friendly name of the Source.
+        ///   source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
+        ///   sourceUri: string, # Required. URI location for the file or url.
+        ///   sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
+        ///   contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
         /// }
         /// </code>
-        /// </details>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> UpdateSourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<AsyncPageable<BinaryData>>> UpdateSourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSources");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.UpdateSources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil, CreateEnumerableAsync).ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
+            }
+
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(Response response, string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                Page<BinaryData> page;
+                if (nextLink == null)
+                {
+                    page = LowLevelPageableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                }
+                while (!string.IsNullOrEmpty(nextLink))
+                {
+                    var message = CreateUpdateSourcesNextPageRequest(nextLink, projectName, content, context);
+                    page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                }
             }
         }
 
@@ -3269,13 +3275,13 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="Pageable{T}"/> containing a list of <see cref="BinaryData"/> objects once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call UpdateSources with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new[] {
         ///     new {
@@ -3292,17 +3298,20 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = client.UpdateSources(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
         /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// var response = operation.WaitForCompletion();
+        /// foreach (var data in response.Value)
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("displayName").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("sourceUri").ToString());
+        ///     Console.WriteLine(result.GetProperty("sourceKind").ToString());
+        ///     Console.WriteLine(result.GetProperty("contentStructureKind").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
+        /// Below is the JSON schema for the request payload and one item in the pageable response.
         /// 
         /// Request Body:
         /// 
@@ -3321,34 +3330,51 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response Body:
         /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// Schema for <c>QnaSourcesMetadata</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   displayName: string, # Optional. Friendly name of the Source.
+        ///   source: string, # Optional. Unique source identifier. Name of the file if it&apos;s a &apos;file&apos; source; otherwise, the complete URL if it&apos;s a &apos;url&apos; source.
+        ///   sourceUri: string, # Required. URI location for the file or url.
+        ///   sourceKind: &quot;file&quot; | &quot;url&quot;, # Required. Supported source types.
+        ///   contentStructureKind: &quot;unstructured&quot;, # Optional. Content structure type for sources.
         /// }
         /// </code>
-        /// </details>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> UpdateSources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation<Pageable<BinaryData>> UpdateSources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateSources");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.UpdateSources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateSourcesRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateSources", OperationFinalStateVia.Location, context, waitUntil, CreateEnumerable);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
+            }
+
+            IEnumerable<Page<BinaryData>> CreateEnumerable(Response response, string nextLink, int? pageSizeHint)
+            {
+                Page<BinaryData> page;
+                if (nextLink == null)
+                {
+                    page = LowLevelPageableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                }
+                while (!string.IsNullOrEmpty(nextLink))
+                {
+                    var message = CreateUpdateSourcesNextPageRequest(nextLink, projectName, content, context);
+                    page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                }
             }
         }
 
@@ -3360,13 +3386,13 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="AsyncPageable{T}"/> containing a list of <see cref="BinaryData"/> objects once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call UpdateQnasAsync with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new[] {
         ///     new {
@@ -3409,17 +3435,37 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = await client.UpdateQnasAsync(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
         /// 
-        /// BinaryData data = await operation.WaitForCompletionAsync();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// var response = await operation.WaitForCompletionAsync();
+        /// await foreach (var data in response.Value)
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("answer").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("questions")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
+        /// Below is the JSON schema for the request payload and one item in the pageable response.
         /// 
         /// Request Body:
         /// 
@@ -3461,34 +3507,82 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response Body:
         /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// Schema for <c>QnaAsset</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   id: number, # Optional. Unique ID for the QnA.
+        ///   answer: string, # Optional. Answer text.
+        ///   source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
+        ///   questions: [string], # Optional. List of questions associated with the answer.
+        ///   metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
+        ///   dialog: {
+        ///     isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
+        ///     prompts: [
+        ///       {
+        ///         displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
+        ///         qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
+        ///         qna: {
+        ///           id: number, # Optional. Unique ID for the QnA.
+        ///           answer: string, # Optional. Answer text.
+        ///           source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
+        ///           questions: [string], # Optional. List of questions associated with the answer.
+        ///           metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
+        ///           dialog: QnaDialog, # Optional. Context of a QnA.
+        ///           activeLearningSuggestions: [
+        ///             {
+        ///               clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
+        ///               suggestedQuestions: [
+        ///                 {
+        ///                   question: string, # Optional. Question suggested by the Active Learning feature.
+        ///                   userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
+        ///                   autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
+        ///                 }
+        ///               ], # Optional. List of all suggested questions for the QnA.
+        ///             }
+        ///           ], # Optional. List of Active Learning suggestions for the QnA.
+        ///         }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
+        ///         displayText: string, # Optional. Text displayed to represent a follow up question prompt.
+        ///       }
+        ///     ], # Optional. List of prompts associated with the answer.
+        ///   }, # Optional. Context of a QnA.
+        ///   activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
         /// }
         /// </code>
-        /// </details>
         /// 
         /// </remarks>
-        public virtual async Task<Operation<BinaryData>> UpdateQnasAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Operation<AsyncPageable<BinaryData>>> UpdateQnasAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateQnas");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.UpdateQnas");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil, CreateEnumerableAsync).ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
+            }
+
+            async IAsyncEnumerable<Page<BinaryData>> CreateEnumerableAsync(Response response, string nextLink, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken = default)
+            {
+                Page<BinaryData> page;
+                if (nextLink == null)
+                {
+                    page = LowLevelPageableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                }
+                while (!string.IsNullOrEmpty(nextLink))
+                {
+                    var message = CreateUpdateQnasNextPageRequest(nextLink, projectName, content, context);
+                    page = await LowLevelPageableHelpers.ProcessMessageAsync(_pipeline, message, context, "value", "nextLink", cancellationToken).ConfigureAwait(false);
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                }
             }
         }
 
@@ -3500,13 +3594,13 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="BinaryData"/> object once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
+        /// <returns> The <see cref="Operation{T}"/> from the service that will contain a <see cref="Pageable{T}"/> containing a list of <see cref="BinaryData"/> objects once the asynchronous operation on the service has completed. Details of the body schema for the operation's final value are in the Remarks section below. </returns>
         /// <example>
         /// This sample shows how to call UpdateQnas with required parameters and request content and parse the result.
         /// <code><![CDATA[
         /// var credential = new AzureKeyCredential("<key>");
         /// var endpoint = new Uri("<https://my-service.azure.com>");
-        /// var client = new QuestionAnsweringProjectsClient(endpoint, credential);
+        /// var client = new QuestionAnsweringAuthoringClient(endpoint, credential);
         /// 
         /// var data = new[] {
         ///     new {
@@ -3549,17 +3643,37 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// var operation = client.UpdateQnas(WaitUntil.Completed, "<projectName>", RequestContent.Create(data));
         /// 
-        /// BinaryData data = operation.WaitForCompletion();
-        /// JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
-        /// Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("expirationDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("jobId").ToString());
-        /// Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-        /// Console.WriteLine(result.GetProperty("status").ToString());
+        /// var response = operation.WaitForCompletion();
+        /// foreach (var data in response.Value)
+        /// {
+        ///     JsonElement result = JsonDocument.Parse(data.ToStream()).RootElement;
+        ///     Console.WriteLine(result.GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("answer").ToString());
+        ///     Console.WriteLine(result.GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("questions")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("metadata").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("isContextOnly").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayOrder").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qnaId").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("id").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("answer").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("source").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("questions")[0].ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("metadata").GetProperty("<test>").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("qna").GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("dialog").GetProperty("prompts")[0].GetProperty("displayText").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("clusterHead").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("question").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("userSuggestedCount").ToString());
+        ///     Console.WriteLine(result.GetProperty("activeLearningSuggestions")[0].GetProperty("suggestedQuestions")[0].GetProperty("autoSuggestedCount").ToString());
+        /// }
         /// ]]></code>
         /// </example>
         /// <remarks>
-        /// Below is the JSON schema for the request and response payloads.
+        /// Below is the JSON schema for the request payload and one item in the pageable response.
         /// 
         /// Request Body:
         /// 
@@ -3601,34 +3715,82 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         /// 
         /// Response Body:
         /// 
-        /// <details><summary>ExportJobState</summary>Schema for <c>ExportJobState</c>:
+        /// Schema for <c>QnaAsset</c>:
         /// <code>{
-        ///   createdDateTime: string (ISO 8601 Format), # Required.
-        ///   expirationDateTime: string (ISO 8601 Format), # Optional.
-        ///   jobId: string, # Required.
-        ///   lastUpdatedDateTime: string (ISO 8601 Format), # Required.
-        ///   status: &quot;notStarted&quot; | &quot;running&quot; | &quot;succeeded&quot; | &quot;failed&quot; | &quot;cancelled&quot; | &quot;cancelling&quot; | &quot;partiallyCompleted&quot;, # Required. Job Status.
+        ///   id: number, # Optional. Unique ID for the QnA.
+        ///   answer: string, # Optional. Answer text.
+        ///   source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
+        ///   questions: [string], # Optional. List of questions associated with the answer.
+        ///   metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
+        ///   dialog: {
+        ///     isContextOnly: boolean, # Optional. To mark if a prompt is relevant only with a previous question or not. If true, do not include this QnA as answer for queries without context; otherwise, ignores context and includes this QnA in answers.
+        ///     prompts: [
+        ///       {
+        ///         displayOrder: number, # Optional. Index of the prompt. It is used for ordering of the prompts.
+        ///         qnaId: number, # Optional. ID of the QnA corresponding to the prompt.
+        ///         qna: {
+        ///           id: number, # Optional. Unique ID for the QnA.
+        ///           answer: string, # Optional. Answer text.
+        ///           source: string, # Optional. Source from which QnA was indexed e.g. https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs .
+        ///           questions: [string], # Optional. List of questions associated with the answer.
+        ///           metadata: Dictionary&lt;string, string&gt;, # Optional. Metadata associated with the answer, useful to categorize or filter question answers.
+        ///           dialog: QnaDialog, # Optional. Context of a QnA.
+        ///           activeLearningSuggestions: [
+        ///             {
+        ///               clusterHead: string, # Optional. Question chosen as the head of suggested questions cluster by Active Learning clustering algorithm.
+        ///               suggestedQuestions: [
+        ///                 {
+        ///                   question: string, # Optional. Question suggested by the Active Learning feature.
+        ///                   userSuggestedCount: number, # Optional. The number of times the question was suggested explicitly by the user.
+        ///                   autoSuggestedCount: number, # Optional. The number of times the question was suggested automatically by the Active Learning algorithm.
+        ///                 }
+        ///               ], # Optional. List of all suggested questions for the QnA.
+        ///             }
+        ///           ], # Optional. List of Active Learning suggestions for the QnA.
+        ///         }, # Optional. QnA record. Either QnAId or QnA record needs to be present in a Prompt.
+        ///         displayText: string, # Optional. Text displayed to represent a follow up question prompt.
+        ///       }
+        ///     ], # Optional. List of prompts associated with the answer.
+        ///   }, # Optional. Context of a QnA.
+        ///   activeLearningSuggestions: [SuggestedQuestionsCluster], # Optional. List of Active Learning suggestions for the QnA.
         /// }
         /// </code>
-        /// </details>
         /// 
         /// </remarks>
-        public virtual Operation<BinaryData> UpdateQnas(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
+        public virtual Operation<Pageable<BinaryData>> UpdateQnas(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringProjectsClient.UpdateQnas");
+            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringAuthoringClient.UpdateQnas");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUpdateQnasRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringProjectsClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "QuestionAnsweringAuthoringClient.UpdateQnas", OperationFinalStateVia.Location, context, waitUntil, CreateEnumerable);
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
+            }
+
+            IEnumerable<Page<BinaryData>> CreateEnumerable(Response response, string nextLink, int? pageSizeHint)
+            {
+                Page<BinaryData> page;
+                if (nextLink == null)
+                {
+                    page = LowLevelPageableHelpers.BuildPageForResponse(response, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                }
+                while (!string.IsNullOrEmpty(nextLink))
+                {
+                    var message = CreateUpdateQnasNextPageRequest(nextLink, projectName, content, context);
+                    page = LowLevelPageableHelpers.ProcessMessage(_pipeline, message, context, "value", "nextLink");
+                    nextLink = page.ContinuationToken;
+                    yield return page;
+                }
             }
         }
 
@@ -4140,6 +4302,34 @@ namespace Azure.AI.Language.QuestionAnswering.Projects
         }
 
         internal HttpMessage CreateGetQnasNextPageRequest(string nextLink, string projectName, string source, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateSourcesNextPageRequest(string nextLink, string projectName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateUpdateQnasNextPageRequest(string nextLink, string projectName, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

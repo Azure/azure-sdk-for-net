@@ -23,7 +23,7 @@ dotnet add package Azure.AI.Language.QuestionAnswering
 
 ### Authenticate the client
 
-In order to interact with the Question Answering service, you'll need to either create an instance of the [`QuestionAnsweringClient`][questionanswering_client_class] class for querying existing projects or an instance of the [`QuestionAnsweringProjectsClient`][questionansweringprojects_client_class] for managing projects within your resource. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
+In order to interact with the Question Answering service, you'll need to either create an instance of the [`QuestionAnsweringClient`][questionanswering_client_class] class for querying existing projects or an instance of the [`QuestionAnsweringAuthoringClient`][questionansweringauthoring_client_class] for managing projects within your resource. You will need an **endpoint**, and an **API key** to instantiate a client object. For more information regarding authenticating with Cognitive Services, see [Authenticate requests to Azure Cognitive Services][cognitive_auth].
 
 #### Get an API key
 
@@ -37,7 +37,13 @@ az cognitiveservices account keys list --resource-group <resource-group-name> --
 
 #### Create a QuestionAnsweringClient
 
-Once you've determined your **endpoint** and **API key** you can instantiate a `QuestionAnsweringClient`:
+To use the `QuestionAnsweringClient`, make sure you use the right namespace:
+
+```C# Snippet:QuestionAnsweringClient_Namespace
+using Azure.AI.Language.QuestionAnswering;
+```
+
+With your **endpoint** and **API key** you can instantiate a `QuestionAnsweringClient`:
 
 ```C# Snippet:QuestionAnsweringClient_Create
 Uri endpoint = new Uri("{LanguageEndpoint}");
@@ -46,15 +52,21 @@ AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
 ```
 
-#### Create a QuestionAnsweringProjectsClient
+#### Create a QuestionAnsweringAuthoringClient
 
-With your **endpoint** and **API key**, you can instantiate a `QuestionAnsweringProjectsClient`:
+To use the `QuestionAnsweringAuthoringClient`, make sure you use the right namespace:
 
-```C# Snippet:QuestionAnsweringProjectsClient_Create
+```C# Snippet:QuestionAnsweringAuthoringClient_Namespace
+using Azure.AI.Language.QuestionAnswering.Authoring;
+```
+
+With your **endpoint** and **API key**, you can instantiate a `QuestionAnsweringAuthoringClient`:
+
+```C# Snippet:QuestionAnsweringAuthoringClient_Create
 Uri endpoint = new Uri("{LanguageEndpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
-QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
+QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 ```
 
 ## Key concepts
@@ -63,9 +75,9 @@ QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(end
 
 The [`QuestionAnsweringClient`][questionanswering_client_class] is the primary interface for asking questions using a knowledge base with your own information, or text input using pre-trained models. It provides both synchronous and asynchronous APIs to ask questions.
 
-### QuestionAnsweringProjectsClient
+### QuestionAnsweringAuthoringClient
 
-The [`QuestionAnsweringProjectsClient`][questionansweringprojects_client_class] provides an interface for managing Question Answering projects. Examples of the available operations include creating and deploying projects, updating your knowledge sources, and updating question and answer pairs. It provides both synchronous and asynchronous APIs.
+The [`QuestionAnsweringAuthoringClient`][questionansweringauthoring_client_class] provides an interface for managing Question Answering projects. Examples of the available operations include creating and deploying projects, updating your knowledge sources, and updating question and answer pairs. It provides both synchronous and asynchronous APIs.
 
 ### Thread safety
 
@@ -83,7 +95,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
-## Examples 
+## Examples
 
 ### QuestionAnsweringClient
 
@@ -136,15 +148,15 @@ foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 }
 ```
 
-### QuestionAnsweringProjectsClient
+### QuestionAnsweringAuthoringClient
 
-The following examples show common scenarios using the `QuestionAnsweringProjectsClient` instance [created in this section](#create-a-questionansweringprojectsclient).
+The following examples show common scenarios using the `QuestionAnsweringAuthoringClient` instance [created in this section](#create-a-questionansweringauthoringclient).
 
 #### Create a new project
 
 To create a new project, you must specify the project's name and a create a `RequestContent` instance with the parameters needed to set up the project.
 
-```C# Snippet:QuestionAnsweringProjectsClient_CreateProject
+```C# Snippet:QuestionAnsweringAuthoringClient_CreateProject
 // Set project name and request content parameters
 string newProjectName = "{ProjectName}";
 RequestContent creationRequestContent = RequestContent.Create(
@@ -174,7 +186,7 @@ foreach (BinaryData project in projects)
 
 Your projects can be deployed using the `DeployProjectAsync` or the synchronous `DeployProject`. All you need to specify is the project's name and the deployment name that you wish to use. Please note that the service will not allow you to deploy empty projects.
 
-```C# Snippet:QuestionAnsweringProjectsClient_DeployProject
+```C# Snippet:QuestionAnsweringAuthoringClient_DeployProject
 // Set deployment name and start operation
 string newDeploymentName = "{DeploymentName}";
 Operation<BinaryData> deploymentOperation = client.DeployProject(WaitUntil.Completed, newProjectName, newDeploymentName);
@@ -192,7 +204,7 @@ foreach (BinaryData deployment in deployments)
 
 One way to add content to your project is to add a knowledge source. The following example shows how you can set up a `RequestContent` instance to add a new knowledge source of the type "url".
 
-```C# Snippet:QuestionAnsweringProjectsClient_UpdateSources
+```C# Snippet:QuestionAnsweringAuthoringClient_UpdateSources
 // Set request content parameters for updating our new project's sources
 string sourceUri = "{KnowledgeSourceUri}";
 RequestContent updateSourcesRequestContent = RequestContent.Create(
@@ -211,10 +223,10 @@ RequestContent updateSourcesRequestContent = RequestContent.Create(
             }
     });
 
-Operation<BinaryData> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
+Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, newProjectName, updateSourcesRequestContent);
 
 // Knowledge Sources can be retrieved as follows
-Pageable<BinaryData> sources = client.GetSources(newProjectName);
+Pageable<BinaryData> sources = updateSourcesOperation.Value;
 Console.WriteLine("Sources: ");
 foreach (BinaryData source in sources)
 {
@@ -317,6 +329,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [questionanswering_rest_docs]: https://docs.microsoft.com/rest/api/cognitiveservices-qnamaker/
 [questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/README.md
 [migration_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/MigrationGuide.md
-[questionansweringprojects_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/Generated/QuestionAnsweringProjectsClient.cs
+[questionansweringauthoring_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/Generated/QuestionAnsweringAuthoringClient.cs
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcognitivelanguage%2FAzure.AI.Language.QuestionAnswering%2FREADME.png)

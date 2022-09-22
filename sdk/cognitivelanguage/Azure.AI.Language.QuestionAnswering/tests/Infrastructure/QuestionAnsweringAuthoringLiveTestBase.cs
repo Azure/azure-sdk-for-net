@@ -3,19 +3,19 @@
 
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
-using Azure.AI.Language.QuestionAnswering.Projects;
+using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests
 {
-    public partial class QuestionAnsweringProjectsLiveTestBase : QuestionAnsweringTestBase<QuestionAnsweringProjectsClient>
+    public partial class QuestionAnsweringAuthoringLiveTestBase : QuestionAnsweringTestBase<QuestionAnsweringAuthoringClient>
     {
         private ConcurrentQueue<string> _projects = new();
 
-        public QuestionAnsweringProjectsLiveTestBase(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
+        public QuestionAnsweringAuthoringLiveTestBase(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode)
+            : base(isAsync, serviceVersion, mode)
         {
         }
 

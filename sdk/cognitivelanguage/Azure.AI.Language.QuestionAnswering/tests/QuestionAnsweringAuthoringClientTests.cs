@@ -3,42 +3,42 @@
 
 using System;
 using NUnit.Framework;
-using Azure.AI.Language.QuestionAnswering.Projects;
+using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core.TestFramework;
 using Azure.Core;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests
 {
-    public class QuestionAnsweringProjectsClientTests
+    public class QuestionAnsweringAuthoringClientTests
     {
         public Uri Endpoint => new("https://leithyta-sdktesting.cognitiveservices.azure.com", UriKind.Absolute);
 
-        public QuestionAnsweringProjectsClient Client => new(Endpoint, new AzureKeyCredential("5d757e79a27f40f896d1dc0c04fb3d09"));
+        public QuestionAnsweringAuthoringClient Client => new(Endpoint, new AzureKeyCredential("5d757e79a27f40f896d1dc0c04fb3d09"));
 
         // private string SampleProjectName = "sampleProjectName";
 
         // private string SampleDeploymentName = "sampleDeploymentName";
 
         [Test]
-        public void QuestionAnswerProjectsClientEndpointNull()
+        public void QuestionAnsweringAuthoringClientEndpointNull()
         {
             ArgumentException ex = Assert.Throws<ArgumentNullException>(
-                () => new QuestionAnsweringProjectsClient(null, (AzureKeyCredential)null));
+                () => new QuestionAnsweringAuthoringClient(null, (AzureKeyCredential)null));
             Assert.AreEqual("endpoint", ex.ParamName);
         }
 
         [Test]
-        public void QuestionAnsweringProjectsClientCredentialNull()
+        public void QuestionAnsweringAuthoringClientCredentialNull()
         {
             Uri endpoint = new Uri("https://test.api.cognitive.microsoft.com", UriKind.Absolute);
 
             ArgumentException ex = Assert.Throws<ArgumentNullException>(
-                () => new QuestionAnsweringProjectsClient(endpoint, (AzureKeyCredential)null));
+                () => new QuestionAnsweringAuthoringClient(endpoint, (AzureKeyCredential)null));
             Assert.AreEqual("credential", ex.ParamName);
         }
 
         [Test]
-        public void QuestionAnsweringProjectsClientEndpointNullUsingTokenCredential()
+        public void QuestionAnsweringAuthoringClientEndpointNullUsingTokenCredential()
         {
             ArgumentNullException ex = Assert.Throws<ArgumentNullException>(
                 () => new QuestionAnsweringClient(null, (TokenCredential)null));
@@ -46,7 +46,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         }
 
         [Test]
-        public void QuestionAnsweringProjectsClientCredentialNullUsingTokenCredential()
+        public void QuestionAnsweringAuthoringClientCredentialNullUsingTokenCredential()
         {
             Uri endpoint = new("https://test.cognitive.microsoft.com", UriKind.Absolute);
 
