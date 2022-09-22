@@ -11,12 +11,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class RegionInfo
+    public partial class NetAppRegionInfo
     {
-        internal static RegionInfo DeserializeRegionInfo(JsonElement element)
+        internal static NetAppRegionInfo DeserializeNetAppRegionInfo(JsonElement element)
         {
             Optional<RegionStorageToNetworkProximity> storageToNetworkProximity = default;
-            Optional<IReadOnlyList<RegionInfoAvailabilityZoneMappingsItem>> availabilityZoneMappings = default;
+            Optional<IReadOnlyList<AvailabilityZoneMapping>> availabilityZoneMappings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageToNetworkProximity"))
@@ -36,16 +36,16 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<RegionInfoAvailabilityZoneMappingsItem> array = new List<RegionInfoAvailabilityZoneMappingsItem>();
+                    List<AvailabilityZoneMapping> array = new List<AvailabilityZoneMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionInfoAvailabilityZoneMappingsItem.DeserializeRegionInfoAvailabilityZoneMappingsItem(item));
+                        array.Add(AvailabilityZoneMapping.DeserializeAvailabilityZoneMapping(item));
                     }
                     availabilityZoneMappings = array;
                     continue;
                 }
             }
-            return new RegionInfo(Optional.ToNullable(storageToNetworkProximity), Optional.ToList(availabilityZoneMappings));
+            return new NetAppRegionInfo(Optional.ToNullable(storageToNetworkProximity), Optional.ToList(availabilityZoneMappings));
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.NetApp.Models
         {
             Optional<NetAppKeySource> keySource = default;
             Optional<NetAppKeyVaultProperties> keyVaultProperties = default;
-            Optional<EncryptionIdentity> identity = default;
+            Optional<NetAppEncryptionIdentity> identity = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keySource"))
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = EncryptionIdentity.DeserializeEncryptionIdentity(property.Value);
+                    identity = NetAppEncryptionIdentity.DeserializeNetAppEncryptionIdentity(property.Value);
                     continue;
                 }
             }
