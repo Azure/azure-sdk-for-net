@@ -35,24 +35,39 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static LabNetworkProfile DeserializeLabNetworkProfile(JsonElement element)
         {
-            Optional<string> subnetId = default;
-            Optional<string> loadBalancerId = default;
-            Optional<string> publicIPId = default;
+            Optional<ResourceIdentifier> subnetId = default;
+            Optional<ResourceIdentifier> loadBalancerId = default;
+            Optional<ResourceIdentifier> publicIPId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"))
                 {
-                    subnetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("loadBalancerId"))
                 {
-                    loadBalancerId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    loadBalancerId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("publicIpId"))
                 {
-                    publicIPId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    publicIPId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

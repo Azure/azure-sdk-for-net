@@ -69,6 +69,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Connections.</param>
         /// <param name="ipConfigurations">List of references to
         /// IpConfigurations.</param>
+        /// <param name="routeMaps">List of references to RouteMaps.</param>
         /// <param name="virtualRouterAsn">VirtualRouter ASN.</param>
         /// <param name="virtualRouterIps">VirtualRouter IPs.</param>
         /// <param name="allowBranchToBranchTraffic">Flag to control transit
@@ -85,7 +86,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the resource is updated.</param>
         /// <param name="kind">Kind of service virtual hub. This is metadata
         /// used for the Azure portal experience for Route Server.</param>
-        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), SubResource azureFirewall = default(SubResource), SubResource securityPartnerProvider = default(SubResource), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string securityProviderName = default(string), IList<VirtualHubRouteTableV2> virtualHubRouteTableV2s = default(IList<VirtualHubRouteTableV2>), string sku = default(string), string routingState = default(string), IList<SubResource> bgpConnections = default(IList<SubResource>), IList<SubResource> ipConfigurations = default(IList<SubResource>), long? virtualRouterAsn = default(long?), IList<string> virtualRouterIps = default(IList<string>), bool? allowBranchToBranchTraffic = default(bool?), string preferredRoutingGateway = default(string), string hubRoutingPreference = default(string), VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration = default(VirtualRouterAutoScaleConfiguration), string etag = default(string), string kind = default(string))
+        public VirtualHub(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualWan = default(SubResource), SubResource vpnGateway = default(SubResource), SubResource p2SVpnGateway = default(SubResource), SubResource expressRouteGateway = default(SubResource), SubResource azureFirewall = default(SubResource), SubResource securityPartnerProvider = default(SubResource), string addressPrefix = default(string), VirtualHubRouteTable routeTable = default(VirtualHubRouteTable), string provisioningState = default(string), string securityProviderName = default(string), IList<VirtualHubRouteTableV2> virtualHubRouteTableV2s = default(IList<VirtualHubRouteTableV2>), string sku = default(string), string routingState = default(string), IList<SubResource> bgpConnections = default(IList<SubResource>), IList<SubResource> ipConfigurations = default(IList<SubResource>), IList<SubResource> routeMaps = default(IList<SubResource>), long? virtualRouterAsn = default(long?), IList<string> virtualRouterIps = default(IList<string>), bool? allowBranchToBranchTraffic = default(bool?), string preferredRoutingGateway = default(string), string hubRoutingPreference = default(string), VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration = default(VirtualRouterAutoScaleConfiguration), string etag = default(string), string kind = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualWan = virtualWan;
@@ -103,6 +104,7 @@ namespace Microsoft.Azure.Management.Network.Models
             RoutingState = routingState;
             BgpConnections = bgpConnections;
             IpConfigurations = ipConfigurations;
+            RouteMaps = routeMaps;
             VirtualRouterAsn = virtualRouterAsn;
             VirtualRouterIps = virtualRouterIps;
             AllowBranchToBranchTraffic = allowBranchToBranchTraffic;
@@ -213,6 +215,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfigurations")]
         public IList<SubResource> IpConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets list of references to RouteMaps.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routeMaps")]
+        public IList<SubResource> RouteMaps { get; private set; }
 
         /// <summary>
         /// Gets or sets virtualRouter ASN.

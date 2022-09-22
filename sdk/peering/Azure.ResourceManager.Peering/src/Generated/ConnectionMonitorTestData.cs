@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="isTestSuccessful"> The flag that indicates if the Connection Monitor test is successful or not. </param>
         /// <param name="path"> The path representing the Connection Monitor test. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal ConnectionMonitorTestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sourceAgent, string destination, int? destinationPort, int? testFrequencyInSec, bool? isTestSuccessful, IReadOnlyList<string> path, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal ConnectionMonitorTestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string sourceAgent, string destination, int? destinationPort, int? testFrequencyInSec, bool? isTestSuccessful, IReadOnlyList<string> path, PeeringProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             SourceAgent = sourceAgent;
             Destination = destination;
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.Peering
         /// <summary> The path representing the Connection Monitor test. </summary>
         public IReadOnlyList<string> Path { get; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PeeringProvisioningState? ProvisioningState { get; }
     }
 }

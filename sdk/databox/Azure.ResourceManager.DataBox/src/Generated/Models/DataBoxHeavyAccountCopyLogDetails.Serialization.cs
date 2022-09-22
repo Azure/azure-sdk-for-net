@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> accountName = default;
             Optional<IReadOnlyList<string>> copyLogLink = default;
             Optional<IReadOnlyList<string>> copyVerboseLogLink = default;
-            ClassDiscriminator copyLogDetailsType = default;
+            DataBoxOrderType copyLogDetailsType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"))
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (property.NameEquals("copyLogDetailsType"))
                 {
-                    copyLogDetailsType = property.Value.GetString().ToClassDiscriminator();
+                    copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
             }

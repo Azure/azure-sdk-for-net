@@ -18,25 +18,16 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="location"> The location. </param>
         public NetAppAccountPatch(AzureLocation location) : base(location)
         {
-            ActiveDirectories = new ChangeTrackingList<ActiveDirectory>();
+            ActiveDirectories = new ChangeTrackingList<NetAppAccountActiveDirectory>();
         }
 
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
         /// <summary> Active Directories. </summary>
-        public IList<ActiveDirectory> ActiveDirectories { get; }
+        public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
         /// <summary> Encryption settings. </summary>
-        internal AccountEncryption Encryption { get; set; }
-        /// <summary> Encryption Key Source. Possible values are: &apos;Microsoft.NetApp&apos;. </summary>
-        public string EncryptionKeySource
-        {
-            get => Encryption is null ? default : Encryption.KeySource;
-            set
-            {
-                if (Encryption is null)
-                    Encryption = new AccountEncryption();
-                Encryption.KeySource = value;
-            }
-        }
+        public NetAppAccountEncryption Encryption { get; set; }
+        /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
+        public bool? DisableShowmount { get; }
     }
 }

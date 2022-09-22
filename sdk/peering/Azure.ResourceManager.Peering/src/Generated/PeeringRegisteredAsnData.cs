@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="asn"> The customer&apos;s ASN from which traffic originates. </param>
         /// <param name="peeringServicePrefixKey"> The peering service prefix key that is to be shared with the customer. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        internal PeeringRegisteredAsnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? asn, string peeringServicePrefixKey, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        internal PeeringRegisteredAsnData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? asn, string peeringServicePrefixKey, PeeringProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Asn = asn;
             PeeringServicePrefixKey = peeringServicePrefixKey;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Peering
         /// <summary> The peering service prefix key that is to be shared with the customer. </summary>
         public string PeeringServicePrefixKey { get; }
         /// <summary> The provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public PeeringProvisioningState? ProvisioningState { get; }
     }
 }

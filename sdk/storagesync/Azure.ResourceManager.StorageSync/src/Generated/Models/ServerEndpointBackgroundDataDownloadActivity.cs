@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.StorageSync.Models
 
         /// <summary> Initializes a new instance of ServerEndpointBackgroundDataDownloadActivity. </summary>
         /// <param name="timestamp"> Timestamp when properties were updated. </param>
-        /// <param name="startedTimestamp"> Timestamp when the operation started. </param>
+        /// <param name="startedOn"> Timestamp when the operation started. </param>
         /// <param name="percentProgress"> Progress percentage. </param>
         /// <param name="downloadedBytes"> Running count of bytes downloaded. </param>
-        internal ServerEndpointBackgroundDataDownloadActivity(DateTimeOffset? timestamp, DateTimeOffset? startedTimestamp, int? percentProgress, long? downloadedBytes)
+        internal ServerEndpointBackgroundDataDownloadActivity(DateTimeOffset? timestamp, DateTimeOffset? startedOn, int? percentProgress, long? downloadedBytes)
         {
             Timestamp = timestamp;
-            StartedTimestamp = startedTimestamp;
+            StartedOn = startedOn;
             PercentProgress = percentProgress;
             DownloadedBytes = downloadedBytes;
         }
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Timestamp when properties were updated. </summary>
         public DateTimeOffset? Timestamp { get; }
         /// <summary> Timestamp when the operation started. </summary>
-        public DateTimeOffset? StartedTimestamp { get; }
+        public DateTimeOffset? StartedOn { get; }
         /// <summary> Progress percentage. </summary>
         public int? PercentProgress { get; }
         /// <summary> Running count of bytes downloaded. </summary>

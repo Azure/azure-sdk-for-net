@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HealthcareApis
         public FhirServiceData(AzureLocation location) : base(location)
         {
             AccessPolicies = new ChangeTrackingList<FhirServiceAccessPolicyEntry>();
-            PrivateEndpointConnections = new ChangeTrackingList<ServicePrivateEndpointConnectionCreateOrUpdateContent>();
+            PrivateEndpointConnections = new ChangeTrackingList<HealthcareApisPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of FhirServiceData. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="importConfiguration"> Fhir Service import configuration. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
-        internal FhirServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FhirServiceKind? kind, ProvisioningState? provisioningState, IList<FhirServiceAccessPolicyEntry> accessPolicies, FhirServiceAcrConfiguration acrConfiguration, FhirServiceAuthenticationConfiguration authenticationConfiguration, FhirServiceCorsConfiguration corsConfiguration, FhirServiceExportConfiguration exportConfiguration, IReadOnlyList<ServicePrivateEndpointConnectionCreateOrUpdateContent> privateEndpointConnections, PublicNetworkAccess? publicNetworkAccess, ServiceEventState? eventState, ResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration, FhirServiceImportConfiguration importConfiguration, ManagedServiceIdentity identity, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        internal FhirServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FhirServiceKind? kind, HealthcareApisProvisioningState? provisioningState, IList<FhirServiceAccessPolicyEntry> accessPolicies, FhirServiceAcrConfiguration acrConfiguration, FhirServiceAuthenticationConfiguration authenticationConfiguration, FhirServiceCorsConfiguration corsConfiguration, FhirServiceExportConfiguration exportConfiguration, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration, FhirServiceImportConfiguration importConfiguration, ManagedServiceIdentity identity, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             ProvisioningState = provisioningState;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <summary> The kind of the service. </summary>
         public FhirServiceKind? Kind { get; set; }
         /// <summary> The provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public HealthcareApisProvisioningState? ProvisioningState { get; }
         /// <summary> Fhir Service access policies. </summary>
         public IList<FhirServiceAccessPolicyEntry> AccessPolicies { get; }
         /// <summary> Fhir Service Azure container registry configuration. </summary>
@@ -90,13 +90,13 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
-        public IReadOnlyList<ServicePrivateEndpointConnectionCreateOrUpdateContent> PrivateEndpointConnections { get; }
+        public IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
-        public PublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public HealthcareApisPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Fhir Service event support status. </summary>
-        public ServiceEventState? EventState { get; }
+        public FhirServiceEventState? EventState { get; }
         /// <summary> Determines tracking of history for resources. </summary>
-        public ResourceVersionPolicyConfiguration ResourceVersionPolicyConfiguration { get; set; }
+        public FhirServiceResourceVersionPolicyConfiguration ResourceVersionPolicyConfiguration { get; set; }
         /// <summary> Fhir Service import configuration. </summary>
         public FhirServiceImportConfiguration ImportConfiguration { get; set; }
         /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>

@@ -20,7 +20,6 @@ pr:
   paths:
     include:
     - sdk/appconfiguration/
-    - sdk/resourcemanager/
     - sdk/network/
 
 # These comments should stay.
@@ -33,5 +32,3 @@ extends:
     Artifacts:
     - name: Azure.Data.AppConfiguration
       safeName: AzureDataAppConfiguration
-    - name: Azure.ResourceManager.AppConfiguration
-      safeName: AzureResourceManagerAppConfiguration

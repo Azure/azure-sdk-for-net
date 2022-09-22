@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DataBoxDiskCopyLogDetails. </summary>
         internal DataBoxDiskCopyLogDetails()
         {
-            CopyLogDetailsType = ClassDiscriminator.DataBoxDisk;
+            CopyLogDetailsType = DataBoxOrderType.DataBoxDisk;
         }
 
         /// <summary> Initializes a new instance of DataBoxDiskCopyLogDetails. </summary>
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="diskSerialNumber"> Disk Serial Number. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
         /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
-        internal DataBoxDiskCopyLogDetails(ClassDiscriminator copyLogDetailsType, string diskSerialNumber, string errorLogLink, string verboseLogLink) : base(copyLogDetailsType)
+        internal DataBoxDiskCopyLogDetails(DataBoxOrderType copyLogDetailsType, string diskSerialNumber, string errorLogLink, string verboseLogLink) : base(copyLogDetailsType)
         {
             DiskSerialNumber = diskSerialNumber;
             ErrorLogLink = errorLogLink;

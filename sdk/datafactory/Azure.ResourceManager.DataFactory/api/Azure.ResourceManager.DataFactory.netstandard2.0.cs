@@ -1883,9 +1883,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string SubjectBeginsWith { get { throw null; } set { } }
         public string SubjectEndsWith { get { throw null; } set { } }
     }
-    public partial class CustomSetupBase
+    public abstract partial class CustomSetupBase
     {
-        public CustomSetupBase() { }
+        protected CustomSetupBase() { }
     }
     public partial class DatabricksNotebookActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity
     {
@@ -2272,9 +2272,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.DependencyCondition left, Azure.ResourceManager.DataFactory.Models.DependencyCondition right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DependencyReference
+    public abstract partial class DependencyReference
     {
-        public DependencyReference() { }
+        protected DependencyReference() { }
     }
     public partial class DistcpSettings
     {
@@ -2697,9 +2697,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.FactoryIntegrationRuntimeDebugInfo IntegrationRuntime { get { throw null; } set { } }
         public int? TimeToLiveInMinutes { get { throw null; } set { } }
     }
-    public partial class FactoryDataFlowDefinition
+    public abstract partial class FactoryDataFlowDefinition
     {
-        public FactoryDataFlowDefinition() { }
+        protected FactoryDataFlowDefinition() { }
         public System.Collections.Generic.IList<System.BinaryData> Annotations { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string FolderName { get { throw null; } set { } }
@@ -2991,9 +2991,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.FactoryPublicNetworkAccess left, Azure.ResourceManager.DataFactory.Models.FactoryPublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FactoryRepoConfiguration
+    public abstract partial class FactoryRepoConfiguration
     {
-        public FactoryRepoConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder) { }
+        protected FactoryRepoConfiguration(string accountName, string repositoryName, string collaborationBranch, string rootFolder) { }
         public string AccountName { get { throw null; } set { } }
         public string CollaborationBranch { get { throw null; } set { } }
         public string LastCommitId { get { throw null; } set { } }
@@ -3006,9 +3006,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.ResourceIdentifier FactoryResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.FactoryRepoConfiguration RepoConfiguration { get { throw null; } set { } }
     }
-    public partial class FactorySecretBaseDefinition
+    public abstract partial class FactorySecretBaseDefinition
     {
-        public FactorySecretBaseDefinition() { }
+        protected FactorySecretBaseDefinition() { }
     }
     public partial class FactorySecretString : Azure.ResourceManager.DataFactory.Models.FactorySecretBaseDefinition
     {
@@ -4311,9 +4311,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.ResourceManager.DataFactory.Models.FactoryCredentialReference Credential { get { throw null; } set { } }
         public string ResourceId { get { throw null; } set { } }
     }
-    public partial class LinkedIntegrationRuntimeType
+    public abstract partial class LinkedIntegrationRuntimeType
     {
-        public LinkedIntegrationRuntimeType() { }
+        protected LinkedIntegrationRuntimeType() { }
     }
     public partial class LogLocationSettings
     {
@@ -6580,9 +6580,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.SsisLogLocationType left, Azure.ResourceManager.DataFactory.Models.SsisLogLocationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SsisObjectMetadata
+    public abstract partial class SsisObjectMetadata
     {
-        internal SsisObjectMetadata() { }
+        protected SsisObjectMetadata() { }
         public string Description { get { throw null; } }
         public long? Id { get { throw null; } }
         public string Name { get { throw null; } }
@@ -7073,9 +7073,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         public WebLinkedService(Azure.ResourceManager.DataFactory.Models.WebLinkedServiceTypeProperties typeProperties) { }
         public Azure.ResourceManager.DataFactory.Models.WebLinkedServiceTypeProperties TypeProperties { get { throw null; } set { } }
     }
-    public partial class WebLinkedServiceTypeProperties
+    public abstract partial class WebLinkedServiceTypeProperties
     {
-        public WebLinkedServiceTypeProperties(System.BinaryData uri) { }
+        protected WebLinkedServiceTypeProperties(System.BinaryData uri) { }
         public System.BinaryData Uri { get { throw null; } set { } }
     }
     public partial class WebSource : Azure.ResourceManager.DataFactory.Models.CopyActivitySource

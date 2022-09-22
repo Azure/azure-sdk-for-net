@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Kusto.Models
     {
         internal static AttachedDatabaseConfigurationListResult DeserializeAttachedDatabaseConfigurationListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<AttachedDatabaseConfigurationData>> value = default;
+            Optional<IReadOnlyList<KustoAttachedDatabaseConfigurationData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Kusto.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AttachedDatabaseConfigurationData> array = new List<AttachedDatabaseConfigurationData>();
+                    List<KustoAttachedDatabaseConfigurationData> array = new List<KustoAttachedDatabaseConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AttachedDatabaseConfigurationData.DeserializeAttachedDatabaseConfigurationData(item));
+                        array.Add(KustoAttachedDatabaseConfigurationData.DeserializeKustoAttachedDatabaseConfigurationData(item));
                     }
                     value = array;
                     continue;

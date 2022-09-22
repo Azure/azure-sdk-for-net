@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBox.Models
         private const string DispatchedValue = "Dispatched";
         private const string DeliveredValue = "Delivered";
         private const string PickedUpValue = "PickedUp";
-        private const string AtAzureDCValue = "AtAzureDC";
+        private const string AtAzureDataCenterValue = "AtAzureDC";
         private const string DataCopyValue = "DataCopy";
         private const string CreatedValue = "Created";
         private const string ShippedToCustomerValue = "ShippedToCustomer";
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Notification at device picked up from user stage. </summary>
         public static NotificationStageName PickedUp { get; } = new NotificationStageName(PickedUpValue);
         /// <summary> Notification at device received at Azure datacenter stage. </summary>
-        public static NotificationStageName AtAzureDC { get; } = new NotificationStageName(AtAzureDCValue);
+        public static NotificationStageName AtAzureDataCenter { get; } = new NotificationStageName(AtAzureDataCenterValue);
         /// <summary> Notification at data copy started stage. </summary>
         public static NotificationStageName DataCopy { get; } = new NotificationStageName(DataCopyValue);
         /// <summary> Notification at job created stage. </summary>

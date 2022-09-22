@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Media
 namespace: Azure.ResourceManager.Media
-require: https://github.com/Azure/azure-rest-api-specs/blob/0f9df940977c680c39938c8b8bd5baf893737ed0/specification/mediaservices/resource-manager/readme.md
-tag: package-account-2021-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/aefbcc5fb18a3b33f401394ebeae01df0733c830/specification/mediaservices/resource-manager/readme.md
+tag: package-metadata-2022-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -17,9 +17,9 @@ modelerfour:
   flatten-payloads: false
 
 request-path-to-resource-name:
-  /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}: MediaServiceOperationResult
+  /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}: MediaServicesOperationResult
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}: MediaAssetTrackOperationResult
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}: MediaService
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}: MediaServicesAccount
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}: MediaAssetTrack
 
 override-operation-name:
@@ -68,10 +68,6 @@ rename-rules:
   CRF: Crf
   MP4: Mp4
 
-list-exception:
-- /subscriptions/{subscriptionId}/providers/Microsoft.Media/locations/{locationName}/mediaServicesOperationResults/{operationId}
-- /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationResults/{operationId}
-
 rename-mapping:
   AacAudioProfile.HeAacV1: HEAacV1
   AacAudioProfile.HeAacV2: HEAacV2
@@ -84,19 +80,18 @@ rename-mapping:
   ContentKeyPolicy.properties.created: CreatedOn
   ContentKeyPolicy.properties.lastModified: LastModifiedOn
   ContentKeyPolicy.properties.options: Preferences
-  ContentKeyPolicyOption: ContentKeyPolicyPreference
   Job: MediaTransformJob
   Job.properties.created: CreatedOn
   Job.properties.lastModified: LastModifiedOn
   Job.properties.startTime: StartsOn
   Job.properties.endTime: EndsOn
-  Priority: TransformOutputsPriority
+  Priority: MediaTransformOutputsPriority
   LiveEvent.properties.created: CreatedOn
   LiveEvent.properties.lastModified: LastModifiedOn
   LiveOutput.properties.created: CreatedOn
   LiveOutput.properties.lastModified: LastModifiedOn
   PublicNetworkAccess: MediaPublicNetworkAccessStatus
-  StorageAccount: MediaServiceStorageAccount
+  StorageAccount: MediaServicesStorageAccount
   StorageAccount.id: -|arm-id
   StreamingEndpoint.properties.cdnEnabled: IsCdnEnabled
   StreamingEndpoint.properties.created: CreatedOn
@@ -132,11 +127,11 @@ rename-mapping:
   Image: ImageBasicProperties
   Video: InputVideoEncodingProperties
   Layer: VideoOrImageLayerProperties
-  ListContainerSasInput: GetContainerSasContent
+  ListContainerSasInput: GetStorageContainersContent
   ListContainerSasInput.expiryTime: ExpiresOn
   ListEdgePoliciesInput: GetEdgePoliciesContent
-  Preset: MediaPreset
-  StorageAccountType: MediaServiceStorageAccountType
+  Preset: MediaTransformPreset
+  StorageAccountType: MediaServicesStorageAccountType
   Visibility: PlayerVisibility
   AssetCollection: AssetListResult
   AccountFilterCollection: AccountFilterListResult
@@ -144,14 +139,15 @@ rename-mapping:
   AssetTrackCollection: AssetTrackListResult
   ContentKeyPolicyCollection: ContentKeyPolicyListResult
   JobCollection: MediaTransformJobListResult
-  MediaServiceCollection: MediaServiceListResult
+  MediaServiceCollection: MediaServicesAccountListResult
   StreamingLocatorCollection: StreamingLocatorListResult
   StreamingPolicyCollection: StreamingPolicyListResult
   TransformCollection: TransformListResult
   StorageEncryptedAssetDecryptionData: StorageEncryptedAssetDecryptionInfo
   AssetTrack: MediaAssetTrack
   TrackBase: AssetTrackInfo
-  PrivateLinkResource: MediaPrivateLinkResource
+  PrivateEndpointConnection: MediaServicesPrivateEndpointConnection
+  PrivateLinkResource: MediaServicesPrivateLinkResource
   ListPathsResponse: GetPathsResult
   AkamaiSignatureHeaderAuthenticationKey.expiration: ExpiresOn
   ContentKeyPolicyFairPlayOfflineRentalConfiguration.playbackDurationSeconds: PlaybackDurationInSeconds
@@ -184,7 +180,6 @@ rename-mapping:
   EntropyMode.Cavlc: ContextAdaptiveVariableLengthCoder
   TrackSelection: MediaTrackSelection
   TransformOutput: MediaTransformOutput
-  BlurType: FaceDetectorBlurType
   H264Layer.crf: ConstantRateFactor
   ImageFormat: OutputImageFileFormat
   InputDefinition: MediaTransformJobInputDefinition
@@ -205,8 +200,12 @@ rename-mapping:
   JobInputHttp: MediaTransformJobInputHttp
   JobInputs: MediaTransformJobInputs
   JobInputSequence: MediaTransformJobInputSequence
+  MediaService: MediaServicesAccount
+  MediaService.properties.mediaServiceId: MediaServicesAccountId
+  MediaServiceOperationStatus.id: -|arm-id
   MediaServiceOperationStatus.startTime: StartsOn
   MediaServiceOperationStatus.endTime: EndsOn
+  MediaServiceOperationStatus: MediaServicesOperationStatus
   OnErrorType: MediaTransformOutputErrorAction
   OutputFile: MultiBitrateOutputFile
   PresetConfigurations: EncoderPresetConfigurations
@@ -216,7 +215,6 @@ rename-mapping:
   TrackPropertyType.FourCC: FourCharacterCode
   FilterTrackPropertyType.FourCC: FourCharacterCode
   AssetTrackOperationStatus.id: -|arm-id
-  MediaServiceOperationStatus.id: -|arm-id
   ContentKeyPolicyPlayReadyPlayRight.digitalVideoOnlyContentRestriction: HasDigitalVideoOnlyContentRestriction
   ContentKeyPolicyPlayReadyPlayRight.imageConstraintForAnalogComponentVideoRestriction: HasImageConstraintForAnalogComponentVideoRestriction
   ContentKeyPolicyPlayReadyPlayRight.imageConstraintForAnalogComputerMonitorRestriction: HasImageConstraintForAnalogComputerMonitorRestriction
@@ -226,8 +224,17 @@ rename-mapping:
   HlsSettings.default: IsDefault
   HlsSettings.forced: IsForced
   VideoLayer.adaptiveBFrame: UseAdaptiveBFrame
+  SecurityLevel: ContentKeyPolicyPlayReadySecurityLevel
   
 directive:
+  - remove-operation: OperationResults_Get
+  - remove-operation: MediaServicesOperationResults_Get
+  - remove-operation: StreamingEndpoints_OperationLocation
+  - remove-operation: LiveOutputs_OperationLocation
+  - remove-operation: LiveEvents_OperationLocation
+  - remove-operation: LiveEvents_AsyncOperation
+  - remove-operation: LiveOutputs_AsyncOperation
+  - remove-operation: StreamingEndpoints_AsyncOperation
   - from: Accounts.json
     where: $.definitions
     transform: >
@@ -236,7 +243,7 @@ directive:
   - from: streamingservice.json
     where: $.definitions
     transform: >
-      $.LiveEventInput.properties.keyFrameIntervalDuration['format'] = 'duration';
+      $.LiveEventInput.properties.keyFrameIntervalDuration["format"] = 'duration';
       $.ArmStreamingEndpointSkuInfo.properties.resourceType['x-ms-format'] = 'resource-type';
   - from: Encoding.json
     where: $.definitions
@@ -261,4 +268,20 @@ directive:
           "itemName": "contentKeys",
           "nextLinkName": null
         };
+  # Service team is on the path to fast deprecate this feature in 12 months, so remove it
+  - from: Encoding.json
+    where: $.definitions
+    transform: >
+      delete $.FaceDetectorPreset;
+  - from: streamingservice.json
+    where: $.definitions
+    transform: >
+      $.StreamingEndpointProperties.properties.maxCacheAge["x-nullable"] = true;
+      $.StreamingEndpointProperties.properties.crossSiteAccessPolicies["x-nullable"] = true;
+      $.StreamingEndpointProperties.properties.accessControl["x-nullable"] = true;
+      $.LiveEventEncoding.properties.stretchMode["x-nullable"] = true;
+      $.LiveEventEncoding.properties.keyFrameInterval["x-nullable"] = true;
+      $.LiveEventPreview.properties.accessControl["x-nullable"] = true;
+      $.LiveEventInput.properties.accessControl["x-nullable"] = true;
+      $.LiveOutputProperties.properties.rewindWindowLength["x-nullable"] = true;
 ```

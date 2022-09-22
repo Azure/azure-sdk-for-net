@@ -22,6 +22,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Optional<string> errorMessage = default;
             Optional<object> startTime = default;
             Optional<object> stopTime = default;
+            Optional<string> linkTableId = default;
+            Optional<string> errorCode = default;
+            Optional<DateTimeOffset> lastProcessedData = default;
+            Optional<DateTimeOffset> lastTransactionCommitTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -59,8 +63,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     stopTime = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("linkTableId"))
+                {
+                    linkTableId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("errorCode"))
+                {
+                    errorCode = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("lastProcessedData"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastProcessedData = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("lastTransactionCommitTime"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    lastTransactionCommitTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
             }
-            return new LinkTableStatus(id.Value, status.Value, errorMessage.Value, startTime.Value, stopTime.Value);
+            return new LinkTableStatus(id.Value, status.Value, errorMessage.Value, startTime.Value, stopTime.Value, linkTableId.Value, errorCode.Value, Optional.ToNullable(lastProcessedData), Optional.ToNullable(lastTransactionCommitTime));
         }
 
         internal partial class LinkTableStatusConverter : JsonConverter<LinkTableStatus>

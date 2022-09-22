@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of BackupPoliciesList. </summary>
         internal BackupPoliciesList()
         {
-            Value = new ChangeTrackingList<BackupPolicyData>();
+            Value = new ChangeTrackingList<NetAppBackupPolicyData>();
         }
 
         /// <summary> Initializes a new instance of BackupPoliciesList. </summary>
         /// <param name="value"> A list of backup policies. </param>
-        internal BackupPoliciesList(IReadOnlyList<BackupPolicyData> value)
+        internal BackupPoliciesList(IReadOnlyList<NetAppBackupPolicyData> value)
         {
             Value = value;
         }
 
         /// <summary> A list of backup policies. </summary>
-        public IReadOnlyList<BackupPolicyData> Value { get; }
+        public IReadOnlyList<NetAppBackupPolicyData> Value { get; }
     }
 }

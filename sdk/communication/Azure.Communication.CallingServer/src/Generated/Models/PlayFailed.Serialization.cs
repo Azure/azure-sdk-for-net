@@ -14,37 +14,39 @@ namespace Azure.Communication.CallingServer
     {
         internal static PlayFailed DeserializePlayFailed(JsonElement element)
         {
+            Optional<string> eventSource = default;
             Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInfo = default;
-            Optional<AcsEventType> type = default;
+            Optional<ResultInformation> resultInformation = default;
+            Optional<string> version = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
+            Optional<string> publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("eventSource"))
+                {
+                    eventSource = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("operationContext"))
                 {
                     operationContext = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resultInfo"))
+                if (property.NameEquals("resultInformation"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    resultInfo = ResultInformation.DeserializeResultInformation(property.Value);
+                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
                     continue;
                 }
-                if (property.NameEquals("type"))
+                if (property.NameEquals("version"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    type = new AcsEventType(property.Value.GetString());
+                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("callConnectionId"))
@@ -62,8 +64,13 @@ namespace Azure.Communication.CallingServer
                     correlationId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("publicEventType"))
+                {
+                    publicEventType = property.Value.GetString();
+                    continue;
+                }
             }
-            return new PlayFailed(operationContext.Value, resultInfo.Value, type, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new PlayFailed(eventSource.Value, operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }

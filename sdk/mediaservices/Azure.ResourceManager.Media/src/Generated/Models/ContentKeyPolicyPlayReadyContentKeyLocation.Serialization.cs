@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new ContentKeyPolicyPlayReadyContentKeyLocation(odataType);
+            return new UnknownContentKeyPolicyPlayReadyContentKeyLocation(odataType);
         }
     }
 }

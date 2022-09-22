@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the HttpLinkedService class.
         /// </summary>
         /// <param name="url">The base URL of the HTTP endpoint, e.g.
-        /// http://www.microsoft.com. Type: string (or Expression with
+        /// https://www.microsoft.com. Type: string (or Expression with
         /// resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
 
         /// <summary>
         /// Gets or sets the base URL of the HTTP endpoint, e.g.
-        /// http://www.microsoft.com. Type: string (or Expression with
+        /// https://www.microsoft.com. Type: string (or Expression with
         /// resultType string).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.url")]

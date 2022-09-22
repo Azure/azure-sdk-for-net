@@ -101,6 +101,7 @@ rename-mapping:
   CapabilitiesResult: HDInsightCapabilitiesResult
   BillingMeters: HDInsightBillingMeters
   BillingResources: HDInsightBillingResources
+  BillingResources.region: -|azure-location
   ClusterConfigurations: HDInsightClusterConfigurations
   ClusterCreateProperties: HDInsightClusterCreateOrUpdateProperties
   ClusterGetProperties: HDInsightClusterProperties
@@ -139,7 +140,7 @@ rename-mapping:
   HostInfo: HDInsightClusterHostInfo
   GatewaySettings: HDInsightClusterGatewaySettings
   IPConfiguration.id: -|arm-id
-  IPConfiguration.type: -|arm-id
+  IPConfiguration.type: -|resource-type
   IPConfiguration.properties.primary: IsPrimary
   NameAvailabilityCheckRequestParameters.type: -|resource-type
   NameAvailabilityCheckResult.nameAvailable: IsNameAvailable
@@ -153,6 +154,13 @@ rename-mapping:
   ApplicationGetHttpsEndpoint.location: EndpointLocation
   SecurityProfile.aaddsResourceId: -|arm-id
   PrivateLinkConfiguration.type: ResourceType|resource-type
+  RegionalQuotaCapability.regionName: region|azure-location
+  VmSizeProperty.supportedByVirtualMachines: IsSupportedByVirtualMachines
+  VmSizeProperty.supportedByWebWorkerRoles: IsSupportedByWebWorkerRoles
+  VmSizeCompatibilityFilterV2.computeIsolationSupported: IsComputeIsolationSupported
+  SecurityProfile.ldapsUrls: LdapUris|uri
+  ApplicationProperties.createdDate: CreatedOn|datetime
+  ClusterGetProperties.createdDate: CreatedOn|datetime
 
 prepend-rp-prefix:
 - VmSizeCompatibilityFilterV2
@@ -220,4 +228,13 @@ directive:
           'description': 'The error details.'
         }
       };
+# nullable
+  - from: cluster.json
+    where: $.definitions
+    transform: >
+      $.StorageAccount.properties.msiResourceId['x-nullable'] = true;
+      $.StorageAccount.properties.resourceId['x-nullable'] = true;
+      $.DiskEncryptionProperties.properties.encryptionAlgorithm['x-nullable'] = true;
+      $.DiskEncryptionProperties.properties.msiResourceId['x-nullable'] = true;
+
 ```

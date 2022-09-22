@@ -18,15 +18,15 @@ namespace Azure.ResourceManager.DataBox.Models
         internal DataboxJobSecrets()
         {
             PodSecrets = new ChangeTrackingList<DataBoxSecret>();
-            JobSecretsType = ClassDiscriminator.DataBox;
+            JobSecretsType = DataBoxOrderType.DataBox;
         }
 
         /// <summary> Initializes a new instance of DataboxJobSecrets. </summary>
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
-        /// <param name="dcAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
+        /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="podSecrets"> Contains the list of secret objects for a job. </param>
-        internal DataboxJobSecrets(ClassDiscriminator jobSecretsType, DcAccessSecurityCode dcAccessSecurityCode, ResponseError error, IReadOnlyList<DataBoxSecret> podSecrets) : base(jobSecretsType, dcAccessSecurityCode, error)
+        internal DataboxJobSecrets(DataBoxOrderType jobSecretsType, DataCenterAccessSecurityCode dataCenterAccessSecurityCode, ResponseError error, IReadOnlyList<DataBoxSecret> podSecrets) : base(jobSecretsType, dataCenterAccessSecurityCode, error)
         {
             PodSecrets = podSecrets;
             JobSecretsType = jobSecretsType;
