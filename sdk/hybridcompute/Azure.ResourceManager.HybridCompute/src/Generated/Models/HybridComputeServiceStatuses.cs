@@ -8,25 +8,25 @@
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Reports the state and behavior of dependent services. </summary>
-    public partial class ServiceStatuses
+    public partial class HybridComputeServiceStatuses
     {
-        /// <summary> Initializes a new instance of ServiceStatuses. </summary>
-        public ServiceStatuses()
+        /// <summary> Initializes a new instance of HybridComputeServiceStatuses. </summary>
+        public HybridComputeServiceStatuses()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceStatuses. </summary>
+        /// <summary> Initializes a new instance of HybridComputeServiceStatuses. </summary>
         /// <param name="extensionService"> The state of the extension service on the Arc-enabled machine. </param>
         /// <param name="guestConfigurationService"> The state of the guest configuration service on the Arc-enabled machine. </param>
-        internal ServiceStatuses(ServiceStatus extensionService, ServiceStatus guestConfigurationService)
+        internal HybridComputeServiceStatuses(HybridComputeServiceStatus extensionService, HybridComputeServiceStatus guestConfigurationService)
         {
             ExtensionService = extensionService;
             GuestConfigurationService = guestConfigurationService;
         }
 
         /// <summary> The state of the extension service on the Arc-enabled machine. </summary>
-        public ServiceStatus ExtensionService { get; set; }
+        public HybridComputeServiceStatus ExtensionService { get; set; }
         /// <summary> The state of the guest configuration service on the Arc-enabled machine. </summary>
-        public ServiceStatus GuestConfigurationService { get; set; }
+        public HybridComputeServiceStatus GuestConfigurationService { get; set; }
     }
 }

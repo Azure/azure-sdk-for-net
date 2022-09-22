@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    public partial class MachineData : IUtf8JsonSerializable
+    public partial class HybridComputeMachineData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.HybridCompute
             writer.WriteEndObject();
         }
 
-        internal static MachineData DeserializeMachineData(JsonElement element)
+        internal static HybridComputeMachineData DeserializeHybridComputeMachineData(JsonElement element)
         {
             Optional<MachineProperties> properties = default;
-            Optional<IReadOnlyList<MachineExtensionData>> resources = default;
+            Optional<IReadOnlyList<HybridComputeMachineExtensionData>> resources = default;
             Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.HybridCompute
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MachineExtensionData> array = new List<MachineExtensionData>();
+                    List<HybridComputeMachineExtensionData> array = new List<HybridComputeMachineExtensionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineExtensionData.DeserializeMachineExtensionData(item));
+                        array.Add(HybridComputeMachineExtensionData.DeserializeHybridComputeMachineExtensionData(item));
                     }
                     resources = array;
                     continue;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HybridCompute
                     continue;
                 }
             }
-            return new MachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToList(resources), identity);
+            return new HybridComputeMachineData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, Optional.ToList(resources), identity);
         }
     }
 }

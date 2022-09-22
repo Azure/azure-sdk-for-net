@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    /// <summary> A class representing the MachineExtension data model. </summary>
-    public partial class MachineExtensionData : TrackedResourceData
+    /// <summary> A class representing the HybridComputeMachineExtension data model. </summary>
+    public partial class HybridComputeMachineExtensionData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MachineExtensionData. </summary>
+        /// <summary> Initializes a new instance of HybridComputeMachineExtensionData. </summary>
         /// <param name="location"> The location. </param>
-        public MachineExtensionData(AzureLocation location) : base(location)
+        public HybridComputeMachineExtensionData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of MachineExtensionData. </summary>
+        /// <summary> Initializes a new instance of HybridComputeMachineExtensionData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Describes Machine Extension Properties. </param>
-        internal MachineExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineExtensionProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal HybridComputeMachineExtensionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MachineExtensionProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
         }

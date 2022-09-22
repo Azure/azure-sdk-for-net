@@ -11,10 +11,10 @@ using Azure.Core;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> The Update Resource model definition. </summary>
-    public partial class ResourceUpdate
+    public partial class HybridComputeResourceUpdate
     {
-        /// <summary> Initializes a new instance of ResourceUpdate. </summary>
-        public ResourceUpdate()
+        /// <summary> Initializes a new instance of HybridComputeResourceUpdate. </summary>
+        public HybridComputeResourceUpdate()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }

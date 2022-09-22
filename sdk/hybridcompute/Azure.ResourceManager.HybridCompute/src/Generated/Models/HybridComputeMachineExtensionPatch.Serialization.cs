@@ -10,16 +10,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachinePatch : IUtf8JsonSerializable
+    public partial class HybridComputeMachineExtensionPatch : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity");
-                JsonSerializer.Serialize(writer, Identity);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties");

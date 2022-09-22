@@ -10,10 +10,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes a hybrid machine Update. </summary>
-    public partial class MachinePatch : ResourceUpdate
+    public partial class HybridComputeMachinePatch : HybridComputeResourceUpdate
     {
-        /// <summary> Initializes a new instance of MachinePatch. </summary>
-        public MachinePatch()
+        /// <summary> Initializes a new instance of HybridComputeMachinePatch. </summary>
+        public HybridComputeMachinePatch()
         {
         }
 

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HybridCompute
 {
-    public partial class MachineExtensionData : IUtf8JsonSerializable
+    public partial class HybridComputeMachineExtensionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridCompute
             writer.WriteEndObject();
         }
 
-        internal static MachineExtensionData DeserializeMachineExtensionData(JsonElement element)
+        internal static HybridComputeMachineExtensionData DeserializeHybridComputeMachineExtensionData(JsonElement element)
         {
             Optional<MachineExtensionProperties> properties = default;
             Optional<IDictionary<string, string>> tags = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridCompute
                     continue;
                 }
             }
-            return new MachineExtensionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value);
+            return new HybridComputeMachineExtensionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value);
         }
     }
 }

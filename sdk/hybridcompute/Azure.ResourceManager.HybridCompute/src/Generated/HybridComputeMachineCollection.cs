@@ -22,28 +22,28 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HybridCompute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineResource" /> and their operations.
-    /// Each <see cref="MachineResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="MachineCollection" /> instance call the GetMachines method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="HybridComputeMachineResource" /> and their operations.
+    /// Each <see cref="HybridComputeMachineResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
+    /// To get a <see cref="HybridComputeMachineCollection" /> instance call the GetHybridComputeMachines method from an instance of <see cref="ResourceGroupResource" />.
     /// </summary>
-    public partial class MachineCollection : ArmCollection, IEnumerable<MachineResource>, IAsyncEnumerable<MachineResource>
+    public partial class HybridComputeMachineCollection : ArmCollection, IEnumerable<HybridComputeMachineResource>, IAsyncEnumerable<HybridComputeMachineResource>
     {
-        private readonly ClientDiagnostics _machineClientDiagnostics;
-        private readonly MachinesRestOperations _machineRestClient;
+        private readonly ClientDiagnostics _hybridComputeMachineMachinesClientDiagnostics;
+        private readonly MachinesRestOperations _hybridComputeMachineMachinesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MachineCollection"/> class for mocking. </summary>
-        protected MachineCollection()
+        /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineCollection"/> class for mocking. </summary>
+        protected HybridComputeMachineCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MachineCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="HybridComputeMachineCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal MachineCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal HybridComputeMachineCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _machineClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", MachineResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(MachineResource.ResourceType, out string machineApiVersion);
-            _machineRestClient = new MachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, machineApiVersion);
+            _hybridComputeMachineMachinesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HybridCompute", HybridComputeMachineResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(HybridComputeMachineResource.ResourceType, out string hybridComputeMachineMachinesApiVersion);
+            _hybridComputeMachineMachinesRestClient = new MachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, hybridComputeMachineMachinesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string machineName, MachineData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HybridComputeMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string machineName, HybridComputeMachineData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineClientDiagnostics.CreateScope("MachineCollection.CreateOrUpdate");
+            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _machineRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, machineName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new HybridComputeArmOperation<MachineResource>(Response.FromValue(new MachineResource(Client, response), response.GetRawResponse()));
+                var response = await _hybridComputeMachineMachinesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, machineName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new HybridComputeArmOperation<HybridComputeMachineResource>(Response.FromValue(new HybridComputeMachineResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -99,17 +99,17 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MachineResource> CreateOrUpdate(WaitUntil waitUntil, string machineName, MachineData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HybridComputeMachineResource> CreateOrUpdate(WaitUntil waitUntil, string machineName, HybridComputeMachineData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _machineClientDiagnostics.CreateScope("MachineCollection.CreateOrUpdate");
+            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _machineRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, machineName, data, cancellationToken);
-                var operation = new HybridComputeArmOperation<MachineResource>(Response.FromValue(new MachineResource(Client, response), response.GetRawResponse()));
+                var response = _hybridComputeMachineMachinesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, machineName, data, cancellationToken);
+                var operation = new HybridComputeArmOperation<HybridComputeMachineResource>(Response.FromValue(new HybridComputeMachineResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -131,18 +131,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
-        public virtual async Task<Response<MachineResource>> GetAsync(string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HybridComputeMachineResource>> GetAsync(string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
 
-            using var scope = _machineClientDiagnostics.CreateScope("MachineCollection.Get");
+            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.Get");
             scope.Start();
             try
             {
-                var response = await _machineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridComputeMachineMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,18 +161,18 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
-        public virtual Response<MachineResource> Get(string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<HybridComputeMachineResource> Get(string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
 
-            using var scope = _machineClientDiagnostics.CreateScope("MachineCollection.Get");
+            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.Get");
             scope.Start();
             try
             {
-                var response = _machineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, cancellationToken);
+                var response = _hybridComputeMachineMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MachineResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new HybridComputeMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,17 +187,17 @@ namespace Azure.ResourceManager.HybridCompute
         /// Operation Id: Machines_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HybridComputeMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<HybridComputeMachineResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MachineResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<HybridComputeMachineResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _machineClientDiagnostics.CreateScope("MachineCollection.GetAll");
+                using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _machineRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hybridComputeMachineMachinesRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -205,14 +205,14 @@ namespace Azure.ResourceManager.HybridCompute
                     throw;
                 }
             }
-            async Task<Page<MachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<HybridComputeMachineResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _machineClientDiagnostics.CreateScope("MachineCollection.GetAll");
+                using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _machineRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _hybridComputeMachineMachinesRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -229,17 +229,17 @@ namespace Azure.ResourceManager.HybridCompute
         /// Operation Id: Machines_ListByResourceGroup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<HybridComputeMachineResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MachineResource> FirstPageFunc(int? pageSizeHint)
+            Page<HybridComputeMachineResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _machineClientDiagnostics.CreateScope("MachineCollection.GetAll");
+                using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _machineRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _hybridComputeMachineMachinesRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -247,14 +247,14 @@ namespace Azure.ResourceManager.HybridCompute
                     throw;
                 }
             }
-            Page<MachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<HybridComputeMachineResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _machineClientDiagnostics.CreateScope("MachineCollection.GetAll");
+                using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _machineRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new MachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _hybridComputeMachineMachinesRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new HybridComputeMachineResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
 
-            using var scope = _machineClientDiagnostics.CreateScope("MachineCollection.Exists");
+            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _machineRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _hybridComputeMachineMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.HybridCompute
         {
             Argument.AssertNotNullOrEmpty(machineName, nameof(machineName));
 
-            using var scope = _machineClientDiagnostics.CreateScope("MachineCollection.Exists");
+            using var scope = _hybridComputeMachineMachinesClientDiagnostics.CreateScope("HybridComputeMachineCollection.Exists");
             scope.Start();
             try
             {
-                var response = _machineRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, cancellationToken: cancellationToken);
+                var response = _hybridComputeMachineMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, machineName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
-        IEnumerator<MachineResource> IEnumerable<MachineResource>.GetEnumerator()
+        IEnumerator<HybridComputeMachineResource> IEnumerable<HybridComputeMachineResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.HybridCompute
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<MachineResource> IAsyncEnumerable<MachineResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<HybridComputeMachineResource> IAsyncEnumerable<HybridComputeMachineResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

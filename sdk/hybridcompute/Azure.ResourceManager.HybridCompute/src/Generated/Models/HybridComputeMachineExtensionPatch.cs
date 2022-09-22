@@ -8,10 +8,10 @@
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> Describes a Machine Extension Update. </summary>
-    public partial class MachineExtensionPatch : ResourceUpdate
+    public partial class HybridComputeMachineExtensionPatch : HybridComputeResourceUpdate
     {
-        /// <summary> Initializes a new instance of MachineExtensionPatch. </summary>
-        public MachineExtensionPatch()
+        /// <summary> Initializes a new instance of HybridComputeMachineExtensionPatch. </summary>
+        public HybridComputeMachineExtensionPatch()
         {
         }
 

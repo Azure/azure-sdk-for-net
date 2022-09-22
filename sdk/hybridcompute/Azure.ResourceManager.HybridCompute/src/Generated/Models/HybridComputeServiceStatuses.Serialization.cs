@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class ServiceStatuses : IUtf8JsonSerializable
+    public partial class HybridComputeServiceStatuses : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceStatuses DeserializeServiceStatuses(JsonElement element)
+        internal static HybridComputeServiceStatuses DeserializeHybridComputeServiceStatuses(JsonElement element)
         {
-            Optional<ServiceStatus> extensionService = default;
-            Optional<ServiceStatus> guestConfigurationService = default;
+            Optional<HybridComputeServiceStatus> extensionService = default;
+            Optional<HybridComputeServiceStatus> guestConfigurationService = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extensionService"))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extensionService = ServiceStatus.DeserializeServiceStatus(property.Value);
+                    extensionService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value);
                     continue;
                 }
                 if (property.NameEquals("guestConfigurationService"))
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    guestConfigurationService = ServiceStatus.DeserializeServiceStatus(property.Value);
+                    guestConfigurationService = HybridComputeServiceStatus.DeserializeHybridComputeServiceStatus(property.Value);
                     continue;
                 }
             }
-            return new ServiceStatuses(extensionService.Value, guestConfigurationService.Value);
+            return new HybridComputeServiceStatuses(extensionService.Value, guestConfigurationService.Value);
         }
     }
 }

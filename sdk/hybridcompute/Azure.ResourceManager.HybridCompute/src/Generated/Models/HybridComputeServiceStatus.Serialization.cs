@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class ServiceStatus : IUtf8JsonSerializable
+    public partial class HybridComputeServiceStatus : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteEndObject();
         }
 
-        internal static ServiceStatus DeserializeServiceStatus(JsonElement element)
+        internal static HybridComputeServiceStatus DeserializeHybridComputeServiceStatus(JsonElement element)
         {
             Optional<string> status = default;
             Optional<string> startupType = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     continue;
                 }
             }
-            return new ServiceStatus(status.Value, startupType.Value);
+            return new HybridComputeServiceStatus(status.Value, startupType.Value);
         }
     }
 }
