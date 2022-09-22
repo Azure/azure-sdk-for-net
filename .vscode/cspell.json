@@ -279,10 +279,24 @@
       ]
     },
     {
+      "filename": "**/sdk/datamigration/**/*.cs",
+      "words": [
+        "regen",
+        "ssis",
+        "initialiazing"
+      ]
+    },
+    {
       "filename": "**/sdk/datashare/**/*.cs",
       "words": [
         "adls",
         "kusto"
+      ]
+    },
+    {
+      "filename": "**/sdk/devspaces/**/*.cs",
+      "words": [
+        "kube"
       ]
     },
     {
@@ -339,6 +353,12 @@
       ]
     },
     {
+      "filename": "**/sdk/elastic/**/*.cs",
+      "words": [
+        "liftr"
+      ]
+    },
+    {
       "filename": "**/sdk/elasticsan/**/*.cs",
       "words": [
         "iscsi",
@@ -378,6 +398,12 @@
       "words": [
         "dicom",
         "fhir"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridkubernetes/**/*.cs",
+      "words": [
+        "kubeconfigs"
       ]
     },
     {

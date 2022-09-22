@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.DataMigration.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SqldbValue = "SQLDB";
-        private const string SqlmiValue = "SQLMI";
-        private const string AzureDbForMySqlValue = "AzureDbForMySql";
-        private const string AzureDbForPostgreSqlValue = "AzureDbForPostgreSql";
-        private const string MongoDbValue = "MongoDb";
+        private const string SqlDBValue = "SQLDB";
+        private const string SqlMIValue = "SQLMI";
+        private const string AzureDBForMySqlValue = "AzureDbForMySql";
+        private const string AzureDBForPostgreSqlValue = "AzureDbForPostgreSql";
+        private const string MongoDBValue = "MongoDb";
         private const string UnknownValue = "Unknown";
 
         /// <summary> SQLDB. </summary>
-        public static ProjectTargetPlatform Sqldb { get; } = new ProjectTargetPlatform(SqldbValue);
+        public static ProjectTargetPlatform SqlDB { get; } = new ProjectTargetPlatform(SqlDBValue);
         /// <summary> SQLMI. </summary>
-        public static ProjectTargetPlatform Sqlmi { get; } = new ProjectTargetPlatform(SqlmiValue);
+        public static ProjectTargetPlatform SqlMI { get; } = new ProjectTargetPlatform(SqlMIValue);
         /// <summary> AzureDbForMySql. </summary>
-        public static ProjectTargetPlatform AzureDbForMySql { get; } = new ProjectTargetPlatform(AzureDbForMySqlValue);
+        public static ProjectTargetPlatform AzureDBForMySql { get; } = new ProjectTargetPlatform(AzureDBForMySqlValue);
         /// <summary> AzureDbForPostgreSql. </summary>
-        public static ProjectTargetPlatform AzureDbForPostgreSql { get; } = new ProjectTargetPlatform(AzureDbForPostgreSqlValue);
+        public static ProjectTargetPlatform AzureDBForPostgreSql { get; } = new ProjectTargetPlatform(AzureDBForPostgreSqlValue);
         /// <summary> MongoDb. </summary>
-        public static ProjectTargetPlatform MongoDb { get; } = new ProjectTargetPlatform(MongoDbValue);
+        public static ProjectTargetPlatform MongoDB { get; } = new ProjectTargetPlatform(MongoDBValue);
         /// <summary> Unknown. </summary>
         public static ProjectTargetPlatform Unknown { get; } = new ProjectTargetPlatform(UnknownValue);
         /// <summary> Determines if two <see cref="ProjectTargetPlatform"/> values are the same. </summary>

@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.DataMigration.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SQLValue = "SQL";
-        private const string MySQLValue = "MySQL";
+        private const string SqlValue = "SQL";
+        private const string MySqlValue = "MySQL";
         private const string PostgreSqlValue = "PostgreSql";
-        private const string MongoDbValue = "MongoDb";
+        private const string MongoDBValue = "MongoDb";
         private const string UnknownValue = "Unknown";
 
         /// <summary> SQL. </summary>
-        public static ProjectSourcePlatform SQL { get; } = new ProjectSourcePlatform(SQLValue);
+        public static ProjectSourcePlatform Sql { get; } = new ProjectSourcePlatform(SqlValue);
         /// <summary> MySQL. </summary>
-        public static ProjectSourcePlatform MySQL { get; } = new ProjectSourcePlatform(MySQLValue);
+        public static ProjectSourcePlatform MySql { get; } = new ProjectSourcePlatform(MySqlValue);
         /// <summary> PostgreSql. </summary>
         public static ProjectSourcePlatform PostgreSql { get; } = new ProjectSourcePlatform(PostgreSqlValue);
         /// <summary> MongoDb. </summary>
-        public static ProjectSourcePlatform MongoDb { get; } = new ProjectSourcePlatform(MongoDbValue);
+        public static ProjectSourcePlatform MongoDB { get; } = new ProjectSourcePlatform(MongoDBValue);
         /// <summary> Unknown. </summary>
         public static ProjectSourcePlatform Unknown { get; } = new ProjectSourcePlatform(UnknownValue);
         /// <summary> Determines if two <see cref="ProjectSourcePlatform"/> values are the same. </summary>

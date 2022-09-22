@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.DataMigration.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SQLServerValue = "SQLServer";
-        private const string SqldbValue = "SQLDB";
-        private const string SqldwValue = "SQLDW";
-        private const string SqlmiValue = "SQLMI";
+        private const string SqlServerValue = "SQLServer";
+        private const string SqlDBValue = "SQLDB";
+        private const string SqlDWValue = "SQLDW";
+        private const string SqlMIValue = "SQLMI";
         private const string AzureDBForMySqlValue = "AzureDBForMySql";
-        private const string AzureDBForPostgresSQLValue = "AzureDBForPostgresSQL";
+        private const string AzureDBForPostgresSqlValue = "AzureDBForPostgresSQL";
         private const string MongoDBValue = "MongoDB";
 
         /// <summary> SQLServer. </summary>
-        public static ScenarioTarget SQLServer { get; } = new ScenarioTarget(SQLServerValue);
+        public static ScenarioTarget SqlServer { get; } = new ScenarioTarget(SqlServerValue);
         /// <summary> SQLDB. </summary>
-        public static ScenarioTarget Sqldb { get; } = new ScenarioTarget(SqldbValue);
+        public static ScenarioTarget SqlDB { get; } = new ScenarioTarget(SqlDBValue);
         /// <summary> SQLDW. </summary>
-        public static ScenarioTarget Sqldw { get; } = new ScenarioTarget(SqldwValue);
+        public static ScenarioTarget SqlDW { get; } = new ScenarioTarget(SqlDWValue);
         /// <summary> SQLMI. </summary>
-        public static ScenarioTarget Sqlmi { get; } = new ScenarioTarget(SqlmiValue);
+        public static ScenarioTarget SqlMI { get; } = new ScenarioTarget(SqlMIValue);
         /// <summary> AzureDBForMySql. </summary>
         public static ScenarioTarget AzureDBForMySql { get; } = new ScenarioTarget(AzureDBForMySqlValue);
         /// <summary> AzureDBForPostgresSQL. </summary>
-        public static ScenarioTarget AzureDBForPostgresSQL { get; } = new ScenarioTarget(AzureDBForPostgresSQLValue);
+        public static ScenarioTarget AzureDBForPostgresSql { get; } = new ScenarioTarget(AzureDBForPostgresSqlValue);
         /// <summary> MongoDB. </summary>
         public static ScenarioTarget MongoDB { get; } = new ScenarioTarget(MongoDBValue);
         /// <summary> Determines if two <see cref="ScenarioTarget"/> values are the same. </summary>

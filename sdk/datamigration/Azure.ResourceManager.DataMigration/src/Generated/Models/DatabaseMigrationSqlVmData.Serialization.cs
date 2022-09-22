@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration
 
         internal static DatabaseMigrationSqlVmData DeserializeDatabaseMigrationSqlVmData(JsonElement element)
         {
-            Optional<DatabaseMigrationPropertiesSqlVm> properties = default;
+            Optional<DatabaseMigrationSqlVmProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             Core.ResourceType type = default;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = DatabaseMigrationPropertiesSqlVm.DeserializeDatabaseMigrationPropertiesSqlVm(property.Value);
+                    properties = DatabaseMigrationSqlVmProperties.DeserializeDatabaseMigrationSqlVmProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("id"))

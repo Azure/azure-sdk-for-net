@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ServerLevelPermissionsGroup.Default => "Default",
             ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureDB => "MigrationFromSqlServerToAzureDB",
             ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureMI => "MigrationFromSqlServerToAzureMI",
-            ServerLevelPermissionsGroup.MigrationFromMySQLToAzureDBForMySQL => "MigrationFromMySQLToAzureDBForMySQL",
+            ServerLevelPermissionsGroup.MigrationFromMySqlToAzureDBForMySql => "MigrationFromMySQLToAzureDBForMySQL",
             ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureVm => "MigrationFromSqlServerToAzureVM",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServerLevelPermissionsGroup value.")
         };
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (string.Equals(value, "Default", StringComparison.InvariantCultureIgnoreCase)) return ServerLevelPermissionsGroup.Default;
             if (string.Equals(value, "MigrationFromSqlServerToAzureDB", StringComparison.InvariantCultureIgnoreCase)) return ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureDB;
             if (string.Equals(value, "MigrationFromSqlServerToAzureMI", StringComparison.InvariantCultureIgnoreCase)) return ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureMI;
-            if (string.Equals(value, "MigrationFromMySQLToAzureDBForMySQL", StringComparison.InvariantCultureIgnoreCase)) return ServerLevelPermissionsGroup.MigrationFromMySQLToAzureDBForMySQL;
+            if (string.Equals(value, "MigrationFromMySQLToAzureDBForMySQL", StringComparison.InvariantCultureIgnoreCase)) return ServerLevelPermissionsGroup.MigrationFromMySqlToAzureDBForMySql;
             if (string.Equals(value, "MigrationFromSqlServerToAzureVM", StringComparison.InvariantCultureIgnoreCase)) return ServerLevelPermissionsGroup.MigrationFromSqlServerToAzureVm;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown ServerLevelPermissionsGroup value.");
         }

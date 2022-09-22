@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of MigrateMISyncCompleteCommandProperties. </summary>
         public MigrateMISyncCompleteCommandProperties()
         {
-            CommandType = CommandType.MigrateSqlServerAzureDbSqlMiComplete;
+            CommandType = CommandType.MigrateSqlServerAzureDBSqlMIComplete;
         }
 
         /// <summary> Initializes a new instance of MigrateMISyncCompleteCommandProperties. </summary>

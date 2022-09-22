@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.DataMigration.Models
                 {
                     case "Migrate.SqlServer.AzureDbSqlMi.Complete": return MigrateMISyncCompleteCommandProperties.DeserializeMigrateMISyncCompleteCommandProperties(element);
                     case "Migrate.Sync.Complete.Database": return MigrateSyncCompleteCommandProperties.DeserializeMigrateSyncCompleteCommandProperties(element);
-                    case "cancel": return MongoDbCancelCommand.DeserializeMongoDbCancelCommand(element);
-                    case "finish": return MongoDbFinishCommand.DeserializeMongoDbFinishCommand(element);
-                    case "restart": return MongoDbRestartCommand.DeserializeMongoDbRestartCommand(element);
+                    case "cancel": return MongoDBCancelCommand.DeserializeMongoDBCancelCommand(element);
+                    case "finish": return MongoDBFinishCommand.DeserializeMongoDBFinishCommand(element);
+                    case "restart": return MongoDBRestartCommand.DeserializeMongoDBRestartCommand(element);
                 }
             }
             CommandType commandType = default;

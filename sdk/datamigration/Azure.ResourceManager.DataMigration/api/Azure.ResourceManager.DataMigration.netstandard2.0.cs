@@ -1,81 +1,81 @@
 namespace Azure.ResourceManager.DataMigration
 {
-    public partial class DatabaseMigrationSqlDbCollection : Azure.ResourceManager.ArmCollection
+    public partial class DatabaseMigrationSqlDBCollection : Azure.ResourceManager.ArmCollection
     {
-        protected DatabaseMigrationSqlDbCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string sqlDbInstanceName, string targetDbName, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string sqlDbInstanceName, string targetDbName, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string sqlDbInstanceName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sqlDbInstanceName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbResource> Get(string sqlDbInstanceName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbResource>> GetAsync(string sqlDbInstanceName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected DatabaseMigrationSqlDBCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string sqlDBInstanceName, string targetDBName, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string sqlDBInstanceName, string targetDBName, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string sqlDBInstanceName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sqlDBInstanceName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource> Get(string sqlDBInstanceName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource>> GetAsync(string sqlDBInstanceName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DatabaseMigrationSqlDbData : Azure.ResourceManager.Models.ResourceData
+    public partial class DatabaseMigrationSqlDBData : Azure.ResourceManager.Models.ResourceData
     {
-        public DatabaseMigrationSqlDbData() { }
-        public Azure.ResourceManager.DataMigration.Models.DatabaseMigrationPropertiesSqlDb Properties { get { throw null; } set { } }
+        public DatabaseMigrationSqlDBData() { }
+        public Azure.ResourceManager.DataMigration.Models.DatabaseMigrationSqlDBProperties Properties { get { throw null; } set { } }
     }
-    public partial class DatabaseMigrationSqlDbResource : Azure.ResourceManager.ArmResource
+    public partial class DatabaseMigrationSqlDBResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected DatabaseMigrationSqlDbResource() { }
-        public virtual Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbData Data { get { throw null; } }
+        protected DatabaseMigrationSqlDBResource() { }
+        public virtual Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.ResourceManager.ArmOperation Cancel(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.Models.MigrationOperationInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CancelAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.Models.MigrationOperationInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, bool? force = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, bool? force = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbResource> Get(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbResource>> GetAsync(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource> Get(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource>> GetAsync(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DatabaseMigrationSqlMiCollection : Azure.ResourceManager.ArmCollection
+    public partial class DatabaseMigrationSqlMICollection : Azure.ResourceManager.ArmCollection
     {
-        protected DatabaseMigrationSqlMiCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string managedInstanceName, string targetDbName, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string managedInstanceName, string targetDbName, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string managedInstanceName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string managedInstanceName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiResource> Get(string managedInstanceName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiResource>> GetAsync(string managedInstanceName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected DatabaseMigrationSqlMICollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string managedInstanceName, string targetDBName, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string managedInstanceName, string targetDBName, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string managedInstanceName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string managedInstanceName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource> Get(string managedInstanceName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource>> GetAsync(string managedInstanceName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DatabaseMigrationSqlMiData : Azure.ResourceManager.Models.ResourceData
+    public partial class DatabaseMigrationSqlMIData : Azure.ResourceManager.Models.ResourceData
     {
-        public DatabaseMigrationSqlMiData() { }
-        public Azure.ResourceManager.DataMigration.Models.DatabaseMigrationPropertiesSqlMi Properties { get { throw null; } set { } }
+        public DatabaseMigrationSqlMIData() { }
+        public Azure.ResourceManager.DataMigration.Models.DatabaseMigrationSqlMIProperties Properties { get { throw null; } set { } }
     }
-    public partial class DatabaseMigrationSqlMiResource : Azure.ResourceManager.ArmResource
+    public partial class DatabaseMigrationSqlMIResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected DatabaseMigrationSqlMiResource() { }
-        public virtual Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiData Data { get { throw null; } }
+        protected DatabaseMigrationSqlMIResource() { }
+        public virtual Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.ResourceManager.ArmOperation Cancel(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.Models.MigrationOperationInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CancelAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.Models.MigrationOperationInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string targetDbName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string managedInstanceName, string targetDBName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Cutover(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.Models.MigrationOperationInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CutoverAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.Models.MigrationOperationInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiResource> Get(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiResource>> GetAsync(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource> Get(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource>> GetAsync(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DatabaseMigrationSqlVmCollection : Azure.ResourceManager.ArmCollection
     {
         protected DatabaseMigrationSqlVmCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string sqlVirtualMachineName, string targetDbName, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string sqlVirtualMachineName, string targetDbName, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string sqlVirtualMachineName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sqlVirtualMachineName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource> Get(string sqlVirtualMachineName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource>> GetAsync(string sqlVirtualMachineName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string sqlVirtualMachineName, string targetDBName, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string sqlVirtualMachineName, string targetDBName, Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string sqlVirtualMachineName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string sqlVirtualMachineName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource> Get(string sqlVirtualMachineName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource>> GetAsync(string sqlVirtualMachineName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class DatabaseMigrationSqlVmData : Azure.ResourceManager.Models.ResourceData
     {
         public DatabaseMigrationSqlVmData() { }
-        public Azure.ResourceManager.DataMigration.Models.DatabaseMigrationPropertiesSqlVm Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.DatabaseMigrationSqlVmProperties Properties { get { throw null; } set { } }
     }
     public partial class DatabaseMigrationSqlVmResource : Azure.ResourceManager.ArmResource
     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataMigration
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.ResourceManager.ArmOperation Cancel(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.Models.MigrationOperationInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CancelAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.Models.MigrationOperationInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDbName) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDBName) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Cutover(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.Models.MigrationOperationInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CutoverAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataMigration.Models.MigrationOperationInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource> Get(System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -97,16 +97,16 @@ namespace Azure.ResourceManager.DataMigration
     {
         public static Azure.Response<Azure.ResourceManager.DataMigration.Models.NameAvailabilityResponse> CheckNameAvailabilityService(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataMigration.Models.NameAvailabilityRequest nameAvailabilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.Models.NameAvailabilityResponse>> CheckNameAvailabilityServiceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, Azure.ResourceManager.DataMigration.Models.NameAvailabilityRequest nameAvailabilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbResource> GetDatabaseMigrationSqlDb(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sqlDbInstanceName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbResource>> GetDatabaseMigrationSqlDbAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sqlDbInstanceName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbResource GetDatabaseMigrationSqlDbResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDbCollection GetDatabaseMigrationSqlDbs(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiResource> GetDatabaseMigrationSqlMi(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiResource>> GetDatabaseMigrationSqlMiAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiResource GetDatabaseMigrationSqlMiResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMiCollection GetDatabaseMigrationSqlMis(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDbName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sqlDBInstanceName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sqlDBInstanceName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource GetDatabaseMigrationSqlDBResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBCollection GetDatabaseMigrationSqlDBs(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource GetDatabaseMigrationSqlMIResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMICollection GetDatabaseMigrationSqlMIs(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource GetDatabaseMigrationSqlVmResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmCollection GetDatabaseMigrationSqlVms(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Response<Azure.ResourceManager.DataMigration.DataMigrationServiceResource> GetDataMigrationService(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -572,17 +572,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         public BlobShare() { }
         public System.Uri SasUri { get { throw null; } set { } }
     }
-    public partial class CheckOCIDriverTaskOutput
+    public partial class CheckOciDriverTaskOutput
     {
-        internal CheckOCIDriverTaskOutput() { }
-        public Azure.ResourceManager.DataMigration.Models.OracleOCIDriverInfo InstalledDriver { get { throw null; } }
+        internal CheckOciDriverTaskOutput() { }
+        public Azure.ResourceManager.DataMigration.Models.OracleOciDriverInfo InstalledDriver { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> ValidationErrors { get { throw null; } }
     }
-    public partial class CheckOCIDriverTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class CheckOciDriverTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public CheckOCIDriverTaskProperties() { }
+        public CheckOciDriverTaskProperties() { }
         public string InputServerVersion { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.CheckOCIDriverTaskOutput> Output { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.CheckOciDriverTaskOutput> Output { get { throw null; } }
     }
     public abstract partial class CommandProperties
     {
@@ -617,11 +617,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string Password { get { throw null; } set { } }
         public string UserName { get { throw null; } set { } }
     }
-    public partial class ConnectToMongoDbTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class ConnectToMongoDBTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public ConnectToMongoDbTaskProperties() { }
-        public Azure.ResourceManager.DataMigration.Models.MongoDbConnectionInfo Input { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MongoDbClusterInfo> Output { get { throw null; } }
+        public ConnectToMongoDBTaskProperties() { }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBConnectionInfo Input { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MongoDBClusterInfo> Output { get { throw null; } }
     }
     public partial class ConnectToSourceMySqlTaskInput
     {
@@ -745,108 +745,108 @@ namespace Azure.ResourceManager.DataMigration.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ConnectToSourceSqlServerTaskOutput> Output { get { throw null; } }
         public string TaskId { get { throw null; } set { } }
     }
-    public partial class ConnectToTargetAzureDbForMySqlTaskInput
+    public partial class ConnectToTargetAzureDBForMySqlTaskInput
     {
-        public ConnectToTargetAzureDbForMySqlTaskInput(Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo targetConnectionInfo) { }
+        public ConnectToTargetAzureDBForMySqlTaskInput(Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo targetConnectionInfo) { }
         public bool? IsOfflineMigration { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo SourceConnectionInfo { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo TargetConnectionInfo { get { throw null; } set { } }
     }
-    public partial class ConnectToTargetAzureDbForMySqlTaskOutput
+    public partial class ConnectToTargetAzureDBForMySqlTaskOutput
     {
-        internal ConnectToTargetAzureDbForMySqlTaskOutput() { }
+        internal ConnectToTargetAzureDBForMySqlTaskOutput() { }
         public System.Collections.Generic.IReadOnlyList<string> Databases { get { throw null; } }
         public string Id { get { throw null; } }
         public string ServerVersion { get { throw null; } }
         public string TargetServerBrandVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> ValidationErrors { get { throw null; } }
     }
-    public partial class ConnectToTargetAzureDbForMySqlTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class ConnectToTargetAzureDBForMySqlTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public ConnectToTargetAzureDbForMySqlTaskProperties() { }
-        public Azure.ResourceManager.DataMigration.Models.ConnectToTargetAzureDbForMySqlTaskInput Input { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ConnectToTargetAzureDbForMySqlTaskOutput> Output { get { throw null; } }
+        public ConnectToTargetAzureDBForMySqlTaskProperties() { }
+        public Azure.ResourceManager.DataMigration.Models.ConnectToTargetAzureDBForMySqlTaskInput Input { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ConnectToTargetAzureDBForMySqlTaskOutput> Output { get { throw null; } }
     }
-    public partial class ConnectToTargetAzureDbForPostgreSqlSyncTaskInput
+    public partial class ConnectToTargetAzureDBForPostgreSqlSyncTaskInput
     {
-        public ConnectToTargetAzureDbForPostgreSqlSyncTaskInput(Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo targetConnectionInfo) { }
+        public ConnectToTargetAzureDBForPostgreSqlSyncTaskInput(Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo targetConnectionInfo) { }
         public Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo SourceConnectionInfo { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo TargetConnectionInfo { get { throw null; } set { } }
     }
-    public partial class ConnectToTargetAzureDbForPostgreSqlSyncTaskOutput
+    public partial class ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput
     {
-        internal ConnectToTargetAzureDbForPostgreSqlSyncTaskOutput() { }
+        internal ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput() { }
         public System.Collections.Generic.IReadOnlyList<string> Databases { get { throw null; } }
         public string Id { get { throw null; } }
         public string TargetServerBrandVersion { get { throw null; } }
         public string TargetServerVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> ValidationErrors { get { throw null; } }
     }
-    public partial class ConnectToTargetAzureDbForPostgreSqlSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public ConnectToTargetAzureDbForPostgreSqlSyncTaskProperties() { }
-        public Azure.ResourceManager.DataMigration.Models.ConnectToTargetAzureDbForPostgreSqlSyncTaskInput Input { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ConnectToTargetAzureDbForPostgreSqlSyncTaskOutput> Output { get { throw null; } }
+        public ConnectToTargetAzureDBForPostgreSqlSyncTaskProperties() { }
+        public Azure.ResourceManager.DataMigration.Models.ConnectToTargetAzureDBForPostgreSqlSyncTaskInput Input { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ConnectToTargetAzureDBForPostgreSqlSyncTaskOutput> Output { get { throw null; } }
     }
-    public partial class ConnectToTargetOracleAzureDbForPostgreSqlSyncTaskOutput
+    public partial class ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput
     {
-        internal ConnectToTargetOracleAzureDbForPostgreSqlSyncTaskOutput() { }
+        internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput() { }
         public System.Collections.Generic.IReadOnlyList<string> Databases { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ConnectToTargetOracleAzureDbForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem> DatabaseSchemaMap { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem> DatabaseSchemaMap { get { throw null; } }
         public string TargetServerBrandVersion { get { throw null; } }
         public string TargetServerVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> ValidationErrors { get { throw null; } }
     }
-    public partial class ConnectToTargetOracleAzureDbForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem
+    public partial class ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem
     {
-        internal ConnectToTargetOracleAzureDbForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem() { }
+        internal ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutputDatabaseSchemaMapItem() { }
         public string Database { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Schemas { get { throw null; } }
     }
-    public partial class ConnectToTargetOracleAzureDbForPostgreSqlSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public ConnectToTargetOracleAzureDbForPostgreSqlSyncTaskProperties() { }
+        public ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskProperties() { }
         public Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo InputTargetConnectionInfo { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ConnectToTargetOracleAzureDbForPostgreSqlSyncTaskOutput> Output { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ConnectToTargetOracleAzureDBForPostgreSqlSyncTaskOutput> Output { get { throw null; } }
     }
-    public partial class ConnectToTargetSqlDbSyncTaskInput
+    public partial class ConnectToTargetSqlDBSyncTaskInput
     {
-        public ConnectToTargetSqlDbSyncTaskInput(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo targetConnectionInfo) { }
+        public ConnectToTargetSqlDBSyncTaskInput(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo targetConnectionInfo) { }
         public Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo SourceConnectionInfo { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo TargetConnectionInfo { get { throw null; } set { } }
     }
-    public partial class ConnectToTargetSqlDbSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class ConnectToTargetSqlDBSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public ConnectToTargetSqlDbSyncTaskProperties() { }
-        public Azure.ResourceManager.DataMigration.Models.ConnectToTargetSqlDbSyncTaskInput Input { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ConnectToTargetSqlDbTaskOutput> Output { get { throw null; } }
+        public ConnectToTargetSqlDBSyncTaskProperties() { }
+        public Azure.ResourceManager.DataMigration.Models.ConnectToTargetSqlDBSyncTaskInput Input { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ConnectToTargetSqlDBTaskOutput> Output { get { throw null; } }
     }
-    public partial class ConnectToTargetSqlDbTaskInput
+    public partial class ConnectToTargetSqlDBTaskInput
     {
-        public ConnectToTargetSqlDbTaskInput(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo targetConnectionInfo) { }
+        public ConnectToTargetSqlDBTaskInput(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo targetConnectionInfo) { }
         public bool? QueryObjectCounts { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo TargetConnectionInfo { get { throw null; } set { } }
     }
-    public partial class ConnectToTargetSqlDbTaskOutput
+    public partial class ConnectToTargetSqlDBTaskOutput
     {
-        internal ConnectToTargetSqlDbTaskOutput() { }
+        internal ConnectToTargetSqlDBTaskOutput() { }
         public string Databases { get { throw null; } }
         public string Id { get { throw null; } }
         public string TargetServerBrandVersion { get { throw null; } }
         public string TargetServerVersion { get { throw null; } }
     }
-    public partial class ConnectToTargetSqlDbTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class ConnectToTargetSqlDBTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public ConnectToTargetSqlDbTaskProperties() { }
+        public ConnectToTargetSqlDBTaskProperties() { }
         public string CreatedOn { get { throw null; } set { } }
-        public Azure.ResourceManager.DataMigration.Models.ConnectToTargetSqlDbTaskInput Input { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ConnectToTargetSqlDbTaskOutput> Output { get { throw null; } }
+        public Azure.ResourceManager.DataMigration.Models.ConnectToTargetSqlDBTaskInput Input { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ConnectToTargetSqlDBTaskOutput> Output { get { throw null; } }
     }
     public partial class ConnectToTargetSqlMISyncTaskInput
     {
-        public ConnectToTargetSqlMISyncTaskInput(Azure.ResourceManager.DataMigration.Models.MiSqlConnectionInfo targetConnectionInfo, Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp azureApp) { }
+        public ConnectToTargetSqlMISyncTaskInput(Azure.ResourceManager.DataMigration.Models.MISqlConnectionInfo targetConnectionInfo, Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp azureApp) { }
         public Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp AzureApp { get { throw null; } set { } }
-        public Azure.ResourceManager.DataMigration.Models.MiSqlConnectionInfo TargetConnectionInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.MISqlConnectionInfo TargetConnectionInfo { get { throw null; } set { } }
     }
     public partial class ConnectToTargetSqlMISyncTaskOutput
     {
@@ -994,24 +994,24 @@ namespace Azure.ResourceManager.DataMigration.Models
         public System.DateTimeOffset? StartedOn { get { throw null; } }
         public string TargetDatabaseCollation { get { throw null; } set { } }
     }
-    public partial class DatabaseMigrationPropertiesSqlDb : Azure.ResourceManager.DataMigration.Models.DatabaseMigrationProperties
+    public partial class DatabaseMigrationSqlDBProperties : Azure.ResourceManager.DataMigration.Models.DatabaseMigrationProperties
     {
-        public DatabaseMigrationPropertiesSqlDb() { }
-        public Azure.ResourceManager.DataMigration.Models.SqlDbMigrationStatusDetails MigrationStatusDetails { get { throw null; } }
+        public DatabaseMigrationSqlDBProperties() { }
+        public Azure.ResourceManager.DataMigration.Models.SqlDBMigrationStatusDetails MigrationStatusDetails { get { throw null; } }
         public bool? Offline { get { throw null; } }
         public System.Collections.Generic.IList<string> TableList { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.SqlConnectionInformation TargetSqlConnection { get { throw null; } set { } }
     }
-    public partial class DatabaseMigrationPropertiesSqlMi : Azure.ResourceManager.DataMigration.Models.DatabaseMigrationProperties
+    public partial class DatabaseMigrationSqlMIProperties : Azure.ResourceManager.DataMigration.Models.DatabaseMigrationProperties
     {
-        public DatabaseMigrationPropertiesSqlMi() { }
+        public DatabaseMigrationSqlMIProperties() { }
         public Azure.ResourceManager.DataMigration.Models.BackupConfiguration BackupConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.MigrationStatusDetails MigrationStatusDetails { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.OfflineConfiguration OfflineConfiguration { get { throw null; } set { } }
     }
-    public partial class DatabaseMigrationPropertiesSqlVm : Azure.ResourceManager.DataMigration.Models.DatabaseMigrationProperties
+    public partial class DatabaseMigrationSqlVmProperties : Azure.ResourceManager.DataMigration.Models.DatabaseMigrationProperties
     {
-        public DatabaseMigrationPropertiesSqlVm() { }
+        public DatabaseMigrationSqlVmProperties() { }
         public Azure.ResourceManager.DataMigration.Models.BackupConfiguration BackupConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.MigrationStatusDetails MigrationStatusDetails { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.OfflineConfiguration OfflineConfiguration { get { throw null; } set { } }
@@ -1264,16 +1264,16 @@ namespace Azure.ResourceManager.DataMigration.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.GetUserTablesSqlTaskOutput> Output { get { throw null; } }
         public string TaskId { get { throw null; } set { } }
     }
-    public partial class InstallOCIDriverTaskOutput
+    public partial class InstallOciDriverTaskOutput
     {
-        internal InstallOCIDriverTaskOutput() { }
+        internal InstallOciDriverTaskOutput() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> ValidationErrors { get { throw null; } }
     }
-    public partial class InstallOCIDriverTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class InstallOciDriverTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public InstallOCIDriverTaskProperties() { }
+        public InstallOciDriverTaskProperties() { }
         public string InputDriverPackageName { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.InstallOCIDriverTaskOutput> Output { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.InstallOciDriverTaskOutput> Output { get { throw null; } }
     }
     public partial class IntegrationRuntimeMonitoringData
     {
@@ -1335,38 +1335,38 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string InputSourceDatabaseName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> OutputErrors { get { throw null; } }
     }
-    public partial class MigrateMongoDbTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class MigrateMongoDBTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public MigrateMongoDbTaskProperties() { }
-        public Azure.ResourceManager.DataMigration.Models.MongoDbMigrationSettings Input { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MongoDbProgress> Output { get { throw null; } }
+        public MigrateMongoDBTaskProperties() { }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBMigrationSettings Input { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MongoDBProgress> Output { get { throw null; } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlOfflineDatabaseInput
+    public partial class MigrateMySqlAzureDBForMySqlOfflineDatabaseInput
     {
-        public MigrateMySqlAzureDbForMySqlOfflineDatabaseInput() { }
+        public MigrateMySqlAzureDBForMySqlOfflineDatabaseInput() { }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> TableMap { get { throw null; } }
         public string TargetDatabaseName { get { throw null; } set { } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlOfflineTaskInput
+    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskInput
     {
-        public MigrateMySqlAzureDbForMySqlOfflineTaskInput(Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo targetConnectionInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlOfflineDatabaseInput> selectedDatabases) { }
+        public MigrateMySqlAzureDBForMySqlOfflineTaskInput(Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo targetConnectionInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> selectedDatabases) { }
         public string EncryptedKeyForSecureFields { get { throw null; } set { } }
         public bool? MakeSourceServerReadOnly { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> OptionalAgentSettings { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlOfflineDatabaseInput> SelectedDatabases { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineDatabaseInput> SelectedDatabases { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo SourceConnectionInfo { get { throw null; } set { } }
         public System.DateTimeOffset? StartedOn { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo TargetConnectionInfo { get { throw null; } set { } }
     }
-    public abstract partial class MigrateMySqlAzureDbForMySqlOfflineTaskOutput
+    public abstract partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {
-        protected MigrateMySqlAzureDbForMySqlOfflineTaskOutput() { }
+        protected MigrateMySqlAzureDBForMySqlOfflineTaskOutput() { }
         public string Id { get { throw null; } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlOfflineTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlOfflineTaskOutput
+    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {
-        internal MigrateMySqlAzureDbForMySqlOfflineTaskOutputDatabaseLevel() { }
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputDatabaseLevel() { }
         public string DatabaseName { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public long? ErrorCount { get { throw null; } }
@@ -1383,14 +1383,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         public Azure.ResourceManager.DataMigration.Models.MigrationState? State { get { throw null; } }
         public string StatusMessage { get { throw null; } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlOfflineTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlOfflineTaskOutput
+    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {
-        internal MigrateMySqlAzureDbForMySqlOfflineTaskOutputError() { }
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlOfflineTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlOfflineTaskOutput
+    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {
-        internal MigrateMySqlAzureDbForMySqlOfflineTaskOutputMigrationLevel() { }
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputMigrationLevel() { }
         public string Databases { get { throw null; } }
         public string DatabaseSummary { get { throw null; } }
         public long? DurationInSeconds { get { throw null; } }
@@ -1407,9 +1407,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string TargetServerBrandVersion { get { throw null; } }
         public string TargetServerVersion { get { throw null; } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlOfflineTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlOfflineTaskOutput
+    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput
     {
-        internal MigrateMySqlAzureDbForMySqlOfflineTaskOutputTableLevel() { }
+        internal MigrateMySqlAzureDBForMySqlOfflineTaskOutputTableLevel() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string ErrorPrefix { get { throw null; } }
         public long? ItemsCompletedCount { get { throw null; } }
@@ -1421,17 +1421,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         public Azure.ResourceManager.DataMigration.Models.MigrationState? State { get { throw null; } }
         public string StatusMessage { get { throw null; } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlOfflineTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class MigrateMySqlAzureDBForMySqlOfflineTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public MigrateMySqlAzureDbForMySqlOfflineTaskProperties() { }
-        public Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlOfflineTaskInput Input { get { throw null; } set { } }
+        public MigrateMySqlAzureDBForMySqlOfflineTaskProperties() { }
+        public Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineTaskInput Input { get { throw null; } set { } }
         public bool? IsCloneable { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlOfflineTaskOutput> Output { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlOfflineTaskOutput> Output { get { throw null; } }
         public string TaskId { get { throw null; } set { } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlSyncDatabaseInput
+    public partial class MigrateMySqlAzureDBForMySqlSyncDatabaseInput
     {
-        public MigrateMySqlAzureDbForMySqlSyncDatabaseInput() { }
+        public MigrateMySqlAzureDBForMySqlSyncDatabaseInput() { }
         public System.Collections.Generic.IDictionary<string, string> MigrationSetting { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> SourceSetting { get { throw null; } }
@@ -1439,27 +1439,27 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string TargetDatabaseName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> TargetSetting { get { throw null; } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlSyncTaskInput
+    public partial class MigrateMySqlAzureDBForMySqlSyncTaskInput
     {
-        public MigrateMySqlAzureDbForMySqlSyncTaskInput(Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo targetConnectionInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlSyncDatabaseInput> selectedDatabases) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlSyncDatabaseInput> SelectedDatabases { get { throw null; } }
+        public MigrateMySqlAzureDBForMySqlSyncTaskInput(Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo targetConnectionInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncDatabaseInput> selectedDatabases) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncDatabaseInput> SelectedDatabases { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo SourceConnectionInfo { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.MySqlConnectionInfo TargetConnectionInfo { get { throw null; } set { } }
     }
-    public abstract partial class MigrateMySqlAzureDbForMySqlSyncTaskOutput
+    public abstract partial class MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        protected MigrateMySqlAzureDbForMySqlSyncTaskOutput() { }
+        protected MigrateMySqlAzureDBForMySqlSyncTaskOutput() { }
         public string Id { get { throw null; } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlSyncTaskOutputDatabaseError : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlSyncTaskOutput
+    public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        internal MigrateMySqlAzureDbForMySqlSyncTaskOutputDatabaseError() { }
+        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseError() { }
         public string ErrorMessage { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlSyncTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlSyncTaskOutput
+    public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        internal MigrateMySqlAzureDbForMySqlSyncTaskOutputDatabaseLevel() { }
+        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputDatabaseLevel() { }
         public long? AppliedChanges { get { throw null; } }
         public long? CdcDeleteCounter { get { throw null; } }
         public long? CdcInsertCounter { get { throw null; } }
@@ -1476,14 +1476,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         public Azure.ResourceManager.DataMigration.Models.SyncDatabaseMigrationReportingState? MigrationState { get { throw null; } }
         public System.DateTimeOffset? StartedOn { get { throw null; } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlSyncTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlSyncTaskOutput
+    public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        internal MigrateMySqlAzureDbForMySqlSyncTaskOutputError() { }
+        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlSyncTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlSyncTaskOutput
+    public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        internal MigrateMySqlAzureDbForMySqlSyncTaskOutputMigrationLevel() { }
+        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputMigrationLevel() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string SourceServer { get { throw null; } }
         public string SourceServerVersion { get { throw null; } }
@@ -1491,9 +1491,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string TargetServer { get { throw null; } }
         public string TargetServerVersion { get { throw null; } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlSyncTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlSyncTaskOutput
+    public partial class MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput
     {
-        internal MigrateMySqlAzureDbForMySqlSyncTaskOutputTableLevel() { }
+        internal MigrateMySqlAzureDBForMySqlSyncTaskOutputTableLevel() { }
         public string CdcDeleteCounter { get { throw null; } }
         public string CdcInsertCounter { get { throw null; } }
         public string CdcUpdateCounter { get { throw null; } }
@@ -1508,21 +1508,21 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string TableName { get { throw null; } }
         public long? TotalChangesApplied { get { throw null; } }
     }
-    public partial class MigrateMySqlAzureDbForMySqlSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class MigrateMySqlAzureDBForMySqlSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public MigrateMySqlAzureDbForMySqlSyncTaskProperties() { }
-        public Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlSyncTaskInput Input { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDbForMySqlSyncTaskOutput> Output { get { throw null; } }
+        public MigrateMySqlAzureDBForMySqlSyncTaskProperties() { }
+        public Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskInput Input { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MigrateMySqlAzureDBForMySqlSyncTaskOutput> Output { get { throw null; } }
     }
-    public partial class MigrateOracleAzureDbForPostgreSqlSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class MigrateOracleAzureDBForPostgreSqlSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public MigrateOracleAzureDbForPostgreSqlSyncTaskProperties() { }
-        public Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDbPostgreSqlSyncTaskInput Input { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDbPostgreSqlSyncTaskOutput> Output { get { throw null; } }
+        public MigrateOracleAzureDBForPostgreSqlSyncTaskProperties() { }
+        public Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskInput Input { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput> Output { get { throw null; } }
     }
-    public partial class MigrateOracleAzureDbPostgreSqlSyncDatabaseInput
+    public partial class MigrateOracleAzureDBPostgreSqlSyncDatabaseInput
     {
-        public MigrateOracleAzureDbPostgreSqlSyncDatabaseInput() { }
+        public MigrateOracleAzureDBPostgreSqlSyncDatabaseInput() { }
         public string CaseManipulation { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> MigrationSetting { get { throw null; } }
         public string Name { get { throw null; } set { } }
@@ -1532,27 +1532,27 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string TargetDatabaseName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> TargetSetting { get { throw null; } }
     }
-    public partial class MigrateOracleAzureDbPostgreSqlSyncTaskInput
+    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskInput
     {
-        public MigrateOracleAzureDbPostgreSqlSyncTaskInput(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDbPostgreSqlSyncDatabaseInput> selectedDatabases, Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo targetConnectionInfo, Azure.ResourceManager.DataMigration.Models.OracleConnectionInfo sourceConnectionInfo) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDbPostgreSqlSyncDatabaseInput> SelectedDatabases { get { throw null; } }
+        public MigrateOracleAzureDBPostgreSqlSyncTaskInput(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> selectedDatabases, Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo targetConnectionInfo, Azure.ResourceManager.DataMigration.Models.OracleConnectionInfo sourceConnectionInfo) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> SelectedDatabases { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.OracleConnectionInfo SourceConnectionInfo { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo TargetConnectionInfo { get { throw null; } set { } }
     }
-    public abstract partial class MigrateOracleAzureDbPostgreSqlSyncTaskOutput
+    public abstract partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        protected MigrateOracleAzureDbPostgreSqlSyncTaskOutput() { }
+        protected MigrateOracleAzureDBPostgreSqlSyncTaskOutput() { }
         public string Id { get { throw null; } }
     }
-    public partial class MigrateOracleAzureDbPostgreSqlSyncTaskOutputDatabaseError : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDbPostgreSqlSyncTaskOutput
+    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        internal MigrateOracleAzureDbPostgreSqlSyncTaskOutputDatabaseError() { }
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError() { }
         public string ErrorMessage { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
     }
-    public partial class MigrateOracleAzureDbPostgreSqlSyncTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDbPostgreSqlSyncTaskOutput
+    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        internal MigrateOracleAzureDbPostgreSqlSyncTaskOutputDatabaseLevel() { }
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseLevel() { }
         public long? AppliedChanges { get { throw null; } }
         public long? CdcDeleteCounter { get { throw null; } }
         public long? CdcInsertCounter { get { throw null; } }
@@ -1569,14 +1569,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         public Azure.ResourceManager.DataMigration.Models.SyncDatabaseMigrationReportingState? MigrationState { get { throw null; } }
         public System.DateTimeOffset? StartedOn { get { throw null; } }
     }
-    public partial class MigrateOracleAzureDbPostgreSqlSyncTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDbPostgreSqlSyncTaskOutput
+    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        internal MigrateOracleAzureDbPostgreSqlSyncTaskOutputError() { }
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
     }
-    public partial class MigrateOracleAzureDbPostgreSqlSyncTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDbPostgreSqlSyncTaskOutput
+    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        internal MigrateOracleAzureDbPostgreSqlSyncTaskOutputMigrationLevel() { }
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputMigrationLevel() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string SourceServer { get { throw null; } }
         public string SourceServerVersion { get { throw null; } }
@@ -1584,9 +1584,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string TargetServer { get { throw null; } }
         public string TargetServerVersion { get { throw null; } }
     }
-    public partial class MigrateOracleAzureDbPostgreSqlSyncTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDbPostgreSqlSyncTaskOutput
+    public partial class MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        internal MigrateOracleAzureDbPostgreSqlSyncTaskOutputTableLevel() { }
+        internal MigrateOracleAzureDBPostgreSqlSyncTaskOutputTableLevel() { }
         public long? CdcDeleteCounter { get { throw null; } }
         public long? CdcInsertCounter { get { throw null; } }
         public long? CdcUpdateCounter { get { throw null; } }
@@ -1601,45 +1601,45 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string TableName { get { throw null; } }
         public long? TotalChangesApplied { get { throw null; } }
     }
-    public partial class MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseInput
+    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput
     {
-        public MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseInput() { }
+        public MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput() { }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> MigrationSetting { get { throw null; } }
         public string Name { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseTableInput> SelectedTables { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput> SelectedTables { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> SourceSetting { get { throw null; } }
         public string TargetDatabaseName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> TargetSetting { get { throw null; } }
     }
-    public partial class MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseTableInput
+    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput
     {
-        public MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseTableInput() { }
+        public MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseTableInput() { }
         public string Name { get { throw null; } set { } }
     }
-    public partial class MigratePostgreSqlAzureDbForPostgreSqlSyncTaskInput
+    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput
     {
-        public MigratePostgreSqlAzureDbForPostgreSqlSyncTaskInput(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseInput> selectedDatabases, Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo targetConnectionInfo, Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo sourceConnectionInfo) { }
+        public MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases, Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo targetConnectionInfo, Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo sourceConnectionInfo) { }
         public string EncryptedKeyForSecureFields { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDbForPostgreSqlSyncDatabaseInput> SelectedDatabases { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> SelectedDatabases { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo SourceConnectionInfo { get { throw null; } set { } }
         public System.DateTimeOffset? StartedOn { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.PostgreSqlConnectionInfo TargetConnectionInfo { get { throw null; } set { } }
     }
-    public abstract partial class MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput
+    public abstract partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        protected MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput() { }
+        protected MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput() { }
         public string Id { get { throw null; } }
     }
-    public partial class MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputDatabaseError : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput
+    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        internal MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputDatabaseError() { }
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseError() { }
         public string ErrorMessage { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
     }
-    public partial class MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput
+    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        internal MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputDatabaseLevel() { }
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputDatabaseLevel() { }
         public long? AppliedChanges { get { throw null; } }
         public long? CdcDeleteCounter { get { throw null; } }
         public long? CdcInsertCounter { get { throw null; } }
@@ -1656,15 +1656,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         public Azure.ResourceManager.DataMigration.Models.SyncDatabaseMigrationReportingState? MigrationState { get { throw null; } }
         public System.DateTimeOffset? StartedOn { get { throw null; } }
     }
-    public partial class MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput
+    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        internal MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputError() { }
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
     }
-    public partial class MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput
+    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        internal MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputMigrationLevel() { }
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputMigrationLevel() { }
         public float? DatabaseCount { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string SourceServer { get { throw null; } }
@@ -1676,9 +1676,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public Azure.ResourceManager.DataMigration.Models.ScenarioTarget? TargetServerType { get { throw null; } }
         public string TargetServerVersion { get { throw null; } }
     }
-    public partial class MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput
+    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput
     {
-        internal MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutputTableLevel() { }
+        internal MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutputTableLevel() { }
         public long? CdcDeleteCounter { get { throw null; } }
         public long? CdcInsertCounter { get { throw null; } }
         public long? CdcUpdateCounter { get { throw null; } }
@@ -1693,38 +1693,38 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string TableName { get { throw null; } }
         public long? TotalChangesApplied { get { throw null; } }
     }
-    public partial class MigratePostgreSqlAzureDbForPostgreSqlSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public MigratePostgreSqlAzureDbForPostgreSqlSyncTaskProperties() { }
+        public MigratePostgreSqlAzureDBForPostgreSqlSyncTaskProperties() { }
         public string CreatedOn { get { throw null; } set { } }
-        public Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDbForPostgreSqlSyncTaskInput Input { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput Input { get { throw null; } set { } }
         public bool? IsCloneable { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDbForPostgreSqlSyncTaskOutput> Output { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MigratePostgreSqlAzureDBForPostgreSqlSyncTaskOutput> Output { get { throw null; } }
         public string TaskId { get { throw null; } set { } }
     }
-    public partial class MigrateSchemaSqlServerSqlDbDatabaseInput
+    public partial class MigrateSchemaSqlServerSqlDBDatabaseInput
     {
-        public MigrateSchemaSqlServerSqlDbDatabaseInput() { }
+        public MigrateSchemaSqlServerSqlDBDatabaseInput() { }
         public string Id { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.SchemaMigrationSetting SchemaSetting { get { throw null; } set { } }
         public string TargetDatabaseName { get { throw null; } set { } }
     }
-    public partial class MigrateSchemaSqlServerSqlDbTaskInput : Azure.ResourceManager.DataMigration.Models.SqlMigrationTaskInput
+    public partial class MigrateSchemaSqlServerSqlDBTaskInput : Azure.ResourceManager.DataMigration.Models.SqlMigrationTaskInput
     {
-        public MigrateSchemaSqlServerSqlDbTaskInput(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo targetConnectionInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDbDatabaseInput> selectedDatabases) : base (default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo), default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo)) { }
+        public MigrateSchemaSqlServerSqlDBTaskInput(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo targetConnectionInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBDatabaseInput> selectedDatabases) : base (default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo), default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo)) { }
         public string EncryptedKeyForSecureFields { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDbDatabaseInput> SelectedDatabases { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBDatabaseInput> SelectedDatabases { get { throw null; } }
         public string StartedOn { get { throw null; } set { } }
     }
-    public abstract partial class MigrateSchemaSqlServerSqlDbTaskOutput
+    public abstract partial class MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        protected MigrateSchemaSqlServerSqlDbTaskOutput() { }
+        protected MigrateSchemaSqlServerSqlDBTaskOutput() { }
         public string Id { get { throw null; } }
     }
-    public partial class MigrateSchemaSqlServerSqlDbTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDbTaskOutput
+    public partial class MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        internal MigrateSchemaSqlServerSqlDbTaskOutputDatabaseLevel() { }
+        internal MigrateSchemaSqlServerSqlDBTaskOutputDatabaseLevel() { }
         public string DatabaseErrorResultPrefix { get { throw null; } }
         public string DatabaseName { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
@@ -1736,15 +1736,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         public System.DateTimeOffset? StartedOn { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.MigrationState? State { get { throw null; } }
     }
-    public partial class MigrateSchemaSqlServerSqlDbTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDbTaskOutput
+    public partial class MigrateSchemaSqlServerSqlDBTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        internal MigrateSchemaSqlServerSqlDbTaskOutputError() { }
+        internal MigrateSchemaSqlServerSqlDBTaskOutputError() { }
         public string CommandText { get { throw null; } }
         public string ErrorText { get { throw null; } }
     }
-    public partial class MigrateSchemaSqlServerSqlDbTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDbTaskOutput
+    public partial class MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        internal MigrateSchemaSqlServerSqlDbTaskOutputMigrationLevel() { }
+        internal MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string SourceServerBrandVersion { get { throw null; } }
         public string SourceServerVersion { get { throw null; } }
@@ -1753,33 +1753,33 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string TargetServerBrandVersion { get { throw null; } }
         public string TargetServerVersion { get { throw null; } }
     }
-    public partial class MigrateSchemaSqlServerSqlDbTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class MigrateSchemaSqlServerSqlDBTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public MigrateSchemaSqlServerSqlDbTaskProperties() { }
+        public MigrateSchemaSqlServerSqlDBTaskProperties() { }
         public string CreatedOn { get { throw null; } set { } }
-        public Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDbTaskInput Input { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBTaskInput Input { get { throw null; } set { } }
         public bool? IsCloneable { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDbTaskOutput> Output { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBTaskOutput> Output { get { throw null; } }
         public string TaskId { get { throw null; } set { } }
     }
-    public partial class MigrateSchemaSqlTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDbTaskOutput
+    public partial class MigrateSchemaSqlTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateSchemaSqlServerSqlDBTaskOutput
     {
         internal MigrateSchemaSqlTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbDatabaseInput
+    public partial class MigrateSqlServerSqlDBDatabaseInput
     {
-        public MigrateSqlServerSqlDbDatabaseInput() { }
+        public MigrateSqlServerSqlDBDatabaseInput() { }
         public string Id { get { throw null; } set { } }
-        public bool? MakeSourceDbReadOnly { get { throw null; } set { } }
+        public bool? MakeSourceDBReadOnly { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.BinaryData SchemaSetting { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> TableMap { get { throw null; } }
         public string TargetDatabaseName { get { throw null; } set { } }
     }
-    public partial class MigrateSqlServerSqlDbSyncDatabaseInput
+    public partial class MigrateSqlServerSqlDBSyncDatabaseInput
     {
-        public MigrateSqlServerSqlDbSyncDatabaseInput() { }
+        public MigrateSqlServerSqlDBSyncDatabaseInput() { }
         public string Id { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> MigrationSetting { get { throw null; } }
         public string Name { get { throw null; } set { } }
@@ -1789,26 +1789,26 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string TargetDatabaseName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> TargetSetting { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbSyncTaskInput : Azure.ResourceManager.DataMigration.Models.SqlMigrationTaskInput
+    public partial class MigrateSqlServerSqlDBSyncTaskInput : Azure.ResourceManager.DataMigration.Models.SqlMigrationTaskInput
     {
-        public MigrateSqlServerSqlDbSyncTaskInput(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo targetConnectionInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbSyncDatabaseInput> selectedDatabases) : base (default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo), default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbSyncDatabaseInput> SelectedDatabases { get { throw null; } }
+        public MigrateSqlServerSqlDBSyncTaskInput(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo targetConnectionInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases) : base (default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo), default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo)) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncDatabaseInput> SelectedDatabases { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.MigrationValidationOptions ValidationOptions { get { throw null; } set { } }
     }
-    public abstract partial class MigrateSqlServerSqlDbSyncTaskOutput
+    public abstract partial class MigrateSqlServerSqlDBSyncTaskOutput
     {
-        protected MigrateSqlServerSqlDbSyncTaskOutput() { }
+        protected MigrateSqlServerSqlDBSyncTaskOutput() { }
         public string Id { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbSyncTaskOutputDatabaseError : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbSyncTaskOutput
+    public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseError : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskOutput
     {
-        internal MigrateSqlServerSqlDbSyncTaskOutputDatabaseError() { }
+        internal MigrateSqlServerSqlDBSyncTaskOutputDatabaseError() { }
         public string ErrorMessage { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.SyncMigrationDatabaseErrorEvent> Events { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbSyncTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbSyncTaskOutput
+    public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskOutput
     {
-        internal MigrateSqlServerSqlDbSyncTaskOutputDatabaseLevel() { }
+        internal MigrateSqlServerSqlDBSyncTaskOutputDatabaseLevel() { }
         public long? AppliedChanges { get { throw null; } }
         public long? CdcDeleteCounter { get { throw null; } }
         public long? CdcInsertCounter { get { throw null; } }
@@ -1825,14 +1825,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         public Azure.ResourceManager.DataMigration.Models.SyncDatabaseMigrationReportingState? MigrationState { get { throw null; } }
         public System.DateTimeOffset? StartedOn { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbSyncTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbSyncTaskOutput
+    public partial class MigrateSqlServerSqlDBSyncTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskOutput
     {
-        internal MigrateSqlServerSqlDbSyncTaskOutputError() { }
+        internal MigrateSqlServerSqlDBSyncTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbSyncTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbSyncTaskOutput
+    public partial class MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskOutput
     {
-        internal MigrateSqlServerSqlDbSyncTaskOutputMigrationLevel() { }
+        internal MigrateSqlServerSqlDBSyncTaskOutputMigrationLevel() { }
         public int? DatabaseCount { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string SourceServer { get { throw null; } }
@@ -1841,9 +1841,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string TargetServer { get { throw null; } }
         public string TargetServerVersion { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbSyncTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbSyncTaskOutput
+    public partial class MigrateSqlServerSqlDBSyncTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskOutput
     {
-        internal MigrateSqlServerSqlDbSyncTaskOutputTableLevel() { }
+        internal MigrateSqlServerSqlDBSyncTaskOutputTableLevel() { }
         public long? CdcDeleteCounter { get { throw null; } }
         public long? CdcInsertCounter { get { throw null; } }
         public long? CdcUpdateCounter { get { throw null; } }
@@ -1858,28 +1858,28 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string TableName { get { throw null; } }
         public long? TotalChangesApplied { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class MigrateSqlServerSqlDBSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public MigrateSqlServerSqlDbSyncTaskProperties() { }
-        public Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbSyncTaskInput Input { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbSyncTaskOutput> Output { get { throw null; } }
+        public MigrateSqlServerSqlDBSyncTaskProperties() { }
+        public Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskInput Input { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncTaskOutput> Output { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbTaskInput : Azure.ResourceManager.DataMigration.Models.SqlMigrationTaskInput
+    public partial class MigrateSqlServerSqlDBTaskInput : Azure.ResourceManager.DataMigration.Models.SqlMigrationTaskInput
     {
-        public MigrateSqlServerSqlDbTaskInput(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo targetConnectionInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbDatabaseInput> selectedDatabases) : base (default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo), default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo)) { }
+        public MigrateSqlServerSqlDBTaskInput(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo targetConnectionInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBDatabaseInput> selectedDatabases) : base (default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo), default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo)) { }
         public string EncryptedKeyForSecureFields { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbDatabaseInput> SelectedDatabases { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBDatabaseInput> SelectedDatabases { get { throw null; } }
         public string StartedOn { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.MigrationValidationOptions ValidationOptions { get { throw null; } set { } }
     }
-    public abstract partial class MigrateSqlServerSqlDbTaskOutput
+    public abstract partial class MigrateSqlServerSqlDBTaskOutput
     {
-        protected MigrateSqlServerSqlDbTaskOutput() { }
+        protected MigrateSqlServerSqlDBTaskOutput() { }
         public string Id { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbTaskOutput
+    public partial class MigrateSqlServerSqlDBTaskOutputDatabaseLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput
     {
-        internal MigrateSqlServerSqlDbTaskOutputDatabaseLevel() { }
+        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevel() { }
         public string DatabaseName { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public long? ErrorCount { get { throw null; } }
@@ -1895,9 +1895,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public Azure.ResourceManager.DataMigration.Models.MigrationState? State { get { throw null; } }
         public string StatusMessage { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbTaskOutputDatabaseLevelValidationResult : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbTaskOutput
+    public partial class MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput
     {
-        internal MigrateSqlServerSqlDbTaskOutputDatabaseLevelValidationResult() { }
+        internal MigrateSqlServerSqlDBTaskOutputDatabaseLevelValidationResult() { }
         public Azure.ResourceManager.DataMigration.Models.DataIntegrityValidationResult DataIntegrityValidationResult { get { throw null; } }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string MigrationId { get { throw null; } }
@@ -1908,14 +1908,14 @@ namespace Azure.ResourceManager.DataMigration.Models
         public Azure.ResourceManager.DataMigration.Models.ValidationStatus? Status { get { throw null; } }
         public string TargetDatabaseName { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbTaskOutput
+    public partial class MigrateSqlServerSqlDBTaskOutputError : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput
     {
-        internal MigrateSqlServerSqlDbTaskOutputError() { }
+        internal MigrateSqlServerSqlDBTaskOutputError() { }
         public Azure.ResourceManager.DataMigration.Models.ReportableException Error { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbTaskOutput
+    public partial class MigrateSqlServerSqlDBTaskOutputMigrationLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput
     {
-        internal MigrateSqlServerSqlDbTaskOutputMigrationLevel() { }
+        internal MigrateSqlServerSqlDBTaskOutputMigrationLevel() { }
         public string Databases { get { throw null; } }
         public string DatabaseSummary { get { throw null; } }
         public long? DurationInSeconds { get { throw null; } }
@@ -1932,9 +1932,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string TargetServerBrandVersion { get { throw null; } }
         public string TargetServerVersion { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbTaskOutput
+    public partial class MigrateSqlServerSqlDBTaskOutputTableLevel : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput
     {
-        internal MigrateSqlServerSqlDbTaskOutputTableLevel() { }
+        internal MigrateSqlServerSqlDBTaskOutputTableLevel() { }
         public System.DateTimeOffset? EndedOn { get { throw null; } }
         public string ErrorPrefix { get { throw null; } }
         public long? ItemsCompletedCount { get { throw null; } }
@@ -1945,20 +1945,20 @@ namespace Azure.ResourceManager.DataMigration.Models
         public Azure.ResourceManager.DataMigration.Models.MigrationState? State { get { throw null; } }
         public string StatusMessage { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbTaskOutputValidationResult : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbTaskOutput
+    public partial class MigrateSqlServerSqlDBTaskOutputValidationResult : Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput
     {
-        internal MigrateSqlServerSqlDbTaskOutputValidationResult() { }
+        internal MigrateSqlServerSqlDBTaskOutputValidationResult() { }
         public string MigrationId { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.ValidationStatus? Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MigrationValidationDatabaseSummaryResult> SummaryResults { get { throw null; } }
     }
-    public partial class MigrateSqlServerSqlDbTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class MigrateSqlServerSqlDBTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public MigrateSqlServerSqlDbTaskProperties() { }
+        public MigrateSqlServerSqlDBTaskProperties() { }
         public string CreatedOn { get { throw null; } set { } }
-        public Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbTaskInput Input { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskInput Input { get { throw null; } set { } }
         public bool? IsCloneable { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbTaskOutput> Output { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBTaskOutput> Output { get { throw null; } }
         public string TaskId { get { throw null; } set { } }
     }
     public partial class MigrateSqlServerSqlMIDatabaseInput
@@ -1972,7 +1972,7 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class MigrateSqlServerSqlMISyncTaskInput : Azure.ResourceManager.DataMigration.Models.SqlServerSqlMISyncTaskInput
     {
-        public MigrateSqlServerSqlMISyncTaskInput(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, string storageResourceId, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.MiSqlConnectionInfo targetConnectionInfo, Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp azureApp) : base (default(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMIDatabaseInput>), default(string), default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo), default(Azure.ResourceManager.DataMigration.Models.MiSqlConnectionInfo), default(Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp)) { }
+        public MigrateSqlServerSqlMISyncTaskInput(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, string storageResourceId, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.MISqlConnectionInfo targetConnectionInfo, Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp azureApp) : base (default(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMIDatabaseInput>), default(string), default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo), default(Azure.ResourceManager.DataMigration.Models.MISqlConnectionInfo), default(Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp)) { }
         public float? NumberOfParallelDatabaseMigrations { get { throw null; } set { } }
     }
     public abstract partial class MigrateSqlServerSqlMISyncTaskOutput
@@ -2278,73 +2278,73 @@ namespace Azure.ResourceManager.DataMigration.Models
         public Azure.ResourceManager.DataMigration.Models.ValidationStatus? Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MigrationValidationDatabaseSummaryResult> SummaryResults { get { throw null; } }
     }
-    public partial class MiSqlConnectionInfo : Azure.ResourceManager.DataMigration.Models.ConnectionInfo
+    public partial class MISqlConnectionInfo : Azure.ResourceManager.DataMigration.Models.ConnectionInfo
     {
-        public MiSqlConnectionInfo(string managedInstanceResourceId) { }
+        public MISqlConnectionInfo(string managedInstanceResourceId) { }
         public string ManagedInstanceResourceId { get { throw null; } set { } }
     }
-    public partial class MongoDbCancelCommand : Azure.ResourceManager.DataMigration.Models.CommandProperties
+    public partial class MongoDBCancelCommand : Azure.ResourceManager.DataMigration.Models.CommandProperties
     {
-        public MongoDbCancelCommand() { }
+        public MongoDBCancelCommand() { }
         public string InputObjectName { get { throw null; } set { } }
     }
-    public partial class MongoDbClusterInfo
+    public partial class MongoDBClusterInfo
     {
-        internal MongoDbClusterInfo() { }
-        public Azure.ResourceManager.DataMigration.Models.MongoDbClusterType ClusterType { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MongoDbDatabaseInfo> Databases { get { throw null; } }
+        internal MongoDBClusterInfo() { }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBClusterType ClusterType { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MongoDBDatabaseInfo> Databases { get { throw null; } }
         public bool SupportsSharding { get { throw null; } }
         public string Version { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MongoDbClusterType : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MongoDbClusterType>
+    public readonly partial struct MongoDBClusterType : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MongoDBClusterType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public MongoDbClusterType(string value) { throw null; }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbClusterType BlobContainer { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbClusterType CosmosDb { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbClusterType MongoDb { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataMigration.Models.MongoDbClusterType other) { throw null; }
+        public MongoDBClusterType(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBClusterType BlobContainer { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBClusterType CosmosDB { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBClusterType MongoDB { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.MongoDBClusterType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.MongoDbClusterType left, Azure.ResourceManager.DataMigration.Models.MongoDbClusterType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataMigration.Models.MongoDbClusterType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.MongoDbClusterType left, Azure.ResourceManager.DataMigration.Models.MongoDbClusterType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.MongoDBClusterType left, Azure.ResourceManager.DataMigration.Models.MongoDBClusterType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.MongoDBClusterType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.MongoDBClusterType left, Azure.ResourceManager.DataMigration.Models.MongoDBClusterType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MongoDbCollectionInfo : Azure.ResourceManager.DataMigration.Models.MongoDbObjectInfo
+    public partial class MongoDBCollectionInfo : Azure.ResourceManager.DataMigration.Models.MongoDBObjectInfo
     {
-        internal MongoDbCollectionInfo() { }
+        internal MongoDBCollectionInfo() { }
         public string DatabaseName { get { throw null; } }
         public bool IsCapped { get { throw null; } }
         public bool IsSystemCollection { get { throw null; } }
         public bool IsView { get { throw null; } }
-        public Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyInfo ShardKey { get { throw null; } }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyInfo ShardKey { get { throw null; } }
         public bool SupportsSharding { get { throw null; } }
         public string ViewOf { get { throw null; } }
     }
-    public partial class MongoDbCollectionProgress : Azure.ResourceManager.DataMigration.Models.MongoDbProgress
+    public partial class MongoDBCollectionProgress : Azure.ResourceManager.DataMigration.Models.MongoDBProgress
     {
-        internal MongoDbCollectionProgress() : base (default(long), default(long), default(string), default(System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDbError>), default(long), default(long), default(Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState), default(long), default(long)) { }
+        internal MongoDBCollectionProgress() : base (default(long), default(long), default(string), default(System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError>), default(long), default(long), default(Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState), default(long), default(long)) { }
     }
-    public partial class MongoDbCollectionSettings
+    public partial class MongoDBCollectionSettings
     {
-        public MongoDbCollectionSettings() { }
+        public MongoDBCollectionSettings() { }
         public bool? CanDelete { get { throw null; } set { } }
-        public Azure.ResourceManager.DataMigration.Models.MongoDbShardKeySetting ShardKey { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBShardKeySetting ShardKey { get { throw null; } set { } }
         public int? TargetRUs { get { throw null; } set { } }
     }
-    public partial class MongoDbCommandInput
+    public partial class MongoDBCommandInput
     {
-        public MongoDbCommandInput() { }
+        public MongoDBCommandInput() { }
         public string ObjectName { get { throw null; } set { } }
     }
-    public partial class MongoDbConnectionInfo : Azure.ResourceManager.DataMigration.Models.ConnectionInfo
+    public partial class MongoDBConnectionInfo : Azure.ResourceManager.DataMigration.Models.ConnectionInfo
     {
-        public MongoDbConnectionInfo(string connectionString) { }
+        public MongoDBConnectionInfo(string connectionString) { }
         public string AdditionalSettings { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.AuthenticationType? Authentication { get { throw null; } set { } }
         public string ConnectionString { get { throw null; } set { } }
@@ -2357,192 +2357,192 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string ServerVersion { get { throw null; } set { } }
         public bool? TrustServerCertificate { get { throw null; } set { } }
     }
-    public partial class MongoDbDatabaseInfo : Azure.ResourceManager.DataMigration.Models.MongoDbObjectInfo
+    public partial class MongoDBDatabaseInfo : Azure.ResourceManager.DataMigration.Models.MongoDBObjectInfo
     {
-        internal MongoDbDatabaseInfo() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MongoDbCollectionInfo> Collections { get { throw null; } }
+        internal MongoDBDatabaseInfo() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MongoDBCollectionInfo> Collections { get { throw null; } }
         public bool SupportsSharding { get { throw null; } }
     }
-    public partial class MongoDbDatabaseProgress : Azure.ResourceManager.DataMigration.Models.MongoDbProgress
+    public partial class MongoDBDatabaseProgress : Azure.ResourceManager.DataMigration.Models.MongoDBProgress
     {
-        internal MongoDbDatabaseProgress() : base (default(long), default(long), default(string), default(System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDbError>), default(long), default(long), default(Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState), default(long), default(long)) { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDbCollectionProgress> Collections { get { throw null; } }
+        internal MongoDBDatabaseProgress() : base (default(long), default(long), default(string), default(System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError>), default(long), default(long), default(Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState), default(long), default(long)) { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBCollectionProgress> Collections { get { throw null; } }
     }
-    public partial class MongoDbDatabaseSettings
+    public partial class MongoDBDatabaseSettings
     {
-        public MongoDbDatabaseSettings(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDbCollectionSettings> collections) { }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDbCollectionSettings> Collections { get { throw null; } }
+        public MongoDBDatabaseSettings(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBCollectionSettings> collections) { }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBCollectionSettings> Collections { get { throw null; } }
         public int? TargetRUs { get { throw null; } set { } }
     }
-    public partial class MongoDbError
+    public partial class MongoDBError
     {
-        internal MongoDbError() { }
+        internal MongoDBError() { }
         public string Code { get { throw null; } }
         public int? Count { get { throw null; } }
-        public Azure.ResourceManager.DataMigration.Models.MongoDbErrorType? ErrorType { get { throw null; } }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBErrorType? ErrorType { get { throw null; } }
         public string Message { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MongoDbErrorType : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MongoDbErrorType>
+    public readonly partial struct MongoDBErrorType : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MongoDBErrorType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public MongoDbErrorType(string value) { throw null; }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbErrorType Error { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbErrorType ValidationError { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbErrorType Warning { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataMigration.Models.MongoDbErrorType other) { throw null; }
+        public MongoDBErrorType(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBErrorType Error { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBErrorType ValidationError { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBErrorType Warning { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.MongoDBErrorType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.MongoDbErrorType left, Azure.ResourceManager.DataMigration.Models.MongoDbErrorType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataMigration.Models.MongoDbErrorType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.MongoDbErrorType left, Azure.ResourceManager.DataMigration.Models.MongoDbErrorType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.MongoDBErrorType left, Azure.ResourceManager.DataMigration.Models.MongoDBErrorType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.MongoDBErrorType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.MongoDBErrorType left, Azure.ResourceManager.DataMigration.Models.MongoDBErrorType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MongoDbFinishCommand : Azure.ResourceManager.DataMigration.Models.CommandProperties
+    public partial class MongoDBFinishCommand : Azure.ResourceManager.DataMigration.Models.CommandProperties
     {
-        public MongoDbFinishCommand() { }
-        public Azure.ResourceManager.DataMigration.Models.MongoDbFinishCommandInput Input { get { throw null; } set { } }
+        public MongoDBFinishCommand() { }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBFinishCommandInput Input { get { throw null; } set { } }
     }
-    public partial class MongoDbFinishCommandInput : Azure.ResourceManager.DataMigration.Models.MongoDbCommandInput
+    public partial class MongoDBFinishCommandInput : Azure.ResourceManager.DataMigration.Models.MongoDBCommandInput
     {
-        public MongoDbFinishCommandInput(bool immediate) { }
+        public MongoDBFinishCommandInput(bool immediate) { }
         public bool Immediate { get { throw null; } set { } }
     }
-    public partial class MongoDbMigrationProgress : Azure.ResourceManager.DataMigration.Models.MongoDbProgress
+    public partial class MongoDBMigrationProgress : Azure.ResourceManager.DataMigration.Models.MongoDBProgress
     {
-        internal MongoDbMigrationProgress() : base (default(long), default(long), default(string), default(System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDbError>), default(long), default(long), default(Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState), default(long), default(long)) { }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDbDatabaseProgress> Databases { get { throw null; } }
+        internal MongoDBMigrationProgress() : base (default(long), default(long), default(string), default(System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError>), default(long), default(long), default(Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState), default(long), default(long)) { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBDatabaseProgress> Databases { get { throw null; } }
     }
-    public partial class MongoDbMigrationSettings
+    public partial class MongoDBMigrationSettings
     {
-        public MongoDbMigrationSettings(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDbDatabaseSettings> databases, Azure.ResourceManager.DataMigration.Models.MongoDbConnectionInfo source, Azure.ResourceManager.DataMigration.Models.MongoDbConnectionInfo target) { }
+        public MongoDBMigrationSettings(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBDatabaseSettings> databases, Azure.ResourceManager.DataMigration.Models.MongoDBConnectionInfo source, Azure.ResourceManager.DataMigration.Models.MongoDBConnectionInfo target) { }
         public int? BoostRUs { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDbDatabaseSettings> Databases { get { throw null; } }
-        public Azure.ResourceManager.DataMigration.Models.MongoDbReplication? Replication { get { throw null; } set { } }
-        public Azure.ResourceManager.DataMigration.Models.MongoDbConnectionInfo Source { get { throw null; } set { } }
-        public Azure.ResourceManager.DataMigration.Models.MongoDbConnectionInfo Target { get { throw null; } set { } }
-        public Azure.ResourceManager.DataMigration.Models.MongoDbThrottlingSettings Throttling { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBDatabaseSettings> Databases { get { throw null; } }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBReplication? Replication { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBConnectionInfo Source { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBConnectionInfo Target { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBThrottlingSettings Throttling { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MongoDbMigrationState : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState>
+    public readonly partial struct MongoDBMigrationState : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public MongoDbMigrationState(string value) { throw null; }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState Complete { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState Copying { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState Failed { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState Finalizing { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState Initializing { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState InitialReplay { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState NotStarted { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState Replaying { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState Restarting { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState ValidatingInput { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState other) { throw null; }
+        public MongoDBMigrationState(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState Complete { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState Copying { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState Failed { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState Finalizing { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState Initializing { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState InitialReplay { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState NotStarted { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState Replaying { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState Restarting { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState ValidatingInput { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState left, Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState left, Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState left, Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState left, Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MongoDbObjectInfo
+    public partial class MongoDBObjectInfo
     {
-        internal MongoDbObjectInfo() { }
+        internal MongoDBObjectInfo() { }
         public long AverageDocumentSize { get { throw null; } }
         public long DataSize { get { throw null; } }
         public long DocumentCount { get { throw null; } }
         public string Name { get { throw null; } }
         public string QualifiedName { get { throw null; } }
     }
-    public abstract partial class MongoDbProgress
+    public abstract partial class MongoDBProgress
     {
-        protected MongoDbProgress(long bytesCopied, long documentsCopied, string elapsedTime, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDbError> errors, long eventsPending, long eventsReplayed, Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState state, long totalBytes, long totalDocuments) { }
+        protected MongoDBProgress(long bytesCopied, long documentsCopied, string elapsedTime, System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError> errors, long eventsPending, long eventsReplayed, Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState state, long totalBytes, long totalDocuments) { }
         public long BytesCopied { get { throw null; } }
         public long DocumentsCopied { get { throw null; } }
         public string ElapsedTime { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDbError> Errors { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataMigration.Models.MongoDBError> Errors { get { throw null; } }
         public long EventsPending { get { throw null; } }
         public long EventsReplayed { get { throw null; } }
         public System.DateTimeOffset? LastEventOn { get { throw null; } }
         public System.DateTimeOffset? LastReplayOn { get { throw null; } }
         public string Name { get { throw null; } }
         public string QualifiedName { get { throw null; } }
-        public Azure.ResourceManager.DataMigration.Models.MongoDbMigrationState State { get { throw null; } }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBMigrationState State { get { throw null; } }
         public long TotalBytes { get { throw null; } }
         public long TotalDocuments { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MongoDbReplication : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MongoDbReplication>
+    public readonly partial struct MongoDBReplication : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MongoDBReplication>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public MongoDbReplication(string value) { throw null; }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbReplication Continuous { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbReplication Disabled { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbReplication OneTime { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataMigration.Models.MongoDbReplication other) { throw null; }
+        public MongoDBReplication(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBReplication Continuous { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBReplication Disabled { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBReplication OneTime { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.MongoDBReplication other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.MongoDbReplication left, Azure.ResourceManager.DataMigration.Models.MongoDbReplication right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataMigration.Models.MongoDbReplication (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.MongoDbReplication left, Azure.ResourceManager.DataMigration.Models.MongoDbReplication right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.MongoDBReplication left, Azure.ResourceManager.DataMigration.Models.MongoDBReplication right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.MongoDBReplication (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.MongoDBReplication left, Azure.ResourceManager.DataMigration.Models.MongoDBReplication right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MongoDbRestartCommand : Azure.ResourceManager.DataMigration.Models.CommandProperties
+    public partial class MongoDBRestartCommand : Azure.ResourceManager.DataMigration.Models.CommandProperties
     {
-        public MongoDbRestartCommand() { }
+        public MongoDBRestartCommand() { }
         public string InputObjectName { get { throw null; } set { } }
     }
-    public partial class MongoDbShardKeyField
+    public partial class MongoDBShardKeyField
     {
-        public MongoDbShardKeyField(string name, Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyOrder order) { }
+        public MongoDBShardKeyField(string name, Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder order) { }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyOrder Order { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder Order { get { throw null; } set { } }
     }
-    public partial class MongoDbShardKeyInfo
+    public partial class MongoDBShardKeyInfo
     {
-        internal MongoDbShardKeyInfo() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyField> Fields { get { throw null; } }
+        internal MongoDBShardKeyInfo() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField> Fields { get { throw null; } }
         public bool IsUnique { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MongoDbShardKeyOrder : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyOrder>
+    public readonly partial struct MongoDBShardKeyOrder : System.IEquatable<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public MongoDbShardKeyOrder(string value) { throw null; }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyOrder Forward { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyOrder Hashed { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyOrder Reverse { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyOrder other) { throw null; }
+        public MongoDBShardKeyOrder(string value) { throw null; }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder Forward { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder Hashed { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder Reverse { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyOrder left, Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyOrder right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyOrder (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyOrder left, Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyOrder right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder left, Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder right) { throw null; }
+        public static implicit operator Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder left, Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyOrder right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MongoDbShardKeySetting
+    public partial class MongoDBShardKeySetting
     {
-        public MongoDbShardKeySetting(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyField> fields) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MongoDbShardKeyField> Fields { get { throw null; } }
+        public MongoDBShardKeySetting(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField> fields) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MongoDBShardKeyField> Fields { get { throw null; } }
         public bool? IsUnique { get { throw null; } set { } }
     }
-    public partial class MongoDbThrottlingSettings
+    public partial class MongoDBThrottlingSettings
     {
-        public MongoDbThrottlingSettings() { }
+        public MongoDBThrottlingSettings() { }
         public int? MaxParallelism { get { throw null; } set { } }
         public int? MinFreeCpu { get { throw null; } set { } }
         public int? MinFreeMemoryMb { get { throw null; } set { } }
@@ -2563,7 +2563,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MySqlTargetPlatformType(string value) { throw null; }
-        public static Azure.ResourceManager.DataMigration.Models.MySqlTargetPlatformType AzureDbForMySQL { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.MySqlTargetPlatformType AzureDBForMySql { get { throw null; } }
         public static Azure.ResourceManager.DataMigration.Models.MySqlTargetPlatformType SqlServer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataMigration.Models.MySqlTargetPlatformType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -2662,9 +2662,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string ServerName { get { throw null; } set { } }
         public string ServerVersion { get { throw null; } set { } }
     }
-    public partial class OracleOCIDriverInfo
+    public partial class OracleOciDriverInfo
     {
-        internal OracleOCIDriverInfo() { }
+        internal OracleOciDriverInfo() { }
         public string ArchiveChecksum { get { throw null; } }
         public string AssemblyVersion { get { throw null; } }
         public string DriverName { get { throw null; } }
@@ -2725,10 +2725,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ProjectSourcePlatform(string value) { throw null; }
-        public static Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform MongoDb { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform MySQL { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform MongoDB { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform MySql { get { throw null; } }
         public static Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform PostgreSql { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform SQL { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform Sql { get { throw null; } }
         public static Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataMigration.Models.ProjectSourcePlatform other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -2746,11 +2746,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public ProjectTargetPlatform(string value) { throw null; }
-        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform AzureDbForMySql { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform AzureDbForPostgreSql { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform MongoDb { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform Sqldb { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform Sqlmi { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform AzureDBForMySql { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform AzureDBForPostgreSql { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform MongoDB { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform SqlDB { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform SqlMI { get { throw null; } }
         public static Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform Unknown { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataMigration.Models.ProjectTargetPlatform other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -2945,12 +2945,12 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static Azure.ResourceManager.DataMigration.Models.ScenarioSource Access { get { throw null; } }
         public static Azure.ResourceManager.DataMigration.Models.ScenarioSource DB2 { get { throw null; } }
         public static Azure.ResourceManager.DataMigration.Models.ScenarioSource MongoDB { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.ScenarioSource MySQL { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ScenarioSource MySql { get { throw null; } }
         public static Azure.ResourceManager.DataMigration.Models.ScenarioSource MySqlrds { get { throw null; } }
         public static Azure.ResourceManager.DataMigration.Models.ScenarioSource Oracle { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.ScenarioSource PostgreSQL { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ScenarioSource PostgreSql { get { throw null; } }
         public static Azure.ResourceManager.DataMigration.Models.ScenarioSource PostgreSqlrds { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.ScenarioSource SQL { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ScenarioSource Sql { get { throw null; } }
         public static Azure.ResourceManager.DataMigration.Models.ScenarioSource Sqlrds { get { throw null; } }
         public static Azure.ResourceManager.DataMigration.Models.ScenarioSource Sybase { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataMigration.Models.ScenarioSource other) { throw null; }
@@ -2970,12 +2970,12 @@ namespace Azure.ResourceManager.DataMigration.Models
         private readonly int _dummyPrimitive;
         public ScenarioTarget(string value) { throw null; }
         public static Azure.ResourceManager.DataMigration.Models.ScenarioTarget AzureDBForMySql { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.ScenarioTarget AzureDBForPostgresSQL { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ScenarioTarget AzureDBForPostgresSql { get { throw null; } }
         public static Azure.ResourceManager.DataMigration.Models.ScenarioTarget MongoDB { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.ScenarioTarget Sqldb { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.ScenarioTarget Sqldw { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.ScenarioTarget Sqlmi { get { throw null; } }
-        public static Azure.ResourceManager.DataMigration.Models.ScenarioTarget SQLServer { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ScenarioTarget SqlDB { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ScenarioTarget SqlDW { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ScenarioTarget SqlMI { get { throw null; } }
+        public static Azure.ResourceManager.DataMigration.Models.ScenarioTarget SqlServer { get { throw null; } }
         public bool Equals(Azure.ResourceManager.DataMigration.Models.ScenarioTarget other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -3064,7 +3064,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         Default = 0,
         MigrationFromSqlServerToAzureDB = 1,
         MigrationFromSqlServerToAzureMI = 2,
-        MigrationFromMySQLToAzureDBForMySQL = 3,
+        MigrationFromMySqlToAzureDBForMySql = 3,
         MigrationFromSqlServerToAzureVm = 4,
     }
     public partial class ServerProperties
@@ -3209,9 +3209,9 @@ namespace Azure.ResourceManager.DataMigration.Models
         public bool? TrustServerCertificate { get { throw null; } set { } }
         public string UserName { get { throw null; } set { } }
     }
-    public partial class SqlDbMigrationStatusDetails
+    public partial class SqlDBMigrationStatusDetails
     {
-        internal SqlDbMigrationStatusDetails() { }
+        internal SqlDBMigrationStatusDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.CopyProgressDetails> ListOfCopyProgressDetails { get { throw null; } }
         public string MigrationState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SqlDataCopyErrors { get { throw null; } }
@@ -3236,13 +3236,13 @@ namespace Azure.ResourceManager.DataMigration.Models
     }
     public partial class SqlServerSqlMISyncTaskInput
     {
-        public SqlServerSqlMISyncTaskInput(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, string storageResourceId, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.MiSqlConnectionInfo targetConnectionInfo, Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp azureApp) { }
+        public SqlServerSqlMISyncTaskInput(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, string storageResourceId, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.MISqlConnectionInfo targetConnectionInfo, Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp azureApp) { }
         public Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp AzureApp { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.FileShare BackupFileShare { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMIDatabaseInput> SelectedDatabases { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo SourceConnectionInfo { get { throw null; } set { } }
         public string StorageResourceId { get { throw null; } set { } }
-        public Azure.ResourceManager.DataMigration.Models.MiSqlConnectionInfo TargetConnectionInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.DataMigration.Models.MISqlConnectionInfo TargetConnectionInfo { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SqlSourcePlatform : System.IEquatable<Azure.ResourceManager.DataMigration.Models.SqlSourcePlatform>
@@ -3435,27 +3435,27 @@ namespace Azure.ResourceManager.DataMigration.Models
         public static bool operator !=(Azure.ResourceManager.DataMigration.Models.UpdateActionType left, Azure.ResourceManager.DataMigration.Models.UpdateActionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class UploadOCIDriverTaskOutput
+    public partial class UploadOciDriverTaskOutput
     {
-        internal UploadOCIDriverTaskOutput() { }
+        internal UploadOciDriverTaskOutput() { }
         public string DriverPackageName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> ValidationErrors { get { throw null; } }
     }
-    public partial class UploadOCIDriverTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class UploadOciDriverTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public UploadOCIDriverTaskProperties() { }
+        public UploadOciDriverTaskProperties() { }
         public Azure.ResourceManager.DataMigration.Models.FileShare InputDriverShare { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.UploadOCIDriverTaskOutput> Output { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.UploadOciDriverTaskOutput> Output { get { throw null; } }
     }
-    public partial class ValidateMigrationInputSqlServerSqlDbSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class ValidateMigrationInputSqlServerSqlDBSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public ValidateMigrationInputSqlServerSqlDbSyncTaskProperties() { }
+        public ValidateMigrationInputSqlServerSqlDBSyncTaskProperties() { }
         public Azure.ResourceManager.DataMigration.Models.ValidateSyncMigrationInputSqlServerTaskInput Input { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ValidateSyncMigrationInputSqlServerTaskOutput> Output { get { throw null; } }
     }
     public partial class ValidateMigrationInputSqlServerSqlMISyncTaskInput : Azure.ResourceManager.DataMigration.Models.SqlServerSqlMISyncTaskInput
     {
-        public ValidateMigrationInputSqlServerSqlMISyncTaskInput(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, string storageResourceId, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.MiSqlConnectionInfo targetConnectionInfo, Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp azureApp) : base (default(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMIDatabaseInput>), default(string), default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo), default(Azure.ResourceManager.DataMigration.Models.MiSqlConnectionInfo), default(Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp)) { }
+        public ValidateMigrationInputSqlServerSqlMISyncTaskInput(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMIDatabaseInput> selectedDatabases, string storageResourceId, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.MISqlConnectionInfo targetConnectionInfo, Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp azureApp) : base (default(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlMIDatabaseInput>), default(string), default(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo), default(Azure.ResourceManager.DataMigration.Models.MISqlConnectionInfo), default(Azure.ResourceManager.DataMigration.Models.AzureActiveDirectoryApp)) { }
     }
     public partial class ValidateMigrationInputSqlServerSqlMISyncTaskOutput
     {
@@ -3499,27 +3499,27 @@ namespace Azure.ResourceManager.DataMigration.Models
         public Azure.ResourceManager.DataMigration.Models.ValidateMigrationInputSqlServerSqlMITaskInput Input { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ValidateMigrationInputSqlServerSqlMITaskOutput> Output { get { throw null; } }
     }
-    public partial class ValidateMongoDbTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class ValidateMongoDBTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public ValidateMongoDbTaskProperties() { }
-        public Azure.ResourceManager.DataMigration.Models.MongoDbMigrationSettings Input { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MongoDbMigrationProgress> Output { get { throw null; } }
+        public ValidateMongoDBTaskProperties() { }
+        public Azure.ResourceManager.DataMigration.Models.MongoDBMigrationSettings Input { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.MongoDBMigrationProgress> Output { get { throw null; } }
     }
-    public partial class ValidateOracleAzureDbForPostgreSqlSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
+    public partial class ValidateOracleAzureDBForPostgreSqlSyncTaskProperties : Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties
     {
-        public ValidateOracleAzureDbForPostgreSqlSyncTaskProperties() { }
-        public Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDbPostgreSqlSyncTaskInput Input { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ValidateOracleAzureDbPostgreSqlSyncTaskOutput> Output { get { throw null; } }
+        public ValidateOracleAzureDBForPostgreSqlSyncTaskProperties() { }
+        public Azure.ResourceManager.DataMigration.Models.MigrateOracleAzureDBPostgreSqlSyncTaskInput Input { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ValidateOracleAzureDBPostgreSqlSyncTaskOutput> Output { get { throw null; } }
     }
-    public partial class ValidateOracleAzureDbPostgreSqlSyncTaskOutput
+    public partial class ValidateOracleAzureDBPostgreSqlSyncTaskOutput
     {
-        internal ValidateOracleAzureDbPostgreSqlSyncTaskOutput() { }
+        internal ValidateOracleAzureDBPostgreSqlSyncTaskOutput() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataMigration.Models.ReportableException> ValidationErrors { get { throw null; } }
     }
     public partial class ValidateSyncMigrationInputSqlServerTaskInput
     {
-        public ValidateSyncMigrationInputSqlServerTaskInput(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo targetConnectionInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbSyncDatabaseInput> selectedDatabases) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDbSyncDatabaseInput> SelectedDatabases { get { throw null; } }
+        public ValidateSyncMigrationInputSqlServerTaskInput(Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo sourceConnectionInfo, Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo targetConnectionInfo, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.DataMigration.Models.MigrateSqlServerSqlDBSyncDatabaseInput> SelectedDatabases { get { throw null; } }
         public Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo SourceConnectionInfo { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.SqlConnectionInfo TargetConnectionInfo { get { throw null; } set { } }
     }

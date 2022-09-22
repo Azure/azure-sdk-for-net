@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SqlDb": return DatabaseMigrationPropertiesSqlDb.DeserializeDatabaseMigrationPropertiesSqlDb(element);
-                    case "SqlVm": return DatabaseMigrationPropertiesSqlVm.DeserializeDatabaseMigrationPropertiesSqlVm(element);
-                    case "SqlMi": return DatabaseMigrationPropertiesSqlMi.DeserializeDatabaseMigrationPropertiesSqlMi(element);
+                    case "SqlDb": return DatabaseMigrationSqlDBProperties.DeserializeDatabaseMigrationSqlDBProperties(element);
+                    case "SqlVm": return DatabaseMigrationSqlVmProperties.DeserializeDatabaseMigrationSqlVmProperties(element);
+                    case "SqlMi": return DatabaseMigrationSqlMIProperties.DeserializeDatabaseMigrationSqlMIProperties(element);
                 }
             }
             ResourceType kind = default;

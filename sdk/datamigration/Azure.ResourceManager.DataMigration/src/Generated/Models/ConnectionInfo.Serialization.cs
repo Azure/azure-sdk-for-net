@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "MiSqlConnectionInfo": return MiSqlConnectionInfo.DeserializeMiSqlConnectionInfo(element);
-                    case "MongoDbConnectionInfo": return MongoDbConnectionInfo.DeserializeMongoDbConnectionInfo(element);
+                    case "MiSqlConnectionInfo": return MISqlConnectionInfo.DeserializeMISqlConnectionInfo(element);
+                    case "MongoDbConnectionInfo": return MongoDBConnectionInfo.DeserializeMongoDBConnectionInfo(element);
                     case "MySqlConnectionInfo": return MySqlConnectionInfo.DeserializeMySqlConnectionInfo(element);
                     case "OracleConnectionInfo": return OracleConnectionInfo.DeserializeOracleConnectionInfo(element);
                     case "PostgreSqlConnectionInfo": return PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(element);

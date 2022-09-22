@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/>, <paramref name="targetConnectionInfo"/> or <paramref name="selectedDatabases"/> is null. </exception>
-        public ValidateSyncMigrationInputSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSqlServerSqlDbSyncDatabaseInput> selectedDatabases)
+        public ValidateSyncMigrationInputSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IEnumerable<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases)
         {
             if (sourceConnectionInfo == null)
             {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceConnectionInfo"> Information for connecting to source SQL server. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
-        internal ValidateSyncMigrationInputSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlDbSyncDatabaseInput> selectedDatabases)
+        internal ValidateSyncMigrationInputSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
@@ -55,6 +55,6 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Information for connecting to target. </summary>
         public SqlConnectionInfo TargetConnectionInfo { get; set; }
         /// <summary> Databases to migrate. </summary>
-        public IList<MigrateSqlServerSqlDbSyncDatabaseInput> SelectedDatabases { get; }
+        public IList<MigrateSqlServerSqlDBSyncDatabaseInput> SelectedDatabases { get; }
     }
 }

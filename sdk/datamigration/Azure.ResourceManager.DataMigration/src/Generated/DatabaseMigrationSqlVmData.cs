@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Database Migration Resource properties for SQL Virtual Machine. </param>
-        internal DatabaseMigrationSqlVmData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DatabaseMigrationPropertiesSqlVm properties) : base(id, name, resourceType, systemData)
+        internal DatabaseMigrationSqlVmData(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DatabaseMigrationSqlVmProperties properties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
         }
 
         /// <summary> Database Migration Resource properties for SQL Virtual Machine. </summary>
-        public DatabaseMigrationPropertiesSqlVm Properties { get; set; }
+        public DatabaseMigrationSqlVmProperties Properties { get; set; }
     }
 }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<FileShare> backupFileShare = default;
             string storageResourceId = default;
             SqlConnectionInfo sourceConnectionInfo = default;
-            MiSqlConnectionInfo targetConnectionInfo = default;
+            MISqlConnectionInfo targetConnectionInfo = default;
             AzureActiveDirectoryApp azureApp = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("targetConnectionInfo"))
                 {
-                    targetConnectionInfo = MiSqlConnectionInfo.DeserializeMiSqlConnectionInfo(property.Value);
+                    targetConnectionInfo = MISqlConnectionInfo.DeserializeMISqlConnectionInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureApp"))

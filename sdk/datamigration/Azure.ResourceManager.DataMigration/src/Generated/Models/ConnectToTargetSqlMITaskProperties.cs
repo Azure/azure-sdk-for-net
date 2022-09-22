@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public ConnectToTargetSqlMITaskProperties()
         {
             Output = new ChangeTrackingList<ConnectToTargetSqlMITaskOutput>();
-            TaskType = TaskType.ConnectToTargetAzureSqlDbMI;
+            TaskType = TaskType.ConnectToTargetAzureSqlDBMI;
         }
 
         /// <summary> Initializes a new instance of ConnectToTargetSqlMITaskProperties. </summary>
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="commands">
         /// Array of command properties.
         /// Please note <see cref="CommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDbCancelCommand"/>, <see cref="MongoDbFinishCommand"/> and <see cref="MongoDbRestartCommand"/>.
+        /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
         /// <param name="input"> Task input. </param>

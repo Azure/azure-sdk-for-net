@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         private const string MigrateSyncCompleteDatabaseValue = "Migrate.Sync.Complete.Database";
-        private const string MigrateSqlServerAzureDbSqlMiCompleteValue = "Migrate.SqlServer.AzureDbSqlMi.Complete";
+        private const string MigrateSqlServerAzureDBSqlMICompleteValue = "Migrate.SqlServer.AzureDbSqlMi.Complete";
         private const string CancelValue = "cancel";
         private const string FinishValue = "finish";
         private const string RestartValue = "restart";
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Migrate.Sync.Complete.Database. </summary>
         public static CommandType MigrateSyncCompleteDatabase { get; } = new CommandType(MigrateSyncCompleteDatabaseValue);
         /// <summary> Migrate.SqlServer.AzureDbSqlMi.Complete. </summary>
-        public static CommandType MigrateSqlServerAzureDbSqlMiComplete { get; } = new CommandType(MigrateSqlServerAzureDbSqlMiCompleteValue);
+        public static CommandType MigrateSqlServerAzureDBSqlMIComplete { get; } = new CommandType(MigrateSqlServerAzureDBSqlMICompleteValue);
         /// <summary> cancel. </summary>
         public static CommandType Cancel { get; } = new CommandType(CancelValue);
         /// <summary> finish. </summary>

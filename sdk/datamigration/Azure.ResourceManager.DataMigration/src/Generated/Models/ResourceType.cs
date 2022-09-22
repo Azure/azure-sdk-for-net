@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string SqlMiValue = "SqlMi";
+        private const string SqlMIValue = "SqlMi";
         private const string SqlVmValue = "SqlVm";
-        private const string SqlDbValue = "SqlDb";
+        private const string SqlDBValue = "SqlDb";
 
         /// <summary> SqlMi. </summary>
-        public static ResourceType SqlMi { get; } = new ResourceType(SqlMiValue);
+        public static ResourceType SqlMI { get; } = new ResourceType(SqlMIValue);
         /// <summary> SqlVm. </summary>
         public static ResourceType SqlVm { get; } = new ResourceType(SqlVmValue);
         /// <summary> SqlDb. </summary>
-        public static ResourceType SqlDb { get; } = new ResourceType(SqlDbValue);
+        public static ResourceType SqlDB { get; } = new ResourceType(SqlDBValue);
         /// <summary> Determines if two <see cref="ResourceType"/> values are the same. </summary>
         public static bool operator ==(ResourceType left, ResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ResourceType"/> values are not the same. </summary>

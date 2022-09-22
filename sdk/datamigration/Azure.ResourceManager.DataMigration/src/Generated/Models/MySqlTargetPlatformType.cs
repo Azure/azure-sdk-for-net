@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.DataMigration.Models
         }
 
         private const string SqlServerValue = "SqlServer";
-        private const string AzureDbForMySQLValue = "AzureDbForMySQL";
+        private const string AzureDBForMySqlValue = "AzureDbForMySQL";
 
         /// <summary> SqlServer. </summary>
         public static MySqlTargetPlatformType SqlServer { get; } = new MySqlTargetPlatformType(SqlServerValue);
         /// <summary> AzureDbForMySQL. </summary>
-        public static MySqlTargetPlatformType AzureDbForMySQL { get; } = new MySqlTargetPlatformType(AzureDbForMySQLValue);
+        public static MySqlTargetPlatformType AzureDBForMySql { get; } = new MySqlTargetPlatformType(AzureDBForMySqlValue);
         /// <summary> Determines if two <see cref="MySqlTargetPlatformType"/> values are the same. </summary>
         public static bool operator ==(MySqlTargetPlatformType left, MySqlTargetPlatformType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MySqlTargetPlatformType"/> values are not the same. </summary>

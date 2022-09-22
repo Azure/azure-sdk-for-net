@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="properties">
         /// Database Migration Resource properties.
         /// Please note <see cref="DatabaseMigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatabaseMigrationPropertiesSqlDb"/>, <see cref="DatabaseMigrationPropertiesSqlVm"/> and <see cref="DatabaseMigrationPropertiesSqlMi"/>.
+        /// The available derived classes include <see cref="DatabaseMigrationSqlDBProperties"/>, <see cref="DatabaseMigrationSqlVmProperties"/> and <see cref="DatabaseMigrationSqlMIProperties"/>.
         /// </param>
         internal DatabaseMigration(ResourceIdentifier id, string name, Core.ResourceType resourceType, SystemData systemData, DatabaseMigrationProperties properties) : base(id, name, resourceType, systemData)
         {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary>
         /// Database Migration Resource properties.
         /// Please note <see cref="DatabaseMigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatabaseMigrationPropertiesSqlDb"/>, <see cref="DatabaseMigrationPropertiesSqlVm"/> and <see cref="DatabaseMigrationPropertiesSqlMi"/>.
+        /// The available derived classes include <see cref="DatabaseMigrationSqlDBProperties"/>, <see cref="DatabaseMigrationSqlVmProperties"/> and <see cref="DatabaseMigrationSqlMIProperties"/>.
         /// </summary>
         public DatabaseMigrationProperties Properties { get; set; }
     }

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, Guid? migrationOperationId, string expand)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId, string expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(sqlDbInstanceName, true);
+            uri.AppendPath(sqlDBInstanceName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
-            uri.AppendPath(targetDbName, true);
+            uri.AppendPath(targetDBName, true);
             if (migrationOperationId != null)
             {
                 uri.AppendQuery("migrationOperationId", migrationOperationId.Value, true);
@@ -70,33 +70,33 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Retrieve the Database Migration resource. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlDbInstanceName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="sqlDBInstanceName"> The String to use. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DatabaseMigrationSqlDbData>> GetAsync(string subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DatabaseMigrationSqlDBData>> GetAsync(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlDbInstanceName, nameof(sqlDbInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(sqlDBInstanceName, nameof(sqlDBInstanceName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, sqlDbInstanceName, targetDbName, migrationOperationId, expand);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, sqlDBInstanceName, targetDBName, migrationOperationId, expand);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DatabaseMigrationSqlDbData value = default;
+                        DatabaseMigrationSqlDBData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DatabaseMigrationSqlDbData.DeserializeDatabaseMigrationSqlDbData(document.RootElement);
+                        value = DatabaseMigrationSqlDBData.DeserializeDatabaseMigrationSqlDBData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatabaseMigrationSqlDbData)null, message.Response);
+                    return Response.FromValue((DatabaseMigrationSqlDBData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -105,39 +105,39 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Retrieve the Database Migration resource. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlDbInstanceName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="sqlDBInstanceName"> The String to use. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DatabaseMigrationSqlDbData> Get(string subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DatabaseMigrationSqlDBData> Get(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlDbInstanceName, nameof(sqlDbInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(sqlDBInstanceName, nameof(sqlDBInstanceName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, sqlDbInstanceName, targetDbName, migrationOperationId, expand);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, sqlDBInstanceName, targetDBName, migrationOperationId, expand);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        DatabaseMigrationSqlDbData value = default;
+                        DatabaseMigrationSqlDBData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DatabaseMigrationSqlDbData.DeserializeDatabaseMigrationSqlDbData(document.RootElement);
+                        value = DatabaseMigrationSqlDBData.DeserializeDatabaseMigrationSqlDBData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DatabaseMigrationSqlDbData)null, message.Response);
+                    return Response.FromValue((DatabaseMigrationSqlDBData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, DatabaseMigrationSqlDbData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, DatabaseMigrationSqlDBData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -149,9 +149,9 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(sqlDbInstanceName, true);
+            uri.AppendPath(sqlDBInstanceName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
-            uri.AppendPath(targetDbName, true);
+            uri.AppendPath(targetDBName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -166,21 +166,21 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Create or Update Database Migration resource. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlDbInstanceName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="sqlDBInstanceName"> The String to use. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="data"> Details of Sql Db migration resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/>, <paramref name="targetDbName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, DatabaseMigrationSqlDbData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/>, <paramref name="targetDBName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, DatabaseMigrationSqlDBData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlDbInstanceName, nameof(sqlDbInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(sqlDBInstanceName, nameof(sqlDBInstanceName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, sqlDbInstanceName, targetDbName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, sqlDBInstanceName, targetDBName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -195,21 +195,21 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Create or Update Database Migration resource. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlDbInstanceName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="sqlDBInstanceName"> The String to use. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="data"> Details of Sql Db migration resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/>, <paramref name="targetDbName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, DatabaseMigrationSqlDbData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/>, <paramref name="targetDBName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, DatabaseMigrationSqlDBData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlDbInstanceName, nameof(sqlDbInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(sqlDBInstanceName, nameof(sqlDBInstanceName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, sqlDbInstanceName, targetDbName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, sqlDBInstanceName, targetDBName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, bool? force)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, bool? force)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -233,9 +233,9 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(sqlDbInstanceName, true);
+            uri.AppendPath(sqlDBInstanceName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
-            uri.AppendPath(targetDbName, true);
+            uri.AppendPath(targetDBName, true);
             if (force != null)
             {
                 uri.AppendQuery("force", force.Value, true);
@@ -249,20 +249,20 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Delete Database Migration resource. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlDbInstanceName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="sqlDBInstanceName"> The String to use. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="force"> Optional force delete boolean. If this is provided as true, migration will be deleted even if active. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, bool? force = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, bool? force = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlDbInstanceName, nameof(sqlDbInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(sqlDBInstanceName, nameof(sqlDBInstanceName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sqlDbInstanceName, targetDbName, force);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sqlDBInstanceName, targetDBName, force);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -278,20 +278,20 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Delete Database Migration resource. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlDbInstanceName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="sqlDBInstanceName"> The String to use. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="force"> Optional force delete boolean. If this is provided as true, migration will be deleted even if active. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, bool? force = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, bool? force = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlDbInstanceName, nameof(sqlDbInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(sqlDBInstanceName, nameof(sqlDBInstanceName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sqlDbInstanceName, targetDbName, force);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sqlDBInstanceName, targetDBName, force);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
-        internal HttpMessage CreateCancelRequest(string subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, MigrationOperationInput input)
+        internal HttpMessage CreateCancelRequest(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, MigrationOperationInput input)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -316,9 +316,9 @@ namespace Azure.ResourceManager.DataMigration
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
-            uri.AppendPath(sqlDbInstanceName, true);
+            uri.AppendPath(sqlDBInstanceName, true);
             uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
-            uri.AppendPath(targetDbName, true);
+            uri.AppendPath(targetDBName, true);
             uri.AppendPath("/cancel", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -333,21 +333,21 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Stop on going migration for the database. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlDbInstanceName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="sqlDBInstanceName"> The String to use. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="input"> Required migration operation ID for which cancel will be initiated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/>, <paramref name="targetDbName"/> or <paramref name="input"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CancelAsync(string subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, MigrationOperationInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/>, <paramref name="targetDBName"/> or <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CancelAsync(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, MigrationOperationInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlDbInstanceName, nameof(sqlDbInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(sqlDBInstanceName, nameof(sqlDBInstanceName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
             Argument.AssertNotNull(input, nameof(input));
 
-            using var message = CreateCancelRequest(subscriptionId, resourceGroupName, sqlDbInstanceName, targetDbName, input);
+            using var message = CreateCancelRequest(subscriptionId, resourceGroupName, sqlDBInstanceName, targetDBName, input);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -362,21 +362,21 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Stop on going migration for the database. </summary>
         /// <param name="subscriptionId"> Subscription ID that identifies an Azure subscription. </param>
         /// <param name="resourceGroupName"> Name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. </param>
-        /// <param name="sqlDbInstanceName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="sqlDBInstanceName"> The String to use. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="input"> Required migration operation ID for which cancel will be initiated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/>, <paramref name="targetDbName"/> or <paramref name="input"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Cancel(string subscriptionId, string resourceGroupName, string sqlDbInstanceName, string targetDbName, MigrationOperationInput input, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/>, <paramref name="targetDBName"/> or <paramref name="input"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Cancel(string subscriptionId, string resourceGroupName, string sqlDBInstanceName, string targetDBName, MigrationOperationInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(sqlDbInstanceName, nameof(sqlDbInstanceName));
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(sqlDBInstanceName, nameof(sqlDBInstanceName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
             Argument.AssertNotNull(input, nameof(input));
 
-            using var message = CreateCancelRequest(subscriptionId, resourceGroupName, sqlDbInstanceName, targetDbName, input);
+            using var message = CreateCancelRequest(subscriptionId, resourceGroupName, sqlDBInstanceName, targetDBName, input);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

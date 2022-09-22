@@ -177,12 +177,12 @@ namespace Azure.ResourceManager.DataMigration
             );
         }
 
-        /// <summary> Gets a collection of DatabaseMigrationSqlDbResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DatabaseMigrationSqlDBResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DatabaseMigrationSqlDbResources and their operations over a DatabaseMigrationSqlDbResource. </returns>
-        public static DatabaseMigrationSqlDbCollection GetDatabaseMigrationSqlDbs(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DatabaseMigrationSqlDBResources and their operations over a DatabaseMigrationSqlDBResource. </returns>
+        public static DatabaseMigrationSqlDBCollection GetDatabaseMigrationSqlDBs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetDatabaseMigrationSqlDbs();
+            return GetExtensionClient(resourceGroupResource).GetDatabaseMigrationSqlDBs();
         }
 
         /// <summary>
@@ -191,17 +191,17 @@ namespace Azure.ResourceManager.DataMigration
         /// Operation Id: DatabaseMigrationsSqlDb_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="sqlDbInstanceName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="sqlDBInstanceName"> The String to use. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DatabaseMigrationSqlDbResource>> GetDatabaseMigrationSqlDbAsync(this ResourceGroupResource resourceGroupResource, string sqlDbInstanceName, string targetDbName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(this ResourceGroupResource resourceGroupResource, string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDatabaseMigrationSqlDbs().GetAsync(sqlDbInstanceName, targetDbName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDatabaseMigrationSqlDBs().GetAsync(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -210,25 +210,25 @@ namespace Azure.ResourceManager.DataMigration
         /// Operation Id: DatabaseMigrationsSqlDb_Get
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="sqlDbInstanceName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="sqlDBInstanceName"> The String to use. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlDbInstanceName"/> or <paramref name="targetDbName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlDBInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DatabaseMigrationSqlDbResource> GetDatabaseMigrationSqlDb(this ResourceGroupResource resourceGroupResource, string sqlDbInstanceName, string targetDbName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(this ResourceGroupResource resourceGroupResource, string sqlDBInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDatabaseMigrationSqlDbs().Get(sqlDbInstanceName, targetDbName, migrationOperationId, expand, cancellationToken);
+            return resourceGroupResource.GetDatabaseMigrationSqlDBs().Get(sqlDBInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DatabaseMigrationSqlMiResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of DatabaseMigrationSqlMIResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of DatabaseMigrationSqlMiResources and their operations over a DatabaseMigrationSqlMiResource. </returns>
-        public static DatabaseMigrationSqlMiCollection GetDatabaseMigrationSqlMis(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of DatabaseMigrationSqlMIResources and their operations over a DatabaseMigrationSqlMIResource. </returns>
+        public static DatabaseMigrationSqlMICollection GetDatabaseMigrationSqlMIs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetDatabaseMigrationSqlMis();
+            return GetExtensionClient(resourceGroupResource).GetDatabaseMigrationSqlMIs();
         }
 
         /// <summary>
@@ -238,16 +238,16 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="managedInstanceName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDbName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DatabaseMigrationSqlMiResource>> GetDatabaseMigrationSqlMiAsync(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDbName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatabaseMigrationSqlMIResource>> GetDatabaseMigrationSqlMIAsync(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDatabaseMigrationSqlMis().GetAsync(managedInstanceName, targetDbName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDatabaseMigrationSqlMIs().GetAsync(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -257,16 +257,16 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="managedInstanceName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDbName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="managedInstanceName"/> or <paramref name="targetDBName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DatabaseMigrationSqlMiResource> GetDatabaseMigrationSqlMi(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDbName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<DatabaseMigrationSqlMIResource> GetDatabaseMigrationSqlMI(this ResourceGroupResource resourceGroupResource, string managedInstanceName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDatabaseMigrationSqlMis().Get(managedInstanceName, targetDbName, migrationOperationId, expand, cancellationToken);
+            return resourceGroupResource.GetDatabaseMigrationSqlMIs().Get(managedInstanceName, targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of DatabaseMigrationSqlVmResources in the ResourceGroupResource. </summary>
@@ -284,16 +284,16 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="sqlVirtualMachineName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDbName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDbName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<DatabaseMigrationSqlVmResource>> GetDatabaseMigrationSqlVmAsync(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetDatabaseMigrationSqlVms().GetAsync(sqlVirtualMachineName, targetDbName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDatabaseMigrationSqlVms().GetAsync(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -303,16 +303,16 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="sqlVirtualMachineName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDbName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDbName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+        public static Response<DatabaseMigrationSqlVmResource> GetDatabaseMigrationSqlVm(this ResourceGroupResource resourceGroupResource, string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetDatabaseMigrationSqlVms().Get(sqlVirtualMachineName, targetDbName, migrationOperationId, expand, cancellationToken);
+            return resourceGroupResource.GetDatabaseMigrationSqlVms().Get(sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of SqlMigrationServiceResources in the ResourceGroupResource. </summary>
@@ -395,39 +395,39 @@ namespace Azure.ResourceManager.DataMigration
             return resourceGroupResource.GetDataMigrationServices().Get(serviceName, cancellationToken);
         }
 
-        #region DatabaseMigrationSqlDbResource
+        #region DatabaseMigrationSqlDBResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseMigrationSqlDbResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseMigrationSqlDbResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlDbResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatabaseMigrationSqlDBResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseMigrationSqlDBResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlDBResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseMigrationSqlDbResource" /> object. </returns>
-        public static DatabaseMigrationSqlDbResource GetDatabaseMigrationSqlDbResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseMigrationSqlDBResource" /> object. </returns>
+        public static DatabaseMigrationSqlDBResource GetDatabaseMigrationSqlDBResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseMigrationSqlDbResource.ValidateResourceId(id);
-                return new DatabaseMigrationSqlDbResource(client, id);
+                DatabaseMigrationSqlDBResource.ValidateResourceId(id);
+                return new DatabaseMigrationSqlDBResource(client, id);
             }
             );
         }
         #endregion
 
-        #region DatabaseMigrationSqlMiResource
+        #region DatabaseMigrationSqlMIResource
         /// <summary>
-        /// Gets an object representing a <see cref="DatabaseMigrationSqlMiResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DatabaseMigrationSqlMiResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlMiResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="DatabaseMigrationSqlMIResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DatabaseMigrationSqlMIResource.CreateResourceIdentifier" /> to create a <see cref="DatabaseMigrationSqlMIResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DatabaseMigrationSqlMiResource" /> object. </returns>
-        public static DatabaseMigrationSqlMiResource GetDatabaseMigrationSqlMiResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DatabaseMigrationSqlMIResource" /> object. </returns>
+        public static DatabaseMigrationSqlMIResource GetDatabaseMigrationSqlMIResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                DatabaseMigrationSqlMiResource.ValidateResourceId(id);
-                return new DatabaseMigrationSqlMiResource(client, id);
+                DatabaseMigrationSqlMIResource.ValidateResourceId(id);
+                return new DatabaseMigrationSqlMIResource(client, id);
             }
             );
         }

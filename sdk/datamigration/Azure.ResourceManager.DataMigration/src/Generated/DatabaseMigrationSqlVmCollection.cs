@@ -58,23 +58,23 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sqlVirtualMachineName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="data"> Details of SqlMigrationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/>, <paramref name="targetDbName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DatabaseMigrationSqlVmResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sqlVirtualMachineName, string targetDbName, DatabaseMigrationSqlVmData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/>, <paramref name="targetDBName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<DatabaseMigrationSqlVmResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sqlVirtualMachineName, string targetDBName, DatabaseMigrationSqlVmData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _databaseMigrationSqlVmDatabaseMigrationsSqlVmClientDiagnostics.CreateScope("DatabaseMigrationSqlVmCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDbName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlVmResource>(new DatabaseMigrationSqlVmOperationSource(Client), _databaseMigrationSqlVmDatabaseMigrationsSqlVmClientDiagnostics, Pipeline, _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDbName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDBName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlVmResource>(new DatabaseMigrationSqlVmOperationSource(Client), _databaseMigrationSqlVmDatabaseMigrationsSqlVmClientDiagnostics, Pipeline, _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDBName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,23 +93,23 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="sqlVirtualMachineName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="data"> Details of SqlMigrationService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/>, <paramref name="targetDbName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DatabaseMigrationSqlVmResource> CreateOrUpdate(WaitUntil waitUntil, string sqlVirtualMachineName, string targetDbName, DatabaseMigrationSqlVmData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/>, <paramref name="targetDBName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<DatabaseMigrationSqlVmResource> CreateOrUpdate(WaitUntil waitUntil, string sqlVirtualMachineName, string targetDBName, DatabaseMigrationSqlVmData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _databaseMigrationSqlVmDatabaseMigrationsSqlVmClientDiagnostics.CreateScope("DatabaseMigrationSqlVmCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDbName, data, cancellationToken);
-                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlVmResource>(new DatabaseMigrationSqlVmOperationSource(Client), _databaseMigrationSqlVmDatabaseMigrationsSqlVmClientDiagnostics, Pipeline, _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDbName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDBName, data, cancellationToken);
+                var operation = new DataMigrationArmOperation<DatabaseMigrationSqlVmResource>(new DatabaseMigrationSqlVmOperationSource(Client), _databaseMigrationSqlVmDatabaseMigrationsSqlVmClientDiagnostics, Pipeline, _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDBName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -127,22 +127,22 @@ namespace Azure.ResourceManager.DataMigration
         /// Operation Id: DatabaseMigrationsSqlVm_Get
         /// </summary>
         /// <param name="sqlVirtualMachineName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDbName"/> is null. </exception>
-        public virtual async Task<Response<DatabaseMigrationSqlVmResource>> GetAsync(string sqlVirtualMachineName, string targetDbName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is null. </exception>
+        public virtual async Task<Response<DatabaseMigrationSqlVmResource>> GetAsync(string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
             using var scope = _databaseMigrationSqlVmDatabaseMigrationsSqlVmClientDiagnostics.CreateScope("DatabaseMigrationSqlVmCollection.Get");
             scope.Start();
             try
             {
-                var response = await _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDbName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseMigrationSqlVmResource(Client, response.Value), response.GetRawResponse());
@@ -160,22 +160,22 @@ namespace Azure.ResourceManager.DataMigration
         /// Operation Id: DatabaseMigrationsSqlVm_Get
         /// </summary>
         /// <param name="sqlVirtualMachineName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDbName"/> is null. </exception>
-        public virtual Response<DatabaseMigrationSqlVmResource> Get(string sqlVirtualMachineName, string targetDbName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is null. </exception>
+        public virtual Response<DatabaseMigrationSqlVmResource> Get(string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
             using var scope = _databaseMigrationSqlVmDatabaseMigrationsSqlVmClientDiagnostics.CreateScope("DatabaseMigrationSqlVmCollection.Get");
             scope.Start();
             try
             {
-                var response = _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDbName, migrationOperationId, expand, cancellationToken);
+                var response = _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DatabaseMigrationSqlVmResource(Client, response.Value), response.GetRawResponse());
@@ -193,22 +193,22 @@ namespace Azure.ResourceManager.DataMigration
         /// Operation Id: DatabaseMigrationsSqlVm_Get
         /// </summary>
         /// <param name="sqlVirtualMachineName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDbName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string sqlVirtualMachineName, string targetDbName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
             using var scope = _databaseMigrationSqlVmDatabaseMigrationsSqlVmClientDiagnostics.CreateScope("DatabaseMigrationSqlVmCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDbName, migrationOperationId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -224,22 +224,22 @@ namespace Azure.ResourceManager.DataMigration
         /// Operation Id: DatabaseMigrationsSqlVm_Get
         /// </summary>
         /// <param name="sqlVirtualMachineName"> The String to use. </param>
-        /// <param name="targetDbName"> The name of the target database. </param>
+        /// <param name="targetDBName"> The name of the target database. </param>
         /// <param name="migrationOperationId"> Optional migration operation ID. If this is provided, then details of migration operation for that ID are retrieved. If not provided (default), then details related to most recent or current operation are retrieved. </param>
         /// <param name="expand"> Complete migration details be included in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDbName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDbName"/> is null. </exception>
-        public virtual Response<bool> Exists(string sqlVirtualMachineName, string targetDbName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sqlVirtualMachineName"/> or <paramref name="targetDBName"/> is null. </exception>
+        public virtual Response<bool> Exists(string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId = null, string expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(sqlVirtualMachineName, nameof(sqlVirtualMachineName));
-            Argument.AssertNotNullOrEmpty(targetDbName, nameof(targetDbName));
+            Argument.AssertNotNullOrEmpty(targetDBName, nameof(targetDBName));
 
             using var scope = _databaseMigrationSqlVmDatabaseMigrationsSqlVmClientDiagnostics.CreateScope("DatabaseMigrationSqlVmCollection.Exists");
             scope.Start();
             try
             {
-                var response = _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDbName, migrationOperationId, expand, cancellationToken: cancellationToken);
+                var response = _databaseMigrationSqlVmDatabaseMigrationsSqlVmRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sqlVirtualMachineName, targetDBName, migrationOperationId, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

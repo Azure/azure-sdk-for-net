@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         {
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
-            IList<MigrateSqlServerSqlDbSyncDatabaseInput> selectedDatabases = default;
+            IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceConnectionInfo"))
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("selectedDatabases"))
                 {
-                    List<MigrateSqlServerSqlDbSyncDatabaseInput> array = new List<MigrateSqlServerSqlDbSyncDatabaseInput>();
+                    List<MigrateSqlServerSqlDBSyncDatabaseInput> array = new List<MigrateSqlServerSqlDBSyncDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateSqlServerSqlDbSyncDatabaseInput.DeserializeMigrateSqlServerSqlDbSyncDatabaseInput(item));
+                        array.Add(MigrateSqlServerSqlDBSyncDatabaseInput.DeserializeMigrateSqlServerSqlDBSyncDatabaseInput(item));
                     }
                     selectedDatabases = array;
                     continue;

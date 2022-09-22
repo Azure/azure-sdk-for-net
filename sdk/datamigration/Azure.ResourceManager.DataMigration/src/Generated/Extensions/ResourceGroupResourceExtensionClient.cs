@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.DataMigration
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of DatabaseMigrationSqlDbResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DatabaseMigrationSqlDbResources and their operations over a DatabaseMigrationSqlDbResource. </returns>
-        public virtual DatabaseMigrationSqlDbCollection GetDatabaseMigrationSqlDbs()
+        /// <summary> Gets a collection of DatabaseMigrationSqlDBResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DatabaseMigrationSqlDBResources and their operations over a DatabaseMigrationSqlDBResource. </returns>
+        public virtual DatabaseMigrationSqlDBCollection GetDatabaseMigrationSqlDBs()
         {
-            return GetCachedClient(Client => new DatabaseMigrationSqlDbCollection(Client, Id));
+            return GetCachedClient(Client => new DatabaseMigrationSqlDBCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of DatabaseMigrationSqlMiResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DatabaseMigrationSqlMiResources and their operations over a DatabaseMigrationSqlMiResource. </returns>
-        public virtual DatabaseMigrationSqlMiCollection GetDatabaseMigrationSqlMis()
+        /// <summary> Gets a collection of DatabaseMigrationSqlMIResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of DatabaseMigrationSqlMIResources and their operations over a DatabaseMigrationSqlMIResource. </returns>
+        public virtual DatabaseMigrationSqlMICollection GetDatabaseMigrationSqlMIs()
         {
-            return GetCachedClient(Client => new DatabaseMigrationSqlMiCollection(Client, Id));
+            return GetCachedClient(Client => new DatabaseMigrationSqlMICollection(Client, Id));
         }
 
         /// <summary> Gets a collection of DatabaseMigrationSqlVmResources in the ResourceGroupResource. </summary>

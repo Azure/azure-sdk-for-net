@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static ConnectToTargetSqlMISyncTaskInput DeserializeConnectToTargetSqlMISyncTaskInput(JsonElement element)
         {
-            MiSqlConnectionInfo targetConnectionInfo = default;
+            MISqlConnectionInfo targetConnectionInfo = default;
             AzureActiveDirectoryApp azureApp = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetConnectionInfo"))
                 {
-                    targetConnectionInfo = MiSqlConnectionInfo.DeserializeMiSqlConnectionInfo(property.Value);
+                    targetConnectionInfo = MISqlConnectionInfo.DeserializeMISqlConnectionInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureApp"))

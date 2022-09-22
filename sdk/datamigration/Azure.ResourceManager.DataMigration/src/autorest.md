@@ -45,10 +45,24 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  SQL: Sql
+  Sqldb: SqlDB
+  Sqldw: SqlDW
+  Sqlmi: SqlMI
+  Db: DB|db
+  Mi: MI|mi
+  OCI: Oci
 
 list-exception:
-  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDbInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}
-  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}
-  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDbName}
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDBInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDBName}
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDBName}
+  - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/{sqlVirtualMachineName}/providers/Microsoft.DataMigration/databaseMigrations/{targetDBName}
 
+directive:
+  - from: sqlmigration.json
+    where: $.definitions
+    transform: >
+      $.DatabaseMigrationPropertiesSqlMi['x-ms-client-name'] = 'DatabaseMigrationSqlMIProperties';
+      $.DatabaseMigrationPropertiesSqlVm['x-ms-client-name'] = 'DatabaseMigrationSqlVmProperties';
+      $.DatabaseMigrationPropertiesSqlDb['x-ms-client-name'] = 'DatabaseMigrationSqlDBProperties';
 ```

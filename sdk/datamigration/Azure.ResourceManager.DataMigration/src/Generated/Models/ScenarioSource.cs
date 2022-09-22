@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         private const string AccessValue = "Access";
         private const string DB2Value = "DB2";
-        private const string MySQLValue = "MySQL";
+        private const string MySqlValue = "MySQL";
         private const string OracleValue = "Oracle";
-        private const string SQLValue = "SQL";
+        private const string SqlValue = "SQL";
         private const string SybaseValue = "Sybase";
-        private const string PostgreSQLValue = "PostgreSQL";
+        private const string PostgreSqlValue = "PostgreSQL";
         private const string MongoDBValue = "MongoDB";
         private const string SqlrdsValue = "SQLRDS";
         private const string MySqlrdsValue = "MySQLRDS";
@@ -39,15 +39,15 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> DB2. </summary>
         public static ScenarioSource DB2 { get; } = new ScenarioSource(DB2Value);
         /// <summary> MySQL. </summary>
-        public static ScenarioSource MySQL { get; } = new ScenarioSource(MySQLValue);
+        public static ScenarioSource MySql { get; } = new ScenarioSource(MySqlValue);
         /// <summary> Oracle. </summary>
         public static ScenarioSource Oracle { get; } = new ScenarioSource(OracleValue);
         /// <summary> SQL. </summary>
-        public static ScenarioSource SQL { get; } = new ScenarioSource(SQLValue);
+        public static ScenarioSource Sql { get; } = new ScenarioSource(SqlValue);
         /// <summary> Sybase. </summary>
         public static ScenarioSource Sybase { get; } = new ScenarioSource(SybaseValue);
         /// <summary> PostgreSQL. </summary>
-        public static ScenarioSource PostgreSQL { get; } = new ScenarioSource(PostgreSQLValue);
+        public static ScenarioSource PostgreSql { get; } = new ScenarioSource(PostgreSqlValue);
         /// <summary> MongoDB. </summary>
         public static ScenarioSource MongoDB { get; } = new ScenarioSource(MongoDBValue);
         /// <summary> SQLRDS. </summary>
