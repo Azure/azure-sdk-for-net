@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.Maintenance.Models
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceScope InGuestPatch { get { throw null; } }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceScope OSImage { get { throw null; } }
         public static Azure.ResourceManager.Maintenance.Models.MaintenanceScope Resource { get { throw null; } }
-        public static Azure.ResourceManager.Maintenance.Models.MaintenanceScope Sqldb { get { throw null; } }
-        public static Azure.ResourceManager.Maintenance.Models.MaintenanceScope SQLManagedInstance { get { throw null; } }
+        public static Azure.ResourceManager.Maintenance.Models.MaintenanceScope SqlDB { get { throw null; } }
+        public static Azure.ResourceManager.Maintenance.Models.MaintenanceScope SqlManagedInstance { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Maintenance.Models.MaintenanceScope other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

@@ -54,6 +54,9 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Sqldb: SqlDB
+  SQL: Sql
+  
 
 directive:
   - from: Maintenance.json

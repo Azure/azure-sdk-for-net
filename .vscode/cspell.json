@@ -544,6 +544,12 @@
       ]
     },
     {
+      "filename": "**/sdk/operationalinsights/**/*.cs",
+      "words": [
+        "itsm"
+      ]
+    },
+    {
       "filename": "**/sdk/orbital/**/*.cs",
       "words": [
         "eirpd",
@@ -808,6 +814,13 @@
         "Cran",
         "Rscript",
         "VCPUs"
+        ]
+    },
+    {
+      "filename": "**/sdk/machinelearningcompute/**/*.cs",
+      "words": [
+        "cname",
+        "kube"
         ]
     },  
     {
