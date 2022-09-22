@@ -8,7 +8,7 @@ New design of track 2 initial commit.
 
 ### Package Name
 
-The package name has been changed from `Microsoft.Azure.Management.MachineLearningCompute` to `Azure.ResourceManager.MachineLearningCompute`.
+The package name has been changed from `Microsoft.Azure.Management.Maintenance` to `Azure.ResourceManager.Maintenance`.
 
 ### General New Features
 
