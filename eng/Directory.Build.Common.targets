@@ -273,9 +273,9 @@
   </Target>
 
   <!-- Validates that all the mgmt libraries have a trigger path in the core resourcemanager pipeline -->
-  <Target Name="ValidateResourceManagerPipelineTriggers" AfterTargets="Build" Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true'" >
+  <Target Name="ValidateResourceManagerPipelineTriggers" AfterTargets="Build" Condition="'$(IsMgmtSubLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true'" >
     <PropertyGroup>
-      <!-- makes sure that at the line ends in the project name which is why we need the newline chars at the end -->
+      <!-- makes sure that the line ends in the project name which is why we need the newline chars at the end -->
       <_ProjectTriggerPath>$(MSBuildProjectName)&#xD;&#xA;</_ProjectTriggerPath>
       <_ResourceManagerCIFile>$(RepoRoot)/sdk/resourcemanager/ci.mgmt.yml</_ResourceManagerCIFile>
       <_ResourceManagerCIFileContents>$([System.IO.File]::ReadAllText($(_ResourceManagerCIFile)))</_ResourceManagerCIFileContents>
