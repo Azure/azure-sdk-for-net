@@ -15,6 +15,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         protected ArmClient Client { get; private set; }
         public SubscriptionResource DefaultSubscription { get; private set; }
         public AzureLocation DefaultLocation => AzureLocation.EastUS;
+        public const string  ResourceGroupNamePrefix = "EventGridRG";
 
         protected EventGridManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -33,12 +34,27 @@ namespace Azure.ResourceManager.EventGrid.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
 
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
+        {
+            string rgName = Recording.GenerateAssetName(ResourceGroupNamePrefix);
+            ResourceGroupData input = new ResourceGroupData(DefaultLocation);
+            var lro = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            return lro.Value;
+        }
+
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
+        }
+
+        protected async Task<PartnerRegistrationResource> CreatePartnerRegistration(ResourceGroupResource resourceGroup, string registrationName)
+        {
+            var data = new PartnerRegistrationData(new AzureLocation("Global"));
+            var registration = await resourceGroup.GetPartnerRegistrations().CreateOrUpdateAsync(WaitUntil.Completed, registrationName, data);
+            return registration.Value;
         }
     }
 }

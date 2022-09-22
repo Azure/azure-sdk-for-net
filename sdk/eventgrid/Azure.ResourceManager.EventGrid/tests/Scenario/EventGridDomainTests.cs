@@ -13,9 +13,9 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Tests
 {
-    public class DomainTests : EventGridManagementTestBase
+    public class EventGridDomainTests : EventGridManagementTestBase
     {
-        public DomainTests(bool isAsync)
+        public EventGridDomainTests(bool isAsync)
             : base(isAsync)//, RecordedTestMode.Record)
         {
         }
