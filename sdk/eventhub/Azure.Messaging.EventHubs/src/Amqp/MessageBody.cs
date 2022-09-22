@@ -207,13 +207,13 @@ namespace Azure.Messaging.EventHubs.Amqp
                 _writer = length > 0 ? new ArrayBufferWriter<byte>(length) : new ArrayBufferWriter<byte>();
                 _segments = segments;
 
-                for (var i = 0; i < numberOfSegments; i++)
+                for (var segmentIndex = 0; segmentIndex < numberOfSegments; segmentIndex++)
                 {
-                    var dataToAppend = segments[i];
+                    var dataToAppend = segments[segmentIndex];
                     var memory = _writer.GetMemory(dataToAppend.Length);
                     dataToAppend.CopyTo(memory);
                     _writer.Advance(dataToAppend.Length);
-                    segments[i] = memory.Slice(0, dataToAppend.Length);
+                    segments[segmentIndex] = memory.Slice(0, dataToAppend.Length);
                 }
             }
         }
@@ -294,13 +294,13 @@ namespace Azure.Messaging.EventHubs.Amqp
                 _writer = length > 0 ? new ArrayBufferWriter<byte>(length) : new ArrayBufferWriter<byte>();
                 _segments = segments;
 
-                for (var i = 0; i < numberOfSegments; i++)
+                for (var segmentIndex = 0; segmentIndex < numberOfSegments; segmentIndex++)
                 {
-                    var dataToAppend = segments[i];
+                    var dataToAppend = segments[segmentIndex];
                     var memory = _writer.GetMemory(dataToAppend.Length);
                     dataToAppend.CopyTo(memory);
                     _writer.Advance(dataToAppend.Length);
-                    segments[i] = memory.Slice(0, dataToAppend.Length);
+                    segments[segmentIndex] = memory.Slice(0, dataToAppend.Length);
                 }
             }
         }
