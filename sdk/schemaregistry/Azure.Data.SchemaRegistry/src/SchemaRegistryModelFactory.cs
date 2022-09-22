@@ -17,7 +17,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="schemaId">The ID of the schema.</param>
         /// <returns>A schemaProperties instance for mocking.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SchemaProperties SchemaProperties(SchemaFormat format, string schemaId) => SchemaProperties(format, schemaId, null, null, null);
+        public static SchemaProperties SchemaProperties(SchemaFormat format, string schemaId) => SchemaProperties(format, schemaId, null, null, 1);
 
         /// <summary>
         /// Constructs a SchemaProperties instance for mocking.
@@ -27,7 +27,8 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="groupName">The group name for the schema.</param>
         /// <param name="name">The name of the schema.</param>
         /// <returns>A schemaProperties instance for mocking.</returns>
-        public static SchemaProperties SchemaProperties(SchemaFormat format, string schemaId, string groupName, string name) => new(format, schemaId, groupName, name, null);
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SchemaProperties SchemaProperties(SchemaFormat format, string schemaId, string groupName, string name) => new(format, schemaId, groupName, name, 1);
 
         /// <summary>
         /// Constructs a SchemaProperties instance for mocking.
@@ -38,7 +39,7 @@ namespace Azure.Data.SchemaRegistry
         /// <param name="name">The name of the schema.</param>
         /// <param name="version">The version of the schema.</param>
         /// <returns>A schemaProperties instance for mocking.</returns>
-        public static SchemaProperties SchemaProperties(SchemaFormat format, string schemaId, string groupName, string name, int? version) => new(format, schemaId, groupName, name, version);
+        public static SchemaProperties SchemaProperties(SchemaFormat format, string schemaId, string groupName, string name, int version) => new(format, schemaId, groupName, name, version);
 
         /// <summary>
         /// Constructs a SchemaRegistrySchema instance for mocking.

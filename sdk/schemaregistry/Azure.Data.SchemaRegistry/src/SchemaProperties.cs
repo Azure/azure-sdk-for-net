@@ -8,7 +8,7 @@ namespace Azure.Data.SchemaRegistry
     /// </summary>
     public class SchemaProperties
     {
-        internal SchemaProperties(SchemaFormat format, string schemaId, string groupName, string name, int? version)
+        internal SchemaProperties(SchemaFormat format, string schemaId, string groupName, string name, int version)
         {
             Id = schemaId;
             Format = format;
@@ -40,6 +40,6 @@ namespace Azure.Data.SchemaRegistry
         /// <summary>
         /// The version of the schema.
         /// </summary>
-        public int? Version { get; }
+        public int Version { get; }
     }
 }
