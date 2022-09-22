@@ -41,9 +41,9 @@ namespace Azure.Monitor.Ingestion
             public BinaryData LogsData { get; }
         }
 
-        internal readonly struct BatchUploadTask
+        internal readonly struct BatchUpload
         {
-            public BatchUploadTask(Response response, UploadLogsError error)
+            public BatchUpload(Response response, UploadLogsError error)
             {
                 Response = response;
                 Error = error;
@@ -206,7 +206,7 @@ namespace Azure.Monitor.Ingestion
                 foreach (BatchedLogs<T> batch in Batch(logs, options))
                 {
                     // Because we are uploading in sequence, wait for each batch to upload before starting the next batch
-                    BatchUploadTask task = CommitBatchListSyncOrAsync(
+                    BatchUpload task = CommitBatchListSyncOrAsync(
                         batch,
                         ruleId,
                         streamName,
@@ -275,12 +275,12 @@ namespace Azure.Monitor.Ingestion
                 scope.Start();
                 // A list of tasks that are currently executing which will
                 // always be smaller than or equal to MaxWorkerCount
-                List<Task<BatchUploadTask>> runningTasks = new();
+                List<Task<BatchUpload>> runningTasks = new();
                 // Partition the stream into individual blocks
                 foreach (BatchedLogs<T> batch in Batch(logs, options))
                 {
                     // Start staging the next batch (but don't await the Task!)
-                    Task<BatchUploadTask> task = CommitBatchListSyncOrAsync(
+                    Task<BatchUpload> task = CommitBatchListSyncOrAsync(
                         batch,
                         ruleId,
                         streamName,
@@ -298,7 +298,7 @@ namespace Azure.Monitor.Ingestion
                         // Clear any completed blocks from the task list
                         for (int i = 0; i < runningTasks.Count; i++)
                         {
-                            Task<BatchUploadTask> runningTask = runningTasks[i];
+                            Task<BatchUpload> runningTask = runningTasks[i];
                             if (!runningTask.IsCompleted)
                             {
                                 continue;
@@ -320,7 +320,7 @@ namespace Azure.Monitor.Ingestion
 
                 // Process all errors after tasks are done to determine status
                 // Will run on a single thread
-                foreach (Task<BatchUploadTask> task in runningTasks)
+                foreach (Task<BatchUpload> task in runningTasks)
                 {
                     // Go through errors from each task and if we have an error, add error from response into errors list which represents the errors from all the batches
                     if (task.Result.Error != null)
@@ -337,8 +337,8 @@ namespace Azure.Monitor.Ingestion
             UploadLogsResult finalResult = new UploadLogsResult(errors, GetStatus(logs, errors));
             return Response.FromValue(finalResult, response);
         }
-
-        private async Task<BatchUploadTask> CommitBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
+        private int _count;
+        private async Task<BatchUpload> CommitBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
         {
             UploadLogsError error = null;
             RequestContext requestContext = GenerateRequestContext(cancellationToken);
@@ -348,6 +348,7 @@ namespace Azure.Monitor.Ingestion
 
             if (async)
             {
+                Interlocked.Increment(ref _count);
                 response = await _pipeline.ProcessMessageAsync(message, requestContext, cancellationToken).ConfigureAwait(false);
             }
             else
@@ -361,7 +362,7 @@ namespace Azure.Monitor.Ingestion
                 ResponseError responseError = new ResponseError(requestFailedException.ErrorCode, requestFailedException.Message);
                 error = new UploadLogsError(responseError, (IReadOnlyList<BinaryData>)batch.LogsList);
             }
-            return new BatchUploadTask(response, error);
+            return new BatchUpload(response, error);
         }
 
         private static RequestContext GenerateRequestContext(CancellationToken cancellationToken)

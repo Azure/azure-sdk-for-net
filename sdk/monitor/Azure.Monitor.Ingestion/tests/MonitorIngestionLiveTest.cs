@@ -18,7 +18,7 @@ namespace Azure.Monitor.Ingestion.Tests
     public class MonitorIngestionLiveTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
         {
             CompareBodies = false; //TODO: https://github.com/Azure/azure-sdk-for-net/issues/30865
         }
@@ -93,7 +93,8 @@ namespace Azure.Monitor.Ingestion.Tests
             {
                 entries.Add(new Object[] {
                     new {
-                        Time = recordingNow,
+                        Time = 1,
+                        //Time = recordingNow,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
                     }
@@ -144,21 +145,20 @@ namespace Azure.Monitor.Ingestion.Tests
 
         [AsyncOnly]
         [Test]
-        [LiveOnly]
         public async Task ConcurrencyMultiThread()
         {
             var policy = new ConcurrencyCounterPolicy();
             LogsIngestionClient client = CreateClient(policy);
-            LogsIngestionClient.SingleUploadThreshold = 1000; // make batch size smaller for Uploads for test recording size
+            LogsIngestionClient.SingleUploadThreshold = 100; // make batch size smaller for Uploads for test recording size
 
             // Make the request
             UploadLogsOptions options = new UploadLogsOptions();
             options.MaxConcurrency = 10;
-            System.Runtime.CompilerServices.ConfiguredTaskAwaitable<Response<UploadLogsResult>> tasks;
-            using (Recording.DisableRecording())
-            {
-                tasks = client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(500, Recording.Now.DateTime), options).ConfigureAwait(false);
-            }
+            //System.Runtime.CompilerServices.ConfiguredTaskAwaitable<Response<UploadLogsResult>> tasks;
+            //using (Recording.DisableRecording())
+            //{
+                var tasks = client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(8, Recording.Now.DateTime), options).ConfigureAwait(false);
+            //}
             Assert.Greater(policy.Count, 1);
 
             var response = await tasks;
