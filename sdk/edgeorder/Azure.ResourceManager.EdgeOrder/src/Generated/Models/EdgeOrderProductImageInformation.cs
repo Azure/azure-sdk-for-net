@@ -10,24 +10,24 @@ using System;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Image for the product. </summary>
-    public partial class ImageInformation
+    public partial class EdgeOrderProductImageInformation
     {
-        /// <summary> Initializes a new instance of ImageInformation. </summary>
-        internal ImageInformation()
+        /// <summary> Initializes a new instance of EdgeOrderProductImageInformation. </summary>
+        internal EdgeOrderProductImageInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageInformation. </summary>
+        /// <summary> Initializes a new instance of EdgeOrderProductImageInformation. </summary>
         /// <param name="imageType"> Type of the image. </param>
         /// <param name="imageUri"> Url of the image. </param>
-        internal ImageInformation(ImageType? imageType, Uri imageUri)
+        internal EdgeOrderProductImageInformation(EdgeOrderProductImageType? imageType, Uri imageUri)
         {
             ImageType = imageType;
             ImageUri = imageUri;
         }
 
         /// <summary> Type of the image. </summary>
-        public ImageType? ImageType { get; }
+        public EdgeOrderProductImageType? ImageType { get; }
         /// <summary> Url of the image. </summary>
         public Uri ImageUri { get; }
     }

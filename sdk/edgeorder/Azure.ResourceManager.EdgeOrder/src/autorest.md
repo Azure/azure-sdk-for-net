@@ -89,6 +89,17 @@ rename-mapping:
   Pav2MeterDetails.meterGuid: -|uuid
   WeightMeasurementUnit.LBS: Lbs
   WeightMeasurementUnit.KGS: Kgs
+  CostInformation: EdgeOrderProductCostInformation
+  BillingMeterDetails: EdgeOrderProductBillingMeterDetails
+  MeterDetails: EdgeOrderProductMeterDetails
+  MeteringType: EdgeOrderProductMeteringType
+  ChargingType: EdgeOrderProductChargingType
+  DeviceDetails: EdgeOrderProductDeviceDetails
+  ImageInformation: EdgeOrderProductImageInformation
+  ImageType: EdgeOrderProductImageType
+  LengthHeightUnit: ProductLengthHeightWidthUnit
+  WeightMeasurementUnit: ProductWeightMeasurementUnit
+  LinkType: ProductLinkType
 
 directive:
   - remove-operation: ListOperations

@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class DeviceDetails
+    public partial class EdgeOrderProductDeviceDetails
     {
-        internal static DeviceDetails DeserializeDeviceDetails(JsonElement element)
+        internal static EdgeOrderProductDeviceDetails DeserializeEdgeOrderProductDeviceDetails(JsonElement element)
         {
             Optional<string> serialNumber = default;
             Optional<string> managementResourceId = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new DeviceDetails(serialNumber.Value, managementResourceId.Value, managementResourceTenantId.Value);
+            return new EdgeOrderProductDeviceDetails(serialNumber.Value, managementResourceId.Value, managementResourceTenantId.Value);
         }
     }
 }

@@ -359,13 +359,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 }
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class AddRemoveIncrementalNamedPartitionScalingMechanism : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism
-    {
-        public AddRemoveIncrementalNamedPartitionScalingMechanism(int minPartitionCount, int maxPartitionCount, int scaleIncrement) { }
-        public int MaxPartitionCount { get { throw null; } set { } }
-        public int MinPartitionCount { get { throw null; } set { } }
-        public int ScaleIncrement { get { throw null; } set { } }
-    }
     public partial class ApplicationHealthPolicy
     {
         public ApplicationHealthPolicy(bool considerWarningAsError, int maxPercentUnhealthyDeployedApplications) { }
@@ -729,6 +722,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public abstract partial class ManagedServiceScalingTrigger
     {
         protected ManagedServiceScalingTrigger() { }
+    }
+    public partial class NamedPartitionAddOrRemoveScalingMechanism : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServiceScalingMechanism
+    {
+        public NamedPartitionAddOrRemoveScalingMechanism(int minPartitionCount, int maxPartitionCount, int scaleIncrement) { }
+        public int MaxPartitionCount { get { throw null; } set { } }
+        public int MinPartitionCount { get { throw null; } set { } }
+        public int ScaleIncrement { get { throw null; } set { } }
     }
     public partial class NamedPartitionScheme : Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedServicePartitionScheme
     {

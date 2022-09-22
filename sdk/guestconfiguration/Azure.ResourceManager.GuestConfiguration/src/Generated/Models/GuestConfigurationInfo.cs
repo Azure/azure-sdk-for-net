@@ -8,17 +8,17 @@
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
     /// <summary> Information about the configuration. </summary>
-    public partial class ConfigurationInfo
+    public partial class GuestConfigurationInfo
     {
-        /// <summary> Initializes a new instance of ConfigurationInfo. </summary>
-        public ConfigurationInfo()
+        /// <summary> Initializes a new instance of GuestConfigurationInfo. </summary>
+        public GuestConfigurationInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ConfigurationInfo. </summary>
+        /// <summary> Initializes a new instance of GuestConfigurationInfo. </summary>
         /// <param name="name"> Name of the configuration. </param>
         /// <param name="version"> Version of the configuration. </param>
-        internal ConfigurationInfo(string name, string version)
+        internal GuestConfigurationInfo(string name, string version)
         {
             Name = name;
             Version = version;

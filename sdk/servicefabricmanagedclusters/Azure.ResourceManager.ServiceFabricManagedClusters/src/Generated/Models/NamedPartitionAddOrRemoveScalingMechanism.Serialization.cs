@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class AddRemoveIncrementalNamedPartitionScalingMechanism : IUtf8JsonSerializable
+    public partial class NamedPartitionAddOrRemoveScalingMechanism : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteEndObject();
         }
 
-        internal static AddRemoveIncrementalNamedPartitionScalingMechanism DeserializeAddRemoveIncrementalNamedPartitionScalingMechanism(JsonElement element)
+        internal static NamedPartitionAddOrRemoveScalingMechanism DeserializeNamedPartitionAddOrRemoveScalingMechanism(JsonElement element)
         {
             int minPartitionCount = default;
             int maxPartitionCount = default;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     continue;
                 }
             }
-            return new AddRemoveIncrementalNamedPartitionScalingMechanism(kind, minPartitionCount, maxPartitionCount, scaleIncrement);
+            return new NamedPartitionAddOrRemoveScalingMechanism(kind, minPartitionCount, maxPartitionCount, scaleIncrement);
         }
     }
 }

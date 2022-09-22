@@ -12,7 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class AssignmentReport : IUtf8JsonSerializable
+    public partial class GuestConfigurationAssignmentReportInfo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             writer.WriteEndObject();
         }
 
-        internal static AssignmentReport DeserializeAssignmentReport(JsonElement element)
+        internal static GuestConfigurationAssignmentReportInfo DeserializeGuestConfigurationAssignmentReportInfo(JsonElement element)
         {
             Optional<ResourceIdentifier> id = default;
             Optional<Guid> reportId = default;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     continue;
                 }
             }
-            return new AssignmentReport(id.Value, Optional.ToNullable(reportId), assignment.Value, vm.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(complianceStatus), Optional.ToNullable(operationType), Optional.ToList(resources));
+            return new GuestConfigurationAssignmentReportInfo(id.Value, Optional.ToNullable(reportId), assignment.Value, vm.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(complianceStatus), Optional.ToNullable(operationType), Optional.ToList(resources));
         }
     }
 }

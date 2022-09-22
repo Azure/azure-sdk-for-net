@@ -10,18 +10,28 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.GuestConfiguration.Models
 {
-    public partial class ConfigurationInfo : IUtf8JsonSerializable
+    public partial class GuestConfigurationParameter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name");
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value");
+                writer.WriteStringValue(Value);
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConfigurationInfo DeserializeConfigurationInfo(JsonElement element)
+        internal static GuestConfigurationParameter DeserializeGuestConfigurationParameter(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<string> version = default;
+            Optional<string> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -29,13 +39,13 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     name = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"))
+                if (property.NameEquals("value"))
                 {
-                    version = property.Value.GetString();
+                    value = property.Value.GetString();
                     continue;
                 }
             }
-            return new ConfigurationInfo(name.Value, version.Value);
+            return new GuestConfigurationParameter(name.Value, value.Value);
         }
     }
 }
