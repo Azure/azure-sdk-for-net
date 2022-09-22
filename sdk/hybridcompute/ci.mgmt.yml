@@ -7,7 +7,7 @@ pr: none
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: elastic
+    ServiceDirectory: hybridcompute
     Artifacts:
-    - name: Azure.ResourceManager.Elastic
-      safeName: AzureResourceManagerElastic
+    - name: Azure.ResourceManager.HybridCompute
+      safeName: AzureResourceManagerHybridCompute
