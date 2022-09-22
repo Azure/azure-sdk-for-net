@@ -12,6 +12,7 @@ trigger:
     - common/ManagementTestShared/
     - common/ManagementCoreShared/
     - sdk/advisor/Azure.ResourceManager.Advisor
+    - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
@@ -50,16 +51,20 @@ trigger:
     - sdk/datafactory/Azure.ResourceManager.DataFactory
     - sdk/datalake-analytics/Azure.ResourceManager.DataLakeAnalytics
     - sdk/datalake-store/Azure.ResourceManager.DataLakeStore
+    - sdk/datamigration/Azure.ResourceManager.DataMigration
     - sdk/datashare/Azure.ResourceManager.DataShare
+    - sdk/deploymentmanager/Azure.ResourceManager.DeploymentManager
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
+    - sdk/devspaces/Azure.ResourceManager.DevSpaces
     - sdk/devtestlabs/Azure.ResourceManager.DevTestLabs
     - sdk/digitaltwins/Azure.ResourceManager.DigitalTwins
     - sdk/dns/Azure.ResourceManager.Dns
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
+    - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
     - sdk/eventgrid/Azure.ResourceManager.EventGrid
     - sdk/eventhub/Azure.ResourceManager.EventHubs
@@ -69,9 +74,11 @@ trigger:
     - sdk/grafana/Azure.ResourceManager.Grafana
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
-    - sdk/healthbot/Azure.ResourceManager.Healthbot
+    - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
+    - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
+    - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
     - sdk/keyvault/Azure.ResourceManager.KeyVault
@@ -140,6 +147,7 @@ pr:
     - common/ManagementTestShared/
     - common/ManagementCoreShared/
     - sdk/advisor/Azure.ResourceManager.Advisor
+    - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
     - sdk/apimanagement/Azure.ResourceManager.ApiManagement
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
@@ -178,16 +186,20 @@ pr:
     - sdk/datafactory/Azure.ResourceManager.DataFactory
     - sdk/datalake-analytics/Azure.ResourceManager.DataLakeAnalytics
     - sdk/datalake-store/Azure.ResourceManager.DataLakeStore
+    - sdk/datamigration/Azure.ResourceManager.DataMigration
     - sdk/datashare/Azure.ResourceManager.DataShare
+    - sdk/deploymentmanager/Azure.ResourceManager.DeploymentManager
     - sdk/desktopvirtualization/Azure.ResourceManager.DesktopVirtualization
     - sdk/deviceprovisioningservices/Azure.ResourceManager.DeviceProvisioningServices
     - sdk/deviceupdate/Azure.ResourceManager.DeviceUpdate
+    - sdk/devspaces/Azure.ResourceManager.DevSpaces
     - sdk/devtestlabs/Azure.ResourceManager.DevTestLabs
     - sdk/digitaltwins/Azure.ResourceManager.DigitalTwins
     - sdk/dns/Azure.ResourceManager.Dns
     - sdk/dnsresolver/Azure.ResourceManager.DnsResolver
     - sdk/dynatrace/Azure.ResourceManager.Dynatrace
     - sdk/edgeorder/Azure.ResourceManager.EdgeOrder
+    - sdk/elastic/Azure.ResourceManager.Elastic
     - sdk/elasticsan/Azure.ResourceManager.ElasticSan
     - sdk/eventgrid/Azure.ResourceManager.EventGrid
     - sdk/eventhub/Azure.ResourceManager.EventHubs
@@ -197,9 +209,11 @@ pr:
     - sdk/grafana/Azure.ResourceManager.Grafana
     - sdk/guestconfiguration/Azure.ResourceManager.GuestConfiguration
     - sdk/hdinsight/Azure.ResourceManager.HDInsight
-    - sdk/healthbot/Azure.ResourceManager.Healthbot
+    - sdk/healthbot/Azure.ResourceManager.HealthBot
     - sdk/healthcareapis/Azure.ResourceManager.HealthcareApis
+    - sdk/hybridcompute/Azure.ResourceManager.HybridCompute
     - sdk/hybridconnectivity/Azure.ResourceManager.HybridConnectivity
+    - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
     - sdk/keyvault/Azure.ResourceManager.KeyVault

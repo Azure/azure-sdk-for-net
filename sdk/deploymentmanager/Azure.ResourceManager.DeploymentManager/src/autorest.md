@@ -47,6 +47,9 @@ rename-rules:
   Etag: ETag|etag
 
 directive:
+  # It generates a new model if the property is `allOf`, that will cause dup model error.
+  # So the normal solution is changing all `allOf` property to direct `ref`, but `ref` doesn't support multiple target, 
+  # to solve this problem here defines a temporary model `tempRolloutProperties` as a workaround.
   - from: deploymentmanager.json
     where: $.definitions
     transform: >
@@ -68,10 +71,15 @@ directive:
       $.ArtifactSource.properties.properties['$ref'] = '#/definitions/ArtifactSourceProperties';
       delete $.Rollout.properties.properties['allOf'];
       $.Rollout.properties.properties['$ref'] = '#/definitions/tempRolloutProperties';
+  # Fix durations
+  - from: deploymentmanager.json
+    where: $.definitions
+    transform: >
       $.HealthCheckStepAttributes.properties.waitDuration['format'] = 'duration';
       $.HealthCheckStepAttributes.properties.maxElasticDuration['format'] = 'duration'; 
       $.HealthCheckStepAttributes.properties.healthyStateDuration['format'] = 'duration';
       $.WaitStepAttributes.properties.duration['format'] = 'duration';
+  # `Rollout` is a superset of `RolloutRequest`, if not change this then the tag operations code can't pass compile
   - from: deploymentmanager.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeploymentManager/rollouts/{rolloutName}']
     transform: >
