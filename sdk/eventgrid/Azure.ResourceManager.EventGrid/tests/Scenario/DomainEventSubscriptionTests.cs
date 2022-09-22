@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var createDomainResponse = (await DomainCollection.CreateOrUpdateAsync(WaitUntil.Completed, domainName,
                 new EventGridDomainData(DefaultLocation)
                 {
-                    Tags = { {"tag1", "value1"}, {"tag2", "value2"} }
+                    Tags = { { "tag1", "value1" }, { "tag2", "value2" } }
                 })).Value;
 
             Assert.NotNull(createDomainResponse);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    EndpointUri = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(AzureFunctionEndpointUrl)
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    EndpointUri = new Uri(AzureFunctionEndpointUrl),
+                    Endpoint = new Uri(AzureFunctionEndpointUrl),
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Test getting full URL and delivery attributes
             var fullUrlResponse = (await eventSubscriptionResponse.GetFullUriAsync()).Value;
             Assert.NotNull(fullUrlResponse);
-            Assert.NotNull(fullUrlResponse.EndpointUri);
+            Assert.NotNull(fullUrlResponse.Endpoint);
 
             var deliveryAttributesResponse = await eventSubscriptionResponse.GetDeliveryAttributesAsync().ToEnumerableAsync();
             Assert.NotNull(deliveryAttributesResponse);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    EndpointUri = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(AzureFunctionEndpointUrl)
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             // Test getting full URL and delivery attributes
             fullUrlResponse = (await domainTopicEventSubscriptionResponse.GetFullUriAsync()).Value;
             Assert.NotNull(fullUrlResponse);
-            Assert.NotNull(fullUrlResponse.EndpointUri);
+            Assert.NotNull(fullUrlResponse.Endpoint);
 
             deliveryAttributesResponse = await domainTopicEventSubscriptionResponse.GetDeliveryAttributesAsync().ToEnumerableAsync();
             Assert.NotNull(deliveryAttributesResponse);

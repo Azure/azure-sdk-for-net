@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    EndpointUri = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(AzureFunctionEndpointUrl)
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    EndpointUri = new Uri(AzureFunctionEndpointUrl),
+                    Endpoint = new Uri(AzureFunctionEndpointUrl),
                     DeliveryAttributeMappings = {
                             new StaticDeliveryAttributeMapping()
                             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    EndpointUri = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(AzureFunctionEndpointUrl)
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    EndpointUri = new Uri(AzureFunctionEndpointUrl),
+                    Endpoint = new Uri(AzureFunctionEndpointUrl),
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    EndpointUri = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(AzureFunctionEndpointUrl)
                 },
                 Filter = new EventSubscriptionFilter()
                 {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             {
                 Destination = new WebHookEventSubscriptionDestination()
                 {
-                    EndpointUri = new Uri(AzureFunctionEndpointUrl)
+                    Endpoint = new Uri(AzureFunctionEndpointUrl)
                 },
                 Filter = new EventSubscriptionFilter()
                 {
