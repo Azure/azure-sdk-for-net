@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var vnetName = Recording.GenerateAssetName("dnsResolver-");
 
             vnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}";
-            subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/snet-sim2";
+            subnetId = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{SubnetName}";
 
             var dnsResolverData = new DnsResolverData(this.DefaultLocation, new WritableSubResource
             {
@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             if (Mode == RecordedTestMode.Record)
             {
                 await CreateVirtualNetworkAsync(vnetName);
-                await CreateSubnetAsync(vnetName);
             }
 
             var subscription = await Client.GetSubscriptions().GetAsync(TestEnvironment.SubscriptionId);

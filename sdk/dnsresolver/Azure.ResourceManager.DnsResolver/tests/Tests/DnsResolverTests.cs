@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
     {
         private DnsResolverCollection dnsResolverCollection;
 
-        public DnsResolverTests(bool async) : base(async, RecordedTestMode.Playback)
+        public DnsResolverTests(bool async) : base(async)
         {
         }
 
