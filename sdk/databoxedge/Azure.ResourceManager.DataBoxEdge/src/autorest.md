@@ -61,7 +61,8 @@ prepend-rp-prefix:
   - ResourceMoveDetails
   - ResourceMoveStatus
   - RoleStatus
-  - RoleType
+  - RoleTypes
+  - RoleSinkInfo
   - SecuritySettings
   - ShipmentType
   - SkuAvailability
@@ -79,6 +80,7 @@ prepend-rp-prefix:
   - UpdateType
   - UserType
   - VmMemory
+  - AlertErrorDetails
 
 rename-mapping:
   DataBoxEdgeSku: AvailableDataBoxEdgeSku
@@ -90,7 +92,7 @@ rename-mapping:
   DataBoxEdgeDevice.properties.systemData: SystemData
   DCAccessCode: DataBoxEdgeDataCenterAccessCode
   SSLStatus: DataBoxEdgeStorageAccountSslStatus
-  AccessLevel: RemoteApplicationAccessLevel
+  AccessLevel: EdgeRemoteApplicationAccessLevel
   AccountType: DataBoxEdgeStorageAccountType
   Address: DataBoxEdgeShippingAddress
   ClusterMemoryCapacity.clusterFailoverMemoryMb: ClusterFailoverMemoryInMB
@@ -107,9 +109,10 @@ rename-mapping:
   GenerateCertResponse: GenerateCertResult
   GenerateCertResponse.expiryTimeInUTC: ExpireOn
   HostCapacity.effectiveAvailableMemoryMbOnHost: EffectiveAvailableMemoryInMBOnHost
-  NodeInfo: KubernetesNodeInfo
+  NodeInfo: EdgeKubernetesNodeInfo
   NumaNodeData.effectiveAvailableMemoryInMb: EffectiveAvailableMemoryInMB
   NumaNodeData.totalMemoryInMb: TotalMemoryInMB
+  NumaNodeData: NumaNodeInfo
   PlatformType: DataBoxEdgeOSPlatformType
   RemoteSupportSettings.expirationTimeStampInUTC: ExpireOn
   Secret: DataBoxEdgeDeviceSecret
@@ -128,6 +131,38 @@ rename-mapping:
   ComputeResource: EdgeComputeResourceInfo
   MonitoringStatus: DataBoxEdgeShareMonitoringStatus
   MetricConfiguration.resourceId: -|arm-id
+  ArcAddon: EdgeArcAddon
+  IoTAddon: EdgeIotAddon
+  IoTDeviceInfo: EdgeIotDeviceInfo
+  IoTRole: EdgeIotRole
+  Ipv4Config: DataBoxEdgeIPv4Config
+  Ipv6Config: DataBoxEdgeIPv6Config
+  ClientPermissionType: EdgeClientPermissionType
+  ClusterMemoryCapacity: EdgeClusterMemoryCapacity
+  ClusterCapacityViewData: EdgeClusterCapacityViewInfo
+  ClusterStorageViewData: EdgeClusterStorageViewInfo
+  ClusterGpuCapacity: EdgeClusterGpuCapacity
+  ClusterWitnessType: EdgeClusterWitnessType
+  EdgeProfileSubscription.id: -|arm-id
+  FileSourceInfo: EdgeFileSourceInfo
+  FileEventTrigger: EdgeFileEventTrigger
+  KeyVaultSyncStatus: EdgeKeyVaultSyncStatus
+  KubernetesClusterInfo: EdgeKubernetesClusterInfo
+  KubernetesIPConfiguration: EdgeKubernetesIPConfiguration
+  KubernetesNodeType: EdgeKubernetesNodeType
+  KubernetesRole: EdgeKubernetesRole
+  KubernetesRoleCompute: EdgeKubernetesRoleCompute
+  KubernetesRoleNetwork: EdgeKubernetesRoleNetwork
+  KubernetesRoleResources: EdgeKubernetesRoleResources
+  KubernetesRoleStorage: EdgeKubernetesRoleStorage
+  KubernetesRoleStorageClassInfo: EdgeKubernetesRoleStorageClassInfo
+  KubernetesState: EdgeKubernetesState
+  NetworkAdapterDhcpStatus: DataBoxEdgeNetworkAdapterDhcpStatus
+  NetworkAdapterPosition: DataBoxEdgeNetworkAdapterPosition
+  NetworkAdapterRdmaStatus: DataBoxEdgeNetworkAdapterRdmaStatus
+  NetworkAdapterStatus: DataBoxEdgeNetworkAdapterStatus
+  RemoteSupportSettings: EdgeRemoteSupportSettings
+  RemoteApplicationType: EdgeRemoteApplicationType
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -203,6 +238,7 @@ override-operation-name:
   SupportPackages_TriggerSupportPackage: TriggerSupportPackage
   Orders_ListDCAccessCode: GetDataCenterAccessCode
   DeviceCapacityInfo_GetDeviceCapacityInfo: GetDeviceCapacityInfo
+  Nodes_ListByDataBoxEdgeDevice: GetEdgeNodes
 
 request-path-is-non-resource:
   # make singleton resource with only get operation to be nonresource

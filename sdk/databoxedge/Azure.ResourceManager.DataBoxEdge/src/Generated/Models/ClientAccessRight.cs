@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="client"> IP of the client. </param>
         /// <param name="accessPermission"> Type of access to be allowed for the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public ClientAccessRight(string client, ClientPermissionType accessPermission)
+        public ClientAccessRight(string client, EdgeClientPermissionType accessPermission)
         {
             if (client == null)
             {
@@ -30,6 +30,6 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> IP of the client. </summary>
         public string Client { get; set; }
         /// <summary> Type of access to be allowed for the client. </summary>
-        public ClientPermissionType AccessPermission { get; set; }
+        public EdgeClientPermissionType AccessPermission { get; set; }
     }
 }
