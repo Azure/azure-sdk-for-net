@@ -12,25 +12,25 @@ using Azure.Core;
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
     /// <summary> Cost information for the product system. </summary>
-    public partial class CostInformation
+    public partial class EdgeOrderProductCostInformation
     {
-        /// <summary> Initializes a new instance of CostInformation. </summary>
-        internal CostInformation()
+        /// <summary> Initializes a new instance of EdgeOrderProductCostInformation. </summary>
+        internal EdgeOrderProductCostInformation()
         {
-            BillingMeterDetails = new ChangeTrackingList<BillingMeterDetails>();
+            BillingMeterDetails = new ChangeTrackingList<EdgeOrderProductBillingMeterDetails>();
         }
 
-        /// <summary> Initializes a new instance of CostInformation. </summary>
+        /// <summary> Initializes a new instance of EdgeOrderProductCostInformation. </summary>
         /// <param name="billingMeterDetails"> Details on the various billing aspects for the product system. </param>
         /// <param name="billingInfoUri"> Default url to display billing information. </param>
-        internal CostInformation(IReadOnlyList<BillingMeterDetails> billingMeterDetails, Uri billingInfoUri)
+        internal EdgeOrderProductCostInformation(IReadOnlyList<EdgeOrderProductBillingMeterDetails> billingMeterDetails, Uri billingInfoUri)
         {
             BillingMeterDetails = billingMeterDetails;
             BillingInfoUri = billingInfoUri;
         }
 
         /// <summary> Details on the various billing aspects for the product system. </summary>
-        public IReadOnlyList<BillingMeterDetails> BillingMeterDetails { get; }
+        public IReadOnlyList<EdgeOrderProductBillingMeterDetails> BillingMeterDetails { get; }
         /// <summary> Default url to display billing information. </summary>
         public Uri BillingInfoUri { get; }
     }

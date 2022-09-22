@@ -12,11 +12,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class CostInformation
+    public partial class EdgeOrderProductCostInformation
     {
-        internal static CostInformation DeserializeCostInformation(JsonElement element)
+        internal static EdgeOrderProductCostInformation DeserializeEdgeOrderProductCostInformation(JsonElement element)
         {
-            Optional<IReadOnlyList<BillingMeterDetails>> billingMeterDetails = default;
+            Optional<IReadOnlyList<EdgeOrderProductBillingMeterDetails>> billingMeterDetails = default;
             Optional<Uri> billingInfoUrl = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<BillingMeterDetails> array = new List<BillingMeterDetails>();
+                    List<EdgeOrderProductBillingMeterDetails> array = new List<EdgeOrderProductBillingMeterDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.BillingMeterDetails.DeserializeBillingMeterDetails(item));
+                        array.Add(EdgeOrderProductBillingMeterDetails.DeserializeEdgeOrderProductBillingMeterDetails(item));
                     }
                     billingMeterDetails = array;
                     continue;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new CostInformation(Optional.ToList(billingMeterDetails), billingInfoUrl.Value);
+            return new EdgeOrderProductCostInformation(Optional.ToList(billingMeterDetails), billingInfoUrl.Value);
         }
     }
 }

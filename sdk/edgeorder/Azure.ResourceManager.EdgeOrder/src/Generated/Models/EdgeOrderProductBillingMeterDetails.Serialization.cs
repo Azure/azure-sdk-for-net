@@ -10,13 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class BillingMeterDetails
+    public partial class EdgeOrderProductBillingMeterDetails
     {
-        internal static BillingMeterDetails DeserializeBillingMeterDetails(JsonElement element)
+        internal static EdgeOrderProductBillingMeterDetails DeserializeEdgeOrderProductBillingMeterDetails(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<MeterDetails> meterDetails = default;
-            Optional<MeteringType> meteringType = default;
+            Optional<EdgeOrderProductMeterDetails> meterDetails = default;
+            Optional<EdgeOrderProductMeteringType> meteringType = default;
             Optional<string> frequency = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    meterDetails = MeterDetails.DeserializeMeterDetails(property.Value);
+                    meterDetails = EdgeOrderProductMeterDetails.DeserializeEdgeOrderProductMeterDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("meteringType"))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    meteringType = new MeteringType(property.Value.GetString());
+                    meteringType = new EdgeOrderProductMeteringType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("frequency"))
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new BillingMeterDetails(name.Value, meterDetails.Value, Optional.ToNullable(meteringType), frequency.Value);
+            return new EdgeOrderProductBillingMeterDetails(name.Value, meterDetails.Value, Optional.ToNullable(meteringType), frequency.Value);
         }
     }
 }

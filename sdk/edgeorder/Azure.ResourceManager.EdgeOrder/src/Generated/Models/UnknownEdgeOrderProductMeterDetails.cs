@@ -7,14 +7,14 @@
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    /// <summary> The UnknownMeterDetails. </summary>
-    internal partial class UnknownMeterDetails : MeterDetails
+    /// <summary> The UnknownEdgeOrderProductMeterDetails. </summary>
+    internal partial class UnknownEdgeOrderProductMeterDetails : EdgeOrderProductMeterDetails
     {
-        /// <summary> Initializes a new instance of UnknownMeterDetails. </summary>
+        /// <summary> Initializes a new instance of UnknownEdgeOrderProductMeterDetails. </summary>
         /// <param name="billingType"> Represents billing type. </param>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
-        internal UnknownMeterDetails(BillingType billingType, double? multiplier, ChargingType? chargingType) : base(billingType, multiplier, chargingType)
+        internal UnknownEdgeOrderProductMeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType) : base(billingType, multiplier, chargingType)
         {
             BillingType = billingType;
         }

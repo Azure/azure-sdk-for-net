@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class ImageInformation
+    public partial class EdgeOrderProductImageInformation
     {
-        internal static ImageInformation DeserializeImageInformation(JsonElement element)
+        internal static EdgeOrderProductImageInformation DeserializeEdgeOrderProductImageInformation(JsonElement element)
         {
-            Optional<ImageType> imageType = default;
+            Optional<EdgeOrderProductImageType> imageType = default;
             Optional<Uri> imageUrl = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    imageType = new ImageType(property.Value.GetString());
+                    imageType = new EdgeOrderProductImageType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("imageUrl"))
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     continue;
                 }
             }
-            return new ImageInformation(Optional.ToNullable(imageType), imageUrl.Value);
+            return new EdgeOrderProductImageInformation(Optional.ToNullable(imageType), imageUrl.Value);
         }
     }
 }

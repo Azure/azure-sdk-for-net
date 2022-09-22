@@ -10,21 +10,13 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
-    public partial class MeterDetails
+    internal partial class UnknownEdgeOrderProductMeterDetails
     {
-        internal static MeterDetails DeserializeMeterDetails(JsonElement element)
+        internal static UnknownEdgeOrderProductMeterDetails DeserializeUnknownEdgeOrderProductMeterDetails(JsonElement element)
         {
-            if (element.TryGetProperty("billingType", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "Pav2": return Pav2MeterDetails.DeserializePav2MeterDetails(element);
-                    case "Purchase": return PurchaseMeterDetails.DeserializePurchaseMeterDetails(element);
-                }
-            }
             BillingType billingType = default;
             Optional<double> multiplier = default;
-            Optional<ChargingType> chargingType = default;
+            Optional<EdgeOrderProductChargingType> chargingType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("billingType"))
@@ -49,11 +41,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    chargingType = new ChargingType(property.Value.GetString());
+                    chargingType = new EdgeOrderProductChargingType(property.Value.GetString());
                     continue;
                 }
             }
-            return new UnknownMeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType));
+            return new UnknownEdgeOrderProductMeterDetails(billingType, Optional.ToNullable(multiplier), Optional.ToNullable(chargingType));
         }
     }
 }
