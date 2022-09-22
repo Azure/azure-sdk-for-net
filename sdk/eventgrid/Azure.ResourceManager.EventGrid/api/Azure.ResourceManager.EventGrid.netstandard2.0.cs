@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventGrid
         public bool? AutoCreateTopicWithFirstSubscription { get { throw null; } set { } }
         public bool? AutoDeleteTopicWithLastSubscription { get { throw null; } set { } }
         public Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary? DataResidencyBoundary { get { throw null; } set { } }
-        public System.Uri EndpointUri { get { throw null; } }
+        public System.Uri Endpoint { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> InboundIPRules { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.EventGridInputSchema? InputSchema { get { throw null; } set { } }
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.EventGrid
     {
         public EventGridTopicData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.EventGrid.Models.DataResidencyBoundary? DataResidencyBoundary { get { throw null; } set { } }
-        public System.Uri EndpointUri { get { throw null; } }
+        public System.Uri Endpoint { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> InboundIPRules { get { throw null; } }
         public Azure.ResourceManager.EventGrid.Models.EventGridInputSchema? InputSchema { get { throw null; } set { } }
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.EventGrid
     public partial class PartnerNamespaceData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public PartnerNamespaceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Uri EndpointUri { get { throw null; } }
+        public System.Uri Endpoint { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.EventGridInboundIPRule> InboundIPRules { get { throw null; } }
         public bool? IsLocalAuthDisabled { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PartnerRegistrationFullyQualifiedId { get { throw null; } set { } }
@@ -1351,7 +1351,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     public partial class EventSubscriptionFullUri
     {
         internal EventSubscriptionFullUri() { }
-        public System.Uri EndpointUri { get { throw null; } }
+        public System.Uri Endpoint { get { throw null; } }
     }
     public partial class EventSubscriptionIdentity
     {
@@ -1905,9 +1905,9 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         public WebHookEventSubscriptionDestination() { }
         public System.Guid? AzureActiveDirectoryTenantId { get { throw null; } set { } }
+        public System.Uri BaseEndpoint { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventGrid.Models.DeliveryAttributeMapping> DeliveryAttributeMappings { get { throw null; } }
-        public System.Uri EndpointBaseUri { get { throw null; } }
-        public System.Uri EndpointUri { get { throw null; } set { } }
+        public System.Uri Endpoint { get { throw null; } set { } }
         public int? MaxEventsPerBatch { get { throw null; } set { } }
         public int? PreferredBatchSizeInKilobytes { get { throw null; } set { } }
         public string UriOrAzureActiveDirectoryApplicationId { get { throw null; } set { } }

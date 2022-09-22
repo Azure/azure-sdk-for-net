@@ -182,7 +182,8 @@ namespace Azure.Communication.CallAutomation
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
 
-            var response = await callAutomationClient.CreateCallAsync(source, targets, callbackUri).ConfigureAwait(false);
+            var options = new CreateCallOptions(source, targets, callbackUri);
+            var response = await callAutomationClient.CreateCallAsync(options).ConfigureAwait(false);
             CreateCallResult result = (CreateCallResult)response;
             Assert.NotNull(result);
             Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
@@ -196,7 +197,8 @@ namespace Azure.Communication.CallAutomation
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(201, CreateOrAnswerCallOrGetCallConnectionPayload);
 
-            var response = callAutomationClient.CreateCall(source, targets, callbackUri);
+            var options = new CreateCallOptions(source, targets, callbackUri);
+            var response = callAutomationClient.CreateCall(options);
             CreateCallResult result = (CreateCallResult)response;
             Assert.NotNull(result);
             Assert.AreEqual((int)HttpStatusCode.Created, response.GetRawResponse().Status);
@@ -254,7 +256,7 @@ namespace Azure.Communication.CallAutomation
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
-            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callAutomationClient.CreateCallAsync(source, targets, callbackUri).ConfigureAwait(false));
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () => await callAutomationClient.CreateCallAsync(new CreateCallOptions(source, targets, callbackUri)).ConfigureAwait(false));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }
@@ -264,7 +266,7 @@ namespace Azure.Communication.CallAutomation
         {
             CallAutomationClient callAutomationClient = CreateMockCallAutomationClient(404);
 
-            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.CreateCall(source, targets, callbackUri));
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() => callAutomationClient.CreateCall(new CreateCallOptions(source, targets, callbackUri)));
             Assert.NotNull(ex);
             Assert.AreEqual(ex?.Status, 404);
         }

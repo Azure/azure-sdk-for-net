@@ -15,9 +15,9 @@ namespace Azure.Communication.CallAutomation
         [Test]
         public async Task DeleteRecording()
         {
-            if (SkipCallingServerInteractionLiveTests)
+            if (SkipCallAutomationInteractionLiveTests)
             {
-                Assert.Ignore("Skip callingserver interaction live tests flag is on");
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on");
             }
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
@@ -32,9 +32,9 @@ namespace Azure.Communication.CallAutomation
         [Test]
         public async Task DeleteRecording404()
         {
-            if (SkipCallingServerInteractionLiveTests)
+            if (SkipCallAutomationInteractionLiveTests)
             {
-                Assert.Ignore("Skip callingserver interaction live tests flag is on");
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on");
             }
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();

@@ -25,8 +25,8 @@ namespace Azure.Communication.CallAutomation
              * 5. verify existing call is still ongoing and has 2 participants now.
             */
 
-            if (SkipCallingServerInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+            if (SkipCallAutomationInteractionLiveTests)
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             string callConnectionId = "";
@@ -42,7 +42,7 @@ namespace Azure.Communication.CallAutomation
                 var pstnTarget = new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber);
                 var targets = new CommunicationIdentifier[] { acsTarget, pstnTarget };
 
-                CreateCallResult createCallResult = await client.CreateCallAsync(source, targets, new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
+                CreateCallResult createCallResult = await client.CreateCallAsync(new CreateCallOptions(source, targets, new Uri(TestEnvironment.AppCallbackUrl))).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 Response<CallConnectionProperties> properties = await createCallResult.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
@@ -81,8 +81,8 @@ namespace Azure.Communication.CallAutomation
              * 5. verify existing call is still ongoing and has 2 participants now.
             */
 
-            if (SkipCallingServerInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+            if (SkipCallAutomationInteractionLiveTests)
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             string callConnectionId = "";
@@ -99,7 +99,7 @@ namespace Azure.Communication.CallAutomation
                 var pstnTarget = new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber);
                 var targets = new CommunicationIdentifier[] { acsTarget1, acsTarget2, pstnTarget };
 
-                CreateCallResult createCallResult = await client.CreateCallAsync(source, targets, new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
+                CreateCallResult createCallResult = await client.CreateCallAsync(new CreateCallOptions(source, targets, new Uri(TestEnvironment.AppCallbackUrl))).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 Response<CallConnectionProperties> properties = await createCallResult.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
@@ -139,8 +139,8 @@ namespace Azure.Communication.CallAutomation
              * 5. verify that call connection cannot be found.
             */
 
-            if (SkipCallingServerInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+            if (SkipCallAutomationInteractionLiveTests)
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             var callConnectionId = "";
@@ -157,7 +157,7 @@ namespace Azure.Communication.CallAutomation
                 var pstnTarget = new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber);
                 var targets = new CommunicationIdentifier[] { acsTarget, pstnTarget };
 
-                CreateCallResult createCallResult = await client.CreateCallAsync(source, targets, new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
+                CreateCallResult createCallResult = await client.CreateCallAsync(new CreateCallOptions(source, targets, new Uri(TestEnvironment.AppCallbackUrl))).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 Response<CallConnectionProperties> properties = await createCallResult.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
@@ -203,8 +203,8 @@ namespace Azure.Communication.CallAutomation
              * 5. verify that call connection cannot be found.
             */
 
-            if (SkipCallingServerInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+            if (SkipCallAutomationInteractionLiveTests)
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             var callConnectionId = "";
@@ -221,7 +221,7 @@ namespace Azure.Communication.CallAutomation
                 var pstnTarget = new PhoneNumberIdentifier(TestEnvironment.TargetPhoneNumber);
                 var targets = new CommunicationIdentifier[] { acsTarget, pstnTarget };
 
-                CreateCallResult createCallResult = await client.CreateCallAsync(source, targets, new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
+                CreateCallResult createCallResult = await client.CreateCallAsync(new CreateCallOptions(source, targets, new Uri(TestEnvironment.AppCallbackUrl))).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 Response<CallConnectionProperties> properties = await createCallResult.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
@@ -266,8 +266,8 @@ namespace Azure.Communication.CallAutomation
              * 4. transfer the call to another target.
             */
 
-            if (SkipCallingServerInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+            if (SkipCallAutomationInteractionLiveTests)
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
 
@@ -281,7 +281,7 @@ namespace Azure.Communication.CallAutomation
                 var acsTarget = new CommunicationUserIdentifier(TestEnvironment.TargetUserId);
                 var targets = new CommunicationIdentifier[] { acsTarget };
 
-                CreateCallResult createCallResult = await client.CreateCallAsync(source, targets, new Uri(TestEnvironment.AppCallbackUrl)).ConfigureAwait(false);
+                CreateCallResult createCallResult = await client.CreateCallAsync(new CreateCallOptions(source, targets, new Uri(TestEnvironment.AppCallbackUrl))).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
 
                 Response<CallConnectionProperties> properties = await createCallResult.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
@@ -289,7 +289,7 @@ namespace Azure.Communication.CallAutomation
                 var callConnectionId = properties.Value.CallConnectionId;
                 Assert.IsNotEmpty(callConnectionId);
 
-                var transferResult = await client.GetCallConnection(callConnectionId).TransferCallToParticipantAsync(new CommunicationUserIdentifier(TestEnvironment.TargetUserId2)).ConfigureAwait(false);
+                var transferResult = await client.GetCallConnection(callConnectionId).TransferCallToParticipantAsync(new TransferToParticipantOptions(new CommunicationUserIdentifier(TestEnvironment.TargetUserId2))).ConfigureAwait(false);
                 await WaitForOperationCompletion().ConfigureAwait(false);
             }
             catch (Exception ex)

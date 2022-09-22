@@ -1150,11 +1150,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     }
     public partial class DataBoxEdgeMetricConfiguration
     {
-        public DataBoxEdgeMetricConfiguration(string resourceId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet> counterSets) { }
+        public DataBoxEdgeMetricConfiguration(Azure.Core.ResourceIdentifier resourceId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet> counterSets) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeMetricCounterSet> CounterSets { get { throw null; } }
         public string MdmAccount { get { throw null; } set { } }
         public string MetricNameSpace { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
     }
     public partial class DataBoxEdgeMetricCounter
     {
@@ -1873,7 +1873,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     public partial class GenerateCertResult
     {
         internal GenerateCertResult() { }
-        public string ExpiryTimeInUtc { get { throw null; } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public string PrivateKey { get { throw null; } }
         public string PublicKey { get { throw null; } }
     }

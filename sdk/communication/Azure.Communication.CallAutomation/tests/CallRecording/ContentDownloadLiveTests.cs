@@ -17,9 +17,9 @@ namespace Azure.Communication.CallAutomation
         [Test]
         public async Task DownloadMetadata()
         {
-            if (SkipCallingServerInteractionLiveTests)
+            if (SkipCallAutomationInteractionLiveTests)
             {
-                Assert.Ignore("Skip callingserver interaction live tests flag is on");
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on");
             }
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
@@ -35,9 +35,9 @@ namespace Azure.Communication.CallAutomation
         [Test]
         public async Task DownloadMetadata_404()
         {
-            if (SkipCallingServerInteractionLiveTests)
+            if (SkipCallAutomationInteractionLiveTests)
             {
-                Assert.Ignore("Skip callingserver interaction live tests flag is on");
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on");
             }
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
@@ -67,9 +67,9 @@ namespace Azure.Communication.CallAutomation
         [Test]
         public async Task DownloadMetadataRange()
         {
-            if (SkipCallingServerInteractionLiveTests)
+            if (SkipCallAutomationInteractionLiveTests)
             {
-                Assert.Ignore("Skip callingserver interaction live tests flag is on");
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on");
             }
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
@@ -88,9 +88,9 @@ namespace Azure.Communication.CallAutomation
         /// and the SDK should be able to make the new request with no error.
         public async Task DownloadMetadataWithRedirection()
         {
-            if (SkipCallingServerInteractionLiveTests)
+            if (SkipCallAutomationInteractionLiveTests)
             {
-                Assert.Ignore("Skip callingserver interaction live tests flag is on");
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on");
             }
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
