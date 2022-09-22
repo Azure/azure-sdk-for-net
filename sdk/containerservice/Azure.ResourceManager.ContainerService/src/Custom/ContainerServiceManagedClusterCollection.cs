@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns>PropertyValue</returns>
         private static T GetPrivateFieldValue<T>(object obj, string propName)
         {
-            if (obj == null) throw new ArgumentNullException("obj");
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
             Type t = obj.GetType();
             FieldInfo fi = null;
             while (fi == null && t != null)
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ContainerService
                 fi = t.GetField(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                 t = t.BaseType;
             }
-            if (fi == null) throw new ArgumentOutOfRangeException("propName", string.Format("Field {0} was not found in Type {1}", propName, obj.GetType().FullName));
+            if (fi == null) throw new ArgumentOutOfRangeException(nameof(propName), "Field {propName} was not found in Type {obj.GetType().FullName}");
             return (T)fi.GetValue(obj);
         }
 
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <exception cref="ArgumentOutOfRangeException">if the Property is not found</exception>
         private static void SetPrivateFieldValue<T>(object obj, string propName, T val)
         {
-            if (obj == null) throw new ArgumentNullException("obj");
+            if (obj == null) throw new ArgumentNullException(nameof(obj));
             Type t = obj.GetType();
             FieldInfo fi = null;
             while (fi == null && t != null)
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService
                 fi = t.GetField(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
                 t = t.BaseType;
             }
-            if (fi == null) throw new ArgumentOutOfRangeException("propName", string.Format("Field {0} was not found in Type {1}", propName, obj.GetType().FullName));
+            if (fi == null) throw new ArgumentOutOfRangeException(nameof(propName), "Field {propName} was not found in Type {obj.GetType().FullName}");
             fi.SetValue(obj, val);
         }
     }

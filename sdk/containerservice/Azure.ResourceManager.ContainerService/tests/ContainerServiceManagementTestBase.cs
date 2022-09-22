@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.ContainerService.Tests
         protected ContainerServiceManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
+            JsonPathSanitizers.Add("$.kubeconfigs.[*].value");
         }
 
         protected ContainerServiceManagementTestBase(bool isAsync)

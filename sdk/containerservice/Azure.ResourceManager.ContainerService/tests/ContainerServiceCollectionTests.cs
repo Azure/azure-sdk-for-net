@@ -1,14 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ContainerService.Models;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -63,6 +59,24 @@ namespace Azure.ResourceManager.ContainerService.Tests
             Assert.AreEqual(clusterFromUpdate.Data.AgentPoolProfiles[0].Count, 2);
             // Delete
             await clusterFromUpdate.DeleteAsync(WaitUntil.Completed);
+        }
+
+        [TestCase]
+        [RecordedTest]
+        public async Task GetCredentials()
+        {
+            ResourceGroupResource rg = await CreateResourceGroupAsync(Subscription, "testaksrg", AzureLocation.EastUS);
+            var clusterCollection = rg.GetContainerServiceManagedClusters();
+            string clusterName = Recording.GenerateAssetName("akscluster");
+            // Create
+            ContainerServiceManagedClusterResource cluster = await CreateContainerServiceAsync(rg, clusterName, rg.Data.Location);
+            ManagedClusterCredentials adminCredentials = await cluster.GetClusterAdminCredentialsAsync();
+            Assert.True(adminCredentials.Kubeconfigs.Count > 0);
+            Assert.True(!string.IsNullOrWhiteSpace(adminCredentials.Kubeconfigs[0].Name));
+            ManagedClusterCredentials userCredentials = await cluster.GetClusterUserCredentialsAsync();
+            Assert.True(userCredentials.Kubeconfigs.Count > 0);
+            // Delete
+            await cluster.DeleteAsync(WaitUntil.Completed);
         }
     }
 }
