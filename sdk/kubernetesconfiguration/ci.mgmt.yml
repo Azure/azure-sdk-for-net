@@ -7,7 +7,7 @@ pr: none
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: confluent
+    ServiceDirectory: kubernetesconfiguration
     Artifacts:
-    - name: Azure.ResourceManager.Confluent
-      safeName: AzureResourceManagerConfluent
+    - name: Azure.ResourceManager.KubernetesConfiguration
+      safeName: AzureResourceManagerKubernetesConfiguration
