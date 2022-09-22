@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> The service level of the file system. </summary>
         public NetAppFileServiceLevel? ServiceLevel { get; set; }
-        /// <summary> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB. Specified in bytes. </summary>
+        /// <summary> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. Minimum size is 100 GiB. Upper limit is 100TiB, 500Tib for LargeVolume. Specified in bytes. </summary>
         public long? UsageThreshold { get; set; }
         /// <summary> Set of export policy rules. </summary>
         internal VolumePatchPropertiesExportPolicy ExportPolicy { get; set; }
