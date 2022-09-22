@@ -1789,7 +1789,7 @@
       "RequestUri": "/subscriptions/e8257c73-24c5-4791-94dc-8b7901c90dbf/resourceGroups/sdktestrg3428/providers/Microsoft.Kusto/clusters/testcluster9012/databases/testdatabase5088/addPrincipals?api-version=2022-07-07",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTgyNTdjNzMtMjRjNS00NzkxLTk0ZGMtOGI3OTAxYzkwZGJmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzM0MjgvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjkwMTIvZGF0YWJhc2VzL3Rlc3RkYXRhYmFzZTUwODgvYWRkUHJpbmNpcGFscz9hcGktdmVyc2lvbj0yMDIyLTA3LTA3",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"value\": [\r\n    {\r\n      \"role\": \"Admin\",\r\n      \"name\": \"Alon Bebchuk\",\r\n      \"type\": \"User\",\r\n      \"email\": \"t-abebchuk@microsoft.com\"\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"value\": [\r\n    {\r\n      \"role\": \"Admin\",\r\n      \"name\": \"\",\r\n      \"type\": \"User\",\r\n      \"email\": \"t-abebchuk@microsoft.com\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "f46d8606-479f-4386-9bc7-d58a1a9150f9"
@@ -1858,7 +1858,7 @@
       "RequestUri": "/subscriptions/e8257c73-24c5-4791-94dc-8b7901c90dbf/resourceGroups/sdktestrg3428/providers/Microsoft.Kusto/clusters/testcluster9012/databases/testdatabase5088/removePrincipals?api-version=2022-07-07",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTgyNTdjNzMtMjRjNS00NzkxLTk0ZGMtOGI3OTAxYzkwZGJmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3RyZzM0MjgvcHJvdmlkZXJzL01pY3Jvc29mdC5LdXN0by9jbHVzdGVycy90ZXN0Y2x1c3RlcjkwMTIvZGF0YWJhc2VzL3Rlc3RkYXRhYmFzZTUwODgvcmVtb3ZlUHJpbmNpcGFscz9hcGktdmVyc2lvbj0yMDIyLTA3LTA3",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"value\": [\r\n    {\r\n      \"role\": \"Admin\",\r\n      \"name\": \"Alon Bebchuk\",\r\n      \"type\": \"User\",\r\n      \"email\": \"t-abebchuk@microsoft.com\"\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"value\": [\r\n    {\r\n      \"role\": \"Admin\",\r\n      \"name\": \"\",\r\n      \"type\": \"User\",\r\n      \"email\": \"t-abebchuk@microsoft.com\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
           "88c7a60a-f752-4cdc-8764-694bc5909a01"

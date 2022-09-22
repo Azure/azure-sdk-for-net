@@ -161,7 +161,7 @@ namespace Kusto.Tests.ScenarioTests
                 testBase.eventhubConnection.ManagedIdentityResourceId = systemAssignedManagedIdentityResourceId;
                 testBase.eventhubConnection.RetrievalStartDate = testBase.retrievalStartDate;
                 var updatedEventHubConnection = testBase.client.DataConnections.CreateOrUpdate(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.eventHubConnectionName, testBase.eventhubConnection);
-                VerifyEventHub(updatedEventHubConnection as EventHubDataConnection, testBase, dataFormat: testBase.dataFormat, managedIdentityResourceId:systemAssignedManagedIdentityResourceId, databaseRouting: testBase.MultiDatabaseRouting, retrievalStartDate: testBase.retrievalStartDate.ToString());
+                VerifyEventHub(updatedEventHubConnection as EventHubDataConnection, testBase, dataFormat: testBase.dataFormat, managedIdentityResourceId: systemAssignedManagedIdentityResourceId, databaseRouting: testBase.MultiDatabaseRouting, retrievalStartDate: testBase.retrievalStartDate.ToString());
 
                 // delete event hub
                 testBase.client.DataConnections.Delete(testBase.rgName, testBase.clusterName, testBase.databaseName, testBase.eventHubConnectionName);
@@ -462,7 +462,7 @@ namespace Kusto.Tests.ScenarioTests
 
                 var databaseName2 = $"{testBase.databaseName}2";
                 var databasePrincipalListRequest = new DatabasePrincipalListRequest(new List<DatabasePrincipal> {
-                            new DatabasePrincipal("Admin", "Alon Bebchuk", "User", email: "t-abebchuk@microsoft.com")
+                            new DatabasePrincipal("Admin", "", "User", email: "t-abebchuk@microsoft.com")
                 });
 
                 // create cluster
@@ -560,7 +560,7 @@ namespace Kusto.Tests.ScenarioTests
                 // create a follower cluster
                 testBase.client.Clusters.CreateOrUpdate(testBase.rgName, testBase.followerClusterName, testBase.cluster);
 
-                // create attached database configuration and test created read-only following database
+                // create attached database configuration
                 var attachedDatabaseConfiguration = testBase.client.AttachedDatabaseConfigurations.CreateOrUpdate(testBase.rgName, testBase.followerClusterName, testBase.attachedDatabaseConfigurationName, testBase.attachedDatabaseConfiguration);
                 VerifyAttachedDatabaseConfiguration(attachedDatabaseConfiguration, testBase);
 
@@ -571,7 +571,7 @@ namespace Kusto.Tests.ScenarioTests
                 var readonlyFollowingDb = testBase.client.Databases.Get(testBase.rgName, testBase.followerClusterName, testBase.databaseName) as ReadOnlyFollowingDatabase;
                 VerifyReadOnlyFollowingDatabase(readonlyFollowingDb, testBase);
 
-                // update attached database configuration and test read-only following database
+                // update attached database configuration
                 testBase.attachedDatabaseConfiguration.DatabaseNameOverride = databaseNameOverride;
                 attachedDatabaseConfiguration = testBase.client.AttachedDatabaseConfigurations.CreateOrUpdate(testBase.rgName, testBase.followerClusterName, testBase.attachedDatabaseConfigurationName, testBase.attachedDatabaseConfiguration);
                 VerifyAttachedDatabaseConfiguration(attachedDatabaseConfiguration, testBase, databaseNameOverride: databaseNameOverride);
@@ -579,7 +579,7 @@ namespace Kusto.Tests.ScenarioTests
                 readonlyFollowingDb = testBase.client.Databases.Get(testBase.rgName, testBase.followerClusterName, databaseNameOverride) as ReadOnlyFollowingDatabase;
                 VerifyReadOnlyFollowingDatabase(readonlyFollowingDb, testBase, databaseName: databaseNameOverride);
 
-                // update attached database configuration and test read-only following database
+                // update attached database configuration
                 testBase.attachedDatabaseConfiguration.DatabaseNameOverride = null;
                 testBase.attachedDatabaseConfiguration.DatabaseNamePrefix = databaseNamePrefix;
                 testBase.attachedDatabaseConfiguration.TableLevelSharingProperties = testBase.tableLevelSharingProperties;
@@ -928,11 +928,11 @@ namespace Kusto.Tests.ScenarioTests
             Assert.Equal(databaseFullName, database.Name);
 
             Assert.Equal(testBase.softDeletePeriod1, database.SoftDeletePeriod);
-            Assert.Equal(hotCachePeriod ?? testBase.hotCachePeriod1, database.HotCachePeriod);
             Assert.Equal(testBase.defaultPrincipalsModificationKind, database.PrincipalsModificationKind);
             // TODO: uncomment when bug fixed
             // Assert.Equal(testBase.databaseName, database.OriginalDatabaseName);
             Assert.Equal(testBase.databaseShareOrigin, database.DatabaseShareOrigin);
+            Assert.Equal(hotCachePeriod ?? testBase.hotCachePeriod1, database.HotCachePeriod);
             AssertTableLevelSharingProperties(tableLevelSharingProperties,database.TableLevelSharingProperties);
         }
 
