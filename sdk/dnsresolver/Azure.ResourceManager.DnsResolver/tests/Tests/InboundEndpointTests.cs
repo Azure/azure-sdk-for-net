@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
                 Id = new ResourceIdentifier(vnetId)
             });
 
-            if (Mode == RecordedTestMode.Record)
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 await CreateVirtualNetworkAsync(vnetName);
             }

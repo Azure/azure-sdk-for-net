@@ -1,23 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.DnsResolver.Tests;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Network.Models;
-using Newtonsoft.Json;
 using NUnit.Framework;
-using System.Net;
 
 namespace Azure.ResourceManager.DnsResolver.Tests
 {

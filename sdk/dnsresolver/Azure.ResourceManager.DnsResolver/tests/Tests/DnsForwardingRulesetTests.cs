@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
         private string vnetId;
         private string subnetId;
 
-        public DnsForwardingRulesetTests(bool async) : base(async)
+        public DnsForwardingRulesetTests(bool async) : base(async, RecordedTestMode.Playback)
         {
         }
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
                 Id = new ResourceIdentifier(vnetId)
             });
 
-            if (Mode == RecordedTestMode.Record)
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 await CreateVirtualNetworkAsync(vnetName);
             }
