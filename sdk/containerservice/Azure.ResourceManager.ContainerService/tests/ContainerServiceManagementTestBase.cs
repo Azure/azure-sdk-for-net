@@ -10,9 +10,6 @@ using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.ContainerService.Tests
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class ContainerServiceManagementTestBase : ManagementRecordedTestBase<ContainerServiceManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
