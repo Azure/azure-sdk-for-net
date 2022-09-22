@@ -9,7 +9,7 @@ namespace Azure.Core
 {
     /// <summary>
     ///   Provides a consistent means for verifying arguments and other invariants for a given
-    ///   member.
+    ///   member. Because this can be shared across multiple projects, avoid using Resource files.
     /// </summary>
     ///
     /// <remarks>
@@ -130,7 +130,7 @@ namespace Azure.Core
         {
             if (wasDisposed)
             {
-                throw new ObjectDisposedException(targetName, string.Format(CultureInfo.CurrentCulture, Resources.ClosedInstanceCannotPerformOperation, targetName));
+                throw new ObjectDisposedException(targetName, $"{targetName} has already been closed and cannot perform the requested operation.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.Core
 
             if (Uri.CheckHostName(argumentValue) == UriHostNameType.Unknown)
             {
-                throw new ArgumentException(string.Format(CultureInfo.InvariantCulture, Resources.InvalidFullyQualifiedNamespace, argumentValue), argumentName);
+                throw new ArgumentException($"The value '{argumentValue}' is not a well-formed Service Bus fully qualified namespace.", argumentName);
             }
         }
     }

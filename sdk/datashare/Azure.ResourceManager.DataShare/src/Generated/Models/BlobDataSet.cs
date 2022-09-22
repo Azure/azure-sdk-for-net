@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> An Azure storage blob data set. </summary>
-    public partial class BlobDataSet : DataSetData
+    public partial class BlobDataSet : ShareDataSetData
     {
         /// <summary> Initializes a new instance of BlobDataSet. </summary>
         /// <param name="containerName"> Container that has the file path. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceGroup"> Resource group of storage account. </param>
         /// <param name="storageAccountName"> Storage account name of the source data set. </param>
         /// <param name="subscriptionId"> Subscription id of storage account. </param>
-        internal BlobDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string containerName, string dataSetId, string filePath, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        internal BlobDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string containerName, Guid? dataSetId, string filePath, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
         {
             ContainerName = containerName;
             DataSetId = dataSetId;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Container that has the file path. </summary>
         public string ContainerName { get; set; }
         /// <summary> Unique id for identifying a data set resource. </summary>
-        public string DataSetId { get; }
+        public Guid? DataSetId { get; }
         /// <summary> File path within the source data set. </summary>
         public string FilePath { get; set; }
         /// <summary> Resource group of storage account. </summary>

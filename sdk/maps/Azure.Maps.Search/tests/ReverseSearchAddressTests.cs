@@ -78,7 +78,8 @@ namespace Azure.Maps.Search.Tests
                 new ReverseSearchAddressQuery(new ReverseSearchOptions { coordinates = new GeoPosition(121.0, 24.0), Language = "en" }),
                 new ReverseSearchAddressQuery(new ReverseSearchOptions { coordinates = new GeoPosition(-122.333345, 47.606038) }),
             });
-
+            // delay 400 ms for the task to complete
+            await Task.Delay(400);
             var reverseResult = operation.WaitForCompletion();
             Assert.AreEqual("Nantou County", reverseResult.Value.Results[0].Addresses[0].Address.Municipality);
             Assert.AreEqual("Seattle", reverseResult.Value.Results[1].Addresses[0].Address.Municipality);

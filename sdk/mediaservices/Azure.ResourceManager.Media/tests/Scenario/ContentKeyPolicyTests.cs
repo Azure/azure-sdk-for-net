@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Tests
 
         private async Task<ContentKeyPolicyResource> CreateDefaultContentKey(string contentKeyPolicyName)
         {
-            ContentKeyPolicyPreference empty_AES_Clear_Key = new ContentKeyPolicyPreference(new ContentKeyPolicyClearKeyConfiguration(), new ContentKeyPolicyOpenRestriction());
+            ContentKeyPolicyOption empty_AES_Clear_Key = new ContentKeyPolicyOption(new ContentKeyPolicyClearKeyConfiguration(), new ContentKeyPolicyOpenRestriction());
             ContentKeyPolicyData data = new ContentKeyPolicyData();
             data.Preferences.Add(empty_AES_Clear_Key);
             var contentKey = await contentKeyPolicyCollection.CreateOrUpdateAsync(WaitUntil.Completed, contentKeyPolicyName, data);

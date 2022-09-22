@@ -224,9 +224,9 @@ namespace Azure.Identity.Tests
         public async Task UsesTenantIdHint([Values(null, TenantIdHint)] string tenantId, [Values(true)] bool allowMultiTenantAuthentication)
         {
             TestSetup();
-            var options = new InteractiveBrowserCredentialOptions();
+            var options = new InteractiveBrowserCredentialOptions() { AdditionallyAllowedTenants = { TenantIdHint }};
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context);
+            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
 
             var credential = InstrumentClient(
                 new InteractiveBrowserCredential(
@@ -240,6 +240,23 @@ namespace Azure.Identity.Tests
 
             Assert.AreEqual(expectedToken, actualToken.Token, "Token should match");
             Assert.AreEqual(expiresOn, actualToken.ExpiresOn, "expiresOn should match");
+        }
+
+        public override async Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters)
+        {
+            Console.WriteLine(parameters.ToDebugString());
+
+            var options = new InteractiveBrowserCredentialOptions { TenantId = parameters.TenantId };
+
+            foreach (var addlTenant in parameters.AdditionallyAllowedTenants)
+            {
+                options.AdditionallyAllowedTenants.Add(addlTenant);
+            }
+            var mockMsalClient = new MockMsalPublicClient(AuthenticationResultFactory.Create());
+            var cred = InstrumentClient(
+                new InteractiveBrowserCredential(parameters.TenantId, Constants.DeveloperSignOnClientId, options, null, mockMsalClient));
+
+            await AssertAllowedTenantIdsEnforcedAsync(parameters, cred);
         }
 
         public class ExtendedInteractiveBrowserCredentialOptions : InteractiveBrowserCredentialOptions, IMsalPublicClientInitializerOptions

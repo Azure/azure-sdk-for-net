@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json.Serialization;
-
 namespace Azure.Communication.CallingServer
 {
     /// <summary>
@@ -13,22 +11,26 @@ namespace Azure.Communication.CallingServer
         /// <summary>
         /// The Encoding.
         /// </summary>
-        [JsonPropertyName("encoding")]
-        public string Encoding { get; set; }
+        public string Encoding { get; }
         /// <summary>
         /// Sample Rate.
         /// </summary>
-        [JsonPropertyName("sampleRate")]
-        public int SampleRate { get; set; }
+        public int SampleRate { get; }
         /// <summary>
         /// Channels.
         /// </summary>
-        [JsonPropertyName("channels")]
-        public int Channels { get; set; }
+        public int Channels { get; }
         /// <summary>
         /// Length.
         /// </summary>
-        [JsonPropertyName("length")]
-        public double Length { get; set; }
+        public double Length { get; }
+
+        internal MediaStreamingFormat(string encoding, int sampleRate, int channels, double length)
+        {
+            Encoding = encoding;
+            SampleRate = sampleRate;
+            Channels = channels;
+            Length = length;
+        }
     }
 }

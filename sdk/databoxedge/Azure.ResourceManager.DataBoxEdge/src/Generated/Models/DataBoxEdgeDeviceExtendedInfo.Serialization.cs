@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<string> encryptionKeyThumbprint = default;
             Optional<string> encryptionKey = default;
             Optional<string> resourceKey = default;
-            Optional<string> clientSecretStoreId = default;
+            Optional<ResourceIdentifier> clientSecretStoreId = default;
             Optional<Uri> clientSecretStoreUrl = default;
             Optional<string> channelIntegrityKeyName = default;
             Optional<string> channelIntegrityKeyVersion = default;
-            Optional<KeyVaultSyncStatus> keyVaultSyncStatus = default;
-            Optional<IReadOnlyDictionary<string, Secret>> deviceSecrets = default;
-            Optional<ClusterWitnessType> clusterWitnessType = default;
+            Optional<EdgeKeyVaultSyncStatus> keyVaultSyncStatus = default;
+            Optional<IReadOnlyDictionary<string, DataBoxEdgeDeviceSecret>> deviceSecrets = default;
+            Optional<EdgeClusterWitnessType> clusterWitnessType = default;
             Optional<string> fileShareWitnessLocation = default;
             Optional<string> fileShareWitnessUsername = default;
             Optional<string> cloudWitnessStorageAccountName = default;
@@ -133,7 +133,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         }
                         if (property0.NameEquals("clientSecretStoreId"))
                         {
-                            clientSecretStoreId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            clientSecretStoreId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("clientSecretStoreUrl"))
@@ -163,7 +168,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            keyVaultSyncStatus = new KeyVaultSyncStatus(property0.Value.GetString());
+                            keyVaultSyncStatus = new EdgeKeyVaultSyncStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("deviceSecrets"))
@@ -173,10 +178,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, Secret> dictionary = new Dictionary<string, Secret>();
+                            Dictionary<string, DataBoxEdgeDeviceSecret> dictionary = new Dictionary<string, DataBoxEdgeDeviceSecret>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, Secret.DeserializeSecret(property1.Value));
+                                dictionary.Add(property1.Name, DataBoxEdgeDeviceSecret.DeserializeDataBoxEdgeDeviceSecret(property1.Value));
                             }
                             deviceSecrets = dictionary;
                             continue;
@@ -188,7 +193,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            clusterWitnessType = new ClusterWitnessType(property0.Value.GetString());
+                            clusterWitnessType = new EdgeClusterWitnessType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("fileShareWitnessLocation"))

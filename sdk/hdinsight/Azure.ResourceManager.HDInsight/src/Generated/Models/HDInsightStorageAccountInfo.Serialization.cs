@@ -42,13 +42,27 @@ namespace Azure.ResourceManager.HDInsight.Models
             }
             if (Optional.IsDefined(ResourceId))
             {
-                writer.WritePropertyName("resourceId");
-                writer.WriteStringValue(ResourceId);
+                if (ResourceId != null)
+                {
+                    writer.WritePropertyName("resourceId");
+                    writer.WriteStringValue(ResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("resourceId");
+                }
             }
             if (Optional.IsDefined(MsiResourceId))
             {
-                writer.WritePropertyName("msiResourceId");
-                writer.WriteStringValue(MsiResourceId);
+                if (MsiResourceId != null)
+                {
+                    writer.WritePropertyName("msiResourceId");
+                    writer.WriteStringValue(MsiResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("msiResourceId");
+                }
             }
             if (Optional.IsDefined(SasKey))
             {
@@ -110,7 +124,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        resourceId = null;
                         continue;
                     }
                     resourceId = new ResourceIdentifier(property.Value.GetString());
@@ -120,7 +134,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        msiResourceId = null;
                         continue;
                     }
                     msiResourceId = new ResourceIdentifier(property.Value.GetString());

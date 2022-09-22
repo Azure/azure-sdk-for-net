@@ -10,7 +10,7 @@ csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
 require: https://github.com/Azure/azure-rest-api-specs/blob/9918d83b021f4abe956ca3be5df358482f50433a/specification/cosmos-db/resource-manager/readme.md
-tag: package-2021-10
+tag: package-2022-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -108,11 +108,13 @@ rename-rules:
   Etag: ETag|etag
   Mongodb: MongoDB
   VNet: Vnet
+  API: Api
 
 override-operation-name:
   RestorableMongodbDatabases_List: GetRestorableMongoDBDatabases
   RestorableMongodbCollections_List: GetRestorableMongoDBCollections
-  RestorableMongodbResources_List: GetRestorableMongoDBResources
+  RestorableMongodbResources_List: GetAllRestorableMongoDBResourceData
+  RestorableSqlResources_List: GetAllRestorableSqlResourceData
 
 rename-mapping:
   SqlRoleDefinitionResource: CosmosDBSqlRoleDefinitionResourceInfo
@@ -244,6 +246,24 @@ rename-mapping:
   MongoIndexOptions: MongoDBIndexConfig
   BackupStorageRedundancy: CosmosDBBackupStorageRedundancy
   PrimaryAggregationType: CosmosDBMetricPrimaryAggregationType
+  RestorableSqlResourcesGetResult: RestorableSqlResourceData
+  RestorableMongodbResourcesGetResult: RestorableMongoDBResourceData
+  ServiceResourceProperties: CosmosDBServiceProperties
+  ServiceResourceCreateUpdateParameters: CosmosDBServiceCreateUpdateParameters
+  ServiceResource: CosmosDBService
+  ServiceResourceListResult: CosmosDBServiceListResult
+  DataTransferServiceResourceProperties: DataTransferServiceProperties
+  SqlDedicatedGatewayServiceResourceProperties: SqlDedicatedGatewayServiceProperties
+  GraphAPIComputeServiceResourceProperties: GraphApiComputeServiceProperties
+  MaterializedViewsBuilderServiceResourceProperties: MaterializedViewsBuilderServiceProperties
+  RegionalServiceResource: CosmosDBRegionalService
+  SqlDedicatedGatewayRegionalServiceResource: SqlDedicatedGatewayRegionalService
+  GraphAPIComputeRegionalServiceResource: GraphApiComputeRegionalService
+  DataTransferRegionalServiceResource: DataTransferRegionalService
+  MaterializedViewsBuilderRegionalServiceResource: MaterializedViewsBuilderRegionalService
+  ServiceStatus: CosmosDBServiceStatus
+  ServiceSize: CosmosDBServiceSize
+  ServiceType: CosmosDBServiceType
 
 prepend-rp-prefix:
 - UniqueKey

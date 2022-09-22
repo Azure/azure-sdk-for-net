@@ -77,7 +77,7 @@ foreach($mgmtDir in $track2MgmtDirs) {
 
 Write-Host "Updating mgmt core client ci.mgmt.yml"
 #add path for each mgmt library into Azure.ResourceManager
-$armCiFile = "$packagesPath/resourceManager/ci.mgmt.yml"
+$armCiFile = "$packagesPath/resourcemanager/ci.mgmt.yml"
 $armLines = Get-Content $armCiFile
 $newLines = [System.Collections.ArrayList]::new()
 $startIndex = $track2MgmtDirs[0].FullName.IndexOf(("\sdk\")) + 1

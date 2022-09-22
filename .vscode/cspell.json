@@ -154,6 +154,14 @@
       ]
     },
     {
+      "filename": "**/sdk/botservice/**/*.cs",
+      "words": [
+        "Alexa",
+        "Cmek",
+        "Omnichannel"
+      ]
+    },
+    {
       "filename": "**/sdk/cdn/**/*.cs",
       "words": [
         "Orqel",
@@ -230,6 +238,12 @@
       ]
     },
     {
+      "filename": "**/sdk/customer-insights/**/*.cs",
+      "words": [
+        "kpis"
+      ]
+    },
+    {
       "filename": "**/sdk/databox/**/*.cs",
       "words": [
         "errored"
@@ -247,10 +261,43 @@
       ]
     },
     {
+      "filename": "**/sdk/datadog/**/*.cs",
+      "words": [
+        "liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/datalake-analytics/**/*.cs",
+      "words": [
+        "undeleting"
+      ]
+    },
+    {
+      "filename": "**/sdk/datalake-store/**/*.cs",
+      "words": [
+        "undeleting"
+      ]
+    },
+    {
+      "filename": "**/sdk/datamigration/**/*.cs",
+      "words": [
+        "regen",
+        "ssis",
+        "sybase",
+        "initialiazing"
+      ]
+    },
+    {
       "filename": "**/sdk/datashare/**/*.cs",
       "words": [
         "adls",
         "kusto"
+      ]
+    },
+    {
+      "filename": "**/sdk/devspaces/**/*.cs",
+      "words": [
+        "kube"
       ]
     },
     {
@@ -307,6 +354,12 @@
       ]
     },
     {
+      "filename": "**/sdk/elastic/**/*.cs",
+      "words": [
+        "liftr"
+      ]
+    },
+    {
       "filename": "**/sdk/elasticsan/**/*.cs",
       "words": [
         "iscsi",
@@ -346,6 +399,12 @@
       "words": [
         "dicom",
         "fhir"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridkubernetes/**/*.cs",
+      "words": [
+        "kubeconfigs"
       ]
     },
     {
@@ -684,7 +743,9 @@
         "updation",
         "usql",
         "vertica",
-        "xero"
+        "xero",
+        "Asana",
+        "Twilio"
       ]
     },
     {
