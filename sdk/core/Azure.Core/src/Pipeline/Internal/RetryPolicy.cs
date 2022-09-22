@@ -14,7 +14,7 @@ namespace Azure.Core.Pipeline
     /// <summary>
     ///
     /// </summary>
-    public abstract class RetryPolicy : HttpPipelinePolicy
+    public abstract class RetryPolicy
     {
         private readonly RetryMode _mode;
         private readonly TimeSpan _delay;
@@ -39,130 +39,6 @@ namespace Azure.Core.Pipeline
             _maxRetries = options.MaxRetries;
         }
 
-        /// <inheritdoc/>
-        public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            ProcessAsync(message, pipeline, false).EnsureCompleted();
-        }
-
-        /// <inheritdoc/>
-        public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            return ProcessAsync(message, pipeline, true);
-        }
-
-        private async ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
-        {
-            List<Exception>? exceptions = null;
-            while (true)
-            {
-                var before = Stopwatch.GetTimestamp();
-
-                if (async)
-                {
-                    await OnTryRequestAsync(message).ConfigureAwait(false);
-                }
-                else
-                {
-                    OnTryRequest(message);
-                }
-
-                try
-                {
-                    if (async)
-                    {
-                        await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        ProcessNext(message, pipeline);
-                    }
-                    // This request didn't result in an exception, so reset the LastException property
-                    // in case it was set on a previous attempt.
-                    message.RetryContext.LastException = null;
-                }
-                catch (Exception ex)
-                {
-                    if (exceptions == null)
-                    {
-                        exceptions = new List<Exception>();
-                    }
-
-                    exceptions.Add(ex);
-
-                    message.RetryContext.LastException = ex;
-                }
-
-                // If we got a response for this request, trigger OnResponse. We don't rely on exception because it's possible
-                // a policy later in the pipeline could throw after receiving a response, but we still want to allow OnResponse to be called
-                // in this case.
-                if (message.Request.ClientRequestId == message.Response.ClientRequestId)
-                {
-                    if (async)
-                    {
-                        await OnResponseAsync(message).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        OnResponse(message);
-                    }
-                }
-
-                var after = Stopwatch.GetTimestamp();
-                double elapsed = (after - before) / (double)Stopwatch.Frequency;
-
-                bool failed = message.RetryContext.LastException != null || message.Response.IsError;
-                if (failed)
-                {
-                    bool shouldRetry = async ? await ShouldRetryAsync(message).ConfigureAwait(false) : ShouldRetry(message);
-                    if (shouldRetry)
-                    {
-                        TimeSpan delay = async ? await CalculateNextDelayAsync(message).ConfigureAwait(false) : CalculateNextDelay(message);
-                        if (delay > TimeSpan.Zero)
-                        {
-                            if (async)
-                            {
-                                await WaitAsync(delay, message.CancellationToken).ConfigureAwait(false);
-                            }
-                            else
-                            {
-                                Wait(delay, message.CancellationToken);
-                            }
-                        }
-                    }
-                    else if (message.RetryContext.LastException != null)
-                    {
-                        // Rethrow a singular exception
-                        if (exceptions!.Count == 1)
-                        {
-                            ExceptionDispatchInfo.Capture(message.RetryContext.LastException).Throw();
-                        }
-
-                        throw new AggregateException($"Retry failed after {message.RetryContext.AttemptNumber} tries. Retry settings can be adjusted in {nameof(ClientOptions)}.{nameof(ClientOptions.Retry)}.", exceptions);
-                    }
-                    else
-                    {
-                        // The response indicates a failure, but there was no exception. Return to the caller so they can handle the response.
-                        return;
-                    }
-                }
-                else
-                {
-                    // Request succeeded. Return to the caller.
-                    return;
-                }
-
-                if (message.HasResponse)
-                {
-                    // Dispose the content stream to free up a connection if the request has any
-                    message.Response.ContentStream?.Dispose();
-                }
-
-                message.RetryContext.AttemptNumber++;
-                AzureCoreEventSource.Singleton.RequestRetrying(message.Request.ClientRequestId, message.RetryContext.AttemptNumber, elapsed);
-            }
-        }
-
         internal virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
         {
             await Task.Delay(time, cancellationToken).ConfigureAwait(false);
@@ -178,14 +54,14 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        protected virtual bool ShouldRetry(HttpMessage message) => ShouldRetryInternal(message);
+        protected internal virtual bool ShouldRetry(HttpMessage message) => ShouldRetryInternal(message);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        protected virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message) => new(ShouldRetryInternal(message));
+        protected internal virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message) => new(ShouldRetryInternal(message));
 
         private bool ShouldRetryInternal(HttpMessage message)
         {
@@ -202,6 +78,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
+            // either was a success response or out of retries
             return false;
         }
 
@@ -210,14 +87,14 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        protected virtual TimeSpan CalculateNextDelay(HttpMessage message) => CalculateNextDelayInternal(message);
+        protected internal virtual TimeSpan CalculateNextDelay(HttpMessage message) => CalculateNextDelayInternal(message);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        protected virtual ValueTask<TimeSpan> CalculateNextDelayAsync(HttpMessage message) => new(CalculateNextDelayInternal(message));
+        protected internal virtual ValueTask<TimeSpan> CalculateNextDelayAsync(HttpMessage message) => new(CalculateNextDelayInternal(message));
 
         private TimeSpan CalculateNextDelayInternal(HttpMessage message)
         {
@@ -242,39 +119,9 @@ namespace Azure.Core.Pipeline
             return delay;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        protected virtual void OnTryRequest(HttpMessage message)
-        {
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        protected virtual ValueTask OnTryRequestAsync(HttpMessage message) => new();
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        protected virtual void OnResponse(HttpMessage message)
-        {
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="message"></param>
-        /// <returns></returns>
-        protected virtual ValueTask OnResponseAsync(HttpMessage message) => new();
-
         internal virtual TimeSpan GetServerDelay(HttpMessage message)
         {
-            if (message.Response == null)
+            if (!message.HasResponse)
             {
                 return TimeSpan.Zero;
             }
