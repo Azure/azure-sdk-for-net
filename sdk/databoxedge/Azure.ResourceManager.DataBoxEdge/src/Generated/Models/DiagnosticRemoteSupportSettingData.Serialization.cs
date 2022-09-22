@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<RemoteSupportSettings>> remoteSupportSettingsList = default;
+            Optional<IList<EdgeRemoteSupportSettings>> remoteSupportSettingsList = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataBoxEdge
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<RemoteSupportSettings> array = new List<RemoteSupportSettings>();
+                            List<EdgeRemoteSupportSettings> array = new List<EdgeRemoteSupportSettings>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RemoteSupportSettings.DeserializeRemoteSupportSettings(item));
+                                array.Add(EdgeRemoteSupportSettings.DeserializeEdgeRemoteSupportSettings(item));
                             }
                             remoteSupportSettingsList = array;
                             continue;
