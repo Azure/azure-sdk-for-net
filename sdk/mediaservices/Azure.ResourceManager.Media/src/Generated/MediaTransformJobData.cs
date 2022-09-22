@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="correlationData"> Customer provided key, value pairs that will be returned in Job and JobOutput state events. </param>
         /// <param name="startsOn"> The UTC date and time at which this Job began processing. </param>
         /// <param name="endsOn"> The UTC date and time at which this Job finished processing. </param>
-        internal MediaTransformJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, JobState? state, string description, MediaTransformJobInputBasicProperties input, DateTimeOffset? lastModifiedOn, IList<MediaTransformJobOutput> outputs, TransformOutputsPriority? priority, IDictionary<string, string> correlationData, DateTimeOffset? startsOn, DateTimeOffset? endsOn) : base(id, name, resourceType, systemData)
+        internal MediaTransformJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, JobState? state, string description, MediaTransformJobInputBasicProperties input, DateTimeOffset? lastModifiedOn, IList<MediaTransformJobOutput> outputs, MediaTransformOutputsPriority? priority, IDictionary<string, string> correlationData, DateTimeOffset? startsOn, DateTimeOffset? endsOn) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             State = state;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media
         /// </summary>
         public IList<MediaTransformJobOutput> Outputs { get; }
         /// <summary> Priority with which the job should be processed. Higher priority jobs are processed before lower priority jobs. If not set, the default is normal. </summary>
-        public TransformOutputsPriority? Priority { get; set; }
+        public MediaTransformOutputsPriority? Priority { get; set; }
         /// <summary> Customer provided key, value pairs that will be returned in Job and JobOutput state events. </summary>
         public IDictionary<string, string> CorrelationData { get; }
         /// <summary> The UTC date and time at which this Job began processing. </summary>

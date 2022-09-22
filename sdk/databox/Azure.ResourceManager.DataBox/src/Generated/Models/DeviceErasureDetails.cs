@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of DeviceErasureDetails. </summary>
         /// <param name="deviceErasureStatus"> Holds the device erasure completion status. </param>
         /// <param name="erasureOrDestructionCertificateSasKey"> Shared access key to download cleanup or destruction certificate for device. </param>
-        internal DeviceErasureDetails(StageStatus? deviceErasureStatus, string erasureOrDestructionCertificateSasKey)
+        internal DeviceErasureDetails(DataBoxStageStatus? deviceErasureStatus, string erasureOrDestructionCertificateSasKey)
         {
             DeviceErasureStatus = deviceErasureStatus;
             ErasureOrDestructionCertificateSasKey = erasureOrDestructionCertificateSasKey;
         }
 
         /// <summary> Holds the device erasure completion status. </summary>
-        public StageStatus? DeviceErasureStatus { get; }
+        public DataBoxStageStatus? DeviceErasureStatus { get; }
         /// <summary> Shared access key to download cleanup or destruction certificate for device. </summary>
         public string ErasureOrDestructionCertificateSasKey { get; }
     }

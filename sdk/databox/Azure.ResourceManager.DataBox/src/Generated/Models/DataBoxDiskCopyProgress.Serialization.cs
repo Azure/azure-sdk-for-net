@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> serialNumber = default;
             Optional<long> bytesCopied = default;
             Optional<int> percentComplete = default;
-            Optional<CopyStatus> status = default;
+            Optional<DataBoxCopyStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serialNumber"))
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new CopyStatus(property.Value.GetString());
+                    status = new DataBoxCopyStatus(property.Value.GetString());
                     continue;
                 }
             }

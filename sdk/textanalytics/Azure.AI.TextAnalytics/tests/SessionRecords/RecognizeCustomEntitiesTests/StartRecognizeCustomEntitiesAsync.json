@@ -8,9 +8,9 @@
         "Content-Length": "525",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-62dde154a2bdff5c4349f7ed256eab84-7b204d3f1affe6e4-00",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220811.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "3ca16d114c905e93db0da7343f7236c4",
+        "traceparent": "00-a480a6a7c44511313f01b778a5c5284c-f070f8572b1aef26-00",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220909.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "489ef9a1571099c606a04c683f3780da",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -41,42 +41,42 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "apim-request-id": "ff73f3ad-5496-4cd9-b244-8d1a6b7afa09",
+        "apim-request-id": "809613c2-8aa5-4fee-bb88-8c2f2e774484",
         "Content-Length": "0",
-        "Date": "Thu, 11 Aug 2022 20:22:59 GMT",
-        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/bc52c28a-fc39-4cfb-8e61-26402908d40f?api-version=2022-05-01",
+        "Date": "Fri, 09 Sep 2022 17:02:51 GMT",
+        "operation-location": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/ef0795a6-a72c-4599-b688-43a421e82a0d?api-version=2022-05-01",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "428"
+        "x-envoy-upstream-service-time": "264"
       },
       "ResponseBody": null
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/bc52c28a-fc39-4cfb-8e61-26402908d40f?api-version=2022-05-01\u0026showStats=false",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/ef0795a6-a72c-4599-b688-43a421e82a0d?api-version=2022-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220811.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "a5f71e743e371082e8a2702cec085cbe",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220909.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "2b48e4335312e80a1184cc47cd8d23bf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "38618725-e3ab-4521-860e-c720c651844a",
+        "apim-request-id": "bd3a886e-ab47-49da-ac11-99f91be7c6d0",
         "Content-Length": "283",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 11 Aug 2022 20:22:59 GMT",
+        "Date": "Fri, 09 Sep 2022 17:02:51 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "8"
+        "x-envoy-upstream-service-time": "7"
       },
       "ResponseBody": {
-        "jobId": "bc52c28a-fc39-4cfb-8e61-26402908d40f",
-        "lastUpdatedDateTime": "2022-08-11T20:22:59Z",
-        "createdDateTime": "2022-08-11T20:22:59Z",
-        "expirationDateTime": "2022-08-12T20:22:59Z",
+        "jobId": "ef0795a6-a72c-4599-b688-43a421e82a0d",
+        "lastUpdatedDateTime": "2022-09-09T17:02:52Z",
+        "createdDateTime": "2022-09-09T17:02:51Z",
+        "expirationDateTime": "2022-09-10T17:02:51Z",
         "status": "notStarted",
         "errors": [],
         "tasks": {
@@ -89,31 +89,31 @@
       }
     },
     {
-      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/bc52c28a-fc39-4cfb-8e61-26402908d40f?api-version=2022-05-01\u0026showStats=false",
+      "RequestUri": "https://javatextanalyticstestresources.cognitiveservices.azure.com/language/analyze-text/jobs/ef0795a6-a72c-4599-b688-43a421e82a0d?api-version=2022-05-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220811.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
-        "x-ms-client-request-id": "7f1030cc5a004e94b70c45d940a9de09",
+        "User-Agent": "azsdk-net-AI.TextAnalytics/5.2.0-alpha.20220909.1 (.NET 6.0.8; Microsoft Windows 10.0.22000)",
+        "x-ms-client-request-id": "690a2873492dc6cd07109951c44f197b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "a3b84fd2-bccf-469d-b2c2-27e3172ef233",
+        "apim-request-id": "cc175649-d7b2-4ddf-a75e-382d537dd191",
         "Content-Length": "1719",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Thu, 11 Aug 2022 20:23:08 GMT",
+        "Date": "Fri, 09 Sep 2022 17:03:02 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "39"
+        "x-envoy-upstream-service-time": "42"
       },
       "ResponseBody": {
-        "jobId": "bc52c28a-fc39-4cfb-8e61-26402908d40f",
-        "lastUpdatedDateTime": "2022-08-11T20:22:59Z",
-        "createdDateTime": "2022-08-11T20:22:59Z",
-        "expirationDateTime": "2022-08-12T20:22:59Z",
+        "jobId": "ef0795a6-a72c-4599-b688-43a421e82a0d",
+        "lastUpdatedDateTime": "2022-09-09T17:02:52Z",
+        "createdDateTime": "2022-09-09T17:02:51Z",
+        "expirationDateTime": "2022-09-10T17:02:51Z",
         "status": "succeeded",
         "errors": [],
         "tasks": {
@@ -124,7 +124,7 @@
           "items": [
             {
               "kind": "CustomEntityRecognitionLROResults",
-              "lastUpdateDateTime": "2022-08-11T20:22:59.9052998Z",
+              "lastUpdateDateTime": "2022-09-09T17:02:52.7353529Z",
               "status": "succeeded",
               "results": {
                 "documents": [
@@ -236,7 +236,7 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "2016285623",
+    "RandomSeed": "410528019",
     "TEXTANALYTICS_CUSTOM_ENTITIES_DEPLOYMENT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
     "TEXTANALYTICS_CUSTOM_ENTITIES_PROJECT_NAME": "88ee0f78-fbca-444d-98e2-7c4c8631e494",
     "TEXT_ANALYTICS_API_KEY": "Sanitized",

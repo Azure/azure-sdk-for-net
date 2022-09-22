@@ -12,11 +12,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// Please note <see cref="AutomationRuleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AutomationRuleModifyPropertiesAction"/> and <see cref="AutomationRuleRunPlaybookAction"/>.
     /// </summary>
-    public partial class AutomationRuleAction
+    public abstract partial class AutomationRuleAction
     {
         /// <summary> Initializes a new instance of AutomationRuleAction. </summary>
         /// <param name="order"></param>
-        public AutomationRuleAction(int order)
+        protected AutomationRuleAction(int order)
         {
             Order = order;
         }

@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Optional<string> version = default;
             Optional<Uri> contentUri = default;
             Optional<string> contentHash = default;
-            Optional<AssignmentType?> assignmentType = default;
+            Optional<GuestConfigurationAssignmentType?> assignmentType = default;
             Optional<string> assignmentSource = default;
             Optional<string> contentType = default;
             Optional<IList<ConfigurationParameter>> configurationParameter = default;
             Optional<IList<ConfigurationParameter>> configurationProtectedParameter = default;
-            Optional<ConfigurationSetting> configurationSetting = default;
+            Optional<LcmConfigurationSetting> configurationSetting = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         assignmentType = null;
                         continue;
                     }
-                    assignmentType = new AssignmentType(property.Value.GetString());
+                    assignmentType = new GuestConfigurationAssignmentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("assignmentSource"))
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         configurationSetting = null;
                         continue;
                     }
-                    configurationSetting = ConfigurationSetting.DeserializeConfigurationSetting(property.Value);
+                    configurationSetting = LcmConfigurationSetting.DeserializeLcmConfigurationSetting(property.Value);
                     continue;
                 }
             }

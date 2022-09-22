@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="policySetDefinitionVersion"> Evaluated policy set definition version. </param>
         /// <param name="policyAssignmentVersion"> Evaluated policy assignment version. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal PolicyState(string odataId, string odataContext, DateTimeOffset? timestamp, string resourceId, string policyAssignmentId, string policyDefinitionId, string effectiveParameters, bool? isCompliant, string subscriptionId, string resourceType, string resourceLocation, string resourceGroup, string resourceTags, string policyAssignmentName, string policyAssignmentOwner, string policyAssignmentParameters, string policyAssignmentScope, string policyDefinitionName, string policyDefinitionAction, string policyDefinitionCategory, string policySetDefinitionId, string policySetDefinitionName, string policySetDefinitionOwner, string policySetDefinitionCategory, string policySetDefinitionParameters, string managementGroupIds, string policyDefinitionReferenceId, string complianceState, PolicyEvaluationDetails policyEvaluationDetails, IReadOnlyList<string> policyDefinitionGroupNames, IReadOnlyList<ComponentStateDetails> components, string policyDefinitionVersion, string policySetDefinitionVersion, string policyAssignmentVersion, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal PolicyState(string odataId, string odataContext, DateTimeOffset? timestamp, ResourceIdentifier resourceId, ResourceIdentifier policyAssignmentId, ResourceIdentifier policyDefinitionId, string effectiveParameters, bool? isCompliant, string subscriptionId, string resourceType, AzureLocation? resourceLocation, string resourceGroup, string resourceTags, string policyAssignmentName, string policyAssignmentOwner, string policyAssignmentParameters, string policyAssignmentScope, string policyDefinitionName, string policyDefinitionAction, string policyDefinitionCategory, ResourceIdentifier policySetDefinitionId, string policySetDefinitionName, string policySetDefinitionOwner, string policySetDefinitionCategory, string policySetDefinitionParameters, string managementGroupIds, string policyDefinitionReferenceId, string complianceState, PolicyEvaluationDetails policyEvaluationDetails, IReadOnlyList<string> policyDefinitionGroupNames, IReadOnlyList<ComponentStateDetails> components, string policyDefinitionVersion, string policySetDefinitionVersion, string policyAssignmentVersion, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             OdataId = odataId;
             OdataContext = odataContext;
@@ -104,11 +104,11 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Timestamp for the policy state record. </summary>
         public DateTimeOffset? Timestamp { get; }
         /// <summary> Resource ID. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> Policy assignment ID. </summary>
-        public string PolicyAssignmentId { get; }
+        public ResourceIdentifier PolicyAssignmentId { get; }
         /// <summary> Policy definition ID. </summary>
-        public string PolicyDefinitionId { get; }
+        public ResourceIdentifier PolicyDefinitionId { get; }
         /// <summary> Effective parameters for the policy assignment. </summary>
         public string EffectiveParameters { get; }
         /// <summary> Flag which states whether the resource is compliant against the policy assignment it was evaluated against. This property is deprecated; please use ComplianceState instead. </summary>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Resource type. </summary>
         public string ResourceType { get; }
         /// <summary> Resource location. </summary>
-        public string ResourceLocation { get; }
+        public AzureLocation? ResourceLocation { get; }
         /// <summary> Resource group name. </summary>
         public string ResourceGroup { get; }
         /// <summary> List of resource tags. </summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> Policy definition category. </summary>
         public string PolicyDefinitionCategory { get; }
         /// <summary> Policy set definition ID, if the policy assignment is for a policy set. </summary>
-        public string PolicySetDefinitionId { get; }
+        public ResourceIdentifier PolicySetDefinitionId { get; }
         /// <summary> Policy set definition name, if the policy assignment is for a policy set. </summary>
         public string PolicySetDefinitionName { get; }
         /// <summary> Policy set definition owner, if the policy assignment is for a policy set. </summary>

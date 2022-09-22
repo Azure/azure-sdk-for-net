@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.Peering.Models
         /// <summary> Initializes a new instance of LookingGlassOutput. </summary>
         /// <param name="command"> Invoked command. </param>
         /// <param name="output"> Output of the command. </param>
-        internal LookingGlassOutput(Command? command, string output)
+        internal LookingGlassOutput(LookingGlassCommand? command, string output)
         {
             Command = command;
             Output = output;
         }
 
         /// <summary> Invoked command. </summary>
-        public Command? Command { get; }
+        public LookingGlassCommand? Command { get; }
         /// <summary> Output of the command. </summary>
         public string Output { get; }
     }

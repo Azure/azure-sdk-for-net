@@ -154,6 +154,14 @@
       ]
     },
     {
+      "filename": "**/sdk/botservice/**/*.cs",
+      "words": [
+        "Alexa",
+        "Cmek",
+        "Omnichannel"
+      ]
+    },
+    {
       "filename": "**/sdk/cdn/**/*.cs",
       "words": [
         "Orqel",
@@ -230,6 +238,12 @@
       ]
     },
     {
+      "filename": "**/sdk/customer-insights/**/*.cs",
+      "words": [
+        "kpis"
+      ]
+    },
+    {
       "filename": "**/sdk/databox/**/*.cs",
       "words": [
         "errored"
@@ -244,6 +258,24 @@
         "numa",
         "posix",
         "rdma"
+      ]
+    },
+    {
+      "filename": "**/sdk/datadog/**/*.cs",
+      "words": [
+        "liftr"
+      ]
+    },
+    {
+      "filename": "**/sdk/datalake-analytics/**/*.cs",
+      "words": [
+        "undeleting"
+      ]
+    },
+    {
+      "filename": "**/sdk/datalake-store/**/*.cs",
+      "words": [
+        "undeleting"
       ]
     },
     {
@@ -311,6 +343,14 @@
       "words": [
         "iscsi",
         "mbps"
+      ]
+    },
+    {
+      "filename": "**/sdk/devtestlabs/**/*.cs",
+      "words": [
+        "Vhds",
+        "Retarget",
+        "Sysprepped"
       ]
     },
     {
@@ -508,6 +548,13 @@
       ]
     },
     {
+      "filename": "**/sdk/privatedns/**/*.cs",
+      "words": [
+        "cname",
+        "ptrdname"
+      ]
+    },
+    {
       "filename": "**/sdk/redis/**/*.cs",
       "words": [
         "hana",
@@ -530,6 +577,20 @@
       "words": [
         "reimage",
         "ssdlrs"
+      ]
+    },
+    {
+      "filename": "**/sdk/securitycenter/**/*.cs",
+      "words": [
+        "Cspm",
+        "Pricings",
+        "Kube",
+        "Exfiltration",
+        "Ngfw",
+        "Saas",
+        "Mcas",
+        "Wdatp",
+        "Qualys"
       ]
     },
     {
@@ -655,7 +716,9 @@
         "updation",
         "usql",
         "vertica",
-        "xero"
+        "xero",
+        "Asana",
+        "Twilio"
       ]
     },
     {

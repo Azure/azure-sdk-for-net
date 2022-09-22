@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public static string ToSerialString(this ShareDestinationFormatType value) => value switch
         {
             ShareDestinationFormatType.UnknownType => "UnknownType",
-            ShareDestinationFormatType.HCS => "HCS",
+            ShareDestinationFormatType.Hcs => "HCS",
             ShareDestinationFormatType.BlockBlob => "BlockBlob",
             ShareDestinationFormatType.PageBlob => "PageBlob",
             ShareDestinationFormatType.AzureFile => "AzureFile",
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public static ShareDestinationFormatType ToShareDestinationFormatType(this string value)
         {
             if (string.Equals(value, "UnknownType", StringComparison.InvariantCultureIgnoreCase)) return ShareDestinationFormatType.UnknownType;
-            if (string.Equals(value, "HCS", StringComparison.InvariantCultureIgnoreCase)) return ShareDestinationFormatType.HCS;
+            if (string.Equals(value, "HCS", StringComparison.InvariantCultureIgnoreCase)) return ShareDestinationFormatType.Hcs;
             if (string.Equals(value, "BlockBlob", StringComparison.InvariantCultureIgnoreCase)) return ShareDestinationFormatType.BlockBlob;
             if (string.Equals(value, "PageBlob", StringComparison.InvariantCultureIgnoreCase)) return ShareDestinationFormatType.PageBlob;
             if (string.Equals(value, "AzureFile", StringComparison.InvariantCultureIgnoreCase)) return ShareDestinationFormatType.AzureFile;

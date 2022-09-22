@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
-using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using NUnit.Framework;
 
@@ -16,7 +18,7 @@ namespace Azure.Storage.Blobs.Test
     public class BlobUriBuilderTests : BlobTestBase
     {
         public BlobUriBuilderTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
-            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
+            : base(async, serviceVersion, RecordedTestMode.Live /* RecordedTestMode.Record /* to re-record */)
         {
         }
 
@@ -104,6 +106,203 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual("", blobUriBuilder.Query);
             Assert.AreEqual(443, blobUriBuilder.Port);
             Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
+        [Combinatorial]
+        public void BlobUriBuilder_OuterSlashes_ConstructorTest(
+            [Values(true, false)] bool preservesSlash,
+            [Values("foo/bar", "/foo/bar/", "/////foo/bar", "foo/bar/////")] string blobName
+        )
+        {
+            // Arrange
+            const string trimmedName = "foo/bar";
+            var containerUriString = "https://account.blob.core.windows.net/container";
+            var originalUri = new UriBuilder(containerUriString + "/" + blobName);
+            var noSlashUri = new UriBuilder(containerUriString + "/" + trimmedName);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameSlashes: preservesSlash);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", blobUriBuilder.Scheme);
+            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
+            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            // blob name was trimmed when set via constructor uri
+            if (preservesSlash)
+            {
+                Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            }
+            else
+            {
+                Assert.AreEqual(trimmedName, blobUriBuilder.BlobName);
+            }
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(443, blobUriBuilder.Port);
+            if (preservesSlash)
+            {
+                Assert.AreEqual(originalUri, newUri);
+            }
+            else
+            {
+                Assert.AreEqual(noSlashUri, newUri);
+            }
+        }
+
+        [RecordedTest]
+        [Combinatorial]
+        public void BlobUriBuilder_OuterSlashes_PropertyTest(
+            [Values(true, false)] bool preservesSlash,
+            [Values("foo/bar", "/foo/bar/", "/////foo/bar", "foo/bar/////")] string blobName
+        )
+        {
+            // Arrange
+            const string trimmedName = "foo/bar";
+            var containerUriString = "https://account.blob.core.windows.net/container";
+            var originalUri = new UriBuilder(containerUriString + "/" + blobName);
+            var noSlashUri = new UriBuilder(containerUriString + "/" + trimmedName);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameSlashes: preservesSlash)
+            {
+                BlobName = blobName
+            };
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", blobUriBuilder.Scheme);
+            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
+            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            // blob name was NOT trimmed when set via property
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(443, blobUriBuilder.Port);
+            if (preservesSlash)
+            {
+                Assert.AreEqual(originalUri, newUri);
+            }
+            else
+            {
+                Assert.AreEqual(noSlashUri, newUri);
+            }
+        }
+
+        [RecordedTest]
+        public void BlobUriBuilder_MiddleRepeatedSlashes_ConstructorTest(
+            [Values(true, false)] bool preservesSlash // middle slashes were always preserved regardless of flag
+        )
+        {
+            // Arrange
+            const string blobName = "foo/////bar";
+            const string trimmedName = "foo/bar";
+            var containerUriString = "https://account.blob.core.windows.net/container";
+            var originalUri = new UriBuilder(containerUriString + "/" + blobName);
+            var noSlashUri = new UriBuilder(containerUriString + "/" + trimmedName);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameSlashes: preservesSlash);
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", blobUriBuilder.Scheme);
+            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
+            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(443, blobUriBuilder.Port);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
+        public void BlobUriBuilder_MiddleRepeatedSlashes_PropertyTest(
+            [Values(true, false)] bool preservesSlash // middle slashes were always preserved regardless of flag
+        )
+        {
+            // Arrange
+            const string blobName = "foo/////bar";
+            const string trimmedName = "foo/bar";
+            var containerUriString = "https://account.blob.core.windows.net/container";
+            var originalUri = new UriBuilder(containerUriString + "/" + blobName);
+            var noSlashUri = new UriBuilder(containerUriString + "/" + trimmedName);
+
+            // Act
+            var blobUriBuilder = new BlobUriBuilder(originalUri.Uri, preserveBlobNameSlashes: preservesSlash)
+            {
+                BlobName = blobName
+            };
+            Uri newUri = blobUriBuilder.ToUri();
+
+            // Assert
+            Assert.AreEqual("https", blobUriBuilder.Scheme);
+            Assert.AreEqual("account.blob.core.windows.net", blobUriBuilder.Host);
+            Assert.AreEqual("account", blobUriBuilder.AccountName);
+            Assert.AreEqual("container", blobUriBuilder.BlobContainerName);
+            Assert.AreEqual(blobName, blobUriBuilder.BlobName);
+            Assert.AreEqual("", blobUriBuilder.Snapshot);
+            Assert.IsNull(blobUriBuilder.Sas);
+            Assert.AreEqual("", blobUriBuilder.Query);
+            Assert.AreEqual(443, blobUriBuilder.Port);
+            Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
+        public async Task ClientTargetsWithAppropriateSlash()
+        {
+            // blob name starts and ends with slash, not a path separator
+            const string blobClientName = "///blob///client///";
+            const string blockBlobClientName = "///blockblob///client///";
+            const string pageBlobClientName = "///pageblob///client///";
+            const string appendBlobClientName = "///appendblob///client///";
+            const string blobBaseClientName = "///blobbase///client///";
+
+            // Arrange
+            var assertPolicy = new AssertMessageContentsPolicy(checkRequest: req => Assert.That(
+                req.Uri.Path.Substring(req.Uri.Path.IndexOf('/') + 1), // extract blob name from uri path
+                Does.Match(@"\/\/\/\w+\/\/\/\w+\/\/\/"))); // matches "///<alphanum>///<alphanum>///"
+
+            BlobClientOptions options = GetOptions();
+            options.PreserveBlobNameSlashes = true;
+            options.AddPolicy(
+                assertPolicy,
+                Core.HttpPipelinePosition.BeforeTransport);
+
+            await using DisposingContainer container = await BlobsClientBuilder.GetTestContainerAsync(
+                BlobsClientBuilder.GetServiceClient_SharedKey(options));
+
+            BlobClient blob = container.Container.GetBlobClient(blobClientName);
+            BlockBlobClient blockBlob = container.Container.GetBlockBlobClient(blockBlobClientName);
+            PageBlobClient pageBlob = container.Container.GetPageBlobClient(pageBlobClientName);
+            AppendBlobClient appendBlob = container.Container.GetAppendBlobClient(appendBlobClientName);
+            BlobBaseClient blobBase = container.Container.GetBlobBaseClient(blobBaseClientName);
+
+            // Act
+            var content = BinaryData.FromString("Hello world!");
+            try
+            {
+                assertPolicy.CheckRequest = true;
+                // any request with each of these clients
+                await blob.UploadAsync(content);
+                await blockBlob.StageBlockAsync(Convert.ToBase64String(Encoding.UTF8.GetBytes("foo")), content.ToStream());
+                await pageBlob.CreateIfNotExistsAsync(Constants.KB);
+                await appendBlob.CreateIfNotExistsAsync();
+                await blobBase.ExistsAsync();
+            }
+            finally
+            {
+                assertPolicy.CheckRequest = false;
+            }
+
+            // assertions in pipeline
         }
 
         [RecordedTest]

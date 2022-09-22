@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="description"> User friendly description of the parameter. </param>
         /// <param name="visibility"> Should this parameter be visible to arm and passed in the parameters argument when executing. </param>
         /// <param name="optional"> Is this parameter required or optional. </param>
-        internal ScriptParameter(ScriptParameterType? parameterType, string name, string description, VisibilityParameterEnum? visibility, OptionalParamEnum? optional)
+        internal ScriptParameter(ScriptParameterType? parameterType, string name, string description, ParameterVisibilityStatus? visibility, ParameterOptionalityStatus? optional)
         {
             ParameterType = parameterType;
             Name = name;
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> User friendly description of the parameter. </summary>
         public string Description { get; }
         /// <summary> Should this parameter be visible to arm and passed in the parameters argument when executing. </summary>
-        public VisibilityParameterEnum? Visibility { get; }
+        public ParameterVisibilityStatus? Visibility { get; }
         /// <summary> Is this parameter required or optional. </summary>
-        public OptionalParamEnum? Optional { get; }
+        public ParameterOptionalityStatus? Optional { get; }
     }
 }

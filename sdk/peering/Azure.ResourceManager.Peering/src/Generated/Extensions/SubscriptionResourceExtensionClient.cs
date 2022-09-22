@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<Enum0>> CheckServiceProviderAvailabilityAsync(CheckServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PeeringServiceProviderAvailability>> CheckPeeringServiceProviderAvailabilityAsync(CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckServiceProviderAvailability");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPeeringServiceProviderAvailability");
             scope.Start();
             try
             {
@@ -203,9 +203,9 @@ namespace Azure.ResourceManager.Peering
         /// </summary>
         /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<Enum0> CheckServiceProviderAvailability(CheckServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PeeringServiceProviderAvailability> CheckPeeringServiceProviderAvailability(CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckServiceProviderAvailability");
+            using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.CheckPeeringServiceProviderAvailability");
             scope.Start();
             try
             {
@@ -321,9 +321,9 @@ namespace Azure.ResourceManager.Peering
         /// <param name="sourceLocation"> The location of the source. </param>
         /// <param name="destinationIP"> The IP address of the destination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<LookingGlassOutput>> InvokeLookingGlasAsync(LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
-            using var scope = LookingGlassClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.InvokeLookingGlas");
+            using var scope = LookingGlassClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.InvokeLookingGlass");
             scope.Start();
             try
             {
@@ -347,9 +347,9 @@ namespace Azure.ResourceManager.Peering
         /// <param name="sourceLocation"> The location of the source. </param>
         /// <param name="destinationIP"> The IP address of the destination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<LookingGlassOutput> InvokeLookingGlas(LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
+        public virtual Response<LookingGlassOutput> InvokeLookingGlass(LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
-            using var scope = LookingGlassClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.InvokeLookingGlas");
+            using var scope = LookingGlassClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.InvokeLookingGlass");
             scope.Start();
             try
             {
@@ -879,9 +879,9 @@ namespace Azure.ResourceManager.Peering
         /// Operation Id: PeeringServices_InitializeConnectionMonitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> InitializeConnectionMonitorPeeringServiceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response> InitializePeeringServiceConnectionMonitorAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = PeeringServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.InitializeConnectionMonitorPeeringService");
+            using var scope = PeeringServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.InitializePeeringServiceConnectionMonitor");
             scope.Start();
             try
             {
@@ -901,9 +901,9 @@ namespace Azure.ResourceManager.Peering
         /// Operation Id: PeeringServices_InitializeConnectionMonitor
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response InitializeConnectionMonitorPeeringService(CancellationToken cancellationToken = default)
+        public virtual Response InitializePeeringServiceConnectionMonitor(CancellationToken cancellationToken = default)
         {
-            using var scope = PeeringServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.InitializeConnectionMonitorPeeringService");
+            using var scope = PeeringServiceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.InitializePeeringServiceConnectionMonitor");
             scope.Start();
             try
             {

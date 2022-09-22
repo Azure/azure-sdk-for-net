@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <summary> Initializes a new instance of ContactProfileListResult. </summary>
         internal ContactProfileListResult()
         {
-            Value = new ChangeTrackingList<ContactProfileData>();
+            Value = new ChangeTrackingList<OrbitalContactProfileData>();
         }
 
         /// <summary> Initializes a new instance of ContactProfileListResult. </summary>
         /// <param name="value"> A list of contact profile resources in a resource group. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
-        internal ContactProfileListResult(IReadOnlyList<ContactProfileData> value, string nextLink)
+        internal ContactProfileListResult(IReadOnlyList<OrbitalContactProfileData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> A list of contact profile resources in a resource group. </summary>
-        public IReadOnlyList<ContactProfileData> Value { get; }
+        public IReadOnlyList<OrbitalContactProfileData> Value { get; }
         /// <summary> The URL to get the next set of results. </summary>
         public string NextLink { get; }
     }

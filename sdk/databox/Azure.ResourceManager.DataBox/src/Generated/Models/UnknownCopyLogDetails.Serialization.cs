@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static UnknownCopyLogDetails DeserializeUnknownCopyLogDetails(JsonElement element)
         {
-            ClassDiscriminator copyLogDetailsType = default;
+            DataBoxOrderType copyLogDetailsType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("copyLogDetailsType"))
                 {
-                    copyLogDetailsType = property.Value.GetString().ToClassDiscriminator();
+                    copyLogDetailsType = property.Value.GetString().ToDataBoxOrderType();
                     continue;
                 }
             }

@@ -10,10 +10,6 @@ namespace Azure.Communication.CallingServer
      /// </summary>
     public abstract class CallAutomationEventBase
     {
-        /// <summary> Gets the Event type. </summary>
-        [CodeGenMember("Type")]
-        internal AcsEventType EventType { get; set; }
-
         /// <summary> Call connection ID. </summary>
         public string CallConnectionId { get; internal set; }
 
