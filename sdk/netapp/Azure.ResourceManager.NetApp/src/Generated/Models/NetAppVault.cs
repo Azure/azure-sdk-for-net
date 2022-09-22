@@ -14,10 +14,8 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppVault : ResourceData
     {
         /// <summary> Initializes a new instance of NetAppVault. </summary>
-        /// <param name="location"> Resource location. </param>
-        internal NetAppVault(AzureLocation location)
+        internal NetAppVault()
         {
-            Location = location;
         }
 
         /// <summary> Initializes a new instance of NetAppVault. </summary>
@@ -25,16 +23,12 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="location"> Resource location. </param>
         /// <param name="vaultName"> Vault Name. </param>
-        internal NetAppVault(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, string vaultName) : base(id, name, resourceType, systemData)
+        internal NetAppVault(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string vaultName) : base(id, name, resourceType, systemData)
         {
-            Location = location;
             VaultName = vaultName;
         }
 
-        /// <summary> Resource location. </summary>
-        public AzureLocation Location { get; }
         /// <summary> Vault Name. </summary>
         public string VaultName { get; }
     }
