@@ -24,7 +24,7 @@ Set-StrictMode -Version 1
 [string[]] $errors = @()
 
 # All errors should be logged using this function, as it tracks the errors in
-# the $errors array, which is used in the finally block of the script to determine 
+# the $errors array, which is used in the finally block of the script to determine
 # the return code.
 function LogError([string]$message) {
     if ($env:TF_BUILD) {
@@ -93,9 +93,22 @@ try {
             & dotnet msbuild $PSScriptRoot/../service.proj /restore /t:GenerateTests /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
         }
 
-        $mgmtPackagesInServiceDirectory = Get-ChildItem -Path "$PSScriptRoot/../../sdk/$ServiceDirectory" -Directory | Where-Object { $_.Name -match "(Azure.ResourceManager)" -and $(Test-Path("$($_.FullName)/src")) }
-        if($ServiceDirectory -eq "*" -or $mgmtPackagesInServiceDirectory.Length -gt 0) {
-    
+        if ("${env:SYSTEM_PULLREQUEST_SOURCECOMMITID}".Length -eq 0) {
+            #running locally
+            $latestHash = & git log -1 --format=format:"%H"
+            $changedFiles = Get-ChangedFiles -SourceCommittish $latestHash -TargetCommittish "main"
+        }
+        else {
+            $changedFiles = Get-ChangedFiles
+        }
+
+        $armChanges = $false
+        foreach($file in $changedFiles) {
+            if($file -match "/Azure.ResourceManager*") {
+                $armChanges = $true
+            }
+        }
+        if($armChanges) {
             Write-Host "Re-generating ci.mgmt.yml for $ServiceDirectory"
             Invoke-Block {
                 & $PSScriptRoot/Update-Mgmt-CI.ps1
