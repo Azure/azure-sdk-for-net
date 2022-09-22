@@ -142,10 +142,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="data"> Update Sign-In settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response> UpdateAsync(string ifMatch, ApiManagementPortalSignInSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response> UpdateAsync(ETag ifMatch, ApiManagementPortalSignInSettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementPortalSignInSettingSignInSettingsClientDiagnostics.CreateScope("ApiManagementPortalSignInSettingResource.Update");
@@ -170,10 +169,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="data"> Update Sign-In settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> or <paramref name="data"/> is null. </exception>
-        public virtual Response Update(string ifMatch, ApiManagementPortalSignInSettingData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response Update(ETag ifMatch, ApiManagementPortalSignInSettingData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementPortalSignInSettingSignInSettingsClientDiagnostics.CreateScope("ApiManagementPortalSignInSettingResource.Update");
@@ -200,7 +198,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ApiManagementPortalSignInSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ApiManagementPortalSignInSettingData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ApiManagementPortalSignInSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ApiManagementPortalSignInSettingData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -231,7 +229,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity, but required when updating an entity. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ApiManagementPortalSignInSettingResource> CreateOrUpdate(WaitUntil waitUntil, ApiManagementPortalSignInSettingData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ApiManagementPortalSignInSettingResource> CreateOrUpdate(WaitUntil waitUntil, ApiManagementPortalSignInSettingData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

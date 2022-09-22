@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// Please note <see cref="WebLinkedServiceTypeProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="WebAnonymousAuthentication"/>, <see cref="WebBasicAuthentication"/> and <see cref="WebClientCertificateAuthentication"/>.
     /// </summary>
-    public partial class WebLinkedServiceTypeProperties
+    public abstract partial class WebLinkedServiceTypeProperties
     {
         /// <summary> Initializes a new instance of WebLinkedServiceTypeProperties. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
-        public WebLinkedServiceTypeProperties(BinaryData uri)
+        protected WebLinkedServiceTypeProperties(BinaryData uri)
         {
             if (uri == null)
             {
@@ -38,7 +38,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             AuthenticationType = authenticationType;
         }
 
-        /// <summary> The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string). </summary>
+        /// <summary>
+        /// The URL of the web service endpoint, e.g. http://www.microsoft.com . Type: string (or Expression with resultType string).
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Uri { get; set; }
         /// <summary> Type of authentication used to connect to the web table source. </summary>
         internal WebAuthenticationType AuthenticationType { get; set; }

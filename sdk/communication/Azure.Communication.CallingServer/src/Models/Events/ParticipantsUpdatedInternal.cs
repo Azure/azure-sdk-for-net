@@ -12,8 +12,5 @@ namespace Azure.Communication.CallingServer
     [CodeGenModel("ParticipantsUpdatedEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     internal partial class ParticipantsUpdatedInternal
     {
-        /// <summary> Gets the Event type. </summary>
-        [CodeGenMember("Type")]
-        public AcsEventType EventType { get; }
     }
 }

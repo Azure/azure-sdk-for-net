@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     continue;
                 }
             }
-            return new StreamingJobFunctionProperties(type, Optional.ToNullable(etag), Optional.ToList(inputs), output.Value, binding.Value);
+            return new UnknownStreamingJobFunctionProperties(type, Optional.ToNullable(etag), Optional.ToList(inputs), output.Value, binding.Value);
         }
     }
 }

@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
             string workspaceId = default;
             string connectionId = default;
             string ticketConfiguration = default;
-            string region = default;
+            AzureLocation region = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("region"))
                 {
-                    region = property.Value.GetString();
+                    region = new AzureLocation(property.Value.GetString());
                     continue;
                 }
             }

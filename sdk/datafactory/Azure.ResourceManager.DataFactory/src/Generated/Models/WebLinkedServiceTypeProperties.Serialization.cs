@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     continue;
                 }
             }
-            return new WebLinkedServiceTypeProperties(url, authenticationType);
+            return new UnknownWebLinkedServiceTypeProperties(url, authenticationType);
         }
     }
 }

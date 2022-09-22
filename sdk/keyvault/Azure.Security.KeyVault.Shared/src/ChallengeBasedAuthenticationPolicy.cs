@@ -13,6 +13,7 @@ namespace Azure.Security.KeyVault
     internal class ChallengeBasedAuthenticationPolicy : BearerTokenAuthenticationPolicy
     {
         private const string KeyVaultStashedContentKey = "KeyVaultContent";
+        private readonly bool _verifyChallengeResource;
 
         /// <summary>
         /// Challenges are cached using the Key Vault or Managed HSM endpoint URI authority as the key.
@@ -20,8 +21,10 @@ namespace Azure.Security.KeyVault
         private static readonly ConcurrentDictionary<string, ChallengeParameters> s_challengeCache = new();
         private ChallengeParameters _challenge;
 
-        public ChallengeBasedAuthenticationPolicy(TokenCredential credential) : base(credential, Array.Empty<string>())
-        { }
+        public ChallengeBasedAuthenticationPolicy(TokenCredential credential, bool disableChallengeResourceVerification) : base(credential, Array.Empty<string>())
+        {
+            _verifyChallengeResource = !disableChallengeResourceVerification;
+        }
 
         /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequestAsync(Azure.Core.HttpMessage)" />
         protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
@@ -77,6 +80,7 @@ namespace Azure.Security.KeyVault
         protected override ValueTask<bool> AuthorizeRequestOnChallengeAsync(HttpMessage message)
             => AuthorizeRequestOnChallengeAsyncInternal(message, true);
 
+        /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequestOnChallenge" />
         protected override bool AuthorizeRequestOnChallenge(HttpMessage message)
             => AuthorizeRequestOnChallengeAsyncInternal(message, false).EnsureCompleted();
 
@@ -107,6 +111,20 @@ namespace Azure.Security.KeyVault
             }
             else
             {
+                // Verify the scope domain with leading "." matches the requested host domain.
+                if (_verifyChallengeResource)
+                {
+                    if (!Uri.TryCreate(scope, UriKind.Absolute, out Uri scopeUri))
+                    {
+                        throw new InvalidOperationException($"The challenge contains invalid scope '{scope}'.");
+                    }
+
+                    if (!message.Request.Uri.Host.EndsWith($".{scopeUri.Host}", StringComparison.OrdinalIgnoreCase))
+                    {
+                        throw new InvalidOperationException($"The challenge resource '{scopeUri.Host}' does not match the requested domain. Set DisableChallengeResourceVerification to true in your client options to disable. See https://aka.ms/azsdk/blog/vault-uri for more information.");
+                    }
+                }
+
                 string authorization = AuthorizationChallengeParser.GetChallengeParameterFromResponse(message.Response, "Bearer", "authorization");
                 if (authorization is null)
                 {

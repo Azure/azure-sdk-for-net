@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="submissionTimestamp"> the timestamp of when the event became available for querying via this API. It is in ISO 8601 format. This value should not be confused eventTimestamp. As there might be a delay between the occurrence time of the event, and the time that the event is submitted to the Azure logging infrastructure. </param>
         /// <param name="subscriptionId"> the Azure subscription Id usually a GUID. </param>
         /// <param name="tenantId"> the Azure tenant Id. </param>
-        internal EventDataInfo(SenderAuthorization authorization, IReadOnlyDictionary<string, string> claims, string caller, string description, string id, string eventDataId, string correlationId, MonitorLocalizableString eventName, MonitorLocalizableString category, HttpRequestInfo httpRequest, MonitorEventLevel? level, string resourceGroupName, MonitorLocalizableString resourceProviderName, ResourceIdentifier resourceId, MonitorLocalizableString resourceType, string operationId, MonitorLocalizableString operationName, IReadOnlyDictionary<string, string> properties, MonitorLocalizableString status, MonitorLocalizableString subStatus, DateTimeOffset? eventTimestamp, DateTimeOffset? submissionTimestamp, string subscriptionId, Guid? tenantId)
+        internal EventDataInfo(SenderAuthorization authorization, IReadOnlyDictionary<string, string> claims, string caller, string description, string id, string eventDataId, string correlationId, MonitorLocalizableString eventName, MonitorLocalizableString category, EventDataHttpRequestInfo httpRequest, MonitorEventLevel? level, string resourceGroupName, MonitorLocalizableString resourceProviderName, ResourceIdentifier resourceId, MonitorLocalizableString resourceType, string operationId, MonitorLocalizableString operationName, IReadOnlyDictionary<string, string> properties, MonitorLocalizableString status, MonitorLocalizableString subStatus, DateTimeOffset? eventTimestamp, DateTimeOffset? submissionTimestamp, string subscriptionId, Guid? tenantId)
         {
             Authorization = authorization;
             Claims = claims;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> the event category. </summary>
         public MonitorLocalizableString Category { get; }
         /// <summary> the HTTP request info. Usually includes the &apos;clientRequestId&apos;, &apos;clientIpAddress&apos; (IP address of the user who initiated the event) and &apos;method&apos; (HTTP method e.g. PUT). </summary>
-        public HttpRequestInfo HttpRequest { get; }
+        public EventDataHttpRequestInfo HttpRequest { get; }
         /// <summary> the event level. </summary>
         public MonitorEventLevel? Level { get; }
         /// <summary> the resource group name of the impacted resource. </summary>

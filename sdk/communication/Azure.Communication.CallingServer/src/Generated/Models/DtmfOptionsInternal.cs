@@ -5,19 +5,23 @@
 
 #nullable disable
 
-using Azure.Communication;
+using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
-    /// <summary> Options for DTMF tone recognition. </summary>
-    internal partial class DtmfOptionsInternal
+    /// <summary> Options for DTMF recognition. </summary>
+    public partial class DtmfOptionsInternal
     {
         /// <summary> Initializes a new instance of DtmfOptionsInternal. </summary>
         public DtmfOptionsInternal()
         {
+            StopTones = new ChangeTrackingList<DtmfTone>();
         }
 
-        /// <summary> Collects the number of digit in DTMF. </summary>
-        public CollectTones CollectTones { get; set; }
+        /// <summary> Time to wait between DTMF inputs to stop recognizing. </summary>
+        public int? InterToneTimeoutInSeconds { get; set; }
+        /// <summary> Maximum number of DTMF tones to be collected. </summary>
+        public int? MaxTonesToCollect { get; set; }
     }
 }

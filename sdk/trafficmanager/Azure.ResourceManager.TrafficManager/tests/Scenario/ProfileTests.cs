@@ -12,7 +12,8 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 {
     public sealed class ProfileTests : ProfileTestBase
     {
-        public ProfileTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
+        public ProfileTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         { }
 
         [RecordedTest]
@@ -63,9 +64,12 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             Assert.AreEqual(TrafficRoutingMethod.Priority, profileResource.Data.TrafficRoutingMethod);
         }
 
-        [RecordedTest]
-        public async Task AddTagTest()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task AddTagTest(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             ProfileResource profileResource = await GetDefaultProfile();
 
             await profileResource.AddTagAsync(ExpectedKey, ExpectedValue);
@@ -76,11 +80,13 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             Assert.AreEqual(ExpectedValue, value);
         }
 
-        [RecordedTest]
-        public async Task SetTagsTest()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task SetTagsTest(bool? useTagResource)
         {
             // add one default tag to check if the method overrides all values as expected
-            await AddTagTest();
+            await AddTagTest(useTagResource);
 
             IDictionary<string, string> expectedTags = new Dictionary<string, string>
             {
@@ -104,10 +110,12 @@ namespace Azure.ResourceManager.TrafficManager.Tests
             }
         }
 
-        [RecordedTest]
-        public async Task RemoveTagTest()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task RemoveTagTest(bool? useTagResource)
         {
-            await AddTagTest();
+            await AddTagTest(useTagResource);
 
             ProfileResource profileResource = await GetDefaultProfile();
 

@@ -13,24 +13,26 @@ namespace Azure.Communication.CallingServer
     internal partial class RecognizeRequestInternal
     {
         /// <summary> Initializes a new instance of RecognizeRequestInternal. </summary>
+        /// <param name="recognizeInputType"> Determines the type of the recognition. </param>
         /// <param name="recognizeOptions"> Defines options for recognition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recognizeOptions"/> is null. </exception>
-        public RecognizeRequestInternal(RecognizeOptionsInternal recognizeOptions)
+        public RecognizeRequestInternal(RecognizeInputType recognizeInputType, RecognizeOptionsInternal recognizeOptions)
         {
             if (recognizeOptions == null)
             {
                 throw new ArgumentNullException(nameof(recognizeOptions));
             }
 
+            RecognizeInputType = recognizeInputType;
             RecognizeOptions = recognizeOptions;
         }
 
         /// <summary> Determines the type of the recognition. </summary>
-        public RecognizeInputType? RecognizeInputType { get; set; }
+        public RecognizeInputType RecognizeInputType { get; }
         /// <summary> The source of the audio to be played for recognition. </summary>
-        public PlaySourceInternal PlaySourceInfo { get; set; }
+        public PlaySourceInternal PlayPrompt { get; set; }
         /// <summary> If set recognize can barge into other existing queued-up/currently-processing requests. </summary>
-        public bool? StopCurrentOperations { get; set; }
+        public bool? InterruptCallMediaOperation { get; set; }
         /// <summary> Defines options for recognition. </summary>
         public RecognizeOptionsInternal RecognizeOptions { get; }
         /// <summary> The value to identify context of the operation. </summary>

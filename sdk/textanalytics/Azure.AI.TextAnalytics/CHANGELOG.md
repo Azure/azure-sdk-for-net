@@ -1,6 +1,48 @@
 # Release History
 
-## 5.2.0 (2022-08-12)
+## 5.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 5.2.0 (2022-09-08)
+
+### Features Added
+
+- Added `DisplayName` property to the following classes to set the optional display name of the operations below:
+  - `AnalyzeHealthcareEntitiesOptions`
+  - `MultiLabelClassifyOptions`
+  - `RecognizeCustomEntitiesOptions`
+  - `SingleLabelClassifyOptions`
+- Added `DisplayName` property to the following operations to read the optional display name set on options classes above:
+  - `AnalyzeHealthcareEntitiesOperation` from `AnalyzeHealthcareEntitiesOptions`
+  - `ClassifyDocumentOperation` from `MultiLabelClassifyOptions` and `SingleLabelClassifyOptions`
+  - `RecognizeCustomEntitiesOperation` from `RecognizeCustomEntitiesOptions`
+- Added the following members to `HealthcareEntityCategory` following proper naming guidelines:
+  - `Age`
+  - `GeneOrProtein`
+  - `SymptomOrSign`
+
+### Breaking Changes
+
+- Changed type `MultiLabelClassifyOptions.IncludeStatistics` from `bool` to `bool?`.
+- Changed type `RecognizeCustomEntitiesOptions.IncludeStatistics` from `bool` to `bool?`.
+- Changed type `SingleLabelClassifyOptions.IncludeStatistics` from `bool` to `bool?`.
+
+### Bugs Fixed
+
+- The values of `HealthcareEntityCategory` have been redefined to match what the service actually returns. ([#20024](https://github.com/Azure/azure-rest-api-specs/issues/20024))
+
+### Other Changes
+
+- Validate that a number of operations and model properties are only used for API versions in which they were defined, or newer API versions.
+
+## 5.2.0-beta.4 (2022-08-12)
 
 ### Features Added
 
@@ -146,7 +188,7 @@ This is the first version of the client library that targets the Azure Cognitive
 - For `PiiEntity.Category` the type of the property is now `PiiEntityCategory` instead of `EntityCategory`.
 - Removed `RelatedEntities`.
 - `RecognizePiiEntitiesOptions.Domain` is now a nullable type.
-- In `StartAnalyzeBatchActions` when all actions return status `failed` the SDK will no longer throw an exception. The request will succeed and the errors will be located at the specific action level. 
+- In `StartAnalyzeBatchActions` when all actions return status `failed` the SDK will no longer throw an exception. The request will succeed and the errors will be located at the specific action level.
 
 ### Fixes
 - `RecognizePiiEntities` and `TextAnalyticsActions.RecognizePiiEntitiesOptions` were always passing `PiiEntityDomainType.PHI`. Now, it is only passed when requested by the user [19086](https://github.com/Azure/azure-sdk-for-net/issues/19086).
@@ -305,7 +347,7 @@ This package's [documentation](https://github.com/Azure/azure-sdk-for-net/blob/m
 
 ### Major changes from `Microsoft.Azure.CognitiveServices.Language.TextAnalytics`
 - This library supports only the Text Analytics Service v3.0-preview.1 API, whereas the previous library supports only earlier versions.
-- The namespace/package name for Azure Text Analytics client library has changed from 
+- The namespace/package name for Azure Text Analytics client library has changed from
     `Microsoft.Azure.CognitiveServices.Language.TextAnalytics` to `Azure.AI.TextAnalytics`
 - Added support for:
   - Subscription key and AAD authentication for both synchronous and asynchronous clients.

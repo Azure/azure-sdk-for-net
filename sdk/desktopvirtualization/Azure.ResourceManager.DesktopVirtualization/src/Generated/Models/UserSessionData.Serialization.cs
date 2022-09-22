@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<SystemData> systemData = default;
             Optional<string> objectId = default;
             Optional<string> userPrincipalName = default;
-            Optional<ApplicationType> applicationType = default;
-            Optional<SessionState> sessionState = default;
+            Optional<VirtualApplicationType> applicationType = default;
+            Optional<UserSessionState> sessionState = default;
             Optional<string> activeDirectoryUserName = default;
             Optional<DateTimeOffset> createTime = default;
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            applicationType = new ApplicationType(property0.Value.GetString());
+                            applicationType = new VirtualApplicationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("sessionState"))
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sessionState = new SessionState(property0.Value.GetString());
+                            sessionState = new UserSessionState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("activeDirectoryUserName"))

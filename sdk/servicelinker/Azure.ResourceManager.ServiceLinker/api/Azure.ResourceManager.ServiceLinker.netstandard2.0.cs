@@ -47,8 +47,11 @@ namespace Azure.ResourceManager.ServiceLinker
     public static partial class ServiceLinkerExtensions
     {
         public static Azure.ResourceManager.ServiceLinker.LinkerResource GetLinkerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.ServiceLinker.LinkerResource> GetLinkerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string linkerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.ServiceLinker.LinkerResource> GetLinkerResource(this Azure.ResourceManager.ArmResource armResource, string linkerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.LinkerResource>> GetLinkerResourceAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, string linkerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.LinkerResource>> GetLinkerResourceAsync(this Azure.ResourceManager.ArmResource armResource, string linkerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ServiceLinker.LinkerResourceCollection GetLinkerResources(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope) { throw null; }
         public static Azure.ResourceManager.ServiceLinker.LinkerResourceCollection GetLinkerResources(this Azure.ResourceManager.ArmResource armResource) { throw null; }
     }
 }
@@ -56,7 +59,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 {
     public abstract partial class AuthBaseInfo
     {
-        public AuthBaseInfo() { }
+        protected AuthBaseInfo() { }
     }
     public partial class AzureKeyVaultProperties : Azure.ResourceManager.ServiceLinker.Models.AzureResourceBaseProperties
     {
@@ -65,7 +68,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     }
     public abstract partial class AzureResourceBaseProperties
     {
-        public AzureResourceBaseProperties() { }
+        protected AzureResourceBaseProperties() { }
     }
     public partial class AzureResourceInfo : Azure.ResourceManager.ServiceLinker.Models.TargetServiceBaseInfo
     {
@@ -207,7 +210,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     }
     public abstract partial class SecretBaseInfo
     {
-        public SecretBaseInfo() { }
+        protected SecretBaseInfo() { }
     }
     public partial class ServicePrincipalCertificateAuthInfo : Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo
     {
@@ -240,7 +243,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     }
     public abstract partial class TargetServiceBaseInfo
     {
-        public TargetServiceBaseInfo() { }
+        protected TargetServiceBaseInfo() { }
     }
     public partial class UserAssignedIdentityAuthInfo : Azure.ResourceManager.ServiceLinker.Models.AuthBaseInfo
     {

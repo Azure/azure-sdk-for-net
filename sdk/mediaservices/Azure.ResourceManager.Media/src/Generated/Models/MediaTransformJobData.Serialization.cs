@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Media
             Optional<MediaTransformJobInputBasicProperties> input = default;
             Optional<DateTimeOffset> lastModified = default;
             Optional<IList<MediaTransformJobOutput>> outputs = default;
-            Optional<TransformOutputsPriority> priority = default;
+            Optional<MediaTransformOutputsPriority> priority = default;
             Optional<IDictionary<string, string>> correlationData = default;
             Optional<DateTimeOffset?> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            priority = new TransformOutputsPriority(property0.Value.GetString());
+                            priority = new MediaTransformOutputsPriority(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("correlationData"))

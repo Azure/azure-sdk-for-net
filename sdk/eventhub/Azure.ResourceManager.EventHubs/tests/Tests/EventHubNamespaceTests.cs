@@ -20,7 +20,8 @@ namespace Azure.ResourceManager.EventHubs.Tests
     public class EventHubNamespaceTests : EventHubTestBase
     {
         private ResourceGroupResource _resourceGroup;
-        public EventHubNamespaceTests(bool isAsync) : base(isAsync)
+        public EventHubNamespaceTests(bool isAsync)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -337,10 +338,12 @@ namespace Azure.ResourceManager.EventHubs.Tests
             await virtualNetwork.DeleteAsync(WaitUntil.Completed);
         }
 
-        [Test]
-        [RecordedTest]
-        public async Task AddSetRemoveTag()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AddSetRemoveTag(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             //create namespace
             _resourceGroup = await CreateResourceGroupAsync();
             EventHubsNamespaceCollection namespaceCollection = _resourceGroup.GetEventHubsNamespaces();
