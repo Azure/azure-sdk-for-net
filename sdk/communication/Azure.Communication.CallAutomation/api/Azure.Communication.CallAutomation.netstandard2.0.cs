@@ -563,8 +563,9 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.CollectTonesResult CollectTonesResult { get { throw null; } }
         public string OperationContext { get { throw null; } }
         public string PublicEventType { get { throw null; } }
-        public Azure.Communication.CallAutomation.CallMediaRecognitionType RecognitionType { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.CallMediaRecognitionType RecognitionType { get { throw null; } }
         public Azure.Communication.CallAutomation.ResultInformation ResultInformation { get { throw null; } }
+        public Azure.Communication.CallAutomation.RecognizeSuccessReason SuccessReason { get { throw null; } }
         public string Version { get { throw null; } }
         public static Azure.Communication.CallAutomation.RecognizeCompleted Deserialize(string content) { throw null; }
     }
@@ -613,6 +614,25 @@ namespace Azure.Communication.CallAutomation
         public static bool operator ==(Azure.Communication.CallAutomation.RecognizeInputType left, Azure.Communication.CallAutomation.RecognizeInputType right) { throw null; }
         public static implicit operator Azure.Communication.CallAutomation.RecognizeInputType (string value) { throw null; }
         public static bool operator !=(Azure.Communication.CallAutomation.RecognizeInputType left, Azure.Communication.CallAutomation.RecognizeInputType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RecognizeSuccessReason : System.IEquatable<Azure.Communication.CallAutomation.RecognizeSuccessReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RecognizeSuccessReason(string value) { throw null; }
+        public static Azure.Communication.CallAutomation.RecognizeSuccessReason MaxDigitsReceived { get { throw null; } }
+        public static Azure.Communication.CallAutomation.RecognizeSuccessReason OperationCanceled { get { throw null; } }
+        public static Azure.Communication.CallAutomation.RecognizeSuccessReason StopToneDetected { get { throw null; } }
+        public bool Equals(Azure.Communication.CallAutomation.RecognizeSuccessReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallAutomation.RecognizeSuccessReason left, Azure.Communication.CallAutomation.RecognizeSuccessReason right) { throw null; }
+        public static implicit operator Azure.Communication.CallAutomation.RecognizeSuccessReason (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallAutomation.RecognizeSuccessReason left, Azure.Communication.CallAutomation.RecognizeSuccessReason right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

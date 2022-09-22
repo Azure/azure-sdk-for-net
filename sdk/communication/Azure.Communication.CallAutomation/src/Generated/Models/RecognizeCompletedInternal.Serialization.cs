@@ -6,13 +6,14 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.CallAutomation;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Models.Events
 {
-    public partial class RecognizeCompleted
+    internal partial class RecognizeCompletedInternal
     {
-        internal static RecognizeCompleted DeserializeRecognizeCompleted(JsonElement element)
+        internal static RecognizeCompletedInternal DeserializeRecognizeCompletedInternal(JsonElement element)
         {
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
@@ -86,7 +87,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecognizeCompleted(operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new RecognizeCompletedInternal(operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }

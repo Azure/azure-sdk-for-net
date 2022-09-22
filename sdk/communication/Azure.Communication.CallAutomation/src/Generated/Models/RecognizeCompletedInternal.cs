@@ -5,17 +5,19 @@
 
 #nullable disable
 
-namespace Azure.Communication.CallAutomation
+using Azure.Communication.CallAutomation;
+
+namespace Azure.Communication.CallAutomation.Models.Events
 {
     /// <summary> The RecognizeCompleted. </summary>
-    public partial class RecognizeCompleted
+    internal partial class RecognizeCompletedInternal
     {
-        /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
-        internal RecognizeCompleted()
+        /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
+        internal RecognizeCompletedInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of RecognizeCompleted. </summary>
+        /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
         /// <param name="recognitionType">
@@ -28,7 +30,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        internal RecognizeCompleted(string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
+        internal RecognizeCompletedInternal(string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
         {
             OperationContext = operationContext;
             ResultInformation = resultInformation;

@@ -274,6 +274,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual(200, recognizeCompleted.ResultInformation.Code);
                 Assert.NotZero(recognizeCompleted.CollectTonesResult.Tones.Count());
                 Assert.AreEqual(DtmfTone.Five, recognizeCompleted.CollectTonesResult.Tones.First());
+                Assert.AreEqual(RecognizeSuccessReason.MaxDigitsReceived, recognizeCompleted.SuccessReason);
             }
             else
             {
