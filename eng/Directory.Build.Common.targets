@@ -275,11 +275,9 @@
   <!-- Validates that all the mgmt libraries have a trigger path in the core resourcemanager pipeline -->
   <Target Name="ValidateResourceManagerPipelineTriggers" AfterTargets="Build" Condition="'$(IsMgmtSubLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true'" >
     <PropertyGroup>
-      <!-- makes sure that the line ends in the project name which is why we need the newline chars at the end -->
-      <_ProjectTriggerPath>$(MSBuildProjectName)&#xD;&#xA;</_ProjectTriggerPath>
       <_ResourceManagerCIFile>$(RepoRoot)/sdk/resourcemanager/ci.mgmt.yml</_ResourceManagerCIFile>
       <_ResourceManagerCIFileContents>$([System.IO.File]::ReadAllText($(_ResourceManagerCIFile)))</_ResourceManagerCIFileContents>
-      <_ContainsTrigger>$(_ResourceManagerCIFileContents.Contains('$(_ProjectTriggerPath)'))</_ContainsTrigger>
+      <_ContainsTrigger>$([System.Text.RegularExpressions.Regex]::IsMatch($(_ResourceManagerCIFileContents), `- sdk/.*/$(MSBuildProjectName)\W+`))</_ContainsTrigger>
     </PropertyGroup>
 
     <Error Condition="'$(_ContainsTrigger)' != 'true'" Text="The core resourcemanager pipeline ['$(_ResourceManagerCIFile)'] does not contain a trigger path for your library please run 'eng/scripts/Update-Mgmt-CI.ps1' to add the correct trigger paths." />
