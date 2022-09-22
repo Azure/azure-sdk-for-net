@@ -141,7 +141,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     segments ??= dataSegments is IReadOnlyCollection<Data> readOnlyList
                         ? new List<ReadOnlyMemory<byte>>(readOnlyList.Count)
                         : new List<ReadOnlyMemory<byte>>();
-                    ReadOnlyMemory<byte> dataToAppend =  segment switch
+                    ReadOnlyMemory<byte> dataToAppend = segment switch
                     {
                         ReadOnlyMemory<byte> romSegment => romSegment,
                         Data data => data.Value switch
