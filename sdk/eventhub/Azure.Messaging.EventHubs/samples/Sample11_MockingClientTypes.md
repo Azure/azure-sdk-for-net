@@ -190,7 +190,7 @@ Assert.DoesNotThrowAsync(async () => await sendFailed(args));
 
 ## Consuming events using an `EventHubConsumerClient`
 
-When testing code that is dependent on the `EventHubConsumerClient`, a developer may want to create a known set of expected events and contexts to verify that their application consumes them correctly.  Tests can mock `EventData` instances coming from the broker using the `EventHubModelFactory`. These can be used within the consumer client mock to mock returns from `ReadEventsFromPartitionAsync`, which for most applications is the key interaction to test.
+When testing code that is dependent on the `EventHubConsumerClient`, a developer may want to create a known set of expected events to verify that their application consumes them correctly.  Tests can mock `EventData` instances coming from the broker using the `EventHubModelFactory`. These can be used within the consumer client mock to mock returns from `ReadEventsFromPartitionAsync`, which for most applications is the key interaction to test.
 
 This snippet also demonstrates how to mock `LastEnqueuedEventProperties` using the `EventHubsModelFactory`.
 
