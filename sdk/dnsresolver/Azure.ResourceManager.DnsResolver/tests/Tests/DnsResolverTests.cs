@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 {
     public class DnsResolverTests : DnsResolverTestBase
     {
-        private DnsResolverCollection dnsResolverCollection;
+        private DnsResolverCollection _dnsResolverCollection;
 
         public DnsResolverTests(bool async) : base(async)
         {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             var subscription = await Client.GetSubscriptions().GetAsync(TestEnvironment.SubscriptionId);
             var resourceGroup = await subscription.Value.GetResourceGroups().GetAsync(TestEnvironment.ResourceGroup);
 
-            this.dnsResolverCollection = resourceGroup.Value.GetDnsResolvers();
+            _dnsResolverCollection = resourceGroup.Value.GetDnsResolvers();
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
             }
 
             // ACT
-            var dnsResolver = await this.dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
+            var dnsResolver = await _dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
 
             // ASSERT
             Assert.AreEqual(dnsResolver.Value.Data.ProvisioningState, DnsResolverProvisioningState.Succeeded);
@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.DnsResolver.Tests
                 await CreateVirtualNetworkAsync(vnetName);
             }
 
-            await this.dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
+            await _dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
 
             // ACT
-            var retrievedDnsResolver = await this.dnsResolverCollection.GetAsync(dnsResolverName);
+            var retrievedDnsResolver = await _dnsResolverCollection.GetAsync(dnsResolverName);
 
             // ASSERT
             Assert.AreEqual(retrievedDnsResolver.Value.Data.Name, dnsResolverName);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
                 await CreateVirtualNetworkAsync(vnetName);
             }
 
-            var createdDnsResolver = await this.dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
+            var createdDnsResolver = await _dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
 
             var newTagKey = Recording.GenerateAlphaNumericId("tagKey");
             var newTagValue = Recording.GenerateAlphaNumericId("tagValue");
@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.DnsResolver.Tests
                 await CreateVirtualNetworkAsync(vnetName);
             }
 
-            var dnsResolver = await this.dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
+            var dnsResolver = await _dnsResolverCollection.CreateOrUpdateAsync(WaitUntil.Completed, dnsResolverName, dnsResolverData);
 
             // ACT
             await dnsResolver.Value.DeleteAsync(WaitUntil.Completed);
 
             // ASSERT
-            var getDnsResolverResult = await this.dnsResolverCollection.ExistsAsync(dnsResolverName);
+            var getDnsResolverResult = await _dnsResolverCollection.ExistsAsync(dnsResolverName);
             Assert.AreEqual(getDnsResolverResult.Value, false);
         }
     }
