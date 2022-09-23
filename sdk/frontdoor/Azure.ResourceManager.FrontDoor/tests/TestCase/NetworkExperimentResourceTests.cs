@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
         }
 
         [TestCase]
-        public async Task FrontDoorResourceApiTests()
+        public async Task AFDNetworkResourceApiTests()
         {
             //1.Get
             var profileName = Recording.GenerateAssetName("testprofile");

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
 
         [TestCase]
         [RecordedTest]
-        public async Task FrontDoorApiTests()
+        public async Task AFDExperimentApiTests()
         {
             //1.CreateorUpdate
             var collection = await GetFrontDoorCollectionAsync();

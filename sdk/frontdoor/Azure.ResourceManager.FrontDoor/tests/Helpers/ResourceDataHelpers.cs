@@ -108,6 +108,17 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
         {
             var data = new FrontDoorExperimentData(location)
             {
+                ExperimentEndpointA = new FrontDoorExperimentEndpointProperties()
+                {
+                    Endpoint = "www.bing.com",
+                    Name = "bing"
+                },
+                ExperimentEndpointB = new FrontDoorExperimentEndpointProperties()
+                {
+                    Endpoint = "www.constoso.com",
+                    Name = "contoso"
+                },
+                EnabledState = FrontDoorExperimentState.Enabled
             };
             return data;
         }

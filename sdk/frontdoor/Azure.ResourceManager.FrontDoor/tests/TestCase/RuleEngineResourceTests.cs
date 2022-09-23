@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
         }
 
         [TestCase]
-        public async Task FrontDoorResourceApiTests()
+        public async Task AFDRulesEngineResourceApiTests()
         {
             //1.Get
             var engineName = Recording.GenerateAssetName("testengine");
