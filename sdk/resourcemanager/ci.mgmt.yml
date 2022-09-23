@@ -110,6 +110,7 @@ trigger:
     - sdk/peering/Azure.ResourceManager.Peering
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
+    - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/redis/Azure.ResourceManager.Redis
@@ -251,6 +252,7 @@ pr:
     - sdk/peering/Azure.ResourceManager.Peering
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
+    - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/redis/Azure.ResourceManager.Redis
