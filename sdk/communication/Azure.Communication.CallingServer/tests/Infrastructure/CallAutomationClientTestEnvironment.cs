@@ -25,10 +25,6 @@ namespace Azure.Communication.CallingServer
 
         private string randomAcsUser2 = $"8:acs:{randomResourceIdentifier}_0000000e-9f82-b5db-eef0-8b3a0d000839";
 
-        private string dispatcherEndpoint = "DISPATCHER_ENDPOINT";
-
-        private string servicebusString = "SERVICEBUS_STRING";
-
         /// <summary>
         /// The resource identifier associated with the Azure Communication Service.
         /// </summary>
@@ -57,21 +53,6 @@ namespace Azure.Communication.CallingServer
         /// Endpoint for the targetted PMA in string. If not set, default endpoint is used.
         /// </summary>
         public string PMAEndpoint => GetRecordedOptionalVariable(Endpoint, options => options.IsSecret("https://sanitized.com"));
-
-        /// <summary>
-        /// Dispatcher endpoint for automated testing
-        /// </summary>
-        public string DispatcherEndpoint => GetRecordedOptionalVariable(dispatcherEndpoint, options => options.IsSecret("https://sanitized.com"));
-
-        /// <summary>
-        /// ServiceBus string
-        /// </summary>
-        public string ServicebusString => GetRecordedOptionalVariable(servicebusString, options => options.IsSecret("https://sanitized.com"));
-
-        /// <summary>
-        /// The callback url of the application where notification would be received.
-        /// </summary>
-        public string DispatcherCallback => $"{DispatcherEndpoint}/api/servicebuscallback/events";
 
         /// <summary>
         /// The secret for validating incoming request.
