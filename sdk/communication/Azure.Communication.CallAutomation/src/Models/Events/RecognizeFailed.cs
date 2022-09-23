@@ -34,7 +34,7 @@ namespace Azure.Communication.CallAutomation
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             PublicEventType = publicEventType;
-            FailureReason = new RecognizeFailureReason(resultInformation.SubCode.ToString());
+            ReasonCodeName = new ReasonCodeName(resultInformation.SubCode.ToString());
         }
 
         /// <summary> Gets the operation context. </summary>
@@ -49,7 +49,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Reason on why this event failed.
         /// </summary>
-        public RecognizeFailureReason FailureReason { get; }
+        public ReasonCodeName ReasonCodeName { get; }
         /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
         /// <summary>
         /// Deserialize <see cref="RecognizeFailed"/> event.

@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             PublicEventType = publicEventType;
-            FailureReason = new PauseFailureReason(resultInformation.SubCode.ToString());
+            FailureReason = new ReasonCodeName(resultInformation.SubCode.ToString());
         }
 
         /// <summary> Gets the event source. </summary>
@@ -49,7 +49,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
         public string PublicEventType { get; }
         /// <summary> Pause Failure reason. </summary>
-        public PauseFailureReason FailureReason { get; }
+        public ReasonCodeName FailureReason { get; }
 
         /// <summary>
         /// Deserialize <see cref="PlayFailed"/> event.

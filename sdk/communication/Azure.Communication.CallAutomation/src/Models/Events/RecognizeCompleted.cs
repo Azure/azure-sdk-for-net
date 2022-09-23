@@ -43,7 +43,7 @@ namespace Azure.Communication.CallAutomation
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             PublicEventType = publicEventType;
-            SuccessReason = new RecognizeSuccessReason(ResultInformation.SubCode.ToString());
+            ReasonCodeName = new ReasonCodeName(ResultInformation.SubCode.ToString());
         }
 
         /// <summary> Gets the operation context. </summary>
@@ -60,7 +60,7 @@ namespace Azure.Communication.CallAutomation
         [JsonConverter(typeof(EquatableEnumJsonConverter<CallMediaRecognitionType>))]
         public CallMediaRecognitionType RecognitionType { get; }
         /// <summary> Success reason. </summary>
-        public RecognizeSuccessReason SuccessReason { get; }
+        public ReasonCodeName ReasonCodeName { get; }
 
         /// <summary>
         /// Deserialize <see cref="RecognizeCompletedInternal"/> event.
