@@ -6,6 +6,9 @@ param (
     [string] $ServiceDirectory,
 
     [Parameter()]
+    [string] $ProjectListOverrideFileName,
+
+    [Parameter()]
     [string] $ProjectDirectory,
 
     [Parameter()]
@@ -85,87 +88,90 @@ try {
 
         Write-Host "Re-generating clients"
         Invoke-Block {
-            & dotnet msbuild $PSScriptRoot\..\service.proj /restore /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
+            & dotnet build $PSScriptRoot\..\service.proj /t:GenerateCode /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory /p:ProjectListOverrideFile=$ProjectListOverrideFileName
         }
 
         Write-Host "Re-generating tests"
         Invoke-Block {
-            & dotnet msbuild $PSScriptRoot/../service.proj /restore /t:GenerateTests /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory
+            & dotnet build $PSScriptRoot/../service.proj /t:GenerateTests /p:SDKType=$SDKType /p:ServiceDirectory=$ServiceDirectory /p:ProjectListOverrideFile=$ProjectListOverrideFileName
+        }
+
+        Write-Host "Re-generating listings"
+        Invoke-Block {
+            & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface -ProjectListOverrideFileName $ProjectListOverrideFileName
         }
     }
+    # The script is taking two path: $ServiceDirectory and $ProjectListOverrideFileName.
+    # If $ProjectListOverrideFileName exists, we don't validate the following steps in seperate code generation jobs.
+    # If $ProjectListOverrideFileName doesn't exist, we will check all steps under the $ServiceDirectory.
+    if (!$ProjectListOverrideFileName) {
+        Write-Host "Re-generating snippets"
+        Invoke-Block {
+            & $PSScriptRoot\Update-Snippets.ps1 -ServiceDirectory $ServiceDirectory
+        }
 
-    Write-Host "Re-generating snippets"
-    Invoke-Block {
-        & $PSScriptRoot\Update-Snippets.ps1 -ServiceDirectory $ServiceDirectory
-    }
+        Write-Host "Validating installation instructions"
+        Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory  `
+            | Resolve-Path `
+            | % { Get-ChildItem $_ -Filter "README.md" -Recurse } `
+            | % {
+                $readmePath = $_
+                $readmeContent = Get-Content $readmePath
 
-    Write-Host "Re-generating listings"
-    Invoke-Block {
-        & $PSScriptRoot\Export-API.ps1 -ServiceDirectory $ServiceDirectory -SDKType $SDKType -SpellCheckPublicApiSurface:$SpellCheckPublicApiSurface
-    }
-
-    Write-Host "Validating installation instructions"
-    Join-Path "$PSScriptRoot/../../sdk" $ServiceDirectory  `
-        | Resolve-Path `
-        | % { Get-ChildItem $_ -Filter "README.md" -Recurse } `
-        | % {
-            $readmePath = $_
-            $readmeContent = Get-Content $readmePath
-
-            if ($readmeContent -Match "Install-Package")
-            {
-                LogError "README files should use dotnet CLI for installation instructions. '$readmePath'"
-            }
-
-            if ($readmeContent -Match "dotnet add .*--version")
-            {
-                LogError "Specific versions should not be specified in the installation instructions in '$readmePath'. For beta versions, include the --prerelease flag."
-            }
-
-            if ($readmeContent -Match "dotnet add")
-            {
-                $changelogPath = Join-Path $(Split-Path -Parent $readmePath) "CHANGELOG.md"
-                $hasGa = $false
-                $hasRelease = $false
-                if (Test-Path $changelogPath)
+                if ($readmeContent -Match "Install-Package")
                 {
-                    $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $changelogPath
-                    foreach ($key in $changeLogEntries.Keys)
+                    LogError "README files should use dotnet CLI for installation instructions. '$readmePath'"
+                }
+    
+                if ($readmeContent -Match "dotnet add .*--version")
+                {
+                    LogError "Specific versions should not be specified in the installation instructions in '$readmePath'. For beta versions, include the --prerelease flag."
+                }
+    
+                if ($readmeContent -Match "dotnet add")
+                {
+                    $changelogPath = Join-Path $(Split-Path -Parent $readmePath) "CHANGELOG.md"
+                    $hasGa = $false
+                    $hasRelease = $false
+                    if (Test-Path $changelogPath)
                     {
-                        $entry = $changeLogEntries[$key]
-                        if ($entry.ReleaseStatus -ne "(Unreleased)")
+                        $changeLogEntries = Get-ChangeLogEntries -ChangeLogLocation $changelogPath
+                        foreach ($key in $changeLogEntries.Keys)
                         {
-                            $hasRelease = $true
-                            if ($entry.ReleaseVersion -notmatch "beta" -and $entry.ReleaseVersion -notmatch "preview")
+                            $entry = $changeLogEntries[$key]
+                            if ($entry.ReleaseStatus -ne "(Unreleased)")
                             {
-                                $hasGa = $true
-                                break
+                                $hasRelease = $true
+                                if ($entry.ReleaseVersion -notmatch "beta" -and $entry.ReleaseVersion -notmatch "preview")
+                                {
+                                    $hasGa = $true
+                                    break
+                                }
                             }
                         }
                     }
-                }
-                if ($hasGa)
-                {
-                    if (-Not ($readmeContent -Match "dotnet add (?!.*--prerelease)"))
+                    if ($hasGa)
                     {
-                        LogError `
-"No GA installation instructions found in '$readmePath' but there was a GA entry in the Changelog '$changelogPath'. `
-    Ensure that there are installation instructions that do not contain the --prerelease flag. You may also include `
-    instructions for installing a beta that does include the --prerelease flag."
+                        if (-Not ($readmeContent -Match "dotnet add (?!.*--prerelease)"))
+                        {
+                            LogError `
+    "No GA installation instructions found in '$readmePath' but there was a GA entry in the Changelog '$changelogPath'. `
+        Ensure that there are installation instructions that do not contain the --prerelease flag. You may also include `
+        instructions for installing a beta that does include the --prerelease flag."
+                        }
                     }
-                }
-                elseif ($hasRelease)
-                {
-                    if (-Not ($readmeContent -Match "dotnet add .*--prerelease$"))
+                    elseif ($hasRelease)
                     {
-                        LogError `
-"No beta installation instructions found in '$readmePath' but there was a beta entry in the Changelog '$changelogPath'. `
-    Ensure that there are installation instructions that contain the --prerelease flag."
+                        if (-Not ($readmeContent -Match "dotnet add .*--prerelease$"))
+                        {
+                            LogError `
+    "No beta installation instructions found in '$readmePath' but there was a beta entry in the Changelog '$changelogPath'. `
+        Ensure that there are installation instructions that contain the --prerelease flag."
+                        }
                     }
                 }
             }
-        }
-
+    
     if (-not $ProjectDirectory)
     {
         Write-Host "git diff"
@@ -181,7 +187,7 @@ try {
     run 'eng\scripts\Export-API.ps1' if you changed public APIs (https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#public-api-additions). `
     run 'dotnet build /t:GenerateCode' to update the generated code.`
     `
-To reproduce this error locally, run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory $ServiceDirectory'."
+To reproduce this error locally, run 'eng\scripts\CodeChecks.ps1 -ServiceDirectory `$ServiceDirectory'."
         }
     }
 }

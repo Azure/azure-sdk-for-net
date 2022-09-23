@@ -23,6 +23,12 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: 'not-specific'
+- name: IncludeSrc
+  type: boolean
+  default: false
+- name: IncludeTests
+  type: boolean
+  default: true
 steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
     parameters:
@@ -30,7 +36,8 @@ steps:
   - pwsh: |
       dotnet build /t:ProjectDependsOn ./eng/service.proj `
         /p:TestDependsOnDependency="${{parameters.TestDependsOnDependency}}" `
-        /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false  `
+        /p:IncludeSrc=${{parameters.IncludeSrc}} /p:IncludeTests=${{parameters.IncludeTests}} `
+        /p:IncludeStress=false /p:IncludeSamples=false  `
         /p:IncludePerf=false /p:RunApiCompat=false `
         /p:InheritDocEnabled=false /p:BuildProjectReferences=false `
         /p:OutputProjectFilePath="${{parameters.OutputProjectFilePath}}"

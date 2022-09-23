@@ -36,6 +36,9 @@ parameters:
 - name: TestDependsOnDependency
   type: string
   default: not-specified
+- name: CodeCheckOnDependency
+  type: string
+  default: not-specified
 jobs:
   - job: Build
     pool:
@@ -215,6 +218,39 @@ jobs:
         displayName: Build snippets
         condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
       - template: /eng/common/pipelines/templates/steps/eng-common-workflow-enforcer.yml
+  - ${{ if ne(parameters.CodeCheckOnDependency, 'not-specified') }}:
+    - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
+      parameters:
+        GenerateJobName: generate_code_generation_matrix 
+        JobTemplatePath: /eng/pipelines/templates/jobs/code.gen.yml
+        MatrixConfigs:
+        - Name: NET_ci_codegen
+          Path: eng/pipelines/templates/stages/code-gen-matrix.json
+          Selection: sparse
+          GenerateVMJobs: true
+        SparseCheckoutPaths: 
+          - "/*"
+          - "!/sdk/*/**/SessionRecords"
+        PreGenerationSteps: 
+        - template: /eng/pipelines/templates/steps/dependency.tests.yml
+          parameters:
+            TestDependsOnDependency: ${{ parameters.CodeCheckOnDependency }}
+            # The value for ProjectListOverrideFilePropertyName should be the same as AdditionalParameters ProjectListOverrideFilePropertyName below
+            ProjectListOverrideFilePropertyName: 'CodeGenerationProjectListFile'
+            ProjectFilesOutputFolder: $(Build.ArtifactStagingDirectory)
+            ExcludeTargetTestProjects: true
+            ServiceDirectory: ${{ parameters.ServiceDirectory }}
+            MatrixConfigsFile: eng/pipelines/templates/stages/code-gen-matrix.json
+            IncludeSrc: true
+            IncludeTests: false
+            OutputProjectFilePath: "$(Build.ArtifactStagingDirectory)/codegen.txt"
+        AdditionalParameters:
+          SDKType: ${{ parameters.SDKType }}
+          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+          TestSetupSteps: ${{ parameters.TestSetupSteps }}
+          TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+          # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
+          ProjectListOverrideFilePropertyName: 'CodeGenerationProjectListFile' 
 
   - job: Compliance
     pool:

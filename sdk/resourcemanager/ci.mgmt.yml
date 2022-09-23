@@ -292,3 +292,4 @@ extends:
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
     TestDependsOnDependency: Azure.ResourceManager
+    CodeCheckOnDependency: Azure.ResourceManager

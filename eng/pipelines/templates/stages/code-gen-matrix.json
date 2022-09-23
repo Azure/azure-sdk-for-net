@@ -1,0 +1,10 @@
+{
+  "matrix": {
+    "Agent": {
+      "Ubuntu-20.04": {
+        "OSVmImage": "MMSUbuntu20.04",
+        "Pool": "azsdk-pool-mms-ubuntu-2004-general"
+      }
+    }
+  }
+}
