@@ -11,6 +11,8 @@ using Microsoft.Azure.Management.CosmosDB.Models;
 using System.Collections.Generic;
 using System;
 using System.Collections.Specialized;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CosmosDB.Tests.ScenarioTests
 {
@@ -127,8 +129,8 @@ namespace CosmosDB.Tests.ScenarioTests
             using (var context = MockContext.Start(this.GetType()))
             {
                 fixture.Init(context);
-                this.fixture.ResourceGroupName = "canary-sdk-test";
-                var databaseAccountName = "canary-sdk-test-mongo-account";
+                this.fixture.ResourceGroupName = "cosmosTest";
+                var databaseAccountName = "mergetest3";
 
                 var mongoClient = this.fixture.CosmosDBManagementClient.MongoDBResources;
 
@@ -171,11 +173,337 @@ namespace CosmosDB.Tests.ScenarioTests
                 PhysicalPartitionStorageInfoCollection physicalPartitionStorageInfoCollection =
                     mongoClient.ListMongoDBCollectionPartitionMerge(fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName, new MergeParameters(isDryRun: true));
 
-                Assert.Equal(2, physicalPartitionStorageInfoCollection.PhysicalPartitionStorageInfoCollectionProperty.Count);
+                Assert.True(physicalPartitionStorageInfoCollection.PhysicalPartitionStorageInfoCollectionProperty.Count > 1);
 
                 mongoClient.DeleteMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName);                
                 mongoClient.DeleteMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName);
                 
+            }
+        }
+
+        [Fact]
+        public async Task MongoInAccountRestoreTestsAsync()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                fixture.Location = "west us";
+                fixture.Init(context);
+                string databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Mongo32);
+                var mongoClient = this.fixture.CosmosDBManagementClient.MongoDBResources;
+                var restorableAccounts = (await this.fixture.CosmosDBManagementClient.RestorableDatabaseAccounts.ListByLocationAsync(this.fixture.Location)).ToList();
+                var restorableDatabaseAccount = restorableAccounts.
+                    SingleOrDefault(account => account.AccountName.Equals(databaseAccountName, StringComparison.OrdinalIgnoreCase));
+
+                string databaseName = TestUtilities.GenerateName(prefix: "mongoDb");
+                string collectionName = TestUtilities.GenerateName(prefix: "mongoCollection");
+
+                //create db
+                MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters = new MongoDBDatabaseCreateUpdateParameters
+                {
+                    Resource = new MongoDBDatabaseResource { Id = databaseName },
+                    Options = new CreateUpdateOptions()
+                };
+
+                MongoDBDatabaseGetResults mongoDBDatabaseGetResults = mongoClient.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, mongoDBDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.Equal(databaseName, mongoDBDatabaseGetResults.Name);
+                Assert.NotNull(mongoDBDatabaseGetResults);
+
+                //get db
+                MongoDBDatabaseGetResults mongoDBDatabaseGetResults1 = mongoClient.GetMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBDatabaseGetResults1);
+                Assert.Equal(databaseName, mongoDBDatabaseGetResults1.Name);
+
+                VerifyEqualMongoDBDatabases(mongoDBDatabaseGetResults, mongoDBDatabaseGetResults1);
+
+                //create prov collection
+                MongoDBCollectionCreateUpdateParameters mongoDBCollectionCreateUpdateParameters = new MongoDBCollectionCreateUpdateParameters
+                {
+                    Resource = new MongoDBCollectionResource
+                    {
+                        Id = collectionName
+                    },
+                    Options = new CreateUpdateOptions()
+                };
+
+                MongoDBCollectionGetResults mongoDBCollectionGetResults = mongoClient.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName, mongoDBCollectionCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBCollectionGetResults);
+                VerfiyMongoCollectionCreation(mongoDBCollectionGetResults, mongoDBCollectionCreateUpdateParameters);
+                DateTime restoreTimestampInUtc = DateTime.UtcNow;
+                String restoreSource = restorableDatabaseAccount.Id;
+
+                //restore collection
+                await mongoClient.DeleteMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, mongoDBCollectionGetResults.Name);
+                Thread.Sleep(5000);
+
+                MongoDBCollectionCreateUpdateParameters mongoDBCollectionCreateUpdateParametersForRestore = new MongoDBCollectionCreateUpdateParameters
+                {
+                    Resource = new MongoDBCollectionResource
+                    {
+                        Id = collectionName,
+                        RestoreParameters = new ResourceRestoreParameters
+                        {
+                            RestoreSource = restoreSource,
+                            RestoreTimestampInUtc = restoreTimestampInUtc
+                        },
+                        CreateMode = CreateMode.Restore
+                    },
+                    Options = new CreateUpdateOptions()
+                };
+
+                MongoDBCollectionGetResults mongoDBCollectionRestoreResults;
+
+                mongoDBCollectionRestoreResults = mongoClient.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName, mongoDBCollectionCreateUpdateParametersForRestore).GetAwaiter().GetResult().Body;
+
+                Assert.NotNull(mongoDBCollectionRestoreResults);
+                VerfiyMongoCollectionCreation(mongoDBCollectionRestoreResults, mongoDBCollectionCreateUpdateParameters);
+
+                //restore database
+                await mongoClient.DeleteMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName);
+                Thread.Sleep(5000);
+
+                try { mongoDBCollectionRestoreResults = mongoClient.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName, mongoDBCollectionCreateUpdateParametersForRestore).GetAwaiter().GetResult().Body; }
+                catch (Exception ex)
+                {
+                    Assert.Contains("Could not find the database", ex.Message);
+                }
+                DateTime currentTimestampInUtc = DateTime.UtcNow;
+                MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParametersForRestoreWithInvalidTimestamp = new MongoDBDatabaseCreateUpdateParameters
+                {
+                    Resource = new MongoDBDatabaseResource
+                    {
+                        Id = databaseName,
+                        RestoreParameters = new ResourceRestoreParameters
+                        {
+                            RestoreSource = restoreSource,
+                            RestoreTimestampInUtc = currentTimestampInUtc
+                        },
+                        CreateMode = CreateMode.Restore
+                    },
+                    Options = new CreateUpdateOptions()
+                };
+
+                MongoDBDatabaseGetResults mongoDBDatabaseRestoreResults;
+                try { mongoDBDatabaseRestoreResults = mongoClient.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, mongoDBDatabaseCreateUpdateParametersForRestoreWithInvalidTimestamp).GetAwaiter().GetResult().Body; }
+                catch (Exception ex)
+                {
+                    Assert.Contains("No databases or collections found in the source account at the restore timestamp provided", ex.Message);
+                }
+
+                MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParametersForRestore = new MongoDBDatabaseCreateUpdateParameters
+                {
+                    Resource = new MongoDBDatabaseResource
+                    {
+                        Id = databaseName,
+                        RestoreParameters = new ResourceRestoreParameters
+                        {
+                            RestoreSource = restoreSource,
+                            RestoreTimestampInUtc = restoreTimestampInUtc
+                        },
+                        CreateMode = CreateMode.Restore
+                    },
+                    Options = new CreateUpdateOptions()
+                };
+
+                mongoDBDatabaseRestoreResults = mongoClient.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, mongoDBDatabaseCreateUpdateParametersForRestore).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBDatabaseRestoreResults);
+                Assert.Equal(databaseName, mongoDBDatabaseRestoreResults.Name);
+
+                mongoDBCollectionCreateUpdateParametersForRestore = new MongoDBCollectionCreateUpdateParameters
+                {
+                    Resource = new MongoDBCollectionResource
+                    {
+                        Id = collectionName,
+                        RestoreParameters = new ResourceRestoreParameters
+                        {
+                            RestoreSource = restoreSource,
+                            RestoreTimestampInUtc = restoreTimestampInUtc
+                        },
+                        CreateMode = CreateMode.Restore
+                    },
+                    Options = new CreateUpdateOptions()
+                };
+
+                mongoDBCollectionRestoreResults = mongoClient.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName, mongoDBCollectionCreateUpdateParametersForRestore).GetAwaiter().GetResult().Body;
+
+                Assert.NotNull(mongoDBCollectionRestoreResults);
+                VerfiyMongoCollectionCreation(mongoDBCollectionRestoreResults, mongoDBCollectionCreateUpdateParameters);
+
+                Thread.Sleep(10000);
+
+                //list collections
+                IEnumerable<MongoDBCollectionGetResults> restoredMongoDBCollections = mongoClient.ListMongoDBCollectionsWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(restoredMongoDBCollections);
+
+                foreach (MongoDBCollectionGetResults mongoDBCollection in restoredMongoDBCollections)
+                {
+                    await mongoClient.DeleteMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, mongoDBCollection.Name);
+                }
+
+                //list databases
+                IEnumerable<MongoDBDatabaseGetResults> mongoDBDatabases = mongoClient.ListMongoDBDatabasesWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBDatabases);
+
+                foreach (MongoDBDatabaseGetResults mongoDBDatabase in mongoDBDatabases)
+                {
+                    await mongoClient.DeleteMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, mongoDBDatabase.Name);
+                }
+            }
+        }
+
+        [Fact]
+        public async Task MongoInAccountRestoreForSharedResourcesTestsAsync()
+        {
+            using (var context = MockContext.Start(this.GetType()))
+            {
+                fixture.Location = "west us";
+                fixture.Init(context);
+                string databaseAccountName = this.fixture.GetDatabaseAccountName(TestFixture.AccountType.Mongo32);
+                var mongoClient = this.fixture.CosmosDBManagementClient.MongoDBResources;
+                var restorableAccounts = (await this.fixture.CosmosDBManagementClient.RestorableDatabaseAccounts.ListByLocationAsync(this.fixture.Location)).ToList();
+                var restorableDatabaseAccount = restorableAccounts.
+                    SingleOrDefault(account => account.AccountName.Equals(databaseAccountName, StringComparison.OrdinalIgnoreCase));
+
+                string databaseName = TestUtilities.GenerateName(prefix: "mongoDb");
+                string collectionName = TestUtilities.GenerateName(prefix: "mongoCollection");
+
+                const string mongoDatabaseThroughputType = "Microsoft.DocumentDB/databaseAccounts/mongodbDatabases/throughputSettings";
+
+                const int sampleThroughput = 700;
+
+                Dictionary<string, string> additionalProperties = new Dictionary<string, string>
+                {
+                    {"foo","bar" }
+                };
+                Dictionary<string, string> tags = new Dictionary<string, string>
+                {
+                    {"key3","value3"},
+                    {"key4","value4"}
+                };
+
+                //create shared db
+                MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParameters = new MongoDBDatabaseCreateUpdateParameters
+                {
+                    Resource = new MongoDBDatabaseResource { Id = databaseName },
+                    Options = new CreateUpdateOptions
+                    {
+                        Throughput = sampleThroughput
+                    }
+                };
+
+                MongoDBDatabaseGetResults mongoDBDatabaseCreateResults = mongoClient.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, mongoDBDatabaseCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBDatabaseCreateResults);
+                Assert.Equal(databaseName, mongoDBDatabaseCreateResults.Name);
+
+                //get db
+                MongoDBDatabaseGetResults mongoDBDatabaseGetResults = mongoClient.GetMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBDatabaseGetResults);
+                Assert.Equal(databaseName, mongoDBDatabaseGetResults.Name);
+
+                ThroughputSettingsGetResults throughputSettingsGetResults = mongoClient.GetMongoDBDatabaseThroughputWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(throughputSettingsGetResults);
+                Assert.NotNull(throughputSettingsGetResults.Name);
+                Assert.Equal(throughputSettingsGetResults.Resource.Throughput, sampleThroughput);
+                Assert.Equal(mongoDatabaseThroughputType, throughputSettingsGetResults.Type);
+
+                Dictionary<string, string> dict = new Dictionary<string, string>();
+                dict.Add("partitionKey", PartitionKind.Hash.ToString());
+
+                //create shared ru collection
+                MongoDBCollectionCreateUpdateParameters mongoDBCollectionCreateUpdateParameters = new MongoDBCollectionCreateUpdateParameters
+                {
+                    Resource = new MongoDBCollectionResource
+                    {
+                        Id = collectionName,
+                        ShardKey = dict
+                    },
+                    Options = new CreateUpdateOptions()
+                };
+
+                MongoDBCollectionGetResults mongoDBCollectionGetResults = mongoClient.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, collectionName, mongoDBCollectionCreateUpdateParameters).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBCollectionGetResults);
+                VerfiyMongoCollectionCreation(mongoDBCollectionGetResults, mongoDBCollectionCreateUpdateParameters);
+
+                DateTime restoreTimestampInUtc = DateTime.UtcNow;
+                String restoreSource = restorableDatabaseAccount.Id;
+
+                Thread.Sleep(10000);
+
+                //restore collection
+                await mongoClient.DeleteMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, mongoDBCollectionGetResults.Name);
+                Thread.Sleep(5000);
+
+                MongoDBCollectionCreateUpdateParameters mongoDBCollectionCreateUpdateParametersForRestore = new MongoDBCollectionCreateUpdateParameters
+                {
+                    Resource = new MongoDBCollectionResource
+                    {
+                        Id = collectionName,
+                        RestoreParameters = new ResourceRestoreParameters
+                        {
+                            RestoreSource = restoreSource,
+                            RestoreTimestampInUtc = restoreTimestampInUtc
+                        },
+                        CreateMode = CreateMode.Restore
+                    },
+                    Options = new CreateUpdateOptions()
+                };
+
+                MongoDBCollectionGetResults mongoDBCollectionRestoreResults;
+
+                try
+                {
+                    mongoDBCollectionRestoreResults = mongoClient.CreateUpdateMongoDBCollectionWithHttpMessagesAsync(
+                  this.fixture.ResourceGroupName,
+                  databaseAccountName,
+                  databaseName,
+                  collectionName,
+                  mongoDBCollectionCreateUpdateParametersForRestore).GetAwaiter().GetResult().Body;
+                }
+                catch (Exception ex)
+                {
+                    Assert.Contains("Partial restore of shared throughput data is not allowed. Please perform restore operation on a shared throughput database or a provisioned collection", ex.Message);
+                }
+
+                //restore database
+                await mongoClient.DeleteMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName);
+                Thread.Sleep(5000);
+
+                MongoDBDatabaseCreateUpdateParameters mongoDBDatabaseCreateUpdateParametersForRestore = new MongoDBDatabaseCreateUpdateParameters
+                {
+                    Resource = new MongoDBDatabaseResource
+                    {
+                        Id = databaseName,
+                        RestoreParameters = new ResourceRestoreParameters
+                        {
+                            RestoreSource = restoreSource,
+                            RestoreTimestampInUtc = restoreTimestampInUtc
+                        },
+                        CreateMode = CreateMode.Restore
+                    },
+                    Options = new CreateUpdateOptions()
+                };
+
+                MongoDBDatabaseGetResults mongoDBDatabaseRestoreResults = mongoClient.CreateUpdateMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, mongoDBDatabaseCreateUpdateParametersForRestore).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBDatabaseRestoreResults);
+                Assert.Equal(databaseName, mongoDBDatabaseRestoreResults.Name);
+
+                Thread.Sleep(10000);
+
+                //list shared ru collections
+                IEnumerable<MongoDBCollectionGetResults> mongoDBCollections = mongoClient.ListMongoDBCollectionsWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBCollections);
+
+                foreach (MongoDBCollectionGetResults mongoDBCollection in mongoDBCollections)
+                {
+                    await mongoClient.DeleteMongoDBCollectionWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, databaseName, mongoDBCollection.Name);
+                }
+
+                //list databases
+                IEnumerable<MongoDBDatabaseGetResults> mongoDBDatabases = mongoClient.ListMongoDBDatabasesWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName).GetAwaiter().GetResult().Body;
+                Assert.NotNull(mongoDBDatabases);
+                foreach (MongoDBDatabaseGetResults mongoDBDatabase in mongoDBDatabases)
+                {
+                    await mongoClient.DeleteMongoDBDatabaseWithHttpMessagesAsync(this.fixture.ResourceGroupName, databaseAccountName, mongoDBDatabase.Name);
+                }
             }
         }
 
