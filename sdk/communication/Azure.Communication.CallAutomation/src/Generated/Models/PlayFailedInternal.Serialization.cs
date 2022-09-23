@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class PlayFailed
+    internal partial class PlayFailedInternal
     {
-        internal static PlayFailed DeserializePlayFailed(JsonElement element)
+        internal static PlayFailedInternal DeserializePlayFailedInternal(JsonElement element)
         {
             Optional<string> eventSource = default;
             Optional<string> operationContext = default;
@@ -70,7 +70,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new PlayFailed(eventSource.Value, operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new PlayFailedInternal(eventSource.Value, operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }

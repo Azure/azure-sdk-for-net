@@ -8,14 +8,14 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The PlayFailed. </summary>
-    public partial class PlayFailed
+    internal partial class PlayFailedInternal
     {
-        /// <summary> Initializes a new instance of PlayFailed. </summary>
-        internal PlayFailed()
+        /// <summary> Initializes a new instance of PlayFailedInternal. </summary>
+        internal PlayFailedInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of PlayFailed. </summary>
+        /// <summary> Initializes a new instance of PlayFailedInternal. </summary>
         /// <param name="eventSource"></param>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"></param>
@@ -24,7 +24,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        internal PlayFailed(string eventSource, string operationContext, ResultInformation resultInformation, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
+        internal PlayFailedInternal(string eventSource, string operationContext, ResultInformation resultInformation, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
         {
             EventSource = eventSource;
             OperationContext = operationContext;

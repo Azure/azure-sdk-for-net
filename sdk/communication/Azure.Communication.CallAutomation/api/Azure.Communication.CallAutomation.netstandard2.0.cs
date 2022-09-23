@@ -527,6 +527,26 @@ namespace Azure.Communication.CallAutomation
         public string Version { get { throw null; } }
         public static Azure.Communication.CallAutomation.ParticipantsUpdated Deserialize(string content) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PauseFailureReason : System.IEquatable<Azure.Communication.CallAutomation.PauseFailureReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PauseFailureReason(string value) { throw null; }
+        public static Azure.Communication.CallAutomation.PauseFailureReason DownloadFailed { get { throw null; } }
+        public static Azure.Communication.CallAutomation.PauseFailureReason InvalidFileFormat { get { throw null; } }
+        public static Azure.Communication.CallAutomation.PauseFailureReason OperationCancelled { get { throw null; } }
+        public static Azure.Communication.CallAutomation.PauseFailureReason UspecifiedError { get { throw null; } }
+        public bool Equals(Azure.Communication.CallAutomation.PauseFailureReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallAutomation.PauseFailureReason left, Azure.Communication.CallAutomation.PauseFailureReason right) { throw null; }
+        public static implicit operator Azure.Communication.CallAutomation.PauseFailureReason (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallAutomation.PauseFailureReason left, Azure.Communication.CallAutomation.PauseFailureReason right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class PlayCompleted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal PlayCompleted() { }
@@ -540,6 +560,7 @@ namespace Azure.Communication.CallAutomation
     {
         internal PlayFailed() { }
         public string EventSource { get { throw null; } }
+        public Azure.Communication.CallAutomation.PauseFailureReason FailureReason { get { throw null; } }
         public string OperationContext { get { throw null; } }
         public string PublicEventType { get { throw null; } }
         public Azure.Communication.CallAutomation.ResultInformation ResultInformation { get { throw null; } }
