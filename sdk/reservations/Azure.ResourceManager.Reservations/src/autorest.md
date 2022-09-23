@@ -124,6 +124,8 @@ directive:
       $.SplitProperties.properties.reservationId['x-ms-format'] = 'arm-id';
       $.ReservationsProperties.properties.renew['x-ms-client-name'] = 'IsRenewEnabled';
       $.ReservationToReturn.properties.reservationId['x-ms-format'] = 'arm-id';
+      $.ExchangePolicyErrors.properties.policyErrors["x-nullable"] = true;
+      $.PurchaseRequestProperties.properties.appliedScopes["x-nullable"] = true;
   - from: reservations.json
     where: $.parameters
     transform: >
