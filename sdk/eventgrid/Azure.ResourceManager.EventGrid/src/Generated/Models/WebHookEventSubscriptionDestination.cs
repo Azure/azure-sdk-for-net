@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.EventGrid.Models
 
         /// <summary> Initializes a new instance of WebHookEventSubscriptionDestination. </summary>
         /// <param name="endpointType"> Type of the endpoint for the event subscription destination. </param>
-        /// <param name="endpointUri"> The URL that represents the endpoint of the destination of an event subscription. </param>
-        /// <param name="endpointBaseUri"> The base URL that represents the endpoint of the destination of an event subscription. </param>
+        /// <param name="endpoint"> The URL that represents the endpoint of the destination of an event subscription. </param>
+        /// <param name="baseEndpoint"> The base URL that represents the endpoint of the destination of an event subscription. </param>
         /// <param name="maxEventsPerBatch"> Maximum number of events per batch. </param>
         /// <param name="preferredBatchSizeInKilobytes"> Preferred batch size in Kilobytes. </param>
         /// <param name="azureActiveDirectoryTenantId"> The Azure Active Directory Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// Please note <see cref="DeliveryAttributeMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="DynamicDeliveryAttributeMapping"/> and <see cref="StaticDeliveryAttributeMapping"/>.
         /// </param>
-        internal WebHookEventSubscriptionDestination(EndpointType endpointType, Uri endpointUri, Uri endpointBaseUri, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, Guid? azureActiveDirectoryTenantId, string uriOrAzureActiveDirectoryApplicationId, IList<DeliveryAttributeMapping> deliveryAttributeMappings) : base(endpointType)
+        internal WebHookEventSubscriptionDestination(EndpointType endpointType, Uri endpoint, Uri baseEndpoint, int? maxEventsPerBatch, int? preferredBatchSizeInKilobytes, Guid? azureActiveDirectoryTenantId, string uriOrAzureActiveDirectoryApplicationId, IList<DeliveryAttributeMapping> deliveryAttributeMappings) : base(endpointType)
         {
-            EndpointUri = endpointUri;
-            EndpointBaseUri = endpointBaseUri;
+            Endpoint = endpoint;
+            BaseEndpoint = baseEndpoint;
             MaxEventsPerBatch = maxEventsPerBatch;
             PreferredBatchSizeInKilobytes = preferredBatchSizeInKilobytes;
             AzureActiveDirectoryTenantId = azureActiveDirectoryTenantId;
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The URL that represents the endpoint of the destination of an event subscription. </summary>
-        public Uri EndpointUri { get; set; }
+        public Uri Endpoint { get; set; }
         /// <summary> The base URL that represents the endpoint of the destination of an event subscription. </summary>
-        public Uri EndpointBaseUri { get; }
+        public Uri BaseEndpoint { get; }
         /// <summary> Maximum number of events per batch. </summary>
         public int? MaxEventsPerBatch { get; set; }
         /// <summary> Preferred batch size in Kilobytes. </summary>

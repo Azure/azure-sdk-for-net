@@ -73,7 +73,7 @@ rename-mapping:
   ReadinessState: PartnerTopicReadinessState
   Domain: EventGridDomain
   Domain.properties.disableLocalAuth: IsLocalAuthDisabled
-  Domain.properties.endpoint: EndpointUri
+  Domain.properties.endpoint: Endpoint|Uri
   DomainUpdateParameters.properties.disableLocalAuth: IsLocalAuthDisabled
   EventSubscriptionUpdateParameters: EventSubscriptionPatch
   EventSubscriptionUpdateParameters.expirationTimeUtc: ExpireOn
@@ -94,14 +94,14 @@ rename-mapping:
   Partner: EventGridPartnerContent
   Partner.authorizationExpirationTimeInUtc: AuthorizationExpireOn
   PartnerNamespace.properties.disableLocalAuth: IsLocalAuthDisabled
-  PartnerNamespace.properties.endpoint: EndpointUri
+  PartnerNamespace.properties.endpoint: Endpoint|Uri
   PartnerNamespace.properties.partnerRegistrationFullyQualifiedId: -|arm-id
   PartnerTopic.properties.expirationTimeIfNotActivatedUtc: ExpireOnIfNotActivated
   SystemTopic.properties.source: -|arm-id
   SystemTopic.properties.metricResourceId: -|uuid
   Topic: EventGridTopic
   Topic.properties.disableLocalAuth: IsLocalAuthDisabled
-  Topic.properties.endpoint: EndpointUri
+  Topic.properties.endpoint: Endpoint|Uri
   TopicUpdateParameters.properties.disableLocalAuth: IsLocalAuthDisabled
   TopicProvisioningState: EventGridTopicProvisioningState
   TopicTypeInfo: TopicType
@@ -120,6 +120,9 @@ rename-mapping:
   PartnerTopicInfo.azureSubscriptionId: -|uuid
   WebHookEventSubscriptionDestination.properties.azureActiveDirectoryApplicationIdOrUri: UriOrAzureActiveDirectoryApplicationId
   WebHookEventSubscriptionDestination.properties.azureActiveDirectoryTenantId: -|uuid
+  WebHookEventSubscriptionDestination.properties.endpointUrl: Endpoint|Uri
+  WebHookEventSubscriptionDestination.properties.endpointBaseUrl: BaseEndpoint|Uri
+  EventSubscriptionFullUrl.endpointUrl: Endpoint|Uri
 
 directive:
   - from: EventGrid.json

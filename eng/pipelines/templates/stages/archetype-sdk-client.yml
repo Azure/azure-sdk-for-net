@@ -3,7 +3,7 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20211215.1
+      ref: refs/tags/azure-sdk-build-tools_20220920.1
 
 parameters:
 - name: Artifacts
@@ -21,9 +21,6 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
-- name: ServiceToTest
-  type: string
-  default: ''
 - name: TargetDocRepoOwner
   type: string
   default: Azure
@@ -68,7 +65,6 @@ stages:
     - template: /eng/pipelines/templates/jobs/ci.yml
       parameters:
         SDKType: ${{ parameters.SDKType }}
-        ServiceToTest: ${{ coalesce(parameters.ServiceToTest, parameters.ServiceDirectory) }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         Artifacts: ${{ parameters.Artifacts }}
         ${{ if eq(parameters.ServiceDirectory, 'template') }}:

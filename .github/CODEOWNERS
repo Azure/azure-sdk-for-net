@@ -542,7 +542,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 /sdk/quantum/Azure.Quantum.Jobs/           @xfield
 
 # ServiceLabel: %Recovery Services Backup %Service Attention
-/sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup/           @pvrk
+/sdk/recoveryservices-backup/Microsoft.Azure.Management.RecoveryServices.Backup/           @pvrk @Daya-Patil
 
 # ServiceLabel: %Recovery Services Site-Recovery %Service Attention
 /sdk/recoveryservices-siterecovery/Microsoft.Azure.Management.RecoveryServices.SiteRecovery/            @Sharmistha-Rai
@@ -579,7 +579,7 @@ sdk/trafficmanager/Microsoft.Azure.Management.TrafficManager/            @tmsupp
 
 # Client
 # PRLabel: %Service Bus
-/sdk/servicebus/                                @JoshLove-msft @jsquire
+/sdk/servicebus/                                @JoshLove-msft @jsquire @m-redding
 
 # PRLabel: %Service Bus %Functions
 /sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/ @JoshLove-msft @jsquire

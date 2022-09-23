@@ -81,9 +81,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.AreEqual(policy.ExpiresIn, updatedPolicy.ExpiresIn);
 
-            // Notify policy is always present and can only be updated.
-            Assert.That(updatedPolicy.LifetimeActions, Has.One.Matches<KeyRotationLifetimeAction>(action => action.Action == KeyRotationPolicyAction.Notify));
-
             KeyRotationLifetimeAction rotateAction = updatedPolicy.LifetimeActions.Single(p => p.Action == KeyRotationPolicyAction.Rotate);
             Assert.AreEqual(policy.LifetimeActions[0].Action, rotateAction.Action);
             Assert.AreEqual(policy.LifetimeActions[0].TimeAfterCreate, rotateAction.TimeAfterCreate);
