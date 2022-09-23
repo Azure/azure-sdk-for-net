@@ -150,13 +150,14 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Gets the details of the Issue for an API specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}
         /// Operation Id: ApiIssue_Get
         /// </summary>
         /// <param name="expandCommentsAttachments"> Expand the comment attachments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiIssueResource>> GetAsync(bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
+        protected override async Task<Response<IssueContractResource>> GetCoreAsync(bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
         {
             using var scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueResource.Get");
             scope.Start();
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = await _apiIssueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expandCommentsAttachments, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiIssueResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,7 +182,22 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="expandCommentsAttachments"> Expand the comment attachments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiIssueResource> Get(bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<ApiIssueResource>> GetAsync(bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
+        {
+            var result = await GetCoreAsync(expandCommentsAttachments, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ApiIssueResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Gets the details of the Issue for an API specified by its identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}
+        /// Operation Id: ApiIssue_Get
+        /// </summary>
+        /// <param name="expandCommentsAttachments"> Expand the comment attachments. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<IssueContractResource> GetCore(bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
         {
             using var scope = _apiIssueClientDiagnostics.CreateScope("ApiIssueResource.Get");
             scope.Start();
@@ -190,13 +206,27 @@ namespace Azure.ResourceManager.ApiManagement
                 var response = _apiIssueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expandCommentsAttachments, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiIssueResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets the details of the Issue for an API specified by its identifier.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}
+        /// Operation Id: ApiIssue_Get
+        /// </summary>
+        /// <param name="expandCommentsAttachments"> Expand the comment attachments. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<ApiIssueResource> Get(bool? expandCommentsAttachments = null, CancellationToken cancellationToken = default)
+        {
+            var result = GetCore(expandCommentsAttachments, cancellationToken);
+            return Response.FromValue((ApiIssueResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>

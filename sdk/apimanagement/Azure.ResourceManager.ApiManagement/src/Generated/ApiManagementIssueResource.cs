@@ -73,53 +73,5 @@ namespace Azure.ResourceManager.ApiManagement
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
-
-        /// <summary>
-        /// Gets API Management issue details
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/issues/{issueId}
-        /// Operation Id: Issue_Get
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApiManagementIssueResource>> GetAsync(CancellationToken cancellationToken = default)
-        {
-            using var scope = _apiManagementIssueIssueClientDiagnostics.CreateScope("ApiManagementIssueResource.Get");
-            scope.Start();
-            try
-            {
-                var response = await _apiManagementIssueIssueRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementIssueResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Gets API Management issue details
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/issues/{issueId}
-        /// Operation Id: Issue_Get
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApiManagementIssueResource> Get(CancellationToken cancellationToken = default)
-        {
-            using var scope = _apiManagementIssueIssueClientDiagnostics.CreateScope("ApiManagementIssueResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _apiManagementIssueIssueRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ApiManagementIssueResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
     }
 }

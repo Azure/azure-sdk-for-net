@@ -20,6 +20,8 @@ skip-serialization-format-xml: true
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}
 
+strict-common-operations: false
+
 request-path-is-non-resource:
 # The Id of content type does not meet the criteria of ResourceIdentifier (E.g. /contentTypes/page)
 - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/contentTypes/{contentTypeId}
@@ -544,6 +546,6 @@ directive:
     reason: Modify the original swagger since the id in the real response is slightly different from the ApiManagementGroupResource.
   - from: swagger-document
     where: $..[?(@.name=='$orderby')]
-    transform: $['x-ms-client-name'] = 'orderBy' 
+    transform: $['x-ms-client-name'] = 'orderBy'
 
 ```
