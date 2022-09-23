@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -17,7 +18,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         private string _linkedServiceName;
         private ResourceGroupResource _resourceGroup;
         private DataFactoryResource _dataFactory;
-        public DataFactoryDatasetResourceTests(bool isAsync) : base(isAsync)
+        public DataFactoryDatasetResourceTests(bool isAsync)
+            : base(isAsync, RecordedTestMode.Record)
         {
         }
 
@@ -110,6 +112,48 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             await dataset.DeleteAsync(WaitUntil.Completed);
             flag = await _dataFactory.GetFactoryDatasets().ExistsAsync(datasetName);
             Assert.IsFalse(flag);
+        }
+
+        [RecordedTest]
+        public async Task UseConstantFilename()
+        {
+            string datasetName = Recording.GenerateAssetName("dataset");
+            FactoryLinkedServiceReference linkedServiceReference = new FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
+            AzureBlobDataset abDataset = new AzureBlobDataset(linkedServiceReference);
+            abDataset.FileName = BinaryData.FromObjectAsJson("foo");
+            FactoryDatasetData data = new FactoryDatasetData(abDataset);
+            var dataset = (await _dataFactory.GetFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data)).Value;
+            Assert.IsNotNull(dataset);
+            Assert.AreEqual(datasetName, dataset.Data.Name);
+        }
+
+        [RecordedTest]
+        public async Task UseComplexConstantFilename()
+        {
+            string datasetName = Recording.GenerateAssetName("dataset");
+            FactoryLinkedServiceReference linkedServiceReference = new FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
+            AzureBlobDataset abDataset = new AzureBlobDataset(linkedServiceReference);
+            abDataset.FileName = BinaryData.FromObjectAsJson(new { type="string", value="foo" });
+            FactoryDatasetData data = new FactoryDatasetData(abDataset);
+            var dataset = (await _dataFactory.GetFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data)).Value;
+            Assert.IsNotNull(dataset);
+            Assert.AreEqual(datasetName, dataset.Data.Name);
+        }
+
+        [RecordedTest]
+        public async Task UseExpressionFilename()
+        {
+            string datasetName = Recording.GenerateAssetName("dataset");
+            FactoryLinkedServiceReference linkedServiceReference = new FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
+            AzureBlobDataset abDataset = new AzureBlobDataset(linkedServiceReference);
+            abDataset.FileName = BinaryData.FromObjectAsJson(new { type = "expression", value = "@dataset().MyFileName" });
+            abDataset.Format = new DatasetStorageFormat();
+            abDataset.Format.DatasetStorageFormatType = "TextFormat";
+            abDataset.Parameters.Add("MyFileName", new EntityParameterSpecification(EntityParameterType.String));
+            FactoryDatasetData data = new FactoryDatasetData(abDataset);
+            var dataset = (await _dataFactory.GetFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data)).Value;
+            Assert.IsNotNull(dataset);
+            Assert.AreEqual(datasetName, dataset.Data.Name);
         }
     }
 }
