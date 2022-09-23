@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return new ResourceGroupLocationTaskResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: AscLocationLocationTaskResource or ResourceGroupLocationTaskResource");
         }
 
-        internal static bool IsAscLocationLocationTaskResource(ResourceIdentifier id)
+        private static bool IsAscLocationLocationTaskResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != AscLocationLocationTaskResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/subscriptions")
+            if (id.Parent.Parent.ResourceType != SubscriptionResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsResourceGroupLocationTaskResource(ResourceIdentifier id)
+        private static bool IsResourceGroupLocationTaskResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != ResourceGroupLocationTaskResource.ResourceType)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

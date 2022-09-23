@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.DevTestLabs.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
@@ -37,11 +38,10 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 return new LabVirtualmachineScheduleResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: ScheduleResource, LabScheduleResource, LabUserServicefabricScheduleResource or LabVirtualmachineScheduleResource");
         }
 
-        internal static bool IsScheduleResource(ResourceIdentifier id)
+        private static bool IsScheduleResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != ScheduleResource.ResourceType)
@@ -49,14 +49,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsLabScheduleResource(ResourceIdentifier id)
+        private static bool IsLabScheduleResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != LabScheduleResource.ResourceType)
@@ -64,14 +64,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsLabUserServicefabricScheduleResource(ResourceIdentifier id)
+        private static bool IsLabUserServicefabricScheduleResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != LabUserServicefabricScheduleResource.ResourceType)
@@ -79,14 +79,14 @@ namespace Azure.ResourceManager.DevTestLabs
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsLabVirtualmachineScheduleResource(ResourceIdentifier id)
+        private static bool IsLabVirtualmachineScheduleResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != LabVirtualmachineScheduleResource.ResourceType)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseLogicWorkflowRunResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _logicWorkflowRunOperationWorkflowRunOperationsClientDiagnostics.CreateScope("LogicWorkflowRunOperationResource.GetCore");
+            using var scope = _logicWorkflowRunOperationWorkflowRunOperationsClientDiagnostics.CreateScope("LogicWorkflowRunOperationResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseLogicWorkflowRunResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _logicWorkflowRunOperationWorkflowRunOperationsClientDiagnostics.CreateScope("LogicWorkflowRunOperationResource.GetCore");
+            using var scope = _logicWorkflowRunOperationWorkflowRunOperationsClientDiagnostics.CreateScope("LogicWorkflowRunOperationResource.Get");
             scope.Start();
             try
             {

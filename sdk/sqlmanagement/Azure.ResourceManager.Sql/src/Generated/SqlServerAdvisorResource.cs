@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<SqlAdvisorResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorResource.GetCore");
+            using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<SqlAdvisorResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorResource.GetCore");
+            using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorResource.Get");
             scope.Start();
             try
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorResource.UpdateCore");
+            using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorResource.Update");
             scope.Start();
             try
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorResource.UpdateCore");
+            using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorResource.Update");
             scope.Start();
             try
             {

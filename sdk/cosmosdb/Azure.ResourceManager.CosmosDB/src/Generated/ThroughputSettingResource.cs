@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
 {
@@ -57,11 +58,10 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return new GremlinGraphThroughputSettingResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: CosmosDBSqlDatabaseThroughputSettingResource, CosmosDBSqlContainerThroughputSettingResource, MongoDBDatabaseThroughputSettingResource, MongoDBCollectionThroughputSettingResource, CosmosTableThroughputSettingResource, CassandraKeyspaceThroughputSettingResource, CassandraTableThroughputSettingResource, GremlinDatabaseThroughputSettingResource or GremlinGraphThroughputSettingResource");
         }
 
-        internal static bool IsCosmosDBSqlDatabaseThroughputSettingResource(ResourceIdentifier id)
+        private static bool IsCosmosDBSqlDatabaseThroughputSettingResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != CosmosDBSqlDatabaseThroughputSettingResource.ResourceType)
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDB
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB
             return true;
         }
 
-        internal static bool IsCosmosDBSqlContainerThroughputSettingResource(ResourceIdentifier id)
+        private static bool IsCosmosDBSqlContainerThroughputSettingResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != CosmosDBSqlContainerThroughputSettingResource.ResourceType)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CosmosDB
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CosmosDB
             return true;
         }
 
-        internal static bool IsMongoDBDatabaseThroughputSettingResource(ResourceIdentifier id)
+        private static bool IsMongoDBDatabaseThroughputSettingResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != MongoDBDatabaseThroughputSettingResource.ResourceType)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CosmosDB
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB
             return true;
         }
 
-        internal static bool IsMongoDBCollectionThroughputSettingResource(ResourceIdentifier id)
+        private static bool IsMongoDBCollectionThroughputSettingResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != MongoDBCollectionThroughputSettingResource.ResourceType)
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.CosmosDB
             return true;
         }
 
-        internal static bool IsCosmosTableThroughputSettingResource(ResourceIdentifier id)
+        private static bool IsCosmosTableThroughputSettingResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != CosmosTableThroughputSettingResource.ResourceType)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.CosmosDB
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB
             return true;
         }
 
-        internal static bool IsCassandraKeyspaceThroughputSettingResource(ResourceIdentifier id)
+        private static bool IsCassandraKeyspaceThroughputSettingResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != CassandraKeyspaceThroughputSettingResource.ResourceType)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB
             return true;
         }
 
-        internal static bool IsCassandraTableThroughputSettingResource(ResourceIdentifier id)
+        private static bool IsCassandraTableThroughputSettingResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != CassandraTableThroughputSettingResource.ResourceType)
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CosmosDB
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.CosmosDB
             return true;
         }
 
-        internal static bool IsGremlinDatabaseThroughputSettingResource(ResourceIdentifier id)
+        private static bool IsGremlinDatabaseThroughputSettingResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != GremlinDatabaseThroughputSettingResource.ResourceType)
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.CosmosDB
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.CosmosDB
             return true;
         }
 
-        internal static bool IsGremlinGraphThroughputSettingResource(ResourceIdentifier id)
+        private static bool IsGremlinGraphThroughputSettingResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != GremlinGraphThroughputSettingResource.ResourceType)
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CosmosDB
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

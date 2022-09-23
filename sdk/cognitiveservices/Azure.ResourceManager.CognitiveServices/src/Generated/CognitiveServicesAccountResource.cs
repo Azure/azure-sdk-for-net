@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseCognitiveServicesAccountResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.GetCore");
+            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.Get");
             scope.Start();
             try
             {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseCognitiveServicesAccountResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.GetCore");
+            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.Get");
             scope.Start();
             try
             {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.DeleteCore");
+            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.Delete");
             scope.Start();
             try
             {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.DeleteCore");
+            using var scope = _cognitiveServicesAccountAccountsClientDiagnostics.CreateScope("CognitiveServicesAccountResource.Delete");
             scope.Start();
             try
             {

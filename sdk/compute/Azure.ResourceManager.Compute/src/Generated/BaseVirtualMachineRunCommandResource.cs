@@ -13,6 +13,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
@@ -29,11 +30,10 @@ namespace Azure.ResourceManager.Compute
             {
                 return new VirtualMachineScaleSetVmRunCommandResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: VirtualMachineRunCommandResource or VirtualMachineScaleSetVmRunCommandResource");
         }
 
-        internal static bool IsVirtualMachineRunCommandResource(ResourceIdentifier id)
+        private static bool IsVirtualMachineRunCommandResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != VirtualMachineRunCommandResource.ResourceType)
@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.Compute
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsVirtualMachineScaleSetVmRunCommandResource(ResourceIdentifier id)
+        private static bool IsVirtualMachineScaleSetVmRunCommandResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != VirtualMachineScaleSetVmRunCommandResource.ResourceType)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

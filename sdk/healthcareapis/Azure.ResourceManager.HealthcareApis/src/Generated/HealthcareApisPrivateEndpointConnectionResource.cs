@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return new HealthcareApisWorkspacePrivateEndpointConnectionResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: HealthcareApisServicePrivateEndpointConnectionResource or HealthcareApisWorkspacePrivateEndpointConnectionResource");
         }
 
-        internal static bool IsHealthcareApisServicePrivateEndpointConnectionResource(ResourceIdentifier id)
+        private static bool IsHealthcareApisServicePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != HealthcareApisServicePrivateEndpointConnectionResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.HealthcareApis
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsHealthcareApisWorkspacePrivateEndpointConnectionResource(ResourceIdentifier id)
+        private static bool IsHealthcareApisWorkspacePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != HealthcareApisWorkspacePrivateEndpointConnectionResource.ResourceType)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

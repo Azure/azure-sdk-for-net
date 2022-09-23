@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MarketplaceOrdering
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             {
                 return new MarketplaceAgreementResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: MarketplaceAgreementTermResource or MarketplaceAgreementResource");
         }
 
-        internal static bool IsMarketplaceAgreementTermResource(ResourceIdentifier id)
+        private static bool IsMarketplaceAgreementTermResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != MarketplaceAgreementTermResource.ResourceType)
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/subscriptions")
+            if (id.Parent.Parent.Parent.Parent.Parent.ResourceType != SubscriptionResource.ResourceType)
             {
                 return false;
             }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             return true;
         }
 
-        internal static bool IsMarketplaceAgreementResource(ResourceIdentifier id)
+        private static bool IsMarketplaceAgreementResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != MarketplaceAgreementResource.ResourceType)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/subscriptions")
+            if (id.Parent.Parent.Parent.ResourceType != SubscriptionResource.ResourceType)
             {
                 return false;
             }

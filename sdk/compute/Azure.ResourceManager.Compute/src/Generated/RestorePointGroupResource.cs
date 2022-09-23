@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restorePointGroupRestorePointCollectionsRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointGroupRestorePointCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorePointGroupResource(Client, response.Value), response.GetRawResponse());
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restorePointGroupRestorePointCollectionsRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, expand, cancellationToken);
+                var response = _restorePointGroupRestorePointCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RestorePointGroupResource(Client, response.Value), response.GetRawResponse());
@@ -191,8 +191,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restorePointGroupRestorePointCollectionsRestClient.DeleteAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_restorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, _restorePointGroupRestorePointCollectionsRestClient.CreateDeleteRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var response = await _restorePointGroupRestorePointCollectionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation(_restorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, _restorePointGroupRestorePointCollectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -217,8 +217,8 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restorePointGroupRestorePointCollectionsRestClient.Delete(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
-                var operation = new ComputeArmOperation(_restorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, _restorePointGroupRestorePointCollectionsRestClient.CreateDeleteRequest(Id.Name, Id.SubscriptionId, Id.ResourceGroupName).Request, response, OperationFinalStateVia.Location);
+                var response = _restorePointGroupRestorePointCollectionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var operation = new ComputeArmOperation(_restorePointGroupRestorePointCollectionsClientDiagnostics, Pipeline, _restorePointGroupRestorePointCollectionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = await _restorePointGroupRestorePointCollectionsRestClient.UpdateAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch, cancellationToken).ConfigureAwait(false);
+                var response = await _restorePointGroupRestorePointCollectionsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new RestorePointGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute
             scope.Start();
             try
             {
-                var response = _restorePointGroupRestorePointCollectionsRestClient.Update(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, patch, cancellationToken);
+                var response = _restorePointGroupRestorePointCollectionsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new RestorePointGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Compute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _restorePointGroupRestorePointCollectionsRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _restorePointGroupRestorePointCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new RestorePointGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Compute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _restorePointGroupRestorePointCollectionsRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, null, cancellationToken);
+                    var originalResponse = _restorePointGroupRestorePointCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                     return Response.FromValue(new RestorePointGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Compute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _restorePointGroupRestorePointCollectionsRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _restorePointGroupRestorePointCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new RestorePointGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Compute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _restorePointGroupRestorePointCollectionsRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, null, cancellationToken);
+                    var originalResponse = _restorePointGroupRestorePointCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                     return Response.FromValue(new RestorePointGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Compute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _restorePointGroupRestorePointCollectionsRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _restorePointGroupRestorePointCollectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(new RestorePointGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Compute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _restorePointGroupRestorePointCollectionsRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, null, cancellationToken);
+                    var originalResponse = _restorePointGroupRestorePointCollectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
                     return Response.FromValue(new RestorePointGroupResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

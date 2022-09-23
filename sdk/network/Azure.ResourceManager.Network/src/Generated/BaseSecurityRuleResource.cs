@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.Network
             {
                 return new DefaultSecurityRuleResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SecurityRuleResource or DefaultSecurityRuleResource");
         }
 
-        internal static bool IsSecurityRuleResource(ResourceIdentifier id)
+        private static bool IsSecurityRuleResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SecurityRuleResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Network
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsDefaultSecurityRuleResource(ResourceIdentifier id)
+        private static bool IsDefaultSecurityRuleResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != DefaultSecurityRuleResource.ResourceType)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

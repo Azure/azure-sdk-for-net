@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<RelationResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _entityRelationClientDiagnostics.CreateScope("EntityRelationResource.GetCore");
+            using var scope = _entityRelationClientDiagnostics.CreateScope("EntityRelationResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<RelationResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _entityRelationClientDiagnostics.CreateScope("EntityRelationResource.GetCore");
+            using var scope = _entityRelationClientDiagnostics.CreateScope("EntityRelationResource.Get");
             scope.Start();
             try
             {

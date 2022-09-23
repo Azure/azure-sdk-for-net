@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<SqlAdvisorResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("SqlDatabaseAdvisorResource.GetCore");
+            using var scope = _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("SqlDatabaseAdvisorResource.Get");
             scope.Start();
             try
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<SqlAdvisorResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("SqlDatabaseAdvisorResource.GetCore");
+            using var scope = _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("SqlDatabaseAdvisorResource.Get");
             scope.Start();
             try
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("SqlDatabaseAdvisorResource.UpdateCore");
+            using var scope = _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("SqlDatabaseAdvisorResource.Update");
             scope.Start();
             try
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("SqlDatabaseAdvisorResource.UpdateCore");
+            using var scope = _sqlDatabaseAdvisorDatabaseAdvisorsClientDiagnostics.CreateScope("SqlDatabaseAdvisorResource.Update");
             scope.Start();
             try
             {

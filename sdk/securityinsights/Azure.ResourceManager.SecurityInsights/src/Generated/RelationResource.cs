@@ -31,11 +31,10 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 return new IncidentRelationResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: BookmarkRelationResource, EntityRelationResource or IncidentRelationResource");
         }
 
-        internal static bool IsBookmarkRelationResource(ResourceIdentifier id)
+        private static bool IsBookmarkRelationResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != BookmarkRelationResource.ResourceType)
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return true;
         }
 
-        internal static bool IsEntityRelationResource(ResourceIdentifier id)
+        private static bool IsEntityRelationResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != EntityRelationResource.ResourceType)
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights
             return true;
         }
 
-        internal static bool IsIncidentRelationResource(ResourceIdentifier id)
+        private static bool IsIncidentRelationResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != IncidentRelationResource.ResourceType)

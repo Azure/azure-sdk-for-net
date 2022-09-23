@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseVirtualMachineRunCommandResource>> GetCoreAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.GetCore");
+            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.Get");
             scope.Start();
             try
             {
-                var response = await _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.GetAsync(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
+                var response = await _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
@@ -126,11 +126,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseVirtualMachineRunCommandResource> GetCore(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.GetCore");
+            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.Get");
             scope.Start();
             try
             {
-                var response = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.Get(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
+                var response = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
@@ -166,12 +166,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.DeleteCore");
+            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.Delete");
             scope.Start();
             try
             {
-                var response = await _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.DeleteAsync(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateDeleteRequest(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.DeleteCore");
+            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.Delete");
             scope.Start();
             try
             {
-                var response = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.Delete(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ComputeArmOperation(_virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateDeleteRequest(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ComputeArmOperation(_virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -224,12 +224,12 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(runCommand, nameof(runCommand));
 
-            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.UpdateCore");
+            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.Update");
             scope.Start();
             try
             {
-                var response = await _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.UpdateAsync(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand, cancellationToken).ConfigureAwait(false);
-                var operation = new ComputeArmOperation<BaseVirtualMachineRunCommandResource>(new BaseVirtualMachineRunCommandOperationSource(Client), _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, response, OperationFinalStateVia.Location);
+                var response = await _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, runCommand, cancellationToken).ConfigureAwait(false);
+                var operation = new ComputeArmOperation<BaseVirtualMachineRunCommandResource>(new BaseVirtualMachineRunCommandOperationSource(Client), _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, runCommand).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Compute
             {
                 return new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(new VirtualMachineScaleSetVmRunCommandOperationSource(Client), _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(new VirtualMachineScaleSetVmRunCommandOperationSource(Client), _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, runCommand).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
 
@@ -276,12 +276,12 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(runCommand, nameof(runCommand));
 
-            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.UpdateCore");
+            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.Update");
             scope.Start();
             try
             {
-                var response = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.Update(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand, cancellationToken);
-                var operation = new ComputeArmOperation<BaseVirtualMachineRunCommandResource>(new BaseVirtualMachineRunCommandOperationSource(Client), _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, response, OperationFinalStateVia.Location);
+                var response = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, runCommand, cancellationToken);
+                var operation = new ComputeArmOperation<BaseVirtualMachineRunCommandResource>(new BaseVirtualMachineRunCommandOperationSource(Client), _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, runCommand).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Compute
             {
                 return new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(new VirtualMachineScaleSetVmRunCommandOperationSource(Client), _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(new VirtualMachineScaleSetVmRunCommandOperationSource(Client), _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, runCommand).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
 
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.AddTagCore");
+            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.AddTag");
             scope.Start();
             try
             {
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Compute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.GetAsync(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.AddTagCore");
+            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.AddTag");
             scope.Start();
             try
             {
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Compute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.Get(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
+                    var originalResponse = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
                     return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.SetTagsCore");
+            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.SetTags");
             scope.Start();
             try
             {
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.Compute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.GetAsync(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.SetTagsCore");
+            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.SetTags");
             scope.Start();
             try
             {
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Compute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.Get(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
+                    var originalResponse = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
                     return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.RemoveTagCore");
+            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.RemoveTag");
             scope.Start();
             try
             {
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Compute
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.GetAsync(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
+                    var originalResponse = await _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.RemoveTagCore");
+            using var scope = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics.CreateScope("VirtualMachineScaleSetVmRunCommandResource.RemoveTag");
             scope.Start();
             try
             {
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Compute
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.Get(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, null, cancellationToken);
+                    var originalResponse = _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, null, cancellationToken);
                     return Response.FromValue(GetResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else

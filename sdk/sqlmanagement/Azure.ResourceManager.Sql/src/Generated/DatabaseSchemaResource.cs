@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.Sql
             {
                 return new ManagedDatabaseSchemaResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SqlDatabaseSchemaResource or ManagedDatabaseSchemaResource");
         }
 
-        internal static bool IsSqlDatabaseSchemaResource(ResourceIdentifier id)
+        private static bool IsSqlDatabaseSchemaResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SqlDatabaseSchemaResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Sql
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsManagedDatabaseSchemaResource(ResourceIdentifier id)
+        private static bool IsManagedDatabaseSchemaResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != ManagedDatabaseSchemaResource.ResourceType)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

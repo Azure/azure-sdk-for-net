@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseSqlServerJobExecutionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobExecutionStepJobStepExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepResource.GetCore");
+            using var scope = _sqlServerJobExecutionStepJobStepExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepResource.Get");
             scope.Start();
             try
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseSqlServerJobExecutionResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobExecutionStepJobStepExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepResource.GetCore");
+            using var scope = _sqlServerJobExecutionStepJobStepExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionStepResource.Get");
             scope.Start();
             try
             {

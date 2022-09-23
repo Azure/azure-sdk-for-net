@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 return new HealthcareApisWorkspacePrivateLinkResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: HealthcareApisServicePrivateLinkResource or HealthcareApisWorkspacePrivateLinkResource");
         }
 
-        internal static bool IsHealthcareApisServicePrivateLinkResource(ResourceIdentifier id)
+        private static bool IsHealthcareApisServicePrivateLinkResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != HealthcareApisServicePrivateLinkResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.HealthcareApis
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsHealthcareApisWorkspacePrivateLinkResource(ResourceIdentifier id)
+        private static bool IsHealthcareApisWorkspacePrivateLinkResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != HealthcareApisWorkspacePrivateLinkResource.ResourceType)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HealthcareApis
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

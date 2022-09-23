@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.NotificationHubs.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
@@ -28,11 +29,10 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 return new NotificationHubAuthorizationRuleResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: NotificationHubNamespaceAuthorizationRuleResource or NotificationHubAuthorizationRuleResource");
         }
 
-        internal static bool IsNotificationHubNamespaceAuthorizationRuleResource(ResourceIdentifier id)
+        private static bool IsNotificationHubNamespaceAuthorizationRuleResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != NotificationHubNamespaceAuthorizationRuleResource.ResourceType)
@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.NotificationHubs
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsNotificationHubAuthorizationRuleResource(ResourceIdentifier id)
+        private static bool IsNotificationHubAuthorizationRuleResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != NotificationHubAuthorizationRuleResource.ResourceType)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

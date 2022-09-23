@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<GovernanceRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityConnectorGovernanceRuleClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.GetCore");
+            using var scope = _securityConnectorGovernanceRuleClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.Get");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<GovernanceRuleResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityConnectorGovernanceRuleClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.GetCore");
+            using var scope = _securityConnectorGovernanceRuleClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.Get");
             scope.Start();
             try
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityConnectorGovernanceRuleClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.DeleteCore");
+            using var scope = _securityConnectorGovernanceRuleClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.Delete");
             scope.Start();
             try
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityConnectorGovernanceRuleClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.DeleteCore");
+            using var scope = _securityConnectorGovernanceRuleClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.Delete");
             scope.Start();
             try
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityConnectorGovernanceRuleClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.UpdateCore");
+            using var scope = _securityConnectorGovernanceRuleClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.Update");
             scope.Start();
             try
             {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityConnectorGovernanceRuleClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.UpdateCore");
+            using var scope = _securityConnectorGovernanceRuleClientDiagnostics.CreateScope("SecurityConnectorGovernanceRuleResource.Update");
             scope.Start();
             try
             {

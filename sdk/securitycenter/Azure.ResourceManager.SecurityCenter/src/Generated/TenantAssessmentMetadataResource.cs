@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<SecurityAssessmentMetadataResponseResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataResource.GetCore");
+            using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<SecurityAssessmentMetadataResponseResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataResource.GetCore");
+            using var scope = _tenantAssessmentMetadataAssessmentsMetadataClientDiagnostics.CreateScope("TenantAssessmentMetadataResource.Get");
             scope.Start();
             try
             {

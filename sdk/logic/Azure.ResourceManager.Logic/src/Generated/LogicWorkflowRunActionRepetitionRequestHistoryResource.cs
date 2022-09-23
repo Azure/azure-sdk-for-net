@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<LogicWorkflowRequestHistoryResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _logicWorkflowRunActionRepetitionRequestHistoryWorkflowRunActionRepetitionsRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionRequestHistoryResource.GetCore");
+            using var scope = _logicWorkflowRunActionRepetitionRequestHistoryWorkflowRunActionRepetitionsRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionRequestHistoryResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<LogicWorkflowRequestHistoryResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _logicWorkflowRunActionRepetitionRequestHistoryWorkflowRunActionRepetitionsRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionRequestHistoryResource.GetCore");
+            using var scope = _logicWorkflowRunActionRepetitionRequestHistoryWorkflowRunActionRepetitionsRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionRequestHistoryResource.Get");
             scope.Start();
             try
             {

@@ -13,74 +13,74 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Sql
+namespace Azure.ResourceManager.Maintenance
 {
     /// <summary> TODO. </summary>
-    public abstract partial class DatabaseTableResource : ArmResource
+    public abstract partial class BaseMaintenanceConfigurationResource : ArmResource
     {
-        internal static DatabaseTableResource GetResource(ArmClient client, DatabaseTableData data)
+        internal static BaseMaintenanceConfigurationResource GetResource(ArmClient client, MaintenanceConfigurationData data)
         {
-            if (IsSqlDatabaseTableResource(data.Id))
+            if (IsPublicMaintenanceConfigurationResource(data.Id))
             {
-                return new SqlDatabaseTableResource(client, data);
+                return new PublicMaintenanceConfigurationResource(client, data);
             }
-            if (IsManagedDatabaseTableResource(data.Id))
+            if (IsMaintenanceConfigurationResource(data.Id))
             {
-                return new ManagedDatabaseTableResource(client, data);
+                return new MaintenanceConfigurationResource(client, data);
             }
-            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SqlDatabaseTableResource or ManagedDatabaseTableResource");
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: PublicMaintenanceConfigurationResource or MaintenanceConfigurationResource");
         }
 
-        private static bool IsSqlDatabaseTableResource(ResourceIdentifier id)
+        private static bool IsPublicMaintenanceConfigurationResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != SqlDatabaseTableResource.ResourceType)
+            if (id.ResourceType != PublicMaintenanceConfigurationResource.ResourceType)
             {
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.Parent.ResourceType != SubscriptionResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        private static bool IsManagedDatabaseTableResource(ResourceIdentifier id)
+        private static bool IsMaintenanceConfigurationResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != ManagedDatabaseTableResource.ResourceType)
+            if (id.ResourceType != MaintenanceConfigurationResource.ResourceType)
             {
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        private readonly DatabaseTableData _data;
+        private readonly MaintenanceConfigurationData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="DatabaseTableResource"/> class for mocking. </summary>
-        protected DatabaseTableResource()
+        /// <summary> Initializes a new instance of the <see cref="BaseMaintenanceConfigurationResource"/> class for mocking. </summary>
+        protected BaseMaintenanceConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DatabaseTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "BaseMaintenanceConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DatabaseTableResource(ArmClient client, DatabaseTableData data) : this(client, data.Id)
+        internal BaseMaintenanceConfigurationResource(ArmClient client, MaintenanceConfigurationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DatabaseTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BaseMaintenanceConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DatabaseTableResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BaseMaintenanceConfigurationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual DatabaseTableData Data
+        public virtual MaintenanceConfigurationData Data
         {
             get
             {
@@ -101,24 +101,24 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<DatabaseTableResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Response<BaseMaintenanceConfigurationResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<DatabaseTableResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<BaseMaintenanceConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<DatabaseTableResource> GetCore(CancellationToken cancellationToken = default);
+        protected abstract Response<BaseMaintenanceConfigurationResource> GetCore(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<DatabaseTableResource> Get(CancellationToken cancellationToken = default)
+        public Response<BaseMaintenanceConfigurationResource> Get(CancellationToken cancellationToken = default)
         {
             return GetCore(cancellationToken);
         }

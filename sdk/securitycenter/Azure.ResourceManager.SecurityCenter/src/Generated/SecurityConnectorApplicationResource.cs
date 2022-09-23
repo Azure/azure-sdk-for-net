@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<ApplicationResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationResource.GetCore");
+            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<ApplicationResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationResource.GetCore");
+            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationResource.Get");
             scope.Start();
             try
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationResource.DeleteCore");
+            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationResource.Delete");
             scope.Start();
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationResource.DeleteCore");
+            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationResource.Delete");
             scope.Start();
             try
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationResource.UpdateCore");
+            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationResource.Update");
             scope.Start();
             try
             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationResource.UpdateCore");
+            using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationResource.Update");
             scope.Start();
             try
             {

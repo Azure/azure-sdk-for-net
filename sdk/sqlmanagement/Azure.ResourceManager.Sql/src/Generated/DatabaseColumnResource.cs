@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.Sql
             {
                 return new ManagedDatabaseColumnResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SqlDatabaseColumnResource or ManagedDatabaseColumnResource");
         }
 
-        internal static bool IsSqlDatabaseColumnResource(ResourceIdentifier id)
+        private static bool IsSqlDatabaseColumnResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SqlDatabaseColumnResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Sql
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsManagedDatabaseColumnResource(ResourceIdentifier id)
+        private static bool IsManagedDatabaseColumnResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != ManagedDatabaseColumnResource.ResourceType)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

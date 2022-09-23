@@ -101,8 +101,8 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MaintenanceConfigurationResource> GetMaintenanceConfigurationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BaseMaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<BaseMaintenanceConfigurationResource> GetMaintenanceConfigurationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetMaintenanceConfigurationsAsync(cancellationToken);
         }
@@ -114,8 +114,8 @@ namespace Azure.ResourceManager.Maintenance
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MaintenanceConfigurationResource> GetMaintenanceConfigurations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BaseMaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<BaseMaintenanceConfigurationResource> GetMaintenanceConfigurations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetMaintenanceConfigurations(cancellationToken);
         }

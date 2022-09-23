@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseVirtualMachineRunCommandResource>> GetCoreAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.GetCore");
+            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.Get");
             scope.Start();
             try
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseVirtualMachineRunCommandResource> GetCore(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.GetCore");
+            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.Get");
             scope.Start();
             try
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.DeleteCore");
+            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.Delete");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.DeleteCore");
+            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.Delete");
             scope.Start();
             try
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(runCommand, nameof(runCommand));
 
-            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.UpdateCore");
+            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.Update");
             scope.Start();
             try
             {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(runCommand, nameof(runCommand));
 
-            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.UpdateCore");
+            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.Update");
             scope.Start();
             try
             {
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.AddTagCore");
+            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.AddTag");
             scope.Start();
             try
             {
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Compute
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.AddTagCore");
+            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.AddTag");
             scope.Start();
             try
             {
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.SetTagsCore");
+            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.SetTags");
             scope.Start();
             try
             {
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.SetTagsCore");
+            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.SetTags");
             scope.Start();
             try
             {
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.RemoveTagCore");
+            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.RemoveTag");
             scope.Start();
             try
             {
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Compute
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.RemoveTagCore");
+            using var scope = _virtualMachineRunCommandClientDiagnostics.CreateScope("VirtualMachineRunCommandResource.RemoveTag");
             scope.Start();
             try
             {

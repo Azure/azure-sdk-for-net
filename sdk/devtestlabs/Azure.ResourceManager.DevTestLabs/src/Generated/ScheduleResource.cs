@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseScheduleResource>> GetCoreAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.GetCore");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.Get");
             scope.Start();
             try
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseScheduleResource> GetCore(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.GetCore");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.Get");
             scope.Start();
             try
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.DeleteCore");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.Delete");
             scope.Start();
             try
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.DeleteCore");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.Delete");
             scope.Start();
             try
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(schedule, nameof(schedule));
 
-            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.UpdateCore");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.Update");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(schedule, nameof(schedule));
 
-            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.UpdateCore");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.Update");
             scope.Start();
             try
             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> ExecuteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.ExecuteCore");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.Execute");
             scope.Start();
             try
             {
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation ExecuteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.ExecuteCore");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.Execute");
             scope.Start();
             try
             {
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.AddTagCore");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.AddTag");
             scope.Start();
             try
             {
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.AddTagCore");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.AddTag");
             scope.Start();
             try
             {
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.SetTagsCore");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.SetTags");
             scope.Start();
             try
             {
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.SetTagsCore");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.SetTags");
             scope.Start();
             try
             {
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.RemoveTagCore");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.RemoveTag");
             scope.Start();
             try
             {
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.RemoveTagCore");
+            using var scope = _scheduleGlobalSchedulesClientDiagnostics.CreateScope("ScheduleResource.RemoveTag");
             scope.Start();
             try
             {

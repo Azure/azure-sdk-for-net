@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -31,11 +32,10 @@ namespace Azure.ResourceManager.Resources
             {
                 return new ManagementGroupPolicyDefinitionResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SubscriptionPolicyDefinitionResource, TenantPolicyDefinitionResource or ManagementGroupPolicyDefinitionResource");
         }
 
-        internal static bool IsSubscriptionPolicyDefinitionResource(ResourceIdentifier id)
+        private static bool IsSubscriptionPolicyDefinitionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SubscriptionPolicyDefinitionResource.ResourceType)
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Resources
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.ResourceType != "Microsoft.Resources/subscriptions")
+            if (id.Parent.ResourceType != SubscriptionResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsTenantPolicyDefinitionResource(ResourceIdentifier id)
+        private static bool IsTenantPolicyDefinitionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != TenantPolicyDefinitionResource.ResourceType)
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.Resources
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.ResourceType != "Microsoft.Resources/tenants")
+            if (id.Parent.ResourceType != TenantResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsManagementGroupPolicyDefinitionResource(ResourceIdentifier id)
+        private static bool IsManagementGroupPolicyDefinitionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != ManagementGroupPolicyDefinitionResource.ResourceType)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Resources
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.ResourceType != "Microsoft.Management/managementGroups")
+            if (id.Parent.ResourceType != ManagementGroupResource.ResourceType)
             {
                 return false;
             }

@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseScheduleResource>> GetCoreAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.GetCore");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Get");
             scope.Start();
             try
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseScheduleResource> GetCore(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.GetCore");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Get");
             scope.Start();
             try
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.DeleteCore");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Delete");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.DeleteCore");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Delete");
             scope.Start();
             try
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(schedule, nameof(schedule));
 
-            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.UpdateCore");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Update");
             scope.Start();
             try
             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(schedule, nameof(schedule));
 
-            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.UpdateCore");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Update");
             scope.Start();
             try
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> ExecuteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.ExecuteCore");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Execute");
             scope.Start();
             try
             {
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation ExecuteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.ExecuteCore");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.Execute");
             scope.Start();
             try
             {
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.AddTagCore");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.AddTag");
             scope.Start();
             try
             {
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.AddTagCore");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.AddTag");
             scope.Start();
             try
             {
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.SetTagsCore");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.SetTags");
             scope.Start();
             try
             {
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.SetTagsCore");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.SetTags");
             scope.Start();
             try
             {
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.RemoveTagCore");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.RemoveTag");
             scope.Start();
             try
             {
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.RemoveTagCore");
+            using var scope = _labUserServicefabricScheduleServiceFabricSchedulesClientDiagnostics.CreateScope("LabUserServicefabricScheduleResource.RemoveTag");
             scope.Start();
             try
             {

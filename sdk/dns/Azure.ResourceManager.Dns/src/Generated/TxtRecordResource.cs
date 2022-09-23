@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<RecordSetResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.GetCore");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.Get");
             scope.Start();
             try
             {
-                var response = await _txtRecordInfoRecordSetsRestClient.GetAsync("TXT".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _txtRecordInfoRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TXT".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<RecordSetResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.GetCore");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.Get");
             scope.Start();
             try
             {
-                var response = _txtRecordInfoRecordSetsRestClient.Get("TXT".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _txtRecordInfoRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TXT".ToDnsRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
@@ -162,11 +162,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.DeleteCore");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = await _txtRecordInfoRecordSetsRestClient.DeleteAsync("TXT".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _txtRecordInfoRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TXT".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.DeleteCore");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = _txtRecordInfoRecordSetsRestClient.Delete("TXT".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
+                var response = _txtRecordInfoRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TXT".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.UpdateCore");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.Update");
             scope.Start();
             try
             {
-                var response = await _txtRecordInfoRecordSetsRestClient.UpdateAsync("TXT".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _txtRecordInfoRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TXT".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.UpdateCore");
+            using var scope = _txtRecordInfoRecordSetsClientDiagnostics.CreateScope("TxtRecordResource.Update");
             scope.Start();
             try
             {
-                var response = _txtRecordInfoRecordSetsRestClient.Update("TXT".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var response = _txtRecordInfoRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "TXT".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
                 return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

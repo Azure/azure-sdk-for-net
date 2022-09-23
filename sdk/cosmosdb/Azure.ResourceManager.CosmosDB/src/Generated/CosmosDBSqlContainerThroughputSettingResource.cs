@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<ThroughputSettingResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.GetCore");
+            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<ThroughputSettingResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.GetCore");
+            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.Get");
             scope.Start();
             try
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.CreateOrUpdateCore");
+            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.CreateOrUpdateCore");
+            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.AddTagCore");
+            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.AddTag");
             scope.Start();
             try
             {
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.CosmosDB
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.AddTagCore");
+            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.AddTag");
             scope.Start();
             try
             {
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SetTagsCore");
+            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SetTags");
             scope.Start();
             try
             {
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SetTagsCore");
+            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.SetTags");
             scope.Start();
             try
             {
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.RemoveTagCore");
+            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.RemoveTag");
             scope.Start();
             try
             {
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.RemoveTagCore");
+            using var scope = _cosmosDBSqlContainerThroughputSettingSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlContainerThroughputSettingResource.RemoveTag");
             scope.Start();
             try
             {

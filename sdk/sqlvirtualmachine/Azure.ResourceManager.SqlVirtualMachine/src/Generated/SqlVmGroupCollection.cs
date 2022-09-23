@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = await _sqlVmGroupSqlVmGroupsRestClient.CreateOrUpdateAsync(sqlVmGroupName, Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(new SqlVmGroupOperationSource(Client), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateCreateOrUpdateRequest(sqlVmGroupName, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _sqlVmGroupSqlVmGroupsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlVmGroupName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(new SqlVmGroupOperationSource(Client), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmGroupName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -107,8 +107,8 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = _sqlVmGroupSqlVmGroupsRestClient.CreateOrUpdate(sqlVmGroupName, Id.SubscriptionId, Id.ResourceGroupName, data, cancellationToken);
-                var operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(new SqlVmGroupOperationSource(Client), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateCreateOrUpdateRequest(sqlVmGroupName, Id.SubscriptionId, Id.ResourceGroupName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _sqlVmGroupSqlVmGroupsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, sqlVmGroupName, data, cancellationToken);
+                var operation = new SqlVirtualMachineArmOperation<SqlVmGroupResource>(new SqlVmGroupOperationSource(Client), _sqlVmGroupSqlVmGroupsClientDiagnostics, Pipeline, _sqlVmGroupSqlVmGroupsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, sqlVmGroupName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = await _sqlVmGroupSqlVmGroupsRestClient.GetAsync(sqlVmGroupName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken).ConfigureAwait(false);
+                var response = await _sqlVmGroupSqlVmGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlVmGroupName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlVmGroupResource(Client, response.Value), response.GetRawResponse());
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = _sqlVmGroupSqlVmGroupsRestClient.Get(sqlVmGroupName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken);
+                var response = _sqlVmGroupSqlVmGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sqlVmGroupName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SqlVmGroupResource(Client, response.Value), response.GetRawResponse());
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = await _sqlVmGroupSqlVmGroupsRestClient.GetAsync(sqlVmGroupName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _sqlVmGroupSqlVmGroupsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, sqlVmGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             scope.Start();
             try
             {
-                var response = _sqlVmGroupSqlVmGroupsRestClient.Get(sqlVmGroupName, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
+                var response = _sqlVmGroupSqlVmGroupsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, sqlVmGroupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

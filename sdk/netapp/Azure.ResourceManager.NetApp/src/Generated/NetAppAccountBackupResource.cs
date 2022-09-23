@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<NetAppBackupResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupResource.GetCore");
+            using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<NetAppBackupResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupResource.GetCore");
+            using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupResource.Get");
             scope.Start();
             try
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupResource.DeleteCore");
+            using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupResource.Delete");
             scope.Start();
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupResource.DeleteCore");
+            using var scope = _netAppAccountBackupAccountBackupsClientDiagnostics.CreateScope("NetAppAccountBackupResource.Delete");
             scope.Start();
             try
             {

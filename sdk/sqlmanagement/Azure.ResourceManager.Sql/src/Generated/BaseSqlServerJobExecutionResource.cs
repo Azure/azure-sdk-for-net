@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -31,11 +32,10 @@ namespace Azure.ResourceManager.Sql
             {
                 return new SqlServerJobExecutionStepTargetResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SqlServerJobExecutionResource, SqlServerJobExecutionStepResource or SqlServerJobExecutionStepTargetResource");
         }
 
-        internal static bool IsSqlServerJobExecutionResource(ResourceIdentifier id)
+        private static bool IsSqlServerJobExecutionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SqlServerJobExecutionResource.ResourceType)
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.Sql
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSqlServerJobExecutionStepResource(ResourceIdentifier id)
+        private static bool IsSqlServerJobExecutionStepResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SqlServerJobExecutionStepResource.ResourceType)
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.Sql
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSqlServerJobExecutionStepTargetResource(ResourceIdentifier id)
+        private static bool IsSqlServerJobExecutionStepTargetResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SqlServerJobExecutionStepTargetResource.ResourceType)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Sql
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

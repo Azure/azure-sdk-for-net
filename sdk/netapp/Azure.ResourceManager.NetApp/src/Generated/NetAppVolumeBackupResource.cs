@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<NetAppBackupResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.GetCore");
+            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<NetAppBackupResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.GetCore");
+            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.Get");
             scope.Start();
             try
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.DeleteCore");
+            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.Delete");
             scope.Start();
             try
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.DeleteCore");
+            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeBackupResource.Delete");
             scope.Start();
             try
             {

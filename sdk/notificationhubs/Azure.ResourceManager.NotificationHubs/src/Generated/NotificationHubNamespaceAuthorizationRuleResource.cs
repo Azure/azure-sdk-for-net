@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseNotificationHubAuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.GetCore");
+            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseNotificationHubAuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.GetCore");
+            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.Get");
             scope.Start();
             try
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.DeleteCore");
+            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.Delete");
             scope.Start();
             try
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.DeleteCore");
+            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.Delete");
             scope.Start();
             try
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.UpdateCore");
+            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.Update");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.UpdateCore");
+            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.Update");
             scope.Start();
             try
             {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<NotificationHubResourceKeys>> GetKeysCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.GetKeysCore");
+            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<NotificationHubResourceKeys> GetKeysCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.GetKeysCore");
+            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(notificationHubPolicyKey, nameof(notificationHubPolicyKey));
 
-            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.RegenerateKeysCore");
+            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.NotificationHubs
         {
             Argument.AssertNotNull(notificationHubPolicyKey, nameof(notificationHubPolicyKey));
 
-            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.RegenerateKeysCore");
+            using var scope = _notificationHubNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("NotificationHubNamespaceAuthorizationRuleResource.RegenerateKeys");
             scope.Start();
             try
             {

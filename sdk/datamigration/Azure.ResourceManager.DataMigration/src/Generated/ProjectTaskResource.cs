@@ -13,74 +13,74 @@ using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace Azure.ResourceManager.Sql
+namespace Azure.ResourceManager.DataMigration
 {
     /// <summary> TODO. </summary>
-    public abstract partial class SensitivityLabelResource : ArmResource
+    public abstract partial class ProjectTaskResource : ArmResource
     {
-        internal static SensitivityLabelResource GetResource(ArmClient client, SensitivityLabelData data)
+        internal static ProjectTaskResource GetResource(ArmClient client, ProjectTaskData data)
         {
-            if (IsManagedDatabaseSensitivityLabelResource(data.Id))
+            if (IsServiceProjectTaskResource(data.Id))
             {
-                return new ManagedDatabaseSensitivityLabelResource(client, data);
+                return new ServiceProjectTaskResource(client, data);
             }
-            if (IsSqlDatabaseSensitivityLabelResource(data.Id))
+            if (IsServiceServiceTaskResource(data.Id))
             {
-                return new SqlDatabaseSensitivityLabelResource(client, data);
+                return new ServiceServiceTaskResource(client, data);
             }
-            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: ManagedDatabaseSensitivityLabelResource or SqlDatabaseSensitivityLabelResource");
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: ServiceProjectTaskResource or ServiceServiceTaskResource");
         }
 
-        private static bool IsManagedDatabaseSensitivityLabelResource(ResourceIdentifier id)
+        private static bool IsServiceProjectTaskResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != ManagedDatabaseSensitivityLabelResource.ResourceType)
+            if (id.ResourceType != ServiceProjectTaskResource.ResourceType)
             {
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        private static bool IsSqlDatabaseSensitivityLabelResource(ResourceIdentifier id)
+        private static bool IsServiceServiceTaskResource(ResourceIdentifier id)
         {
             // checking the resource type
-            if (id.ResourceType != SqlDatabaseSensitivityLabelResource.ResourceType)
+            if (id.ResourceType != ServiceServiceTaskResource.ResourceType)
             {
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        private readonly SensitivityLabelData _data;
+        private readonly ProjectTaskData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SensitivityLabelResource"/> class for mocking. </summary>
-        protected SensitivityLabelResource()
+        /// <summary> Initializes a new instance of the <see cref="ProjectTaskResource"/> class for mocking. </summary>
+        protected ProjectTaskResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SensitivityLabelResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "ProjectTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SensitivityLabelResource(ArmClient client, SensitivityLabelData data) : this(client, data.Id)
+        internal ProjectTaskResource(ArmClient client, ProjectTaskData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SensitivityLabelResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProjectTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SensitivityLabelResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ProjectTaskResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SensitivityLabelData Data
+        public virtual ProjectTaskData Data
         {
             get
             {
@@ -100,91 +100,119 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="expand"> Expand the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<SensitivityLabelResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Response<ProjectTaskResource>> GetCoreAsync(string expand = null, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
+        /// <param name="expand"> Expand the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<SensitivityLabelResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<ProjectTaskResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return await GetCoreAsync(expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Get. </summary>
+        /// <param name="expand"> Expand the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<SensitivityLabelResource> GetCore(CancellationToken cancellationToken = default);
+        protected abstract Response<ProjectTaskResource> GetCore(string expand = null, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
+        /// <param name="expand"> Expand the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<SensitivityLabelResource> Get(CancellationToken cancellationToken = default)
+        public Response<ProjectTaskResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetCore(cancellationToken);
+            return GetCore(expand, cancellationToken);
         }
 
         /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="deleteRunningTasks"> Delete the resource even if it contains running tasks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default);
+        protected abstract Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, bool? deleteRunningTasks = null, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="deleteRunningTasks"> Delete the resource even if it contains running tasks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? deleteRunningTasks = null, CancellationToken cancellationToken = default)
         {
-            return await DeleteCoreAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            return await DeleteCoreAsync(waitUntil, deleteRunningTasks, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="deleteRunningTasks"> Delete the resource even if it contains running tasks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default);
+        protected abstract ArmOperation DeleteCore(WaitUntil waitUntil, bool? deleteRunningTasks = null, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Delete. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="deleteRunningTasks"> Delete the resource even if it contains running tasks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public ArmOperation Delete(WaitUntil waitUntil, bool? deleteRunningTasks = null, CancellationToken cancellationToken = default)
         {
-            return DeleteCore(waitUntil, cancellationToken);
+            return DeleteCore(waitUntil, deleteRunningTasks, cancellationToken);
         }
 
         /// <summary> The core implementation for operation Update. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The column sensitivity label resource. </param>
+        /// <param name="data"> Information about the task. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected abstract Task<ArmOperation<SensitivityLabelResource>> UpdateCoreAsync(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default);
+        protected abstract Task<Response<ProjectTaskResource>> UpdateCoreAsync(ProjectTaskData data, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Update. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The column sensitivity label resource. </param>
+        /// <param name="data"> Information about the task. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public async Task<ArmOperation<SensitivityLabelResource>> UpdateAsync(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ProjectTaskResource>> UpdateAsync(ProjectTaskData data, CancellationToken cancellationToken = default)
         {
-            return await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Update. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The column sensitivity label resource. </param>
+        /// <param name="data"> Information about the task. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected abstract ArmOperation<SensitivityLabelResource> UpdateCore(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default);
+        protected abstract Response<ProjectTaskResource> UpdateCore(ProjectTaskData data, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Update. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The column sensitivity label resource. </param>
+        /// <param name="data"> Information about the task. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public ArmOperation<SensitivityLabelResource> Update(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        public Response<ProjectTaskResource> Update(ProjectTaskData data, CancellationToken cancellationToken = default)
         {
-            return UpdateCore(waitUntil, data, cancellationToken);
+            return UpdateCore(data, cancellationToken);
+        }
+
+        /// <summary> The core implementation for operation Cancel. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected abstract Task<Response<ProjectTaskResource>> CancelCoreAsync(CancellationToken cancellationToken = default);
+
+        /// <summary> The default implementation for operation Cancel. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public async Task<Response<ProjectTaskResource>> CancelAsync(CancellationToken cancellationToken = default)
+        {
+            return await CancelCoreAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> The core implementation for operation Cancel. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected abstract Response<ProjectTaskResource> CancelCore(CancellationToken cancellationToken = default);
+
+        /// <summary> The default implementation for operation Cancel. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public Response<ProjectTaskResource> Cancel(CancellationToken cancellationToken = default)
+        {
+            return CancelCore(cancellationToken);
         }
     }
 }

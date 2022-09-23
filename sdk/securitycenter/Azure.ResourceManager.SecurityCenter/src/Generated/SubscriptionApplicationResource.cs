@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<ApplicationResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.GetCore");
+            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<ApplicationResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.GetCore");
+            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.Get");
             scope.Start();
             try
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.DeleteCore");
+            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.Delete");
             scope.Start();
             try
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.DeleteCore");
+            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.Delete");
             scope.Start();
             try
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.UpdateCore");
+            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.Update");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.UpdateCore");
+            using var scope = _subscriptionApplicationApplicationClientDiagnostics.CreateScope("SubscriptionApplicationResource.Update");
             scope.Start();
             try
             {

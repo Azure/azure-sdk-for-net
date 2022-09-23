@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<AlertResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceGroupLocationAlertAlertsClientDiagnostics.CreateScope("ResourceGroupLocationAlertResource.GetCore");
+            using var scope = _resourceGroupLocationAlertAlertsClientDiagnostics.CreateScope("ResourceGroupLocationAlertResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<AlertResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _resourceGroupLocationAlertAlertsClientDiagnostics.CreateScope("ResourceGroupLocationAlertResource.GetCore");
+            using var scope = _resourceGroupLocationAlertAlertsClientDiagnostics.CreateScope("ResourceGroupLocationAlertResource.Get");
             scope.Start();
             try
             {

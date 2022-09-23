@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PrivateDns
 {
@@ -51,11 +52,10 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 return new PrivateDnsZoneTXTResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: PrivateDnsZoneAResource, PrivateDnsZoneAAAAResource, PrivateDnsZoneCNAMEResource, PrivateDnsZoneMXResource, PrivateDnsZonePTRResource, PrivateDnsZoneSOAResource, PrivateDnsZoneSRVResource or PrivateDnsZoneTXTResource");
         }
 
-        internal static bool IsPrivateDnsZoneAResource(ResourceIdentifier id)
+        private static bool IsPrivateDnsZoneAResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != PrivateDnsZoneAResource.ResourceType)
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.PrivateDns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsPrivateDnsZoneAAAAResource(ResourceIdentifier id)
+        private static bool IsPrivateDnsZoneAAAAResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != PrivateDnsZoneAAAAResource.ResourceType)
@@ -78,14 +78,14 @@ namespace Azure.ResourceManager.PrivateDns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsPrivateDnsZoneCNAMEResource(ResourceIdentifier id)
+        private static bool IsPrivateDnsZoneCNAMEResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != PrivateDnsZoneCNAMEResource.ResourceType)
@@ -93,14 +93,14 @@ namespace Azure.ResourceManager.PrivateDns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsPrivateDnsZoneMXResource(ResourceIdentifier id)
+        private static bool IsPrivateDnsZoneMXResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != PrivateDnsZoneMXResource.ResourceType)
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.PrivateDns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsPrivateDnsZonePTRResource(ResourceIdentifier id)
+        private static bool IsPrivateDnsZonePTRResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != PrivateDnsZonePTRResource.ResourceType)
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.PrivateDns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsPrivateDnsZoneSOAResource(ResourceIdentifier id)
+        private static bool IsPrivateDnsZoneSOAResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != PrivateDnsZoneSOAResource.ResourceType)
@@ -138,14 +138,14 @@ namespace Azure.ResourceManager.PrivateDns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsPrivateDnsZoneSRVResource(ResourceIdentifier id)
+        private static bool IsPrivateDnsZoneSRVResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != PrivateDnsZoneSRVResource.ResourceType)
@@ -153,14 +153,14 @@ namespace Azure.ResourceManager.PrivateDns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsPrivateDnsZoneTXTResource(ResourceIdentifier id)
+        private static bool IsPrivateDnsZoneTXTResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != PrivateDnsZoneTXTResource.ResourceType)
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.PrivateDns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

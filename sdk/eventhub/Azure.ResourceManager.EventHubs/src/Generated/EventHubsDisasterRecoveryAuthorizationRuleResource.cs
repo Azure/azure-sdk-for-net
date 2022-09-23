@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<EventHubsAuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryAuthorizationRuleResource.GetCore");
+            using var scope = _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryAuthorizationRuleResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<EventHubsAuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryAuthorizationRuleResource.GetCore");
+            using var scope = _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryAuthorizationRuleResource.Get");
             scope.Start();
             try
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<EventHubsAccessKeys>> GetKeysCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryAuthorizationRuleResource.GetKeysCore");
+            using var scope = _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<EventHubsAccessKeys> GetKeysCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryAuthorizationRuleResource.GetKeysCore");
+            using var scope = _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {

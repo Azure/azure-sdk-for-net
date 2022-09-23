@@ -149,17 +149,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScheduleResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScheduleResource> GetSchedulesAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BaseScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BaseScheduleResource> GetSchedulesAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<ScheduleResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<BaseScheduleResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ScheduleGlobalSchedulesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSchedules");
                 scope.Start();
                 try
                 {
                     var response = await ScheduleGlobalSchedulesRestClient.ListBySubscriptionAsync(Id.SubscriptionId, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => BaseScheduleResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -167,14 +167,14 @@ namespace Azure.ResourceManager.DevTestLabs
                     throw;
                 }
             }
-            async Task<Page<ScheduleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<BaseScheduleResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ScheduleGlobalSchedulesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSchedules");
                 scope.Start();
                 try
                 {
                     var response = await ScheduleGlobalSchedulesRestClient.ListBySubscriptionNextPageAsync(nextLink, Id.SubscriptionId, expand, filter, top, orderby, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => BaseScheduleResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -195,17 +195,17 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScheduleResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScheduleResource> GetSchedules(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BaseScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BaseScheduleResource> GetSchedules(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
-            Page<ScheduleResource> FirstPageFunc(int? pageSizeHint)
+            Page<BaseScheduleResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = ScheduleGlobalSchedulesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSchedules");
                 scope.Start();
                 try
                 {
                     var response = ScheduleGlobalSchedulesRestClient.ListBySubscription(Id.SubscriptionId, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => BaseScheduleResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -213,14 +213,14 @@ namespace Azure.ResourceManager.DevTestLabs
                     throw;
                 }
             }
-            Page<ScheduleResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<BaseScheduleResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = ScheduleGlobalSchedulesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetSchedules");
                 scope.Start();
                 try
                 {
                     var response = ScheduleGlobalSchedulesRestClient.ListBySubscriptionNextPage(nextLink, Id.SubscriptionId, expand, filter, top, orderby, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new ScheduleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => BaseScheduleResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

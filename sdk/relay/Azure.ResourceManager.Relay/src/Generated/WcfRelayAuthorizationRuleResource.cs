@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<RelayAuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.GetCore");
+            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<RelayAuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.GetCore");
+            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.Get");
             scope.Start();
             try
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.DeleteCore");
+            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.Delete");
             scope.Start();
             try
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.DeleteCore");
+            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.Delete");
             scope.Start();
             try
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.UpdateCore");
+            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.Update");
             scope.Start();
             try
             {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.UpdateCore");
+            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.Update");
             scope.Start();
             try
             {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<RelayAccessKeys>> GetKeysCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.GetKeysCore");
+            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<RelayAccessKeys> GetKeysCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.GetKeysCore");
+            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.RegenerateKeysCore");
+            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.RegenerateKeys");
             scope.Start();
             try
             {
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Relay
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.RegenerateKeysCore");
+            using var scope = _wcfRelayAuthorizationRuleWCFRelaysClientDiagnostics.CreateScope("WcfRelayAuthorizationRuleResource.RegenerateKeys");
             scope.Start();
             try
             {

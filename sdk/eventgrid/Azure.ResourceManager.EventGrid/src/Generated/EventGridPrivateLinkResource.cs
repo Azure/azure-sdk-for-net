@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -31,11 +32,10 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return new PartnerNamespacePrivateLinkResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: EventGridTopicPrivateLinkResource, EventGridDomainPrivateLinkResource or PartnerNamespacePrivateLinkResource");
         }
 
-        internal static bool IsEventGridTopicPrivateLinkResource(ResourceIdentifier id)
+        private static bool IsEventGridTopicPrivateLinkResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != EventGridTopicPrivateLinkResource.ResourceType)
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.EventGrid
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsEventGridDomainPrivateLinkResource(ResourceIdentifier id)
+        private static bool IsEventGridDomainPrivateLinkResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != EventGridDomainPrivateLinkResource.ResourceType)
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.EventGrid
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsPartnerNamespacePrivateLinkResource(ResourceIdentifier id)
+        private static bool IsPartnerNamespacePrivateLinkResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != PartnerNamespacePrivateLinkResource.ResourceType)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.EventGrid
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

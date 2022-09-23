@@ -293,6 +293,28 @@ namespace Azure.ResourceManager.DataMigration
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.DataMigration.Models.ProjectTaskProperties Properties { get { throw null; } set { } }
     }
+    public abstract partial class ProjectTaskResource : Azure.ResourceManager.ArmResource
+    {
+        protected ProjectTaskResource() { }
+        public virtual Azure.ResourceManager.DataMigration.ProjectTaskData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource> Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource>> CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected abstract Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource> CancelCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected abstract System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource>> CancelCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, bool? deleteRunningTasks = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, bool? deleteRunningTasks = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected abstract Azure.ResourceManager.ArmOperation DeleteCore(Azure.WaitUntil waitUntil, bool? deleteRunningTasks = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected abstract System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteCoreAsync(Azure.WaitUntil waitUntil, bool? deleteRunningTasks = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected abstract Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource> GetCore(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected abstract System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource>> GetCoreAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource> Update(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource>> UpdateAsync(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected abstract Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource> UpdateCore(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected abstract System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource>> UpdateCoreAsync(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
     public partial class ServiceProjectTaskCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource>, System.Collections.IEnumerable
     {
         protected ServiceProjectTaskCollection() { }
@@ -308,23 +330,27 @@ namespace Azure.ResourceManager.DataMigration
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceProjectTaskResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceProjectTaskResource : Azure.ResourceManager.DataMigration.ProjectTaskResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceProjectTaskResource() { }
-        public virtual Azure.ResourceManager.DataMigration.ProjectTaskData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource> Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource>> CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource> Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource>> CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource> CancelCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource>> CancelCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.Models.CommandProperties> Command(Azure.ResourceManager.DataMigration.Models.CommandProperties commandProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.Models.CommandProperties>> CommandAsync(Azure.ResourceManager.DataMigration.Models.CommandProperties commandProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string groupName, string serviceName, string projectName, string taskName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, bool? deleteRunningTasks = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, bool? deleteRunningTasks = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource> Update(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource>> UpdateAsync(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.ResourceManager.ArmOperation DeleteCore(Azure.WaitUntil waitUntil, bool? deleteRunningTasks = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteCoreAsync(Azure.WaitUntil waitUntil, bool? deleteRunningTasks = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource> GetCore(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource>> GetCoreAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource> Update(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceProjectTaskResource>> UpdateAsync(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource> UpdateCore(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource>> UpdateCoreAsync(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ServiceServiceTaskCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource>, System.Collections.IEnumerable
     {
@@ -341,21 +367,25 @@ namespace Azure.ResourceManager.DataMigration
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ServiceServiceTaskResource : Azure.ResourceManager.ArmResource
+    public partial class ServiceServiceTaskResource : Azure.ResourceManager.DataMigration.ProjectTaskResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected ServiceServiceTaskResource() { }
-        public virtual Azure.ResourceManager.DataMigration.ProjectTaskData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource> Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource>> CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource> Cancel(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource>> CancelAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource> CancelCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource>> CancelCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string groupName, string serviceName, string taskName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, bool? deleteRunningTasks = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, bool? deleteRunningTasks = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource> Update(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource>> UpdateAsync(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.ResourceManager.ArmOperation DeleteCore(Azure.WaitUntil waitUntil, bool? deleteRunningTasks = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteCoreAsync(Azure.WaitUntil waitUntil, bool? deleteRunningTasks = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource> Get(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource>> GetAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource> GetCore(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource>> GetCoreAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource> Update(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ServiceServiceTaskResource>> UpdateAsync(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource> UpdateCore(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.ProjectTaskResource>> UpdateCoreAsync(Azure.ResourceManager.DataMigration.ProjectTaskData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class SqlMigrationServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataMigration.SqlMigrationServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataMigration.SqlMigrationServiceResource>, System.Collections.IEnumerable
     {

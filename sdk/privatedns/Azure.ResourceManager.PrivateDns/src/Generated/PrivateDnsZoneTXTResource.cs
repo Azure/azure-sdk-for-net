@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<RecordSetResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateDnsZoneTXTRecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneTXTResource.GetCore");
+            using var scope = _privateDnsZoneTXTRecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneTXTResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<RecordSetResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateDnsZoneTXTRecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneTXTResource.GetCore");
+            using var scope = _privateDnsZoneTXTRecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneTXTResource.Get");
             scope.Start();
             try
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateDnsZoneTXTRecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneTXTResource.DeleteCore");
+            using var scope = _privateDnsZoneTXTRecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneTXTResource.Delete");
             scope.Start();
             try
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, string ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateDnsZoneTXTRecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneTXTResource.DeleteCore");
+            using var scope = _privateDnsZoneTXTRecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneTXTResource.Delete");
             scope.Start();
             try
             {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _privateDnsZoneTXTRecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneTXTResource.UpdateCore");
+            using var scope = _privateDnsZoneTXTRecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneTXTResource.Update");
             scope.Start();
             try
             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _privateDnsZoneTXTRecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneTXTResource.UpdateCore");
+            using var scope = _privateDnsZoneTXTRecordSetsClientDiagnostics.CreateScope("PrivateDnsZoneTXTResource.Update");
             scope.Start();
             try
             {

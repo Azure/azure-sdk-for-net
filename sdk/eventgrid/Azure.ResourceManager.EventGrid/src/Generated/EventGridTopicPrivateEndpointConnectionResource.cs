@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<EventGridPrivateEndpointConnectionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionResource.GetCore");
+            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<EventGridPrivateEndpointConnectionResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionResource.GetCore");
+            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionResource.Get");
             scope.Start();
             try
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionResource.DeleteCore");
+            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionResource.DeleteCore");
+            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionResource.UpdateCore");
+            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionResource.UpdateCore");
+            using var scope = _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("EventGridTopicPrivateEndpointConnectionResource.Update");
             scope.Start();
             try
             {

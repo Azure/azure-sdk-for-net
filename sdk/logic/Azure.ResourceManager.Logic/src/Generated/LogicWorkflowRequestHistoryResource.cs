@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Logic
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.Logic
             {
                 return new LogicWorkflowRunActionRequestHistoryResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: LogicWorkflowRunActionRepetitionRequestHistoryResource or LogicWorkflowRunActionRequestHistoryResource");
         }
 
-        internal static bool IsLogicWorkflowRunActionRepetitionRequestHistoryResource(ResourceIdentifier id)
+        private static bool IsLogicWorkflowRunActionRepetitionRequestHistoryResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != LogicWorkflowRunActionRepetitionRequestHistoryResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Logic
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsLogicWorkflowRunActionRequestHistoryResource(ResourceIdentifier id)
+        private static bool IsLogicWorkflowRunActionRequestHistoryResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != LogicWorkflowRunActionRequestHistoryResource.ResourceType)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Logic
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

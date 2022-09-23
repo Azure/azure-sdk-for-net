@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<EventGridPrivateLinkResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResource.GetCore");
+            using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResource.Get");
             scope.Start();
             try
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<EventGridPrivateLinkResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResource.GetCore");
+            using var scope = _eventGridDomainPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("EventGridDomainPrivateLinkResource.Get");
             scope.Start();
             try
             {

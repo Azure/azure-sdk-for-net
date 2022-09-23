@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRuleForwardingRulesRestClient.CreateOrUpdateAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, forwardingRuleName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _dnsForwardingRuleForwardingRulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, data, ifMatch, ifNoneMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsResolverArmOperation<DnsForwardingRuleResource>(Response.FromValue(new DnsForwardingRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRuleForwardingRulesRestClient.CreateOrUpdate(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, forwardingRuleName, data, ifMatch, ifNoneMatch, cancellationToken);
+                var response = _dnsForwardingRuleForwardingRulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, data, ifMatch, ifNoneMatch, cancellationToken);
                 var operation = new DnsResolverArmOperation<DnsForwardingRuleResource>(Response.FromValue(new DnsForwardingRuleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRuleForwardingRulesRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, forwardingRuleName, cancellationToken).ConfigureAwait(false);
+                var response = await _dnsForwardingRuleForwardingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DnsForwardingRuleResource(Client, response.Value), response.GetRawResponse());
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRuleForwardingRulesRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, forwardingRuleName, cancellationToken);
+                var response = _dnsForwardingRuleForwardingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new DnsForwardingRuleResource(Client, response.Value), response.GetRawResponse());
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DnsResolver
                 scope.Start();
                 try
                 {
-                    var response = await _dnsForwardingRuleForwardingRulesRestClient.ListAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dnsForwardingRuleForwardingRulesRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DnsResolver
                 scope.Start();
                 try
                 {
-                    var response = await _dnsForwardingRuleForwardingRulesRestClient.ListNextPageAsync(nextLink, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _dnsForwardingRuleForwardingRulesRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DnsResolver
                 scope.Start();
                 try
                 {
-                    var response = _dnsForwardingRuleForwardingRulesRestClient.List(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
+                    var response = _dnsForwardingRuleForwardingRulesRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DnsResolver
                 scope.Start();
                 try
                 {
-                    var response = _dnsForwardingRuleForwardingRulesRestClient.ListNextPage(nextLink, Id.Name, Id.SubscriptionId, Id.ResourceGroupName, top, cancellationToken: cancellationToken);
+                    var response = _dnsForwardingRuleForwardingRulesRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => new DnsForwardingRuleResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = await _dnsForwardingRuleForwardingRulesRestClient.GetAsync(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, forwardingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _dnsForwardingRuleForwardingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.DnsResolver
             scope.Start();
             try
             {
-                var response = _dnsForwardingRuleForwardingRulesRestClient.Get(Id.Name, Id.SubscriptionId, Id.ResourceGroupName, forwardingRuleName, cancellationToken: cancellationToken);
+                var response = _dnsForwardingRuleForwardingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, forwardingRuleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

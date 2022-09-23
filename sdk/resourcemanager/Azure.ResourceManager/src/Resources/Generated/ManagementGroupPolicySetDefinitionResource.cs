@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<PolicySetDefinitionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managementGroupPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicySetDefinitionResource.GetCore");
+            using var scope = _managementGroupPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicySetDefinitionResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<PolicySetDefinitionResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _managementGroupPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicySetDefinitionResource.GetCore");
+            using var scope = _managementGroupPolicySetDefinitionPolicySetDefinitionsClientDiagnostics.CreateScope("ManagementGroupPolicySetDefinitionResource.Get");
             scope.Start();
             try
             {

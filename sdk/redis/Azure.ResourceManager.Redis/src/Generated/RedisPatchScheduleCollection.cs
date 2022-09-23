@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Redis
             scope.Start();
             try
             {
-                var response = await _redisPatchSchedulePatchSchedulesRestClient.CreateOrUpdateAsync(defaultName, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _redisPatchSchedulePatchSchedulesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defaultName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new RedisArmOperation<RedisPatchScheduleResource>(Response.FromValue(new RedisPatchScheduleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Redis
             scope.Start();
             try
             {
-                var response = _redisPatchSchedulePatchSchedulesRestClient.CreateOrUpdate(defaultName, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, data, cancellationToken);
+                var response = _redisPatchSchedulePatchSchedulesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defaultName, data, cancellationToken);
                 var operation = new RedisArmOperation<RedisPatchScheduleResource>(Response.FromValue(new RedisPatchScheduleResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Redis
             scope.Start();
             try
             {
-                var response = await _redisPatchSchedulePatchSchedulesRestClient.GetAsync(defaultName, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _redisPatchSchedulePatchSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defaultName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RedisPatchScheduleResource(Client, response.Value), response.GetRawResponse());
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Redis
             scope.Start();
             try
             {
-                var response = _redisPatchSchedulePatchSchedulesRestClient.Get(defaultName, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                var response = _redisPatchSchedulePatchSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defaultName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new RedisPatchScheduleResource(Client, response.Value), response.GetRawResponse());
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Redis
             scope.Start();
             try
             {
-                var response = await _redisPatchSchedulePatchSchedulesRestClient.GetAsync(defaultName, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _redisPatchSchedulePatchSchedulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defaultName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Redis
             scope.Start();
             try
             {
-                var response = _redisPatchSchedulePatchSchedulesRestClient.Get(defaultName, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                var response = _redisPatchSchedulePatchSchedulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, defaultName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseMarketplaceAgreementTermResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _marketplaceAgreementClientDiagnostics.CreateScope("MarketplaceAgreementResource.GetCore");
+            using var scope = _marketplaceAgreementClientDiagnostics.CreateScope("MarketplaceAgreementResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseMarketplaceAgreementTermResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _marketplaceAgreementClientDiagnostics.CreateScope("MarketplaceAgreementResource.GetCore");
+            using var scope = _marketplaceAgreementClientDiagnostics.CreateScope("MarketplaceAgreementResource.Get");
             scope.Start();
             try
             {

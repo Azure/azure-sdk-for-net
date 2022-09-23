@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<DatabaseTableResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseTableClientDiagnostics.CreateScope("ManagedDatabaseTableResource.GetCore");
+            using var scope = _managedDatabaseTableClientDiagnostics.CreateScope("ManagedDatabaseTableResource.Get");
             scope.Start();
             try
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<DatabaseTableResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseTableClientDiagnostics.CreateScope("ManagedDatabaseTableResource.GetCore");
+            using var scope = _managedDatabaseTableClientDiagnostics.CreateScope("ManagedDatabaseTableResource.Get");
             scope.Start();
             try
             {

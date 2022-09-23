@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseEventSubscriptionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.GetCore");
+            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseEventSubscriptionResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.GetCore");
+            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.Get");
             scope.Start();
             try
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.DeleteCore");
+            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.Delete");
             scope.Start();
             try
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.DeleteCore");
+            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.Delete");
             scope.Start();
             try
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.UpdateCore");
+            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.Update");
             scope.Start();
             try
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.UpdateCore");
+            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.Update");
             scope.Start();
             try
             {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<EventSubscriptionFullUri>> GetFullUriCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.GetFullUriCore");
+            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.GetFullUri");
             scope.Start();
             try
             {
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<EventSubscriptionFullUri> GetFullUriCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.GetFullUriCore");
+            using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.GetFullUri");
             scope.Start();
             try
             {
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             async Task<Page<DeliveryAttributeMapping>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.GetDeliveryAttributesCore");
+                using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.GetDeliveryAttributes");
                 scope.Start();
                 try
                 {
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.EventGrid
         {
             Page<DeliveryAttributeMapping> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.GetDeliveryAttributesCore");
+                using var scope = _eventSubscriptionClientDiagnostics.CreateScope("EventSubscriptionResource.GetDeliveryAttributes");
                 scope.Start();
                 try
                 {

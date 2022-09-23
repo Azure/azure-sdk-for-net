@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dns
 {
@@ -59,11 +60,10 @@ namespace Azure.ResourceManager.Dns
             {
                 return new TxtRecordResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: ARecordResource, AaaaRecordResource, CaaRecordResource, CnameRecordResource, MXRecordResource, NSRecordResource, PtrRecordResource, SoaRecordResource, SrvRecordResource or TxtRecordResource");
         }
 
-        internal static bool IsARecordResource(ResourceIdentifier id)
+        private static bool IsARecordResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != ARecordResource.ResourceType)
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.Dns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsAaaaRecordResource(ResourceIdentifier id)
+        private static bool IsAaaaRecordResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != AaaaRecordResource.ResourceType)
@@ -86,14 +86,14 @@ namespace Azure.ResourceManager.Dns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsCaaRecordResource(ResourceIdentifier id)
+        private static bool IsCaaRecordResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != CaaRecordResource.ResourceType)
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.Dns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsCnameRecordResource(ResourceIdentifier id)
+        private static bool IsCnameRecordResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != CnameRecordResource.ResourceType)
@@ -116,14 +116,14 @@ namespace Azure.ResourceManager.Dns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsMXRecordResource(ResourceIdentifier id)
+        private static bool IsMXRecordResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != MXRecordResource.ResourceType)
@@ -131,14 +131,14 @@ namespace Azure.ResourceManager.Dns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsNSRecordResource(ResourceIdentifier id)
+        private static bool IsNSRecordResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != NSRecordResource.ResourceType)
@@ -146,14 +146,14 @@ namespace Azure.ResourceManager.Dns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsPtrRecordResource(ResourceIdentifier id)
+        private static bool IsPtrRecordResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != PtrRecordResource.ResourceType)
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.Dns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSoaRecordResource(ResourceIdentifier id)
+        private static bool IsSoaRecordResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SoaRecordResource.ResourceType)
@@ -176,14 +176,14 @@ namespace Azure.ResourceManager.Dns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSrvRecordResource(ResourceIdentifier id)
+        private static bool IsSrvRecordResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SrvRecordResource.ResourceType)
@@ -191,14 +191,14 @@ namespace Azure.ResourceManager.Dns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsTxtRecordResource(ResourceIdentifier id)
+        private static bool IsTxtRecordResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != TxtRecordResource.ResourceType)
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Dns
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<LogicWorkflowRunActionRepetitionDefinitionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionResource.GetCore");
+            using var scope = _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionResource.Get");
             scope.Start();
             try
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<LogicWorkflowRunActionRepetitionDefinitionResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionResource.GetCore");
+            using var scope = _logicWorkflowRunActionRepetitionWorkflowRunActionRepetitionsClientDiagnostics.CreateScope("LogicWorkflowRunActionRepetitionResource.Get");
             scope.Start();
             try
             {

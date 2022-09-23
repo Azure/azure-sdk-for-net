@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseSecurityRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleResource.GetCore");
+            using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseSecurityRuleResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleResource.GetCore");
+            using var scope = _defaultSecurityRuleClientDiagnostics.CreateScope("DefaultSecurityRuleResource.Get");
             scope.Start();
             try
             {

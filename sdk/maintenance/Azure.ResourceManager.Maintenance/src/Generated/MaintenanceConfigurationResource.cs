@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Maintenance
     /// from an instance of <see cref="ArmClient" /> using the GetMaintenanceConfigurationResource method.
     /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetMaintenanceConfiguration method.
     /// </summary>
-    public partial class MaintenanceConfigurationResource : ArmResource
+    public partial class MaintenanceConfigurationResource : BaseMaintenanceConfigurationResource
     {
         /// <summary> Generate the resource identifier of a <see cref="MaintenanceConfigurationResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
@@ -35,7 +35,6 @@ namespace Azure.ResourceManager.Maintenance
 
         private readonly ClientDiagnostics _maintenanceConfigurationClientDiagnostics;
         private readonly MaintenanceConfigurationsRestOperations _maintenanceConfigurationRestClient;
-        private readonly MaintenanceConfigurationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="MaintenanceConfigurationResource"/> class for mocking. </summary>
         protected MaintenanceConfigurationResource()
@@ -45,10 +44,14 @@ namespace Azure.ResourceManager.Maintenance
         /// <summary> Initializes a new instance of the <see cref = "MaintenanceConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MaintenanceConfigurationResource(ArmClient client, MaintenanceConfigurationData data) : this(client, data.Id)
+        internal MaintenanceConfigurationResource(ArmClient client, MaintenanceConfigurationData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _maintenanceConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string maintenanceConfigurationApiVersion);
+            _maintenanceConfigurationRestClient = new MaintenanceConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, maintenanceConfigurationApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="MaintenanceConfigurationResource"/> class. </summary>
@@ -67,21 +70,6 @@ namespace Azure.ResourceManager.Maintenance
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Maintenance/maintenanceConfigurations";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual MaintenanceConfigurationData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -89,12 +77,13 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Get Configuration record
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}
         /// Operation Id: MaintenanceConfigurations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MaintenanceConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseMaintenanceConfigurationResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Get");
             scope.Start();
@@ -103,7 +92,7 @@ namespace Azure.ResourceManager.Maintenance
                 var response = await _maintenanceConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +107,21 @@ namespace Azure.ResourceManager.Maintenance
         /// Operation Id: MaintenanceConfigurations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MaintenanceConfigurationResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<MaintenanceConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((MaintenanceConfigurationResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Get Configuration record
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}
+        /// Operation Id: MaintenanceConfigurations_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<BaseMaintenanceConfigurationResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _maintenanceConfigurationClientDiagnostics.CreateScope("MaintenanceConfigurationResource.Get");
             scope.Start();
@@ -127,13 +130,26 @@ namespace Azure.ResourceManager.Maintenance
                 var response = _maintenanceConfigurationRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new MaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get Configuration record
+        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}
+        /// Operation Id: MaintenanceConfigurations_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<MaintenanceConfigurationResource> Get(CancellationToken cancellationToken = default)
+        {
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((MaintenanceConfigurationResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<ServiceBusAuthorizationRuleResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.GetCore");
+            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<ServiceBusAuthorizationRuleResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.GetCore");
+            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.Get");
             scope.Start();
             try
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<ServiceBusAccessKeys>> GetKeysCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.GetKeysCore");
+            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<ServiceBusAccessKeys> GetKeysCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.GetKeysCore");
+            using var scope = _serviceBusDisasterRecoveryAuthorizationRuleDisasterRecoveryAuthorizationRulesClientDiagnostics.CreateScope("ServiceBusDisasterRecoveryAuthorizationRuleResource.GetKeys");
             scope.Start();
             try
             {

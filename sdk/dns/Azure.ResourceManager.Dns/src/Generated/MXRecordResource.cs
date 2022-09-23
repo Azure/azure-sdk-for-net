@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<RecordSetResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.GetCore");
+            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.Get");
             scope.Start();
             try
             {
-                var response = await _mxRecordRecordSetsRestClient.GetAsync("MX".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _mxRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "MX".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<RecordSetResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.GetCore");
+            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.Get");
             scope.Start();
             try
             {
-                var response = _mxRecordRecordSetsRestClient.Get("MX".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _mxRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "MX".ToDnsRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
@@ -162,11 +162,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.DeleteCore");
+            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = await _mxRecordRecordSetsRestClient.DeleteAsync("MX".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _mxRecordRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "MX".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.DeleteCore");
+            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = _mxRecordRecordSetsRestClient.Delete("MX".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
+                var response = _mxRecordRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "MX".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.UpdateCore");
+            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.Update");
             scope.Start();
             try
             {
-                var response = await _mxRecordRecordSetsRestClient.UpdateAsync("MX".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _mxRecordRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "MX".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.UpdateCore");
+            using var scope = _mxRecordRecordSetsClientDiagnostics.CreateScope("MXRecordResource.Update");
             scope.Start();
             try
             {
-                var response = _mxRecordRecordSetsRestClient.Update("MX".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var response = _mxRecordRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "MX".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
                 return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.EventGrid.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -44,11 +45,10 @@ namespace Azure.ResourceManager.EventGrid
             {
                 return new PartnerTopicEventSubscriptionResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: TopicEventSubscriptionResource, DomainEventSubscriptionResource, EventSubscriptionResource, DomainTopicEventSubscriptionResource, SystemTopicEventSubscriptionResource or PartnerTopicEventSubscriptionResource");
         }
 
-        internal static bool IsTopicEventSubscriptionResource(ResourceIdentifier id)
+        private static bool IsTopicEventSubscriptionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != TopicEventSubscriptionResource.ResourceType)
@@ -56,14 +56,14 @@ namespace Azure.ResourceManager.EventGrid
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsDomainEventSubscriptionResource(ResourceIdentifier id)
+        private static bool IsDomainEventSubscriptionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != DomainEventSubscriptionResource.ResourceType)
@@ -71,14 +71,14 @@ namespace Azure.ResourceManager.EventGrid
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsEventSubscriptionResource(ResourceIdentifier id)
+        private static bool IsEventSubscriptionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != EventSubscriptionResource.ResourceType)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid
             return true;
         }
 
-        internal static bool IsDomainTopicEventSubscriptionResource(ResourceIdentifier id)
+        private static bool IsDomainTopicEventSubscriptionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != DomainTopicEventSubscriptionResource.ResourceType)
@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.EventGrid
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSystemTopicEventSubscriptionResource(ResourceIdentifier id)
+        private static bool IsSystemTopicEventSubscriptionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SystemTopicEventSubscriptionResource.ResourceType)
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.EventGrid
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsPartnerTopicEventSubscriptionResource(ResourceIdentifier id)
+        private static bool IsPartnerTopicEventSubscriptionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != PartnerTopicEventSubscriptionResource.ResourceType)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventGrid
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

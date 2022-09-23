@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Relay.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Relay
 {
@@ -32,11 +33,10 @@ namespace Azure.ResourceManager.Relay
             {
                 return new WcfRelayAuthorizationRuleResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: RelayNamespaceAuthorizationRuleResource, RelayHybridConnectionAuthorizationRuleResource or WcfRelayAuthorizationRuleResource");
         }
 
-        internal static bool IsRelayNamespaceAuthorizationRuleResource(ResourceIdentifier id)
+        private static bool IsRelayNamespaceAuthorizationRuleResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != RelayNamespaceAuthorizationRuleResource.ResourceType)
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.Relay
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsRelayHybridConnectionAuthorizationRuleResource(ResourceIdentifier id)
+        private static bool IsRelayHybridConnectionAuthorizationRuleResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != RelayHybridConnectionAuthorizationRuleResource.ResourceType)
@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.Relay
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsWcfRelayAuthorizationRuleResource(ResourceIdentifier id)
+        private static bool IsWcfRelayAuthorizationRuleResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != WcfRelayAuthorizationRuleResource.ResourceType)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Relay
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

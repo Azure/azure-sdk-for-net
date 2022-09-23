@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CognitiveServicesAccountResource> GetCognitiveServicesAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BaseCognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<BaseCognitiveServicesAccountResource> GetCognitiveServicesAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCognitiveServicesAccountsAsync(cancellationToken);
         }
@@ -92,8 +92,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CognitiveServicesAccountResource> GetCognitiveServicesAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BaseCognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<BaseCognitiveServicesAccountResource> GetCognitiveServicesAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetCognitiveServicesAccounts(cancellationToken);
         }
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CognitiveServicesDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CognitiveServicesDeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BaseCognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<BaseCognitiveServicesAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
         }
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CognitiveServicesDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CognitiveServicesDeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BaseCognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<BaseCognitiveServicesAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetDeletedAccounts(cancellationToken);
         }

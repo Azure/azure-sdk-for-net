@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Maintenance
     /// from an instance of <see cref="ArmClient" /> using the GetPublicMaintenanceConfigurationResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetPublicMaintenanceConfiguration method.
     /// </summary>
-    public partial class PublicMaintenanceConfigurationResource : ArmResource
+    public partial class PublicMaintenanceConfigurationResource : BaseMaintenanceConfigurationResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PublicMaintenanceConfigurationResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceName)
@@ -34,7 +34,6 @@ namespace Azure.ResourceManager.Maintenance
 
         private readonly ClientDiagnostics _publicMaintenanceConfigurationClientDiagnostics;
         private readonly PublicMaintenanceConfigurationsRestOperations _publicMaintenanceConfigurationRestClient;
-        private readonly MaintenanceConfigurationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="PublicMaintenanceConfigurationResource"/> class for mocking. </summary>
         protected PublicMaintenanceConfigurationResource()
@@ -44,10 +43,14 @@ namespace Azure.ResourceManager.Maintenance
         /// <summary> Initializes a new instance of the <see cref = "PublicMaintenanceConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PublicMaintenanceConfigurationResource(ArmClient client, MaintenanceConfigurationData data) : this(client, data.Id)
+        internal PublicMaintenanceConfigurationResource(ArmClient client, MaintenanceConfigurationData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _publicMaintenanceConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Maintenance", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string publicMaintenanceConfigurationApiVersion);
+            _publicMaintenanceConfigurationRestClient = new PublicMaintenanceConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, publicMaintenanceConfigurationApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="PublicMaintenanceConfigurationResource"/> class. </summary>
@@ -66,21 +69,6 @@ namespace Azure.ResourceManager.Maintenance
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Maintenance/publicMaintenanceConfigurations";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual MaintenanceConfigurationData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -88,12 +76,13 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// Get Public Maintenance Configuration record
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}
         /// Operation Id: PublicMaintenanceConfigurations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PublicMaintenanceConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseMaintenanceConfigurationResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _publicMaintenanceConfigurationClientDiagnostics.CreateScope("PublicMaintenanceConfigurationResource.Get");
             scope.Start();
@@ -102,7 +91,7 @@ namespace Azure.ResourceManager.Maintenance
                 var response = await _publicMaintenanceConfigurationRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PublicMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -117,7 +106,21 @@ namespace Azure.ResourceManager.Maintenance
         /// Operation Id: PublicMaintenanceConfigurations_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PublicMaintenanceConfigurationResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<PublicMaintenanceConfigurationResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((PublicMaintenanceConfigurationResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// Get Public Maintenance Configuration record
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}
+        /// Operation Id: PublicMaintenanceConfigurations_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<BaseMaintenanceConfigurationResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _publicMaintenanceConfigurationClientDiagnostics.CreateScope("PublicMaintenanceConfigurationResource.Get");
             scope.Start();
@@ -126,13 +129,26 @@ namespace Azure.ResourceManager.Maintenance
                 var response = _publicMaintenanceConfigurationRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PublicMaintenanceConfigurationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get Public Maintenance Configuration record
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}
+        /// Operation Id: PublicMaintenanceConfigurations_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<PublicMaintenanceConfigurationResource> Get(CancellationToken cancellationToken = default)
+        {
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((PublicMaintenanceConfigurationResource)result.Value, result.GetRawResponse());
         }
     }
 }

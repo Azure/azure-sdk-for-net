@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetApp
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.NetApp
             {
                 return new NetAppAccountBackupResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: NetAppVolumeBackupResource or NetAppAccountBackupResource");
         }
 
-        internal static bool IsNetAppVolumeBackupResource(ResourceIdentifier id)
+        private static bool IsNetAppVolumeBackupResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != NetAppVolumeBackupResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.NetApp
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsNetAppAccountBackupResource(ResourceIdentifier id)
+        private static bool IsNetAppAccountBackupResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != NetAppAccountBackupResource.ResourceType)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetApp
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

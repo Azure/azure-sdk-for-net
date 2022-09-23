@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 return new SecurityConnectorGovernanceRuleResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SubscriptionGovernanceRuleResource or SecurityConnectorGovernanceRuleResource");
         }
 
-        internal static bool IsSubscriptionGovernanceRuleResource(ResourceIdentifier id)
+        private static bool IsSubscriptionGovernanceRuleResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SubscriptionGovernanceRuleResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.ResourceType != "Microsoft.Resources/subscriptions")
+            if (id.Parent.ResourceType != SubscriptionResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSecurityConnectorGovernanceRuleResource(ResourceIdentifier id)
+        private static bool IsSecurityConnectorGovernanceRuleResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SecurityConnectorGovernanceRuleResource.ResourceType)

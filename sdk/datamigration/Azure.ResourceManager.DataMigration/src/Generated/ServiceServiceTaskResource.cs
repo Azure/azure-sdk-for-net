@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration
     /// from an instance of <see cref="ArmClient" /> using the GetServiceServiceTaskResource method.
     /// Otherwise you can get one from its parent resource <see cref="DataMigrationServiceResource" /> using the GetServiceServiceTask method.
     /// </summary>
-    public partial class ServiceServiceTaskResource : ArmResource
+    public partial class ServiceServiceTaskResource : ProjectTaskResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceServiceTaskResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string groupName, string serviceName, string taskName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.DataMigration
 
         private readonly ClientDiagnostics _serviceServiceTaskServiceTasksClientDiagnostics;
         private readonly ServiceTasksRestOperations _serviceServiceTaskServiceTasksRestClient;
-        private readonly ProjectTaskData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ServiceServiceTaskResource"/> class for mocking. </summary>
         protected ServiceServiceTaskResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Initializes a new instance of the <see cref = "ServiceServiceTaskResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ServiceServiceTaskResource(ArmClient client, ProjectTaskData data) : this(client, data.Id)
+        internal ServiceServiceTaskResource(ArmClient client, ProjectTaskData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _serviceServiceTaskServiceTasksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string serviceServiceTaskServiceTasksApiVersion);
+            _serviceServiceTaskServiceTasksRestClient = new ServiceTasksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serviceServiceTaskServiceTasksApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="ServiceServiceTaskResource"/> class. </summary>
@@ -65,21 +68,6 @@ namespace Azure.ResourceManager.DataMigration
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DataMigration/services/serviceTasks";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ProjectTaskData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -87,13 +75,14 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
+        /// The core implementation for operation Get
         /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The GET method retrieves information about a service task.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}
         /// Operation Id: ServiceTasks_Get
         /// </summary>
         /// <param name="expand"> Expand the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceServiceTaskResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        protected override async Task<Response<ProjectTaskResource>> GetCoreAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceServiceTaskServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskResource.Get");
             scope.Start();
@@ -102,7 +91,7 @@ namespace Azure.ResourceManager.DataMigration
                 var response = await _serviceServiceTaskServiceTasksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -118,7 +107,22 @@ namespace Azure.ResourceManager.DataMigration
         /// </summary>
         /// <param name="expand"> Expand the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceServiceTaskResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<ServiceServiceTaskResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        {
+            var result = await GetCoreAsync(expand, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ServiceServiceTaskResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Get
+        /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The GET method retrieves information about a service task.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}
+        /// Operation Id: ServiceTasks_Get
+        /// </summary>
+        /// <param name="expand"> Expand the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<ProjectTaskResource> GetCore(string expand = null, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceServiceTaskServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskResource.Get");
             scope.Start();
@@ -127,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration
                 var response = _serviceServiceTaskServiceTasksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -137,6 +141,21 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
+        /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The GET method retrieves information about a service task.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}
+        /// Operation Id: ServiceTasks_Get
+        /// </summary>
+        /// <param name="expand"> Expand the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<ServiceServiceTaskResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        {
+            var result = GetCore(expand, cancellationToken);
+            return Response.FromValue((ServiceServiceTaskResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Delete
         /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a service task, canceling it first if it&apos;s running.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}
         /// Operation Id: ServiceTasks_Delete
@@ -144,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="deleteRunningTasks"> Delete the resource even if it contains running tasks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? deleteRunningTasks = null, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, bool? deleteRunningTasks = null, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceServiceTaskServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskResource.Delete");
             scope.Start();
@@ -164,6 +183,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
+        /// The core implementation for operation Delete
         /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a service task, canceling it first if it&apos;s running.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}
         /// Operation Id: ServiceTasks_Delete
@@ -171,7 +191,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="deleteRunningTasks"> Delete the resource even if it contains running tasks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? deleteRunningTasks = null, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, bool? deleteRunningTasks = null, CancellationToken cancellationToken = default)
         {
             using var scope = _serviceServiceTaskServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskResource.Delete");
             scope.Start();
@@ -191,6 +211,7 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
+        /// The core implementation for operation Update
         /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The PATCH method updates an existing service task, but since service tasks have no mutable custom properties, there is little reason to do so.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}
         /// Operation Id: ServiceTasks_Update
@@ -198,7 +219,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="data"> Information about the task. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<Response<ServiceServiceTaskResource>> UpdateAsync(ProjectTaskData data, CancellationToken cancellationToken = default)
+        protected override async Task<Response<ProjectTaskResource>> UpdateCoreAsync(ProjectTaskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -207,7 +228,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = await _serviceServiceTaskServiceTasksRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -224,7 +245,23 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="data"> Information about the task. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual Response<ServiceServiceTaskResource> Update(ProjectTaskData data, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<ServiceServiceTaskResource>> UpdateAsync(ProjectTaskData data, CancellationToken cancellationToken = default)
+        {
+            var result = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ServiceServiceTaskResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Update
+        /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The PATCH method updates an existing service task, but since service tasks have no mutable custom properties, there is little reason to do so.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}
+        /// Operation Id: ServiceTasks_Update
+        /// </summary>
+        /// <param name="data"> Information about the task. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        protected override Response<ProjectTaskResource> UpdateCore(ProjectTaskData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -233,7 +270,7 @@ namespace Azure.ResourceManager.DataMigration
             try
             {
                 var response = _serviceServiceTaskServiceTasksRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -243,19 +280,35 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
+        /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The PATCH method updates an existing service task, but since service tasks have no mutable custom properties, there is little reason to do so.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}
+        /// Operation Id: ServiceTasks_Update
+        /// </summary>
+        /// <param name="data"> Information about the task. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new Response<ServiceServiceTaskResource> Update(ProjectTaskData data, CancellationToken cancellationToken = default)
+        {
+            var result = UpdateCore(data, cancellationToken);
+            return Response.FromValue((ServiceServiceTaskResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Cancel
         /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a service task if it&apos;s currently queued or running.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}/cancel
         /// Operation Id: ServiceTasks_Cancel
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ServiceServiceTaskResource>> CancelAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<ProjectTaskResource>> CancelCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _serviceServiceTaskServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskResource.Cancel");
             scope.Start();
             try
             {
                 var response = await _serviceServiceTaskServiceTasksRestClient.CancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -270,20 +323,47 @@ namespace Azure.ResourceManager.DataMigration
         /// Operation Id: ServiceTasks_Cancel
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ServiceServiceTaskResource> Cancel(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<ServiceServiceTaskResource>> CancelAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await CancelCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ServiceServiceTaskResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// The core implementation for operation Cancel
+        /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a service task if it&apos;s currently queued or running.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}/cancel
+        /// Operation Id: ServiceTasks_Cancel
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<ProjectTaskResource> CancelCore(CancellationToken cancellationToken = default)
         {
             using var scope = _serviceServiceTaskServiceTasksClientDiagnostics.CreateScope("ServiceServiceTaskResource.Cancel");
             scope.Start();
             try
             {
                 var response = _serviceServiceTaskServiceTasksRestClient.Cancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new ServiceServiceTaskResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// The service tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a service task if it&apos;s currently queued or running.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/serviceTasks/{taskName}/cancel
+        /// Operation Id: ServiceTasks_Cancel
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<ServiceServiceTaskResource> Cancel(CancellationToken cancellationToken = default)
+        {
+            var result = CancelCore(cancellationToken);
+            return Response.FromValue((ServiceServiceTaskResource)result.Value, result.GetRawResponse());
         }
     }
 }

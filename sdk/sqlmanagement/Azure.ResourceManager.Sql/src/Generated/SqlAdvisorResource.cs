@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.Sql
             {
                 return new SqlServerAdvisorResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SqlDatabaseAdvisorResource or SqlServerAdvisorResource");
         }
 
-        internal static bool IsSqlDatabaseAdvisorResource(ResourceIdentifier id)
+        private static bool IsSqlDatabaseAdvisorResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SqlDatabaseAdvisorResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Sql
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSqlServerAdvisorResource(ResourceIdentifier id)
+        private static bool IsSqlServerAdvisorResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SqlServerAdvisorResource.ResourceType)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

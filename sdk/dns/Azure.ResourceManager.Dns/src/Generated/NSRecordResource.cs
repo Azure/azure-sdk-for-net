@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<RecordSetResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordResource.GetCore");
+            using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordResource.Get");
             scope.Start();
             try
             {
-                var response = await _nsRecordRecordSetsRestClient.GetAsync("NS".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _nsRecordRecordSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NS".ToDnsRecordType(), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<RecordSetResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordResource.GetCore");
+            using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordResource.Get");
             scope.Start();
             try
             {
-                var response = _nsRecordRecordSetsRestClient.Get("NS".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _nsRecordRecordSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NS".ToDnsRecordType(), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
@@ -162,11 +162,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordResource.DeleteCore");
+            using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = await _nsRecordRecordSetsRestClient.DeleteAsync("NS".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _nsRecordRecordSetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NS".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -190,11 +190,11 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordResource.DeleteCore");
+            using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordResource.Delete");
             scope.Start();
             try
             {
-                var response = _nsRecordRecordSetsRestClient.Delete("NS".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ifMatch, cancellationToken);
+                var response = _nsRecordRecordSetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NS".ToDnsRecordType(), Id.Name, ifMatch, cancellationToken);
                 var operation = new DnsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordResource.UpdateCore");
+            using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordResource.Update");
             scope.Start();
             try
             {
-                var response = await _nsRecordRecordSetsRestClient.UpdateAsync("NS".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
+                var response = await _nsRecordRecordSetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NS".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.Dns
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordResource.UpdateCore");
+            using var scope = _nsRecordRecordSetsClientDiagnostics.CreateScope("NSRecordResource.Update");
             scope.Start();
             try
             {
-                var response = _nsRecordRecordSetsRestClient.Update("NS".ToDnsRecordType(), Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, ifMatch, cancellationToken);
+                var response = _nsRecordRecordSetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "NS".ToDnsRecordType(), Id.Name, data, ifMatch, cancellationToken);
                 return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

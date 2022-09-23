@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CognitiveServices
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 return new CognitiveServicesDeletedAccountResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: CognitiveServicesAccountResource or CognitiveServicesDeletedAccountResource");
         }
 
-        internal static bool IsCognitiveServicesAccountResource(ResourceIdentifier id)
+        private static bool IsCognitiveServicesAccountResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != CognitiveServicesAccountResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.CognitiveServices
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsCognitiveServicesDeletedAccountResource(ResourceIdentifier id)
+        private static bool IsCognitiveServicesDeletedAccountResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != CognitiveServicesDeletedAccountResource.ResourceType)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/subscriptions")
+            if (id.Parent.Parent.Parent.ResourceType != SubscriptionResource.ResourceType)
             {
                 return false;
             }

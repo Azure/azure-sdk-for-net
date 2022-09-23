@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseScheduleResource>> GetCoreAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.GetCore");
+            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Get");
             scope.Start();
             try
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseScheduleResource> GetCore(string expand = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.GetCore");
+            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Get");
             scope.Start();
             try
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.DeleteCore");
+            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Delete");
             scope.Start();
             try
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.DeleteCore");
+            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Delete");
             scope.Start();
             try
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(schedule, nameof(schedule));
 
-            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.UpdateCore");
+            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Update");
             scope.Start();
             try
             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(schedule, nameof(schedule));
 
-            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.UpdateCore");
+            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Update");
             scope.Start();
             try
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> ExecuteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.ExecuteCore");
+            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Execute");
             scope.Start();
             try
             {
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation ExecuteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.ExecuteCore");
+            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.Execute");
             scope.Start();
             try
             {
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.AddTagCore");
+            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.AddTag");
             scope.Start();
             try
             {
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.DevTestLabs
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.AddTagCore");
+            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.AddTag");
             scope.Start();
             try
             {
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.SetTagsCore");
+            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.SetTags");
             scope.Start();
             try
             {
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.SetTagsCore");
+            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.SetTags");
             scope.Start();
             try
             {
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.RemoveTagCore");
+            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.RemoveTag");
             scope.Start();
             try
             {
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.RemoveTagCore");
+            using var scope = _labVirtualmachineScheduleVirtualMachineSchedulesClientDiagnostics.CreateScope("LabVirtualmachineScheduleResource.RemoveTag");
             scope.Start();
             try
             {

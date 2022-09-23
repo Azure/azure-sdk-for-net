@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<PolicyDefinitionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinitionResource.GetCore");
+            using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinitionResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<PolicyDefinitionResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinitionResource.GetCore");
+            using var scope = _tenantPolicyDefinitionPolicyDefinitionsClientDiagnostics.CreateScope("TenantPolicyDefinitionResource.Get");
             scope.Start();
             try
             {
