@@ -4,11 +4,16 @@
 #nullable disable
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Text.RegularExpressions;
+using System.Globalization;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerService
@@ -20,86 +25,70 @@ namespace Azure.ResourceManager.ContainerService
     /// </summary>
     public partial class ContainerServiceManagedClusterCollection : ArmCollection, IEnumerable<ContainerServiceManagedClusterResource>, IAsyncEnumerable<ContainerServiceManagedClusterResource>
     {
-        /// <summary> Initializes a new instance of the <see cref="ContainerServiceManagedClusterCollection"/> class. </summary>
-        /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ContainerServiceManagedClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        /// <summary>
+        /// Creates or updates a managed cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}
+        /// Operation Id: ManagedClusters_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceName"> The name of the managed cluster resource. </param>
+        /// <param name="data"> The managed cluster to create or update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ContainerServiceManagedClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string resourceName, ContainerServiceManagedClusterData data, CancellationToken cancellationToken = default)
         {
-            // Hack the HttpPipelinePolicies
-            HttpPipelinePolicy[] originalPolicies = GetPrivateFieldValue<ReadOnlyMemory<HttpPipelinePolicy>>(Pipeline, "_pipeline").ToArray();
-            var all = new HttpPipelinePolicy[originalPolicies.Length + 1];
-            all[0] = new OperationQueryApiVersionPolicy();
-            originalPolicies.CopyTo(all, 1);
-            SetPrivateFieldValue<ReadOnlyMemory<HttpPipelinePolicy>>(Pipeline, "_pipeline", all);
-            // End of hack
-            _containerServiceManagedClusterManagedClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ContainerServiceManagedClusterResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ContainerServiceManagedClusterResource.ResourceType, out string containerServiceManagedClusterManagedClustersApiVersion);
-            _containerServiceManagedClusterManagedClustersRestClient = new ManagedClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceManagedClusterManagedClustersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
-        }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
-        internal class OperationQueryApiVersionPolicy : HttpPipelineSynchronousPolicy
-        {
-            // "https://management.azure.com/subscriptions/8ecadfc9-d1a3-4ea4-b844-0d9f87e4d7c8/providers/Microsoft.ContainerService/locations/westus2/operations/6112cdd3-47cb-4b46-9d7c-7531b9fe64b5?api-version=2022-04-01"
-            private Regex _operationQueryPattern = new Regex(@"/subscriptions/[^/]+/providers/Microsoft.ContainerService/locations/([^?/]+)/operations/[^?/]+\?api-version=2022-04-01");
-
-            public override void OnSendingRequest(HttpMessage message)
+            using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterCollection.CreateOrUpdate");
+            scope.Start();
+            try
             {
-                if (message.Request.Method == RequestMethod.Get)
-                {
-                    var match = _operationQueryPattern.Match(message.Request.Uri.ToString());
-                    if (match.Success)
-                    {
-                        message.Request.Uri.Query = message.Request.Uri.Query.Replace("api-version=2022-04-01", "api-version=2017-08-31");
-                    }
-                }
+                var response = await _containerServiceManagedClusterManagedClustersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ContainerServiceArmOperation<ContainerServiceManagedClusterResource>(new ContainerServiceManagedClusterOperationSource(Client), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location, "2017-08-31");
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
             }
         }
 
         /// <summary>
-        /// Returns a private Property Value from a given Object. Uses Reflection.
-        /// Throws a ArgumentOutOfRangeException if the Property is not found.
+        /// Creates or updates a managed cluster.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerService/managedClusters/{resourceName}
+        /// Operation Id: ManagedClusters_CreateOrUpdate
         /// </summary>
-        /// <typeparam name="T">Type of the Property</typeparam>
-        /// <param name="obj">Object from where the Property Value is returned</param>
-        /// <param name="propName">Propertyname as string.</param>
-        /// <returns>PropertyValue</returns>
-        private static T GetPrivateFieldValue<T>(object obj, string propName)
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="resourceName"> The name of the managed cluster resource. </param>
+        /// <param name="data"> The managed cluster to create or update. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ContainerServiceManagedClusterResource> CreateOrUpdate(WaitUntil waitUntil, string resourceName, ContainerServiceManagedClusterData data, CancellationToken cancellationToken = default)
         {
-            if (obj == null) throw new ArgumentNullException(nameof(obj));
-            Type t = obj.GetType();
-            FieldInfo fi = null;
-            while (fi == null && t != null)
-            {
-                fi = t.GetField(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                t = t.BaseType;
-            }
-            if (fi == null) throw new ArgumentOutOfRangeException(nameof(propName), "Field {propName} was not found in Type {obj.GetType().FullName}");
-            return (T)fi.GetValue(obj);
-        }
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNull(data, nameof(data));
 
-        /// <summary>
-        /// Set a private Property Value on a given Object. Uses Reflection.
-        /// </summary>
-        /// <typeparam name="T">Type of the Property</typeparam>
-        /// <param name="obj">Object from where the Property Value is returned</param>
-        /// <param name="propName">Propertyname as string.</param>
-        /// <param name="val">the value to set</param>
-        /// <exception cref="ArgumentOutOfRangeException">if the Property is not found</exception>
-        private static void SetPrivateFieldValue<T>(object obj, string propName, T val)
-        {
-            if (obj == null) throw new ArgumentNullException(nameof(obj));
-            Type t = obj.GetType();
-            FieldInfo fi = null;
-            while (fi == null && t != null)
+            using var scope = _containerServiceManagedClusterManagedClustersClientDiagnostics.CreateScope("ContainerServiceManagedClusterCollection.CreateOrUpdate");
+            scope.Start();
+            try
             {
-                fi = t.GetField(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                t = t.BaseType;
+                var response = _containerServiceManagedClusterManagedClustersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data, cancellationToken);
+                var operation = new ContainerServiceArmOperation<ContainerServiceManagedClusterResource>(new ContainerServiceManagedClusterOperationSource(Client), _containerServiceManagedClusterManagedClustersClientDiagnostics, Pipeline, _containerServiceManagedClusterManagedClustersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, data).Request, response, OperationFinalStateVia.Location, "2017-08-31");
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
             }
-            if (fi == null) throw new ArgumentOutOfRangeException(nameof(propName), "Field {propName} was not found in Type {obj.GetType().FullName}");
-            fi.SetValue(obj, val);
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
