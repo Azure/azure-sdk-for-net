@@ -44,7 +44,7 @@ namespace Azure.Communication.CallAutomation
                 var uniqueId = await ServiceBusWithNewCall(user, target);
 
                 // create call and assert response
-                CreateCallResult response = await client.CreateCallAsync(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}")).ConfigureAwait(false);
+                CreateCallResult response = await client.CreateCallAsync(new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"))).ConfigureAwait(false);
                 string callConnectionId = response.CallConnectionProperties.CallConnectionId;
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
