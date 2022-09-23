@@ -30,18 +30,11 @@ namespace Azure.ResourceManager.EventGrid.Tests
             _eventGridTopicCollection = _resourceGroup.GetEventGridTopics();
         }
 
-        private async Task<EventGridTopicResource> CreateEventGridTopic(string topicName)
-        {
-            var data = new EventGridTopicData(_resourceGroup.Data.Location);
-            var topic = await _eventGridTopicCollection.CreateOrUpdateAsync(WaitUntil.Completed, topicName, data);
-            return topic.Value;
-        }
-
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
             string topicName = Recording.GenerateAssetName("EventGridTopic");
-            var topic = await CreateEventGridTopic(topicName);
+            var topic = await CreateEventGridTopic(_resourceGroup, topicName);
             ValidateEventGridTopic(topic, topicName);
         }
 
@@ -49,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         public async Task Exist()
         {
             string topicName = Recording.GenerateAssetName("EventGridTopic");
-            await CreateEventGridTopic(topicName);
+            await CreateEventGridTopic(_resourceGroup, topicName);
             bool flag = await _eventGridTopicCollection.ExistsAsync(topicName);
             Assert.IsTrue(flag);
         }
@@ -58,7 +51,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         public async Task Get()
         {
             string topicName = Recording.GenerateAssetName("EventGridTopic");
-            await CreateEventGridTopic(topicName);
+            await CreateEventGridTopic(_resourceGroup, topicName);
             var topic = await _eventGridTopicCollection.GetAsync(topicName);
             ValidateEventGridTopic(topic, topicName);
         }
@@ -67,7 +60,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         public async Task GetAll()
         {
             string topicName = Recording.GenerateAssetName("EventGridTopic");
-            await CreateEventGridTopic(topicName);
+            await CreateEventGridTopic(_resourceGroup, topicName);
             var list = await _eventGridTopicCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             ValidateEventGridTopic(list.First(item => item.Data.Name == topicName), topicName);
@@ -77,7 +70,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
         public async Task Delete()
         {
             string topicName = Recording.GenerateAssetName("EventGridTopic");
-            var topic = await CreateEventGridTopic(topicName);
+            var topic = await CreateEventGridTopic(_resourceGroup, topicName);
             bool flag = await _eventGridTopicCollection.ExistsAsync(topicName);
             Assert.IsTrue(flag);
 

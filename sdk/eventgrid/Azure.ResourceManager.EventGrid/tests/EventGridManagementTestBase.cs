@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -55,6 +56,27 @@ namespace Azure.ResourceManager.EventGrid.Tests
             var data = new PartnerRegistrationData(new AzureLocation("Global"));
             var registration = await resourceGroup.GetPartnerRegistrations().CreateOrUpdateAsync(WaitUntil.Completed, registrationName, data);
             return registration.Value;
+        }
+
+        protected async Task<PartnerNamespaceResource> CreatePartnerNamespace(ResourceGroupResource resourceGroup, string namespaceName)
+        {
+            var registration = await CreatePartnerRegistration(resourceGroup, Recording.GenerateAssetName("PartnerRegistration"));
+            var data = new PartnerNamespaceData(resourceGroup.Data.Location)
+            {
+                PartnerRegistrationFullyQualifiedId = registration.Data.Id,
+                IsLocalAuthDisabled = true,
+                PublicNetworkAccess = EventGridPublicNetworkAccess.Enabled,
+                PartnerTopicRoutingMode = PartnerTopicRoutingMode.ChannelNameHeader,
+            };
+            var partnerNamespace = await resourceGroup.GetPartnerNamespaces().CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, data);
+            return partnerNamespace.Value;
+        }
+
+        protected async Task<EventGridTopicResource> CreateEventGridTopic(ResourceGroupResource resourceGroup, string topicName)
+        {
+            var data = new EventGridTopicData(resourceGroup.Data.Location);
+            var topic = await resourceGroup.GetEventGridTopics().CreateOrUpdateAsync(WaitUntil.Completed, topicName, data);
+            return topic.Value;
         }
     }
 }
