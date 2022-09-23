@@ -2,13 +2,9 @@
 
 ## 1.0.0-beta.1 (2022-09-22)
 
-### Breaking Changes
+### Features Added
 
 New design of track 2 initial commit.
-
-### Package Name
-
-The package name has been changed from `Microsoft.Azure.Management.HybridCompute` to `Azure.ResourceManager.HybridCompute`.
 
 ### General New Features
 
