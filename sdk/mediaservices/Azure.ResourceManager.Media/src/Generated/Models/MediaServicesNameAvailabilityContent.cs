@@ -8,16 +8,16 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The input to the check name availability request. </summary>
-    public partial class MediaNameServicesAvailabilityContent
+    public partial class MediaServicesNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of MediaNameServicesAvailabilityContent. </summary>
-        public MediaNameServicesAvailabilityContent()
+        /// <summary> Initializes a new instance of MediaServicesNameAvailabilityContent. </summary>
+        public MediaServicesNameAvailabilityContent()
         {
         }
 
         /// <summary> The account name. </summary>
         public string Name { get; set; }
         /// <summary> The account type. For a Media Services account, this should be &apos;MediaServices&apos;. </summary>
-        public string CheckNameAvailabilityInputType { get; set; }
+        public string ResourceType { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Media.Models
         internal static MediaTransformOutput DeserializeMediaTransformOutput(JsonElement element)
         {
             Optional<MediaTransformOnErrorType> onError = default;
-            Optional<JobPriority> relativePriority = default;
+            Optional<MediaJobPriority> relativePriority = default;
             MediaTransformPreset preset = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    relativePriority = new JobPriority(property.Value.GetString());
+                    relativePriority = new MediaJobPriority(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("preset"))

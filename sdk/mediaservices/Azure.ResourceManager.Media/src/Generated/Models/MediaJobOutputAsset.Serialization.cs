@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = default;
             Optional<MediaJobError> error = default;
             Optional<MediaTransformPreset> presetOverride = default;
-            Optional<JobState> state = default;
+            Optional<MediaJobState> state = default;
             Optional<int> progress = default;
             Optional<string> label = default;
             Optional<DateTimeOffset?> startTime = default;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = new JobState(property.Value.GetString());
+                    state = new MediaJobState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("progress"))

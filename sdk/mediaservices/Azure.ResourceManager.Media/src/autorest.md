@@ -95,7 +95,7 @@ rename-mapping:
   AssetTrackCollection: MediaAssetTrackListResult
   AttributeFilter: TrackAttributeFilter
   Audio: AudioBase
-  CheckNameAvailabilityInput: MediaNameServicesAvailabilityContent
+  CheckNameAvailabilityInput: MediaServicesNameAvailabilityContent
   Codec: CodecBase
   Complexity: EncodingComplexity
   ContentKeyPolicy.properties.created: CreatedOn
@@ -168,6 +168,7 @@ rename-mapping:
   JobOutput.endTime: EndOn
   JobOutputAsset: MediaJobOutputAsset
   JobRetry: MediaJobRetry
+  JobState: MediaJobState
   KeyDelivery: MediaKeyDelivery
   Layer: LayerBase
   ListContainerSasInput: StorageContainerSasContent
@@ -188,11 +189,11 @@ rename-mapping:
   Overlay: OverlayBase
   Preset: MediaTransformPreset
   PresetConfigurations: EncoderPresetConfigurations
-  Priority: JobPriority
+  Priority: MediaJobPriority
   PrivateEndpointConnection: MediaServicesPrivateEndpointConnection
   PrivateLinkResource: MediaServicesPrivateLinkResource
   ProvisioningState: MediaServicesProvisioningState
-  PublicNetworkAccess: MediaPublicNetworkAccess
+  PublicNetworkAccess: MediaServicesPublicNetworkAccess
   Rectangle: RectangularWindow
   Rotation: RotationSetting
   SecurityLevel: PlayReadySecurityLevel

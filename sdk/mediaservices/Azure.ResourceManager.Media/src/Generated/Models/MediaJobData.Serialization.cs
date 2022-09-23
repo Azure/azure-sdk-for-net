@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.Media
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> created = default;
-            Optional<JobState> state = default;
+            Optional<MediaJobState> state = default;
             Optional<string> description = default;
             Optional<MediaJobInputBasicProperties> input = default;
             Optional<DateTimeOffset> lastModified = default;
             Optional<IList<MediaJobOutput>> outputs = default;
-            Optional<JobPriority> priority = default;
+            Optional<MediaJobPriority> priority = default;
             Optional<IDictionary<string, string>> correlationData = default;
             Optional<DateTimeOffset?> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            state = new JobState(property0.Value.GetString());
+                            state = new MediaJobState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("description"))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            priority = new JobPriority(property0.Value.GetString());
+                            priority = new MediaJobPriority(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("correlationData"))

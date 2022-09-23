@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Describes the state of the JobOutput. </summary>
-    public readonly partial struct JobState : IEquatable<JobState>
+    public readonly partial struct MediaJobState : IEquatable<MediaJobState>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="JobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaJobState"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public JobState(string value)
+        public MediaJobState(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -31,31 +31,31 @@ namespace Azure.ResourceManager.Media.Models
         private const string ScheduledValue = "Scheduled";
 
         /// <summary> The job was canceled. This is a final state for the job. </summary>
-        public static JobState Canceled { get; } = new JobState(CanceledValue);
+        public static MediaJobState Canceled { get; } = new MediaJobState(CanceledValue);
         /// <summary> The job is in the process of being canceled. This is a transient state for the job. </summary>
-        public static JobState Canceling { get; } = new JobState(CancelingValue);
+        public static MediaJobState Canceling { get; } = new MediaJobState(CancelingValue);
         /// <summary> The job has encountered an error. This is a final state for the job. </summary>
-        public static JobState Error { get; } = new JobState(ErrorValue);
+        public static MediaJobState Error { get; } = new MediaJobState(ErrorValue);
         /// <summary> The job is finished. This is a final state for the job. </summary>
-        public static JobState Finished { get; } = new JobState(FinishedValue);
+        public static MediaJobState Finished { get; } = new MediaJobState(FinishedValue);
         /// <summary> The job is processing. This is a transient state for the job. </summary>
-        public static JobState Processing { get; } = new JobState(ProcessingValue);
+        public static MediaJobState Processing { get; } = new MediaJobState(ProcessingValue);
         /// <summary> The job is in a queued state, waiting for resources to become available. This is a transient state. </summary>
-        public static JobState Queued { get; } = new JobState(QueuedValue);
+        public static MediaJobState Queued { get; } = new MediaJobState(QueuedValue);
         /// <summary> The job is being scheduled to run on an available resource. This is a transient state, between queued and processing states. </summary>
-        public static JobState Scheduled { get; } = new JobState(ScheduledValue);
-        /// <summary> Determines if two <see cref="JobState"/> values are the same. </summary>
-        public static bool operator ==(JobState left, JobState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="JobState"/> values are not the same. </summary>
-        public static bool operator !=(JobState left, JobState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JobState"/>. </summary>
-        public static implicit operator JobState(string value) => new JobState(value);
+        public static MediaJobState Scheduled { get; } = new MediaJobState(ScheduledValue);
+        /// <summary> Determines if two <see cref="MediaJobState"/> values are the same. </summary>
+        public static bool operator ==(MediaJobState left, MediaJobState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="MediaJobState"/> values are not the same. </summary>
+        public static bool operator !=(MediaJobState left, MediaJobState right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="MediaJobState"/>. </summary>
+        public static implicit operator MediaJobState(string value) => new MediaJobState(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is JobState other && Equals(other);
+        public override bool Equals(object obj) => obj is MediaJobState other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(JobState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(MediaJobState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

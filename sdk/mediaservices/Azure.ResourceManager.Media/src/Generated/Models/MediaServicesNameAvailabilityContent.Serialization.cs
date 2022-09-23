@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class MediaNameServicesAvailabilityContent : IUtf8JsonSerializable
+    public partial class MediaServicesNameAvailabilityContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("name");
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(CheckNameAvailabilityInputType))
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(CheckNameAvailabilityInputType);
+                writer.WriteStringValue(ResourceType);
             }
             writer.WriteEndObject();
         }

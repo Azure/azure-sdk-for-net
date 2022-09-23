@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="startOn"> The UTC date and time at which this Job Output began processing. </param>
         /// <param name="endOn"> The UTC date and time at which this Job Output finished processing. </param>
         /// <param name="assetName"> The name of the output Asset. </param>
-        internal MediaJobOutputAsset(string odataType, MediaJobError error, MediaTransformPreset presetOverride, JobState? state, int? progress, string label, DateTimeOffset? startOn, DateTimeOffset? endOn, string assetName) : base(odataType, error, presetOverride, state, progress, label, startOn, endOn)
+        internal MediaJobOutputAsset(string odataType, MediaJobError error, MediaTransformPreset presetOverride, MediaJobState? state, int? progress, string label, DateTimeOffset? startOn, DateTimeOffset? endOn, string assetName) : base(odataType, error, presetOverride, state, progress, label, startOn, endOn)
         {
             AssetName = assetName;
             OdataType = odataType ?? "#Microsoft.Media.JobOutputAsset";

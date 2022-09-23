@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="correlationData"> Customer provided key, value pairs that will be returned in Job and JobOutput state events. </param>
         /// <param name="startOn"> The UTC date and time at which this Job began processing. </param>
         /// <param name="endOn"> The UTC date and time at which this Job finished processing. </param>
-        internal MediaJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, JobState? state, string description, MediaJobInputBasicProperties input, DateTimeOffset? lastModifiedOn, IList<MediaJobOutput> outputs, JobPriority? priority, IDictionary<string, string> correlationData, DateTimeOffset? startOn, DateTimeOffset? endOn) : base(id, name, resourceType, systemData)
+        internal MediaJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, MediaJobState? state, string description, MediaJobInputBasicProperties input, DateTimeOffset? lastModifiedOn, IList<MediaJobOutput> outputs, MediaJobPriority? priority, IDictionary<string, string> correlationData, DateTimeOffset? startOn, DateTimeOffset? endOn) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
             State = state;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Media
         /// <summary> The UTC date and time when the customer has created the Job, in &apos;YYYY-MM-DDThh:mm:ssZ&apos; format. </summary>
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The current state of the job. </summary>
-        public JobState? State { get; }
+        public MediaJobState? State { get; }
         /// <summary> Optional customer supplied description of the Job. </summary>
         public string Description { get; set; }
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Media
         /// </summary>
         public IList<MediaJobOutput> Outputs { get; }
         /// <summary> Priority with which the job should be processed. Higher priority jobs are processed before lower priority jobs. If not set, the default is normal. </summary>
-        public JobPriority? Priority { get; set; }
+        public MediaJobPriority? Priority { get; set; }
         /// <summary> Customer provided key, value pairs that will be returned in Job and JobOutput state events. </summary>
         public IDictionary<string, string> CorrelationData { get; }
         /// <summary> The UTC date and time at which this Job began processing. </summary>

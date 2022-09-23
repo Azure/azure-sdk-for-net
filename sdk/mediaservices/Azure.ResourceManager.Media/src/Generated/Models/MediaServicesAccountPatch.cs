@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Media.Models
         }
 
         /// <summary> Whether or not public network access is allowed for resources under the Media Services account. </summary>
-        public MediaPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public MediaServicesPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Provisioning state of the Media Services account. </summary>
         public MediaServicesProvisioningState? ProvisioningState { get; }
         /// <summary> The Private Endpoint Connections created for the Media Service account. </summary>

@@ -1,14 +1,20 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0 (2022-09-25)
 
-### Features Added
+This is the first stable release of the Media Management client library.
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- All `Asset-` models renamed to `MediaAsset-`.
+- Prepended `MediaServices` prefix to some special models.
+- Prepended `Media` prefix to all `Job` models.
+- Renamed `MediaTransformJob` to `MediaJob`.
+- Shorted `HttpLiveStreaming` to `Hls`.
+- Renamed `ContentKeyPolicyPlayReadySecurityLevel` to `PlayReadySecurityLevel`.
+- Renamed `LiveEvent` to `MediaLiveEvent`.
+- Renamed `LiveOutput` to `MediaLiveOutput`.
+- Other renames.
 
 ## 1.0.0-beta.3 (2022-09-14)
 
