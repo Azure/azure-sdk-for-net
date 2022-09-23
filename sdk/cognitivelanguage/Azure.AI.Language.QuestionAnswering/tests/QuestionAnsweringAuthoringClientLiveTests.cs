@@ -2,30 +2,27 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
-using Azure.AI.Language.QuestionAnswering.Projects;
+using Azure.AI.Language.QuestionAnswering.Authoring;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests
 {
-    public class QuestionAnsweringProjectsClientLiveTests : QuestionAnsweringProjectsLiveTestBase
+    public class QuestionAnsweringAuthoringClientLiveTests : QuestionAnsweringAuthoringLiveTestBase
     {
-        public QuestionAnsweringProjectsClientLiveTests(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion)
-            : base(isAsync, serviceVersion)
+        public QuestionAnsweringAuthoringClientLiveTests(bool isAsync, QuestionAnsweringClientOptions.ServiceVersion serviceVersion)
+            : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/29958")]
         public async Task SupportsAadAuthentication()
         {
-            QuestionAnsweringProjectsClient client = CreateClient<QuestionAnsweringProjectsClient>(
+            QuestionAnsweringAuthoringClient client = CreateClient<QuestionAnsweringAuthoringClient>(
                TestEnvironment.Endpoint,
                TestEnvironment.Credential,
                InstrumentClientOptions(
@@ -57,6 +54,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         }
 
         [RecordedTest]
+        [AsyncOnly] // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/31325 is fixed.
         public async Task DeployProject()
         {
             string testProjectName = CreateTestProjectName();
@@ -78,8 +76,8 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                             }
                         }
                 });
-            Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Started, testProjectName, updateSourcesRequestContent);
-            await updateSourcesOperation.WaitForCompletionAsync();
+
+            Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
             string testDeploymentName = "production";
             Operation<BinaryData> deploymentOperation = await Client.DeployProjectAsync(WaitUntil.Started, testProjectName, testDeploymentName);
@@ -92,6 +90,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         }
 
         [RecordedTest]
+        [AsyncOnly] // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/31325 is fixed.
         public async Task UpdateQnAs()
         {
             string testProjectName = CreateTestProjectName();
@@ -114,8 +113,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                         }
                 });
 
-            Operation<BinaryData> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
+            Operation<AsyncPageable<BinaryData>> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
+            // BUGBUG: This gets the job state.
+            // AsyncPageable<BinaryData> sources = updateQnasOperation.Value;
+
+            // This works, but is not the intended use case.
             AsyncPageable<BinaryData> sources = Client.GetQnasAsync(testProjectName);
 
             Assert.True(updateQnasOperation.HasCompleted);
@@ -125,6 +128,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
         }
 
         [RecordedTest]
+        [AsyncOnly] // TODO: Remove once https://github.com/Azure/azure-sdk-for-net/issues/31325 is fixed.
         public async Task UpdateSources()
         {
             string testProjectName = CreateTestProjectName();
@@ -147,10 +151,12 @@ namespace Azure.AI.Language.QuestionAnswering.Tests
                         }
                 });
 
-            Operation<BinaryData> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Started, testProjectName, updateSourcesRequestContent);
+            Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await Client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
-            await updateSourcesOperation.WaitForCompletionAsync();
+            // BUGBUG: This gets the job state.
+            // AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
 
+            // This works, but is not the intended use case.
             AsyncPageable<BinaryData> sources = Client.GetSourcesAsync(testProjectName);
 
             Assert.True(updateSourcesOperation.HasCompleted);

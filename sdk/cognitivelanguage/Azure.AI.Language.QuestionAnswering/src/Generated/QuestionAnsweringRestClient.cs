@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.QuestionAnswering
 {
-    internal partial class QuestionAnsweringRuntimeRestClient
+    internal partial class QuestionAnsweringRestClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -24,13 +24,13 @@ namespace Azure.AI.Language.QuestionAnswering
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of QuestionAnsweringRuntimeRestClient. </summary>
+        /// <summary> Initializes a new instance of QuestionAnsweringRestClient. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com). </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public QuestionAnsweringRuntimeRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2021-10-01")
+        public QuestionAnsweringRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2021-10-01")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -59,7 +59,7 @@ namespace Azure.AI.Language.QuestionAnswering
             return message;
         }
 
-        /// <summary> Answers the specified question using your knowledge base. It is the runtime API for Custom Question Answering. </summary>
+        /// <summary> Answers the specified question using your knowledge base. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
@@ -96,7 +96,7 @@ namespace Azure.AI.Language.QuestionAnswering
             }
         }
 
-        /// <summary> Answers the specified question using your knowledge base. It is the runtime API for Custom Question Answering. </summary>
+        /// <summary> Answers the specified question using your knowledge base. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
@@ -152,7 +152,7 @@ namespace Azure.AI.Language.QuestionAnswering
             return message;
         }
 
-        /// <summary> Answers the specified question using the provided text in the body. It is the runtime API for Prebuilt Question Answering. </summary>
+        /// <summary> Answers the specified question using the provided text in the body. </summary>
         /// <param name="textQueryOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textQueryOptions"/> is null. </exception>
@@ -179,7 +179,7 @@ namespace Azure.AI.Language.QuestionAnswering
             }
         }
 
-        /// <summary> Answers the specified question using the provided text in the body. It is the runtime API for Prebuilt Question Answering. </summary>
+        /// <summary> Answers the specified question using the provided text in the body. </summary>
         /// <param name="textQueryOptions"> Post body of the request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textQueryOptions"/> is null. </exception>

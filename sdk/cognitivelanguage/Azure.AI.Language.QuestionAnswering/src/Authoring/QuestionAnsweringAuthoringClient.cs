@@ -2,31 +2,29 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
-namespace Azure.AI.Language.QuestionAnswering.Projects
+namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
-    /// <summary> The QuestionAnsweringProjects service client. </summary>
+    /// <summary> The QuestionAnsweringAuthoring service client. </summary>
     [CodeGenType("QuestionAnsweringProjectsClient")]
-    public partial class QuestionAnsweringProjectsClient
+    public partial class QuestionAnsweringAuthoringClient
     {
-        /// <summary> Initializes a new instance of QuestionAnsweringProjectsClient. </summary>
+        /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public QuestionAnsweringProjectsClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new QuestionAnsweringClientOptions())
+        public QuestionAnsweringAuthoringClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new QuestionAnsweringClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of QuestionAnsweringProjectsClient. </summary>
+        /// <summary> Initializes a new instance of QuestionAnsweringAuthoringClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint (e.g., https://&lt;resource-name&gt;.cognitiveservices.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public QuestionAnsweringProjectsClient(Uri endpoint, TokenCredential credential, QuestionAnsweringClientOptions options)
+        public QuestionAnsweringAuthoringClient(Uri endpoint, TokenCredential credential, QuestionAnsweringClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
