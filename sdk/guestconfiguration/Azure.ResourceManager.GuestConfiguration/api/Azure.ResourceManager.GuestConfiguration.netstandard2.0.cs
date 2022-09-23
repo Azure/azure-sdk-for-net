@@ -177,19 +177,6 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static bool operator !=(Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus left, Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AssignmentReport
-    {
-        public AssignmentReport() { }
-        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo Assignment { get { throw null; } set { } }
-        public Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get { throw null; } }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
-        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType? OperationType { get { throw null; } }
-        public System.Guid? ReportId { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo> Resources { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
-        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo Vm { get { throw null; } set { } }
-    }
     public partial class AssignmentReportResourceComplianceReason
     {
         public AssignmentReportResourceComplianceReason() { }
@@ -204,22 +191,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public System.BinaryData Properties { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceComplianceReason> Reasons { get { throw null; } }
     }
-    public partial class ConfigurationInfo
-    {
-        public ConfigurationInfo() { }
-        public string Name { get { throw null; } }
-        public string Version { get { throw null; } }
-    }
-    public partial class ConfigurationParameter
-    {
-        public ConfigurationParameter() { }
-        public string Name { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
     public partial class GuestConfigurationAssignmentInfo
     {
         public GuestConfigurationAssignmentInfo() { }
-        public Azure.ResourceManager.GuestConfiguration.Models.ConfigurationInfo Configuration { get { throw null; } set { } }
+        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationInfo Configuration { get { throw null; } set { } }
         public string Name { get { throw null; } }
     }
     public partial class GuestConfigurationAssignmentProperties
@@ -230,7 +205,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public string Context { get { throw null; } set { } }
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationNavigation GuestConfiguration { get { throw null; } set { } }
         public System.DateTimeOffset? LastComplianceStatusCheckedOn { get { throw null; } }
-        public Azure.ResourceManager.GuestConfiguration.Models.AssignmentReport LatestAssignmentReport { get { throw null; } set { } }
+        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportInfo LatestAssignmentReport { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier LatestReportId { get { throw null; } }
         public string ParameterHash { get { throw null; } }
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState? ProvisioningState { get { throw null; } }
@@ -254,6 +229,19 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType? OperationType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo> Resources { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
+    }
+    public partial class GuestConfigurationAssignmentReportInfo
+    {
+        public GuestConfigurationAssignmentReportInfo() { }
+        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentInfo Assignment { get { throw null; } set { } }
+        public Azure.ResourceManager.GuestConfiguration.Models.AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentReportType? OperationType { get { throw null; } }
+        public System.Guid? ReportId { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.AssignmentReportResourceInfo> Resources { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationVmInfo Vm { get { throw null; } set { } }
     }
     public partial class GuestConfigurationAssignmentReportProperties
     {
@@ -305,6 +293,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public static bool operator !=(Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType left, Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class GuestConfigurationInfo
+    {
+        public GuestConfigurationInfo() { }
+        public string Name { get { throw null; } }
+        public string Version { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GuestConfigurationKind : System.IEquatable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind>
     {
@@ -327,8 +321,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public GuestConfigurationNavigation() { }
         public string AssignmentSource { get { throw null; } }
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationAssignmentType? AssignmentType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.ConfigurationParameter> ConfigurationParameter { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.ConfigurationParameter> ConfigurationProtectedParameter { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter> ConfigurationParameters { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationParameter> ConfigurationProtectedParameters { get { throw null; } }
         public Azure.ResourceManager.GuestConfiguration.Models.LcmConfigurationSetting ConfigurationSetting { get { throw null; } }
         public string ContentHash { get { throw null; } set { } }
         public string ContentType { get { throw null; } }
@@ -336,6 +330,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         public Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationKind? Kind { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+    }
+    public partial class GuestConfigurationParameter
+    {
+        public GuestConfigurationParameter() { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GuestConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.GuestConfiguration.Models.GuestConfigurationProvisioningState>

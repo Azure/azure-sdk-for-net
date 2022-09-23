@@ -279,10 +279,25 @@
       ]
     },
     {
+      "filename": "**/sdk/datamigration/**/*.cs",
+      "words": [
+        "regen",
+        "ssis",
+        "sybase",
+        "initialiazing"
+      ]
+    },
+    {
       "filename": "**/sdk/datashare/**/*.cs",
       "words": [
         "adls",
         "kusto"
+      ]
+    },
+    {
+      "filename": "**/sdk/devspaces/**/*.cs",
+      "words": [
+        "kube"
       ]
     },
     {
@@ -339,6 +354,12 @@
       ]
     },
     {
+      "filename": "**/sdk/elastic/**/*.cs",
+      "words": [
+        "liftr"
+      ]
+    },
+    {
       "filename": "**/sdk/elasticsan/**/*.cs",
       "words": [
         "iscsi",
@@ -378,6 +399,19 @@
       "words": [
         "dicom",
         "fhir"
+      ]
+    },
+    {
+      "filename": "**/sdk/hybridkubernetes/**/*.cs",
+      "words": [
+        "kubeconfigs"
+      ]
+    },
+    {
+      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "words": [
+        "kustomization",
+        "kustomizations"
       ]
     },
     {
@@ -514,6 +548,12 @@
       "filename": "**/sdk/networkfunction/**/*.cs",
       "words": [
         "ipfix"
+      ]
+    },
+    {
+      "filename": "**/sdk/operationalinsights/**/*.cs",
+      "words": [
+        "itsm"
       ]
     },
     {
@@ -781,6 +821,13 @@
         "Cran",
         "Rscript",
         "VCPUs"
+        ]
+    },
+    {
+      "filename": "**/sdk/machinelearningcompute/**/*.cs",
+      "words": [
+        "cname",
+        "kube"
         ]
     },  
     {

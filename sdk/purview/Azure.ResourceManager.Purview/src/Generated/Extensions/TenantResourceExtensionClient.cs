@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DefaultAccountPayload>> GetDefaultAccountAsync(Guid scopeTenantId, ScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
             using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetDefaultAccount");
             scope0.Start();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DefaultAccountPayload> GetDefaultAccount(Guid scopeTenantId, ScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public virtual Response<DefaultPurviewAccountPayload> GetDefaultAccount(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
             using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.GetDefaultAccount");
             scope0.Start();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DefaultAccountPayload>> SetDefaultAccountAsync(DefaultAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DefaultPurviewAccountPayload>> SetDefaultAccountAsync(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.SetDefaultAccount");
             scope.Start();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Purview
         /// </summary>
         /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DefaultAccountPayload> SetDefaultAccount(DefaultAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
+        public virtual Response<DefaultPurviewAccountPayload> SetDefaultAccount(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
             using var scope = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.SetDefaultAccount");
             scope.Start();
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RemoveDefaultAccountAsync(Guid scopeTenantId, ScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> RemoveDefaultAccountAsync(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
             using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.RemoveDefaultAccount");
             scope0.Start();
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is &quot;Subscription&quot; then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RemoveDefaultAccount(Guid scopeTenantId, ScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
+        public virtual Response RemoveDefaultAccount(Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
             using var scope0 = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.RemoveDefaultAccount");
             scope0.Start();
