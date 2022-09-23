@@ -64,10 +64,10 @@ namespace Azure.Communication.CallAutomation.Tests.EventCatcher
         private async Task AddAndRecordMessage(ProcessMessageEventArgs args)
         {
             await AddMessage(args).ContinueWith(async task => { await RecordMessage(args); });
-            // await RecordMessage(args);
+            await args.CompleteMessageAsync(args.Message);
         }
 
-        private Task AddMessage(ProcessMessageEventArgs args)
+        private async Task AddMessage(ProcessMessageEventArgs args)
         {
             // add to event store right away
             // no need to block the test while the recording is being written
@@ -75,7 +75,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventCatcher
             _receivedEvents.Add(recordedMessage);
             // notify event subscribers
             OnNewServiceBusReceivedMessageAdded(new RecordedEventArgs(recordedMessage));
-            return Task.CompletedTask;
+            await args.CompleteMessageAsync(args.Message);
         }
 
         public void InitializePlayerForPlayback()
@@ -139,7 +139,11 @@ namespace Azure.Communication.CallAutomation.Tests.EventCatcher
 
         private void RegisterErrorHandler(ServiceBusProcessor processor)
         {
-            processor.ProcessErrorAsync += args => Task.CompletedTask;
+            processor.ProcessErrorAsync += args =>
+            {
+                Console.WriteLine($"Processing message failed with message: {args.Exception.Message}");
+                return Task.CompletedTask;
+            };
         }
 
         private async Task StartProcessorAsync(ServiceBusProcessor processor)
