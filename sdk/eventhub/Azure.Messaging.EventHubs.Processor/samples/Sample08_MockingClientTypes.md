@@ -2,7 +2,7 @@
 
 Event Hubs is built to support unit testing with mocks, as described in the [Azure SDK Design Guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking). This is an important feature of the library that allows developers to write tests that are completely focused on their own application logic, though they depend on the Event Hubs types.
 
-For a more detailed description of mocking the set of Event Hubs client types see TODO INSERT LINK TO OTHER SAMPLE ONCE MERGED.
+For a more detailed description of mocking the set of Event Hubs client types see the [Event Hubs mocking client types sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/samples/Sample11_MockingClientTypes.md).
 
 ## Application-defined handlers
 
