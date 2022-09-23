@@ -61,27 +61,6 @@ namespace Azure.Communication.CallAutomation.Tests.EventCatcher
             _processorStore.TryAdd(queueName, processor);
         }
 
-        public async Task CleanUp(Func<HttpContent, Task>? deregisterCallback)
-        {
-            // cleanup servicebus
-            List<string> unsubList = new List<string>();
-            foreach (var processor in _processorStore)
-            {
-                unsubList.Add(processor.Key);
-            }
-
-            // unsubscribe;
-            var jsonString = JsonConvert.SerializeObject(unsubList);
-            var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-
-            if (deregisterCallback != null)
-            {
-                await deregisterCallback(content);
-            }
-
-            await StopProcessors();
-        }
-
         private async Task AddAndRecordMessage(ProcessMessageEventArgs args)
         {
             await AddMessage(args).ContinueWith(async task => { await RecordMessage(args); });

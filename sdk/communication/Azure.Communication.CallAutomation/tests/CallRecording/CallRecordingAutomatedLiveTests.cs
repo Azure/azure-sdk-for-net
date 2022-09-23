@@ -38,7 +38,7 @@ namespace Azure.Communication.CallAutomation
 
             try
             {
-                // create caller and reciever
+                // create caller and receiver
                 var user = await CreateIdentityUserAsync().ConfigureAwait(false);
                 var target = await CreateIdentityUserAsync().ConfigureAwait(false);
 
@@ -120,7 +120,7 @@ namespace Azure.Communication.CallAutomation
 
             try
             {
-                // create caller and reciever
+                // create caller and receiver
                 var user = await CreateIdentityUserAsync().ConfigureAwait(false);
                 var target = await CreateIdentityUserAsync().ConfigureAwait(false);
 

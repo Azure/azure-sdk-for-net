@@ -41,7 +41,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         public CallAutomationClientAutomatedLiveTestsBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
 #pragma warning restore CS8618
         {
-            SaveDebugRecordingsOnFailure = true;
             SanitizedHeaders.Add("x-ms-content-sha256");
             SanitizedHeaders.Add("X-FORWARDED-HOST");
             JsonPathSanitizers.Add("$..id");
