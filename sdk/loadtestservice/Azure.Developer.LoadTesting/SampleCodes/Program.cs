@@ -9,6 +9,8 @@ using Azure.Identity;
 using System.IO.Pipes;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using System.Net;
+using System.Net.Mime;
 
 namespace SampleCodes
 {
@@ -44,106 +46,139 @@ namespace SampleCodes
             string JMXPath = "/mnt/c/Users/niveditjain/Desktop/csharp/sdk/loadtestservice/Azure.Developer.LoadTesting/SampleCodes/sample.jmx";
             string appComponentConnectionString = "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourceGroups/App-Service-Sample-Demo-rg/providers/Microsoft.Web/sites/App-Service-Sample-Demo";
 
+            LoadTestAdministrationClient loadTestAdministration = client.getLoadTestAdministration();
+            TestRunClient loadTestRun = client.getLoadTestRun();
 
+            PrintResults(loadTestAdministration.CreateOrUpdateTest(testid, RequestContent.Create(
+                   new
+                   {
+                       description = "This is created using SDK",
+                       displayName = "SDK's LoadTest",
+                       loadTestConfig = new
+                       {
+                           engineInstances = 1,
+                           splitAllCSVs = false,
+                       },
+                       secrets = new { },
+                       enviornmentVariables = new { },
+                       passFailCriteria = new
+                       {
+                           passFailMetrics = new { },
+                       }
+                   }
+                )));
+
+            PrintResults(loadTestAdministration.UploadTestFile(testid, fileid, File.OpenRead(JMXPath)));
             // temp variable diclaration
-            Response response;
+            //Response response;
 
 
             // creating a loadtest
-            var requestCreateLoadTest = new
-            {
-               description = "This is created from new C# SDK",
-               displayName = "Nivedit's Test",
-               loadTestConfig = new
-               {
-                   engineInstances = 1,
-                   splitAllCSVs = false,
-               },
-               secrets = new { },
-               environmentVariables = new { },
-               passFailCriteria = new
-               {
-                   passFailMetrics = new { },
-               },
-            };
+            //var requestCreateLoadTest = new
+            //{
+            //   description = "This is created from new C# SDK",
+            //   displayName = "Nivedit's Test",
+            //   loadTestConfig = new
+            //   {
+            //       engineInstances = 1,
+            //       splitAllCSVs = false,
+            //   },
+            //   secrets = new { },
+            //   environmentVariables = new { },
+            //   passFailCriteria = new
+            //   {
+            //       passFailMetrics = new { },
+            //   },
+            //};
 
-            response = client.LoadTestAdministration.CreateOrUpdateTest(testid, RequestContent.Create(requestCreateLoadTest));
-            PrintResults(response);
+            //response = client.LoadTestAdministration.CreateOrUpdateTest(testid, RequestContent.Create(requestCreateLoadTest));
+            //PrintResults(response);
+
+            //response = client.LoadTestAdministration.UploadTestFile(testid, fileid, RequestContent.Create(filestream));
+            //PrintResults(response);
+
+            //HttpClient httpClient = new HttpClient();
+            //MultipartFormDataContent form = new MultipartFormDataContent();
+
+            //form.Add(new ByteArrayContent(file_bytes))
+
 
             // attaching JMX file to loadtest
 
+            //var requestUploadFile = File.OpenRead(JMXPath);
+            //var fileContent = new StreamContent(requestUploadFile);
+            //fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
+            //fileContent.Headers.ContentDisposition.FileName = "\"SampleApp.jmx\"";
+            //fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            //fileContent.Headers.ContentDisposition.Name = "\"file\"";
 
-            var requestUploadFile = File.OpenRead(JMXPath);
-            var fileContent = new StreamContent(requestUploadFile);
-            fileContent.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
-            fileContent.Headers.ContentDisposition.FileName = "\"SampleApp.jmx\"";
-            fileContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            fileContent.Headers.ContentDisposition.Name = "\"file\"";
 
+            //MultipartFormDataContent content = new MultipartFormDataContent("----WebKitFormBoundaryOphjV8IJ3BFxFX4F");
+            //content.Headers.Remove("Content-Type");
+            //content.Headers.TryAddWithoutValidation("Content-Type", "multipart/form-data; boundary=----WebKitFormBoundaryOphjV8IJ3BFxFX4F");
+            //content.Add(fileContent);
+            //RequestContent reqcontent = RequestContent.Create(content.ReadAsByteArrayAsync().GetAwaiter().GetResult());
 
-            MultipartFormDataContent content = new MultipartFormDataContent("----WebKitFormBoundaryOphjV8IJ3BFxFX4F");
-            content.Headers.Remove("Content-Type");
-            content.Headers.TryAddWithoutValidation("Content-Type", "multipart/form-data; boundary=----WebKitFormBoundaryOphjV8IJ3BFxFX4F");
-            content.Add(fileContent);
-            RequestContent reqcontent = RequestContent.Create(content.ReadAsByteArrayAsync().GetAwaiter().GetResult());
+            //response = client.LoadTestAdministration.UploadTestFile(testid, fileid, reqcontent);
 
-            response = client.LoadTestAdministration.UploadTestFile(testid, fileid, reqcontent);
+            //PrintResults(response);
 
-            PrintResults(response);
+            ////FileStream file = new FileStream(JMXPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            ////response = client.Administration.Test.UploadFile(testid, fileid, RequestContent.Create(file));
 
-            //FileStream file = new FileStream(JMXPath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            //response = client.Administration.Test.UploadFile(testid, fileid, RequestContent.Create(file));
+            //// connecting to a app component
 
-            // connecting to a app component
+            //var data = new
+            //{
+            //   testId = testid,
+            //   name = "Nivedit's app component",
+            //   value = new
+            //   {
+            //       appComponentConnectionString = new
+            //       {
+            //           resourceId = appComponentConnectionString,
+            //           resourceName = "App-Service-Sample-Demo",
+            //           resourceType = "Microsoft.Web/sites",
+            //           subscriptionId = "7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a"
+            //       }
+            //   }
+            //};
 
-            var data = new
-            {
-               testId = testid,
-               name = "Nivedit's app component",
-               value = new
-               {
-                   appComponentConnectionString = new
-                   {
-                       resourceId = appComponentConnectionString,
-                       resourceName = "App-Service-Sample-Demo",
-                       resourceType = "Microsoft.Web/sites",
-                       subscriptionId = "7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a"
-                   }
-               }
-            };
+            //response = client.LoadTestAdministration.CreateOrUpdateAppComponents(appcomponentid, RequestContent.Create(data));
+            //PrintResults(response);
 
-            response = client.LoadTestAdministration.CreateOrUpdateAppComponents(appcomponentid, RequestContent.Create(data));
-            PrintResults(response);
+            //var dataRunLoadTest = new
+            //{
+            //   testId = testid,
+            //   displayName = "Running load test from C# SDK",
+            //};
 
-            var dataRunLoadTest = new
-            {
-               testId = testid,
-               displayName = "Running load test from C# SDK",
-            };
+            //response = client.LoadTestRun.CreateAndUpdateTest(testrunid, RequestContent.Create(dataRunLoadTest));
+            //PrintResults(response);
 
-            response = client.LoadTestRun.CreateAndUpdateTest(testrunid, RequestContent.Create(dataRunLoadTest));
-            PrintResults(response);
+            //var dataResponse = client.LoadTestRun.GetTestRunClientMetricsFilters(testrunid).Content.ToString();
+            //Console.WriteLine(dataResponse);
+            //dynamic clientMetricFilters = JsonConvert.DeserializeObject(dataResponse);
 
-            var dataResponse = client.LoadTestRun.GetTestRunClientMetricsFilters(testrunid).Content.ToString();
-            Console.WriteLine(dataResponse);
-            dynamic clientMetricFilters = JsonConvert.DeserializeObject(dataResponse);
+            //// {"testRunId":"df697300-dd3d-4654-bddf-e83d70f71af8","filters":{"requestSamplerValues":["GET"],"errorFiltersValues":[]},"timeRange":{"startTime":"2022-09-16T10:20:36Z","endTime":"2022-09-16T10:27:23Z"}}
+            //Console.WriteLine(clientMetricFilters.timeRange.startTime);
+            //Console.WriteLine(clientMetricFilters.timeRange.endTime);
 
-            // {"testRunId":"df697300-dd3d-4654-bddf-e83d70f71af8","filters":{"requestSamplerValues":["GET"],"errorFiltersValues":[]},"timeRange":{"startTime":"2022-09-16T10:20:36Z","endTime":"2022-09-16T10:27:23Z"}}
-            Console.WriteLine(clientMetricFilters.timeRange.startTime);
-            Console.WriteLine(clientMetricFilters.timeRange.endTime);
+            //var resquestData = new
+            //{
+            //    requestSamplers = new[]
+            //    {
+            //        "GET"
+            //    },
+            //    startTime = DateTime.ParseExact(clientMetricFilters.timeRange.startTime, "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+            //    endTime = DateTime.ParseExact(clientMetricFilters.timeRange.endTime, "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
+            //};
 
-            var resquestData = new
-            {
-                requestSamplers = new[]
-                {
-                    "GET"
-                },
-                startTime = DateTime.ParseExact(clientMetricFilters.timeRange.startTime, "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
-                endTime = DateTime.ParseExact(clientMetricFilters.timeRange.endTime, "dd/MM/yyyy HH:mm:ss", System.Globalization.CultureInfo.InvariantCulture),
-            };
+            //response = client.LoadTestRun.GetTestRunClientMetrics(testrunid, RequestContent.Create(resquestData));
+            //PrintResults(response);
 
-            response = client.LoadTestRun.GetTestRunClientMetrics(testrunid, RequestContent.Create(resquestData));
-            PrintResults(response);
+            //FileStream fileStream = File.OpenRead(JMXPath);
+            //var fileContent = new StreamContent(fileStream);
         }
     }
 }

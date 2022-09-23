@@ -12,7 +12,7 @@ namespace Azure.Developer.LoadTesting
 {
     [CodeGenSuppress("LoadTestAdministrationClient", typeof(string), typeof(TokenCredential))]
     [CodeGenSuppress("LoadTestAdministrationClient", typeof(string), typeof(TokenCredential), typeof(AzureLoadTestingClientOptions))]
-    public partial class LoadTestAdministrationClient
-    {
-    }
+    [CodeGenSuppress("UploadTestFile", typeof(string), typeof(string), typeof(RequestContent), typeof(int?), typeof(RequestContent))]
+    [CodeGenSuppress("UploadTestFileAsync", typeof(string), typeof(string), typeof(RequestContent), typeof(int?), typeof(RequestContent))]
+    public partial class LoadTestAdministrationClient { }
 }

@@ -21,14 +21,14 @@ namespace Azure.Developer.LoadTesting
         private readonly string _apiVersion;
 
         /// <summary>
-        /// Adminstration Client for LoadTest
+        /// LoadTestAdministrationClient
         /// </summary>
-        public LoadTestAdministrationClient LoadTestAdministration;
+        private LoadTestAdministrationClient LoadTestAdministration;
 
         /// <summary>
-        /// TestRun Client
+        /// TestRunClient
         /// </summary>
-        public TestRunClient LoadTestRun;
+        private TestRunClient LoadTestRun;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -66,6 +66,24 @@ namespace Azure.Developer.LoadTesting
 
             LoadTestAdministration = new LoadTestAdministrationClient(endpoint, credential, options);
             LoadTestRun = new TestRunClient(endpoint, credential, options);
+        }
+
+        /// <summary>
+        /// getter for LoadTestAdministrationClient
+        /// </summary>
+        /// <returns> LoadTestAdministration Object </returns>
+        public LoadTestAdministrationClient getLoadTestAdministration()
+        {
+            return LoadTestAdministration;
+        }
+
+        /// <summary>
+        /// getter for LoadTestRunClient
+        /// </summary>
+        /// <returns> LoadTestRun Object </returns>
+        public TestRunClient getLoadTestRun()
+        {
+            return LoadTestRun;
         }
     }
 }
