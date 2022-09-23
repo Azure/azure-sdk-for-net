@@ -6,7 +6,7 @@ function Update-CIFile() {
     param(
         [string]$mgmtCiFile = ""
     )
-    
+
     $shouldRemove = $false
 
     $lines = Get-Content $mgmtCiFile
@@ -36,10 +36,10 @@ function Update-CIFile() {
             }
             $shouldRemove = $false
         }
-        
+
         $newLines.Add($line) | Out-Null
     }
-    
+
     Set-Content -Path $mgmtCiFile $newLines
 }
 
@@ -86,9 +86,9 @@ foreach($line in $armLines) {
     if($line.StartsWith("  paths:")) {
         $newLines.Add($line) | Out-Null
         $newLines.Add("    include:") | Out-Null
-        $newLines.Add("    - sdk/resourcemanager/") | Out-Null
-        $newLines.Add("    - common/ManagementTestShared/") | Out-Null
-        $newLines.Add("    - common/ManagementCoreShared/") | Out-Null
+        $newLines.Add("    - sdk/resourcemanager") | Out-Null
+        $newLines.Add("    - common/ManagementTestShared") | Out-Null
+        $newLines.Add("    - common/ManagementCoreShared") | Out-Null
         foreach($dir in $track2MgmtDirs) {
             $newLine = "    - $($dir.FullName.Substring($startIndex, $dir.FullName.Length - $startIndex).Replace('\', '/'))"
             $newLines.Add($newLine) | Out-Null

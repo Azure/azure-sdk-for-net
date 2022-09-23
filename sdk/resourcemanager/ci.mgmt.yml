@@ -8,9 +8,9 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/resourcemanager/
-    - common/ManagementTestShared/
-    - common/ManagementCoreShared/
+    - sdk/resourcemanager
+    - common/ManagementTestShared
+    - common/ManagementCoreShared
     - sdk/advisor/Azure.ResourceManager.Advisor
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
@@ -82,12 +82,17 @@ trigger:
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
     - sdk/keyvault/Azure.ResourceManager.KeyVault
+    - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
     - sdk/labservices/Azure.ResourceManager.LabServices
     - sdk/logic/Azure.ResourceManager.Logic
+    - sdk/machinelearningcompute/Azure.ResourceManager.MachineLearningCompute
     - sdk/machinelearningservices/Azure.ResourceManager.MachineLearning
+    - sdk/maintenance/Azure.ResourceManager.Maintenance
+    - sdk/managednetwork/Azure.ResourceManager.ManagedNetwork
     - sdk/managedserviceidentity/Azure.ResourceManager.ManagedServiceIdentities
     - sdk/managedservices/Azure.ResourceManager.ManagedServices
+    - sdk/managementpartner/Azure.ResourceManager.ManagementPartner
     - sdk/maps/Azure.ResourceManager.Maps
     - sdk/marketplace/Azure.ResourceManager.Marketplace
     - sdk/marketplaceordering/Azure.ResourceManager.MarketplaceOrdering
@@ -100,6 +105,7 @@ trigger:
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
+    - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
     - sdk/orbital/Azure.ResourceManager.Orbital
     - sdk/peering/Azure.ResourceManager.Peering
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
@@ -143,9 +149,9 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/resourcemanager/
-    - common/ManagementTestShared/
-    - common/ManagementCoreShared/
+    - sdk/resourcemanager
+    - common/ManagementTestShared
+    - common/ManagementCoreShared
     - sdk/advisor/Azure.ResourceManager.Advisor
     - sdk/agrifood/Azure.ResourceManager.AgFoodPlatform
     - sdk/alertsmanagement/Azure.ResourceManager.AlertsManagement
@@ -217,12 +223,17 @@ pr:
     - sdk/iotcentral/Azure.ResourceManager.IotCentral
     - sdk/iothub/Azure.ResourceManager.IotHub
     - sdk/keyvault/Azure.ResourceManager.KeyVault
+    - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration
     - sdk/kusto/Azure.ResourceManager.Kusto
     - sdk/labservices/Azure.ResourceManager.LabServices
     - sdk/logic/Azure.ResourceManager.Logic
+    - sdk/machinelearningcompute/Azure.ResourceManager.MachineLearningCompute
     - sdk/machinelearningservices/Azure.ResourceManager.MachineLearning
+    - sdk/maintenance/Azure.ResourceManager.Maintenance
+    - sdk/managednetwork/Azure.ResourceManager.ManagedNetwork
     - sdk/managedserviceidentity/Azure.ResourceManager.ManagedServiceIdentities
     - sdk/managedservices/Azure.ResourceManager.ManagedServices
+    - sdk/managementpartner/Azure.ResourceManager.ManagementPartner
     - sdk/maps/Azure.ResourceManager.Maps
     - sdk/marketplace/Azure.ResourceManager.Marketplace
     - sdk/marketplaceordering/Azure.ResourceManager.MarketplaceOrdering
@@ -235,6 +246,7 @@ pr:
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
     - sdk/notificationhubs/Azure.ResourceManager.NotificationHubs
     - sdk/openenergyplatform/Azure.ResourceManager.EnergyServices
+    - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
     - sdk/orbital/Azure.ResourceManager.Orbital
     - sdk/peering/Azure.ResourceManager.Peering
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights

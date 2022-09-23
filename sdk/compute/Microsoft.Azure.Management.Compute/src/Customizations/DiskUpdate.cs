@@ -160,5 +160,31 @@ namespace Microsoft.Azure.Management.Compute.Models
             Sku = sku;
             CustomInit();
         }
+
+        public DiskUpdate(OperatingSystemTypes? osType , int? diskSizeGB , EncryptionSettingsCollection encryptionSettingsCollection , long? diskIOPSReadWrite , long? diskMBpsReadWrite , long? diskIOPSReadOnly , long? diskMBpsReadOnly , int? maxShares , Encryption encryption , string networkAccessPolicy , string diskAccessId , string tier , bool? burstingEnabled , PurchasePlan purchasePlan , SupportedCapabilities supportedCapabilities , PropertyUpdatesInProgress propertyUpdatesInProgress , bool? supportsHibernation , string publicNetworkAccess , string dataAccessAuthMode , IDictionary<string, string> tags , DiskSku sku = default(DiskSku))
+        {
+            OsType = osType;
+            DiskSizeGB = diskSizeGB;
+            EncryptionSettingsCollection = encryptionSettingsCollection;
+            DiskIOPSReadWrite = diskIOPSReadWrite;
+            DiskMBpsReadWrite = diskMBpsReadWrite;
+            DiskIOPSReadOnly = diskIOPSReadOnly;
+            DiskMBpsReadOnly = diskMBpsReadOnly;
+            MaxShares = maxShares;
+            Encryption = encryption;
+            NetworkAccessPolicy = networkAccessPolicy;
+            DiskAccessId = diskAccessId;
+            Tier = tier;
+            BurstingEnabled = burstingEnabled;
+            PurchasePlan = purchasePlan;
+            SupportedCapabilities = supportedCapabilities;
+            PropertyUpdatesInProgress = propertyUpdatesInProgress;
+            SupportsHibernation = supportsHibernation;
+            PublicNetworkAccess = publicNetworkAccess;
+            DataAccessAuthMode = dataAccessAuthMode;
+            Tags = tags;
+            Sku = sku;
+            CustomInit();
+        }
     }
 }
