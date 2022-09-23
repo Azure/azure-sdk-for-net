@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Media.Tests
             {
                 AssetName = asset.Value.Data.Name,
                 ArchiveWindowLength = new TimeSpan(0, 5, 0),
-                HttpLiveStreaming = new Hls()
+                Hls = new Hls()
                 {
                     FragmentsPerTsSegment = 5
                 },

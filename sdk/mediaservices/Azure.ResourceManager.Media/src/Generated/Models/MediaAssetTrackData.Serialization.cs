@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Media
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<AssetTrackInfo> track = default;
-            Optional<MediaProvisioningState> provisioningState = default;
+            Optional<TrackBase> track = default;
+            Optional<MediaServicesProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            track = AssetTrackInfo.DeserializeAssetTrackInfo(property0.Value);
+                            track = TrackBase.DeserializeTrackBase(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new MediaProvisioningState(property0.Value.GetString());
+                            provisioningState = new MediaServicesProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

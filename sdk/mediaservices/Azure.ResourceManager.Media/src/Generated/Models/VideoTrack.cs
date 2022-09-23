@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Represents a video track in the asset. </summary>
-    public partial class VideoTrack : AssetTrackInfo
+    public partial class VideoTrack : TrackBase
     {
         /// <summary> Initializes a new instance of VideoTrack. </summary>
         public VideoTrack()

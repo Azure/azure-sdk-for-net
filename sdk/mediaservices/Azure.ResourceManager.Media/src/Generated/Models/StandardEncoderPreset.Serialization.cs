@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.Media.Models
         internal static StandardEncoderPreset DeserializeStandardEncoderPreset(JsonElement element)
         {
             Optional<FilteringOperations> filters = default;
-            IList<CodecBasicProperties> codecs = default;
-            IList<FormatBasicProperties> formats = default;
+            IList<CodecBase> codecs = default;
+            IList<FormatBase> formats = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -60,20 +60,20 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("codecs"))
                 {
-                    List<CodecBasicProperties> array = new List<CodecBasicProperties>();
+                    List<CodecBase> array = new List<CodecBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CodecBasicProperties.DeserializeCodecBasicProperties(item));
+                        array.Add(CodecBase.DeserializeCodecBase(item));
                     }
                     codecs = array;
                     continue;
                 }
                 if (property.NameEquals("formats"))
                 {
-                    List<FormatBasicProperties> array = new List<FormatBasicProperties>();
+                    List<FormatBase> array = new List<FormatBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FormatBasicProperties.DeserializeFormatBasicProperties(item));
+                        array.Add(FormatBase.DeserializeFormatBase(item));
                     }
                     formats = array;
                     continue;
