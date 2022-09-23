@@ -13,6 +13,8 @@ namespace Azure.ResourceManager.FrontDoor.Tests
     public class FrontDoorManagementTestBase : ManagementRecordedTestBase<FrontDoorManagementTestEnvironment>
     {
         protected ArmClient Client { get; private set; }
+        protected AzureLocation DefaultLocation => AzureLocation.WestUS;
+        protected SubscriptionResource DefaultSubscription { get; private set; }
 
         protected FrontDoorManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
@@ -25,17 +27,20 @@ namespace Azure.ResourceManager.FrontDoor.Tests
         }
 
         [SetUp]
-        public void CreateCommonClient()
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
-            Client = GetArmClient();
-        }
-
-        protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
-        {
-            string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
-            var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
-            return lro.Value;
+            var resourceGroupName = Recording.GenerateAssetName("testRG-");
+            var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+                WaitUntil.Completed,
+                resourceGroupName,
+                new ResourceGroupData(DefaultLocation)
+                {
+                    Tags =
+                    {
+                        { "test", "env" }
+                    }
+                });
+            return rgOp.Value;
         }
     }
 }
