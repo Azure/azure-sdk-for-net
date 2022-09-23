@@ -171,6 +171,7 @@ try {
                     }
                 }
             }
+        }
     
     if (-not $ProjectDirectory)
     {
