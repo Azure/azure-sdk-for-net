@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EventGrid.Models
     {
         internal static DomainsListResult DeserializeDomainsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<DomainData>> value = default;
+            Optional<IReadOnlyList<EventGridDomainData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<DomainData> array = new List<DomainData>();
+                    List<EventGridDomainData> array = new List<EventGridDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DomainData.DeserializeDomainData(item));
+                        array.Add(EventGridDomainData.DeserializeEventGridDomainData(item));
                     }
                     value = array;
                     continue;

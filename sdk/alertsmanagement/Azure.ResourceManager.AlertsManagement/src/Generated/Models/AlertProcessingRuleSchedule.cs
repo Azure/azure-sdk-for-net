@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="recurrences">
         /// List of recurrences.
         /// Please note <see cref="AlertProcessingRuleRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="MonthlyRecurrence"/> and <see cref="WeeklyRecurrence"/>.
+        /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="AlertProcessingRuleMonthlyRecurrence"/> and <see cref="AlertProcessingRuleWeeklyRecurrence"/>.
         /// </param>
         internal AlertProcessingRuleSchedule(DateTimeOffset? effectiveFrom, DateTimeOffset? effectiveUntil, string timeZone, IList<AlertProcessingRuleRecurrence> recurrences)
         {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <summary>
         /// List of recurrences.
         /// Please note <see cref="AlertProcessingRuleRecurrence"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="MonthlyRecurrence"/> and <see cref="WeeklyRecurrence"/>.
+        /// The available derived classes include <see cref="DailyRecurrence"/>, <see cref="AlertProcessingRuleMonthlyRecurrence"/> and <see cref="AlertProcessingRuleWeeklyRecurrence"/>.
         /// </summary>
         public IList<AlertProcessingRuleRecurrence> Recurrences { get; }
     }

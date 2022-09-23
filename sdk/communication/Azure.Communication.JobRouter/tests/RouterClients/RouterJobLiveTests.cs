@@ -22,6 +22,41 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         #region Job Tests
 
         [Test]
+        public async Task UpdateJobWithNotesWorksCorrectly()
+        {
+            RouterClient routerClient = CreateRouterClientWithConnectionString();
+            var channelId = GenerateUniqueId($"{nameof(UpdateJobWithNotesWorksCorrectly)}-Channel");
+
+            // Setup queue
+            var createQueueResponse = await CreateQueueAsync(nameof(UpdateJobWithNotesWorksCorrectly));
+            var createQueue = createQueueResponse.Value;
+
+            // Create 1 job
+            var jobId1 = GenerateUniqueId($"{IdPrefix}{nameof(UpdateJobWithNotesWorksCorrectly)}1");
+            var createJob1Response = await routerClient.CreateJobAsync(
+                new CreateJobOptions(jobId1, channelId, createQueue.Id)
+                {
+                    Priority = 1,
+                });
+            var createJob1 = createJob1Response.Value;
+            AddForCleanup(new Task(async () => await routerClient.DeleteJobAsync(createJob1.Id)));
+
+            // update job with notes
+            DateTimeOffset updateNoteTimeStamp = new DateTimeOffset(2022, 9, 01, 3, 0, 0, new TimeSpan(0, 0, 0));
+            var updatedJob1Response = await routerClient.UpdateJobAsync(new UpdateJobOptions(jobId1)
+            {
+                Notes = new Dictionary<DateTimeOffset, string>()
+                {
+                    [updateNoteTimeStamp] = "Fake notes attached to job with update"
+                }
+            });
+            var updatedJob1 = updatedJob1Response.Value;
+
+            Assert.IsNotEmpty(updatedJob1.Notes);
+            Assert.IsTrue(updatedJob1.Notes.Count == 1);
+        }
+
+        [Test]
         public async Task GetJobsTest()
         {
             RouterClient routerClient = CreateRouterClientWithConnectionString();

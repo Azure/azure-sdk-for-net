@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         internal static ServiceBusQueueEventSubscriptionDestination DeserializeServiceBusQueueEventSubscriptionDestination(JsonElement element)
         {
             EndpointType endpointType = default;
-            Optional<string> resourceId = default;
+            Optional<ResourceIdentifier> resourceId = default;
             Optional<IList<DeliveryAttributeMapping>> deliveryAttributeMappings = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -62,7 +62,12 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         if (property0.NameEquals("resourceId"))
                         {
-                            resourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            resourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("deliveryAttributeMappings"))

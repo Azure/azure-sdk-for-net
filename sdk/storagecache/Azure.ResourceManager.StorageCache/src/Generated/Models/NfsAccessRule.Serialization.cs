@@ -24,20 +24,20 @@ namespace Azure.ResourceManager.StorageCache.Models
             }
             writer.WritePropertyName("access");
             writer.WriteStringValue(Access.ToString());
-            if (Optional.IsDefined(Suid))
+            if (Optional.IsDefined(AllowSuid))
             {
                 writer.WritePropertyName("suid");
-                writer.WriteBooleanValue(Suid.Value);
+                writer.WriteBooleanValue(AllowSuid.Value);
             }
-            if (Optional.IsDefined(SubmountAccess))
+            if (Optional.IsDefined(AllowSubmountAccess))
             {
                 writer.WritePropertyName("submountAccess");
-                writer.WriteBooleanValue(SubmountAccess.Value);
+                writer.WriteBooleanValue(AllowSubmountAccess.Value);
             }
-            if (Optional.IsDefined(RootSquash))
+            if (Optional.IsDefined(EnableRootSquash))
             {
                 writer.WritePropertyName("rootSquash");
-                writer.WriteBooleanValue(RootSquash.Value);
+                writer.WriteBooleanValue(EnableRootSquash.Value);
             }
             if (Optional.IsDefined(AnonymousUID))
             {

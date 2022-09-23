@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Initializes a new instance of ServerEndpointCloudTieringStatus. </summary>
-        /// <param name="lastUpdatedTimestamp"> Last updated timestamp. </param>
+        /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="health"> Cloud tiering health state. </param>
-        /// <param name="healthLastUpdatedTimestamp"> The last updated timestamp of health state. </param>
+        /// <param name="healthLastUpdatedOn"> The last updated timestamp of health state. </param>
         /// <param name="lastCloudTieringResult"> Last cloud tiering result (HResult). </param>
         /// <param name="lastSuccessTimestamp"> Last cloud tiering success timestamp. </param>
         /// <param name="spaceSavings"> Information regarding how much local space cloud tiering is saving. </param>
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="filesNotTiering"> Information regarding files that failed to be tiered. </param>
         /// <param name="volumeFreeSpacePolicyStatus"> Status of the volume free space policy. </param>
         /// <param name="datePolicyStatus"> Status of the date policy. </param>
-        internal ServerEndpointCloudTieringStatus(DateTimeOffset? lastUpdatedTimestamp, ServerEndpointHealthState? health, DateTimeOffset? healthLastUpdatedTimestamp, int? lastCloudTieringResult, DateTimeOffset? lastSuccessTimestamp, CloudTieringSpaceSavings spaceSavings, CloudTieringCachePerformance cachePerformance, CloudTieringFilesNotTiering filesNotTiering, CloudTieringVolumeFreeSpacePolicyStatus volumeFreeSpacePolicyStatus, CloudTieringDatePolicyStatus datePolicyStatus)
+        internal ServerEndpointCloudTieringStatus(DateTimeOffset? lastUpdatedOn, ServerEndpointHealthState? health, DateTimeOffset? healthLastUpdatedOn, int? lastCloudTieringResult, DateTimeOffset? lastSuccessTimestamp, CloudTieringSpaceSavings spaceSavings, CloudTieringCachePerformance cachePerformance, CloudTieringFilesNotTiering filesNotTiering, CloudTieringVolumeFreeSpacePolicyStatus volumeFreeSpacePolicyStatus, CloudTieringDatePolicyStatus datePolicyStatus)
         {
-            LastUpdatedTimestamp = lastUpdatedTimestamp;
+            LastUpdatedOn = lastUpdatedOn;
             Health = health;
-            HealthLastUpdatedTimestamp = healthLastUpdatedTimestamp;
+            HealthLastUpdatedOn = healthLastUpdatedOn;
             LastCloudTieringResult = lastCloudTieringResult;
             LastSuccessTimestamp = lastSuccessTimestamp;
             SpaceSavings = spaceSavings;
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.StorageSync.Models
         }
 
         /// <summary> Last updated timestamp. </summary>
-        public DateTimeOffset? LastUpdatedTimestamp { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> Cloud tiering health state. </summary>
         public ServerEndpointHealthState? Health { get; }
         /// <summary> The last updated timestamp of health state. </summary>
-        public DateTimeOffset? HealthLastUpdatedTimestamp { get; }
+        public DateTimeOffset? HealthLastUpdatedOn { get; }
         /// <summary> Last cloud tiering result (HResult). </summary>
         public int? LastCloudTieringResult { get; }
         /// <summary> Last cloud tiering success timestamp. </summary>

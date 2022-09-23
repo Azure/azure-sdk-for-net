@@ -1,55 +1,5 @@
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class ExperimentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.ExperimentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.ExperimentResource>, System.Collections.IEnumerable
-    {
-        protected ExperimentCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.ExperimentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string experimentName, Azure.ResourceManager.FrontDoor.ExperimentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.ExperimentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string experimentName, Azure.ResourceManager.FrontDoor.ExperimentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.ExperimentResource> Get(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.ExperimentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.ExperimentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.ExperimentResource>> GetAsync(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.FrontDoor.ExperimentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.ExperimentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.ExperimentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.ExperimentResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ExperimentData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public ExperimentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.State? EnabledState { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.Endpoint EndpointA { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.Endpoint EndpointB { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState? ResourceState { get { throw null; } }
-        public System.Uri ScriptFileUri { get { throw null; } }
-        public string Status { get { throw null; } }
-    }
-    public partial class ExperimentResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ExperimentResource() { }
-        public virtual Azure.ResourceManager.FrontDoor.ExperimentData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.ExperimentResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.ExperimentResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string experimentName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.ExperimentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.ExperimentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard> GetLatencyScorecardsReport(Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval aggregationInterval, string endDateTimeUTC = null, string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard>> GetLatencyScorecardsReportAsync(Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval aggregationInterval, string endDateTimeUTC = null, string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.Timeseries> GetTimeseriesReport(System.DateTimeOffset startDateTimeUTC, System.DateTimeOffset endDateTimeUTC, Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval aggregationInterval, Azure.ResourceManager.FrontDoor.Models.TimeseriesType timeseriesType, string endpoint = null, string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.Timeseries>> GetTimeseriesReportAsync(System.DateTimeOffset startDateTimeUTC, System.DateTimeOffset endDateTimeUTC, Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval aggregationInterval, Azure.ResourceManager.FrontDoor.Models.TimeseriesType timeseriesType, string endpoint = null, string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.ExperimentResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.ExperimentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.ExperimentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.ExperimentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.ExperimentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.ExperimentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.ExperimentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.ExperimentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class FrontDoorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorResource>, System.Collections.IEnumerable
     {
         protected FrontDoorCollection() { }
@@ -68,7 +18,7 @@ namespace Azure.ResourceManager.FrontDoor
     public partial class FrontDoorData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public FrontDoorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.BackendPool> BackendPools { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.FrontDoorBackendPool> BackendPools { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.BackendPoolsSettings BackendPoolsSettings { get { throw null; } set { } }
         public string Cname { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorEnabledState? EnabledState { get { throw null; } set { } }
@@ -76,40 +26,137 @@ namespace Azure.ResourceManager.FrontDoor
         public string FriendlyName { get { throw null; } set { } }
         public string FrontdoorId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.FrontendEndpointData> FrontendEndpoints { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.HealthProbeSettingsModel> HealthProbeSettings { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.LoadBalancingSettingsModel> LoadBalancingSettings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeSettingsData> HealthProbeSettings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.FrontDoorLoadBalancingSettingsData> LoadBalancingSettings { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.RoutingRule> RoutingRules { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.FrontDoor.RulesEngineData> RulesEngines { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.RoutingRuleData> RoutingRules { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData> RulesEngines { get { throw null; } }
+    }
+    public partial class FrontDoorExperimentCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>, System.Collections.IEnumerable
+    {
+        protected FrontDoorExperimentCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string experimentName, Azure.ResourceManager.FrontDoor.FrontDoorExperimentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string experimentName, Azure.ResourceManager.FrontDoor.FrontDoorExperimentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> Get(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> GetAsync(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FrontDoorExperimentData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public FrontDoorExperimentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentEndpointProperties ExperimentEndpointA { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentEndpointProperties ExperimentEndpointB { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState? ResourceState { get { throw null; } }
+        public System.Uri ScriptFileUri { get { throw null; } }
+        public string Status { get { throw null; } }
+    }
+    public partial class FrontDoorExperimentResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FrontDoorExperimentResource() { }
+        public virtual Azure.ResourceManager.FrontDoor.FrontDoorExperimentData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string experimentName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard> GetLatencyScorecardsReport(Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval aggregationInterval, System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.LatencyScorecard>> GetLatencyScorecardsReportAsync(Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval aggregationInterval, System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfo> GetTimeSeriesReport(System.DateTimeOffset startOn, System.DateTimeOffset endOn, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval aggregationInterval, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType timeSeriesType, string endpoint = null, string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfo>> GetTimeSeriesReportAsync(System.DateTimeOffset startOn, System.DateTimeOffset endOn, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval aggregationInterval, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType timeSeriesType, string endpoint = null, string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class FrontDoorExtensions
     {
-        public static Azure.Response<Azure.ResourceManager.FrontDoor.Models.CheckNameAvailabilityOutput> CheckFrontDoorNameAvailability(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.FrontDoor.Models.CheckNameAvailabilityInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.CheckNameAvailabilityOutput>> CheckFrontDoorNameAvailabilityAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.FrontDoor.Models.CheckNameAvailabilityInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.FrontDoor.Models.CheckNameAvailabilityOutput> CheckFrontDoorNameAvailabilityWithSubscription(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.FrontDoor.Models.CheckNameAvailabilityInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.CheckNameAvailabilityOutput>> CheckFrontDoorNameAvailabilityWithSubscriptionAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.FrontDoor.Models.CheckNameAvailabilityInput input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.ExperimentResource GetExperimentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailability(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource> GetFrontDoor(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string frontDoorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource>> GetFrontDoorAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string frontDoorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource GetFrontDoorExperimentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfile(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>> GetFrontDoorNetworkExperimentProfileAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource GetFrontDoorNetworkExperimentProfileResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileCollection GetFrontDoorNetworkExperimentProfiles(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfiles(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfilesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.FrontDoor.FrontDoorResource GetFrontDoorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource GetFrontDoorRulesEngineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.FrontDoor.FrontDoorCollection GetFrontDoors(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.FrontDoor.FrontDoorResource> GetFrontDoors(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.FrontDoorResource> GetFrontDoorsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyCollection GetFrontDoorWebApplicationFirewallPolicies(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> GetFrontDoorWebApplicationFirewallPolicy(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>> GetFrontDoorWebApplicationFirewallPolicyAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource GetFrontDoorWebApplicationFirewallPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.FrontDoor.FrontendEndpointResource GetFrontendEndpointResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetDefinition> GetManagedRuleSets(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetDefinition> GetManagedRuleSetsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.FrontDoor.ProfileResource> GetProfile(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.ProfileResource>> GetProfileAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.ProfileResource GetProfileResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.ProfileCollection GetProfiles(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.FrontDoor.ProfileResource> GetProfiles(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.ProfileResource> GetProfilesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.RulesEngineResource GetRulesEngineResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyCollection GetWebApplicationFirewallPolicies(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicy(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource>> GetWebApplicationFirewallPolicyAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource GetWebApplicationFirewallPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class FrontDoorNetworkExperimentProfileCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>, System.Collections.IEnumerable
+    {
+        protected FrontDoorNetworkExperimentProfileCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string profileName, Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string profileName, Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> Get(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>> GetAsync(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FrontDoorNetworkExperimentProfileData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public FrontDoorNetworkExperimentProfileData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState? ResourceState { get { throw null; } }
+    }
+    public partial class FrontDoorNetworkExperimentProfileResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FrontDoorNetworkExperimentProfileResource() { }
+        public virtual Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> GetFrontDoorExperiment(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> GetFrontDoorExperimentAsync(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.FrontDoor.FrontDoorExperimentCollection GetFrontDoorExperiments() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.Models.PreconfiguredEndpoint> GetPreconfiguredEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.Models.PreconfiguredEndpoint> GetPreconfiguredEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.FrontDoorNetworkExperimentProfilePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.FrontDoorNetworkExperimentProfilePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class FrontDoorResource : Azure.ResourceManager.ArmResource
     {
@@ -124,22 +171,106 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> GetFrontDoorRulesEngine(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>> GetFrontDoorRulesEngineAsync(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineCollection GetFrontDoorRulesEngines() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontendEndpointResource> GetFrontendEndpoint(string frontendEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontendEndpointResource>> GetFrontendEndpointAsync(string frontendEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.FrontDoor.FrontendEndpointCollection GetFrontendEndpoints() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.RulesEngineResource> GetRulesEngine(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.RulesEngineResource>> GetRulesEngineAsync(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.FrontDoor.RulesEngineCollection GetRulesEngines() { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation PurgeContentEndpoint(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.PurgeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PurgeContentEndpointAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.PurgeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation PurgeContent(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointPurgeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> PurgeContentAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointPurgeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.FrontDoorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.FrontDoorData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.ValidateCustomDomainOutput> ValidateCustomDomain(Azure.ResourceManager.FrontDoor.Models.ValidateCustomDomainContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.ValidateCustomDomainOutput>> ValidateCustomDomainAsync(Azure.ResourceManager.FrontDoor.Models.ValidateCustomDomainContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainResult> ValidateCustomDomain(Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainResult>> ValidateCustomDomainAsync(Azure.ResourceManager.FrontDoor.Models.FrontDoorValidateCustomDomainContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class FrontDoorRulesEngineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>, System.Collections.IEnumerable
+    {
+        protected FrontDoorRulesEngineCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string rulesEngineName, Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string rulesEngineName, Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> Get(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>> GetAsync(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FrontDoorRulesEngineData : Azure.ResourceManager.Models.ResourceData
+    {
+        public FrontDoorRulesEngineData() { }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.RulesEngineRule> Rules { get { throw null; } }
+    }
+    public partial class FrontDoorRulesEngineResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FrontDoorRulesEngineResource() { }
+        public virtual Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string frontDoorName, string rulesEngineName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class FrontDoorWebApplicationFirewallPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>, System.Collections.IEnumerable
+    {
+        protected FrontDoorWebApplicationFirewallPolicyCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string policyName, Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string policyName, Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> Get(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>> GetAsync(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class FrontDoorWebApplicationFirewallPolicyData : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public FrontDoorWebApplicationFirewallPolicyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ETag? ETag { get { throw null; } set { } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> FrontendEndpointLinks { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSet> ManagedRuleSets { get { throw null; } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicySettings PolicySettings { get { throw null; } set { } }
+        public string ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState? ResourceState { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> RoutingRuleLinks { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.WebApplicationCustomRule> Rules { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> SecurityPolicyLinks { get { throw null; } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorSkuName? SkuName { get { throw null; } set { } }
+    }
+    public partial class FrontDoorWebApplicationFirewallPolicyResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected FrontDoorWebApplicationFirewallPolicyResource() { }
+        public virtual Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string policyName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class FrontendEndpointCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontendEndpointResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontendEndpointResource>, System.Collections.IEnumerable
     {
@@ -154,18 +285,16 @@ namespace Azure.ResourceManager.FrontDoor
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.FrontendEndpointResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontendEndpointResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class FrontendEndpointData : Azure.ResourceManager.FrontDoor.Models.SubResource
+    public partial class FrontendEndpointData : Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceData
     {
         public FrontendEndpointData() { }
         public Azure.ResourceManager.FrontDoor.Models.CustomHttpsConfiguration CustomHttpsConfiguration { get { throw null; } }
-        public Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningState? CustomHttpsProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate? CustomHttpsProvisioningSubstate { get { throw null; } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState? CustomHttpsProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate? CustomHttpsProvisioningSubstate { get { throw null; } }
         public string HostName { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState? SessionAffinityEnabledState { get { throw null; } set { } }
-        public int? SessionAffinityTtlSeconds { get { throw null; } set { } }
+        public int? SessionAffinityTtlInSeconds { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier WebApplicationFirewallPolicyLinkId { get { throw null; } set { } }
     }
     public partial class FrontendEndpointResource : Azure.ResourceManager.ArmResource
@@ -182,212 +311,9 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontendEndpointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontendEndpointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ProfileCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.ProfileResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.ProfileResource>, System.Collections.IEnumerable
-    {
-        protected ProfileCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.ProfileResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string profileName, Azure.ResourceManager.FrontDoor.ProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.ProfileResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string profileName, Azure.ResourceManager.FrontDoor.ProfileData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.ProfileResource> Get(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.ProfileResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.ProfileResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.ProfileResource>> GetAsync(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.FrontDoor.ProfileResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.ProfileResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.ProfileResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.ProfileResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class ProfileData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public ProfileData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.FrontDoor.Models.State? EnabledState { get { throw null; } set { } }
-        public Azure.ETag? ETag { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState? ResourceState { get { throw null; } }
-    }
-    public partial class ProfileResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected ProfileResource() { }
-        public virtual Azure.ResourceManager.FrontDoor.ProfileData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.ProfileResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.ProfileResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.ProfileResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.ProfileResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.ExperimentResource> GetExperiment(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.ExperimentResource>> GetExperimentAsync(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.FrontDoor.ExperimentCollection GetExperiments() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.Models.PreconfiguredEndpoint> GetPreconfiguredEndpoints(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.Models.PreconfiguredEndpoint> GetPreconfiguredEndpointsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.ProfileResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.ProfileResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.ProfileResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.ProfileResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.ProfileResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.ProfilePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.ProfileResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.ProfilePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class RulesEngineCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.RulesEngineResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.RulesEngineResource>, System.Collections.IEnumerable
-    {
-        protected RulesEngineCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.RulesEngineResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string rulesEngineName, Azure.ResourceManager.FrontDoor.RulesEngineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.RulesEngineResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string rulesEngineName, Azure.ResourceManager.FrontDoor.RulesEngineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.RulesEngineResource> Get(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.RulesEngineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.RulesEngineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.RulesEngineResource>> GetAsync(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.FrontDoor.RulesEngineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.RulesEngineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.RulesEngineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.RulesEngineResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class RulesEngineData : Azure.ResourceManager.Models.ResourceData
-    {
-        public RulesEngineData() { }
-        public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.RulesEngineRule> Rules { get { throw null; } }
-    }
-    public partial class RulesEngineResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected RulesEngineResource() { }
-        public virtual Azure.ResourceManager.FrontDoor.RulesEngineData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string frontDoorName, string rulesEngineName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.RulesEngineResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.RulesEngineResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.RulesEngineResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.RulesEngineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.RulesEngineResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.RulesEngineData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class WebApplicationFirewallPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource>, System.Collections.IEnumerable
-    {
-        protected WebApplicationFirewallPolicyCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string policyName, Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string policyName, Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource> Get(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource>> GetAsync(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class WebApplicationFirewallPolicyData : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public WebApplicationFirewallPolicyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ETag? ETag { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> FrontendEndpointLinks { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSet> ManagedRuleSets { get { throw null; } }
-        public Azure.ResourceManager.FrontDoor.Models.PolicySettings PolicySettings { get { throw null; } set { } }
-        public string ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.FrontDoor.Models.PolicyResourceState? ResourceState { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> RoutingRuleLinks { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.CustomRule> Rules { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> SecurityPolicyLinks { get { throw null; } }
-        public Azure.ResourceManager.FrontDoor.Models.FrontDoorSkuName? SkuName { get { throw null; } set { } }
-    }
-    public partial class WebApplicationFirewallPolicyResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected WebApplicationFirewallPolicyResource() { }
-        public virtual Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string policyName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.FrontDoor.WebApplicationFirewallPolicyResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.WebApplicationFirewallPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
 }
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ActionType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.ActionType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ActionType(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.ActionType Allow { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.ActionType Block { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.ActionType Log { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.ActionType Redirect { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.ActionType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.ActionType left, Azure.ResourceManager.FrontDoor.Models.ActionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.ActionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.ActionType left, Azure.ResourceManager.FrontDoor.Models.ActionType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AggregationInterval : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.AggregationInterval>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AggregationInterval(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.AggregationInterval Daily { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.AggregationInterval Hourly { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.AggregationInterval other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.AggregationInterval left, Azure.ResourceManager.FrontDoor.Models.AggregationInterval right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.AggregationInterval (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.AggregationInterval left, Azure.ResourceManager.FrontDoor.Models.AggregationInterval right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Availability : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.Availability>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Availability(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.Availability Available { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Availability Unavailable { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.Availability other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.Availability left, Azure.ResourceManager.FrontDoor.Models.Availability right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.Availability (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.Availability left, Azure.ResourceManager.FrontDoor.Models.Availability right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class Backend
-    {
-        public Backend() { }
-        public string Address { get { throw null; } set { } }
-        public string BackendHostHeader { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.BackendEnabledState? EnabledState { get { throw null; } set { } }
-        public int? HttpPort { get { throw null; } set { } }
-        public int? HttpsPort { get { throw null; } set { } }
-        public int? Priority { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.PrivateEndpointStatus? PrivateEndpointStatus { get { throw null; } }
-        public string PrivateLinkAlias { get { throw null; } set { } }
-        public string PrivateLinkApprovalMessage { get { throw null; } set { } }
-        public string PrivateLinkLocation { get { throw null; } set { } }
-        public string PrivateLinkResourceId { get { throw null; } set { } }
-        public int? Weight { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BackendEnabledState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.BackendEnabledState>
     {
@@ -406,112 +332,43 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.BackendEnabledState left, Azure.ResourceManager.FrontDoor.Models.BackendEnabledState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BackendPool : Azure.ResourceManager.FrontDoor.Models.SubResource
-    {
-        public BackendPool() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.Backend> Backends { get { throw null; } }
-        public Azure.Core.ResourceIdentifier HealthProbeSettingsId { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier LoadBalancingSettingsId { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-    }
     public partial class BackendPoolsSettings
     {
         public BackendPoolsSettings() { }
         public Azure.ResourceManager.FrontDoor.Models.EnforceCertificateNameCheckEnabledState? EnforceCertificateNameCheck { get { throw null; } set { } }
-        public int? SendRecvTimeoutSeconds { get { throw null; } set { } }
+        public int? SendRecvTimeoutInSeconds { get { throw null; } set { } }
     }
-    public partial class CacheConfiguration
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BackendPrivateEndpointStatus : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus>
     {
-        public CacheConfiguration() { }
-        public System.TimeSpan? CacheDuration { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.DynamicCompressionEnabled? DynamicCompression { get { throw null; } set { } }
-        public string QueryParameters { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.FrontDoorQuery? QueryParameterStripDirective { get { throw null; } set { } }
-    }
-    public partial class CheckNameAvailabilityInput
-    {
-        public CheckNameAvailabilityInput(string name, Azure.ResourceManager.FrontDoor.Models.ResourceType resourceType) { }
-        public string Name { get { throw null; } }
-        public Azure.ResourceManager.FrontDoor.Models.ResourceType ResourceType { get { throw null; } }
-    }
-    public partial class CheckNameAvailabilityOutput
-    {
-        internal CheckNameAvailabilityOutput() { }
-        public string Message { get { throw null; } }
-        public Azure.ResourceManager.FrontDoor.Models.Availability? NameAvailability { get { throw null; } }
-        public string Reason { get { throw null; } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BackendPrivateEndpointStatus(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus Approved { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus Disconnected { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus Pending { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus Rejected { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus Timeout { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus left, Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus left, Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class CustomHttpsConfiguration
     {
-        public CustomHttpsConfiguration(Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateSource certificateSource, Azure.ResourceManager.FrontDoor.Models.FrontDoorTlsProtocolType protocolType, Azure.ResourceManager.FrontDoor.Models.MinimumTLSVersion minimumTlsVersion) { }
+        public CustomHttpsConfiguration(Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateSource certificateSource, Azure.ResourceManager.FrontDoor.Models.FrontDoorTlsProtocolType protocolType, Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion minimumTlsVersion) { }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateSource CertificateSource { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateType? CertificateType { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.MinimumTLSVersion MinimumTlsVersion { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType? CertificateType { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion MinimumTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorTlsProtocolType ProtocolType { get { throw null; } set { } }
         public string SecretName { get { throw null; } set { } }
         public string SecretVersion { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier VaultId { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CustomHttpsProvisioningState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CustomHttpsProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningState Disabled { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningState Disabling { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningState Enabled { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningState Enabling { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningState Failed { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningState left, Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningState left, Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CustomHttpsProvisioningSubstate : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CustomHttpsProvisioningSubstate(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate CertificateDeleted { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate CertificateDeployed { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate DeletingCertificate { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate DeployingCertificate { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate DomainControlValidationRequestApproved { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate DomainControlValidationRequestRejected { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate DomainControlValidationRequestTimedOut { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate IssuingCertificate { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate PendingDomainControlValidationREquestApproval { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate SubmittingDomainControlValidationRequest { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate left, Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate left, Azure.ResourceManager.FrontDoor.Models.CustomHttpsProvisioningSubstate right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class CustomRule
-    {
-        public CustomRule(int priority, Azure.ResourceManager.FrontDoor.Models.RuleType ruleType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.Models.MatchCondition> matchConditions, Azure.ResourceManager.FrontDoor.Models.ActionType action) { }
-        public Azure.ResourceManager.FrontDoor.Models.ActionType Action { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.CustomRuleEnabledState? EnabledState { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.MatchCondition> MatchConditions { get { throw null; } }
-        public string Name { get { throw null; } set { } }
-        public int Priority { get { throw null; } set { } }
-        public int? RateLimitDurationInMinutes { get { throw null; } set { } }
-        public int? RateLimitThreshold { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.RuleType RuleType { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CustomRuleEnabledState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.CustomRuleEnabledState>
@@ -549,32 +406,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.DynamicCompressionEnabled left, Azure.ResourceManager.FrontDoor.Models.DynamicCompressionEnabled right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Endpoint
-    {
-        public Endpoint() { }
-        public string EndpointValue { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EndpointType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.EndpointType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public EndpointType(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.EndpointType AFD { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.EndpointType ATM { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.EndpointType AzureRegion { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.EndpointType CDN { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.EndpointType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.EndpointType left, Azure.ResourceManager.FrontDoor.Models.EndpointType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.EndpointType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.EndpointType left, Azure.ResourceManager.FrontDoor.Models.EndpointType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EnforceCertificateNameCheckEnabledState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.EnforceCertificateNameCheckEnabledState>
     {
@@ -593,20 +424,45 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.EnforceCertificateNameCheckEnabledState left, Azure.ResourceManager.FrontDoor.Models.EnforceCertificateNameCheckEnabledState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ExperimentPatch
-    {
-        public ExperimentPatch() { }
-        public string Description { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.State? EnabledState { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
     public partial class ForwardingConfiguration : Azure.ResourceManager.FrontDoor.Models.RouteConfiguration
     {
         public ForwardingConfiguration() { }
         public Azure.Core.ResourceIdentifier BackendPoolId { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.CacheConfiguration CacheConfiguration { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorCacheConfiguration CacheConfiguration { get { throw null; } set { } }
         public string CustomForwardingPath { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorForwardingProtocol? ForwardingProtocol { get { throw null; } set { } }
+    }
+    public partial class FrontDoorBackend
+    {
+        public FrontDoorBackend() { }
+        public string Address { get { throw null; } set { } }
+        public string BackendHostHeader { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.BackendEnabledState? EnabledState { get { throw null; } set { } }
+        public int? HttpPort { get { throw null; } set { } }
+        public int? HttpsPort { get { throw null; } set { } }
+        public int? Priority { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.BackendPrivateEndpointStatus? PrivateEndpointStatus { get { throw null; } }
+        public string PrivateLinkAlias { get { throw null; } set { } }
+        public string PrivateLinkApprovalMessage { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? PrivateLinkLocation { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateLinkResourceId { get { throw null; } set { } }
+        public int? Weight { get { throw null; } set { } }
+    }
+    public partial class FrontDoorBackendPool : Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceData
+    {
+        public FrontDoorBackendPool() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.FrontDoorBackend> Backends { get { throw null; } }
+        public Azure.Core.ResourceIdentifier HealthProbeSettingsId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LoadBalancingSettingsId { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
+    }
+    public partial class FrontDoorCacheConfiguration
+    {
+        public FrontDoorCacheConfiguration() { }
+        public System.TimeSpan? CacheDuration { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.DynamicCompressionEnabled? DynamicCompression { get { throw null; } set { } }
+        public string QueryParameters { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorQuery? QueryParameterStripDirective { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FrontDoorCertificateSource : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateSource>
@@ -627,23 +483,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct FrontDoorCertificateType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public FrontDoorCertificateType(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateType Dedicated { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorCertificateType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FrontDoorEnabledState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorEnabledState>
     {
         private readonly object _dummy;
@@ -659,6 +498,79 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorEnabledState left, Azure.ResourceManager.FrontDoor.Models.FrontDoorEnabledState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorEnabledState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorEnabledState left, Azure.ResourceManager.FrontDoor.Models.FrontDoorEnabledState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorEndpointConnectionCertificateType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorEndpointConnectionCertificateType(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType Dedicated { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointConnectionCertificateType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FrontDoorEndpointPurgeContent
+    {
+        public FrontDoorEndpointPurgeContent(System.Collections.Generic.IEnumerable<string> contentPaths) { }
+        public System.Collections.Generic.IList<string> ContentPaths { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorEndpointType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorEndpointType(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType AzureFrontDoor { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType AzureRegion { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType AzureTrafficManager { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType Cdn { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FrontDoorExperimentEndpointProperties
+    {
+        public FrontDoorExperimentEndpointProperties() { }
+        public string Endpoint { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+    }
+    public partial class FrontDoorExperimentPatch
+    {
+        public FrontDoorExperimentPatch() { }
+        public string Description { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorExperimentState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorExperimentState(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState left, Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState left, Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -686,7 +598,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public FrontDoorHealthProbeMethod(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod GET { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod Get { get { throw null; } }
         public static Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod Head { get { throw null; } }
         public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -697,6 +609,61 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod left, Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class FrontDoorHealthProbeSettingsData : Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceData
+    {
+        public FrontDoorHealthProbeSettingsData() { }
+        public Azure.ResourceManager.FrontDoor.Models.HealthProbeEnabled? EnabledState { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod? HealthProbeMethod { get { throw null; } set { } }
+        public int? IntervalInSeconds { get { throw null; } set { } }
+        public string Path { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorProtocol? Protocol { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
+    }
+    public partial class FrontDoorLoadBalancingSettingsData : Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceData
+    {
+        public FrontDoorLoadBalancingSettingsData() { }
+        public int? AdditionalLatencyMilliseconds { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
+        public int? SampleSize { get { throw null; } set { } }
+        public int? SuccessfulSamplesRequired { get { throw null; } set { } }
+    }
+    public partial class FrontDoorNameAvailabilityContent
+    {
+        public FrontDoorNameAvailabilityContent(string name, Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceType resourceType) { }
+        public string Name { get { throw null; } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceType ResourceType { get { throw null; } }
+    }
+    public partial class FrontDoorNameAvailabilityResult
+    {
+        internal FrontDoorNameAvailabilityResult() { }
+        public string Message { get { throw null; } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState? NameAvailability { get { throw null; } }
+        public string Reason { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorNameAvailabilityState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorNameAvailabilityState(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState Available { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState Unavailable { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState left, Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState left, Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FrontDoorNetworkExperimentProfilePatch
+    {
+        public FrontDoorNetworkExperimentProfilePatch() { }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FrontDoorProtocol : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorProtocol>
@@ -776,6 +743,31 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorRequiredMinimumTlsVersion : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorRequiredMinimumTlsVersion(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion Tls1_0 { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion Tls1_2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion left, Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion left, Azure.ResourceManager.FrontDoor.Models.FrontDoorRequiredMinimumTlsVersion right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FrontDoorResourceData
+    {
+        public FrontDoorResourceData() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public string Name { get { throw null; } set { } }
+        public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FrontDoorResourceState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState>
     {
         private readonly object _dummy;
@@ -799,6 +791,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState left, Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public enum FrontDoorResourceType
+    {
+        MicrosoftNetworkFrontDoors = 0,
+        MicrosoftNetworkFrontDoorsFrontendEndpoints = 1,
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FrontDoorSkuName : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorSkuName>
     {
@@ -819,6 +816,79 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorTimeSeriesAggregationInterval : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorTimeSeriesAggregationInterval(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval Daily { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval Hourly { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval left, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval left, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesAggregationInterval right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FrontDoorTimeSeriesDataPoint
+    {
+        public FrontDoorTimeSeriesDataPoint() { }
+        public System.DateTimeOffset? DateTimeUtc { get { throw null; } set { } }
+        public float? Value { get { throw null; } set { } }
+    }
+    public partial class FrontDoorTimeSeriesInfo : Azure.ResourceManager.Models.TrackedResourceData
+    {
+        public FrontDoorTimeSeriesInfo(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval? AggregationInterval { get { throw null; } set { } }
+        public string Country { get { throw null; } set { } }
+        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public System.Uri Endpoint { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesDataPoint> TimeSeriesData { get { throw null; } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType? TimeSeriesType { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorTimeSeriesInfoAggregationInterval : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorTimeSeriesInfoAggregationInterval(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval Daily { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval Hourly { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval left, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval left, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorTimeSeriesType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorTimeSeriesType(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType LatencyP50 { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType LatencyP75 { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType LatencyP95 { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType MeasurementCounts { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FrontDoorTlsProtocolType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorTlsProtocolType>
     {
         private readonly object _dummy;
@@ -835,30 +905,118 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorTlsProtocolType left, Azure.ResourceManager.FrontDoor.Models.FrontDoorTlsProtocolType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HeaderAction
+    public partial class FrontDoorValidateCustomDomainContent
     {
-        public HeaderAction(Azure.ResourceManager.FrontDoor.Models.HeaderActionType headerActionType, string headerName) { }
-        public Azure.ResourceManager.FrontDoor.Models.HeaderActionType HeaderActionType { get { throw null; } set { } }
-        public string HeaderName { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
+        public FrontDoorValidateCustomDomainContent(string hostName) { }
+        public string HostName { get { throw null; } }
+    }
+    public partial class FrontDoorValidateCustomDomainResult
+    {
+        internal FrontDoorValidateCustomDomainResult() { }
+        public bool? IsCustomDomainValidated { get { throw null; } }
+        public string Message { get { throw null; } }
+        public string Reason { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HeaderActionType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.HeaderActionType>
+    public readonly partial struct FrontDoorWebApplicationFirewallPolicyMode : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public HeaderActionType(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.HeaderActionType Append { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.HeaderActionType Delete { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.HeaderActionType Overwrite { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.HeaderActionType other) { throw null; }
+        public FrontDoorWebApplicationFirewallPolicyMode(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode Detection { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode Prevention { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.HeaderActionType left, Azure.ResourceManager.FrontDoor.Models.HeaderActionType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.HeaderActionType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.HeaderActionType left, Azure.ResourceManager.FrontDoor.Models.HeaderActionType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode left, Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode left, Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FrontDoorWebApplicationFirewallPolicyPatch
+    {
+        public FrontDoorWebApplicationFirewallPolicyPatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontDoorWebApplicationFirewallPolicyResourceState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontDoorWebApplicationFirewallPolicyResourceState(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState Creating { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState Disabling { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState Enabled { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState Enabling { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState left, Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState left, Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyResourceState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class FrontDoorWebApplicationFirewallPolicySettings
+    {
+        public FrontDoorWebApplicationFirewallPolicySettings() { }
+        public string CustomBlockResponseBody { get { throw null; } set { } }
+        public int? CustomBlockResponseStatusCode { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState? EnabledState { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorWebApplicationFirewallPolicyMode? Mode { get { throw null; } set { } }
+        public System.Uri RedirectUri { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.PolicyRequestBodyCheck? RequestBodyCheck { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontendEndpointCustomHttpsProvisioningState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontendEndpointCustomHttpsProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState Disabling { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState Enabled { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState Enabling { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState Failed { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState left, Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState left, Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct FrontendEndpointCustomHttpsProvisioningSubstate : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public FrontendEndpointCustomHttpsProvisioningSubstate(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate CertificateDeleted { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate CertificateDeployed { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate DeletingCertificate { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate DeployingCertificate { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate DomainControlValidationRequestApproved { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate DomainControlValidationRequestRejected { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate DomainControlValidationRequestTimedOut { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate IssuingCertificate { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate PendingDomainControlValidationRequestApproval { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate SubmittingDomainControlValidationRequest { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate left, Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate left, Azure.ResourceManager.FrontDoor.Models.FrontendEndpointCustomHttpsProvisioningSubstate right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -879,18 +1037,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.HealthProbeEnabled left, Azure.ResourceManager.FrontDoor.Models.HealthProbeEnabled right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HealthProbeSettingsModel : Azure.ResourceManager.FrontDoor.Models.SubResource
-    {
-        public HealthProbeSettingsModel() { }
-        public Azure.ResourceManager.FrontDoor.Models.HealthProbeEnabled? EnabledState { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.FrontDoorHealthProbeMethod? HealthProbeMethod { get { throw null; } set { } }
-        public int? IntervalInSeconds { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public string Path { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.FrontDoorProtocol? Protocol { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-    }
     public partial class LatencyMetric
     {
         public LatencyMetric() { }
@@ -902,7 +1048,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public float? BValue { get { throw null; } }
         public float? Delta { get { throw null; } }
         public float? DeltaPercent { get { throw null; } }
-        public string EndDateTimeUTC { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public string Name { get { throw null; } }
     }
     public partial class LatencyScorecard : Azure.ResourceManager.Models.TrackedResourceData
@@ -910,13 +1056,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public LatencyScorecard(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Country { get { throw null; } }
         public string Description { get { throw null; } }
-        public System.DateTimeOffset? EndDateTimeUTC { get { throw null; } }
-        public string EndpointA { get { throw null; } }
-        public string EndpointB { get { throw null; } }
-        public string IdPropertiesId { get { throw null; } }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.LatencyMetric> LatencyMetrics { get { throw null; } }
-        public string NamePropertiesName { get { throw null; } }
-        public System.DateTimeOffset? StartDateTimeUTC { get { throw null; } }
+        public string LatencyScorecardId { get { throw null; } }
+        public string LatencyScorecardName { get { throw null; } }
+        public System.Uri ScorecardEndpointA { get { throw null; } }
+        public System.Uri ScorecardEndpointB { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LatencyScorecardAggregationInterval : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval>
@@ -937,20 +1083,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval left, Azure.ResourceManager.FrontDoor.Models.LatencyScorecardAggregationInterval right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LoadBalancingSettingsModel : Azure.ResourceManager.FrontDoor.Models.SubResource
-    {
-        public LoadBalancingSettingsModel() { }
-        public int? AdditionalLatencyMilliseconds { get { throw null; } set { } }
-        public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
-        public int? SampleSize { get { throw null; } set { } }
-        public int? SuccessfulSamplesRequired { get { throw null; } set { } }
-    }
     public partial class ManagedRuleDefinition
     {
         internal ManagedRuleDefinition() { }
-        public Azure.ResourceManager.FrontDoor.Models.ActionType? DefaultAction { get { throw null; } }
+        public Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType? DefaultAction { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState? DefaultState { get { throw null; } }
         public string Description { get { throw null; } }
         public string RuleId { get { throw null; } }
@@ -1039,7 +1175,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     public partial class ManagedRuleOverride
     {
         public ManagedRuleOverride(string ruleId) { }
-        public Azure.ResourceManager.FrontDoor.Models.ActionType? Action { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType? Action { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.ManagedRuleEnabledState? EnabledState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.ManagedRuleExclusion> Exclusions { get { throw null; } }
         public string RuleId { get { throw null; } set { } }
@@ -1081,16 +1217,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public string RuleSetType { get { throw null; } }
         public string RuleSetVersion { get { throw null; } }
     }
-    public partial class MatchCondition
-    {
-        public MatchCondition(Azure.ResourceManager.FrontDoor.Models.MatchVariable matchVariable, Azure.ResourceManager.FrontDoor.Models.Operator @operator, System.Collections.Generic.IEnumerable<string> matchValue) { }
-        public System.Collections.Generic.IList<string> MatchValue { get { throw null; } }
-        public Azure.ResourceManager.FrontDoor.Models.MatchVariable MatchVariable { get { throw null; } set { } }
-        public bool? NegateCondition { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.Operator Operator { get { throw null; } set { } }
-        public string Selector { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.TransformType> Transforms { get { throw null; } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MatchProcessingBehavior : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior>
     {
@@ -1107,49 +1233,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior left, Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior left, Azure.ResourceManager.FrontDoor.Models.MatchProcessingBehavior right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MatchVariable : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.MatchVariable>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MatchVariable(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.MatchVariable Cookies { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.MatchVariable PostArgs { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.MatchVariable QueryString { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.MatchVariable RemoteAddr { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.MatchVariable RequestBody { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.MatchVariable RequestHeader { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.MatchVariable RequestMethod { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.MatchVariable RequestUri { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.MatchVariable SocketAddr { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.MatchVariable other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.MatchVariable left, Azure.ResourceManager.FrontDoor.Models.MatchVariable right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.MatchVariable (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.MatchVariable left, Azure.ResourceManager.FrontDoor.Models.MatchVariable right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MinimumTLSVersion : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.MinimumTLSVersion>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MinimumTLSVersion(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.MinimumTLSVersion One0 { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.MinimumTLSVersion One2 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.MinimumTLSVersion other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.MinimumTLSVersion left, Azure.ResourceManager.FrontDoor.Models.MinimumTLSVersion right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.MinimumTLSVersion (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.MinimumTLSVersion left, Azure.ResourceManager.FrontDoor.Models.MinimumTLSVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1175,34 +1258,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Operator : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.Operator>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Operator(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.Operator Any { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Operator BeginsWith { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Operator Contains { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Operator EndsWith { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Operator Equal { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Operator GeoMatch { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Operator GreaterThan { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Operator GreaterThanOrEqual { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Operator IPMatch { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Operator LessThan { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Operator LessThanOrEqual { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Operator RegEx { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.Operator other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.Operator left, Azure.ResourceManager.FrontDoor.Models.Operator right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.Operator (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.Operator left, Azure.ResourceManager.FrontDoor.Models.Operator right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PolicyEnabledState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState>
     {
         private readonly object _dummy;
@@ -1218,24 +1273,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState left, Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState right) { throw null; }
         public static implicit operator Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState left, Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PolicyMode : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.PolicyMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PolicyMode(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.PolicyMode Detection { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.PolicyMode Prevention { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.PolicyMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.PolicyMode left, Azure.ResourceManager.FrontDoor.Models.PolicyMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.PolicyMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.PolicyMode left, Azure.ResourceManager.FrontDoor.Models.PolicyMode right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1256,77 +1293,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.PolicyRequestBodyCheck left, Azure.ResourceManager.FrontDoor.Models.PolicyRequestBodyCheck right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PolicyResourceState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.PolicyResourceState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PolicyResourceState(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.PolicyResourceState Creating { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.PolicyResourceState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.PolicyResourceState Disabled { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.PolicyResourceState Disabling { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.PolicyResourceState Enabled { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.PolicyResourceState Enabling { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.PolicyResourceState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.PolicyResourceState left, Azure.ResourceManager.FrontDoor.Models.PolicyResourceState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.PolicyResourceState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.PolicyResourceState left, Azure.ResourceManager.FrontDoor.Models.PolicyResourceState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class PolicySettings
-    {
-        public PolicySettings() { }
-        public string CustomBlockResponseBody { get { throw null; } set { } }
-        public int? CustomBlockResponseStatusCode { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.PolicyEnabledState? EnabledState { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.PolicyMode? Mode { get { throw null; } set { } }
-        public System.Uri RedirectUri { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.PolicyRequestBodyCheck? RequestBodyCheck { get { throw null; } set { } }
-    }
     public partial class PreconfiguredEndpoint : Azure.ResourceManager.Models.TrackedResourceData
     {
         public PreconfiguredEndpoint(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public string Backend { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string Endpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.FrontDoor.Models.EndpointType? EndpointType { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PrivateEndpointStatus : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.PrivateEndpointStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PrivateEndpointStatus(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.PrivateEndpointStatus Approved { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.PrivateEndpointStatus Disconnected { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.PrivateEndpointStatus Pending { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.PrivateEndpointStatus Rejected { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.PrivateEndpointStatus Timeout { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.PrivateEndpointStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.PrivateEndpointStatus left, Azure.ResourceManager.FrontDoor.Models.PrivateEndpointStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.PrivateEndpointStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.PrivateEndpointStatus left, Azure.ResourceManager.FrontDoor.Models.PrivateEndpointStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ProfilePatch
-    {
-        public ProfilePatch() { }
-        public Azure.ResourceManager.FrontDoor.Models.State? EnabledState { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class PurgeContent
-    {
-        public PurgeContent(System.Collections.Generic.IEnumerable<string> contentPaths) { }
-        public System.Collections.Generic.IList<string> ContentPaths { get { throw null; } }
+        public Azure.ResourceManager.FrontDoor.Models.FrontDoorEndpointType? EndpointType { get { throw null; } set { } }
     }
     public partial class RedirectConfiguration : Azure.ResourceManager.FrontDoor.Models.RouteConfiguration
     {
@@ -1338,25 +1311,18 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectProtocol? RedirectProtocol { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorRedirectType? RedirectType { get { throw null; } set { } }
     }
-    public enum ResourceType
-    {
-        MicrosoftNetworkFrontDoors = 0,
-        MicrosoftNetworkFrontDoorsFrontendEndpoints = 1,
-    }
     public abstract partial class RouteConfiguration
     {
         protected RouteConfiguration() { }
     }
-    public partial class RoutingRule : Azure.ResourceManager.FrontDoor.Models.SubResource
+    public partial class RoutingRuleData : Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceData
     {
-        public RoutingRule() { }
+        public RoutingRuleData() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.FrontDoorProtocol> AcceptedProtocols { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.RoutingRuleEnabledState? EnabledState { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> FrontendEndpoints { get { throw null; } }
-        public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PatternsToMatch { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorResourceState? ResourceState { get { throw null; } }
-        public string ResourceType { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.RouteConfiguration RouteConfiguration { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier RulesEngineId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier WebApplicationFirewallPolicyLinkId { get { throw null; } set { } }
@@ -1379,22 +1345,90 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.RoutingRuleEnabledState left, Azure.ResourceManager.FrontDoor.Models.RoutingRuleEnabledState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RuleMatchActionType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RuleMatchActionType(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType Allow { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType Block { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType Log { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType Redirect { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType left, Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType left, Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class RulesEngineAction
     {
         public RulesEngineAction() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.HeaderAction> RequestHeaderActions { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.HeaderAction> ResponseHeaderActions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderAction> RequestHeaderActions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderAction> ResponseHeaderActions { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.RouteConfiguration RouteConfigurationOverride { get { throw null; } set { } }
+    }
+    public partial class RulesEngineHeaderAction
+    {
+        public RulesEngineHeaderAction(Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType headerActionType, string headerName) { }
+        public Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType HeaderActionType { get { throw null; } set { } }
+        public string HeaderName { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RulesEngineHeaderActionType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RulesEngineHeaderActionType(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType Append { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType Delete { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType Overwrite { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType left, Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType left, Azure.ResourceManager.FrontDoor.Models.RulesEngineHeaderActionType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class RulesEngineMatchCondition
     {
         public RulesEngineMatchCondition(Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchVariable rulesEngineMatchVariable, Azure.ResourceManager.FrontDoor.Models.RulesEngineOperator rulesEngineOperator, System.Collections.Generic.IEnumerable<string> rulesEngineMatchValue) { }
-        public bool? NegateCondition { get { throw null; } set { } }
+        public bool? IsNegateCondition { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> RulesEngineMatchValue { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchVariable RulesEngineMatchVariable { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.RulesEngineOperator RulesEngineOperator { get { throw null; } set { } }
         public string Selector { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.Transform> Transforms { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform> Transforms { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RulesEngineMatchTransform : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RulesEngineMatchTransform(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform Lowercase { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform RemoveNulls { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform Trim { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform Uppercase { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform UriDecode { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform UriEncode { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform left, Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform left, Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchTransform right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RulesEngineMatchVariable : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.RulesEngineMatchVariable>
@@ -1461,24 +1495,6 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public int Priority { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RuleType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.RuleType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RuleType(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.RuleType MatchRule { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.RuleType RateLimitRule { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.RuleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.RuleType left, Azure.ResourceManager.FrontDoor.Models.RuleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.RuleType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.RuleType left, Azure.ResourceManager.FrontDoor.Models.RuleType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SessionAffinityEnabledState : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState>
     {
         private readonly object _dummy;
@@ -1496,143 +1512,119 @@ namespace Azure.ResourceManager.FrontDoor.Models
         public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState left, Azure.ResourceManager.FrontDoor.Models.SessionAffinityEnabledState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class WebApplicationCustomRule
+    {
+        public WebApplicationCustomRule(int priority, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType ruleType, System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchCondition> matchConditions, Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType action) { }
+        public Azure.ResourceManager.FrontDoor.Models.RuleMatchActionType Action { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.CustomRuleEnabledState? EnabledState { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchCondition> MatchConditions { get { throw null; } }
+        public string Name { get { throw null; } set { } }
+        public int Priority { get { throw null; } set { } }
+        public int? RateLimitDurationInMinutes { get { throw null; } set { } }
+        public int? RateLimitThreshold { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType RuleType { get { throw null; } set { } }
+    }
+    public partial class WebApplicationRuleMatchCondition
+    {
+        public WebApplicationRuleMatchCondition(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable matchVariable, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator @operator, System.Collections.Generic.IEnumerable<string> matchValue) { }
+        public bool? IsNegateCondition { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> MatchValue { get { throw null; } }
+        public Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable MatchVariable { get { throw null; } set { } }
+        public Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator Operator { get { throw null; } set { } }
+        public string Selector { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType> Transforms { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct State : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.State>
+    public readonly partial struct WebApplicationRuleMatchOperator : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public State(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.State Disabled { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.State Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.State other) { throw null; }
+        public WebApplicationRuleMatchOperator(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator Any { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator BeginsWith { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator Contains { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator EndsWith { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator Equal { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator GeoMatch { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator GreaterThan { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator GreaterThanOrEqual { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator IPMatch { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator LessThan { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator LessThanOrEqual { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator RegEX { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.State left, Azure.ResourceManager.FrontDoor.Models.State right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.State (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.State left, Azure.ResourceManager.FrontDoor.Models.State right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator left, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator left, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SubResource
-    {
-        public SubResource() { }
-        public string Id { get { throw null; } set { } }
-    }
-    public partial class Timeseries : Azure.ResourceManager.Models.TrackedResourceData
-    {
-        public Timeseries(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public Azure.ResourceManager.FrontDoor.Models.AggregationInterval? AggregationInterval { get { throw null; } set { } }
-        public string Country { get { throw null; } set { } }
-        public string EndDateTimeUTC { get { throw null; } set { } }
-        public string Endpoint { get { throw null; } set { } }
-        public string StartDateTimeUTC { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.TimeseriesDataPoint> TimeseriesData { get { throw null; } }
-        public Azure.ResourceManager.FrontDoor.Models.TimeseriesType? TimeseriesType { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TimeseriesAggregationInterval : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval>
+    public readonly partial struct WebApplicationRuleMatchTransformType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public TimeseriesAggregationInterval(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval Daily { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval Hourly { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval other) { throw null; }
+        public WebApplicationRuleMatchTransformType(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType Lowercase { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType RemoveNulls { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType Trim { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType Uppercase { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType UriDecode { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType UriEncode { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval left, Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval left, Azure.ResourceManager.FrontDoor.Models.TimeseriesAggregationInterval right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType left, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType left, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchTransformType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TimeseriesDataPoint
-    {
-        public TimeseriesDataPoint() { }
-        public string DateTimeUTC { get { throw null; } set { } }
-        public float? Value { get { throw null; } set { } }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TimeseriesType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.TimeseriesType>
+    public readonly partial struct WebApplicationRuleMatchVariable : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public TimeseriesType(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.TimeseriesType LatencyP50 { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.TimeseriesType LatencyP75 { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.TimeseriesType LatencyP95 { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.TimeseriesType MeasurementCounts { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.TimeseriesType other) { throw null; }
+        public WebApplicationRuleMatchVariable(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable Cookies { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable PostArgs { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable QueryString { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable RemoteAddr { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable RequestBody { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable RequestHeader { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable RequestMethod { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable RequestUri { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable SocketAddr { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.TimeseriesType left, Azure.ResourceManager.FrontDoor.Models.TimeseriesType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.TimeseriesType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.TimeseriesType left, Azure.ResourceManager.FrontDoor.Models.TimeseriesType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable left, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable left, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleMatchVariable right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Transform : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.Transform>
+    public readonly partial struct WebApplicationRuleType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public Transform(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.Transform Lowercase { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Transform RemoveNulls { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Transform Trim { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Transform Uppercase { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Transform UrlDecode { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.Transform UrlEncode { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.Transform other) { throw null; }
+        public WebApplicationRuleType(string value) { throw null; }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType MatchRule { get { throw null; } }
+        public static Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType RateLimitRule { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.Transform left, Azure.ResourceManager.FrontDoor.Models.Transform right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.Transform (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.Transform left, Azure.ResourceManager.FrontDoor.Models.Transform right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType left, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType left, Azure.ResourceManager.FrontDoor.Models.WebApplicationRuleType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct TransformType : System.IEquatable<Azure.ResourceManager.FrontDoor.Models.TransformType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public TransformType(string value) { throw null; }
-        public static Azure.ResourceManager.FrontDoor.Models.TransformType Lowercase { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.TransformType RemoveNulls { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.TransformType Trim { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.TransformType Uppercase { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.TransformType UrlDecode { get { throw null; } }
-        public static Azure.ResourceManager.FrontDoor.Models.TransformType UrlEncode { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.FrontDoor.Models.TransformType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.FrontDoor.Models.TransformType left, Azure.ResourceManager.FrontDoor.Models.TransformType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.FrontDoor.Models.TransformType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.FrontDoor.Models.TransformType left, Azure.ResourceManager.FrontDoor.Models.TransformType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ValidateCustomDomainContent
-    {
-        public ValidateCustomDomainContent(string hostName) { }
-        public string HostName { get { throw null; } }
-    }
-    public partial class ValidateCustomDomainOutput
-    {
-        internal ValidateCustomDomainOutput() { }
-        public bool? CustomDomainValidated { get { throw null; } }
-        public string Message { get { throw null; } }
-        public string Reason { get { throw null; } }
-    }
-    public partial class WebApplicationFirewallPolicyPatch
-    {
-        public WebApplicationFirewallPolicyPatch() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
     }
 }

@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -135,7 +135,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078?api-version=2022-05-15",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -160,7 +160,7 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/a67f1343-df06-4583-94d7-fd9ad0e62c73?api-version=2021-10-15",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/a67f1343-df06-4583-94d7-fd9ad0e62c73?api-version=2022-05-15",
         "Cache-Control": [
           "no-store",
           "no-cache"
@@ -168,7 +168,7 @@
         "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Fri, 03 Dec 2021 01:59:56 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078/operationResults/a67f1343-df06-4583-94d7-fd9ad0e62c73?api-version=2021-10-15",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078/operationResults/a67f1343-df06-4583-94d7-fd9ad0e62c73?api-version=2022-05-15",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -184,7 +184,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/a67f1343-df06-4583-94d7-fd9ad0e62c73?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/a67f1343-df06-4583-94d7-fd9ad0e62c73?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -217,7 +217,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -260,7 +260,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078/throughputSettings/default?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078/throughputSettings/default?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -302,7 +302,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078/throughputSettings/default/migrateToAutoscale?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078/throughputSettings/default/migrateToAutoscale?api-version=2022-05-15",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -314,7 +314,7 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/ed25962c-d6c3-4906-b86c-071d83a14abc?api-version=2021-10-15",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/ed25962c-d6c3-4906-b86c-071d83a14abc?api-version=2022-05-15",
         "Cache-Control": [
           "no-store",
           "no-cache"
@@ -322,7 +322,7 @@
         "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Fri, 03 Dec 2021 02:00:15 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078/throughputSettings/default/migrateToAutoscale/operationResults/ed25962c-d6c3-4906-b86c-071d83a14abc?api-version=2021-10-15",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078/throughputSettings/default/migrateToAutoscale/operationResults/ed25962c-d6c3-4906-b86c-071d83a14abc?api-version=2022-05-15",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -338,7 +338,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/ed25962c-d6c3-4906-b86c-071d83a14abc?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/ed25962c-d6c3-4906-b86c-071d83a14abc?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -371,7 +371,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078/throughputSettings/default/migrateToAutoscale/operationResults/ed25962c-d6c3-4906-b86c-071d83a14abc?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078/throughputSettings/default/migrateToAutoscale/operationResults/ed25962c-d6c3-4906-b86c-071d83a14abc?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -415,7 +415,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/ed25962c-d6c3-4906-b86c-071d83a14abc?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/ed25962c-d6c3-4906-b86c-071d83a14abc?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -448,7 +448,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078/throughputSettings/default/migrateToAutoscale/operationResults/ed25962c-d6c3-4906-b86c-071d83a14abc?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078/throughputSettings/default/migrateToAutoscale/operationResults/ed25962c-d6c3-4906-b86c-071d83a14abc?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -492,7 +492,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
@@ -536,7 +536,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078?api-version=2022-05-15",
       "RequestMethod": "DELETE",
       "RequestHeaders": {
         "Authorization": "Sanitized",
@@ -547,7 +547,7 @@
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/dd4cbf99-9529-4149-9196-d3f02d4cac24?api-version=2021-10-15",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/dd4cbf99-9529-4149-9196-d3f02d4cac24?api-version=2022-05-15",
         "Cache-Control": [
           "no-store",
           "no-cache"
@@ -555,7 +555,7 @@
         "Content-Length": "21",
         "Content-Type": "application/json",
         "Date": "Fri, 03 Dec 2021 02:00:23 GMT",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078/operationResults/dd4cbf99-9529-4149-9196-d3f02d4cac24?api-version=2021-10-15",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/dbaccount-7064/providers/Microsoft.DocumentDB/databaseAccounts/dbaccount-4840/cassandraKeyspaces/cassandra-keyspace-1078/operationResults/dd4cbf99-9529-4149-9196-d3f02d4cac24?api-version=2022-05-15",
         "Pragma": "no-cache",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -571,7 +571,7 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/dd4cbf99-9529-4149-9196-d3f02d4cac24?api-version=2021-10-15",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/providers/Microsoft.DocumentDB/locations/westus2/operationsStatus/dd4cbf99-9529-4149-9196-d3f02d4cac24?api-version=2022-05-15",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",

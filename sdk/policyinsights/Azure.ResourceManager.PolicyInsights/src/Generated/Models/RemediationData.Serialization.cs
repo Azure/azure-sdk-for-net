@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.PolicyInsights
                 writer.WritePropertyName("resourceDiscoveryMode");
                 writer.WriteStringValue(ResourceDiscoveryMode.Value.ToString());
             }
-            if (Optional.IsDefined(Filters))
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filters");
-                writer.WriteObjectValue(Filters);
+                writer.WriteObjectValue(Filter);
             }
             if (Optional.IsDefined(ResourceCount))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PolicyInsights
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> policyAssignmentId = default;
+            Optional<ResourceIdentifier> policyAssignmentId = default;
             Optional<string> policyDefinitionReferenceId = default;
             Optional<ResourceDiscoveryMode> resourceDiscoveryMode = default;
             Optional<string> provisioningState = default;
@@ -116,7 +116,12 @@ namespace Azure.ResourceManager.PolicyInsights
                     {
                         if (property0.NameEquals("policyAssignmentId"))
                         {
-                            policyAssignmentId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            policyAssignmentId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("policyDefinitionReferenceId"))

@@ -6,30 +6,30 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-2a4a98f954fdd442288d47e7cca46c2d-a919511461e82305-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220829.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-35e8da7067790644328d273fa418f602-54e0d456e2f6d568-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "460e9f7b540e82c86a95a1a53a7f942f",
+        "x-ms-client-request-id": "252d86ac778712c53230d44d7499658d",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
-        "Content-Length": "8510",
+        "Content-Length": "8509",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Tue, 30 Aug 2022 05:39:30 GMT",
+        "Date": "Thu, 08 Sep 2022 18:56:06 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Vary": "Accept-Encoding",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 5E28D60761624AB1A8FF3D8ADD31808D Ref B: PAOEDGE0616 Ref C: 2022-08-30T05:39:31Z"
+        "X-MSEdge-Ref": "Ref A: B584ECB9B827405782368911CEDF6B1F Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:07Z"
       },
       "ResponseBody": {
         "summary": {
           "query": "milford",
           "queryType": "NON_NEAR",
-          "queryTime": 29,
+          "queryTime": 8,
           "numResults": 10,
           "offset": 0,
           "totalResults": 108,
@@ -38,7 +38,7 @@
         "results": [
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/3882",
+            "id": "NZ/GEO/p0/4548",
             "score": 2.3825688362,
             "entityType": "Municipality",
             "address": {
@@ -83,7 +83,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/4533",
+            "id": "NZ/GEO/p0/1932",
             "score": 2.358474493,
             "entityType": "Municipality",
             "address": {
@@ -128,7 +128,7 @@
           },
           {
             "type": "Geography",
-            "id": "NZ/GEO/p0/4245",
+            "id": "NZ/GEO/p0/3007",
             "score": 2.1768069267,
             "entityType": "MunicipalitySubdivision",
             "address": {
@@ -174,11 +174,12 @@
           },
           {
             "type": "POI",
-            "id": "554008000023622",
+            "id": "554009000466267",
             "score": 2.1244060993,
-            "info": "search:ta:554008000023622-NZ",
+            "info": "search:ta:554009000466267-NZ",
             "poi": {
-              "name": "Milford Sound",
+              "name": "Milford Helicopters",
+              "phone": "\u002B64 3-249 7845",
               "categorySet": [
                 {
                   "id": 7376
@@ -200,38 +201,39 @@
               ]
             },
             "address": {
-              "streetName": "Bowen Falls Walking Track",
-              "municipality": "Fiordland National Park",
+              "streetNumber": "52",
+              "streetName": "Ben Loch Lane",
+              "municipality": "Te Anau",
               "countrySecondarySubdivision": "Southland",
               "countryTertiarySubdivision": "Southland",
               "countrySubdivision": "South Island",
-              "postalCode": "9679",
+              "postalCode": "9672",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "Bowen Falls Walking Track, Fiordland National Park, Fiordland National Park 9679",
-              "localName": "Fiordland National Park"
+              "freeformAddress": "52 Ben Loch Lane, Te Anau, Te Anau 9672",
+              "localName": "Te Anau"
             },
             "position": {
-              "lat": -44.6669,
-              "lon": 167.92566
+              "lat": -45.43027,
+              "lon": 167.74263
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -44.66502,
-                "lon": 167.92302
+                "lat": -45.42937,
+                "lon": 167.74135
               },
               "btmRightPoint": {
-                "lat": -44.66878,
-                "lon": 167.9283
+                "lat": -45.43117,
+                "lon": 167.74391
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": -44.66543,
-                  "lon": 167.92401
+                  "lat": -45.43111,
+                  "lon": 167.74332
                 }
               }
             ]
@@ -302,12 +304,11 @@
           },
           {
             "type": "POI",
-            "id": "554009000466267",
+            "id": "554008000023622",
             "score": 2.1244060993,
-            "info": "search:ta:554009000466267-NZ",
+            "info": "search:ta:554008000023622-NZ",
             "poi": {
-              "name": "Milford Helicopters",
-              "phone": "\u002B64 3-249 7845",
+              "name": "Milford Sound",
               "categorySet": [
                 {
                   "id": 7376
@@ -329,39 +330,38 @@
               ]
             },
             "address": {
-              "streetNumber": "52",
-              "streetName": "Ben Loch Lane",
-              "municipality": "Te Anau",
+              "streetName": "Bowen Falls Walking Track",
+              "municipality": "Fiordland National Park",
               "countrySecondarySubdivision": "Southland",
               "countryTertiarySubdivision": "Southland",
               "countrySubdivision": "South Island",
-              "postalCode": "9672",
+              "postalCode": "9679",
               "countryCode": "NZ",
               "country": "New Zealand",
               "countryCodeISO3": "NZL",
-              "freeformAddress": "52 Ben Loch Lane, Te Anau, Te Anau 9672",
-              "localName": "Te Anau"
+              "freeformAddress": "Bowen Falls Walking Track, Fiordland National Park, Fiordland National Park 9679",
+              "localName": "Fiordland National Park"
             },
             "position": {
-              "lat": -45.43027,
-              "lon": 167.74263
+              "lat": -44.6669,
+              "lon": 167.92566
             },
             "viewport": {
               "topLeftPoint": {
-                "lat": -45.42937,
-                "lon": 167.74135
+                "lat": -44.66502,
+                "lon": 167.92302
               },
               "btmRightPoint": {
-                "lat": -45.43117,
-                "lon": 167.74391
+                "lat": -44.66878,
+                "lon": 167.9283
               }
             },
             "entryPoints": [
               {
                 "type": "main",
                 "position": {
-                  "lat": -45.43111,
-                  "lon": 167.74332
+                  "lat": -44.66543,
+                  "lon": 167.92401
                 }
               }
             ]
@@ -509,7 +509,7 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/25765",
+            "id": "NZ/STR/p0/25303",
             "score": 2.0962057114,
             "address": {
               "streetName": "Milford Street",
@@ -542,7 +542,7 @@
           },
           {
             "type": "Street",
-            "id": "NZ/STR/p0/25768",
+            "id": "NZ/STR/p0/25306",
             "score": 2.0962057114,
             "address": {
               "streetName": "Milford Street",
@@ -580,6 +580,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "654295198"
+    "RandomSeed": "907849363"
   }
 }

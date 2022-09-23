@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         {
             string ruleId = default;
             Optional<ManagedRuleEnabledState> enabledState = default;
-            Optional<ActionType> action = default;
+            Optional<RuleMatchActionType> action = default;
             Optional<IList<ManagedRuleExclusion>> exclusions = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    action = new ActionType(property.Value.GetString());
+                    action = new RuleMatchActionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("exclusions"))

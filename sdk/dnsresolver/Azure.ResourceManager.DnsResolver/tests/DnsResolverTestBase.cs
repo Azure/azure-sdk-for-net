@@ -1,26 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.DnsResolver.Tests;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
-using Newtonsoft.Json;
+using Azure.ResourceManager.Network;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DnsResolver.Tests
 {
     public class DnsResolverTestBase : ManagementRecordedTestBase<DnsResolverManagementTestEnvironment>
     {
-        protected AzureLocation DefaultLocation => AzureLocation.WestUS2;
+        protected string SubnetName => "snet-endpoint";
+
+        protected AzureLocation DefaultLocation => AzureLocation.AustraliaEast;
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
         public DnsResolverTestBase(bool isAsync) : base(isAsync)
@@ -56,44 +51,25 @@ namespace Azure.ResourceManager.DnsResolver.Tests
 
         protected async Task CreateVirtualNetworkAsync(string virtualNetworkName)
         {
-            var baseUri = $"https://{TestEnvironment.Location}.test.azuremresolver.net:9002";
-            var relativeUri = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}";
-            var client = new HttpClient();
-
-            var virtualNetwork = new
+            var vnet = new VirtualNetworkData()
             {
-                location = TestEnvironment.Location,
-                properties = new
-                {
-                    addressSpace = new
+                Location = TestEnvironment.Location,
+                Subnets = {
+                    new SubnetData()
                     {
-                        addressPrefixes = new[] { "10.0.0.0/8" },
+                        Name = SubnetName,
+                        AddressPrefix = "10.2.2.0/28",
                     }
-                },
+                }
             };
 
-            var httpContent = new StringContent(JsonConvert.SerializeObject(virtualNetwork), Encoding.UTF8, "application/json");
-            await client.PutAsync(baseUri + relativeUri, httpContent);
-        }
+            vnet.AddressPrefixes.Add("10.0.0.0/8");
 
-        protected async Task CreateSubnetAsync(string virtualNetworkName)
-        {
-            var subnetName = "snet-sim2";
-            var baseUri = $"https://{TestEnvironment.Location}.test.azuremresolver.net:9002";
-            var relativeUri = $"/subscriptions/{TestEnvironment.SubscriptionId}/resourceGroups/{TestEnvironment.ResourceGroup}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}/subnets/{subnetName}";
-            var client = new HttpClient();
+            var subscription = await Client.GetSubscriptions().GetAsync(TestEnvironment.SubscriptionId);
+            var resourceGroup = await subscription.Value.GetResourceGroups().GetAsync(TestEnvironment.ResourceGroup);
 
-            var virtualNetwork = new
-            {
-                location = TestEnvironment.Location,
-                properties = new
-                {
-                    addressPrefix = "10.2.2.0/28",
-                },
-            };
-
-            var httpContent = new StringContent(JsonConvert.SerializeObject(virtualNetwork), Encoding.UTF8, "application/json");
-            await client.PutAsync(baseUri + relativeUri, httpContent);
+            var virtualNetworks = resourceGroup.Value.GetVirtualNetworks();
+            await virtualNetworks.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkName, vnet);
         }
     }
 }

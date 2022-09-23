@@ -300,6 +300,96 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Gets the inbound routes configured for the Virtual Hub on a particular
+            /// connection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VirtualHub.
+            /// </param>
+            /// <param name='virtualHubName'>
+            /// The name of the VirtualHub.
+            /// </param>
+            /// <param name='getInboundRoutesParameters'>
+            /// Parameters supplied to get the inbound routes for a connection resource.
+            /// </param>
+            public static void GetInboundRoutes(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, GetInboundRoutesParameters getInboundRoutesParameters)
+            {
+                operations.GetInboundRoutesAsync(resourceGroupName, virtualHubName, getInboundRoutesParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the inbound routes configured for the Virtual Hub on a particular
+            /// connection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VirtualHub.
+            /// </param>
+            /// <param name='virtualHubName'>
+            /// The name of the VirtualHub.
+            /// </param>
+            /// <param name='getInboundRoutesParameters'>
+            /// Parameters supplied to get the inbound routes for a connection resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task GetInboundRoutesAsync(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, GetInboundRoutesParameters getInboundRoutesParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.GetInboundRoutesWithHttpMessagesAsync(resourceGroupName, virtualHubName, getInboundRoutesParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the outbound routes configured for the Virtual Hub on a particular
+            /// connection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VirtualHub.
+            /// </param>
+            /// <param name='virtualHubName'>
+            /// The name of the VirtualHub.
+            /// </param>
+            /// <param name='getOutboundRoutesParameters'>
+            /// Parameters supplied to get the outbound routes for a connection resource.
+            /// </param>
+            public static void GetOutboundRoutes(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, GetOutboundRoutesParameters getOutboundRoutesParameters)
+            {
+                operations.GetOutboundRoutesAsync(resourceGroupName, virtualHubName, getOutboundRoutesParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the outbound routes configured for the Virtual Hub on a particular
+            /// connection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VirtualHub.
+            /// </param>
+            /// <param name='virtualHubName'>
+            /// The name of the VirtualHub.
+            /// </param>
+            /// <param name='getOutboundRoutesParameters'>
+            /// Parameters supplied to get the outbound routes for a connection resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task GetOutboundRoutesAsync(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, GetOutboundRoutesParameters getOutboundRoutesParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.GetOutboundRoutesWithHttpMessagesAsync(resourceGroupName, virtualHubName, getOutboundRoutesParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Creates a VirtualHub resource if it doesn't exist else updates the existing
             /// VirtualHub.
             /// </summary>
@@ -427,6 +517,96 @@ namespace Microsoft.Azure.Management.Network
             public static async Task BeginGetEffectiveVirtualHubRoutesAsync(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, EffectiveRoutesParameters effectiveRoutesParameters = default(EffectiveRoutesParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginGetEffectiveVirtualHubRoutesWithHttpMessagesAsync(resourceGroupName, virtualHubName, effectiveRoutesParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the inbound routes configured for the Virtual Hub on a particular
+            /// connection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VirtualHub.
+            /// </param>
+            /// <param name='virtualHubName'>
+            /// The name of the VirtualHub.
+            /// </param>
+            /// <param name='getInboundRoutesParameters'>
+            /// Parameters supplied to get the inbound routes for a connection resource.
+            /// </param>
+            public static void BeginGetInboundRoutes(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, GetInboundRoutesParameters getInboundRoutesParameters)
+            {
+                operations.BeginGetInboundRoutesAsync(resourceGroupName, virtualHubName, getInboundRoutesParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the inbound routes configured for the Virtual Hub on a particular
+            /// connection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VirtualHub.
+            /// </param>
+            /// <param name='virtualHubName'>
+            /// The name of the VirtualHub.
+            /// </param>
+            /// <param name='getInboundRoutesParameters'>
+            /// Parameters supplied to get the inbound routes for a connection resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginGetInboundRoutesAsync(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, GetInboundRoutesParameters getInboundRoutesParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginGetInboundRoutesWithHttpMessagesAsync(resourceGroupName, virtualHubName, getInboundRoutesParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Gets the outbound routes configured for the Virtual Hub on a particular
+            /// connection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VirtualHub.
+            /// </param>
+            /// <param name='virtualHubName'>
+            /// The name of the VirtualHub.
+            /// </param>
+            /// <param name='getOutboundRoutesParameters'>
+            /// Parameters supplied to get the outbound routes for a connection resource.
+            /// </param>
+            public static void BeginGetOutboundRoutes(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, GetOutboundRoutesParameters getOutboundRoutesParameters)
+            {
+                operations.BeginGetOutboundRoutesAsync(resourceGroupName, virtualHubName, getOutboundRoutesParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the outbound routes configured for the Virtual Hub on a particular
+            /// connection.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name of the VirtualHub.
+            /// </param>
+            /// <param name='virtualHubName'>
+            /// The name of the VirtualHub.
+            /// </param>
+            /// <param name='getOutboundRoutesParameters'>
+            /// Parameters supplied to get the outbound routes for a connection resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginGetOutboundRoutesAsync(this IVirtualHubsOperations operations, string resourceGroupName, string virtualHubName, GetOutboundRoutesParameters getOutboundRoutesParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginGetOutboundRoutesWithHttpMessagesAsync(resourceGroupName, virtualHubName, getOutboundRoutesParameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

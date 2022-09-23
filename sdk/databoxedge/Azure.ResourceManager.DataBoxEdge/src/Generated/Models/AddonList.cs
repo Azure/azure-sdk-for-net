@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Initializes a new instance of AddonList. </summary>
         internal AddonList()
         {
-            Value = new ChangeTrackingList<AddonData>();
+            Value = new ChangeTrackingList<DataBoxEdgeRoleAddonData>();
         }
 
         /// <summary> Initializes a new instance of AddonList. </summary>
         /// <param name="value">
         /// The Value.
-        /// Please note <see cref="AddonData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ArcAddon"/> and <see cref="IoTAddon"/>.
+        /// Please note <see cref="DataBoxEdgeRoleAddonData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="EdgeArcAddon"/> and <see cref="EdgeIotAddon"/>.
         /// </param>
         /// <param name="nextLink"> Link to the next set of results. </param>
-        internal AddonList(IReadOnlyList<AddonData> value, string nextLink)
+        internal AddonList(IReadOnlyList<DataBoxEdgeRoleAddonData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
 
         /// <summary>
         /// The Value.
-        /// Please note <see cref="AddonData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ArcAddon"/> and <see cref="IoTAddon"/>.
+        /// Please note <see cref="DataBoxEdgeRoleAddonData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="EdgeArcAddon"/> and <see cref="EdgeIotAddon"/>.
         /// </summary>
-        public IReadOnlyList<AddonData> Value { get; }
+        public IReadOnlyList<DataBoxEdgeRoleAddonData> Value { get; }
         /// <summary> Link to the next set of results. </summary>
         public string NextLink { get; }
     }
