@@ -205,7 +205,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         {
             PlayCompleted @event = CallAutomationModelFactory.PlayCompleted(
                 operationContext: "operationContext",
-                resultInformation: new ResultInformation(code: 200, subCode: 200, message: "Action completed successfully"),
+                resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId");
@@ -217,6 +217,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", playCompleted.CorrelationId);
                 Assert.AreEqual("serverCallId", playCompleted.ServerCallId);
                 Assert.AreEqual(200, playCompleted.ResultInformation.Code);
+                Assert.AreEqual(ReasonCodeName.CompletedSuccessfully, playCompleted.ReasonCodeName);
             }
             else
             {

@@ -31,6 +31,7 @@ namespace Azure.Communication.CallAutomation
         private const string PlayOperationCancelledValue = "8508";
         private const string PlayInvalidFileFormatValue = "8535";
 
+        private const string CompletedSuccessfullyValue = "0";
         private const string OperationCanceledValue = "8508";
         private const string UspecifiedErrorValue = "9999";
 
@@ -53,6 +54,8 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Action failed, file could not be downloaded. </summary>
         public static ReasonCodeName PlayInvalidFileFormat { get; } = new ReasonCodeName(PlayInvalidFileFormatValue);
 
+        /// <summary> Action completed successfully. </summary>
+        public static ReasonCodeName CompletedSuccessfully { get; } = new ReasonCodeName (CompletedSuccessfullyValue);
         /// <summary> Unknown internal server error. </summary>
         public static ReasonCodeName UspecifiedError { get; } = new ReasonCodeName(UspecifiedErrorValue);
         /// <summary> Action falied, the operation was cancelled. </summary>
