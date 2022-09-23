@@ -21,7 +21,7 @@ namespace Azure.Monitor.Ingestion
     {
         internal UploadLogsError() { }
         public Azure.ResponseError Error { get { throw null; } }
-        public System.Collections.Generic.IEnumerable<object> FailedLogs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.BinaryData> FailedLogs { get { throw null; } }
     }
     public partial class UploadLogsOptions
     {
