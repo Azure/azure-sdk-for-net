@@ -241,7 +241,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", playFailed.CorrelationId);
                 Assert.AreEqual("serverCallId", playFailed.ServerCallId);
                 Assert.AreEqual(400, playFailed.ResultInformation.Code);
-                Assert.AreEqual(ReasonCodeName.PlayDownloadFailed, playFailed.FailureReason);
+                Assert.AreEqual(ReasonCodeName.PlayDownloadFailed, playFailed.ReasonCodeName);
             }
             else
             {

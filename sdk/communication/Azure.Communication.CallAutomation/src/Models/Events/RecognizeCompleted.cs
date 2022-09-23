@@ -12,7 +12,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The play completed event.
     /// </summary>
-    public partial class RecognizeCompleted : CallAutomationEventBase
+    public partial class RecognizeCompleted : CallAutomationEventWithReasonCodeName
     {
         /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
         internal RecognizeCompleted()
@@ -59,8 +59,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The recognition type. </summary>
         [JsonConverter(typeof(EquatableEnumJsonConverter<CallMediaRecognitionType>))]
         public CallMediaRecognitionType RecognitionType { get; }
-        /// <summary> Success reason. </summary>
-        public ReasonCodeName ReasonCodeName { get; }
 
         /// <summary>
         /// Deserialize <see cref="RecognizeCompletedInternal"/> event.

@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The recognize failed event.
     /// </summary>
-    public class RecognizeFailed : CallAutomationEventBase
+    public class RecognizeFailed : CallAutomationEventWithReasonCodeName
     {
         /// <summary> Initializes a new instance of RecognizeFailed. </summary>
         internal RecognizeFailed()
@@ -46,10 +46,6 @@ namespace Azure.Communication.CallAutomation
         /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
         public string PublicEventType { get; }
 
-        /// <summary>
-        /// Reason on why this event failed.
-        /// </summary>
-        public ReasonCodeName ReasonCodeName { get; }
         /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
         /// <summary>
         /// Deserialize <see cref="RecognizeFailed"/> event.
