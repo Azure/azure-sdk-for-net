@@ -337,7 +337,7 @@ namespace Azure.Monitor.Ingestion
             UploadLogsResult finalResult = new UploadLogsResult(errors, GetStatus(logs, errors));
             return Response.FromValue(finalResult, response);
         }
-        private int _count;
+
         private async Task<BatchUpload> CommitBatchListSyncOrAsync<T>(BatchedLogs<T> batch, string ruleId, string streamName, bool async, CancellationToken cancellationToken)
         {
             UploadLogsError error = null;
@@ -348,7 +348,6 @@ namespace Azure.Monitor.Ingestion
 
             if (async)
             {
-                Interlocked.Increment(ref _count);
                 response = await _pipeline.ProcessMessageAsync(message, requestContext, cancellationToken).ConfigureAwait(false);
             }
             else

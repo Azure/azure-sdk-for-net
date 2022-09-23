@@ -18,9 +18,8 @@ namespace Azure.Monitor.Ingestion.Tests
     public class MonitorIngestionLiveTest : RecordedTestBase<MonitorIngestionTestEnvironment>
     {
         private const int Mb = 1024 * 1024;
-        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync, RecordedTestMode.Playback)
+        public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
         {
-            CompareBodies = false; //TODO: https://github.com/Azure/azure-sdk-for-net/issues/30865
         }
 
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
@@ -93,8 +92,7 @@ namespace Azure.Monitor.Ingestion.Tests
             {
                 entries.Add(new Object[] {
                     new {
-                        Time = 1,
-                        //Time = recordingNow,
+                        Time = recordingNow,
                         Computer = "Computer" + i.ToString(),
                         AdditionalContext = i
                     }
@@ -147,19 +145,14 @@ namespace Azure.Monitor.Ingestion.Tests
         [Test]
         public async Task ConcurrencyMultiThread()
         {
-            var policy = new ConcurrencyCounterPolicy();
+            var policy = new ConcurrencyCounterPolicy(10);
             LogsIngestionClient client = CreateClient(policy);
             LogsIngestionClient.SingleUploadThreshold = 100; // make batch size smaller for Uploads for test recording size
 
             // Make the request
             UploadLogsOptions options = new UploadLogsOptions();
             options.MaxConcurrency = 10;
-            //System.Runtime.CompilerServices.ConfiguredTaskAwaitable<Response<UploadLogsResult>> tasks;
-            //using (Recording.DisableRecording())
-            //{
-                var tasks = client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(8, Recording.Now.DateTime), options).ConfigureAwait(false);
-            //}
-            Assert.Greater(policy.Count, 1);
+            var tasks = client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(8, Recording.Now.DateTime), options).ConfigureAwait(false);
 
             var response = await tasks;
 
@@ -172,12 +165,11 @@ namespace Azure.Monitor.Ingestion.Tests
         [Test]
         public void ConcurrencySingleThread()
         {
-            var policy = new ConcurrencyCounterPolicy();
+            var policy = new ConcurrencyCounterPolicy(10);
             LogsIngestionClient client = CreateClient(policy);
 
-            LogsIngestionClient.SingleUploadThreshold = 1000; // make batch size smaller for Uploads for test recording size
-            var response = client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(500, Recording.Now.DateTime));
-            Assert.AreEqual(policy.Count, 0);
+            LogsIngestionClient.SingleUploadThreshold = 100; // make batch size smaller for Uploads for test recording size
+            var response = client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(50, Recording.Now.DateTime));
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
