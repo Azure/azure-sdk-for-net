@@ -54,10 +54,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="diffDiskSettings">Specifies the ephemeral disk
         /// Settings for the operating system disk used by the virtual machine
         /// scale set.</param>
-        /// <param name="diskSizeGB">Specifies the size of the operating system
-        /// disk in gigabytes. This element can be used to overwrite the size
-        /// of the disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This
-        /// value cannot be larger than 1023 GB</param>
+        /// <param name="diskSizeGB">Specifies the size of an empty data disk
+        /// in gigabytes. This element can be used to overwrite the size of the
+        /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; diskSizeGB is
+        /// the number of bytes x 1024^3 for the disk and the value cannot be
+        /// larger than 1023</param>
         /// <param name="osType">This property allows you to specify the type
         /// of the OS that is included in the disk if creating a VM from
         /// user-image or a specialized VHD. &lt;br&gt;&lt;br&gt; Possible
@@ -147,11 +148,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         public DiffDiskSettings DiffDiskSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies the size of the operating system disk in
-        /// gigabytes. This element can be used to overwrite the size of the
-        /// disk in a virtual machine image.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This value cannot be larger
-        /// than 1023 GB
+        /// Gets or sets specifies the size of an empty data disk in gigabytes.
+        /// This element can be used to overwrite the size of the disk in a
+        /// virtual machine image. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// diskSizeGB is the number of bytes x 1024^3 for the disk and the
+        /// value cannot be larger than 1023
         /// </summary>
         [JsonProperty(PropertyName = "diskSizeGB")]
         public int? DiskSizeGB { get; set; }

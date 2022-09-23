@@ -144,6 +144,7 @@ rename-mapping:
   ServicePackageActivationMode: ManagedServicePackageActivationMode
   ServicePlacementPolicy: ManagedServicePlacementPolicy
   ManagedVMSize: ServiceFabricManagedUnsupportedVmSize
+  AddRemoveIncrementalNamedPartitionScalingMechanism: NamedPartitionAddOrRemoveScalingMechanism
 
 directive:
   - remove-operation: OperationStatus_Get

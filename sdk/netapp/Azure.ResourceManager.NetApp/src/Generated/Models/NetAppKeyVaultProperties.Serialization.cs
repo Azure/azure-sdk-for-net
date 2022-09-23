@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Models
             Uri keyVaultUri = default;
             string keyName = default;
             string keyVaultResourceId = default;
-            Optional<KeyVaultStatus> status = default;
+            Optional<NetAppKeyVaultStatus> status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultId"))
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new KeyVaultStatus(property.Value.GetString());
+                    status = new NetAppKeyVaultStatus(property.Value.GetString());
                     continue;
                 }
             }

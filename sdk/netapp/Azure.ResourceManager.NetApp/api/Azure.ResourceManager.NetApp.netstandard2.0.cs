@@ -233,8 +233,8 @@ namespace Azure.ResourceManager.NetApp
         public static Azure.ResourceManager.NetApp.NetAppVolumeResource GetNetAppVolumeResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.NetApp.NetAppVolumeSnapshotResource GetNetAppVolumeSnapshotResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.NetApp.SnapshotPolicyResource GetSnapshotPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.NetApp.Models.RegionInfo> QueryRegionInfoNetAppResource(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.RegionInfo>> QueryRegionInfoNetAppResourceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppRegionInfo> QueryRegionInfoNetAppResource(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class NetAppSubvolumeInfoCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetApp.NetAppSubvolumeInfoResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetApp.NetAppSubvolumeInfoResource>, System.Collections.IEnumerable
     {
@@ -595,6 +595,12 @@ namespace Azure.ResourceManager.NetApp
 }
 namespace Azure.ResourceManager.NetApp.Models
 {
+    public partial class AvailabilityZoneMapping
+    {
+        internal AvailabilityZoneMapping() { }
+        public string AvailabilityZone { get { throw null; } }
+        public bool? IsAvailable { get { throw null; } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CapacityPoolEncryptionType : System.IEquatable<Azure.ResourceManager.NetApp.Models.CapacityPoolEncryptionType>
     {
@@ -656,33 +662,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator !=(Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume left, Azure.ResourceManager.NetApp.Models.EnableNetAppSubvolume right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EncryptionIdentity
-    {
-        public EncryptionIdentity() { }
-        public string PrincipalId { get { throw null; } }
-        public string UserAssignedIdentity { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct KeyVaultStatus : System.IEquatable<Azure.ResourceManager.NetApp.Models.KeyVaultStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public KeyVaultStatus(string value) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.KeyVaultStatus Created { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.KeyVaultStatus Deleted { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.KeyVaultStatus Error { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.KeyVaultStatus InUse { get { throw null; } }
-        public static Azure.ResourceManager.NetApp.Models.KeyVaultStatus Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.NetApp.Models.KeyVaultStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.NetApp.Models.KeyVaultStatus left, Azure.ResourceManager.NetApp.Models.KeyVaultStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.NetApp.Models.KeyVaultStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.NetApp.Models.KeyVaultStatus left, Azure.ResourceManager.NetApp.Models.KeyVaultStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class NetAppAccountActiveDirectory
     {
         public NetAppAccountActiveDirectory() { }
@@ -733,7 +712,7 @@ namespace Azure.ResourceManager.NetApp.Models
     public partial class NetAppAccountEncryption
     {
         public NetAppAccountEncryption() { }
-        public Azure.ResourceManager.NetApp.Models.EncryptionIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.NetApp.Models.NetAppEncryptionIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppKeySource? KeySource { get { throw null; } set { } }
         public Azure.ResourceManager.NetApp.Models.NetAppKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
     }
@@ -835,6 +814,12 @@ namespace Azure.ResourceManager.NetApp.Models
         public static bool operator !=(Azure.ResourceManager.NetApp.Models.NetAppChownMode left, Azure.ResourceManager.NetApp.Models.NetAppChownMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class NetAppEncryptionIdentity
+    {
+        public NetAppEncryptionIdentity() { }
+        public string PrincipalId { get { throw null; } }
+        public string UserAssignedIdentity { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetAppEncryptionKeySource : System.IEquatable<Azure.ResourceManager.NetApp.Models.NetAppEncryptionKeySource>
     {
@@ -922,7 +907,28 @@ namespace Azure.ResourceManager.NetApp.Models
         public string KeyVaultId { get { throw null; } }
         public string KeyVaultResourceId { get { throw null; } set { } }
         public System.Uri KeyVaultUri { get { throw null; } set { } }
-        public Azure.ResourceManager.NetApp.Models.KeyVaultStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus? Status { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct NetAppKeyVaultStatus : System.IEquatable<Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public NetAppKeyVaultStatus(string value) { throw null; }
+        public static Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus Created { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus Deleted { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus Error { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus InUse { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus left, Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus left, Azure.ResourceManager.NetApp.Models.NetAppKeyVaultStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class NetAppLdapSearchScopeConfiguration
     {
@@ -1049,6 +1055,12 @@ namespace Azure.ResourceManager.NetApp.Models
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppQuotaAvailabilityResourceType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetApp.Models.NetAppQuotaAvailabilityResourceType left, Azure.ResourceManager.NetApp.Models.NetAppQuotaAvailabilityResourceType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class NetAppRegionInfo
+    {
+        internal NetAppRegionInfo() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetApp.Models.AvailabilityZoneMapping> AvailabilityZoneMappings { get { throw null; } }
+        public Azure.ResourceManager.NetApp.Models.RegionStorageToNetworkProximity? StorageToNetworkProximity { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetAppRelationshipStatus : System.IEquatable<Azure.ResourceManager.NetApp.Models.NetAppRelationshipStatus>
@@ -1423,18 +1435,6 @@ namespace Azure.ResourceManager.NetApp.Models
         public static implicit operator Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity left, Azure.ResourceManager.NetApp.Models.NetAppVolumeStorageToNetworkProximity right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class RegionInfo
-    {
-        internal RegionInfo() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetApp.Models.RegionInfoAvailabilityZoneMappingsItem> AvailabilityZoneMappings { get { throw null; } }
-        public Azure.ResourceManager.NetApp.Models.RegionStorageToNetworkProximity? StorageToNetworkProximity { get { throw null; } }
-    }
-    public partial class RegionInfoAvailabilityZoneMappingsItem
-    {
-        internal RegionInfoAvailabilityZoneMappingsItem() { }
-        public string AvailabilityZone { get { throw null; } }
-        public bool? IsAvailable { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RegionStorageToNetworkProximity : System.IEquatable<Azure.ResourceManager.NetApp.Models.RegionStorageToNetworkProximity>

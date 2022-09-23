@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVaultResourceId"> The resource ID of KeyVault. </param>
         /// <param name="status"> Status of the KeyVault connection. </param>
-        internal NetAppKeyVaultProperties(string keyVaultId, Uri keyVaultUri, string keyName, string keyVaultResourceId, KeyVaultStatus? status)
+        internal NetAppKeyVaultProperties(string keyVaultId, Uri keyVaultUri, string keyName, string keyVaultResourceId, NetAppKeyVaultStatus? status)
         {
             KeyVaultId = keyVaultId;
             KeyVaultUri = keyVaultUri;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> The resource ID of KeyVault. </summary>
         public string KeyVaultResourceId { get; set; }
         /// <summary> Status of the KeyVault connection. </summary>
-        public KeyVaultStatus? Status { get; }
+        public NetAppKeyVaultStatus? Status { get; }
     }
 }

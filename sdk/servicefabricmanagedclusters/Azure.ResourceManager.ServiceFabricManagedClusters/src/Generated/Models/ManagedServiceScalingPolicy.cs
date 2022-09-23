@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="scalingMechanism">
         /// Specifies the mechanism associated with this scaling policy
         /// Please note <see cref="ManagedServiceScalingMechanism"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AddRemoveIncrementalNamedPartitionScalingMechanism"/> and <see cref="PartitionInstanceCountScalingMechanism"/>.
+        /// The available derived classes include <see cref="NamedPartitionAddOrRemoveScalingMechanism"/> and <see cref="PartitionInstanceCountScalingMechanism"/>.
         /// </param>
         /// <param name="scalingTrigger">
         /// Specifies the trigger associated with this scaling policy.
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary>
         /// Specifies the mechanism associated with this scaling policy
         /// Please note <see cref="ManagedServiceScalingMechanism"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AddRemoveIncrementalNamedPartitionScalingMechanism"/> and <see cref="PartitionInstanceCountScalingMechanism"/>.
+        /// The available derived classes include <see cref="NamedPartitionAddOrRemoveScalingMechanism"/> and <see cref="PartitionInstanceCountScalingMechanism"/>.
         /// </summary>
         public ManagedServiceScalingMechanism ScalingMechanism { get; set; }
         /// <summary>
