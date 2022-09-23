@@ -24,8 +24,8 @@ request-path-to-resource-name:
 
 override-operation-name:
   StreamingEndpoints_Skus: GetSupportedSkus
-  StreamingLocators_ListPaths: GetSupportedPaths
-  Locations_CheckNameAvailability: CheckMediaNameAvailability
+  StreamingLocators_ListPaths: GetStreamingPaths
+  Locations_CheckNameAvailability: CheckMediaServicesNameAvailability
   Assets_ListContainerSas: GetStorageContainerUris
   
 format-by-name-rules:
@@ -34,7 +34,6 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
-  '*UriTemplate': 'Uri'
   'ResponseCustomData': 'any'
   'locationName': 'azure-location'
 
@@ -74,29 +73,29 @@ rename-mapping:
   AccessControl: MediaAccessControl
   KeyDelivery: MediaKeyDelivery
   Asset: MediaAsset
+  AssetFilter: MediaAssetFilter
   Asset.properties.created: CreatedOn
   Asset.properties.lastModified: LastModifiedOn
   ProvisioningState: MediaProvisioningState
   ContentKeyPolicy.properties.created: CreatedOn
   ContentKeyPolicy.properties.lastModified: LastModifiedOn
-  ContentKeyPolicy.properties.options: Preferences
-  Job: MediaTransformJob
+  ContentKeyPolicy.properties.options: Option
+  Job: MediaJob
   Job.properties.created: CreatedOn
   Job.properties.lastModified: LastModifiedOn
   Job.properties.startTime: StartsOn
   Job.properties.endTime: EndsOn
-  Priority: MediaTransformOutputsPriority
+  Priority: JobPriority
   LiveEvent.properties.created: CreatedOn
   LiveEvent.properties.lastModified: LastModifiedOn
   LiveOutput.properties.created: CreatedOn
   LiveOutput.properties.lastModified: LastModifiedOn
-  PublicNetworkAccess: MediaPublicNetworkAccessStatus
+  PublicNetworkAccess: MediaPublicNetworkAccess
   StorageAccount: MediaServicesStorageAccount
   StorageAccount.id: -|arm-id
   StreamingEndpoint.properties.cdnEnabled: IsCdnEnabled
   StreamingEndpoint.properties.created: CreatedOn
   StreamingEndpoint.properties.lastModified: LastModifiedOn
-  StreamingEndpoint.properties.scaleUnits: ScaleUnitsNumber
   StreamingLocator.properties.created: CreatedOn
   StreamingLocator.properties.startTime: StartsOn
   StreamingLocator.properties.endTime: EndsOn
@@ -110,42 +109,39 @@ rename-mapping:
   AssetStreamingLocator.created: CreatedOn
   AssetStreamingLocator.startTime: StartsOn
   AssetStreamingLocator.endTime: EndsOn
-  Codec: CodecBasicProperties
-  Audio: AudioCommonProperties
-  Overlay: OverlayBasicProperties
-  Complexity: EncoderComplexitySetting
+  Codec: CodecBase
+  Audio: AudioBase
+  Overlay: OverlayBase
+  Complexity: EncodingComplexity
   ContentKeyPolicyPlayReadyLicense.expirationDate: ExpiresOn
-  ContentKeyPolicyPlayReadyUnknownOutputPassingOption: ContentKeyPolicyPlayReadyUnknownOutputPassingSetting
   ContentKeyPolicyProperties.created: CreatedOn
   ContentKeyPolicyProperties.lastModified: LastModifiedOn
-  ContentKeyPolicyProperties.options: Preferences
-  Filters: FilteringOperations
-  Rectangle: RectangularWindowProperties
+  Filters: FilteringOperations 
+  Rectangle: RectangularWindowProperties  # can be a single word class. self explanatory
   Deinterlace: DeinterlaceSettings
   Rotation: RotationSetting
-  Format: FormatBasicProperties
-  Image: ImageBasicProperties
-  Video: InputVideoEncodingProperties
-  Layer: VideoOrImageLayerProperties
-  ListContainerSasInput: GetStorageContainersContent
+  Format: FormatBase
+  Image: ImageBase
+  Video: VideoBase
+  Layer: LayerBase
+  ListContainerSasInput: GetStorageContainerUriContent
   ListContainerSasInput.expiryTime: ExpiresOn
   ListEdgePoliciesInput: GetEdgePoliciesContent
   Preset: MediaTransformPreset
   StorageAccountType: MediaServicesStorageAccountType
   Visibility: PlayerVisibility
-  AssetCollection: AssetListResult
+  AssetCollection: MediaAssetListResult
   AccountFilterCollection: AccountFilterListResult
-  AssetFilterCollection: AssetFilterListResult
+  AssetFilterCollection: MediaAssetFilterListResult
   AssetTrackCollection: AssetTrackListResult
   ContentKeyPolicyCollection: ContentKeyPolicyListResult
-  JobCollection: MediaTransformJobListResult
+  JobCollection: MediaJobListResult
   MediaServiceCollection: MediaServicesAccountListResult
   StreamingLocatorCollection: StreamingLocatorListResult
   StreamingPolicyCollection: StreamingPolicyListResult
-  TransformCollection: TransformListResult
+  TransformCollection: MediaTransformListResult
   StorageEncryptedAssetDecryptionData: StorageEncryptedAssetDecryptionInfo
   AssetTrack: MediaAssetTrack
-  TrackBase: AssetTrackInfo
   PrivateEndpointConnection: MediaServicesPrivateEndpointConnection
   PrivateLinkResource: MediaServicesPrivateLinkResource
   ListPathsResponse: GetPathsResult
@@ -156,9 +152,9 @@ rename-mapping:
   EnabledProtocols: MediaEnabledProtocols
   EnabledProtocols.download: IsDownloadEnabled
   EnabledProtocols.dash: IsDashEnabled
-  EnabledProtocols.hls: IsHttpLiveStreamingEnabled
+  EnabledProtocols.hls: IsHls
   EnabledProtocols.smoothStreaming: IsSmoothStreamingEnabled
-  LiveOutput.properties.hls: HttpLiveStreaming
+  LiveOutput.properties.hls: Hls  # can you double check this one.
   StorageAuthentication: MediaStorageAuthentication
   ArmStreamingEndpointCapacity: StreamingEndpointCapacity
   ArmStreamingEndpointCurrentSku: StreamingEndpointCurrentSku
@@ -173,47 +169,43 @@ rename-mapping:
   ContentKeyPolicyPlayReadyPlayRight.compressedDigitalVideoOpl: CompressedDigitalVideoOutputProtectionLevel
   ContentKeyPolicyPlayReadyPlayRight.compressedDigitalAudioOpl: CompressedDigitalAudioOutputProtectionLevel
   ContentKeyPolicyPlayReadyPlayRight.analogVideoOpl: AnalogVideoOutputProtectionLevel
-  DefaultKey: EncryptionSchemeDefaultKey
+  DefaultKey: EncryptionSchemeDefaultKey  #?? 
   EncryptionScheme: StreamingPathEncryptionScheme
   EntropyMode: LayerEntropyMode
-  EntropyMode.Cabac: ContextAdaptiveBinaryArithmeticCoder
-  EntropyMode.Cavlc: ContextAdaptiveVariableLengthCoder
   TrackSelection: MediaTrackSelection
   TransformOutput: MediaTransformOutput
   H264Layer.crf: ConstantRateFactor
   ImageFormat: OutputImageFileFormat
-  InputDefinition: MediaTransformJobInputDefinition
-  InputFile: MediaTransformJobInputFile
+  InputDefinition: MediaJobInputDefinition
+  InputFile: MediaJobInputFile
   IPRange.address: -|ip-address
-  JobOutput: MediaTransformJobOutput
+  JobOutput: MediaJobOutput
   JobOutput.startTime: StartsOn
   JobOutput.endTime: EndsOn
-  JobOutputAsset: MediaTransformJobOutputAsset
-  JobError: MediaTransformJobError
-  JobErrorCode: MediaTransformJobErrorCode
-  JobErrorCategory: MediaTransformJobErrorCategory
-  JobRetry: MediaTransformJobRetry
-  JobErrorDetail: MediaTransformJobErrorDetail
-  JobInput: MediaTransformJobInputBasicProperties
-  JobInputAsset: MediaTransformJobInputAsset
-  JobInputClip: MediaTransformJobInputClip
-  JobInputHttp: MediaTransformJobInputHttp
-  JobInputs: MediaTransformJobInputs
-  JobInputSequence: MediaTransformJobInputSequence
+  JobOutputAsset: MediaJobOutputAsset
+  JobError: MediaJobError
+  JobErrorCode: MediaJobErrorCode
+  JobErrorCategory: MediaJobErrorCategory
+  JobRetry: MediaJobRetry
+  JobErrorDetail: MediaJobErrorDetail
+  JobInput: MediaJobInputBasicProperties
+  JobInputAsset: MediaJobInputAsset
+  JobInputClip: MediaJobInputClip
+  JobInputHttp: MediaJobInputHttp
+  JobInputs: MediaJobInputs
+  JobInputSequence: MediaJobInputSequence
   MediaService: MediaServicesAccount
   MediaService.properties.mediaServiceId: MediaServicesAccountId
   MediaServiceOperationStatus.id: -|arm-id
   MediaServiceOperationStatus.startTime: StartsOn
   MediaServiceOperationStatus.endTime: EndsOn
   MediaServiceOperationStatus: MediaServicesOperationStatus
-  OnErrorType: MediaTransformOutputErrorAction
-  OutputFile: MultiBitrateOutputFile
+  OnErrorType: MediaTransformOutputErrorType  # can you check if we can remove this rename?
+  OutputFile: MultiBitrateOutputFile  # may be Roy should now better.
   PresetConfigurations: EncoderPresetConfigurations
   StreamingEndpointAccessControl.ip: IPs
   IPAccessControl.allow: AllowedIPs
   StretchMode: InputVideoStretchMode
-  TrackPropertyType.FourCC: FourCharacterCode
-  FilterTrackPropertyType.FourCC: FourCharacterCode
   AssetTrackOperationStatus.id: -|arm-id
   ContentKeyPolicyPlayReadyPlayRight.digitalVideoOnlyContentRestriction: HasDigitalVideoOnlyContentRestriction
   ContentKeyPolicyPlayReadyPlayRight.imageConstraintForAnalogComponentVideoRestriction: HasImageConstraintForAnalogComponentVideoRestriction
@@ -224,7 +216,7 @@ rename-mapping:
   HlsSettings.default: IsDefault
   HlsSettings.forced: IsForced
   VideoLayer.adaptiveBFrame: UseAdaptiveBFrame
-  SecurityLevel: ContentKeyPolicyPlayReadySecurityLevel
+  SecurityLevel: PlayReadySecurityLevel
   
 directive:
   - remove-operation: OperationResults_Get
@@ -245,11 +237,6 @@ directive:
     transform: >
       $.LiveEventInput.properties.keyFrameIntervalDuration["format"] = 'duration';
       $.ArmStreamingEndpointSkuInfo.properties.resourceType['x-ms-format'] = 'resource-type';
-  - from: Encoding.json
-    where: $.definitions
-    transform: >
-      $.Overlay.properties.fadeInDuration['format'] = 'duration';
-      $.Overlay.properties.fadeOutDuration['format'] = 'duration';
   - from: AssetsAndAssetFilters.json
     where: $.paths
     transform: >
