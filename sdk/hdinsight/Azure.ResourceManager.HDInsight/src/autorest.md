@@ -144,8 +144,8 @@ rename-mapping:
   IPConfiguration.properties.primary: IsPrimary
   NameAvailabilityCheckRequestParameters.type: -|resource-type
   NameAvailabilityCheckResult.nameAvailable: IsNameAvailable
-  RuntimeScriptActionDetail.startTime: -|datetime
-  RuntimeScriptActionDetail.endTime: -|datetime
+  RuntimeScriptActionDetail.startTime: -|date-time
+  RuntimeScriptActionDetail.endTime: -|date-time
   DaysOfWeek: HDInsightDayOfWeek
   DiskEncryptionProperties.encryptionAtHost: IsEncryptionAtHostEnabled
   DirectoryType: AuthenticationDirectoryType
@@ -159,8 +159,8 @@ rename-mapping:
   VmSizeProperty.supportedByWebWorkerRoles: IsSupportedByWebWorkerRoles
   VmSizeCompatibilityFilterV2.computeIsolationSupported: IsComputeIsolationSupported
   SecurityProfile.ldapsUrls: LdapUris|uri
-  ApplicationProperties.createdDate: CreatedOn|datetime
-  ClusterGetProperties.createdDate: CreatedOn|datetime
+  ApplicationProperties.createdDate: CreatedOn|date-time
+  ClusterGetProperties.createdDate: CreatedOn|date-time
 
 prepend-rp-prefix:
 - VmSizeCompatibilityFilterV2
