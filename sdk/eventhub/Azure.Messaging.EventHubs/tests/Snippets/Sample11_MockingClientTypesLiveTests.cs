@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
 using Azure.Messaging.EventHubs.Producer;
@@ -126,7 +124,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             EventHubBufferedProducerClient bufferedProducer = bufferedProducerMock.Object;
 
-            CancellationTokenSource cancellationTokenSource = new();
+            using CancellationTokenSource cancellationTokenSource = new();
 
             // This gets all the partition Ids and arbitrarily takes the first partition Id.
 
@@ -139,8 +137,6 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 await bufferedProducer.GetPartitionPropertiesAsync(partitionId, cancellationTokenSource.Token);
 
             string isPartitionEmpty = firstPartitionProperties.IsEmpty.ToString();
-
-            Debug.WriteLine($"Sending Events to: {isPartitionEmpty}");
 
             // The last part of this snippet briefly demonstrates mocking Partition Ids with an EventHubConsumerClient. This
             // illustrates how each client can mock properties in the same way.
@@ -168,12 +164,14 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             Mock<EventHubProducerClient> mockProducer = new();
 
+            EventHubProducerClient producer = mockProducer.Object;
+
             // This argument sets the value returned by the EventDataBatch when accessing the Size property, it does
             // not impact TryAdd on the mocked batch.
 
             long batchSizeInBytes = 500;
 
-            // As events are added to the batch they will be added to this listas well. Altering the events in this
+            // As events are added to the batch they will be added to this list as well. Altering the events in this
             // list will not change the events in the batch though, since they are stored inside the batch as well.
 
             List<EventData> backingList = new();
@@ -187,7 +185,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                     batchSizeBytes : batchSizeInBytes,
                     batchEventStore : backingList,
                     batchOptions : new CreateBatchOptions(),
-                    // The model factory allows the user to define a custom TryAdd callback, allowing control of what
+                    // The model factory allows a custom TryAdd callback, allowing control of what
                     // events the batch accepts.
                     eventData =>
                     {
@@ -195,25 +193,14 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                         return eventCount < batchCountThreshold;
                     });
 
-            // This sets up a mock of the CreateBatchAsync method.
+            // This sets up a mock of the CreateBatchAsync method, returning the batch that was previously mocked.
 
             mockProducer
                 .Setup(p => p.CreateBatchAsync(It.IsAny<CancellationToken>()))
                 .ReturnsAsync(dataBatchMock);
 
-            // Here we are mocking the SendAsync method so it will throw an exception if the batch passed into it is
-            // not the one we are expecting to send.
-
-            mockProducer
-                .Setup(p => p.SendAsync(
-                    It.Is<EventDataBatch>(sendBatch => sendBatch != dataBatchMock),
-                    It.IsAny<CancellationToken>()))
-                .Throws(new Exception("The batch published was not the expected batch."));
-
-            EventHubProducerClient producer = mockProducer.Object;
-
-            // The rest of this snippet demonstrates how to use the mocked methods define above. This would be where
-            // application methods can be called and tested.
+            // The next part of this snippet illustrates how to create and fill a mocked batch. This would be where
+            // application methods in which batches are created and filled can be called and tested.
 
             EventDataBatch batch = await producer.CreateBatchAsync();
 
@@ -221,9 +208,9 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             List<EventData> sourceEvents = new();
 
-            for (int index=0; index<batchCountThreshold; index++)
+            for (int index = 0; index < batchCountThreshold; index++)
             {
-                var eventData = new EventData($"Sample-Event-{ index }");
+                var eventData = new EventData($"Sample-Event-{index}");
                 sourceEvents.Add(eventData);
             }
 
@@ -240,8 +227,17 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             EventData eventData4 = new EventData("Sample-Event-4-will-fail");
             Assert.IsFalse(batch.TryAdd(eventData4));
 
-            // For illustrative purposes we are calling SendAsync. This call would likely already be inside the
-            // application-defined method being tested.
+            // Here we are mocking the SendAsync method so it will throw an exception if the batch passed into it is
+            // not the one we are expecting to send.
+
+            mockProducer
+                .Setup(p => p.SendAsync(
+                    It.Is<EventDataBatch>(sendBatch => sendBatch != dataBatchMock),
+                    It.IsAny<CancellationToken>()))
+                .Throws(new Exception("The batch published was not the expected batch."));
+
+            // For illustrative purposes we are calling SendAsync. This would again be where application methods could be called
+            // and tested.
 
             await producer.SendAsync(batch);
 
@@ -293,7 +289,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
                 {
                     // Do more complex error handling here...
 
-                    Debug.WriteLine($"Publishing failed for {args.EventBatch.Count} events.  Error: '{args.Exception.Message}'");
+                    Debug.WriteLine($"Publishing failed for the event: {eventData.MessageId}.  Error: '{args.Exception.Message}'");
                     await Task.CompletedTask;
                 }
             });
@@ -303,11 +299,14 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             // For illustrative purposes, enqueue a set of events to be published.
 
             int numOfEventsToEnqueue = 15;
-            CancellationTokenSource cancellationTokenSource = new();
+            using CancellationTokenSource cancellationTokenSource = new();
 
             for (int index = 0; index < numOfEventsToEnqueue; index++)
             {
-                EventData eventToEnqueue = new(index.ToString());
+                EventData eventToEnqueue = new($"Event-{index}")
+                {
+                    MessageId = index.ToString()
+                };
                 await bufferedProducer.EnqueueEventAsync(eventToEnqueue, cancellationTokenSource.Token);
             }
 
@@ -318,7 +317,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
             {
                 bufferedProducerMock
                     .Verify(bp => bp.EnqueueEventAsync(
-                        It.Is<EventData>(e => (e.EventBody.ToString().Equals(index.ToString()))), // Check that enqueue was called on each expected event body
+                        It.Is<EventData>(e => (e.MessageId == index.ToString())), // Check that enqueue was called on each expected event
                         It.IsAny<CancellationToken>()));
             }
 
@@ -330,13 +329,16 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             for (int index = 0; index < numEventsInBatch; index++)
             {
-                EventData eventToEnqueue = new(index.ToString());
+                EventData eventToEnqueue = new($"Event-{index}")
+                {
+                    MessageId = index.ToString()
+                };
                 await bufferedProducer.EnqueueEventAsync(eventToEnqueue, cancellationTokenSource.Token);
             }
 
             SendEventBatchFailedEventArgs args = new SendEventBatchFailedEventArgs(eventsInBatch, new Exception(), "0", default);
 
-            // The expected outcome of any application-specific complex processing can be asserted here.
+            // The expected outcome of any application-specific complex processing can be verified here.
 
             Assert.DoesNotThrowAsync(async () => await sendFailed(args));
 
@@ -451,7 +453,7 @@ namespace Azure.Messaging.EventHubs.Tests.Snippets
 
             await foreach (PartitionEvent receivedEvent in consumer.ReadEventsFromPartitionAsync(firstPartition, startingPosition, options, cancellationTokenSource.Token))
             {
-                // This could be where application code is handling partition events.
+                // This is where application logic has control of the partition events.
             }
 
             // This is where applications can verify that the partition events output by the consumer client were handled as expected.
