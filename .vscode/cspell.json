@@ -408,6 +408,13 @@
       ]
     },
     {
+      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "words": [
+        "kustomization",
+        "kustomizations"
+      ]
+    },
+    {
       "filename": "**/sdk/iothub/**/*.cs",
       "words": [
         "fqdns"
@@ -541,6 +548,12 @@
       "filename": "**/sdk/networkfunction/**/*.cs",
       "words": [
         "ipfix"
+      ]
+    },
+    {
+      "filename": "**/sdk/operationalinsights/**/*.cs",
+      "words": [
+        "itsm"
       ]
     },
     {
@@ -808,6 +821,13 @@
         "Cran",
         "Rscript",
         "VCPUs"
+        ]
+    },
+    {
+      "filename": "**/sdk/machinelearningcompute/**/*.cs",
+      "words": [
+        "cname",
+        "kube"
         ]
     },  
     {

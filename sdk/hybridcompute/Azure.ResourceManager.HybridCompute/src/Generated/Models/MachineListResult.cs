@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of MachineListResult. </summary>
         /// <param name="value"> The list of hybrid machines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MachineListResult(IEnumerable<MachineData> value)
+        internal MachineListResult(IEnumerable<HybridComputeMachineData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Initializes a new instance of MachineListResult. </summary>
         /// <param name="value"> The list of hybrid machines. </param>
         /// <param name="nextLink"> The URI to fetch the next page of Machines. Call ListNext() with this URI to fetch the next page of hybrid machines. </param>
-        internal MachineListResult(IReadOnlyList<MachineData> value, string nextLink)
+        internal MachineListResult(IReadOnlyList<HybridComputeMachineData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of hybrid machines. </summary>
-        public IReadOnlyList<MachineData> Value { get; }
+        public IReadOnlyList<HybridComputeMachineData> Value { get; }
         /// <summary> The URI to fetch the next page of Machines. Call ListNext() with this URI to fetch the next page of hybrid machines. </summary>
         public string NextLink { get; }
     }
