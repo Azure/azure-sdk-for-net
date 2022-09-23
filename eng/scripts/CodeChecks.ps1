@@ -102,7 +102,7 @@ try {
         }
     }
     # The script is taking two path: $ServiceDirectory and $ProjectListOverrideFileName.
-    # If $ProjectListOverrideFileName exists, we don't validate the following steps in seperate code generation jobs.
+    # If $ProjectListOverrideFileName exists, we don't validate the following steps in code generation job matrix.
     # If $ProjectListOverrideFileName doesn't exist, we will check all steps under the $ServiceDirectory.
     if (!$ProjectListOverrideFileName) {
         Write-Host "Re-generating snippets"
