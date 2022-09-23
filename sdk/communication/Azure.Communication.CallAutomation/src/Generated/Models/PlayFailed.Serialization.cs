@@ -10,10 +10,11 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class RecognizeFailedInternal
+    public partial class PlayFailed
     {
-        internal static RecognizeFailedInternal DeserializeRecognizeFailedInternal(JsonElement element)
+        internal static PlayFailed DeserializePlayFailed(JsonElement element)
         {
+            Optional<string> eventSource = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
             Optional<string> version = default;
@@ -23,6 +24,11 @@ namespace Azure.Communication.CallAutomation
             Optional<string> publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("eventSource"))
+                {
+                    eventSource = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("operationContext"))
                 {
                     operationContext = property.Value.GetString();
@@ -64,7 +70,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecognizeFailedInternal(operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new PlayFailed(eventSource.Value, operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }

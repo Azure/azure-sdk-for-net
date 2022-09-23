@@ -6,19 +6,16 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.CallAutomation;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
-    internal partial class RecognizeCompletedInternal
+    public partial class RecognizeFailed
     {
-        internal static RecognizeCompletedInternal DeserializeRecognizeCompletedInternal(JsonElement element)
+        internal static RecognizeFailed DeserializeRecognizeFailed(JsonElement element)
         {
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
-            Optional<CallMediaRecognitionType> recognitionType = default;
-            Optional<CollectTonesResult> collectTonesResult = default;
             Optional<string> version = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
@@ -39,26 +36,6 @@ namespace Azure.Communication.CallAutomation.Models.Events
                         continue;
                     }
                     resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("recognitionType"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    recognitionType = new CallMediaRecognitionType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("collectTonesResult"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    collectTonesResult = CollectTonesResult.DeserializeCollectTonesResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("version"))
@@ -87,7 +64,7 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     continue;
                 }
             }
-            return new RecognizeCompletedInternal(operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new RecognizeFailed(operationContext.Value, resultInformation.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }

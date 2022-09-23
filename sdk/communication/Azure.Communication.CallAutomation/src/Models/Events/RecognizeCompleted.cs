@@ -2,23 +2,15 @@
 // Licensed under the MIT License.
 
 using Azure.Communication.CallAutomation.Converters;
-using Azure.Communication.CallAutomation.Models.Events;
-using Azure.Core;
-using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary>
-    /// The play completed event.
-    /// </summary>
+    [CodeGenModel("RecognizeCompleted", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class RecognizeCompleted : CallAutomationEventWithReasonCodeName
     {
-        /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
-        internal RecognizeCompleted()
-        {
-        }
-
         /// <summary> Initializes a new instance of RecognizeCompletedInternal. </summary>
         /// <param name="operationContext"></param>
         /// <param name="resultInformation"> Result information defines the code, subcode and message. </param>
@@ -43,111 +35,26 @@ namespace Azure.Communication.CallAutomation
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             PublicEventType = publicEventType;
-            ReasonCodeName = new ReasonCodeName(ResultInformation.SubCode.ToString());
+            ReasonCodeName = new ReasonCodeName(resultInformation.SubCode.ToString());
         }
-
-        /// <summary> Gets the operation context. </summary>
-        public string OperationContext { get; }
-        /// <summary> Result information defines the code, subcode and message. </summary>
-        public ResultInformation ResultInformation { get; }
-        /// <summary> Defines the result for RecognitionType = Dtmf. </summary>
-        public CollectTonesResult CollectTonesResult { get; }
-        /// <summary> Used to determine the version of the event. </summary>
-        public string Version { get; }
-        /// <summary> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </summary>
-        public string PublicEventType { get; }
-        /// <summary> The recognition type. </summary>
+        /// <summary>
+        /// The recognition type.
+        /// </summary>
+        [CodeGenMember("RecognitionType")]
         [JsonConverter(typeof(EquatableEnumJsonConverter<CallMediaRecognitionType>))]
-        public CallMediaRecognitionType RecognitionType { get; }
+        public CallMediaRecognitionType RecognitionType { get; set; }
 
         /// <summary>
-        /// Deserialize <see cref="RecognizeCompletedInternal"/> event.
+        /// Deserialize <see cref="RecognizeCompleted"/> event.
         /// </summary>
         /// <param name="content">The json content.</param>
-        /// <returns>The new <see cref="RecognizeCompletedInternal"/> object.</returns>
+        /// <returns>The new <see cref="RecognizeCompleted"/> object.</returns>
         public static RecognizeCompleted Deserialize(string content)
         {
             using var document = JsonDocument.Parse(content);
             JsonElement element = document.RootElement;
 
             return DeserializeRecognizeCompleted(element);
-        }
-
-        internal static RecognizeCompleted DeserializeRecognizeCompleted(JsonElement element)
-        {
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<CallMediaRecognitionType> recognitionType = default;
-            Optional<CollectTonesResult> collectTonesResult = default;
-            Optional<string> version = default;
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
-            Optional<string> publicEventType = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("operationContext"))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultInformation"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("recognitionType"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    recognitionType = new CallMediaRecognitionType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("collectTonesResult"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    collectTonesResult = CollectTonesResult.DeserializeCollectTonesResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("version"))
-                {
-                    version = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("callConnectionId"))
-                {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"))
-                {
-                    correlationId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("publicEventType"))
-                {
-                    publicEventType = property.Value.GetString();
-                    continue;
-                }
-            }
-            return new RecognizeCompleted(operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
         }
     }
 }
