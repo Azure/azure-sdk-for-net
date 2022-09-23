@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<SiteSlotInstanceExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<SiteSlotInstanceExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((SiteSlotInstanceExtensionResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SiteSlotInstanceExtensionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<SiteSlotInstanceExtensionResource> Get(CancellationToken cancellationToken = default)
+        public new Response<SiteSlotInstanceExtensionResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((SiteSlotInstanceExtensionResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((SiteSlotInstanceExtensionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<SiteSlotInstanceExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<SiteSlotInstanceExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
-            var value = await CreateOrUpdateCoreAsync(waitUntil, msDeploy, cancellationToken).ConfigureAwait(false);
+            var result = await CreateOrUpdateCoreAsync(waitUntil, msDeploy, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
-                return new AppServiceArmOperation<SiteSlotInstanceExtensionResource>(Response.FromValue((SiteSlotInstanceExtensionResource)value.Value, value.GetRawResponse()));
+                return new AppServiceArmOperation<SiteSlotInstanceExtensionResource>(Response.FromValue((SiteSlotInstanceExtensionResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new AppServiceArmOperation<SiteSlotInstanceExtensionResource>(new SiteSlotInstanceExtensionOperationSource(Client), _siteSlotInstanceExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotInstanceExtensionWebAppsRestClient.CreateCreateInstanceMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new AppServiceArmOperation<SiteSlotInstanceExtensionResource>(new SiteSlotInstanceExtensionOperationSource(Client), _siteSlotInstanceExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotInstanceExtensionWebAppsRestClient.CreateCreateInstanceMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
 
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<SiteSlotInstanceExtensionResource> CreateOrUpdate(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        public new ArmOperation<SiteSlotInstanceExtensionResource> CreateOrUpdate(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
-            var value = CreateOrUpdateCore(waitUntil, msDeploy, cancellationToken);
+            var result = CreateOrUpdateCore(waitUntil, msDeploy, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {
-                return new AppServiceArmOperation<SiteSlotInstanceExtensionResource>(Response.FromValue((SiteSlotInstanceExtensionResource)value.Value, value.GetRawResponse()));
+                return new AppServiceArmOperation<SiteSlotInstanceExtensionResource>(Response.FromValue((SiteSlotInstanceExtensionResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new AppServiceArmOperation<SiteSlotInstanceExtensionResource>(new SiteSlotInstanceExtensionOperationSource(Client), _siteSlotInstanceExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotInstanceExtensionWebAppsRestClient.CreateCreateInstanceMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new AppServiceArmOperation<SiteSlotInstanceExtensionResource>(new SiteSlotInstanceExtensionOperationSource(Client), _siteSlotInstanceExtensionWebAppsClientDiagnostics, Pipeline, _siteSlotInstanceExtensionWebAppsRestClient.CreateCreateInstanceMSDeployOperationSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, msDeploy).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
 

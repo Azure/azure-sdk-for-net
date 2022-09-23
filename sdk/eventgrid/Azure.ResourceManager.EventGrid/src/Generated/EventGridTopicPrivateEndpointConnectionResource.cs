@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<EventGridTopicPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<EventGridTopicPrivateEndpointConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((EventGridTopicPrivateEndpointConnectionResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((EventGridTopicPrivateEndpointConnectionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<EventGridTopicPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
+        public new Response<EventGridTopicPrivateEndpointConnectionResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((EventGridTopicPrivateEndpointConnectionResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((EventGridTopicPrivateEndpointConnectionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -247,14 +247,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<EventGridTopicPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<EventGridTopicPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
-                return new EventGridArmOperation<EventGridTopicPrivateEndpointConnectionResource>(Response.FromValue((EventGridTopicPrivateEndpointConnectionResource)value.Value, value.GetRawResponse()));
+                return new EventGridArmOperation<EventGridTopicPrivateEndpointConnectionResource>(Response.FromValue((EventGridTopicPrivateEndpointConnectionResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new EventGridArmOperation<EventGridTopicPrivateEndpointConnectionResource>(new EventGridTopicPrivateEndpointConnectionOperationSource(Client), _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Parent.Name, Id.Name, data).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new EventGridArmOperation<EventGridTopicPrivateEndpointConnectionResource>(new EventGridTopicPrivateEndpointConnectionOperationSource(Client), _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Parent.Name, Id.Name, data).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
 
@@ -299,14 +299,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<EventGridTopicPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        public new ArmOperation<EventGridTopicPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(waitUntil, data, cancellationToken);
+            var result = UpdateCore(waitUntil, data, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {
-                return new EventGridArmOperation<EventGridTopicPrivateEndpointConnectionResource>(Response.FromValue((EventGridTopicPrivateEndpointConnectionResource)value.Value, value.GetRawResponse()));
+                return new EventGridArmOperation<EventGridTopicPrivateEndpointConnectionResource>(Response.FromValue((EventGridTopicPrivateEndpointConnectionResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new EventGridArmOperation<EventGridTopicPrivateEndpointConnectionResource>(new EventGridTopicPrivateEndpointConnectionOperationSource(Client), _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Parent.Name, Id.Name, data).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new EventGridArmOperation<EventGridTopicPrivateEndpointConnectionResource>(new EventGridTopicPrivateEndpointConnectionOperationSource(Client), _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _eventGridTopicPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Parent.Name, Id.Name, data).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
     }

@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<VirtualMachineScaleSetVmRunCommandResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public new async Task<Response<VirtualMachineScaleSetVmRunCommandResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(expand, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(expand, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="expand"> The expand expression to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<VirtualMachineScaleSetVmRunCommandResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        public new Response<VirtualMachineScaleSetVmRunCommandResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            var value = GetCore(expand, cancellationToken);
-            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)value.Value, value.GetRawResponse());
+            var result = GetCore(expand, cancellationToken);
+            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -251,14 +251,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommand"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<VirtualMachineScaleSetVmRunCommandResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<VirtualMachineScaleSetVmRunCommandResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, runCommand, cancellationToken).ConfigureAwait(false);
+            var result = await UpdateCoreAsync(waitUntil, runCommand, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
-                return new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)value.Value, value.GetRawResponse()));
+                return new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(new VirtualMachineScaleSetVmRunCommandOperationSource(Client), _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(new VirtualMachineScaleSetVmRunCommandOperationSource(Client), _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
 
@@ -303,14 +303,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="runCommand"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<VirtualMachineScaleSetVmRunCommandResource> Update(WaitUntil waitUntil, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
+        public new ArmOperation<VirtualMachineScaleSetVmRunCommandResource> Update(WaitUntil waitUntil, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(waitUntil, runCommand, cancellationToken);
+            var result = UpdateCore(waitUntil, runCommand, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {
-                return new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)value.Value, value.GetRawResponse()));
+                return new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(new VirtualMachineScaleSetVmRunCommandOperationSource(Client), _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new ComputeArmOperation<VirtualMachineScaleSetVmRunCommandResource>(new VirtualMachineScaleSetVmRunCommandOperationSource(Client), _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsClientDiagnostics, Pipeline, _virtualMachineScaleSetVmRunCommandVirtualMachineScaleSetVmRunCommandsRestClient.CreateUpdateRequest(Id.Parent.Parent.Name, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, runCommand).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
 
@@ -371,10 +371,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<VirtualMachineScaleSetVmRunCommandResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public new async Task<Response<VirtualMachineScaleSetVmRunCommandResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            var value0 = await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)value0.Value, value0.GetRawResponse());
+            var result = await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -434,10 +434,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<VirtualMachineScaleSetVmRunCommandResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public new Response<VirtualMachineScaleSetVmRunCommandResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            var value0 = AddTagCore(key, value, cancellationToken);
-            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)value0.Value, value0.GetRawResponse());
+            var result = AddTagCore(key, value, cancellationToken);
+            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -491,10 +491,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<VirtualMachineScaleSetVmRunCommandResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public new async Task<Response<VirtualMachineScaleSetVmRunCommandResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var value = await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)value.Value, value.GetRawResponse());
+            var result = await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -548,10 +548,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<VirtualMachineScaleSetVmRunCommandResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public new Response<VirtualMachineScaleSetVmRunCommandResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var value = SetTagsCore(tags, cancellationToken);
-            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)value.Value, value.GetRawResponse());
+            var result = SetTagsCore(tags, cancellationToken);
+            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -608,10 +608,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<VirtualMachineScaleSetVmRunCommandResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public new async Task<Response<VirtualMachineScaleSetVmRunCommandResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            var value = await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)value.Value, value.GetRawResponse());
+            var result = await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -668,10 +668,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<VirtualMachineScaleSetVmRunCommandResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public new Response<VirtualMachineScaleSetVmRunCommandResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            var value = RemoveTagCore(key, cancellationToken);
-            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)value.Value, value.GetRawResponse());
+            var result = RemoveTagCore(key, cancellationToken);
+            return Response.FromValue((VirtualMachineScaleSetVmRunCommandResource)result.Value, result.GetRawResponse());
         }
     }
 }

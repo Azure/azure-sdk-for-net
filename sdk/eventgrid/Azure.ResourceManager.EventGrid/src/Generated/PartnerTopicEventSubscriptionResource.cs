@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<PartnerTopicEventSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<PartnerTopicEventSubscriptionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((PartnerTopicEventSubscriptionResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((PartnerTopicEventSubscriptionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<PartnerTopicEventSubscriptionResource> Get(CancellationToken cancellationToken = default)
+        public new Response<PartnerTopicEventSubscriptionResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((PartnerTopicEventSubscriptionResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((PartnerTopicEventSubscriptionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -246,14 +246,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<PartnerTopicEventSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<PartnerTopicEventSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, patch, cancellationToken).ConfigureAwait(false);
+            var result = await UpdateCoreAsync(waitUntil, patch, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
-                return new EventGridArmOperation<PartnerTopicEventSubscriptionResource>(Response.FromValue((PartnerTopicEventSubscriptionResource)value.Value, value.GetRawResponse()));
+                return new EventGridArmOperation<PartnerTopicEventSubscriptionResource>(Response.FromValue((PartnerTopicEventSubscriptionResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new EventGridArmOperation<PartnerTopicEventSubscriptionResource>(new PartnerTopicEventSubscriptionOperationSource(Client), _partnerTopicEventSubscriptionClientDiagnostics, Pipeline, _partnerTopicEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new EventGridArmOperation<PartnerTopicEventSubscriptionResource>(new PartnerTopicEventSubscriptionOperationSource(Client), _partnerTopicEventSubscriptionClientDiagnostics, Pipeline, _partnerTopicEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
 
@@ -298,14 +298,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<PartnerTopicEventSubscriptionResource> Update(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
+        public new ArmOperation<PartnerTopicEventSubscriptionResource> Update(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(waitUntil, patch, cancellationToken);
+            var result = UpdateCore(waitUntil, patch, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {
-                return new EventGridArmOperation<PartnerTopicEventSubscriptionResource>(Response.FromValue((PartnerTopicEventSubscriptionResource)value.Value, value.GetRawResponse()));
+                return new EventGridArmOperation<PartnerTopicEventSubscriptionResource>(Response.FromValue((PartnerTopicEventSubscriptionResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new EventGridArmOperation<PartnerTopicEventSubscriptionResource>(new PartnerTopicEventSubscriptionOperationSource(Client), _partnerTopicEventSubscriptionClientDiagnostics, Pipeline, _partnerTopicEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new EventGridArmOperation<PartnerTopicEventSubscriptionResource>(new PartnerTopicEventSubscriptionOperationSource(Client), _partnerTopicEventSubscriptionClientDiagnostics, Pipeline, _partnerTopicEventSubscriptionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
 

@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<TenantPolicyDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<TenantPolicyDefinitionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((TenantPolicyDefinitionResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((TenantPolicyDefinitionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.Resources
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<TenantPolicyDefinitionResource> Get(CancellationToken cancellationToken = default)
+        public new Response<TenantPolicyDefinitionResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((TenantPolicyDefinitionResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((TenantPolicyDefinitionResource)result.Value, result.GetRawResponse());
         }
     }
 }

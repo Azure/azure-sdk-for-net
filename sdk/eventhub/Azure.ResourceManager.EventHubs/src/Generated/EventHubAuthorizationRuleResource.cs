@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<EventHubAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<EventHubAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((EventHubAuthorizationRuleResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((EventHubAuthorizationRuleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.EventHubs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<EventHubAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        public new Response<EventHubAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((EventHubAuthorizationRuleResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((EventHubAuthorizationRuleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>

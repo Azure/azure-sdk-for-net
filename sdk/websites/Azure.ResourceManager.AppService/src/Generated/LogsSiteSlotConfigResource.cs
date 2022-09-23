@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<LogsSiteSlotConfigResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<LogsSiteSlotConfigResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((LogsSiteSlotConfigResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((LogsSiteSlotConfigResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<LogsSiteSlotConfigResource> Get(CancellationToken cancellationToken = default)
+        public new Response<LogsSiteSlotConfigResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((LogsSiteSlotConfigResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((LogsSiteSlotConfigResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<LogsSiteSlotConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<LogsSiteSlotConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
-            var value = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
-            return new AppServiceArmOperation<LogsSiteSlotConfigResource>(Response.FromValue((LogsSiteSlotConfigResource)value.Value, value.GetRawResponse()));
+            var result = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return new AppServiceArmOperation<LogsSiteSlotConfigResource>(Response.FromValue((LogsSiteSlotConfigResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<LogsSiteSlotConfigResource> CreateOrUpdate(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
+        public new ArmOperation<LogsSiteSlotConfigResource> CreateOrUpdate(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
-            var value = CreateOrUpdateCore(waitUntil, data, cancellationToken);
-            return new AppServiceArmOperation<LogsSiteSlotConfigResource>(Response.FromValue((LogsSiteSlotConfigResource)value.Value, value.GetRawResponse()));
+            var result = CreateOrUpdateCore(waitUntil, data, cancellationToken);
+            return new AppServiceArmOperation<LogsSiteSlotConfigResource>(Response.FromValue((LogsSiteSlotConfigResource)result.Value, result.GetRawResponse()));
         }
     }
 }

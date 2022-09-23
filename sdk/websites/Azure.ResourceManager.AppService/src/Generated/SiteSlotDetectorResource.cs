@@ -112,10 +112,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<SiteSlotDetectorResource>> GetAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public new async Task<Response<SiteSlotDetectorResource>> GetAsync(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((SiteSlotDetectorResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(startTime, endTime, timeGrain, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SiteSlotDetectorResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="timeGrain"> Time Grain. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<SiteSlotDetectorResource> Get(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
+        public new Response<SiteSlotDetectorResource> Get(DateTimeOffset? startTime = null, DateTimeOffset? endTime = null, string timeGrain = null, CancellationToken cancellationToken = default)
         {
-            var value = GetCore(startTime, endTime, timeGrain, cancellationToken);
-            return Response.FromValue((SiteSlotDetectorResource)value.Value, value.GetRawResponse());
+            var result = GetCore(startTime, endTime, timeGrain, cancellationToken);
+            return Response.FromValue((SiteSlotDetectorResource)result.Value, result.GetRawResponse());
         }
     }
 }

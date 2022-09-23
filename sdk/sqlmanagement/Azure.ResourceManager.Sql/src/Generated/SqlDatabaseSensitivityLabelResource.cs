@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<SqlDatabaseSensitivityLabelResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<SqlDatabaseSensitivityLabelResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((SqlDatabaseSensitivityLabelResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SqlDatabaseSensitivityLabelResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<SqlDatabaseSensitivityLabelResource> Get(CancellationToken cancellationToken = default)
+        public new Response<SqlDatabaseSensitivityLabelResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((SqlDatabaseSensitivityLabelResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((SqlDatabaseSensitivityLabelResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<SqlDatabaseSensitivityLabelResource>> UpdateAsync(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<SqlDatabaseSensitivityLabelResource>> UpdateAsync(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
-            return new SqlArmOperation<SqlDatabaseSensitivityLabelResource>(Response.FromValue((SqlDatabaseSensitivityLabelResource)value.Value, value.GetRawResponse()));
+            var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return new SqlArmOperation<SqlDatabaseSensitivityLabelResource>(Response.FromValue((SqlDatabaseSensitivityLabelResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
@@ -293,10 +293,10 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<SqlDatabaseSensitivityLabelResource> Update(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        public new ArmOperation<SqlDatabaseSensitivityLabelResource> Update(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(waitUntil, data, cancellationToken);
-            return new SqlArmOperation<SqlDatabaseSensitivityLabelResource>(Response.FromValue((SqlDatabaseSensitivityLabelResource)value.Value, value.GetRawResponse()));
+            var result = UpdateCore(waitUntil, data, cancellationToken);
+            return new SqlArmOperation<SqlDatabaseSensitivityLabelResource>(Response.FromValue((SqlDatabaseSensitivityLabelResource)result.Value, result.GetRawResponse()));
         }
     }
 }

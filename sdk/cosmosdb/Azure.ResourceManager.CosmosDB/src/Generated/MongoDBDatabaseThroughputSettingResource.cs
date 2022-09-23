@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<MongoDBDatabaseThroughputSettingResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<MongoDBDatabaseThroughputSettingResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<MongoDBDatabaseThroughputSettingResource> Get(CancellationToken cancellationToken = default)
+        public new Response<MongoDBDatabaseThroughputSettingResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -193,14 +193,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<MongoDBDatabaseThroughputSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<MongoDBDatabaseThroughputSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
-            var value = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            var result = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
-                return new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(Response.FromValue((MongoDBDatabaseThroughputSettingResource)value.Value, value.GetRawResponse()));
+                return new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(Response.FromValue((MongoDBDatabaseThroughputSettingResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateUpdateMongoDBDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateUpdateMongoDBDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
 
@@ -245,14 +245,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<MongoDBDatabaseThroughputSettingResource> CreateOrUpdate(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
+        public new ArmOperation<MongoDBDatabaseThroughputSettingResource> CreateOrUpdate(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
-            var value = CreateOrUpdateCore(waitUntil, data, cancellationToken);
+            var result = CreateOrUpdateCore(waitUntil, data, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {
-                return new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(Response.FromValue((MongoDBDatabaseThroughputSettingResource)value.Value, value.GetRawResponse()));
+                return new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(Response.FromValue((MongoDBDatabaseThroughputSettingResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateUpdateMongoDBDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new CosmosDBArmOperation<MongoDBDatabaseThroughputSettingResource>(new MongoDBDatabaseThroughputSettingOperationSource(Client), _mongoDBDatabaseThroughputSettingMongoDBResourcesClientDiagnostics, Pipeline, _mongoDBDatabaseThroughputSettingMongoDBResourcesRestClient.CreateUpdateMongoDBDatabaseThroughputRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, data).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
 
@@ -416,10 +416,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<MongoDBDatabaseThroughputSettingResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public new async Task<Response<MongoDBDatabaseThroughputSettingResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            var value0 = await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)value0.Value, value0.GetRawResponse());
+            var result = await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -479,10 +479,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<MongoDBDatabaseThroughputSettingResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public new Response<MongoDBDatabaseThroughputSettingResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            var value0 = AddTagCore(key, value, cancellationToken);
-            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)value0.Value, value0.GetRawResponse());
+            var result = AddTagCore(key, value, cancellationToken);
+            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -536,10 +536,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<MongoDBDatabaseThroughputSettingResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public new async Task<Response<MongoDBDatabaseThroughputSettingResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var value = await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)value.Value, value.GetRawResponse());
+            var result = await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -593,10 +593,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<MongoDBDatabaseThroughputSettingResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public new Response<MongoDBDatabaseThroughputSettingResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var value = SetTagsCore(tags, cancellationToken);
-            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)value.Value, value.GetRawResponse());
+            var result = SetTagsCore(tags, cancellationToken);
+            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -653,10 +653,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<MongoDBDatabaseThroughputSettingResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public new async Task<Response<MongoDBDatabaseThroughputSettingResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            var value = await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)value.Value, value.GetRawResponse());
+            var result = await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -713,10 +713,10 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<MongoDBDatabaseThroughputSettingResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public new Response<MongoDBDatabaseThroughputSettingResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            var value = RemoveTagCore(key, cancellationToken);
-            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)value.Value, value.GetRawResponse());
+            var result = RemoveTagCore(key, cancellationToken);
+            return Response.FromValue((MongoDBDatabaseThroughputSettingResource)result.Value, result.GetRawResponse());
         }
     }
 }

@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Blueprint
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<BlueprintArtifactResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<BlueprintArtifactResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((BlueprintArtifactResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((BlueprintArtifactResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.Blueprint
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<BlueprintArtifactResource> Get(CancellationToken cancellationToken = default)
+        public new Response<BlueprintArtifactResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((BlueprintArtifactResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((BlueprintArtifactResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>

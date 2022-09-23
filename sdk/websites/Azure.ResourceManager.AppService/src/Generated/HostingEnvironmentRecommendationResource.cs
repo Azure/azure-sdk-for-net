@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<HostingEnvironmentRecommendationResource>> GetAsync(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public new async Task<Response<HostingEnvironmentRecommendationResource>> GetAsync(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((HostingEnvironmentRecommendationResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(updateSeen, recommendationId, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((HostingEnvironmentRecommendationResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="recommendationId"> The GUID of the recommendation object if you query an expired one. You don&apos;t need to specify it to query an active entry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<HostingEnvironmentRecommendationResource> Get(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
+        public new Response<HostingEnvironmentRecommendationResource> Get(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
-            var value = GetCore(updateSeen, recommendationId, cancellationToken);
-            return Response.FromValue((HostingEnvironmentRecommendationResource)value.Value, value.GetRawResponse());
+            var result = GetCore(updateSeen, recommendationId, cancellationToken);
+            return Response.FromValue((HostingEnvironmentRecommendationResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>

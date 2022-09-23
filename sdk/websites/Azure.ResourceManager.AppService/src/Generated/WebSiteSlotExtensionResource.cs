@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<WebSiteSlotExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<WebSiteSlotExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((WebSiteSlotExtensionResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((WebSiteSlotExtensionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<WebSiteSlotExtensionResource> Get(CancellationToken cancellationToken = default)
+        public new Response<WebSiteSlotExtensionResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((WebSiteSlotExtensionResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((WebSiteSlotExtensionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -239,14 +239,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<WebSiteSlotExtensionResource>> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<WebSiteSlotExtensionResource>> UpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, cancellationToken).ConfigureAwait(false);
+            var result = await UpdateCoreAsync(waitUntil, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
-                return new AppServiceArmOperation<WebSiteSlotExtensionResource>(Response.FromValue((WebSiteSlotExtensionResource)value.Value, value.GetRawResponse()));
+                return new AppServiceArmOperation<WebSiteSlotExtensionResource>(Response.FromValue((WebSiteSlotExtensionResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new AppServiceArmOperation<WebSiteSlotExtensionResource>(new WebSiteSlotExtensionOperationSource(Client), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, _webSiteSlotExtensionWebAppsRestClient.CreateInstallSiteExtensionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new AppServiceArmOperation<WebSiteSlotExtensionResource>(new WebSiteSlotExtensionOperationSource(Client), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, _webSiteSlotExtensionWebAppsRestClient.CreateInstallSiteExtensionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
 
@@ -285,14 +285,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<WebSiteSlotExtensionResource> Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public new ArmOperation<WebSiteSlotExtensionResource> Update(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(waitUntil, cancellationToken);
+            var result = UpdateCore(waitUntil, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {
-                return new AppServiceArmOperation<WebSiteSlotExtensionResource>(Response.FromValue((WebSiteSlotExtensionResource)value.Value, value.GetRawResponse()));
+                return new AppServiceArmOperation<WebSiteSlotExtensionResource>(Response.FromValue((WebSiteSlotExtensionResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new AppServiceArmOperation<WebSiteSlotExtensionResource>(new WebSiteSlotExtensionOperationSource(Client), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, _webSiteSlotExtensionWebAppsRestClient.CreateInstallSiteExtensionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new AppServiceArmOperation<WebSiteSlotExtensionResource>(new WebSiteSlotExtensionOperationSource(Client), _webSiteSlotExtensionWebAppsClientDiagnostics, Pipeline, _webSiteSlotExtensionWebAppsRestClient.CreateInstallSiteExtensionSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
     }

@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<AutomationAccountPython2PackageResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<AutomationAccountPython2PackageResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((AutomationAccountPython2PackageResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<AutomationAccountPython2PackageResource> Get(CancellationToken cancellationToken = default)
+        public new Response<AutomationAccountPython2PackageResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((AutomationAccountPython2PackageResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -314,10 +314,10 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<AutomationAccountPython2PackageResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public new async Task<Response<AutomationAccountPython2PackageResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            var value0 = await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((AutomationAccountPython2PackageResource)value0.Value, value0.GetRawResponse());
+            var result = await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((AutomationAccountPython2PackageResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -377,10 +377,10 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<AutomationAccountPython2PackageResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public new Response<AutomationAccountPython2PackageResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            var value0 = AddTagCore(key, value, cancellationToken);
-            return Response.FromValue((AutomationAccountPython2PackageResource)value0.Value, value0.GetRawResponse());
+            var result = AddTagCore(key, value, cancellationToken);
+            return Response.FromValue((AutomationAccountPython2PackageResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -434,10 +434,10 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<AutomationAccountPython2PackageResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public new async Task<Response<AutomationAccountPython2PackageResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var value = await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
+            var result = await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((AutomationAccountPython2PackageResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -491,10 +491,10 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<AutomationAccountPython2PackageResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public new Response<AutomationAccountPython2PackageResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var value = SetTagsCore(tags, cancellationToken);
-            return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
+            var result = SetTagsCore(tags, cancellationToken);
+            return Response.FromValue((AutomationAccountPython2PackageResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -551,10 +551,10 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<AutomationAccountPython2PackageResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public new async Task<Response<AutomationAccountPython2PackageResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            var value = await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
+            var result = await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((AutomationAccountPython2PackageResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -611,10 +611,10 @@ namespace Azure.ResourceManager.Automation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<AutomationAccountPython2PackageResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public new Response<AutomationAccountPython2PackageResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            var value = RemoveTagCore(key, cancellationToken);
-            return Response.FromValue((AutomationAccountPython2PackageResource)value.Value, value.GetRawResponse());
+            var result = RemoveTagCore(key, cancellationToken);
+            return Response.FromValue((AutomationAccountPython2PackageResource)result.Value, result.GetRawResponse());
         }
     }
 }

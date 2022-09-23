@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<NotificationHubAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<NotificationHubAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((NotificationHubAuthorizationRuleResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((NotificationHubAuthorizationRuleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<NotificationHubAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        public new Response<NotificationHubAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((NotificationHubAuthorizationRuleResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((NotificationHubAuthorizationRuleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<NotificationHubAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<NotificationHubAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
-            return new NotificationHubsArmOperation<NotificationHubAuthorizationRuleResource>(Response.FromValue((NotificationHubAuthorizationRuleResource)value.Value, value.GetRawResponse()));
+            var result = await UpdateCoreAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
+            return new NotificationHubsArmOperation<NotificationHubAuthorizationRuleResource>(Response.FromValue((NotificationHubAuthorizationRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
@@ -293,10 +293,10 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<NotificationHubAuthorizationRuleResource> Update(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public new ArmOperation<NotificationHubAuthorizationRuleResource> Update(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(waitUntil, content, cancellationToken);
-            return new NotificationHubsArmOperation<NotificationHubAuthorizationRuleResource>(Response.FromValue((NotificationHubAuthorizationRuleResource)value.Value, value.GetRawResponse()));
+            var result = UpdateCore(waitUntil, content, cancellationToken);
+            return new NotificationHubsArmOperation<NotificationHubAuthorizationRuleResource>(Response.FromValue((NotificationHubAuthorizationRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>

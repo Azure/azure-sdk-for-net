@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<WebSiteSlotPublicCertificateResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<WebSiteSlotPublicCertificateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((WebSiteSlotPublicCertificateResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((WebSiteSlotPublicCertificateResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<WebSiteSlotPublicCertificateResource> Get(CancellationToken cancellationToken = default)
+        public new Response<WebSiteSlotPublicCertificateResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((WebSiteSlotPublicCertificateResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((WebSiteSlotPublicCertificateResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -245,10 +245,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<WebSiteSlotPublicCertificateResource>> UpdateAsync(WaitUntil waitUntil, PublicCertificateData data, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<WebSiteSlotPublicCertificateResource>> UpdateAsync(WaitUntil waitUntil, PublicCertificateData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
-            return new AppServiceArmOperation<WebSiteSlotPublicCertificateResource>(Response.FromValue((WebSiteSlotPublicCertificateResource)value.Value, value.GetRawResponse()));
+            var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return new AppServiceArmOperation<WebSiteSlotPublicCertificateResource>(Response.FromValue((WebSiteSlotPublicCertificateResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
@@ -292,10 +292,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<WebSiteSlotPublicCertificateResource> Update(WaitUntil waitUntil, PublicCertificateData data, CancellationToken cancellationToken = default)
+        public new ArmOperation<WebSiteSlotPublicCertificateResource> Update(WaitUntil waitUntil, PublicCertificateData data, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(waitUntil, data, cancellationToken);
-            return new AppServiceArmOperation<WebSiteSlotPublicCertificateResource>(Response.FromValue((WebSiteSlotPublicCertificateResource)value.Value, value.GetRawResponse()));
+            var result = UpdateCore(waitUntil, data, cancellationToken);
+            return new AppServiceArmOperation<WebSiteSlotPublicCertificateResource>(Response.FromValue((WebSiteSlotPublicCertificateResource)result.Value, result.GetRawResponse()));
         }
     }
 }

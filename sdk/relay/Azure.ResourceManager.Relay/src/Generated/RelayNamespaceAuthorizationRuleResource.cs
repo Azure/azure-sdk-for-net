@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<RelayNamespaceAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<RelayNamespaceAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((RelayNamespaceAuthorizationRuleResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((RelayNamespaceAuthorizationRuleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<RelayNamespaceAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        public new Response<RelayNamespaceAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((RelayNamespaceAuthorizationRuleResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((RelayNamespaceAuthorizationRuleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<RelayNamespaceAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<RelayNamespaceAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
-            return new RelayArmOperation<RelayNamespaceAuthorizationRuleResource>(Response.FromValue((RelayNamespaceAuthorizationRuleResource)value.Value, value.GetRawResponse()));
+            var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return new RelayArmOperation<RelayNamespaceAuthorizationRuleResource>(Response.FromValue((RelayNamespaceAuthorizationRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
@@ -293,10 +293,10 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<RelayNamespaceAuthorizationRuleResource> Update(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public new ArmOperation<RelayNamespaceAuthorizationRuleResource> Update(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(waitUntil, data, cancellationToken);
-            return new RelayArmOperation<RelayNamespaceAuthorizationRuleResource>(Response.FromValue((RelayNamespaceAuthorizationRuleResource)value.Value, value.GetRawResponse()));
+            var result = UpdateCore(waitUntil, data, cancellationToken);
+            return new RelayArmOperation<RelayNamespaceAuthorizationRuleResource>(Response.FromValue((RelayNamespaceAuthorizationRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>

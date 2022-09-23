@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<HostingEnvironmentMultiRolePoolResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<HostingEnvironmentMultiRolePoolResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((HostingEnvironmentMultiRolePoolResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((HostingEnvironmentMultiRolePoolResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<HostingEnvironmentMultiRolePoolResource> Get(CancellationToken cancellationToken = default)
+        public new Response<HostingEnvironmentMultiRolePoolResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((HostingEnvironmentMultiRolePoolResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((HostingEnvironmentMultiRolePoolResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -187,10 +187,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<HostingEnvironmentMultiRolePoolResource>> UpdateAsync(WorkerPoolData data, CancellationToken cancellationToken = default)
+        public new async Task<Response<HostingEnvironmentMultiRolePoolResource>> UpdateAsync(WorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((HostingEnvironmentMultiRolePoolResource)value.Value, value.GetRawResponse());
+            var result = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((HostingEnvironmentMultiRolePoolResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -229,10 +229,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<HostingEnvironmentMultiRolePoolResource> Update(WorkerPoolData data, CancellationToken cancellationToken = default)
+        public new Response<HostingEnvironmentMultiRolePoolResource> Update(WorkerPoolData data, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(data, cancellationToken);
-            return Response.FromValue((HostingEnvironmentMultiRolePoolResource)value.Value, value.GetRawResponse());
+            var result = UpdateCore(data, cancellationToken);
+            return Response.FromValue((HostingEnvironmentMultiRolePoolResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>

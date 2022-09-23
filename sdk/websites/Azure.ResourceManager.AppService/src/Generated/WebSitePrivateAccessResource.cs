@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<WebSitePrivateAccessResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<WebSitePrivateAccessResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((WebSitePrivateAccessResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((WebSitePrivateAccessResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<WebSitePrivateAccessResource> Get(CancellationToken cancellationToken = default)
+        public new Response<WebSitePrivateAccessResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((WebSitePrivateAccessResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((WebSitePrivateAccessResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<WebSitePrivateAccessResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PrivateAccessData data, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<WebSitePrivateAccessResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PrivateAccessData data, CancellationToken cancellationToken = default)
         {
-            var value = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
-            return new AppServiceArmOperation<WebSitePrivateAccessResource>(Response.FromValue((WebSitePrivateAccessResource)value.Value, value.GetRawResponse()));
+            var result = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return new AppServiceArmOperation<WebSitePrivateAccessResource>(Response.FromValue((WebSitePrivateAccessResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<WebSitePrivateAccessResource> CreateOrUpdate(WaitUntil waitUntil, PrivateAccessData data, CancellationToken cancellationToken = default)
+        public new ArmOperation<WebSitePrivateAccessResource> CreateOrUpdate(WaitUntil waitUntil, PrivateAccessData data, CancellationToken cancellationToken = default)
         {
-            var value = CreateOrUpdateCore(waitUntil, data, cancellationToken);
-            return new AppServiceArmOperation<WebSitePrivateAccessResource>(Response.FromValue((WebSitePrivateAccessResource)value.Value, value.GetRawResponse()));
+            var result = CreateOrUpdateCore(waitUntil, data, cancellationToken);
+            return new AppServiceArmOperation<WebSitePrivateAccessResource>(Response.FromValue((WebSitePrivateAccessResource)result.Value, result.GetRawResponse()));
         }
     }
 }

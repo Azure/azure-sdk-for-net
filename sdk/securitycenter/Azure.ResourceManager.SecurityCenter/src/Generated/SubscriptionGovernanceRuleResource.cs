@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<SubscriptionGovernanceRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<SubscriptionGovernanceRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((SubscriptionGovernanceRuleResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SubscriptionGovernanceRuleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<SubscriptionGovernanceRuleResource> Get(CancellationToken cancellationToken = default)
+        public new Response<SubscriptionGovernanceRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((SubscriptionGovernanceRuleResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((SubscriptionGovernanceRuleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -253,10 +253,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<SubscriptionGovernanceRuleResource>> UpdateAsync(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<SubscriptionGovernanceRuleResource>> UpdateAsync(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
-            return new SecurityCenterArmOperation<SubscriptionGovernanceRuleResource>(Response.FromValue((SubscriptionGovernanceRuleResource)value.Value, value.GetRawResponse()));
+            var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return new SecurityCenterArmOperation<SubscriptionGovernanceRuleResource>(Response.FromValue((SubscriptionGovernanceRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
@@ -300,10 +300,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<SubscriptionGovernanceRuleResource> Update(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
+        public new ArmOperation<SubscriptionGovernanceRuleResource> Update(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(waitUntil, data, cancellationToken);
-            return new SecurityCenterArmOperation<SubscriptionGovernanceRuleResource>(Response.FromValue((SubscriptionGovernanceRuleResource)value.Value, value.GetRawResponse()));
+            var result = UpdateCore(waitUntil, data, cancellationToken);
+            return new SecurityCenterArmOperation<SubscriptionGovernanceRuleResource>(Response.FromValue((SubscriptionGovernanceRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>

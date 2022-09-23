@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<AppServicePlanHybridConnectionNamespaceRelayResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<AppServicePlanHybridConnectionNamespaceRelayResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((AppServicePlanHybridConnectionNamespaceRelayResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((AppServicePlanHybridConnectionNamespaceRelayResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<AppServicePlanHybridConnectionNamespaceRelayResource> Get(CancellationToken cancellationToken = default)
+        public new Response<AppServicePlanHybridConnectionNamespaceRelayResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((AppServicePlanHybridConnectionNamespaceRelayResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((AppServicePlanHybridConnectionNamespaceRelayResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>

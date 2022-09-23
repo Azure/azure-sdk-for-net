@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<SiteExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<SiteExtensionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((SiteExtensionResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SiteExtensionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<SiteExtensionResource> Get(CancellationToken cancellationToken = default)
+        public new Response<SiteExtensionResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((SiteExtensionResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((SiteExtensionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -192,14 +192,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<SiteExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<SiteExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
-            var value = await CreateOrUpdateCoreAsync(waitUntil, msDeploy, cancellationToken).ConfigureAwait(false);
+            var result = await CreateOrUpdateCoreAsync(waitUntil, msDeploy, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
-                return new AppServiceArmOperation<SiteExtensionResource>(Response.FromValue((SiteExtensionResource)value.Value, value.GetRawResponse()));
+                return new AppServiceArmOperation<SiteExtensionResource>(Response.FromValue((SiteExtensionResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new AppServiceArmOperation<SiteExtensionResource>(new SiteExtensionOperationSource(Client), _siteExtensionWebAppsClientDiagnostics, Pipeline, _siteExtensionWebAppsRestClient.CreateCreateMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, msDeploy).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new AppServiceArmOperation<SiteExtensionResource>(new SiteExtensionOperationSource(Client), _siteExtensionWebAppsClientDiagnostics, Pipeline, _siteExtensionWebAppsRestClient.CreateCreateMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, msDeploy).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
 
@@ -244,14 +244,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="msDeploy"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<SiteExtensionResource> CreateOrUpdate(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        public new ArmOperation<SiteExtensionResource> CreateOrUpdate(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
-            var value = CreateOrUpdateCore(waitUntil, msDeploy, cancellationToken);
+            var result = CreateOrUpdateCore(waitUntil, msDeploy, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {
-                return new AppServiceArmOperation<SiteExtensionResource>(Response.FromValue((SiteExtensionResource)value.Value, value.GetRawResponse()));
+                return new AppServiceArmOperation<SiteExtensionResource>(Response.FromValue((SiteExtensionResource)result.Value, result.GetRawResponse()));
             }
-            var operation = new AppServiceArmOperation<SiteExtensionResource>(new SiteExtensionOperationSource(Client), _siteExtensionWebAppsClientDiagnostics, Pipeline, _siteExtensionWebAppsRestClient.CreateCreateMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, msDeploy).Request, value.GetRawResponse(), OperationFinalStateVia.Location);
+            var operation = new AppServiceArmOperation<SiteExtensionResource>(new SiteExtensionOperationSource(Client), _siteExtensionWebAppsClientDiagnostics, Pipeline, _siteExtensionWebAppsRestClient.CreateCreateMSDeployOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, msDeploy).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
             return operation;
         }
 

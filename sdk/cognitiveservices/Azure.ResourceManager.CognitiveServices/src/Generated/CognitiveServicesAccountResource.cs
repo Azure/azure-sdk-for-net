@@ -226,10 +226,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<CognitiveServicesAccountResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<CognitiveServicesAccountResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((CognitiveServicesAccountResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((CognitiveServicesAccountResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -264,10 +264,10 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<CognitiveServicesAccountResource> Get(CancellationToken cancellationToken = default)
+        public new Response<CognitiveServicesAccountResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((CognitiveServicesAccountResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((CognitiveServicesAccountResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>

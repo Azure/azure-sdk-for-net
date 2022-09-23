@@ -1058,10 +1058,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<WebSiteResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<WebSiteResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((WebSiteResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((WebSiteResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -1096,10 +1096,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<WebSiteResource> Get(CancellationToken cancellationToken = default)
+        public new Response<WebSiteResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((WebSiteResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((WebSiteResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -1196,10 +1196,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<WebSiteResource>> UpdateAsync(SitePatchInfo info, CancellationToken cancellationToken = default)
+        public new async Task<Response<WebSiteResource>> UpdateAsync(SitePatchInfo info, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(info, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((WebSiteResource)value.Value, value.GetRawResponse());
+            var result = await UpdateCoreAsync(info, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((WebSiteResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -1238,10 +1238,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<WebSiteResource> Update(SitePatchInfo info, CancellationToken cancellationToken = default)
+        public new Response<WebSiteResource> Update(SitePatchInfo info, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(info, cancellationToken);
-            return Response.FromValue((WebSiteResource)value.Value, value.GetRawResponse());
+            var result = UpdateCore(info, cancellationToken);
+            return Response.FromValue((WebSiteResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>

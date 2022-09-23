@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<SiteSlotNetworkConfigResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<SiteSlotNetworkConfigResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((SiteSlotNetworkConfigResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SiteSlotNetworkConfigResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<SiteSlotNetworkConfigResource> Get(CancellationToken cancellationToken = default)
+        public new Response<SiteSlotNetworkConfigResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((SiteSlotNetworkConfigResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((SiteSlotNetworkConfigResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -242,10 +242,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<SiteSlotNetworkConfigResource>> UpdateAsync(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
+        public new async Task<Response<SiteSlotNetworkConfigResource>> UpdateAsync(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((SiteSlotNetworkConfigResource)value.Value, value.GetRawResponse());
+            var result = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SiteSlotNetworkConfigResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -286,10 +286,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<SiteSlotNetworkConfigResource> Update(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
+        public new Response<SiteSlotNetworkConfigResource> Update(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(data, cancellationToken);
-            return Response.FromValue((SiteSlotNetworkConfigResource)value.Value, value.GetRawResponse());
+            var result = UpdateCore(data, cancellationToken);
+            return Response.FromValue((SiteSlotNetworkConfigResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -335,10 +335,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<SiteSlotNetworkConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<SiteSlotNetworkConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            var value = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
-            return new AppServiceArmOperation<SiteSlotNetworkConfigResource>(Response.FromValue((SiteSlotNetworkConfigResource)value.Value, value.GetRawResponse()));
+            var result = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return new AppServiceArmOperation<SiteSlotNetworkConfigResource>(Response.FromValue((SiteSlotNetworkConfigResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
@@ -384,10 +384,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<SiteSlotNetworkConfigResource> CreateOrUpdate(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
+        public new ArmOperation<SiteSlotNetworkConfigResource> CreateOrUpdate(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
-            var value = CreateOrUpdateCore(waitUntil, data, cancellationToken);
-            return new AppServiceArmOperation<SiteSlotNetworkConfigResource>(Response.FromValue((SiteSlotNetworkConfigResource)value.Value, value.GetRawResponse()));
+            var result = CreateOrUpdateCore(waitUntil, data, cancellationToken);
+            return new AppServiceArmOperation<SiteSlotNetworkConfigResource>(Response.FromValue((SiteSlotNetworkConfigResource)result.Value, result.GetRawResponse()));
         }
     }
 }

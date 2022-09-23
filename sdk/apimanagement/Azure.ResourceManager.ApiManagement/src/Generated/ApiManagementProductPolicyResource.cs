@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<ApiManagementProductPolicyResource>> GetAsync(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public new async Task<Response<ApiManagementProductPolicyResource>> GetAsync(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(format, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((ApiManagementProductPolicyResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(format, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ApiManagementProductPolicyResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -149,10 +149,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="format"> Policy Export Format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<ApiManagementProductPolicyResource> Get(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        public new Response<ApiManagementProductPolicyResource> Get(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
-            var value = GetCore(format, cancellationToken);
-            return Response.FromValue((ApiManagementProductPolicyResource)value.Value, value.GetRawResponse());
+            var result = GetCore(format, cancellationToken);
+            return Response.FromValue((ApiManagementProductPolicyResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -254,10 +254,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<ApiManagementProductPolicyResource>> UpdateAsync(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<ApiManagementProductPolicyResource>> UpdateAsync(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, data, ifMatch, cancellationToken).ConfigureAwait(false);
-            return new ApiManagementArmOperation<ApiManagementProductPolicyResource>(Response.FromValue((ApiManagementProductPolicyResource)value.Value, value.GetRawResponse()));
+            var result = await UpdateCoreAsync(waitUntil, data, ifMatch, cancellationToken).ConfigureAwait(false);
+            return new ApiManagementArmOperation<ApiManagementProductPolicyResource>(Response.FromValue((ApiManagementProductPolicyResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
@@ -303,10 +303,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<ApiManagementProductPolicyResource> Update(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public new ArmOperation<ApiManagementProductPolicyResource> Update(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(waitUntil, data, ifMatch, cancellationToken);
-            return new ApiManagementArmOperation<ApiManagementProductPolicyResource>(Response.FromValue((ApiManagementProductPolicyResource)value.Value, value.GetRawResponse()));
+            var result = UpdateCore(waitUntil, data, ifMatch, cancellationToken);
+            return new ApiManagementArmOperation<ApiManagementProductPolicyResource>(Response.FromValue((ApiManagementProductPolicyResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>

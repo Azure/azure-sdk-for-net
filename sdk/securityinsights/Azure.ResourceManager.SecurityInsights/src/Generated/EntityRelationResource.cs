@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<EntityRelationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<EntityRelationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((EntityRelationResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((EntityRelationResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<EntityRelationResource> Get(CancellationToken cancellationToken = default)
+        public new Response<EntityRelationResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((EntityRelationResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((EntityRelationResource)result.Value, result.GetRawResponse());
         }
     }
 }

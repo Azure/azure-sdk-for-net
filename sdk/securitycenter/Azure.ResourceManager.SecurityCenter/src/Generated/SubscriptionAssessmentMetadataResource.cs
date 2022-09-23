@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<SubscriptionAssessmentMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<SubscriptionAssessmentMetadataResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((SubscriptionAssessmentMetadataResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SubscriptionAssessmentMetadataResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<SubscriptionAssessmentMetadataResource> Get(CancellationToken cancellationToken = default)
+        public new Response<SubscriptionAssessmentMetadataResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((SubscriptionAssessmentMetadataResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((SubscriptionAssessmentMetadataResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>

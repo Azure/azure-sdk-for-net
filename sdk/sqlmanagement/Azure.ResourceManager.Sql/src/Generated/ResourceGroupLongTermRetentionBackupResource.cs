@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<ResourceGroupLongTermRetentionBackupResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<ResourceGroupLongTermRetentionBackupResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((ResourceGroupLongTermRetentionBackupResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ResourceGroupLongTermRetentionBackupResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<ResourceGroupLongTermRetentionBackupResource> Get(CancellationToken cancellationToken = default)
+        public new Response<ResourceGroupLongTermRetentionBackupResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((ResourceGroupLongTermRetentionBackupResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((ResourceGroupLongTermRetentionBackupResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>

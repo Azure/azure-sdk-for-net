@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<SiteDiagnosticResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<SiteDiagnosticResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((SiteDiagnosticResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SiteDiagnosticResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -218,10 +218,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<SiteDiagnosticResource> Get(CancellationToken cancellationToken = default)
+        public new Response<SiteDiagnosticResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((SiteDiagnosticResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((SiteDiagnosticResource)result.Value, result.GetRawResponse());
         }
     }
 }

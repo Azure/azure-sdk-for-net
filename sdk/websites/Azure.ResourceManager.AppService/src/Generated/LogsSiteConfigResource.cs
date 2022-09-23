@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<LogsSiteConfigResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<LogsSiteConfigResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((LogsSiteConfigResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((LogsSiteConfigResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<LogsSiteConfigResource> Get(CancellationToken cancellationToken = default)
+        public new Response<LogsSiteConfigResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((LogsSiteConfigResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((LogsSiteConfigResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -191,10 +191,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<LogsSiteConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<LogsSiteConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
-            var value = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
-            return new AppServiceArmOperation<LogsSiteConfigResource>(Response.FromValue((LogsSiteConfigResource)value.Value, value.GetRawResponse()));
+            var result = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return new AppServiceArmOperation<LogsSiteConfigResource>(Response.FromValue((LogsSiteConfigResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
@@ -238,10 +238,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<LogsSiteConfigResource> CreateOrUpdate(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
+        public new ArmOperation<LogsSiteConfigResource> CreateOrUpdate(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
-            var value = CreateOrUpdateCore(waitUntil, data, cancellationToken);
-            return new AppServiceArmOperation<LogsSiteConfigResource>(Response.FromValue((LogsSiteConfigResource)value.Value, value.GetRawResponse()));
+            var result = CreateOrUpdateCore(waitUntil, data, cancellationToken);
+            return new AppServiceArmOperation<LogsSiteConfigResource>(Response.FromValue((LogsSiteConfigResource)result.Value, result.GetRawResponse()));
         }
     }
 }

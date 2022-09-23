@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<WebSiteSlotPremierAddOnResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<WebSiteSlotPremierAddOnResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((WebSiteSlotPremierAddOnResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((WebSiteSlotPremierAddOnResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<WebSiteSlotPremierAddOnResource> Get(CancellationToken cancellationToken = default)
+        public new Response<WebSiteSlotPremierAddOnResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((WebSiteSlotPremierAddOnResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((WebSiteSlotPremierAddOnResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<WebSiteSlotPremierAddOnResource>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
+        public new async Task<Response<WebSiteSlotPremierAddOnResource>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(premierAddOn, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((WebSiteSlotPremierAddOnResource)value.Value, value.GetRawResponse());
+            var result = await UpdateCoreAsync(premierAddOn, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((WebSiteSlotPremierAddOnResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -283,10 +283,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<WebSiteSlotPremierAddOnResource> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
+        public new Response<WebSiteSlotPremierAddOnResource> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(premierAddOn, cancellationToken);
-            return Response.FromValue((WebSiteSlotPremierAddOnResource)value.Value, value.GetRawResponse());
+            var result = UpdateCore(premierAddOn, cancellationToken);
+            return Response.FromValue((WebSiteSlotPremierAddOnResource)result.Value, result.GetRawResponse());
         }
     }
 }

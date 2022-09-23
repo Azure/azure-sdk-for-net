@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<SubscriptionApplicationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<SubscriptionApplicationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((SubscriptionApplicationResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((SubscriptionApplicationResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<SubscriptionApplicationResource> Get(CancellationToken cancellationToken = default)
+        public new Response<SubscriptionApplicationResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((SubscriptionApplicationResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((SubscriptionApplicationResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<SubscriptionApplicationResource>> UpdateAsync(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<SubscriptionApplicationResource>> UpdateAsync(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
-            return new SecurityCenterArmOperation<SubscriptionApplicationResource>(Response.FromValue((SubscriptionApplicationResource)value.Value, value.GetRawResponse()));
+            var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return new SecurityCenterArmOperation<SubscriptionApplicationResource>(Response.FromValue((SubscriptionApplicationResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
@@ -293,10 +293,10 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<SubscriptionApplicationResource> Update(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
+        public new ArmOperation<SubscriptionApplicationResource> Update(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(waitUntil, data, cancellationToken);
-            return new SecurityCenterArmOperation<SubscriptionApplicationResource>(Response.FromValue((SubscriptionApplicationResource)value.Value, value.GetRawResponse()));
+            var result = UpdateCore(waitUntil, data, cancellationToken);
+            return new SecurityCenterArmOperation<SubscriptionApplicationResource>(Response.FromValue((SubscriptionApplicationResource)result.Value, result.GetRawResponse()));
         }
     }
 }

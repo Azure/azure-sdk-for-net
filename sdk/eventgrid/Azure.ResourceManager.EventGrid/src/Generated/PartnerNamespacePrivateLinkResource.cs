@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<PartnerNamespacePrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<PartnerNamespacePrivateLinkResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((PartnerNamespacePrivateLinkResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((PartnerNamespacePrivateLinkResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -146,10 +146,10 @@ namespace Azure.ResourceManager.EventGrid
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<PartnerNamespacePrivateLinkResource> Get(CancellationToken cancellationToken = default)
+        public new Response<PartnerNamespacePrivateLinkResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((PartnerNamespacePrivateLinkResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((PartnerNamespacePrivateLinkResource)result.Value, result.GetRawResponse());
         }
     }
 }

@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<RelayHybridConnectionAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<RelayHybridConnectionAuthorizationRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((RelayHybridConnectionAuthorizationRuleResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((RelayHybridConnectionAuthorizationRuleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Relay
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<RelayHybridConnectionAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
+        public new Response<RelayHybridConnectionAuthorizationRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((RelayHybridConnectionAuthorizationRuleResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((RelayHybridConnectionAuthorizationRuleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<ArmOperation<RelayHybridConnectionAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public new async Task<ArmOperation<RelayHybridConnectionAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
-            return new RelayArmOperation<RelayHybridConnectionAuthorizationRuleResource>(Response.FromValue((RelayHybridConnectionAuthorizationRuleResource)value.Value, value.GetRawResponse()));
+            var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
+            return new RelayArmOperation<RelayHybridConnectionAuthorizationRuleResource>(Response.FromValue((RelayHybridConnectionAuthorizationRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
@@ -293,10 +293,10 @@ namespace Azure.ResourceManager.Relay
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual ArmOperation<RelayHybridConnectionAuthorizationRuleResource> Update(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
+        public new ArmOperation<RelayHybridConnectionAuthorizationRuleResource> Update(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(waitUntil, data, cancellationToken);
-            return new RelayArmOperation<RelayHybridConnectionAuthorizationRuleResource>(Response.FromValue((RelayHybridConnectionAuthorizationRuleResource)value.Value, value.GetRawResponse()));
+            var result = UpdateCore(waitUntil, data, cancellationToken);
+            return new RelayArmOperation<RelayHybridConnectionAuthorizationRuleResource>(Response.FromValue((RelayHybridConnectionAuthorizationRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>

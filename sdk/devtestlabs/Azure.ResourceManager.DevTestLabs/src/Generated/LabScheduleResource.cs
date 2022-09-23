@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<LabScheduleResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
+        public new async Task<Response<LabScheduleResource>> GetAsync(string expand = null, CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(expand, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((LabScheduleResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(expand, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((LabScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="expand"> Specify the $expand query. Example: &apos;properties($select=status)&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<LabScheduleResource> Get(string expand = null, CancellationToken cancellationToken = default)
+        public new Response<LabScheduleResource> Get(string expand = null, CancellationToken cancellationToken = default)
         {
-            var value = GetCore(expand, cancellationToken);
-            return Response.FromValue((LabScheduleResource)value.Value, value.GetRawResponse());
+            var result = GetCore(expand, cancellationToken);
+            return Response.FromValue((LabScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -246,10 +246,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<LabScheduleResource>> UpdateAsync(ScheduleFragment schedule, CancellationToken cancellationToken = default)
+        public new async Task<Response<LabScheduleResource>> UpdateAsync(ScheduleFragment schedule, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(schedule, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((LabScheduleResource)value.Value, value.GetRawResponse());
+            var result = await UpdateCoreAsync(schedule, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((LabScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -288,10 +288,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<LabScheduleResource> Update(ScheduleFragment schedule, CancellationToken cancellationToken = default)
+        public new Response<LabScheduleResource> Update(ScheduleFragment schedule, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(schedule, cancellationToken);
-            return Response.FromValue((LabScheduleResource)value.Value, value.GetRawResponse());
+            var result = UpdateCore(schedule, cancellationToken);
+            return Response.FromValue((LabScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -405,10 +405,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<LabScheduleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public new async Task<Response<LabScheduleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            var value0 = await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((LabScheduleResource)value0.Value, value0.GetRawResponse());
+            var result = await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((LabScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -468,10 +468,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<LabScheduleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public new Response<LabScheduleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            var value0 = AddTagCore(key, value, cancellationToken);
-            return Response.FromValue((LabScheduleResource)value0.Value, value0.GetRawResponse());
+            var result = AddTagCore(key, value, cancellationToken);
+            return Response.FromValue((LabScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -525,10 +525,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<LabScheduleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public new async Task<Response<LabScheduleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var value = await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((LabScheduleResource)value.Value, value.GetRawResponse());
+            var result = await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((LabScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -582,10 +582,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<LabScheduleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public new Response<LabScheduleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            var value = SetTagsCore(tags, cancellationToken);
-            return Response.FromValue((LabScheduleResource)value.Value, value.GetRawResponse());
+            var result = SetTagsCore(tags, cancellationToken);
+            return Response.FromValue((LabScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -642,10 +642,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<LabScheduleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public new async Task<Response<LabScheduleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            var value = await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((LabScheduleResource)value.Value, value.GetRawResponse());
+            var result = await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((LabScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -702,10 +702,10 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<LabScheduleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public new Response<LabScheduleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            var value = RemoveTagCore(key, cancellationToken);
-            return Response.FromValue((LabScheduleResource)value.Value, value.GetRawResponse());
+            var result = RemoveTagCore(key, cancellationToken);
+            return Response.FromValue((LabScheduleResource)result.Value, result.GetRawResponse());
         }
     }
 }

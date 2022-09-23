@@ -148,10 +148,10 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<ManagedDatabaseColumnResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<ManagedDatabaseColumnResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((ManagedDatabaseColumnResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ManagedDatabaseColumnResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -186,10 +186,10 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<ManagedDatabaseColumnResource> Get(CancellationToken cancellationToken = default)
+        public new Response<ManagedDatabaseColumnResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((ManagedDatabaseColumnResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((ManagedDatabaseColumnResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>

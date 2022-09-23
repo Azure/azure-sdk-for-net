@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<BillingAccountPaymentMethodResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<BillingAccountPaymentMethodResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((BillingAccountPaymentMethodResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((BillingAccountPaymentMethodResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Billing
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<BillingAccountPaymentMethodResource> Get(CancellationToken cancellationToken = default)
+        public new Response<BillingAccountPaymentMethodResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((BillingAccountPaymentMethodResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((BillingAccountPaymentMethodResource)result.Value, result.GetRawResponse());
         }
     }
 }

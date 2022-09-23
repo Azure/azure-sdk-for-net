@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<ApiDiagnosticResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<ApiDiagnosticResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((ApiDiagnosticResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ApiDiagnosticResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<ApiDiagnosticResource> Get(CancellationToken cancellationToken = default)
+        public new Response<ApiDiagnosticResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((ApiDiagnosticResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((ApiDiagnosticResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -244,10 +244,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<ApiDiagnosticResource>> UpdateAsync(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
+        public new async Task<Response<ApiDiagnosticResource>> UpdateAsync(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(ifMatch, data, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((ApiDiagnosticResource)value.Value, value.GetRawResponse());
+            var result = await UpdateCoreAsync(ifMatch, data, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((ApiDiagnosticResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -288,10 +288,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<ApiDiagnosticResource> Update(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
+        public new Response<ApiDiagnosticResource> Update(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(ifMatch, data, cancellationToken);
-            return Response.FromValue((ApiDiagnosticResource)value.Value, value.GetRawResponse());
+            var result = UpdateCore(ifMatch, data, cancellationToken);
+            return Response.FromValue((ApiDiagnosticResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>

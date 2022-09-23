@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<WebSitePremierAddonResource>> GetAsync(CancellationToken cancellationToken = default)
+        public new async Task<Response<WebSitePremierAddonResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            var value = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((WebSitePremierAddonResource)value.Value, value.GetRawResponse());
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((WebSitePremierAddonResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public new virtual Response<WebSitePremierAddonResource> Get(CancellationToken cancellationToken = default)
+        public new Response<WebSitePremierAddonResource> Get(CancellationToken cancellationToken = default)
         {
-            var value = GetCore(cancellationToken);
-            return Response.FromValue((WebSitePremierAddonResource)value.Value, value.GetRawResponse());
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((WebSitePremierAddonResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -241,10 +241,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual async Task<Response<WebSitePremierAddonResource>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
+        public new async Task<Response<WebSitePremierAddonResource>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
-            var value = await UpdateCoreAsync(premierAddOn, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue((WebSitePremierAddonResource)value.Value, value.GetRawResponse());
+            var result = await UpdateCoreAsync(premierAddOn, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((WebSitePremierAddonResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
@@ -283,10 +283,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="premierAddOn"/> is null. </exception>
         [ForwardsClientCalls]
-        public new virtual Response<WebSitePremierAddonResource> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
+        public new Response<WebSitePremierAddonResource> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
-            var value = UpdateCore(premierAddOn, cancellationToken);
-            return Response.FromValue((WebSitePremierAddonResource)value.Value, value.GetRawResponse());
+            var result = UpdateCore(premierAddOn, cancellationToken);
+            return Response.FromValue((WebSitePremierAddonResource)result.Value, result.GetRawResponse());
         }
     }
 }
