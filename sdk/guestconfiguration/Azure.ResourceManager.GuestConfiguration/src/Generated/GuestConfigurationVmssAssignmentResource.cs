@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<GuestConfigurationAssignmentResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetCore");
+            using var scope = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.Get");
             scope.Start();
             try
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<GuestConfigurationAssignmentResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetCore");
+            using var scope = _guestConfigurationVmssAssignmentGuestConfigurationAssignmentsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.Get");
             scope.Start();
             try
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             async Task<Page<GuestConfigurationAssignmentReport>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReportsCore");
+                using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReports");
                 scope.Start();
                 try
                 {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Page<GuestConfigurationAssignmentReport> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReportsCore");
+                using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReports");
                 scope.Start();
                 try
                 {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReportCore");
+            using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReport");
             scope.Start();
             try
             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReportCore");
+            using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReport");
             scope.Start();
             try
             {

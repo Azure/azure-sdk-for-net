@@ -32,11 +32,10 @@ namespace Azure.ResourceManager.GuestConfiguration
             {
                 return new GuestConfigurationVmssAssignmentResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: GuestConfigurationVmAssignmentResource, GuestConfigurationHcrpAssignmentResource or GuestConfigurationVmssAssignmentResource");
         }
 
-        internal static bool IsGuestConfigurationVmAssignmentResource(ResourceIdentifier id)
+        private static bool IsGuestConfigurationVmAssignmentResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != GuestConfigurationVmAssignmentResource.ResourceType)
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             return true;
         }
 
-        internal static bool IsGuestConfigurationHcrpAssignmentResource(ResourceIdentifier id)
+        private static bool IsGuestConfigurationHcrpAssignmentResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != GuestConfigurationHcrpAssignmentResource.ResourceType)
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             return true;
         }
 
-        internal static bool IsGuestConfigurationVmssAssignmentResource(ResourceIdentifier id)
+        private static bool IsGuestConfigurationVmssAssignmentResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != GuestConfigurationVmssAssignmentResource.ResourceType)

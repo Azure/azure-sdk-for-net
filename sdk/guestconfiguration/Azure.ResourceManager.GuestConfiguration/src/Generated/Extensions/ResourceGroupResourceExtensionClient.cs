@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -72,17 +73,17 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Operation Id: GuestConfigurationAssignments_RGList
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationAssignmentData> GetGuestConfigurationAssignmentsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<GuestConfigurationAssignmentResource> GetGuestConfigurationAssignmentsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<GuestConfigurationAssignmentData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<GuestConfigurationAssignmentResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGuestConfigurationAssignments");
                 scope.Start();
                 try
                 {
                     var response = await GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.RGListAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => GuestConfigurationAssignmentResource.GetResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -99,17 +100,17 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Operation Id: GuestConfigurationAssignments_RGList
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationAssignmentData> GetGuestConfigurationAssignments(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<GuestConfigurationAssignmentResource> GetGuestConfigurationAssignments(CancellationToken cancellationToken = default)
         {
-            Page<GuestConfigurationAssignmentData> FirstPageFunc(int? pageSizeHint)
+            Page<GuestConfigurationAssignmentResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGuestConfigurationAssignments");
                 scope.Start();
                 try
                 {
                     var response = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.RGList(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => GuestConfigurationAssignmentResource.GetResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

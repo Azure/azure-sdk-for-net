@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GuestConfigurationAssignmentData> GetGuestConfigurationAssignmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<GuestConfigurationAssignmentResource> GetGuestConfigurationAssignmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetGuestConfigurationAssignmentsAsync(cancellationToken);
         }
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GuestConfigurationAssignmentData> GetGuestConfigurationAssignments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<GuestConfigurationAssignmentResource> GetGuestConfigurationAssignments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetGuestConfigurationAssignments(cancellationToken);
         }
@@ -210,8 +210,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<GuestConfigurationAssignmentData> GetGuestConfigurationAssignmentsAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<GuestConfigurationAssignmentResource> GetGuestConfigurationAssignmentsAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetGuestConfigurationAssignmentsAsync(cancellationToken);
         }
@@ -223,8 +223,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<GuestConfigurationAssignmentData> GetGuestConfigurationAssignments(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<GuestConfigurationAssignmentResource> GetGuestConfigurationAssignments(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetGuestConfigurationAssignments(cancellationToken);
         }
