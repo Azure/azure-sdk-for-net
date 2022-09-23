@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Media.Tests
             var list = await mediaTransformJobCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             // Cancel
-            while (result.Value.Data.State != JobState.Canceled)
+            while (result.Value.Data.State != MediaJobState.Canceled)
             {
                 var cancelResult = await job.CancelJobAsync();
                 Assert.IsTrue(cancelResult.Status == 200);

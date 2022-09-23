@@ -14,6 +14,7 @@ This is the first stable release of the Media Management client library.
 - Renamed `ContentKeyPolicyPlayReadySecurityLevel` to `PlayReadySecurityLevel`.
 - Renamed `LiveEvent` to `MediaLiveEvent`.
 - Renamed `LiveOutput` to `MediaLiveOutput`.
+- Removed operations releated methods which have been supported by core lib.
 - Other renames.
 
 ## 1.0.0-beta.3 (2022-09-14)
