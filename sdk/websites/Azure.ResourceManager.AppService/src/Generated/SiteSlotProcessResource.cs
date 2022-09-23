@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<ProcessInfoResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessResource.GetCore");
+            using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessResource.Get");
             scope.Start();
             try
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<ProcessInfoResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessResource.GetCore");
+            using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessResource.Get");
             scope.Start();
             try
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessResource.DeleteCore");
+            using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessResource.Delete");
             scope.Start();
             try
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessResource.DeleteCore");
+            using var scope = _siteSlotProcessWebAppsClientDiagnostics.CreateScope("SiteSlotProcessResource.Delete");
             scope.Start();
             try
             {

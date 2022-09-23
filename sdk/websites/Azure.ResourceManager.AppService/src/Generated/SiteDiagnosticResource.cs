@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<DiagnosticCategoryResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticResource.GetCore");
+            using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticResource.Get");
             scope.Start();
             try
             {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<DiagnosticCategoryResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticResource.GetCore");
+            using var scope = _siteDiagnosticDiagnosticsClientDiagnostics.CreateScope("SiteDiagnosticResource.Get");
             scope.Start();
             try
             {

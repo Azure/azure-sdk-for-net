@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<TriggeredJobHistoryResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteSlotTriggeredWebJobHistoryResource.GetCore");
+            using var scope = _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteSlotTriggeredWebJobHistoryResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<TriggeredJobHistoryResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteSlotTriggeredWebJobHistoryResource.GetCore");
+            using var scope = _webSiteSlotTriggeredWebJobHistoryWebAppsClientDiagnostics.CreateScope("WebSiteSlotTriggeredWebJobHistoryResource.Get");
             scope.Start();
             try
             {

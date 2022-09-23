@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.AppService
             {
                 return new WebSiteSlotResourceHealthMetadataResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: WebSiteResourceHealthMetadataResource or WebSiteSlotResourceHealthMetadataResource");
         }
 
-        internal static bool IsWebSiteResourceHealthMetadataResource(ResourceIdentifier id)
+        private static bool IsWebSiteResourceHealthMetadataResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != WebSiteResourceHealthMetadataResource.ResourceType)
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        internal static bool IsWebSiteSlotResourceHealthMetadataResource(ResourceIdentifier id)
+        private static bool IsWebSiteSlotResourceHealthMetadataResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != WebSiteSlotResourceHealthMetadataResource.ResourceType)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

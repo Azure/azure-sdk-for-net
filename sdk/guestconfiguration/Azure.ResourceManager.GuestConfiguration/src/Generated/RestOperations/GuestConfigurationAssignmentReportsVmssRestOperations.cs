@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vmssName, string name, string id)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vmssName, string name, string reportId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.GuestConfiguration
             uri.AppendPath("/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/", false);
             uri.AppendPath(name, true);
             uri.AppendPath("/reports/", false);
-            uri.AppendPath(id, true);
+            uri.AppendPath(reportId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -151,19 +151,19 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="vmssName"> The name of the virtual machine scale set. </param>
         /// <param name="name"> The guest configuration assignment name. </param>
-        /// <param name="id"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmssName"/>, <paramref name="name"/> or <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmssName"/>, <paramref name="name"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<GuestConfigurationAssignmentReport>> GetAsync(string subscriptionId, string resourceGroupName, string vmssName, string name, string id, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmssName"/>, <paramref name="name"/> or <paramref name="reportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmssName"/>, <paramref name="name"/> or <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<GuestConfigurationAssignmentReport>> GetAsync(string subscriptionId, string resourceGroupName, string vmssName, string name, string reportId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vmssName, name, id);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vmssName, name, reportId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -184,19 +184,19 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="vmssName"> The name of the virtual machine scale set. </param>
         /// <param name="name"> The guest configuration assignment name. </param>
-        /// <param name="id"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmssName"/>, <paramref name="name"/> or <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmssName"/>, <paramref name="name"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<GuestConfigurationAssignmentReport> Get(string subscriptionId, string resourceGroupName, string vmssName, string name, string id, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmssName"/>, <paramref name="name"/> or <paramref name="reportId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmssName"/>, <paramref name="name"/> or <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<GuestConfigurationAssignmentReport> Get(string subscriptionId, string resourceGroupName, string vmssName, string name, string reportId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmssName, nameof(vmssName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vmssName, name, id);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vmssName, name, reportId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

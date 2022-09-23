@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<VnetGatewayResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionGatewayResource.GetCore");
+            using var scope = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionGatewayResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<VnetGatewayResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionGatewayResource.GetCore");
+            using var scope = _appServicePlanVirtualNetworkConnectionGatewayAppServicePlansClientDiagnostics.CreateScope("AppServicePlanVirtualNetworkConnectionGatewayResource.Get");
             scope.Start();
             try
             {

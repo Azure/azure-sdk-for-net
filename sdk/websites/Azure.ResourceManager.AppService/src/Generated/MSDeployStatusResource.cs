@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -36,11 +37,10 @@ namespace Azure.ResourceManager.AppService
             {
                 return new SiteSlotInstanceExtensionResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SiteExtensionResource, SiteInstanceExtensionResource, SiteSlotExtensionResource or SiteSlotInstanceExtensionResource");
         }
 
-        internal static bool IsSiteExtensionResource(ResourceIdentifier id)
+        private static bool IsSiteExtensionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteExtensionResource.ResourceType)
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        internal static bool IsSiteInstanceExtensionResource(ResourceIdentifier id)
+        private static bool IsSiteInstanceExtensionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteInstanceExtensionResource.ResourceType)
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        internal static bool IsSiteSlotExtensionResource(ResourceIdentifier id)
+        private static bool IsSiteSlotExtensionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteSlotExtensionResource.ResourceType)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        internal static bool IsSiteSlotInstanceExtensionResource(ResourceIdentifier id)
+        private static bool IsSiteSlotInstanceExtensionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteSlotInstanceExtensionResource.ResourceType)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<SiteLogsConfigResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfigResource.GetCore");
+            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfigResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<SiteLogsConfigResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfigResource.GetCore");
+            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfigResource.Get");
             scope.Start();
             try
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfigResource.CreateOrUpdateCore");
+            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfigResource.CreateOrUpdateCore");
+            using var scope = _logsSiteConfigWebAppsClientDiagnostics.CreateScope("LogsSiteConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {

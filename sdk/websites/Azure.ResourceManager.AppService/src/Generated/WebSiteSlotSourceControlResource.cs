@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<SiteSourceControlResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.GetCore");
+            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<SiteSourceControlResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.GetCore");
+            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.Get");
             scope.Start();
             try
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.DeleteCore");
+            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.Delete");
             scope.Start();
             try
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, string additionalFlags = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.DeleteCore");
+            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.Delete");
             scope.Start();
             try
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.UpdateCore");
+            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.Update");
             scope.Start();
             try
             {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.UpdateCore");
+            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.Update");
             scope.Start();
             try
             {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.CreateOrUpdateCore");
+            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.CreateOrUpdateCore");
+            using var scope = _webSiteSlotSourceControlWebAppsClientDiagnostics.CreateScope("WebSiteSlotSourceControlResource.CreateOrUpdate");
             scope.Start();
             try
             {

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<SiteLogsConfigResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfigResource.GetCore");
+            using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfigResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<SiteLogsConfigResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfigResource.GetCore");
+            using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfigResource.Get");
             scope.Start();
             try
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfigResource.CreateOrUpdateCore");
+            using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfigResource.CreateOrUpdateCore");
+            using var scope = _logsSiteSlotConfigWebAppsClientDiagnostics.CreateScope("LogsSiteSlotConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -35,11 +36,10 @@ namespace Azure.ResourceManager.AppService
             {
                 return new SiteSlotProcessResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SiteInstanceProcessResource, SiteProcessResource, SiteSlotInstanceProcessResource or SiteSlotProcessResource");
         }
 
-        internal static bool IsSiteInstanceProcessResource(ResourceIdentifier id)
+        private static bool IsSiteInstanceProcessResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteInstanceProcessResource.ResourceType)
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSiteProcessResource(ResourceIdentifier id)
+        private static bool IsSiteProcessResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteProcessResource.ResourceType)
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSiteSlotInstanceProcessResource(ResourceIdentifier id)
+        private static bool IsSiteSlotInstanceProcessResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteSlotInstanceProcessResource.ResourceType)
@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSiteSlotProcessResource(ResourceIdentifier id)
+        private static bool IsSiteSlotProcessResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteSlotProcessResource.ResourceType)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

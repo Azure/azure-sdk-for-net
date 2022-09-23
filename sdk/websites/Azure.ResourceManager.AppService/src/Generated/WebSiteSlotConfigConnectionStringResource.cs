@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<ApiKeyVaultReferenceResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringResource.GetCore");
+            using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<ApiKeyVaultReferenceResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringResource.GetCore");
+            using var scope = _webSiteSlotConfigConnectionStringWebAppsClientDiagnostics.CreateScope("WebSiteSlotConfigConnectionStringResource.Get");
             scope.Start();
             try
             {

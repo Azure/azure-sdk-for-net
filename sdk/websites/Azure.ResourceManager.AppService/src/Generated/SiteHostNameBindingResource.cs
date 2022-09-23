@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<HostNameBindingResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingResource.GetCore");
+            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<HostNameBindingResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingResource.GetCore");
+            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingResource.Get");
             scope.Start();
             try
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingResource.DeleteCore");
+            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingResource.Delete");
             scope.Start();
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingResource.DeleteCore");
+            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingResource.Delete");
             scope.Start();
             try
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingResource.UpdateCore");
+            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingResource.Update");
             scope.Start();
             try
             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingResource.UpdateCore");
+            using var scope = _siteHostNameBindingWebAppsClientDiagnostics.CreateScope("SiteHostNameBindingResource.Update");
             scope.Start();
             try
             {

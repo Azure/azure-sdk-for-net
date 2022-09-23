@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<SiteConfigResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.GetCore");
+            using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.Get");
             scope.Start();
             try
             {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<SiteConfigResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.GetCore");
+            using var scope = _webSiteConfigWebAppsClientDiagnostics.CreateScope("WebSiteConfigResource.Get");
             scope.Start();
             try
             {

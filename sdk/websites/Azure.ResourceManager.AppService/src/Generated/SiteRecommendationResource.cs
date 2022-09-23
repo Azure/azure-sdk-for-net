@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<RecommendationRuleResource>> GetCoreAsync(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("SiteRecommendationResource.GetCore");
+            using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("SiteRecommendationResource.Get");
             scope.Start();
             try
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<RecommendationRuleResource> GetCore(bool? updateSeen = null, string recommendationId = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("SiteRecommendationResource.GetCore");
+            using var scope = _siteRecommendationRecommendationsClientDiagnostics.CreateScope("SiteRecommendationResource.Get");
             scope.Start();
             try
             {

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -35,11 +36,10 @@ namespace Azure.ResourceManager.AppService
             {
                 return new SiteSlotDetectorResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: CertificateOrderDetectorResource, HostingEnvironmentDetectorResource, SiteDetectorResource or SiteSlotDetectorResource");
         }
 
-        internal static bool IsCertificateOrderDetectorResource(ResourceIdentifier id)
+        private static bool IsCertificateOrderDetectorResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != CertificateOrderDetectorResource.ResourceType)
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsHostingEnvironmentDetectorResource(ResourceIdentifier id)
+        private static bool IsHostingEnvironmentDetectorResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != HostingEnvironmentDetectorResource.ResourceType)
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSiteDetectorResource(ResourceIdentifier id)
+        private static bool IsSiteDetectorResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteDetectorResource.ResourceType)
@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSiteSlotDetectorResource(ResourceIdentifier id)
+        private static bool IsSiteSlotDetectorResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteSlotDetectorResource.ResourceType)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

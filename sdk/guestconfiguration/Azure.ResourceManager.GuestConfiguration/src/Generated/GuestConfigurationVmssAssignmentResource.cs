@@ -269,19 +269,19 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}/reports/{id}
         /// Operation Id: GuestConfigurationAssignmentReportsVMSS_Get
         /// </summary>
-        /// <param name="id"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        protected override async Task<Response<GuestConfigurationAssignmentReport>> GetReportCoreAsync(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
+        protected override async Task<Response<GuestConfigurationAssignmentReport>> GetReportCoreAsync(string reportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
 
             using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReport");
             scope.Start();
             try
             {
-                var response = await _guestConfigurationAssignmentReportsVmSSRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken).ConfigureAwait(false);
+                var response = await _guestConfigurationAssignmentReportsVmSSRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -297,19 +297,19 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}/reports/{id}
         /// Operation Id: GuestConfigurationAssignmentReportsVMSS_Get
         /// </summary>
-        /// <param name="id"> The GUID for the guest configuration assignment report. </param>
+        /// <param name="reportId"> The GUID for the guest configuration assignment report. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        protected override Response<GuestConfigurationAssignmentReport> GetReportCore(string id, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="reportId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportId"/> is null. </exception>
+        protected override Response<GuestConfigurationAssignmentReport> GetReportCore(string reportId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
 
             using var scope = _guestConfigurationAssignmentReportsVmSSClientDiagnostics.CreateScope("GuestConfigurationVmssAssignmentResource.GetReport");
             scope.Start();
             try
             {
-                var response = _guestConfigurationAssignmentReportsVmSSRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, id, cancellationToken);
+                var response = _guestConfigurationAssignmentReportsVmSSRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportId, cancellationToken);
                 return response;
             }
             catch (Exception e)

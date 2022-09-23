@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<FunctionEnvelopeResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.GetCore");
+            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<FunctionEnvelopeResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.GetCore");
+            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.Get");
             scope.Start();
             try
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.DeleteCore");
+            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.Delete");
             scope.Start();
             try
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.DeleteCore");
+            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.Delete");
             scope.Start();
             try
             {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.UpdateCore");
+            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.Update");
             scope.Start();
             try
             {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.UpdateCore");
+            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.Update");
             scope.Start();
             try
             {

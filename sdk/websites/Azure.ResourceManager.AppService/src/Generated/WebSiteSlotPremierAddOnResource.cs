@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<PremierAddOnResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnResource.GetCore");
+            using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<PremierAddOnResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnResource.GetCore");
+            using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnResource.Get");
             scope.Start();
             try
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnResource.DeleteCore");
+            using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnResource.Delete");
             scope.Start();
             try
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnResource.DeleteCore");
+            using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnResource.Delete");
             scope.Start();
             try
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
 
-            using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnResource.UpdateCore");
+            using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnResource.Update");
             scope.Start();
             try
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
 
-            using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnResource.UpdateCore");
+            using var scope = _webSiteSlotPremierAddOnWebAppsClientDiagnostics.CreateScope("WebSiteSlotPremierAddOnResource.Update");
             scope.Start();
             try
             {

@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<TriggeredWebJobResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.GetCore");
+            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.Get");
             scope.Start();
             try
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<TriggeredWebJobResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.GetCore");
+            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.Get");
             scope.Start();
             try
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.DeleteCore");
+            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.Delete");
             scope.Start();
             try
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.DeleteCore");
+            using var scope = _webSiteTriggeredwebJobWebAppsClientDiagnostics.CreateScope("WebSiteTriggeredwebJobResource.Delete");
             scope.Start();
             try
             {

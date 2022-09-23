@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<MSDeployStatusResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("SiteExtensionResource.GetCore");
+            using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("SiteExtensionResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<MSDeployStatusResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("SiteExtensionResource.GetCore");
+            using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("SiteExtensionResource.Get");
             scope.Start();
             try
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
-            using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("SiteExtensionResource.CreateOrUpdateCore");
+            using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("SiteExtensionResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
-            using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("SiteExtensionResource.CreateOrUpdateCore");
+            using var scope = _siteExtensionWebAppsClientDiagnostics.CreateScope("SiteExtensionResource.CreateOrUpdate");
             scope.Start();
             try
             {

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.AppService
             {
                 return new SiteSlotNetworkConfigResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SiteNetworkConfigResource or SiteSlotNetworkConfigResource");
         }
 
-        internal static bool IsSiteNetworkConfigResource(ResourceIdentifier id)
+        private static bool IsSiteNetworkConfigResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteNetworkConfigResource.ResourceType)
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        internal static bool IsSiteSlotNetworkConfigResource(ResourceIdentifier id)
+        private static bool IsSiteSlotNetworkConfigResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteSlotNetworkConfigResource.ResourceType)
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<ProcessModuleInfoResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotProcessModuleWebAppsClientDiagnostics.CreateScope("SiteSlotProcessModuleResource.GetCore");
+            using var scope = _siteSlotProcessModuleWebAppsClientDiagnostics.CreateScope("SiteSlotProcessModuleResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<ProcessModuleInfoResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotProcessModuleWebAppsClientDiagnostics.CreateScope("SiteSlotProcessModuleResource.GetCore");
+            using var scope = _siteSlotProcessModuleWebAppsClientDiagnostics.CreateScope("SiteSlotProcessModuleResource.Get");
             scope.Start();
             try
             {

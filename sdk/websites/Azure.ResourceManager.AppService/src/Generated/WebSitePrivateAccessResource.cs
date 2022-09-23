@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<PrivateAccessResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSitePrivateAccessWebAppsClientDiagnostics.CreateScope("WebSitePrivateAccessResource.GetCore");
+            using var scope = _webSitePrivateAccessWebAppsClientDiagnostics.CreateScope("WebSitePrivateAccessResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<PrivateAccessResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSitePrivateAccessWebAppsClientDiagnostics.CreateScope("WebSitePrivateAccessResource.GetCore");
+            using var scope = _webSitePrivateAccessWebAppsClientDiagnostics.CreateScope("WebSitePrivateAccessResource.Get");
             scope.Start();
             try
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSitePrivateAccessWebAppsClientDiagnostics.CreateScope("WebSitePrivateAccessResource.CreateOrUpdateCore");
+            using var scope = _webSitePrivateAccessWebAppsClientDiagnostics.CreateScope("WebSitePrivateAccessResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSitePrivateAccessWebAppsClientDiagnostics.CreateScope("WebSitePrivateAccessResource.CreateOrUpdateCore");
+            using var scope = _webSitePrivateAccessWebAppsClientDiagnostics.CreateScope("WebSitePrivateAccessResource.CreateOrUpdate");
             scope.Start();
             try
             {

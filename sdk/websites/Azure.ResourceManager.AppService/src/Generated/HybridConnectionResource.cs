@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -31,11 +32,10 @@ namespace Azure.ResourceManager.AppService
             {
                 return new SiteSlotHybridConnectionNamespaceRelayResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: AppServicePlanHybridConnectionNamespaceRelayResource, SiteHybridConnectionNamespaceRelayResource or SiteSlotHybridConnectionNamespaceRelayResource");
         }
 
-        internal static bool IsAppServicePlanHybridConnectionNamespaceRelayResource(ResourceIdentifier id)
+        private static bool IsAppServicePlanHybridConnectionNamespaceRelayResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != AppServicePlanHybridConnectionNamespaceRelayResource.ResourceType)
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSiteHybridConnectionNamespaceRelayResource(ResourceIdentifier id)
+        private static bool IsSiteHybridConnectionNamespaceRelayResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteHybridConnectionNamespaceRelayResource.ResourceType)
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSiteSlotHybridConnectionNamespaceRelayResource(ResourceIdentifier id)
+        private static bool IsSiteSlotHybridConnectionNamespaceRelayResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteSlotHybridConnectionNamespaceRelayResource.ResourceType)
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

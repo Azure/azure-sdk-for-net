@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<SiteExtensionInfoResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionResource.GetCore");
+            using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<SiteExtensionInfoResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionResource.GetCore");
+            using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionResource.Get");
             scope.Start();
             try
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionResource.DeleteCore");
+            using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionResource.Delete");
             scope.Start();
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionResource.DeleteCore");
+            using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionResource.Delete");
             scope.Start();
             try
             {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation<SiteExtensionInfoResource>> UpdateCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionResource.UpdateCore");
+            using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionResource.Update");
             scope.Start();
             try
             {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation<SiteExtensionInfoResource> UpdateCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionResource.UpdateCore");
+            using var scope = _webSiteSlotExtensionWebAppsClientDiagnostics.CreateScope("WebSiteSlotExtensionResource.Update");
             scope.Start();
             try
             {

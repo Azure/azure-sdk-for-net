@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<CsmPublishingCredentialsPoliciesEntityResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _scmSiteBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteBasicPublishingCredentialsPolicyResource.GetCore");
+            using var scope = _scmSiteBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteBasicPublishingCredentialsPolicyResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<CsmPublishingCredentialsPoliciesEntityResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _scmSiteBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteBasicPublishingCredentialsPolicyResource.GetCore");
+            using var scope = _scmSiteBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteBasicPublishingCredentialsPolicyResource.Get");
             scope.Start();
             try
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _scmSiteBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteBasicPublishingCredentialsPolicyResource.CreateOrUpdateCore");
+            using var scope = _scmSiteBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteBasicPublishingCredentialsPolicyResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _scmSiteBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteBasicPublishingCredentialsPolicyResource.CreateOrUpdateCore");
+            using var scope = _scmSiteBasicPublishingCredentialsPolicyWebAppsClientDiagnostics.CreateScope("ScmSiteBasicPublishingCredentialsPolicyResource.CreateOrUpdate");
             scope.Start();
             try
             {

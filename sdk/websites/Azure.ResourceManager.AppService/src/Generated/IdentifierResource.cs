@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.AppService
             {
                 return new SiteSlotDomainOwnershipIdentifierResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SiteDomainOwnershipIdentifierResource or SiteSlotDomainOwnershipIdentifierResource");
         }
 
-        internal static bool IsSiteDomainOwnershipIdentifierResource(ResourceIdentifier id)
+        private static bool IsSiteDomainOwnershipIdentifierResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteDomainOwnershipIdentifierResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSiteSlotDomainOwnershipIdentifierResource(ResourceIdentifier id)
+        private static bool IsSiteSlotDomainOwnershipIdentifierResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteSlotDomainOwnershipIdentifierResource.ResourceType)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

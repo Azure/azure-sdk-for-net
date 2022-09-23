@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BaseWebSiteResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetCore");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.Get");
             scope.Start();
             try
             {
@@ -1073,7 +1073,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BaseWebSiteResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.GetCore");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.Get");
             scope.Start();
             try
             {
@@ -1114,7 +1114,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.DeleteCore");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.Delete");
             scope.Start();
             try
             {
@@ -1143,7 +1143,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, bool? deleteMetrics = null, bool? deleteEmptyServerFarm = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.DeleteCore");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.Delete");
             scope.Start();
             try
             {
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(info, nameof(info));
 
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.UpdateCore");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.Update");
             scope.Start();
             try
             {
@@ -1215,7 +1215,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(info, nameof(info));
 
-            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.UpdateCore");
+            using var scope = _webSiteWebAppsClientDiagnostics.CreateScope("WebSiteResource.Update");
             scope.Start();
             try
             {

@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<MSDeployStatusResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.GetCore");
+            using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<MSDeployStatusResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.GetCore");
+            using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.Get");
             scope.Start();
             try
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
-            using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.CreateOrUpdateCore");
+            using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(msDeploy, nameof(msDeploy));
 
-            using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.CreateOrUpdateCore");
+            using var scope = _siteInstanceExtensionWebAppsClientDiagnostics.CreateScope("SiteInstanceExtensionResource.CreateOrUpdate");
             scope.Start();
             try
             {

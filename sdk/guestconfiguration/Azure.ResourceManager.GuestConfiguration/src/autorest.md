@@ -98,6 +98,10 @@ rename-mapping:
   GuestConfigurationNavigation.configurationParameter: ConfigurationParameters
   GuestConfigurationNavigation.configurationProtectedParameter: ConfigurationProtectedParameters
 
+parameter-rename-mapping:
+  GuestConfigurationAssignmentReportsVMSS_Get:
+    id: reportId
+
 directive:
   - from: guestconfiguration.json
     where: $.definitions

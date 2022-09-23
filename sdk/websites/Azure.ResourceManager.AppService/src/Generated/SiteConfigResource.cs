@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -35,11 +36,10 @@ namespace Azure.ResourceManager.AppService
             {
                 return new SiteSlotConfigSnapshotResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: WebSiteConfigResource, SiteConfigSnapshotResource, WebSiteSlotConfigResource or SiteSlotConfigSnapshotResource");
         }
 
-        internal static bool IsWebSiteConfigResource(ResourceIdentifier id)
+        private static bool IsWebSiteConfigResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != WebSiteConfigResource.ResourceType)
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        internal static bool IsSiteConfigSnapshotResource(ResourceIdentifier id)
+        private static bool IsSiteConfigSnapshotResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteConfigSnapshotResource.ResourceType)
@@ -67,14 +67,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsWebSiteSlotConfigResource(ResourceIdentifier id)
+        private static bool IsWebSiteSlotConfigResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != WebSiteSlotConfigResource.ResourceType)
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        internal static bool IsSiteSlotConfigSnapshotResource(ResourceIdentifier id)
+        private static bool IsSiteSlotConfigSnapshotResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteSlotConfigSnapshotResource.ResourceType)
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

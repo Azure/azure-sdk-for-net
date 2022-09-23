@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<RelayServiceConnectionEntityResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionResource.GetCore");
+            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<RelayServiceConnectionEntityResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionResource.GetCore");
+            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionResource.Get");
             scope.Start();
             try
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionResource.DeleteCore");
+            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionResource.DeleteCore");
+            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionResource.Delete");
             scope.Start();
             try
             {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionResource.UpdateCore");
+            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionResource.Update");
             scope.Start();
             try
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionResource.UpdateCore");
+            using var scope = _webSiteHybridConnectionWebAppsClientDiagnostics.CreateScope("WebSiteHybridConnectionResource.Update");
             scope.Start();
             try
             {

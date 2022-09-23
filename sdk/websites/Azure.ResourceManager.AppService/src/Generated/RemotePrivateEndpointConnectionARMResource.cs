@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -36,11 +37,10 @@ namespace Azure.ResourceManager.AppService
             {
                 return new SiteSlotPrivateEndpointConnectionResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: HostingEnvironmentPrivateEndpointConnectionResource, StaticSitePrivateEndpointConnectionResource, SitePrivateEndpointConnectionResource or SiteSlotPrivateEndpointConnectionResource");
         }
 
-        internal static bool IsHostingEnvironmentPrivateEndpointConnectionResource(ResourceIdentifier id)
+        private static bool IsHostingEnvironmentPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != HostingEnvironmentPrivateEndpointConnectionResource.ResourceType)
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsStaticSitePrivateEndpointConnectionResource(ResourceIdentifier id)
+        private static bool IsStaticSitePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != StaticSitePrivateEndpointConnectionResource.ResourceType)
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSitePrivateEndpointConnectionResource(ResourceIdentifier id)
+        private static bool IsSitePrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SitePrivateEndpointConnectionResource.ResourceType)
@@ -78,14 +78,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSiteSlotPrivateEndpointConnectionResource(ResourceIdentifier id)
+        private static bool IsSiteSlotPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteSlotPrivateEndpointConnectionResource.ResourceType)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

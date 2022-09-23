@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -28,11 +29,10 @@ namespace Azure.ResourceManager.AppService
             {
                 return new WebSiteSlotResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: WebSiteResource or WebSiteSlotResource");
         }
 
-        internal static bool IsWebSiteResource(ResourceIdentifier id)
+        private static bool IsWebSiteResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != WebSiteResource.ResourceType)
@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsWebSiteSlotResource(ResourceIdentifier id)
+        private static bool IsWebSiteSlotResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != WebSiteSlotResource.ResourceType)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

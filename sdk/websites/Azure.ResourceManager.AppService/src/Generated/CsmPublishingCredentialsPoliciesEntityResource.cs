@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -35,11 +36,10 @@ namespace Azure.ResourceManager.AppService
             {
                 return new ScmSiteSlotBasicPublishingCredentialsPolicyResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: WebSiteFtpPublishingCredentialsPolicyResource, ScmSiteBasicPublishingCredentialsPolicyResource, WebSiteSlotFtpPublishingCredentialsPolicyResource or ScmSiteSlotBasicPublishingCredentialsPolicyResource");
         }
 
-        internal static bool IsWebSiteFtpPublishingCredentialsPolicyResource(ResourceIdentifier id)
+        private static bool IsWebSiteFtpPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != WebSiteFtpPublishingCredentialsPolicyResource.ResourceType)
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        internal static bool IsScmSiteBasicPublishingCredentialsPolicyResource(ResourceIdentifier id)
+        private static bool IsScmSiteBasicPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != ScmSiteBasicPublishingCredentialsPolicyResource.ResourceType)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        internal static bool IsWebSiteSlotFtpPublishingCredentialsPolicyResource(ResourceIdentifier id)
+        private static bool IsWebSiteSlotFtpPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != WebSiteSlotFtpPublishingCredentialsPolicyResource.ResourceType)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppService
             return true;
         }
 
-        internal static bool IsScmSiteSlotBasicPublishingCredentialsPolicyResource(ResourceIdentifier id)
+        private static bool IsScmSiteSlotBasicPublishingCredentialsPolicyResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != ScmSiteSlotBasicPublishingCredentialsPolicyResource.ResourceType)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

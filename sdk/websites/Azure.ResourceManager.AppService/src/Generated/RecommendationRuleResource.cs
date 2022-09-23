@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.AppService
             {
                 return new SiteRecommendationResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: HostingEnvironmentRecommendationResource or SiteRecommendationResource");
         }
 
-        internal static bool IsHostingEnvironmentRecommendationResource(ResourceIdentifier id)
+        private static bool IsHostingEnvironmentRecommendationResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != HostingEnvironmentRecommendationResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsSiteRecommendationResource(ResourceIdentifier id)
+        private static bool IsSiteRecommendationResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteRecommendationResource.ResourceType)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

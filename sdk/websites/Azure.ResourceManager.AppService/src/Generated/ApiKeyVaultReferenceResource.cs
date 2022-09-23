@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -35,11 +36,10 @@ namespace Azure.ResourceManager.AppService
             {
                 return new WebSiteSlotConfigConnectionStringResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: SiteConfigAppsettingResource, WebSiteConfigConnectionStringResource, WebSiteSlotConfigAppSettingResource or WebSiteSlotConfigConnectionStringResource");
         }
 
-        internal static bool IsSiteConfigAppsettingResource(ResourceIdentifier id)
+        private static bool IsSiteConfigAppsettingResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != SiteConfigAppsettingResource.ResourceType)
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsWebSiteConfigConnectionStringResource(ResourceIdentifier id)
+        private static bool IsWebSiteConfigConnectionStringResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != WebSiteConfigConnectionStringResource.ResourceType)
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsWebSiteSlotConfigAppSettingResource(ResourceIdentifier id)
+        private static bool IsWebSiteSlotConfigAppSettingResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != WebSiteSlotConfigAppSettingResource.ResourceType)
@@ -77,14 +77,14 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsWebSiteSlotConfigConnectionStringResource(ResourceIdentifier id)
+        private static bool IsWebSiteSlotConfigConnectionStringResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != WebSiteSlotConfigConnectionStringResource.ResourceType)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

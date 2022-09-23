@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BackupItemResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupResource.GetCore");
+            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BackupItemResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupResource.GetCore");
+            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupResource.Get");
             scope.Start();
             try
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupResource.DeleteCore");
+            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupResource.Delete");
             scope.Start();
             try
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupResource.DeleteCore");
+            using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupResource.Delete");
             scope.Start();
             try
             {

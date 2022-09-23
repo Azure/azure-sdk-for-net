@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<WebSiteInstanceStatusResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotInstanceWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceResource.GetCore");
+            using var scope = _siteSlotInstanceWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceResource.Get");
             scope.Start();
             try
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<WebSiteInstanceStatusResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotInstanceWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceResource.GetCore");
+            using var scope = _siteSlotInstanceWebAppsClientDiagnostics.CreateScope("SiteSlotInstanceResource.Get");
             scope.Start();
             try
             {

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<ContinuousWebJobResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.GetCore");
+            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<ContinuousWebJobResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.GetCore");
+            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.Get");
             scope.Start();
             try
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.DeleteCore");
+            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.Delete");
             scope.Start();
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.DeleteCore");
+            using var scope = _webSiteSlotContinuousWebJobWebAppsClientDiagnostics.CreateScope("WebSiteSlotContinuousWebJobResource.Delete");
             scope.Start();
             try
             {

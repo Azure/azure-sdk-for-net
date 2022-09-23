@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<SwiftVirtualNetworkResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.GetCore");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<SwiftVirtualNetworkResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.GetCore");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.Get");
             scope.Start();
             try
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.DeleteCore");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.Delete");
             scope.Start();
             try
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.DeleteCore");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.Delete");
             scope.Start();
             try
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.UpdateCore");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.Update");
             scope.Start();
             try
             {
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.UpdateCore");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.Update");
             scope.Start();
             try
             {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.CreateOrUpdateCore");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.AppService
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.CreateOrUpdateCore");
+            using var scope = _siteNetworkConfigWebAppsClientDiagnostics.CreateScope("SiteNetworkConfigResource.CreateOrUpdate");
             scope.Start();
             try
             {

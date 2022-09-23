@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<WebJobResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteWebJobWebAppsClientDiagnostics.CreateScope("WebSiteWebJobResource.GetCore");
+            using var scope = _webSiteWebJobWebAppsClientDiagnostics.CreateScope("WebSiteWebJobResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<WebJobResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _webSiteWebJobWebAppsClientDiagnostics.CreateScope("WebSiteWebJobResource.GetCore");
+            using var scope = _webSiteWebJobWebAppsClientDiagnostics.CreateScope("WebSiteWebJobResource.Get");
             scope.Start();
             try
             {
