@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.IotHub
         internal static EventHubConsumerGroupInfoData DeserializeEventHubConsumerGroupInfoData(JsonElement element)
         {
             Optional<IReadOnlyDictionary<string, BinaryData>> properties = default;
-            Optional<ETag> etag = default;
+            Optional<ETag?> etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.IotHub
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        etag = null;
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());

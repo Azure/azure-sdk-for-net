@@ -11,17 +11,17 @@ namespace Azure.ResourceManager.Media.Models
     public partial class ContentKeyPolicyFairPlayOfflineRentalConfiguration
     {
         /// <summary> Initializes a new instance of ContentKeyPolicyFairPlayOfflineRentalConfiguration. </summary>
-        /// <param name="playbackDurationSeconds"> Playback duration. </param>
-        /// <param name="storageDurationSeconds"> Storage duration. </param>
-        public ContentKeyPolicyFairPlayOfflineRentalConfiguration(long playbackDurationSeconds, long storageDurationSeconds)
+        /// <param name="playbackDurationInSeconds"> Playback duration. </param>
+        /// <param name="storageDurationInSeconds"> Storage duration. </param>
+        public ContentKeyPolicyFairPlayOfflineRentalConfiguration(long playbackDurationInSeconds, long storageDurationInSeconds)
         {
-            PlaybackDurationSeconds = playbackDurationSeconds;
-            StorageDurationSeconds = storageDurationSeconds;
+            PlaybackDurationInSeconds = playbackDurationInSeconds;
+            StorageDurationInSeconds = storageDurationInSeconds;
         }
 
         /// <summary> Playback duration. </summary>
-        public long PlaybackDurationSeconds { get; set; }
+        public long PlaybackDurationInSeconds { get; set; }
         /// <summary> Storage duration. </summary>
-        public long StorageDurationSeconds { get; set; }
+        public long StorageDurationInSeconds { get; set; }
     }
 }

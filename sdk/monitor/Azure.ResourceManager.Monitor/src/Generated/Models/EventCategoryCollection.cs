@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of EventCategoryCollection. </summary>
         /// <param name="value"> the list that includes the Azure event categories. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal EventCategoryCollection(IEnumerable<LocalizableString> value)
+        internal EventCategoryCollection(IEnumerable<MonitorLocalizableString> value)
         {
             if (value == null)
             {
@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of EventCategoryCollection. </summary>
         /// <param name="value"> the list that includes the Azure event categories. </param>
-        internal EventCategoryCollection(IReadOnlyList<LocalizableString> value)
+        internal EventCategoryCollection(IReadOnlyList<MonitorLocalizableString> value)
         {
             Value = value;
         }
 
         /// <summary> the list that includes the Azure event categories. </summary>
-        public IReadOnlyList<LocalizableString> Value { get; }
+        public IReadOnlyList<MonitorLocalizableString> Value { get; }
     }
 }

@@ -617,25 +617,25 @@ namespace Azure.ResourceManager.EventHubs.Models
     public partial class EventHubsEncryption
     {
         public EventHubsEncryption() { }
-        public Azure.ResourceManager.EventHubs.Models.EventHubsEncryptionKeySource? KeySource { get { throw null; } set { } }
+        public Azure.ResourceManager.EventHubs.Models.EventHubsKeySource? KeySource { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EventHubs.Models.EventHubsKeyVaultProperties> KeyVaultProperties { get { throw null; } }
         public bool? RequireInfrastructureEncryption { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct EventHubsEncryptionKeySource : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsEncryptionKeySource>
+    public readonly partial struct EventHubsKeySource : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsKeySource>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public EventHubsEncryptionKeySource(string value) { throw null; }
-        public static Azure.ResourceManager.EventHubs.Models.EventHubsEncryptionKeySource MicrosoftKeyVault { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EventHubs.Models.EventHubsEncryptionKeySource other) { throw null; }
+        public EventHubsKeySource(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.EventHubsKeySource MicrosoftKeyVault { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.EventHubsKeySource other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.EventHubsEncryptionKeySource left, Azure.ResourceManager.EventHubs.Models.EventHubsEncryptionKeySource right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EventHubs.Models.EventHubsEncryptionKeySource (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsEncryptionKeySource left, Azure.ResourceManager.EventHubs.Models.EventHubsEncryptionKeySource right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.EventHubsKeySource left, Azure.ResourceManager.EventHubs.Models.EventHubsKeySource right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.EventHubsKeySource (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsKeySource left, Azure.ResourceManager.EventHubs.Models.EventHubsKeySource right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class EventHubsKeyVaultProperties

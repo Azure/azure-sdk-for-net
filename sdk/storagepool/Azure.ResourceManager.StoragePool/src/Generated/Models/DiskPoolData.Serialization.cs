@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.StoragePool
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            ProvisioningState provisioningState = default;
+            DiskPoolIscsiTargetProvisioningState provisioningState = default;
             IList<string> availabilityZones = default;
-            OperationalStatus status = default;
+            StoragePoolOperationalStatus status = default;
             Optional<IList<WritableSubResource>> disks = default;
-            string subnetId = default;
+            ResourceIdentifier subnetId = default;
             Optional<IList<string>> additionalCapabilities = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StoragePool
                     {
                         if (property0.NameEquals("provisioningState"))
                         {
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new DiskPoolIscsiTargetProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("availabilityZones"))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.StoragePool
                         }
                         if (property0.NameEquals("status"))
                         {
-                            status = new OperationalStatus(property0.Value.GetString());
+                            status = new StoragePoolOperationalStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("disks"))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.StoragePool
                         }
                         if (property0.NameEquals("subnetId"))
                         {
-                            subnetId = property0.Value.GetString();
+                            subnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("additionalCapabilities"))

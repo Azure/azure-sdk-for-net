@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="hubDatabasePassword"> Password for the sync group hub database credential. </param>
         /// <param name="syncState"> Sync state of the sync group. </param>
         /// <param name="schema"> Sync schema of the sync group. </param>
-        /// <param name="enableConflictLogging"> If conflict logging is enabled. </param>
+        /// <param name="isConflictLoggingEnabled"> If conflict logging is enabled. </param>
         /// <param name="conflictLoggingRetentionInDays"> Conflict logging retention period. </param>
         /// <param name="usePrivateLinkConnection"> If use private link connection is enabled. </param>
         /// <param name="privateEndpointName"> Private endpoint name of the sync group if use private link connection is enabled. </param>
-        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlSku sku, int? interval, DateTimeOffset? lastSyncOn, SyncConflictResolutionPolicy? conflictResolutionPolicy, ResourceIdentifier syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? enableConflictLogging, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName) : base(id, name, resourceType, systemData)
+        internal SyncGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SqlSku sku, int? interval, DateTimeOffset? lastSyncOn, SyncConflictResolutionPolicy? conflictResolutionPolicy, ResourceIdentifier syncDatabaseId, string hubDatabaseUserName, string hubDatabasePassword, SyncGroupState? syncState, SyncGroupSchema schema, bool? isConflictLoggingEnabled, int? conflictLoggingRetentionInDays, bool? usePrivateLinkConnection, string privateEndpointName) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             Interval = interval;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Sql
             HubDatabasePassword = hubDatabasePassword;
             SyncState = syncState;
             Schema = schema;
-            EnableConflictLogging = enableConflictLogging;
+            IsConflictLoggingEnabled = isConflictLoggingEnabled;
             ConflictLoggingRetentionInDays = conflictLoggingRetentionInDays;
             UsePrivateLinkConnection = usePrivateLinkConnection;
             PrivateEndpointName = privateEndpointName;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Sync schema of the sync group. </summary>
         public SyncGroupSchema Schema { get; set; }
         /// <summary> If conflict logging is enabled. </summary>
-        public bool? EnableConflictLogging { get; set; }
+        public bool? IsConflictLoggingEnabled { get; set; }
         /// <summary> Conflict logging retention period. </summary>
         public int? ConflictLoggingRetentionInDays { get; set; }
         /// <summary> If use private link connection is enabled. </summary>

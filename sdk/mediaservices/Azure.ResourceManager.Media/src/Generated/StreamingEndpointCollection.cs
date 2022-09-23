@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Media
 {
     /// <summary>
     /// A class representing a collection of <see cref="StreamingEndpointResource" /> and their operations.
-    /// Each <see cref="StreamingEndpointResource" /> in the collection will belong to the same instance of <see cref="MediaserviceResource" />.
-    /// To get a <see cref="StreamingEndpointCollection" /> instance call the GetStreamingEndpoints method from an instance of <see cref="MediaserviceResource" />.
+    /// Each <see cref="StreamingEndpointResource" /> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource" />.
+    /// To get a <see cref="StreamingEndpointCollection" /> instance call the GetStreamingEndpoints method from an instance of <see cref="MediaServicesAccountResource" />.
     /// </summary>
     public partial class StreamingEndpointCollection : ArmCollection, IEnumerable<StreamingEndpointResource>, IAsyncEnumerable<StreamingEndpointResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Media
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != MediaserviceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MediaserviceResource.ResourceType), nameof(id));
+            if (id.ResourceType != MediaServicesAccountResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, MediaServicesAccountResource.ResourceType), nameof(id));
         }
 
         /// <summary>

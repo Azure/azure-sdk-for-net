@@ -1,6 +1,52 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2022-09-05)
+
+This is the first stable release of the Notification Hubs Management client library.
+
+### Other Changes
+
+- Optimized the implementation of methods related to tag operations.
+
+## 1.0.0-beta.2 (2022-08-29)
+
+Polishing since last public beta release:
+- Prepended `NotificationHubs` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ETag` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the format of all binary type properties / parameters.
+- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters which end with units.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.0
+
+## 1.0.0-beta.1 (2022-07-12)
+
+### Breaking Changes
+
+New design of track 2 initial commit.
+
+### Package Name
+
+The package name has been changed from `Microsoft.Azure.Management.NotificationHubs` to `Azure.ResourceManager.NotificationHubs`.
 
 ### General New Features
 

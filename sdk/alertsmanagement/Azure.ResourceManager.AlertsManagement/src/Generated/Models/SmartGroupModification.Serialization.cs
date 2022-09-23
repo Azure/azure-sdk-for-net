@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,38 +16,33 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("properties");
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Modifications))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("modifications");
-                writer.WriteStartArray();
-                foreach (var item in Modifications)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("properties");
+                writer.WriteObjectValue(Properties);
             }
-            if (Optional.IsDefined(NextLink))
-            {
-                writer.WritePropertyName("nextLink");
-                writer.WriteStringValue(NextLink);
-            }
-            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
         internal static SmartGroupModification DeserializeSmartGroupModification(JsonElement element)
         {
+            Optional<SmartGroupModificationProperties> properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> smartGroupId = default;
-            Optional<IList<SmartGroupModificationItemData>> modifications = default;
-            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    properties = SmartGroupModificationProperties.DeserializeSmartGroupModificationProperties(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("id"))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -74,45 +68,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
                     continue;
                 }
-                if (property.NameEquals("properties"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("smartGroupId"))
-                        {
-                            smartGroupId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("modifications"))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            List<SmartGroupModificationItemData> array = new List<SmartGroupModificationItemData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(SmartGroupModificationItemData.DeserializeSmartGroupModificationItemData(item));
-                            }
-                            modifications = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("nextLink"))
-                        {
-                            nextLink = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
             }
-            return new SmartGroupModification(id, name, type, systemData.Value, smartGroupId.Value, Optional.ToList(modifications), nextLink.Value);
+            return new SmartGroupModification(id, name, type, systemData.Value, properties.Value);
         }
     }
 }

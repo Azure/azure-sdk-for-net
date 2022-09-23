@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("refreshToken");
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Optional.IsDefined(ExpirationOn))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime");
-                writer.WriteStringValue(ExpirationOn.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

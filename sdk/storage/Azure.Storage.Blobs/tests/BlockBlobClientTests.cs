@@ -284,7 +284,10 @@ namespace Azure.Storage.Blobs.Test
                 blockBlobClient.StageBlockAsync(
                     base64BlockId: string.Empty,
                     content: new MemoryStream(),
-                    conditions: conditions),
+                    options: new BlockBlobStageBlockOptions
+                    {
+                        Conditions = conditions
+                    }),
                 e =>
                 {
                     Assert.IsTrue(e.Message.Contains($"StageBlock does not support the {invalidCondition} condition(s)."));
@@ -374,9 +377,12 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlockInfo> response = await blob.StageBlockAsync(
                     base64BlockId: ToBase64(GetNewBlockName()),
                     content: stream,
-                    conditions: new BlobRequestConditions
+                    options: new BlockBlobStageBlockOptions
                     {
-                        LeaseId = leaseId
+                        Conditions = new BlobRequestConditions
+                        {
+                            LeaseId = leaseId
+                        }
                     });
 
                 // Assert
@@ -407,9 +413,12 @@ namespace Azure.Storage.Blobs.Test
                     blob.StageBlockAsync(
                         base64BlockId: ToBase64(GetNewBlockName()),
                         content: stream,
-                        conditions: new BlobRequestConditions
+                        options: new BlockBlobStageBlockOptions
                         {
-                            LeaseId = garbageLeaseId
+                            Conditions = new BlobRequestConditions
+                            {
+                                LeaseId = garbageLeaseId
+                            }
                         }),
                     e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
             }
@@ -446,7 +455,7 @@ namespace Azure.Storage.Blobs.Test
                 new IOException("Simulated stream fault"),
                 () => timesFaulted++))
             {
-                await blobFaulty.StageBlockAsync(ToBase64(blockName), stream, null, null, progressHandler: progressHandler);
+                await blobFaulty.StageBlockAsync(ToBase64(blockName), stream, null, null, progressHandler: progressHandler, default);
 
                 await WaitForProgressAsync(progressBag, data.LongLength);
                 Assert.IsTrue(progressBag.Count > 1, "Too few progress received");
@@ -509,7 +518,10 @@ namespace Azure.Storage.Blobs.Test
                 Response<BlockInfo> response = await blob.StageBlockAsync(
                     base64BlockId: ToBase64(GetNewBlockName()),
                     content: stream,
-                    progressHandler: progress);
+                    options: new BlockBlobStageBlockOptions
+                    {
+                        ProgressHandler = progress
+                    });
             }
 
             // Assert

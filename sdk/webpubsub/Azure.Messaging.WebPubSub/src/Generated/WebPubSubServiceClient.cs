@@ -14,6 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.WebPubSub
 {
+    // Data plane generated client. The WebPubSubService service client.
     /// <summary> The WebPubSubService service client. </summary>
     public partial class WebPubSubServiceClient
     {
@@ -40,6 +41,26 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GenerateClientTokenImplAsync and parse the result.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.GenerateClientTokenImplAsync();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GenerateClientTokenImplAsync with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.GenerateClientTokenImplAsync("<userId>", new String[]{"<role>"}, 1234);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("token").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -75,6 +96,26 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call GenerateClientTokenImpl and parse the result.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.GenerateClientTokenImpl();
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call GenerateClientTokenImpl with all parameters, and how to parse the result.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.GenerateClientTokenImpl("<userId>", new String[]{"<role>"}, 1234);
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("token").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
         /// 
@@ -109,6 +150,22 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call CloseAllConnectionsAsync.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.CloseAllConnectionsAsync();
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call CloseAllConnectionsAsync with all parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.CloseAllConnectionsAsync(new String[]{"<excluded>"}, "<reason>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> CloseAllConnectionsAsync(IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
@@ -131,6 +188,22 @@ namespace Azure.Messaging.WebPubSub
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call CloseAllConnections.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.CloseAllConnections();
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call CloseAllConnections with all parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.CloseAllConnections(new String[]{"<excluded>"}, "<reason>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response CloseAllConnections(IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.CloseAllConnections");
@@ -155,6 +228,26 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call SendToAllAsync with required parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = await client.SendToAllAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call SendToAllAsync with all parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = await client.SendToAllAsync(RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"<excluded>"});
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> SendToAllAsync(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -181,6 +274,26 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call SendToAll with required parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = client.SendToAll(RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call SendToAll with all parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = client.SendToAll(RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"<excluded>"});
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response SendToAll(RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -206,6 +319,15 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call ConnectionExistsImplAsync with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.ConnectionExistsImplAsync("<connectionId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         internal virtual async Task<Response> ConnectionExistsImplAsync(string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -231,6 +353,15 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call ConnectionExistsImpl with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.ConnectionExistsImpl("<connectionId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         internal virtual Response ConnectionExistsImpl(string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -257,6 +388,22 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call CloseConnectionAsync with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.CloseConnectionAsync("<connectionId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call CloseConnectionAsync with all parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.CloseConnectionAsync("<connectionId>", "<reason>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> CloseConnectionAsync(string connectionId, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -283,6 +430,22 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call CloseConnection with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.CloseConnection("<connectionId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call CloseConnection with all parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.CloseConnection("<connectionId>", "<reason>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response CloseConnection(string connectionId, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -310,6 +473,17 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call SendToConnectionAsync with required parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = await client.SendToConnectionAsync("<connectionId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> SendToConnectionAsync(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -338,6 +512,17 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call SendToConnection with required parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = client.SendToConnection("<connectionId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response SendToConnection(string connectionId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(connectionId, nameof(connectionId));
@@ -364,6 +549,15 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call GroupExistsImplAsync with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.GroupExistsImplAsync("<group>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         internal virtual async Task<Response> GroupExistsImplAsync(string group, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -389,6 +583,15 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call GroupExistsImpl with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.GroupExistsImpl("<group>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         internal virtual Response GroupExistsImpl(string group, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -416,6 +619,22 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call CloseGroupConnectionsAsync with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.CloseGroupConnectionsAsync("<group>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call CloseGroupConnectionsAsync with all parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.CloseGroupConnectionsAsync("<group>", new String[]{"<excluded>"}, "<reason>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> CloseGroupConnectionsAsync(string group, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -443,6 +662,22 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call CloseGroupConnections with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.CloseGroupConnections("<group>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call CloseGroupConnections with all parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.CloseGroupConnections("<group>", new String[]{"<excluded>"}, "<reason>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response CloseGroupConnections(string group, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -471,6 +706,26 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call SendToGroupAsync with required parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = await client.SendToGroupAsync("<group>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call SendToGroupAsync with all parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = await client.SendToGroupAsync("<group>", RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"<excluded>"});
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> SendToGroupAsync(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -500,6 +755,26 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call SendToGroup with required parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = client.SendToGroup("<group>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call SendToGroup with all parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = client.SendToGroup("<group>", RequestContent.Create(data), ContentType.ApplicationOctetStream, new String[]{"<excluded>"});
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response SendToGroup(string group, RequestContent content, ContentType contentType, IEnumerable<string> excluded = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -527,6 +802,15 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call AddConnectionToGroupAsync with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.AddConnectionToGroupAsync("<group>", "<connectionId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> AddConnectionToGroupAsync(string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -554,6 +838,15 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call AddConnectionToGroup with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.AddConnectionToGroup("<group>", "<connectionId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response AddConnectionToGroup(string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -581,6 +874,15 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call RemoveConnectionFromGroupAsync with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.RemoveConnectionFromGroupAsync("<group>", "<connectionId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> RemoveConnectionFromGroupAsync(string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -608,6 +910,15 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="group"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call RemoveConnectionFromGroup with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.RemoveConnectionFromGroup("<group>", "<connectionId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response RemoveConnectionFromGroup(string group, string connectionId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(group, nameof(group));
@@ -634,6 +945,15 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call UserExistsImplAsync with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.UserExistsImplAsync("<userId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         internal virtual async Task<Response> UserExistsImplAsync(string userId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -659,6 +979,15 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call UserExistsImpl with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.UserExistsImpl("<userId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         internal virtual Response UserExistsImpl(string userId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -686,6 +1015,22 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call CloseUserConnectionsAsync with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.CloseUserConnectionsAsync("<userId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call CloseUserConnectionsAsync with all parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.CloseUserConnectionsAsync("<userId>", new String[]{"<excluded>"}, "<reason>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> CloseUserConnectionsAsync(string userId, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -713,6 +1058,22 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call CloseUserConnections with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.CloseUserConnections("<userId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call CloseUserConnections with all parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.CloseUserConnections("<userId>", new String[]{"<excluded>"}, "<reason>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response CloseUserConnections(string userId, IEnumerable<string> excluded = null, string reason = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -740,6 +1101,17 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call SendToUserAsync with required parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = await client.SendToUserAsync("<userId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> SendToUserAsync(string userId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -768,6 +1140,17 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call SendToUser with required parameters and request content.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// var data = File.OpenRead("<filePath>");
+        /// 
+        /// Response response = client.SendToUser("<userId>", RequestContent.Create(data), ContentType.ApplicationOctetStream);
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response SendToUser(string userId, RequestContent content, ContentType contentType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -794,6 +1177,15 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call RemoveUserFromAllGroupsAsync with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.RemoveUserFromAllGroupsAsync("<userId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual async Task<Response> RemoveUserFromAllGroupsAsync(string userId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -819,6 +1211,15 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="userId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call RemoveUserFromAllGroups with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.RemoveUserFromAllGroups("<userId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         public virtual Response RemoveUserFromAllGroups(string userId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
@@ -846,6 +1247,22 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call GrantPermissionAsync with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.GrantPermissionAsync("<permission>", "<connectionId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call GrantPermissionAsync with all parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.GrantPermissionAsync("<permission>", "<connectionId>", "<targetName>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         internal virtual async Task<Response> GrantPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -874,6 +1291,22 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call GrantPermission with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.GrantPermission("<permission>", "<connectionId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call GrantPermission with all parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.GrantPermission("<permission>", "<connectionId>", "<targetName>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         internal virtual Response GrantPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -902,6 +1335,22 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call RevokePermissionAsync with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.RevokePermissionAsync("<permission>", "<connectionId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call RevokePermissionAsync with all parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.RevokePermissionAsync("<permission>", "<connectionId>", "<targetName>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         internal virtual async Task<Response> RevokePermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -930,6 +1379,22 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call RevokePermission with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.RevokePermission("<permission>", "<connectionId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call RevokePermission with all parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.RevokePermission("<permission>", "<connectionId>", "<targetName>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         internal virtual Response RevokePermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -958,6 +1423,22 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call CheckPermissionAsync with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.CheckPermissionAsync("<permission>", "<connectionId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call CheckPermissionAsync with all parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = await client.CheckPermissionAsync("<permission>", "<connectionId>", "<targetName>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         internal virtual async Task<Response> CheckPermissionAsync(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));
@@ -986,6 +1467,22 @@ namespace Azure.Messaging.WebPubSub
         /// <exception cref="ArgumentException"> <paramref name="permission"/> or <paramref name="connectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
+        /// <example>
+        /// This sample shows how to call CheckPermission with required parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.CheckPermission("<permission>", "<connectionId>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// This sample shows how to call CheckPermission with all parameters.
+        /// <code><![CDATA[
+        /// var client = new WebPubSubServiceClient("<https://my-service.azure.com>", "<hub>");
+        /// 
+        /// Response response = client.CheckPermission("<permission>", "<connectionId>", "<targetName>");
+        /// Console.WriteLine(response.Status);
+        /// ]]></code>
+        /// </example>
         internal virtual Response CheckPermission(string permission, string connectionId, string targetName = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(permission, nameof(permission));

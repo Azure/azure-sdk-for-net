@@ -51,12 +51,14 @@ namespace Azure.Storage.Blobs.Models
         public Tags Tags { get; set; }
 #pragma warning restore CA2227 // Collection properties should be readonly
 
-        ///// <summary>
-        ///// Optional <see cref="UploadTransactionalHashingOptions"/> for using transactional
-        ///// hashing on uploads.
-        ///// </summary>
-        // TODO #27253
-        //public UploadTransactionalHashingOptions TransactionalHashingOptions { get; set; }
+        /// <summary>
+        /// Options for transfer validation settings on this operation.
+        /// When transfer validation options are set in the client, setting this parameter
+        /// acts as an override.
+        /// This operation does not allow <see cref="UploadTransferValidationOptions.PrecalculatedChecksum"/>
+        /// to be set.
+        /// </summary>
+        public UploadTransferValidationOptions TransferValidationOptions { get; set; }
     }
 
     internal static class BlobOpenWriteOptionsExtensions
@@ -70,8 +72,7 @@ namespace Azure.Storage.Blobs.Models
                 HttpHeaders = options.HttpHeaders,
                 Metadata = options.Metadata,
                 Tags = options.Tags,
-                // TODO #27253
-                //TransactionalHashingOptions = options.TransactionalHashingOptions,
+                TransferValidationOptions = options.TransferValidationOptions,
                 OperationName = $"{nameof(BlobClient)}.{nameof(BlockBlobClient.OpenWrite)}"
             };
     }

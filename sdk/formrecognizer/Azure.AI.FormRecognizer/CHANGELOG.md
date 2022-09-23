@@ -1,20 +1,82 @@
 # Release History
 
-## 4.0.0-beta.5 (Unreleased)
+## 4.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
-- Renamed method `StartCreateComposedModel` to `StartComposeModel`.
-- Renamed `BuildModelOptions.ModelDescription` to `Description`.
-- Renamed `modelDescription` parameters to `description` in methods `GetCopyAuthorization` and `StartCreateComposedModel` (now called `StartComposeModel`).
-- Renamed `CopyAuthorization.ExpirationDateTime` to `ExpiresOn`.
-- Renamed `DocumentModelInfo` to `DocumentModelSummary`.
-- Removed `DocumentCaption` and `DocumentFootnote` features.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.0.0 (2022-09-08)
+
+### Features Added
+- Added `GetWords` method to `DocumentLine`. It can be used to split the line into separate `DocumentWord` instances.
+- Added derived classes to `DocumentModelOperationDetails` for each kind of operation: `DocumentModelBuildOperationDetails`, `DocumentModelCopyToOperationDetails`, and `DocumentModelComposeOperationDetails`.
+- Added `DocumentField.ExpectedFieldType` property.
+
+### Breaking Changes
+- The `DocumentAnalysisClient` and `DocumentModelAdministrationClient` now target the service version `2022-08-31`, so they don't support `2020-06-30-preview` anymore.
+- Renamed `DocumentModelAdministrationClient` methods to use the term `DocumentModel` instead of `Model` only. For example, `BuildModel` and `GetModels` became `BuildDocumentModel` and `GetDocumentModels`.
+  - Similarly, `Operation` types have been renamed to reflect this change. For example, `ComposeModelOperation` became `ComposeDocumentModelOperation`.
+  - As a consequence, `BuildModelOptions` has been renamed to `BuildDocumentModelOptions`.
+- Removed the `BoundingPolygon` type. All `BoundingPolygon` properties are now of type `IReadOnlyList<PointF>`.
+- Moved all `DocumentField` conversion methods, such as `AsDate` and `AsString`, to the new `DocumentFieldValue` class. They can be accessed from the `DocumentField.Value` property.
+- `DocumentField.ValueType` (now called `FieldType`) can now be `Unknown` when the field value couldn't be parsed by the service. In this case, `DocumentField.Content` can be used to get a textual representation of the field.
+- Updated `DocumentField.AsDate` to return a `DateTimeOffset` instead of a `DateTime`.
+- Renamed classes `DocumentModelOperationDetails` and `DocumentModelOperationSummary` to `OperationDetails` and `OperationSummary`, respectively.
+- Moved property `Result` in `DocumentModelOperationDetails` (now called `OperationDetails`) to each of its new derived classes. The property can't be accessed from the base class anymore.
+- Renamed class `DocTypeInfo` to `DocumentTypeDetails`.
+- Renamed property `Offset` to `Index` in the `DocumentSpan` class.
+- Renamed property `DocType` to `DocumentType` in the `AnalyzedDocument` class.
+- Renamed property `DocTypes` to `DocumentTypes` in the `DocumentModelDetails` class.
+- Renamed properties `DocumentModelCount` and `DocumentModelLimit` to `CustomDocumentModelCount` and `CustomDocumentModelLimit` in the `ResourceDetails` class.
+- Removed property `BuildModelOptions.Prefix`. The prefix must now be set with the `prefix` parameter in the method `BuildModel`.
+- Removed class `DocumentPageKind` and related properties.
+- Made `BoundingRegion` a `struct` instead of a `class`.
+- `BoundingRegion` now implements the `IEquatable<BoundingRegion>` interface.
+- Overrode `BoundingRegion.ToString` to include information about its page number and its bounding polygon in its string representation.
+- `DocumentSpan` now implements the `IEquatable<DocumentSpan>` interface.
+- Overrode `DocumentSpan.ToString` to include information about its index and its length in its string representation.
+- Renamed `LengthUnit` to `DocumentPageLengthUnit`. This change only affects the type defined in the `DocumentAnalysis` namespace.
+- Renamed `SelectionMarkState` to `DocumentSelectionMarkState`. This change only affects the type defined in the `DocumentAnalysis` namespace.
+- Renamed `CopyAuthorization` to `DocumentModelCopyAuthorization`. This change only affects the type defined in the `DocumentAnalysis` namespace.
+
+## 4.0.0-beta.5 (2022-08-09)
+
+### Features Added
+- Added `Length` property to `BoundingPolygon`.
+- Added a public constructor to `CopyAuthorization`.
+- Added properties `AccessToken` and `TargetResourceId` to `CopyAuthorization`.
+
+### Breaking Changes
+- Updated all long-running operation client methods to a new pattern. This affects `StartAnalyzeDocument`, `StartAnalyzeDocumentFromUri`, `StartBuildModel`, `StartCopyModelTo`, and `StartCreateComposedModel` methods. Changes are:
+  - Removed the "Start" prefix. For example, `StartAnalyzeDocument` was renamed to `AnalyzeDocument`.
+  - Added a new required parameter: `waitUntil`. It specifies whether the operation should run to completion before returning or not, removing the need to call `WaitForCompletion` in most scenarios.
+- Updated `DocumentModelInfo` and `DocumentModel`:
+  - Renamed them to `DocumentModelSummary` and `DocumentModelDetails`, respectively.
+  - Removed the inheritance between them.
+- Updated `ModelOperationInfo` and `ModelOperation`:
+  - Renamed them to `DocumentModelOperationSummary` and `DocumentModelOperationDetails`, respectively.
+  - Removed the inheritance between them.
+  - Updated `ResourceLocation` to be a `Uri` in both.
+- Renamed `AccountProperties` to `ResourceDetails`.
+- Renamed method `GetAccountProperties` to `GetResourceDetails`.
+- Renamed method `StartCreateComposedModel` to `ComposeModel`.
+- Renamed `BuildModelOptions.ModelDescription` to `Description`.
+- Renamed `modelDescription` parameters to `description` in methods `GetCopyAuthorization` and `StartCreateComposedModel` (now called `ComposeModel`).
+- Renamed `CopyAuthorization.ExpirationDateTime` to `ExpiresOn`.
+- Removed `DocumentCaption` and `DocumentFootnote` features.
+- Updated the return type of `StartCreateComposedModel` (now called `ComposeModel`) to a `ComposeModelOperation`.
+- Renamed class `CopyModelOperation` to `CopyModelToOperation`.
+- Renamed parameter `analyzeDocumentOptions` to `options` in the `StartAnalyzeDocument` and `StartAnalyzeDocumentFromUri` methods (now called `AnalyzeDocument` and `AnalyzeDocumentFromUri`).
+- Renamed parameter `buildModelOptions` to `options` in the `StartBuildModel` method (now called `BuildModel`).
+- `FormRecognizerClientOptions.Audience` and `DocumentAnalysisClientOptions.Audience` now default to `null`.
+- In the `DocumentAnalysis` namespace, `CopyModelOperation.PercentCompleted` and `BuildModelOperation.PercentCompleted` now throw an `InvalidOperationException` if called before a call to `UpdateStatus`.
+- Updated `CopyAuthorization.TargetModelLocation` to be a `Uri` instead of `string`.
+- Removed method `DocumentAnalysisModelFactory.CopyAuthorization`.
 
 ## 4.0.0-beta.4 (2022-06-08)
 

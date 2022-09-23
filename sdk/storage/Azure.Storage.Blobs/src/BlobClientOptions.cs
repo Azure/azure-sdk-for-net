@@ -96,7 +96,12 @@ namespace Azure.Storage.Blobs
             /// <summary>
             /// The 2021-08-06 service version.
             /// </summary>
-            V2021_08_06 = 13
+            V2021_08_06 = 13,
+
+            /// <summary>
+            /// The 2021-10-04 service version.
+            /// </summary>
+            V2021_10_04 = 14
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -129,6 +134,26 @@ namespace Azure.Storage.Blobs
         /// between primary and secondary Uri.
         /// </summary>
         public Uri GeoRedundantSecondaryUri { get; set; }
+
+        /// <summary>
+        /// Strategy to take when sending requests and retries between primary and secondary endpoints.
+        /// Ignored when <see cref="GeoRedundantSecondaryUri"/> is not set.
+        /// Defaults to <see cref="GeoRedundantReadMode.PrimaryThenSecondary"/>.
+        /// </summary>
+        public GeoRedundantReadMode GeoRedundantReadMode { get; set; }
+
+        /// <summary>
+        /// Configures whether to send or receive checksum headers for blob uploads and downloads. Downloads
+        /// can optionally validate that the content matches the checksum.
+        /// </summary>
+        public TransferValidationOptions TransferValidation { get; } = new();
+
+        /// <summary>
+        /// Whether to preserve leading and trailing slashes on a blob name when using
+        /// <see cref="BlobContainerClient.GetBlobClient(string)"/> and similar methods.
+        /// Defaults to false for backwards compatibility.
+        /// </summary>
+        public bool PreserveBlobNameSlashes { get; set; }
 
         #region Advanced Options
         internal ClientSideEncryptionOptions _clientSideEncryptionOptions;
@@ -281,7 +306,7 @@ namespace Azure.Storage.Blobs
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(HttpPipelinePolicy authentication = null)
         {
-            return this.Build(authentication, GeoRedundantSecondaryUri);
+            return this.Build(authentication, GeoRedundantSecondaryUri, GeoRedundantReadMode);
         }
 
         /// <summary>
@@ -291,7 +316,7 @@ namespace Azure.Storage.Blobs
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
         internal HttpPipeline Build(object credentials)
         {
-            return this.Build(credentials, GeoRedundantSecondaryUri);
+            return this.Build(credentials, GeoRedundantSecondaryUri, GeoRedundantReadMode);
         }
 
         /// <inheritdoc />

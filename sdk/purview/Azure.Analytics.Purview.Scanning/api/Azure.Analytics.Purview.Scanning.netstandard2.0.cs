@@ -103,10 +103,10 @@ namespace Azure.Analytics.Purview.Scanning
     }
     public partial class PurviewScanningServiceClientOptions : Azure.Core.ClientOptions
     {
-        public PurviewScanningServiceClientOptions(Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion version = Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion.V2018_12_01_preview) { }
+        public PurviewScanningServiceClientOptions(Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion version = Azure.Analytics.Purview.Scanning.PurviewScanningServiceClientOptions.ServiceVersion.V2018_12_01_Preview) { }
         public enum ServiceVersion
         {
-            V2018_12_01_preview = 1,
+            V2018_12_01_Preview = 1,
         }
     }
 }

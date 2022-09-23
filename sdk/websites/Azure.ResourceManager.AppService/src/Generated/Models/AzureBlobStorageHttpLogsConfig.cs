@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// Remove blobs older than X days.
         /// 0 or lower means no retention.
         /// </param>
-        /// <param name="enabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
-        internal AzureBlobStorageHttpLogsConfig(Uri sasUri, int? retentionInDays, bool? enabled)
+        /// <param name="isEnabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
+        internal AzureBlobStorageHttpLogsConfig(Uri sasUri, int? retentionInDays, bool? isEnabled)
         {
             SasUri = sasUri;
             RetentionInDays = retentionInDays;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
         }
 
         /// <summary> SAS url to a azure blob container with read/write/list/delete permissions. </summary>
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public int? RetentionInDays { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
     }
 }

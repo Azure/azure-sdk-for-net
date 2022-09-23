@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<IList<ServerInfo>> groupMembers = default;
+            Optional<IList<ServerTrustGroupServerInfo>> groupMembers = default;
             Optional<IList<ServerTrustGroupPropertiesTrustScopesItem>> trustScopes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -95,10 +95,10 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<ServerInfo> array = new List<ServerInfo>();
+                            List<ServerTrustGroupServerInfo> array = new List<ServerTrustGroupServerInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServerInfo.DeserializeServerInfo(item));
+                                array.Add(ServerTrustGroupServerInfo.DeserializeServerTrustGroupServerInfo(item));
                             }
                             groupMembers = array;
                             continue;

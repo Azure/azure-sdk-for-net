@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics;
         private readonly JobTargetExecutionsRestOperations _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient;
-        private readonly JobExecutionData _data;
+        private readonly SqlServerJobExecutionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SqlServerJobExecutionStepTargetResource"/> class for mocking. </summary>
         protected SqlServerJobExecutionStepTargetResource()
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of the <see cref = "SqlServerJobExecutionStepTargetResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SqlServerJobExecutionStepTargetResource(ArmClient client, JobExecutionData data) : this(client, data.Id)
+        internal SqlServerJobExecutionStepTargetResource(ArmClient client, SqlServerJobExecutionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual JobExecutionData Data
+        public virtual SqlServerJobExecutionData Data
         {
             get
             {

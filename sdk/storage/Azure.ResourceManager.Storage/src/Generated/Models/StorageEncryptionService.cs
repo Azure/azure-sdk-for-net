@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <param name="isEnabled"> A boolean indicating whether or not the service encrypts the data as it is stored. Encryption at rest is enabled by default today and cannot be disabled. </param>
         /// <param name="lastEnabledOn"> Gets a rough estimate of the date/time when the encryption was last enabled by the user. Data is encrypted at rest by default today and cannot be disabled. </param>
         /// <param name="keyType"> Encryption key type to be used for the encryption service. &apos;Account&apos; key type implies that an account-scoped encryption key will be used. &apos;Service&apos; key type implies that a default service key is used. </param>
-        internal StorageEncryptionService(bool? isEnabled, DateTimeOffset? lastEnabledOn, StorageKeyType? keyType)
+        internal StorageEncryptionService(bool? isEnabled, DateTimeOffset? lastEnabledOn, StorageEncryptionKeyType? keyType)
         {
             IsEnabled = isEnabled;
             LastEnabledOn = lastEnabledOn;
@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Gets a rough estimate of the date/time when the encryption was last enabled by the user. Data is encrypted at rest by default today and cannot be disabled. </summary>
         public DateTimeOffset? LastEnabledOn { get; }
         /// <summary> Encryption key type to be used for the encryption service. &apos;Account&apos; key type implies that an account-scoped encryption key will be used. &apos;Service&apos; key type implies that a default service key is used. </summary>
-        public StorageKeyType? KeyType { get; set; }
+        public StorageEncryptionKeyType? KeyType { get; set; }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
 
         internal static VirtualWorkspaceData DeserializeVirtualWorkspaceData(JsonElement element)
         {
-            Optional<string> managedBy = default;
+            Optional<ResourceIdentifier> managedBy = default;
             Optional<string> kind = default;
             Optional<ETag> etag = default;
-            Optional<ResourceModelWithAllowedPropertySetIdentity> identity = default;
-            Optional<ResourceModelWithAllowedPropertySetSku> sku = default;
+            Optional<ManagedServiceIdentity> identity = default;
+            Optional<DesktopVirtualizationSku> sku = default;
             Optional<ArmPlan> plan = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -101,12 +101,17 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> description = default;
             Optional<string> friendlyName = default;
             Optional<IList<string>> applicationGroupReferences = default;
-            Optional<bool> cloudPcResource = default;
+            Optional<bool> cloudPCResource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"))
                 {
-                    managedBy = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    managedBy = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("kind"))
@@ -131,7 +136,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = ResourceModelWithAllowedPropertySetIdentity.DeserializeResourceModelWithAllowedPropertySetIdentity(property.Value);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("sku"))
@@ -141,7 +146,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ResourceModelWithAllowedPropertySetSku.DeserializeResourceModelWithAllowedPropertySetSku(property.Value);
+                    sku = DesktopVirtualizationSku.DeserializeDesktopVirtualizationSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("plan"))
@@ -245,14 +250,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            cloudPcResource = property0.Value.GetBoolean();
+                            cloudPCResource = property0.Value.GetBoolean();
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new VirtualWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, Optional.ToList(applicationGroupReferences), Optional.ToNullable(cloudPcResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity.Value, sku.Value, plan);
+            return new VirtualWorkspaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, Optional.ToList(applicationGroupReferences), Optional.ToNullable(cloudPCResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
         }
     }
 }

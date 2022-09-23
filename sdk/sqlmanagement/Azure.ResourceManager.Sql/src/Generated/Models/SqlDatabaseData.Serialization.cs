@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("catalogCollation");
                 writer.WriteStringValue(CatalogCollation.Value.ToString());
             }
-            if (Optional.IsDefined(ZoneRedundant))
+            if (Optional.IsDefined(IsZoneRedundant))
             {
                 writer.WritePropertyName("zoneRedundant");
-                writer.WriteBooleanValue(ZoneRedundant.Value);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (Optional.IsDefined(LicenseType))
             {
@@ -185,19 +185,19 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<CreateMode> createMode = default;
+            Optional<SqlDatabaseCreateMode> createMode = default;
             Optional<string> collation = default;
             Optional<long> maxSizeBytes = default;
             Optional<SampleSchemaName> sampleName = default;
             Optional<ResourceIdentifier> elasticPoolId = default;
             Optional<ResourceIdentifier> sourceDatabaseId = default;
-            Optional<DatabaseStatus> status = default;
+            Optional<SqlDatabaseStatus> status = default;
             Optional<Guid> databaseId = default;
             Optional<DateTimeOffset> creationDate = default;
             Optional<string> currentServiceObjectiveName = default;
             Optional<string> requestedServiceObjectiveName = default;
             Optional<AzureLocation> defaultSecondaryLocation = default;
-            Optional<string> failoverGroupId = default;
+            Optional<ResourceIdentifier> failoverGroupId = default;
             Optional<DateTimeOffset> restorePointInTime = default;
             Optional<DateTimeOffset> sourceDatabaseDeletionDate = default;
             Optional<ResourceIdentifier> recoveryServicesRecoveryPointId = default;
@@ -214,8 +214,8 @@ namespace Azure.ResourceManager.Sql
             Optional<SecondaryType> secondaryType = default;
             Optional<SqlSku> currentSku = default;
             Optional<int> autoPauseDelay = default;
-            Optional<BackupStorageRedundancy> currentBackupStorageRedundancy = default;
-            Optional<BackupStorageRedundancy> requestedBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> currentBackupStorageRedundancy = default;
+            Optional<SqlBackupStorageRedundancy> requestedBackupStorageRedundancy = default;
             Optional<double> minCapacity = default;
             Optional<DateTimeOffset> pausedDate = default;
             Optional<DateTimeOffset> resumedDate = default;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            createMode = new CreateMode(property0.Value.GetString());
+                            createMode = new SqlDatabaseCreateMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("collation"))
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            status = new DatabaseStatus(property0.Value.GetString());
+                            status = new SqlDatabaseStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("databaseId"))
@@ -417,7 +417,12 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("failoverGroupId"))
                         {
-                            failoverGroupId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            failoverGroupId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("restorePointInTime"))
@@ -587,7 +592,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            currentBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            currentBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("requestedBackupStorageRedundancy"))
@@ -597,7 +602,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            requestedBackupStorageRedundancy = new BackupStorageRedundancy(property0.Value.GetString());
+                            requestedBackupStorageRedundancy = new SqlBackupStorageRedundancy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("minCapacity"))

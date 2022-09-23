@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Storage.Models
         internal static StorageCorsRule DeserializeStorageCorsRule(JsonElement element)
         {
             IList<string> allowedOrigins = default;
-            IList<CorsRuleAllowedMethodsItem> allowedMethods = default;
+            IList<CorsRuleAllowedMethod> allowedMethods = default;
             int maxAgeInSeconds = default;
             IList<string> exposedHeaders = default;
             IList<string> allowedHeaders = default;
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("allowedMethods"))
                 {
-                    List<CorsRuleAllowedMethodsItem> array = new List<CorsRuleAllowedMethodsItem>();
+                    List<CorsRuleAllowedMethod> array = new List<CorsRuleAllowedMethod>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new CorsRuleAllowedMethodsItem(item.GetString()));
+                        array.Add(new CorsRuleAllowedMethod(item.GetString()));
                     }
                     allowedMethods = array;
                     continue;

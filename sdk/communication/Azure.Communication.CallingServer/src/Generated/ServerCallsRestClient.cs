@@ -57,7 +57,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingId"> The recording id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
-        public async Task<Response<GetCallRecordingStateResponse>> GetRecordingPropertiesAsync(string recordingId, CancellationToken cancellationToken = default)
+        public async Task<Response<RecordingStateResult>> GetRecordingPropertiesAsync(string recordingId, CancellationToken cancellationToken = default)
         {
             if (recordingId == null)
             {
@@ -70,9 +70,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        GetCallRecordingStateResponse value = default;
+                        RecordingStateResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GetCallRecordingStateResponse.DeserializeGetCallRecordingStateResponse(document.RootElement);
+                        value = RecordingStateResult.DeserializeRecordingStateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -84,7 +84,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="recordingId"> The recording id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
-        public Response<GetCallRecordingStateResponse> GetRecordingProperties(string recordingId, CancellationToken cancellationToken = default)
+        public Response<RecordingStateResult> GetRecordingProperties(string recordingId, CancellationToken cancellationToken = default)
         {
             if (recordingId == null)
             {
@@ -97,9 +97,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        GetCallRecordingStateResponse value = default;
+                        RecordingStateResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GetCallRecordingStateResponse.DeserializeGetCallRecordingStateResponse(document.RootElement);
+                        value = RecordingStateResult.DeserializeRecordingStateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -136,7 +136,7 @@ namespace Azure.Communication.CallingServer
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -158,7 +158,7 @@ namespace Azure.Communication.CallingServer
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
+                case 204:
                     return message.Response;
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
@@ -174,7 +174,7 @@ namespace Azure.Communication.CallingServer
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/recordings/", false);
             uri.AppendPath(recordingId, true);
-            uri.AppendPath("/:pause", false);
+            uri.AppendPath(":pause", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             return message;
@@ -195,7 +195,7 @@ namespace Azure.Communication.CallingServer
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -217,7 +217,7 @@ namespace Azure.Communication.CallingServer
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
@@ -233,7 +233,7 @@ namespace Azure.Communication.CallingServer
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/recordings/", false);
             uri.AppendPath(recordingId, true);
-            uri.AppendPath("/:resume", false);
+            uri.AppendPath(":resume", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             return message;
@@ -254,7 +254,7 @@ namespace Azure.Communication.CallingServer
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -276,7 +276,7 @@ namespace Azure.Communication.CallingServer
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
+                case 202:
                     return message.Response;
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CapabilitiesResult>> GetCapabilitiesAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<HDInsightCapabilitiesResult>> GetCapabilitiesAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -72,9 +72,9 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case 200:
                     {
-                        CapabilitiesResult value = default;
+                        HDInsightCapabilitiesResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CapabilitiesResult.DeserializeCapabilitiesResult(document.RootElement);
+                        value = HDInsightCapabilitiesResult.DeserializeHDInsightCapabilitiesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CapabilitiesResult> GetCapabilities(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<HDInsightCapabilitiesResult> GetCapabilities(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case 200:
                     {
-                        CapabilitiesResult value = default;
+                        HDInsightCapabilitiesResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CapabilitiesResult.DeserializeCapabilitiesResult(document.RootElement);
+                        value = HDInsightCapabilitiesResult.DeserializeHDInsightCapabilitiesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BillingResponseListResult>> ListBillingSpecsAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public async Task<Response<HDInsightBillingSpecsListResult>> ListBillingSpecsAsync(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -214,9 +214,9 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case 200:
                     {
-                        BillingResponseListResult value = default;
+                        HDInsightBillingSpecsListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BillingResponseListResult.DeserializeBillingResponseListResult(document.RootElement);
+                        value = HDInsightBillingSpecsListResult.DeserializeHDInsightBillingSpecsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.HDInsight
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BillingResponseListResult> ListBillingSpecs(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
+        public Response<HDInsightBillingSpecsListResult> ListBillingSpecs(string subscriptionId, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -240,9 +240,9 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case 200:
                     {
-                        BillingResponseListResult value = default;
+                        HDInsightBillingSpecsListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BillingResponseListResult.DeserializeBillingResponseListResult(document.RootElement);
+                        value = HDInsightBillingSpecsListResult.DeserializeHDInsightBillingSpecsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -250,83 +250,7 @@ namespace Azure.ResourceManager.HDInsight
             }
         }
 
-        internal HttpMessage CreateGetAzureAsyncOperationStatusRequest(string subscriptionId, AzureLocation location, string operationId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.HDInsight/locations/", false);
-            uri.AppendPath(location, true);
-            uri.AppendPath("/azureasyncoperations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get the async operation status. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="operationId"> The long running operation id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AsyncOperationResult>> GetAzureAsyncOperationStatusAsync(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateGetAzureAsyncOperationStatusRequest(subscriptionId, location, operationId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AsyncOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AsyncOperationResult.DeserializeAsyncOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the async operation status. </summary>
-        /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="operationId"> The long running operation id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AsyncOperationResult> GetAzureAsyncOperationStatus(string subscriptionId, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var message = CreateGetAzureAsyncOperationStatusRequest(subscriptionId, location, operationId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        AsyncOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AsyncOperationResult.DeserializeAsyncOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, NameAvailabilityCheckRequestContent content)
+        internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation location, HDInsightNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -352,11 +276,11 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> Check the cluster name is available or not. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="content"> The NameAvailabilityCheckRequestContent to use. </param>
+        /// <param name="content"> The HDInsightNameAvailabilityContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NameAvailabilityCheckResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, NameAvailabilityCheckRequestContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<HDInsightNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -367,9 +291,9 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case 200:
                     {
-                        NameAvailabilityCheckResult value = default;
+                        HDInsightNameAvailabilityResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NameAvailabilityCheckResult.DeserializeNameAvailabilityCheckResult(document.RootElement);
+                        value = HDInsightNameAvailabilityResult.DeserializeHDInsightNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -380,11 +304,11 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> Check the cluster name is available or not. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="content"> The NameAvailabilityCheckRequestContent to use. </param>
+        /// <param name="content"> The HDInsightNameAvailabilityContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NameAvailabilityCheckResult> CheckNameAvailability(string subscriptionId, AzureLocation location, NameAvailabilityCheckRequestContent content, CancellationToken cancellationToken = default)
+        public Response<HDInsightNameAvailabilityResult> CheckNameAvailability(string subscriptionId, AzureLocation location, HDInsightNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -395,9 +319,9 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case 200:
                     {
-                        NameAvailabilityCheckResult value = default;
+                        HDInsightNameAvailabilityResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NameAvailabilityCheckResult.DeserializeNameAvailabilityCheckResult(document.RootElement);
+                        value = HDInsightNameAvailabilityResult.DeserializeHDInsightNameAvailabilityResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -405,7 +329,7 @@ namespace Azure.ResourceManager.HDInsight
             }
         }
 
-        internal HttpMessage CreateValidateClusterCreateRequestRequest(string subscriptionId, AzureLocation location, ClusterCreateRequestValidationContent content)
+        internal HttpMessage CreateValidateClusterCreateRequestRequest(string subscriptionId, AzureLocation location, HDInsightClusterCreationValidateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -431,11 +355,11 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> Validate the cluster create request spec is valid or not. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="content"> The ClusterCreateRequestValidationContent to use. </param>
+        /// <param name="content"> The HDInsightClusterCreationValidateContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ClusterCreateValidationResult>> ValidateClusterCreateRequestAsync(string subscriptionId, AzureLocation location, ClusterCreateRequestValidationContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<HDInsightClusterCreationValidateResult>> ValidateClusterCreateRequestAsync(string subscriptionId, AzureLocation location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -446,9 +370,9 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case 200:
                     {
-                        ClusterCreateValidationResult value = default;
+                        HDInsightClusterCreationValidateResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ClusterCreateValidationResult.DeserializeClusterCreateValidationResult(document.RootElement);
+                        value = HDInsightClusterCreationValidateResult.DeserializeHDInsightClusterCreationValidateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -459,11 +383,11 @@ namespace Azure.ResourceManager.HDInsight
         /// <summary> Validate the cluster create request spec is valid or not. </summary>
         /// <param name="subscriptionId"> The subscription credentials which uniquely identify Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
         /// <param name="location"> The Azure location (region) for which to make the request. </param>
-        /// <param name="content"> The ClusterCreateRequestValidationContent to use. </param>
+        /// <param name="content"> The HDInsightClusterCreationValidateContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ClusterCreateValidationResult> ValidateClusterCreateRequest(string subscriptionId, AzureLocation location, ClusterCreateRequestValidationContent content, CancellationToken cancellationToken = default)
+        public Response<HDInsightClusterCreationValidateResult> ValidateClusterCreateRequest(string subscriptionId, AzureLocation location, HDInsightClusterCreationValidateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(content, nameof(content));
@@ -474,9 +398,9 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case 200:
                     {
-                        ClusterCreateValidationResult value = default;
+                        HDInsightClusterCreationValidateResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ClusterCreateValidationResult.DeserializeClusterCreateValidationResult(document.RootElement);
+                        value = HDInsightClusterCreationValidateResult.DeserializeHDInsightClusterCreationValidateResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

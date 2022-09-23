@@ -52,9 +52,12 @@ namespace Azure.ResourceManager.Communication.Tests
             }
         }
 
-        [Test]
-        public async Task AddTag()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AddTag(bool? useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
             var collection = _resourceGroup.GetCommunicationServiceResources();
             var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
@@ -65,9 +68,12 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.AreEqual(tagValue.Value, "testvalue");
         }
 
-        [Test]
-        public async Task RemoveTag()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RemoveTag(bool? useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
             var collection = _resourceGroup.GetCommunicationServiceResources();
             var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
@@ -82,9 +88,12 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.IsTrue(tag.Count == 0);
         }
 
-        [Test]
-        public async Task SetTags()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetTags(bool? useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             string communicationServiceName = Recording.GenerateAssetName("communication-service-");
             var collection = _resourceGroup.GetCommunicationServiceResources();
             var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
@@ -126,11 +135,11 @@ namespace Azure.ResourceManager.Communication.Tests
             string secondaryKey = keys.Value.SecondaryKey;
             string primaryConnectionString = keys.Value.PrimaryConnectionString;
             string secondaryConnectionString = keys.Value.SecondaryConnectionString;
-            var parameter = new RegenerateKeyContent() { KeyType = KeyType.Primary };
+            var parameter = new RegenerateCommunicationServiceKeyContent() { KeyType = CommunicationServiceKeyType.Primary };
             var newkeys = await communication.RegenerateKeyAsync(WaitUntil.Completed, parameter);
             Assert.AreEqual(primaryKey, newkeys.Value.PrimaryKey);
             Assert.NotNull(primaryConnectionString, keys.Value.PrimaryConnectionString);
-            parameter = new RegenerateKeyContent() { KeyType = KeyType.Secondary };
+            parameter = new RegenerateCommunicationServiceKeyContent() { KeyType = CommunicationServiceKeyType.Secondary };
             newkeys = await communication.RegenerateKeyAsync(WaitUntil.Completed, parameter);
             Assert.NotNull(secondaryKey, keys.Value.SecondaryKey);
             Assert.NotNull(secondaryConnectionString, keys.Value.SecondaryConnectionString);
@@ -143,7 +152,8 @@ namespace Azure.ResourceManager.Communication.Tests
             var collection = _resourceGroup.GetCommunicationServiceResources();
             var communication = await CreateDefaultCommunicationServices(communicationServiceName, _resourceGroup);
             // Need to create a NotificationHub first
-            var parameter = new LinkNotificationHubContent(((CommunicationManagementTestEnvironment)TestEnvironment).NotificationHubsResourceId, ((CommunicationManagementTestEnvironment)TestEnvironment).NotificationHubsConnectionString);
+            var parameter = new LinkNotificationHubContent(new ResourceIdentifier(((CommunicationManagementTestEnvironment)TestEnvironment).NotificationHubsResourceId),
+                ((CommunicationManagementTestEnvironment)TestEnvironment).NotificationHubsConnectionString);
             var hub = await communication.LinkNotificationHubAsync(parameter);
             Assert.NotNull(hub.Value.ResourceId);
         }

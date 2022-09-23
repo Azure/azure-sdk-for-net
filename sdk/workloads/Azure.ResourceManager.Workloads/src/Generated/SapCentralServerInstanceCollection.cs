@@ -63,10 +63,11 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="data"> The SAP Central Server instance request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
-        public virtual async Task<ArmOperation<SapCentralServerInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string centralInstanceName, SapCentralServerInstanceData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<SapCentralServerInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string centralInstanceName, SapCentralServerInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapCentralServerInstanceSapCentralInstancesClientDiagnostics.CreateScope("SapCentralServerInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -95,10 +96,11 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="data"> The SAP Central Server instance request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="centralInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> is null. </exception>
-        public virtual ArmOperation<SapCentralServerInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string centralInstanceName, SapCentralServerInstanceData data = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="centralInstanceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<SapCentralServerInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string centralInstanceName, SapCentralServerInstanceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(centralInstanceName, nameof(centralInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapCentralServerInstanceSapCentralInstancesClientDiagnostics.CreateScope("SapCentralServerInstanceCollection.CreateOrUpdate");
             scope.Start();

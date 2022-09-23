@@ -14,6 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.Catalog
 {
+    // Data plane generated client. The PurviewCatalog service client.
     /// <summary> The PurviewCatalog service client. </summary>
     public partial class PurviewCatalogClient
     {
@@ -66,6 +67,92 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call SearchAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.SearchAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call SearchAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     keywords = "<keywords>",
+        ///     offset = 1234,
+        ///     limit = 1234,
+        ///     filter = new {},
+        ///     facets = new[] {
+        ///         new {
+        ///             count = 1234,
+        ///             facet = "<facet>",
+        ///             sort = new {},
+        ///         }
+        ///     },
+        ///     taxonomySetting = new {
+        ///         assetTypes = new[] {
+        ///             "<String>"
+        ///         },
+        ///         facet = new {
+        ///             count = 1234,
+        ///             facet = "<facet>",
+        ///             sort = new {},
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = await client.SearchAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("@search.count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classificationCategory")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classificationCategory")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("fileExtension")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("fileExtension")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("id")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("qualifiedName")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("name")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("description")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("entityType")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.text").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("classification")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("label")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("glossaryName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -139,6 +226,92 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call Search and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.Search(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call Search with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     keywords = "<keywords>",
+        ///     offset = 1234,
+        ///     limit = 1234,
+        ///     filter = new {},
+        ///     facets = new[] {
+        ///         new {
+        ///             count = 1234,
+        ///             facet = "<facet>",
+        ///             sort = new {},
+        ///         }
+        ///     },
+        ///     taxonomySetting = new {
+        ///         assetTypes = new[] {
+        ///             "<String>"
+        ///         },
+        ///         facet = new {
+        ///             count = 1234,
+        ///             facet = "<facet>",
+        ///             sort = new {},
+        ///         },
+        ///     },
+        /// };
+        /// 
+        /// Response response = client.Search(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("@search.count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("assetType")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classification")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classificationCategory")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("classificationCategory")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("contactId")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("fileExtension")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("fileExtension")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("label")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term")[0].GetProperty("count").ToString());
+        /// Console.WriteLine(result.GetProperty("@search.facets").GetProperty("term")[0].GetProperty("value").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("id")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("qualifiedName")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("name")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("description")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.highlights").GetProperty("entityType")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.text").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("classification")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("label")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("glossaryName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -212,6 +385,54 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call SuggestAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.SuggestAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call SuggestAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     keywords = "<keywords>",
+        ///     limit = 1234,
+        ///     filter = new {},
+        /// };
+        /// 
+        /// Response response = await client.SuggestAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.text").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("classification")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("label")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("glossaryName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -258,6 +479,54 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call Suggest and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.Suggest(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call Suggest with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     keywords = "<keywords>",
+        ///     limit = 1234,
+        ///     filter = new {},
+        /// };
+        /// 
+        /// Response response = client.Suggest(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.score").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("@search.text").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("classification")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("label")[0].ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("glossaryName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("term")[0].GetProperty("guid").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("info").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("contact")[0].GetProperty("contactType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("assetType")[0].ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -304,6 +573,49 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call BrowseAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.BrowseAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call BrowseAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     entityType = "<entityType>",
+        ///     path = "<path>",
+        ///     limit = 1234,
+        ///     offset = 1234,
+        /// };
+        /// 
+        /// Response response = await client.BrowseAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("@search.count").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("isLeaf").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("mail").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("contactType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("path").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -352,6 +664,49 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call Browse and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.Browse(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call Browse with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     entityType = "<entityType>",
+        ///     path = "<path>",
+        ///     limit = 1234,
+        ///     offset = 1234,
+        /// };
+        /// 
+        /// Response response = client.Browse(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("@search.count").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("entityType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("isLeaf").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("name").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("id").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("displayName").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("mail").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("owner")[0].GetProperty("contactType").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("path").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("qualifiedName").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -400,6 +755,39 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call AutoCompleteAsync and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = await client.AutoCompleteAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call AutoCompleteAsync with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     keywords = "<keywords>",
+        ///     limit = 1234,
+        ///     filter = new {},
+        /// };
+        /// 
+        /// Response response = await client.AutoCompleteAsync(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("queryPlusText").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 
@@ -446,6 +834,39 @@ namespace Azure.Analytics.Purview.Catalog
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        /// <example>
+        /// This sample shows how to call AutoComplete and parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {};
+        /// 
+        /// Response response = client.AutoComplete(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.ToString());
+        /// ]]></code>
+        /// This sample shows how to call AutoComplete with all request content, and how to parse the result.
+        /// <code><![CDATA[
+        /// var credential = new DefaultAzureCredential();
+        /// var endpoint = new Uri("<https://my-service.azure.com>");
+        /// var client = new PurviewCatalogClient(endpoint, credential);
+        /// 
+        /// var data = new {
+        ///     keywords = "<keywords>",
+        ///     limit = 1234,
+        ///     filter = new {},
+        /// };
+        /// 
+        /// Response response = client.AutoComplete(RequestContent.Create(data));
+        /// 
+        /// JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
+        /// Console.WriteLine(result.GetProperty("value")[0].GetProperty("queryPlusText").ToString());
+        /// ]]></code>
+        /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
         /// 

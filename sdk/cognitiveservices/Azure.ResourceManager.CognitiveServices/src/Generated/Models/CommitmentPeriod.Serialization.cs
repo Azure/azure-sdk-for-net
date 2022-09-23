@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -33,8 +34,8 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Optional<string> tier = default;
             Optional<int> count = default;
             Optional<CommitmentQuota> quota = default;
-            Optional<string> startDate = default;
-            Optional<string> endDate = default;
+            Optional<DateTimeOffset> startDate = default;
+            Optional<DateTimeOffset> endDate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tier"))
@@ -64,16 +65,26 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
                 if (property.NameEquals("startDate"))
                 {
-                    startDate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    startDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("endDate"))
                 {
-                    endDate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    endDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new CommitmentPeriod(tier.Value, Optional.ToNullable(count), quota.Value, startDate.Value, endDate.Value);
+            return new CommitmentPeriod(tier.Value, Optional.ToNullable(count), quota.Value, Optional.ToNullable(startDate), Optional.ToNullable(endDate));
         }
     }
 }

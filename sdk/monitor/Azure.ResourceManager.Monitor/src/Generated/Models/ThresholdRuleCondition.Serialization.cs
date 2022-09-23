@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ThresholdRuleCondition DeserializeThresholdRuleCondition(JsonElement element)
         {
-            ConditionOperator @operator = default;
+            MonitorConditionOperator @operator = default;
             double threshold = default;
             Optional<TimeSpan> windowSize = default;
-            Optional<TimeAggregationOperator> timeAggregation = default;
+            Optional<ThresholdRuleConditionTimeAggregationType> timeAggregation = default;
             string odataType = default;
             Optional<RuleDataSource> dataSource = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operator"))
                 {
-                    @operator = property.Value.GetString().ToConditionOperator();
+                    @operator = property.Value.GetString().ToMonitorConditionOperator();
                     continue;
                 }
                 if (property.NameEquals("threshold"))
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    timeAggregation = property.Value.GetString().ToTimeAggregationOperator();
+                    timeAggregation = property.Value.GetString().ToThresholdRuleConditionTimeAggregationType();
                     continue;
                 }
                 if (property.NameEquals("odata.type"))

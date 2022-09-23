@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ALLValue = "ALL";
+        private const string AllValue = "ALL";
         private const string EachQuorumValue = "EACH_QUORUM";
         private const string QuorumValue = "QUORUM";
         private const string LocalQuorumValue = "LOCAL_QUORUM";
-        private const string ONEValue = "ONE";
-        private const string TWOValue = "TWO";
+        private const string OneValue = "ONE";
+        private const string TwoValue = "TWO";
         private const string ThreeValue = "THREE";
-        private const string LocalONEValue = "LOCAL_ONE";
+        private const string LocalOneValue = "LOCAL_ONE";
         private const string SerialValue = "SERIAL";
         private const string LocalSerialValue = "LOCAL_SERIAL";
 
         /// <summary> ALL. </summary>
-        public static CassandraSourceReadConsistencyLevel ALL { get; } = new CassandraSourceReadConsistencyLevel(ALLValue);
+        public static CassandraSourceReadConsistencyLevel All { get; } = new CassandraSourceReadConsistencyLevel(AllValue);
         /// <summary> EACH_QUORUM. </summary>
         public static CassandraSourceReadConsistencyLevel EachQuorum { get; } = new CassandraSourceReadConsistencyLevel(EachQuorumValue);
         /// <summary> QUORUM. </summary>
@@ -42,13 +42,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> LOCAL_QUORUM. </summary>
         public static CassandraSourceReadConsistencyLevel LocalQuorum { get; } = new CassandraSourceReadConsistencyLevel(LocalQuorumValue);
         /// <summary> ONE. </summary>
-        public static CassandraSourceReadConsistencyLevel ONE { get; } = new CassandraSourceReadConsistencyLevel(ONEValue);
+        public static CassandraSourceReadConsistencyLevel One { get; } = new CassandraSourceReadConsistencyLevel(OneValue);
         /// <summary> TWO. </summary>
-        public static CassandraSourceReadConsistencyLevel TWO { get; } = new CassandraSourceReadConsistencyLevel(TWOValue);
+        public static CassandraSourceReadConsistencyLevel Two { get; } = new CassandraSourceReadConsistencyLevel(TwoValue);
         /// <summary> THREE. </summary>
         public static CassandraSourceReadConsistencyLevel Three { get; } = new CassandraSourceReadConsistencyLevel(ThreeValue);
         /// <summary> LOCAL_ONE. </summary>
-        public static CassandraSourceReadConsistencyLevel LocalONE { get; } = new CassandraSourceReadConsistencyLevel(LocalONEValue);
+        public static CassandraSourceReadConsistencyLevel LocalOne { get; } = new CassandraSourceReadConsistencyLevel(LocalOneValue);
         /// <summary> SERIAL. </summary>
         public static CassandraSourceReadConsistencyLevel Serial { get; } = new CassandraSourceReadConsistencyLevel(SerialValue);
         /// <summary> LOCAL_SERIAL. </summary>

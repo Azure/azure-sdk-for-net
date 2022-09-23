@@ -171,5 +171,32 @@ namespace Azure.ResourceManager.Network.Tests
 
             return subnetCollection.All(subnets => AreSubnetsEqual(subnets.subnet1, subnets.subnet2));
         }
+
+        [RecordedTest]
+        public async Task ExpandResourceTest()
+        {
+            string resourceGroupName = Recording.GenerateAssetName("csmrg");
+
+            string location = TestEnvironment.Location;
+            var resourceGroup = await CreateResourceGroup(resourceGroupName);
+
+            // Create Vnet
+            string vnetName = Recording.GenerateAssetName("azsmnet");
+            string subnetName = Recording.GenerateAssetName("azsmnet");
+            VirtualNetworkResource vnet = await CreateVirtualNetwork(vnetName, subnetName, location, resourceGroup.GetVirtualNetworks());
+
+            // Get subnet with expanded ipconfigurations
+            Response<SubnetResource> subnet = await (await resourceGroup.GetVirtualNetworks().GetAsync(vnetName)).Value.GetSubnets().GetAsync(
+                subnetName,
+                "IPConfigurations");
+
+            foreach (NetworkIPConfiguration ipconfig in subnet.Value.Data.IPConfigurations)
+            {
+                Assert.NotNull(ipconfig.Id);
+                //Assert.NotNull(ipconfig.Name);
+                //Assert.NotNull(ipconfig.Etag);
+                Assert.NotNull(ipconfig.PrivateIPAddress);
+            }
+        }
     }
 }

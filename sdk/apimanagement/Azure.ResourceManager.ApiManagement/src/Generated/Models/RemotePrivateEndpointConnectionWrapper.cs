@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="groupIds"> All the Group ids. </param>
-        internal RemotePrivateEndpointConnectionWrapper(string id, string name, string resourceType, SubResource privateEndpoint, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IReadOnlyList<string> groupIds)
+        internal RemotePrivateEndpointConnectionWrapper(ResourceIdentifier id, string name, ResourceType? resourceType, SubResource privateEndpoint, ApiManagementPrivateLinkServiceConnectionState privateLinkServiceConnectionState, string provisioningState, IReadOnlyList<string> groupIds)
         {
             Id = id;
             Name = name;
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Private Endpoint connection resource id. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> Private Endpoint Connection Name. </summary>
         public string Name { get; set; }
         /// <summary> Private Endpoint Connection Resource Type. </summary>
-        public string ResourceType { get; set; }
+        public ResourceType? ResourceType { get; set; }
         /// <summary> The resource of private end point. </summary>
         internal SubResource PrivateEndpoint { get; set; }
         /// <summary> Gets Id. </summary>

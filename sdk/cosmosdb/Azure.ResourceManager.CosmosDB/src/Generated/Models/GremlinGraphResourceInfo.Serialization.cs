@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id");
-            writer.WriteStringValue(Id);
+            writer.WriteStringValue(GraphName);
             if (Optional.IsDefined(IndexingPolicy))
             {
                 writer.WritePropertyName("indexingPolicy");
@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("conflictResolutionPolicy");
                 writer.WriteObjectValue(ConflictResolutionPolicy);
             }
+            if (Optional.IsDefined(AnalyticalStorageTtl))
+            {
+                writer.WritePropertyName("analyticalStorageTtl");
+                writer.WriteNumberValue(AnalyticalStorageTtl.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -49,10 +54,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             string id = default;
             Optional<CosmosDBIndexingPolicy> indexingPolicy = default;
-            Optional<ContainerPartitionKey> partitionKey = default;
+            Optional<CosmosDBContainerPartitionKey> partitionKey = default;
             Optional<int> defaultTtl = default;
             Optional<CosmosDBUniqueKeyPolicy> uniqueKeyPolicy = default;
             Optional<ConflictResolutionPolicy> conflictResolutionPolicy = default;
+            Optional<long> analyticalStorageTtl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -77,7 +83,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    partitionKey = ContainerPartitionKey.DeserializeContainerPartitionKey(property.Value);
+                    partitionKey = CosmosDBContainerPartitionKey.DeserializeCosmosDBContainerPartitionKey(property.Value);
                     continue;
                 }
                 if (property.NameEquals("defaultTtl"))
@@ -110,8 +116,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     conflictResolutionPolicy = ConflictResolutionPolicy.DeserializeConflictResolutionPolicy(property.Value);
                     continue;
                 }
+                if (property.NameEquals("analyticalStorageTtl"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    analyticalStorageTtl = property.Value.GetInt64();
+                    continue;
+                }
             }
-            return new GremlinGraphResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value);
+            return new GremlinGraphResourceInfo(id, indexingPolicy.Value, partitionKey.Value, Optional.ToNullable(defaultTtl), uniqueKeyPolicy.Value, conflictResolutionPolicy.Value, Optional.ToNullable(analyticalStorageTtl));
         }
     }
 }

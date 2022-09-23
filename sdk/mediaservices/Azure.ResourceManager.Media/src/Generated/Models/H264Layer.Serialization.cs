@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("bufferWindow");
                 writer.WriteStringValue(BufferWindow.Value, "P");
             }
-            if (Optional.IsDefined(Crf))
+            if (Optional.IsDefined(ConstantRateFactor))
             {
                 writer.WritePropertyName("crf");
-                writer.WriteNumberValue(Crf.Value);
+                writer.WriteNumberValue(ConstantRateFactor.Value);
             }
             if (Optional.IsDefined(ReferenceFrames))
             {
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("slices");
                 writer.WriteNumberValue(Slices.Value);
             }
-            if (Optional.IsDefined(AdaptiveBFrame))
+            if (Optional.IsDefined(UseAdaptiveBFrame))
             {
                 writer.WritePropertyName("adaptiveBFrame");
-                writer.WriteBooleanValue(AdaptiveBFrame.Value);
+                writer.WriteBooleanValue(UseAdaptiveBFrame.Value);
             }
             if (Optional.IsDefined(Width))
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<TimeSpan> bufferWindow = default;
             Optional<float> crf = default;
             Optional<int> referenceFrames = default;
-            Optional<EntropyMode> entropyMode = default;
+            Optional<LayerEntropyMode> entropyMode = default;
             int bitrate = default;
             Optional<int> maxBitrate = default;
             Optional<int> bFrames = default;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    entropyMode = new EntropyMode(property.Value.GetString());
+                    entropyMode = new LayerEntropyMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("bitrate"))

@@ -15,12 +15,6 @@ namespace Azure.ResourceManager.Resources
     /// <summary>
     /// A class representing the operations that can be performed over a specific subscription.
     /// </summary>
-    [CodeGenSuppress("AddTagAsync", typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("AddTag", typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("SetTagsAsync", typeof(IDictionary<string, string>), typeof(CancellationToken))]
-    [CodeGenSuppress("SetTags", typeof(IDictionary<string, string>), typeof(CancellationToken))]
-    [CodeGenSuppress("RemoveTagAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("RemoveTag", typeof(string), typeof(CancellationToken))]
     public partial class SubscriptionResource : ArmResource
     {
         /// RequestPath: /subscriptions/{subscriptionId}/resources

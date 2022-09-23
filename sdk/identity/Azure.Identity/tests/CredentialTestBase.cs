@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Globalization;
 using System.IO;
@@ -68,6 +70,79 @@ namespace Azure.Identity.Tests
             else
             {
                 CollectionAssert.IsEmpty(loggedEvents);
+            }
+        }
+
+        public class AllowedTenantsTestParameters
+        {
+            public string TenantId { get; set; }
+            public List<string> AdditionallyAllowedTenants { get; set; }
+            public TokenRequestContext TokenRequestContext { get; set; }
+            public string ToDebugString()
+            {
+                return $"TenantId:{TenantId??"null"}, AddlTenants:[{string.Join(",", AdditionallyAllowedTenants)}], RequestedTenantId:{TokenRequestContext.TenantId??"null"}";
+            }
+        }
+
+        public static IEnumerable<AllowedTenantsTestParameters> GetAllowedTenantsTestCases()
+        {
+            string tenant = Guid.NewGuid().ToString();
+            string addlTenantA = Guid.NewGuid().ToString();
+            string addlTenantB = Guid.NewGuid().ToString();
+
+            List<string> tenantValues = new List<string>() { tenant, null };
+
+            List<List<string>> additionalAllowedTenantsValues = new List<List<string>>()
+            {
+                new List<string>(),
+                new List<string> { addlTenantA, addlTenantB },
+                new List<string> { "*" },
+                new List<string> { addlTenantA, "*", addlTenantB }
+            };
+
+            List<TokenRequestContext> tokenRequestContextValues = new List<TokenRequestContext>()
+            {
+                new TokenRequestContext(MockScopes.Default),
+                new TokenRequestContext(MockScopes.Default, tenantId: tenant),
+                new TokenRequestContext(MockScopes.Default, tenantId: addlTenantA),
+                new TokenRequestContext(MockScopes.Default, tenantId: addlTenantB),
+                new TokenRequestContext(MockScopes.Default, tenantId: Guid.NewGuid().ToString()),
+            };
+
+            foreach (var mainTenant in tenantValues)
+            {
+                foreach (var additoinallyAllowedTenants in additionalAllowedTenantsValues)
+                {
+                    foreach (var tokenRequestContext in tokenRequestContextValues)
+                    {
+                        yield return new AllowedTenantsTestParameters { TenantId = mainTenant, AdditionallyAllowedTenants = additoinallyAllowedTenants, TokenRequestContext = tokenRequestContext };
+                    }
+                }
+            }
+        }
+
+        [TestCaseSource(nameof(GetAllowedTenantsTestCases))]
+        public abstract Task VerifyAllowedTenantEnforcement(AllowedTenantsTestParameters parameters);
+
+        public static async Task AssertAllowedTenantIdsEnforcedAsync(AllowedTenantsTestParameters parameters, TokenCredential credential)
+        {
+            bool expAllowed = parameters.TenantId == null
+                || parameters.TokenRequestContext.TenantId == null
+                || parameters.TenantId == parameters.TokenRequestContext.TenantId
+                || parameters.AdditionallyAllowedTenants.Contains(parameters.TokenRequestContext.TenantId)
+                || parameters.AdditionallyAllowedTenants.Contains("*");
+
+            if (expAllowed)
+            {
+                var accessToken = await credential.GetTokenAsync(parameters.TokenRequestContext, default);
+
+                Assert.IsNotNull(accessToken.Token);
+            }
+            else
+            {
+                var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => { await credential.GetTokenAsync(parameters.TokenRequestContext, default); });
+
+                StringAssert.Contains($"The current credential is not configured to acquire tokens for tenant {parameters.TokenRequestContext.TenantId}", ex.Message);
             }
         }
 

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of StaticSiteFunctionOverviewCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal StaticSiteFunctionOverviewCollection(IEnumerable<StaticSiteFunctionOverviewARMResource> value)
+        internal StaticSiteFunctionOverviewCollection(IEnumerable<StaticSiteFunctionOverview> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of StaticSiteFunctionOverviewCollection. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
-        internal StaticSiteFunctionOverviewCollection(IReadOnlyList<StaticSiteFunctionOverviewARMResource> value, string nextLink)
+        internal StaticSiteFunctionOverviewCollection(IReadOnlyList<StaticSiteFunctionOverview> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Collection of resources. </summary>
-        public IReadOnlyList<StaticSiteFunctionOverviewARMResource> Value { get; }
+        public IReadOnlyList<StaticSiteFunctionOverview> Value { get; }
         /// <summary> Link to next page of resources. </summary>
         public string NextLink { get; }
     }

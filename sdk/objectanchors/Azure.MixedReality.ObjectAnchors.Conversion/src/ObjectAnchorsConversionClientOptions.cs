@@ -42,18 +42,18 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
         /// Initializes a new instance of the <see cref="ObjectAnchorsConversionClientOptions"/> class.
         /// </summary>
         /// <param name="version">The version.</param>
-        public ObjectAnchorsConversionClientOptions(ServiceVersion version = ServiceVersion.V0_3_preview_0)
+        public ObjectAnchorsConversionClientOptions(ServiceVersion version = ServiceVersion.V0_3_Preview_0)
         {
             Version = version switch
             {
-                ServiceVersion.V0_2_preview_0 => "0.2.preview.0",
-                ServiceVersion.V0_3_preview_0 => "0.3-preview.0",
+                ServiceVersion.V0_2_Preview_0 => "0.2.preview.0",
+                ServiceVersion.V0_3_Preview_0 => "0.3-preview.0",
                 _ => throw new ArgumentException($"The service version {version} is not supported by this library.", nameof(version))
             };
 
             SupportedAssetFileTypes = version switch
             {
-                ServiceVersion.V0_2_preview_0 or ServiceVersion.V0_3_preview_0 => new HashSet<AssetFileType>
+                ServiceVersion.V0_2_Preview_0 or ServiceVersion.V0_3_Preview_0 => new HashSet<AssetFileType>
                 {
                     AssetFileType.Fbx,
                     AssetFileType.Glb,
@@ -73,14 +73,12 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             /// Version 0.2-preview.0 of the Azure Object Anchors service.
             /// </summary>
 #pragma warning disable CA1707 // Identifiers should not contain underscores
-#pragma warning disable AZC0016 // Invalid ServiceVersion member name.
-            V0_2_preview_0 = 1,
+            V0_2_Preview_0 = 1,
 
             /// <summary>
             /// Version 0.3-preview.0 of the Azure Object Anchors service.
             /// </summary>
-            V0_3_preview_0 = 2,
-#pragma warning restore AZC0016 // Invalid ServiceVersion member name.
+            V0_3_Preview_0 = 2,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
     }

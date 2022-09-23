@@ -762,5 +762,14 @@ namespace Azure.ResourceManager.Network.Tests.Helpers
         {
             return GetResourceGroup(resourceGroupName).GetVirtualNetworkGateways();
         }
+
+        protected async Task<BackendAddressPoolResource> GetFirstPoolAsync(LoadBalancerResource loadBalancer)
+        {
+            await foreach (var pool in loadBalancer.GetBackendAddressPools())
+            {
+                return pool;
+            }
+            throw new InvalidOperationException($"Pool list was empty for {loadBalancer.Id}");
+        }
     }
 }

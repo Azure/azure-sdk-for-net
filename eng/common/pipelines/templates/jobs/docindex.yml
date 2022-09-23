@@ -4,9 +4,9 @@ jobs:
       vmImage: windows-2019
     steps:
       - task: UsePythonVersion@0
-        displayName: 'Use Python 3.6'
+        displayName: 'Use Python 3.9'
         inputs:
-          versionSpec: '3.6'
+          versionSpec: '3.9'
 
       - pwsh: |
           Invoke-WebRequest -Uri "https://github.com/dotnet/docfx/releases/download/v2.43.2/docfx.zip" `
@@ -27,10 +27,6 @@ jobs:
             -DocOutDir "$(Build.ArtifactStagingDirectory)/docfx_project"
             -verbose
 
-      - task: UsePythonVersion@0
-        displayName: 'Use Python 3.6'
-        inputs:
-          versionSpec: '3.6'
       - template: /eng/common/pipelines/templates/steps/mashup-doc-index.yml
         parameters:
           SourceDirectory: $(Build.ArtifactStagingDirectory)

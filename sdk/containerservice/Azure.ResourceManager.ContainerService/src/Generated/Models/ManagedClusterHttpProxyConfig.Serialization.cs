@@ -36,10 +36,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TrustedCa))
+            if (Optional.IsDefined(TrustedCA))
             {
                 writer.WritePropertyName("trustedCa");
-                writer.WriteStringValue(TrustedCa);
+                writer.WriteStringValue(TrustedCA);
             }
             writer.WriteEndObject();
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             Optional<string> httpProxy = default;
             Optional<string> httpsProxy = default;
             Optional<IList<string>> noProxy = default;
-            Optional<string> trustedCa = default;
+            Optional<string> trustedCA = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("httpProxy"))
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 if (property.NameEquals("trustedCa"))
                 {
-                    trustedCa = property.Value.GetString();
+                    trustedCA = property.Value.GetString();
                     continue;
                 }
             }
-            return new ManagedClusterHttpProxyConfig(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), trustedCa.Value);
+            return new ManagedClusterHttpProxyConfig(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), trustedCA.Value);
         }
     }
 }

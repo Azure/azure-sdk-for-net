@@ -17,20 +17,20 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <summary> Initializes a new instance of VirtualNetworkLinkListResult. </summary>
         internal VirtualNetworkLinkListResult()
         {
-            Value = new ChangeTrackingList<VirtualNetworkLinkData>();
+            Value = new ChangeTrackingList<DnsForwardingRulesetVirtualNetworkLinkData>();
         }
 
         /// <summary> Initializes a new instance of VirtualNetworkLinkListResult. </summary>
         /// <param name="value"> Enumeration of the virtual network links. </param>
         /// <param name="nextLink"> The continuation token for the next page of results. </param>
-        internal VirtualNetworkLinkListResult(IReadOnlyList<VirtualNetworkLinkData> value, string nextLink)
+        internal VirtualNetworkLinkListResult(IReadOnlyList<DnsForwardingRulesetVirtualNetworkLinkData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Enumeration of the virtual network links. </summary>
-        public IReadOnlyList<VirtualNetworkLinkData> Value { get; }
+        public IReadOnlyList<DnsForwardingRulesetVirtualNetworkLinkData> Value { get; }
         /// <summary> The continuation token for the next page of results. </summary>
         public string NextLink { get; }
     }

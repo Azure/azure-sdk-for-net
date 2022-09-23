@@ -20,23 +20,28 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("id");
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(IgnoreMissingVNetServiceEndpoint))
+            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint))
             {
                 writer.WritePropertyName("ignoreMissingVNetServiceEndpoint");
-                writer.WriteBooleanValue(IgnoreMissingVNetServiceEndpoint.Value);
+                writer.WriteBooleanValue(IgnoreMissingVnetServiceEndpoint.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static CosmosDBVirtualNetworkRule DeserializeCosmosDBVirtualNetworkRule(JsonElement element)
         {
-            Optional<string> id = default;
-            Optional<bool> ignoreMissingVNetServiceEndpoint = default;
+            Optional<ResourceIdentifier> id = default;
+            Optional<bool> ignoreMissingVnetServiceEndpoint = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ignoreMissingVNetServiceEndpoint"))
@@ -46,11 +51,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    ignoreMissingVNetServiceEndpoint = property.Value.GetBoolean();
+                    ignoreMissingVnetServiceEndpoint = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new CosmosDBVirtualNetworkRule(id.Value, Optional.ToNullable(ignoreMissingVNetServiceEndpoint));
+            return new CosmosDBVirtualNetworkRule(id.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint));
         }
     }
 }

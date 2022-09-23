@@ -6,13 +6,10 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
-using Azure.Communication;
-using Azure.Communication.CallingServer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -60,7 +57,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public async Task<Response<CallConnectionPropertiesDto>> GetCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
+        public async Task<Response<CallConnectionPropertiesInternal>> GetCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -73,9 +70,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        CallConnectionPropertiesDto value = default;
+                        CallConnectionPropertiesInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CallConnectionPropertiesDto.DeserializeCallConnectionPropertiesDto(document.RootElement);
+                        value = CallConnectionPropertiesInternal.DeserializeCallConnectionPropertiesInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -87,7 +84,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public Response<CallConnectionPropertiesDto> GetCall(string callConnectionId, CancellationToken cancellationToken = default)
+        public Response<CallConnectionPropertiesInternal> GetCall(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -100,9 +97,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        CallConnectionPropertiesDto value = default;
+                        CallConnectionPropertiesInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CallConnectionPropertiesDto.DeserializeCallConnectionPropertiesDto(document.RootElement);
+                        value = CallConnectionPropertiesInternal.DeserializeCallConnectionPropertiesInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -168,7 +165,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateTerminateCallRequest(string callConnectionId)
+        internal HttpMessage CreateTerminateCallRequest(string callConnectionId, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -180,25 +177,35 @@ namespace Azure.Communication.CallingServer
             uri.AppendPath(":terminate", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (repeatabilityRequestID != null)
+            {
+                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
+            }
+            if (repeatabilityFirstSent != null)
+            {
+                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
+            }
             return message;
         }
 
         /// <summary> Terminate a call using CallConnectionId. </summary>
         /// <param name="callConnectionId"> The terminate call request. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public async Task<Response> TerminateCallAsync(string callConnectionId, CancellationToken cancellationToken = default)
+        public async Task<Response> TerminateCallAsync(string callConnectionId, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
 
-            using var message = CreateTerminateCallRequest(callConnectionId);
+            using var message = CreateTerminateCallRequest(callConnectionId, repeatabilityRequestID, repeatabilityFirstSent);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw await ClientDiagnostics.CreateRequestFailedExceptionAsync(message.Response).ConfigureAwait(false);
@@ -207,27 +214,29 @@ namespace Azure.Communication.CallingServer
 
         /// <summary> Terminate a call using CallConnectionId. </summary>
         /// <param name="callConnectionId"> The terminate call request. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public Response TerminateCall(string callConnectionId, CancellationToken cancellationToken = default)
+        public Response TerminateCall(string callConnectionId, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
 
-            using var message = CreateTerminateCallRequest(callConnectionId);
+            using var message = CreateTerminateCallRequest(callConnectionId, repeatabilityRequestID, repeatabilityFirstSent);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 202:
+                case 204:
                     return message.Response;
                 default:
                     throw ClientDiagnostics.CreateRequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateTransferToParticipantRequest(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest)
+        internal HttpMessage CreateTransferToParticipantRequest(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -239,6 +248,14 @@ namespace Azure.Communication.CallingServer
             uri.AppendPath(":transferToParticipant", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (repeatabilityRequestID != null)
+            {
+                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
+            }
+            if (repeatabilityFirstSent != null)
+            {
+                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
+            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -250,9 +267,11 @@ namespace Azure.Communication.CallingServer
         /// <summary> Transfer the call to a participant. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="transferToParticipantRequest"> The transfer to participant request. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequest"/> is null. </exception>
-        public async Task<Response<TransferCallResponse>> TransferToParticipantAsync(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<TransferCallToParticipantResult>> TransferToParticipantAsync(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -263,15 +282,15 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(transferToParticipantRequest));
             }
 
-            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequest);
+            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequest, repeatabilityRequestID, repeatabilityFirstSent);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        TransferCallResponse value = default;
+                        TransferCallToParticipantResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransferCallResponse.DeserializeTransferCallResponse(document.RootElement);
+                        value = TransferCallToParticipantResult.DeserializeTransferCallToParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -282,9 +301,11 @@ namespace Azure.Communication.CallingServer
         /// <summary> Transfer the call to a participant. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="transferToParticipantRequest"> The transfer to participant request. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="transferToParticipantRequest"/> is null. </exception>
-        public Response<TransferCallResponse> TransferToParticipant(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, CancellationToken cancellationToken = default)
+        public Response<TransferCallToParticipantResult> TransferToParticipant(string callConnectionId, TransferToParticipantRequestInternal transferToParticipantRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -295,15 +316,15 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(transferToParticipantRequest));
             }
 
-            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequest);
+            using var message = CreateTransferToParticipantRequest(callConnectionId, transferToParticipantRequest, repeatabilityRequestID, repeatabilityFirstSent);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        TransferCallResponse value = default;
+                        TransferCallToParticipantResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransferCallResponse.DeserializeTransferCallResponse(document.RootElement);
+                        value = TransferCallToParticipantResult.DeserializeTransferCallToParticipantResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -331,7 +352,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public async Task<Response<IReadOnlyList<AcsCallParticipantDtoInternal>>> GetParticipantsAsync(string callConnectionId, CancellationToken cancellationToken = default)
+        public async Task<Response<GetParticipantsResponseInternal>> GetParticipantsAsync(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -344,14 +365,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        IReadOnlyList<AcsCallParticipantDtoInternal> value = default;
+                        GetParticipantsResponseInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<AcsCallParticipantDtoInternal> array = new List<AcsCallParticipantDtoInternal>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(AcsCallParticipantDtoInternal.DeserializeAcsCallParticipantDtoInternal(item));
-                        }
-                        value = array;
+                        value = GetParticipantsResponseInternal.DeserializeGetParticipantsResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -363,7 +379,7 @@ namespace Azure.Communication.CallingServer
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public Response<IReadOnlyList<AcsCallParticipantDtoInternal>> GetParticipants(string callConnectionId, CancellationToken cancellationToken = default)
+        public Response<GetParticipantsResponseInternal> GetParticipants(string callConnectionId, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -376,14 +392,9 @@ namespace Azure.Communication.CallingServer
             {
                 case 200:
                     {
-                        IReadOnlyList<AcsCallParticipantDtoInternal> value = default;
+                        GetParticipantsResponseInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<AcsCallParticipantDtoInternal> array = new List<AcsCallParticipantDtoInternal>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(AcsCallParticipantDtoInternal.DeserializeAcsCallParticipantDtoInternal(item));
-                        }
-                        value = array;
+                        value = GetParticipantsResponseInternal.DeserializeGetParticipantsResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -391,7 +402,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateAddParticipantRequest(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest)
+        internal HttpMessage CreateAddParticipantRequest(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -403,6 +414,14 @@ namespace Azure.Communication.CallingServer
             uri.AppendPath("/participants:add", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (repeatabilityRequestID != null)
+            {
+                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
+            }
+            if (repeatabilityFirstSent != null)
+            {
+                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
+            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -414,9 +433,11 @@ namespace Azure.Communication.CallingServer
         /// <summary> Add participants to the call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="addParticipantsRequest"> The add participants request. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantsRequest"/> is null. </exception>
-        public async Task<Response<AddParticipantsResponse>> AddParticipantAsync(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<AddParticipantsResponseInternal>> AddParticipantAsync(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -427,15 +448,15 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(addParticipantsRequest));
             }
 
-            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantsRequest);
+            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        AddParticipantsResponse value = default;
+                        AddParticipantsResponseInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AddParticipantsResponse.DeserializeAddParticipantsResponse(document.RootElement);
+                        value = AddParticipantsResponseInternal.DeserializeAddParticipantsResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -446,9 +467,11 @@ namespace Azure.Communication.CallingServer
         /// <summary> Add participants to the call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
         /// <param name="addParticipantsRequest"> The add participants request. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="addParticipantsRequest"/> is null. </exception>
-        public Response<AddParticipantsResponse> AddParticipant(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, CancellationToken cancellationToken = default)
+        public Response<AddParticipantsResponseInternal> AddParticipant(string callConnectionId, AddParticipantsRequestInternal addParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -459,15 +482,15 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(addParticipantsRequest));
             }
 
-            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantsRequest);
+            using var message = CreateAddParticipantRequest(callConnectionId, addParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        AddParticipantsResponse value = default;
+                        AddParticipantsResponseInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AddParticipantsResponse.DeserializeAddParticipantsResponse(document.RootElement);
+                        value = AddParticipantsResponseInternal.DeserializeAddParticipantsResponseInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -475,7 +498,7 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateRemoveParticipantsRequest(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest)
+        internal HttpMessage CreateRemoveParticipantsRequest(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, Guid? repeatabilityRequestID, string repeatabilityFirstSent)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -487,6 +510,14 @@ namespace Azure.Communication.CallingServer
             uri.AppendPath("/participants:remove", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
+            if (repeatabilityRequestID != null)
+            {
+                request.Headers.Add("Repeatability-Request-ID", repeatabilityRequestID.Value);
+            }
+            if (repeatabilityFirstSent != null)
+            {
+                request.Headers.Add("Repeatability-First-Sent", repeatabilityFirstSent);
+            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -498,9 +529,11 @@ namespace Azure.Communication.CallingServer
         /// <summary> Remove participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="removeParticipantsRequest"> The participants to be removed from the call. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantsRequest"/> is null. </exception>
-        public async Task<Response<RemoveParticipantsResponse>> RemoveParticipantsAsync(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<RemoveParticipantsResult>> RemoveParticipantsAsync(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -511,15 +544,15 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(removeParticipantsRequest));
             }
 
-            using var message = CreateRemoveParticipantsRequest(callConnectionId, removeParticipantsRequest);
+            using var message = CreateRemoveParticipantsRequest(callConnectionId, removeParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        RemoveParticipantsResponse value = default;
+                        RemoveParticipantsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RemoveParticipantsResponse.DeserializeRemoveParticipantsResponse(document.RootElement);
+                        value = RemoveParticipantsResult.DeserializeRemoveParticipantsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -530,9 +563,11 @@ namespace Azure.Communication.CallingServer
         /// <summary> Remove participant from the call using identifier. </summary>
         /// <param name="callConnectionId"> The call connection id. </param>
         /// <param name="removeParticipantsRequest"> The participants to be removed from the call. </param>
+        /// <param name="repeatabilityRequestID"> If specified, the client directs that the request is repeatable; that is, that the client can make the request multiple times with the same Repeatability-Request-Id and get back an appropriate response without the server executing the request multiple times. The value of the Repeatability-Request-Id is an opaque string representing a client-generated unique identifier for the request. It is a version 4 (random) UUID. </param>
+        /// <param name="repeatabilityFirstSent"> If Repeatability-Request-ID header is specified, then Repeatability-First-Sent header must also be specified. The value should be the date and time at which the request was first created, expressed using the IMF-fixdate form of HTTP-date. Example: Sun, 06 Nov 1994 08:49:37 GMT. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="removeParticipantsRequest"/> is null. </exception>
-        public Response<RemoveParticipantsResponse> RemoveParticipants(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, CancellationToken cancellationToken = default)
+        public Response<RemoveParticipantsResult> RemoveParticipants(string callConnectionId, RemoveParticipantsRequestInternal removeParticipantsRequest, Guid? repeatabilityRequestID = null, string repeatabilityFirstSent = null, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -543,15 +578,15 @@ namespace Azure.Communication.CallingServer
                 throw new ArgumentNullException(nameof(removeParticipantsRequest));
             }
 
-            using var message = CreateRemoveParticipantsRequest(callConnectionId, removeParticipantsRequest);
+            using var message = CreateRemoveParticipantsRequest(callConnectionId, removeParticipantsRequest, repeatabilityRequestID, repeatabilityFirstSent);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 202:
                     {
-                        RemoveParticipantsResponse value = default;
+                        RemoveParticipantsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RemoveParticipantsResponse.DeserializeRemoveParticipantsResponse(document.RootElement);
+                        value = RemoveParticipantsResult.DeserializeRemoveParticipantsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -559,51 +594,48 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        internal HttpMessage CreateGetParticipantRequest(string callConnectionId, CommunicationIdentifierModel participant)
+        internal HttpMessage CreateGetParticipantRequest(string callConnectionId, string participantMri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Post;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/calling/callConnections/", false);
             uri.AppendPath(callConnectionId, true);
-            uri.AppendPath("/participants:get", false);
+            uri.AppendPath("/participants/", false);
+            uri.AppendPath(participantMri, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var model = new GetParticipantRequest()
-            {
-                Participant = participant
-            };
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
-            request.Content = content;
             return message;
         }
 
-        /// <summary> Get a participant from a call. </summary>
+        /// <summary> Get participant from a call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="participant"> The CommunicationIdentifierModel to use. </param>
+        /// <param name="participantMri"> MRI of the participants to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public async Task<Response<AcsCallParticipantDtoInternal>> GetParticipantAsync(string callConnectionId, CommunicationIdentifierModel participant = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participantMri"/> is null. </exception>
+        public async Task<Response<AcsCallParticipantInternal>> GetParticipantAsync(string callConnectionId, string participantMri, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
+            if (participantMri == null)
+            {
+                throw new ArgumentNullException(nameof(participantMri));
+            }
 
-            using var message = CreateGetParticipantRequest(callConnectionId, participant);
+            using var message = CreateGetParticipantRequest(callConnectionId, participantMri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AcsCallParticipantDtoInternal value = default;
+                        AcsCallParticipantInternal value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AcsCallParticipantDtoInternal.DeserializeAcsCallParticipantDtoInternal(document.RootElement);
+                        value = AcsCallParticipantInternal.DeserializeAcsCallParticipantInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -611,27 +643,31 @@ namespace Azure.Communication.CallingServer
             }
         }
 
-        /// <summary> Get a participant from a call. </summary>
+        /// <summary> Get participant from a call. </summary>
         /// <param name="callConnectionId"> The call connection Id. </param>
-        /// <param name="participant"> The CommunicationIdentifierModel to use. </param>
+        /// <param name="participantMri"> MRI of the participants to retrieve. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> is null. </exception>
-        public Response<AcsCallParticipantDtoInternal> GetParticipant(string callConnectionId, CommunicationIdentifierModel participant = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="participantMri"/> is null. </exception>
+        public Response<AcsCallParticipantInternal> GetParticipant(string callConnectionId, string participantMri, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
                 throw new ArgumentNullException(nameof(callConnectionId));
             }
+            if (participantMri == null)
+            {
+                throw new ArgumentNullException(nameof(participantMri));
+            }
 
-            using var message = CreateGetParticipantRequest(callConnectionId, participant);
+            using var message = CreateGetParticipantRequest(callConnectionId, participantMri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AcsCallParticipantDtoInternal value = default;
+                        AcsCallParticipantInternal value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AcsCallParticipantDtoInternal.DeserializeAcsCallParticipantDtoInternal(document.RootElement);
+                        value = AcsCallParticipantInternal.DeserializeAcsCallParticipantInternal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.IotHub
                 try
                 {
                     var response = await _iotHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new IotHubPrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new IotHubPrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.IotHub
                 try
                 {
                     var response = _iotHubPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new IotHubPrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new IotHubPrivateEndpointConnectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

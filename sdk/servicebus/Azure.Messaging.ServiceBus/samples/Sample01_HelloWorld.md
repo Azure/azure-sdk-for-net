@@ -1,8 +1,8 @@
-# Sending and Receiving Messages
+# Sending and receiving messages
 
-This sample demonstrates how to send and receive messages from a Service Bus queue.
+This sample demonstrates how to send and receive messages from a Service Bus queue. Once a message is received, you will typically want to settle it. Message settlement is covered in detail in the [Settling Messages samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample02_MessageSettlement.md).
 
-### Send and receive a message
+### Send and receive a message using queues
 
 Message sending is performed using the `ServiceBusSender`. Receiving is performed using the `ServiceBusReceiver`.
 
@@ -23,6 +23,37 @@ await sender.SendMessageAsync(message);
 
 // create a receiver that we can use to receive the message
 ServiceBusReceiver receiver = client.CreateReceiver(queueName);
+
+// the received message is a different type as it contains some service set properties
+ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
+
+// get the message body as a string
+string body = receivedMessage.Body.ToString();
+Console.WriteLine(body);
+```
+
+### Send and receive a message using topics and subscriptions
+
+As discussed in the [Key concepts section](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/servicebus/Azure.Messaging.ServiceBus/README.md#key-concepts) of the README, Service Bus supports topics and subscriptions that are useful in pub/sub scenarios. When using topics and subscriptions, each subscription will get its own copy of each message that is delivered to the topic. So completing a message in one subscription won't impact what happens to the message in a different subscription. Another important point about using subscriptions is that messages that were delivered to a topic *before* a subscription resource is created (whether creating resources via portal, the `ServiceBusAdministrationClient`, or the management library) will never get delivered to that subscription. The types that we use to send and receive messages are the same as the types used to send and receive messages using queues. However, the way we construct them is slightly different. When constructing a `ServiceBusSender` we pass the topic name to the `CreateSender` method. When constructing a `ServiceBusReceiver`, we have to pass both the topic name *and* the subscription name.
+
+```C# Snippet:ServiceBusSendAndReceiveTopic
+string connectionString = "<connection_string>";
+string topicName = "<topic_name>";
+string subscriptionName = "<subscription_name>";
+// since ServiceBusClient implements IAsyncDisposable we create it with "await using"
+await using var client = new ServiceBusClient(connectionString);
+
+// create the sender that we will use to send to our topic
+ServiceBusSender sender = client.CreateSender(topicName);
+
+// create a message that we can send. UTF-8 encoding is used when providing a string.
+ServiceBusMessage message = new ServiceBusMessage("Hello world!");
+
+// send the message
+await sender.SendMessageAsync(message);
+
+// create a receiver for our subscription that we can use to receive the message
+ServiceBusReceiver receiver = client.CreateReceiver(topicName, subscriptionName);
 
 // the received message is a different type as it contains some service set properties
 ServiceBusReceivedMessage receivedMessage = await receiver.ReceiveMessageAsync();
@@ -109,7 +140,7 @@ foreach (ServiceBusReceivedMessage receivedMessage in receivedMessages)
 
 ## Peeking a message
 
-It's also possible to simply peek a message. Peeking a message does not require the message to be locked.
+It's also possible to simply peek a message. Peeking a message does not require the message to be locked. Because the message is not locked to a specific receiver, the message will not be able to be settled. It's also possible that another receiver could lock the message and settle it while you are looking at the peeked message.
 
 ```C# Snippet:ServiceBusPeek
 ServiceBusReceivedMessage peekedMessage = await receiver.PeekMessageAsync();
@@ -125,12 +156,22 @@ long seq = await sender.ScheduleMessageAsync(
     DateTimeOffset.Now.AddDays(1));
 ```
 
+You can also schedule a message by setting the `ScheduledEnqueueTime` property on the message and using the `SendMessageAsync` or `SendMessagesAsync` methods. The difference is that you won't get back the sequence number when using these methods so you would need to peek the message to get the sequence number if you wanted to cancel the scheduled message.
+
 ### Cancel a scheduled message
 
 Cancelling the scheduled message will delete it from the service.
 
 ```C# Snippet:ServiceBusCancelScheduled
 await sender.CancelScheduledMessageAsync(seq);
+```
+
+### Setting time to live
+
+Message time to live can be configured at the queue or subscription level. By default, it is 14 days. Once this time has passed, the message is considered "expired". You can configure what happens to expired messages at the queue or subscription level. By default, these messages are deleted, but they can also be configured to move to the dead letter queue. More information about message expiry can be found [here](https://docs.microsoft.com/azure/service-bus-messaging/message-expiration). If you want to have an individual message expire before the entity-level configured time, you can set the `TimeToLive` property on the message.  
+
+```C# Snippet:ServiceBusMessageTimeToLive
+var message = new ServiceBusMessage("Hello world!") { TimeToLive = TimeSpan.FromMinutes(5) };
 ```
 
 ## Source

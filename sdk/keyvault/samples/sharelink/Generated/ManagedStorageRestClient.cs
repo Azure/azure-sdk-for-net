@@ -118,9 +118,10 @@ namespace Azure.Security.KeyVault.Storage
             return message;
         }
 
-        /// <summary> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </summary>
+        /// <summary> Lists deleted storage accounts for the specified vault. </summary>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </remarks>
         public async Task<Response<DeletedStorageListResult>> GetDeletedStorageAccountsAsync(int? maxresults = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDeletedStorageAccountsRequest(maxresults);
@@ -139,9 +140,10 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
-        /// <summary> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </summary>
+        /// <summary> Lists deleted storage accounts for the specified vault. </summary>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </remarks>
         public Response<DeletedStorageListResult> GetDeletedStorageAccounts(int? maxresults = null, CancellationToken cancellationToken = default)
         {
             using var message = CreateGetDeletedStorageAccountsRequest(maxresults);
@@ -175,10 +177,11 @@ namespace Azure.Security.KeyVault.Storage
             return message;
         }
 
-        /// <summary> The Get Deleted Storage Account operation returns the specified deleted storage account along with its attributes. This operation requires the storage/get permission. </summary>
+        /// <summary> Gets the specified deleted storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The Get Deleted Storage Account operation returns the specified deleted storage account along with its attributes. This operation requires the storage/get permission. </remarks>
         public async Task<Response<DeletedStorageBundle>> GetDeletedStorageAccountAsync(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -202,10 +205,11 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
-        /// <summary> The Get Deleted Storage Account operation returns the specified deleted storage account along with its attributes. This operation requires the storage/get permission. </summary>
+        /// <summary> Gets the specified deleted storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The Get Deleted Storage Account operation returns the specified deleted storage account along with its attributes. This operation requires the storage/get permission. </remarks>
         public Response<DeletedStorageBundle> GetDeletedStorageAccount(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -244,10 +248,11 @@ namespace Azure.Security.KeyVault.Storage
             return message;
         }
 
-        /// <summary> The purge deleted storage account operation removes the secret permanently, without the possibility of recovery. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/purge permission. </summary>
+        /// <summary> Permanently deletes the specified storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The purge deleted storage account operation removes the secret permanently, without the possibility of recovery. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/purge permission. </remarks>
         public async Task<Response> PurgeDeletedStorageAccountAsync(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -266,10 +271,11 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
-        /// <summary> The purge deleted storage account operation removes the secret permanently, without the possibility of recovery. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/purge permission. </summary>
+        /// <summary> Permanently deletes the specified storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The purge deleted storage account operation removes the secret permanently, without the possibility of recovery. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/purge permission. </remarks>
         public Response PurgeDeletedStorageAccount(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -304,10 +310,11 @@ namespace Azure.Security.KeyVault.Storage
             return message;
         }
 
-        /// <summary> Recovers the deleted storage account in the specified vault. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </summary>
+        /// <summary> Recovers the deleted storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> Recovers the deleted storage account in the specified vault. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </remarks>
         public async Task<Response<StorageBundle>> RecoverDeletedStorageAccountAsync(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -331,10 +338,11 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
-        /// <summary> Recovers the deleted storage account in the specified vault. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </summary>
+        /// <summary> Recovers the deleted storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> Recovers the deleted storage account in the specified vault. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </remarks>
         public Response<StorageBundle> RecoverDeletedStorageAccount(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -374,10 +382,11 @@ namespace Azure.Security.KeyVault.Storage
             return message;
         }
 
-        /// <summary> Requests that a backup of the specified storage account be downloaded to the client. This operation requires the storage/backup permission. </summary>
+        /// <summary> Backs up the specified storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> Requests that a backup of the specified storage account be downloaded to the client. This operation requires the storage/backup permission. </remarks>
         public async Task<Response<BackupStorageResult>> BackupStorageAccountAsync(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -401,10 +410,11 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
-        /// <summary> Requests that a backup of the specified storage account be downloaded to the client. This operation requires the storage/backup permission. </summary>
+        /// <summary> Backs up the specified storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> Requests that a backup of the specified storage account be downloaded to the client. This operation requires the storage/backup permission. </remarks>
         public Response<BackupStorageResult> BackupStorageAccount(string storageAccountName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -447,10 +457,11 @@ namespace Azure.Security.KeyVault.Storage
             return message;
         }
 
-        /// <summary> Restores a backed up storage account to a vault. This operation requires the storage/restore permission. </summary>
+        /// <summary> Restores a backed up storage account to a vault. </summary>
         /// <param name="storageBundleBackup"> The backup blob associated with a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageBundleBackup"/> is null. </exception>
+        /// <remarks> Restores a backed up storage account to a vault. This operation requires the storage/restore permission. </remarks>
         public async Task<Response<StorageBundle>> RestoreStorageAccountAsync(byte[] storageBundleBackup, CancellationToken cancellationToken = default)
         {
             if (storageBundleBackup == null)
@@ -474,10 +485,11 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
-        /// <summary> Restores a backed up storage account to a vault. This operation requires the storage/restore permission. </summary>
+        /// <summary> Restores a backed up storage account to a vault. </summary>
         /// <param name="storageBundleBackup"> The backup blob associated with a storage account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageBundleBackup"/> is null. </exception>
+        /// <remarks> Restores a backed up storage account to a vault. This operation requires the storage/restore permission. </remarks>
         public Response<StorageBundle> RestoreStorageAccount(byte[] storageBundleBackup, CancellationToken cancellationToken = default)
         {
             if (storageBundleBackup == null)
@@ -1032,11 +1044,12 @@ namespace Azure.Security.KeyVault.Storage
             return message;
         }
 
-        /// <summary> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </summary>
+        /// <summary> Lists deleted SAS definitions for the specified vault and storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </remarks>
         public async Task<Response<DeletedSasDefinitionListResult>> GetDeletedSasDefinitionsAsync(string storageAccountName, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1060,11 +1073,12 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
-        /// <summary> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </summary>
+        /// <summary> Lists deleted SAS definitions for the specified vault and storage account. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </remarks>
         public Response<DeletedSasDefinitionListResult> GetDeletedSasDefinitions(string storageAccountName, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1105,11 +1119,12 @@ namespace Azure.Security.KeyVault.Storage
             return message;
         }
 
-        /// <summary> The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with its attributes. This operation requires the storage/getsas permission. </summary>
+        /// <summary> Gets the specified deleted sas definition. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="sasDefinitionName"> The name of the SAS definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> or <paramref name="sasDefinitionName"/> is null. </exception>
+        /// <remarks> The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with its attributes. This operation requires the storage/getsas permission. </remarks>
         public async Task<Response<DeletedSasDefinitionBundle>> GetDeletedSasDefinitionAsync(string storageAccountName, string sasDefinitionName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1137,11 +1152,12 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
-        /// <summary> The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with its attributes. This operation requires the storage/getsas permission. </summary>
+        /// <summary> Gets the specified deleted sas definition. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="sasDefinitionName"> The name of the SAS definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> or <paramref name="sasDefinitionName"/> is null. </exception>
+        /// <remarks> The Get Deleted SAS Definition operation returns the specified deleted SAS definition along with its attributes. This operation requires the storage/getsas permission. </remarks>
         public Response<DeletedSasDefinitionBundle> GetDeletedSasDefinition(string storageAccountName, string sasDefinitionName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1187,11 +1203,12 @@ namespace Azure.Security.KeyVault.Storage
             return message;
         }
 
-        /// <summary> Recovers the deleted SAS definition for the specified storage account. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </summary>
+        /// <summary> Recovers the deleted SAS definition. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="sasDefinitionName"> The name of the SAS definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> or <paramref name="sasDefinitionName"/> is null. </exception>
+        /// <remarks> Recovers the deleted SAS definition for the specified storage account. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </remarks>
         public async Task<Response<SasDefinitionBundle>> RecoverDeletedSasDefinitionAsync(string storageAccountName, string sasDefinitionName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1219,11 +1236,12 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
-        /// <summary> Recovers the deleted SAS definition for the specified storage account. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </summary>
+        /// <summary> Recovers the deleted SAS definition. </summary>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="sasDefinitionName"> The name of the SAS definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountName"/> or <paramref name="sasDefinitionName"/> is null. </exception>
+        /// <remarks> Recovers the deleted SAS definition for the specified storage account. This operation can only be performed on a soft-delete enabled vault. This operation requires the storage/recover permission. </remarks>
         public Response<SasDefinitionBundle> RecoverDeletedSasDefinition(string storageAccountName, string sasDefinitionName, CancellationToken cancellationToken = default)
         {
             if (storageAccountName == null)
@@ -1728,11 +1746,12 @@ namespace Azure.Security.KeyVault.Storage
             return message;
         }
 
-        /// <summary> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </summary>
+        /// <summary> Lists deleted storage accounts for the specified vault. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </remarks>
         public async Task<Response<DeletedStorageListResult>> GetDeletedStorageAccountsNextPageAsync(string nextLink, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1756,11 +1775,12 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
-        /// <summary> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </summary>
+        /// <summary> Lists deleted storage accounts for the specified vault. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
+        /// <remarks> The Get Deleted Storage Accounts operation returns the storage accounts that have been deleted for a vault enabled for soft-delete. This operation requires the storage/list permission. </remarks>
         public Response<DeletedStorageListResult> GetDeletedStorageAccountsNextPage(string nextLink, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1876,12 +1896,13 @@ namespace Azure.Security.KeyVault.Storage
             return message;
         }
 
-        /// <summary> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </summary>
+        /// <summary> Lists deleted SAS definitions for the specified vault and storage account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </remarks>
         public async Task<Response<DeletedSasDefinitionListResult>> GetDeletedSasDefinitionsNextPageAsync(string nextLink, string storageAccountName, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)
@@ -1909,12 +1930,13 @@ namespace Azure.Security.KeyVault.Storage
             }
         }
 
-        /// <summary> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </summary>
+        /// <summary> Lists deleted SAS definitions for the specified vault and storage account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="storageAccountName"> The name of the storage account. </param>
         /// <param name="maxresults"> Maximum number of results to return in a page. If not specified the service will return up to 25 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="storageAccountName"/> is null. </exception>
+        /// <remarks> The Get Deleted Sas Definitions operation returns the SAS definitions that have been deleted for a vault enabled for soft-delete. This operation requires the storage/listsas permission. </remarks>
         public Response<DeletedSasDefinitionListResult> GetDeletedSasDefinitionsNextPage(string nextLink, string storageAccountName, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             if (nextLink == null)

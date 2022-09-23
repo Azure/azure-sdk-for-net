@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.Monitor
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<WritableSubResource> privateEndpoint = default;
-            Optional<MonitorPrivateLinkServiceConnectionStateProperty> privateLinkServiceConnectionState = default;
-            Optional<string> provisioningState = default;
+            Optional<SubResource> privateEndpoint = default;
+            Optional<MonitorPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            Optional<MonitorPrivateEndpointConnectionProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            privateEndpoint = JsonSerializer.Deserialize<SubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("privateLinkServiceConnectionState"))
@@ -96,19 +96,24 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            privateLinkServiceConnectionState = MonitorPrivateLinkServiceConnectionStateProperty.DeserializeMonitorPrivateLinkServiceConnectionStateProperty(property0.Value);
+                            privateLinkServiceConnectionState = MonitorPrivateLinkServiceConnectionState.DeserializeMonitorPrivateLinkServiceConnectionState(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            provisioningState = new MonitorPrivateEndpointConnectionProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new MonitorPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, provisioningState.Value);
+            return new MonitorPrivateEndpointConnectionData(id, name, type, systemData.Value, privateEndpoint, privateLinkServiceConnectionState.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

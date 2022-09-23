@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             string type = default;
             Optional<EventHubV2StreamInputDataSource> subscriber = default;
             Optional<EventGridEventSchemaType> schema = default;
-            Optional<IList<StorageAccount>> storageAccounts = default;
+            Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
             Optional<IList<string>> eventTypes = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<StorageAccount> array = new List<StorageAccount>();
+                            List<StreamAnalyticsStorageAccount> array = new List<StreamAnalyticsStorageAccount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StorageAccount.DeserializeStorageAccount(item));
+                                array.Add(StreamAnalyticsStorageAccount.DeserializeStreamAnalyticsStorageAccount(item));
                             }
                             storageAccounts = array;
                             continue;

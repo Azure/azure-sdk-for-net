@@ -22,16 +22,9 @@ namespace Azure.ResourceManager.Storage.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string TLS10Value = "TLS1_0";
-        private const string TLS11Value = "TLS1_1";
-        private const string TLS12Value = "TLS1_2";
-
-        /// <summary> TLS1_0. </summary>
-        public static StorageMinimumTlsVersion TLS10 { get; } = new StorageMinimumTlsVersion(TLS10Value);
-        /// <summary> TLS1_1. </summary>
-        public static StorageMinimumTlsVersion TLS11 { get; } = new StorageMinimumTlsVersion(TLS11Value);
-        /// <summary> TLS1_2. </summary>
-        public static StorageMinimumTlsVersion TLS12 { get; } = new StorageMinimumTlsVersion(TLS12Value);
+        private const string Tls1_0Value = "TLS1_0";
+        private const string Tls1_1Value = "TLS1_1";
+        private const string Tls1_2Value = "TLS1_2";
         /// <summary> Determines if two <see cref="StorageMinimumTlsVersion"/> values are the same. </summary>
         public static bool operator ==(StorageMinimumTlsVersion left, StorageMinimumTlsVersion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageMinimumTlsVersion"/> values are not the same. </summary>

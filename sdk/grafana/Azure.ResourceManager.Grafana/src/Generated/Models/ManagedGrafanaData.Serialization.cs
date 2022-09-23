@@ -31,7 +31,8 @@ namespace Azure.ResourceManager.Grafana
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -51,9 +52,9 @@ namespace Azure.ResourceManager.Grafana
 
         internal static ManagedGrafanaData DeserializeManagedGrafanaData(JsonElement element)
         {
-            Optional<ResourceSku> sku = default;
+            Optional<ManagedGrafanaSku> sku = default;
             Optional<ManagedGrafanaProperties> properties = default;
-            Optional<ManagedIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Grafana
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    sku = ResourceSku.DeserializeResourceSku(property.Value);
+                    sku = ManagedGrafanaSku.DeserializeManagedGrafanaSku(property.Value);
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -89,7 +90,8 @@ namespace Azure.ResourceManager.Grafana
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("tags"))
@@ -138,7 +140,7 @@ namespace Azure.ResourceManager.Grafana
                     continue;
                 }
             }
-            return new ManagedGrafanaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, properties.Value, identity.Value);
+            return new ManagedGrafanaData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, properties.Value, identity);
         }
     }
 }

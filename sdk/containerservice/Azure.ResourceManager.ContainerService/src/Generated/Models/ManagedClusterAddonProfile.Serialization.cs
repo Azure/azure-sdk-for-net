@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("enabled");
-            writer.WriteBooleanValue(Enabled);
+            writer.WriteBooleanValue(IsEnabled);
             if (Optional.IsCollectionDefined(Config))
             {
                 writer.WritePropertyName("config");
