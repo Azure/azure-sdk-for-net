@@ -5,23 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.KubernetesConfiguration.Models;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _operationStatusClientDiagnostics;
-        private OperationStatusRestOperations _operationStatusRestClient;
-
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResourceExtensionClient"/> class for mocking. </summary>
         protected ResourceGroupResourceExtensionClient()
         {
@@ -33,9 +24,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         internal ResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
-
-        private ClientDiagnostics OperationStatusClientDiagnostics => _operationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private OperationStatusRestOperations OperationStatusRestClient => _operationStatusRestClient ??= new OperationStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -71,96 +59,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         public virtual SourceControlConfigurationCollection GetSourceControlConfigurations(string clusterRp, string clusterResourceName, string clusterName)
         {
             return new SourceControlConfigurationCollection(Client, Id, clusterRp, clusterResourceName, clusterName);
-        }
-
-        /// <summary>
-        /// List Async Operations, currently in progress, in a cluster
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/operations
-        /// Operation Id: OperationStatus_List
-        /// </summary>
-        /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
-        /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
-        /// <param name="clusterName"> The name of the kubernetes cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationStatusResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationStatusResult> GetOperationStatusAsync(string clusterRp, string clusterResourceName, string clusterName, CancellationToken cancellationToken = default)
-        {
-            async Task<Page<OperationStatusResult>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetOperationStatus");
-                scope.Start();
-                try
-                {
-                    var response = await OperationStatusRestClient.ListAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterRp, clusterResourceName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            async Task<Page<OperationStatusResult>> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = OperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetOperationStatus");
-                scope.Start();
-                try
-                {
-                    var response = await OperationStatusRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, clusterRp, clusterResourceName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, NextPageFunc);
-        }
-
-        /// <summary>
-        /// List Async Operations, currently in progress, in a cluster
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/operations
-        /// Operation Id: OperationStatus_List
-        /// </summary>
-        /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
-        /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
-        /// <param name="clusterName"> The name of the kubernetes cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationStatusResult" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationStatusResult> GetOperationStatus(string clusterRp, string clusterResourceName, string clusterName, CancellationToken cancellationToken = default)
-        {
-            Page<OperationStatusResult> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = OperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetOperationStatus");
-                scope.Start();
-                try
-                {
-                    var response = OperationStatusRestClient.List(Id.SubscriptionId, Id.ResourceGroupName, clusterRp, clusterResourceName, clusterName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            Page<OperationStatusResult> NextPageFunc(string nextLink, int? pageSizeHint)
-            {
-                using var scope = OperationStatusClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetOperationStatus");
-                scope.Start();
-                try
-                {
-                    var response = OperationStatusRestClient.ListNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, clusterRp, clusterResourceName, clusterName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
         }
     }
 }

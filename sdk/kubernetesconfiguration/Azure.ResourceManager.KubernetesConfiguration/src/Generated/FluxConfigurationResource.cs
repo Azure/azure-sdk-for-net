@@ -36,8 +36,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         private readonly ClientDiagnostics _fluxConfigurationClientDiagnostics;
         private readonly FluxConfigurationsRestOperations _fluxConfigurationRestClient;
-        private readonly ClientDiagnostics _fluxConfigOperationStatusClientDiagnostics;
-        private readonly FluxConfigOperationStatusRestOperations _fluxConfigOperationStatusRestClient;
         private readonly FluxConfigurationData _data;
 
         /// <summary> Initializes a new instance of the <see cref="FluxConfigurationResource"/> class for mocking. </summary>
@@ -62,8 +60,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             _fluxConfigurationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string fluxConfigurationApiVersion);
             _fluxConfigurationRestClient = new FluxConfigurationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, fluxConfigurationApiVersion);
-            _fluxConfigOperationStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _fluxConfigOperationStatusRestClient = new FluxConfigOperationStatusRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -247,60 +243,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get Async Operation status
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}/operations/{operationId}
-        /// Operation Id: FluxConfigOperationStatus_Get
-        /// </summary>
-        /// <param name="operationId"> operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<OperationStatusResult>> GetFluxConfigOperationStatuAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _fluxConfigOperationStatusClientDiagnostics.CreateScope("FluxConfigurationResource.GetFluxConfigOperationStatu");
-            scope.Start();
-            try
-            {
-                var response = await _fluxConfigOperationStatusRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get Async Operation status
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/fluxConfigurations/{fluxConfigurationName}/operations/{operationId}
-        /// Operation Id: FluxConfigOperationStatus_Get
-        /// </summary>
-        /// <param name="operationId"> operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<OperationStatusResult> GetFluxConfigOperationStatu(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _fluxConfigOperationStatusClientDiagnostics.CreateScope("FluxConfigurationResource.GetFluxConfigOperationStatu");
-            scope.Start();
-            try
-            {
-                var response = _fluxConfigOperationStatusRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, operationId, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

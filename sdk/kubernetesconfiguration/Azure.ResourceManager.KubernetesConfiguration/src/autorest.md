@@ -46,4 +46,9 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
 
+directive:
+  - remove-operation: OperationStatus_Get
+  - remove-operation: OperationStatus_List
+  - remove-operation: FluxConfigOperationStatus_Get
+
 ```

@@ -408,6 +408,12 @@
       ]
     },
     {
+      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
+      "words": [
+        "kustomization"
+      ]
+    },
+    {
       "filename": "**/sdk/iothub/**/*.cs",
       "words": [
         "fqdns"

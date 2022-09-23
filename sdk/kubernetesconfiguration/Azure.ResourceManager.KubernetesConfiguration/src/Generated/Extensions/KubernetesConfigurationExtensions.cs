@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.KubernetesConfiguration.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KubernetesConfiguration
@@ -191,50 +190,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         public static Response<SourceControlConfigurationResource> GetSourceControlConfiguration(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetSourceControlConfigurations(clusterRp, clusterResourceName, clusterName).Get(sourceControlConfigurationName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List Async Operations, currently in progress, in a cluster
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/operations
-        /// Operation Id: OperationStatus_List
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
-        /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
-        /// <param name="clusterName"> The name of the kubernetes cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="OperationStatusResult" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OperationStatusResult> GetOperationStatusAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            return GetExtensionClient(resourceGroupResource).GetOperationStatusAsync(clusterRp, clusterResourceName, clusterName, cancellationToken);
-        }
-
-        /// <summary>
-        /// List Async Operations, currently in progress, in a cluster
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{clusterRp}/{clusterResourceName}/{clusterName}/providers/Microsoft.KubernetesConfiguration/operations
-        /// Operation Id: OperationStatus_List
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="clusterRp"> The Kubernetes cluster RP - i.e. Microsoft.ContainerService, Microsoft.Kubernetes, Microsoft.HybridContainerService. </param>
-        /// <param name="clusterResourceName"> The Kubernetes cluster resource name - i.e. managedClusters, connectedClusters, provisionedClusters. </param>
-        /// <param name="clusterName"> The name of the kubernetes cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterRp"/>, <paramref name="clusterResourceName"/> or <paramref name="clusterName"/> is null. </exception>
-        /// <returns> A collection of <see cref="OperationStatusResult" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OperationStatusResult> GetOperationStatus(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(clusterRp, nameof(clusterRp));
-            Argument.AssertNotNullOrEmpty(clusterResourceName, nameof(clusterResourceName));
-            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
-
-            return GetExtensionClient(resourceGroupResource).GetOperationStatus(clusterRp, clusterResourceName, clusterName, cancellationToken);
         }
 
         #region ExtensionResource
