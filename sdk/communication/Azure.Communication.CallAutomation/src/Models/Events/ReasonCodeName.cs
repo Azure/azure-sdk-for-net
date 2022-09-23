@@ -28,7 +28,6 @@ namespace Azure.Communication.CallAutomation
         private const string RecognizeStopToneDetectedValue = "8514";
 
         private const string PlayDownloadFailedValue = "8536";
-        private const string PlayOperationCancelledValue = "8508";
         private const string PlayInvalidFileFormatValue = "8535";
 
         private const string CompletedSuccessfullyValue = "0";
@@ -49,8 +48,6 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Action failed, file could not be downloaded. </summary>
         public static ReasonCodeName PlayDownloadFailed { get; } = new ReasonCodeName(PlayDownloadFailedValue);
-        /// <summary> Action falied, the operation was cancelled. </summary>
-        public static ReasonCodeName PlayOperationCancelled { get; } = new ReasonCodeName(PlayOperationCancelledValue);
         /// <summary> Action failed, file could not be downloaded. </summary>
         public static ReasonCodeName PlayInvalidFileFormat { get; } = new ReasonCodeName(PlayInvalidFileFormatValue);
 

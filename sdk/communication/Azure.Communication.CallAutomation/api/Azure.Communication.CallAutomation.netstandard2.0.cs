@@ -572,7 +572,6 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.ReasonCodeName OperationCanceled { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCodeName PlayDownloadFailed { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCodeName PlayInvalidFileFormat { get { throw null; } }
-        public static Azure.Communication.CallAutomation.ReasonCodeName PlayOperationCancelled { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCodeName RecognizeInitialSilenceTimeout { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCodeName RecognizeInterDigitTimeout { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCodeName RecognizeMaxDigitsReceived { get { throw null; } }
