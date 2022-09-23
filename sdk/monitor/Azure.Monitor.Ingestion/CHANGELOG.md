@@ -1,14 +1,9 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+## 1.0.0-beta.3 (2022-09-23)
+## Features Added
+- Added Concurrency with Multi-Threading to Upload methods
+- Added Model `UploadLogsResult` representing the request to upload logs to Azure Monitor
 
 ## 1.0.0-beta.2 (2022-08-26)
 ## Features Added
