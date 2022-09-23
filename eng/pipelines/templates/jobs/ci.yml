@@ -242,7 +242,6 @@ jobs:
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
             MatrixConfigsFile: eng/pipelines/templates/stages/code-gen-matrix.json
             IncludeSrc: true
-            IncludeTests: false
             OutputProjectFilePath: "$(Build.ArtifactStagingDirectory)/codegen.txt"
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}
