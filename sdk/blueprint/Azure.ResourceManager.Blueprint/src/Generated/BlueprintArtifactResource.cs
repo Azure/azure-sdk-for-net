@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<ArtifactResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _blueprintArtifactArtifactsClientDiagnostics.CreateScope("BlueprintArtifactResource.GetCore");
+            using var scope = _blueprintArtifactArtifactsClientDiagnostics.CreateScope("BlueprintArtifactResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Blueprint
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<ArtifactResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _blueprintArtifactArtifactsClientDiagnostics.CreateScope("BlueprintArtifactResource.GetCore");
+            using var scope = _blueprintArtifactArtifactsClientDiagnostics.CreateScope("BlueprintArtifactResource.Get");
             scope.Start();
             try
             {

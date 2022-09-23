@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<TagContractResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementProductTagTagClientDiagnostics.CreateScope("ApiManagementProductTagResource.GetCore");
+            using var scope = _apiManagementProductTagTagClientDiagnostics.CreateScope("ApiManagementProductTagResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<TagContractResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiManagementProductTagTagClientDiagnostics.CreateScope("ApiManagementProductTagResource.GetCore");
+            using var scope = _apiManagementProductTagTagClientDiagnostics.CreateScope("ApiManagementProductTagResource.Get");
             scope.Start();
             try
             {

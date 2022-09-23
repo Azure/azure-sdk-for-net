@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<DiagnosticContractResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.GetCore");
+            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.Get");
             scope.Start();
             try
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<DiagnosticContractResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.GetCore");
+            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.Get");
             scope.Start();
             try
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.DeleteCore");
+            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.Delete");
             scope.Start();
             try
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.DeleteCore");
+            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.Delete");
             scope.Start();
             try
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.UpdateCore");
+            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.Update");
             scope.Start();
             try
             {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.UpdateCore");
+            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.Update");
             scope.Start();
             try
             {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<bool>> GetEntityTagCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.GetEntityTagCore");
+            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.GetEntityTag");
             scope.Start();
             try
             {
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<bool> GetEntityTagCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.GetEntityTagCore");
+            using var scope = _apiDiagnosticClientDiagnostics.CreateScope("ApiDiagnosticResource.GetEntityTag");
             scope.Start();
             try
             {

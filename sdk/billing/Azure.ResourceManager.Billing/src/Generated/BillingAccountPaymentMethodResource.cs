@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<BasePaymentMethodResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingAccountPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingAccountPaymentMethodResource.GetCore");
+            using var scope = _billingAccountPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingAccountPaymentMethodResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<BasePaymentMethodResource> GetCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _billingAccountPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingAccountPaymentMethodResource.GetCore");
+            using var scope = _billingAccountPaymentMethodPaymentMethodsClientDiagnostics.CreateScope("BillingAccountPaymentMethodResource.Get");
             scope.Start();
             try
             {

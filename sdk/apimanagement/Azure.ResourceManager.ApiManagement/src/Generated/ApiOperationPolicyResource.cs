@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<PolicyContractResource>> GetCoreAsync(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.GetCore");
+            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.Get");
             scope.Start();
             try
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<PolicyContractResource> GetCore(PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.GetCore");
+            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.Get");
             scope.Start();
             try
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.DeleteCore");
+            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.Delete");
             scope.Start();
             try
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override ArmOperation DeleteCore(WaitUntil waitUntil, ETag ifMatch, CancellationToken cancellationToken = default)
         {
-            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.DeleteCore");
+            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.Delete");
             scope.Start();
             try
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.UpdateCore");
+            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.Update");
             scope.Start();
             try
             {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.UpdateCore");
+            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.Update");
             scope.Start();
             try
             {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override async Task<Response<bool>> GetEntityTagCoreAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.GetEntityTagCore");
+            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.GetEntityTag");
             scope.Start();
             try
             {
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         protected override Response<bool> GetEntityTagCore(CancellationToken cancellationToken = default)
         {
-            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.GetEntityTagCore");
+            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyResource.GetEntityTag");
             scope.Start();
             try
             {

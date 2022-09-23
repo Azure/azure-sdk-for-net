@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Automation
 {
@@ -28,11 +29,10 @@ namespace Azure.ResourceManager.Automation
             {
                 return new AutomationAccountModuleResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: AutomationAccountPython2PackageResource or AutomationAccountModuleResource");
         }
 
-        internal static bool IsAutomationAccountPython2PackageResource(ResourceIdentifier id)
+        private static bool IsAutomationAccountPython2PackageResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != AutomationAccountPython2PackageResource.ResourceType)
@@ -40,14 +40,14 @@ namespace Azure.ResourceManager.Automation
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsAutomationAccountModuleResource(ResourceIdentifier id)
+        private static bool IsAutomationAccountModuleResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != AutomationAccountModuleResource.ResourceType)
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Automation
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

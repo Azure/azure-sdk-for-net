@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return new ApiManagementDiagnosticResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: ApiDiagnosticResource or ApiManagementDiagnosticResource");
         }
 
-        internal static bool IsApiDiagnosticResource(ResourceIdentifier id)
+        private static bool IsApiDiagnosticResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != ApiDiagnosticResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.ApiManagement
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsApiManagementDiagnosticResource(ResourceIdentifier id)
+        private static bool IsApiManagementDiagnosticResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != ApiManagementDiagnosticResource.ResourceType)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }

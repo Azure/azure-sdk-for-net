@@ -27,11 +27,10 @@ namespace Azure.ResourceManager.Blueprint
             {
                 return new BlueprintVersionArtifactResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: BlueprintArtifactResource or BlueprintVersionArtifactResource");
         }
 
-        internal static bool IsBlueprintArtifactResource(ResourceIdentifier id)
+        private static bool IsBlueprintArtifactResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != BlueprintArtifactResource.ResourceType)
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Blueprint
             return true;
         }
 
-        internal static bool IsBlueprintVersionArtifactResource(ResourceIdentifier id)
+        private static bool IsBlueprintVersionArtifactResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != BlueprintVersionArtifactResource.ResourceType)

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
@@ -27,11 +28,10 @@ namespace Azure.ResourceManager.Billing
             {
                 return new BillingAccountPaymentMethodResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: PaymentMethodResource or BillingAccountPaymentMethodResource");
         }
 
-        internal static bool IsPaymentMethodResource(ResourceIdentifier id)
+        private static bool IsPaymentMethodResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != PaymentMethodResource.ResourceType)
@@ -39,14 +39,14 @@ namespace Azure.ResourceManager.Billing
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.ResourceType != "Microsoft.Resources/tenants")
+            if (id.Parent.ResourceType != TenantResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsBillingAccountPaymentMethodResource(ResourceIdentifier id)
+        private static bool IsBillingAccountPaymentMethodResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != BillingAccountPaymentMethodResource.ResourceType)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Billing
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/tenants")
+            if (id.Parent.Parent.ResourceType != TenantResource.ResourceType)
             {
                 return false;
             }

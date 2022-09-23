@@ -12,6 +12,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ApiManagement.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -36,11 +37,10 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 return new ApiManagementProductPolicyResource(client, data);
             }
-            // TODO -- should we throw or return an UnknownResource?
-            throw new InvalidOperationException();
+            throw new InvalidOperationException($"The resource identifier {data.Id} cannot be recognized as one of the following resource candidates: ApiOperationPolicyResource, ApiPolicyResource, ApiManagementPolicyResource or ApiManagementProductPolicyResource");
         }
 
-        internal static bool IsApiOperationPolicyResource(ResourceIdentifier id)
+        private static bool IsApiOperationPolicyResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != ApiOperationPolicyResource.ResourceType)
@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.ApiManagement
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsApiPolicyResource(ResourceIdentifier id)
+        private static bool IsApiPolicyResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != ApiPolicyResource.ResourceType)
@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.ApiManagement
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsApiManagementPolicyResource(ResourceIdentifier id)
+        private static bool IsApiManagementPolicyResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != ApiManagementPolicyResource.ResourceType)
@@ -78,14 +78,14 @@ namespace Azure.ResourceManager.ApiManagement
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
             return true;
         }
 
-        internal static bool IsApiManagementProductPolicyResource(ResourceIdentifier id)
+        private static bool IsApiManagementProductPolicyResource(ResourceIdentifier id)
         {
             // checking the resource type
             if (id.ResourceType != ApiManagementProductPolicyResource.ResourceType)
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ApiManagement
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.Parent.Parent.ResourceType != "Microsoft.Resources/resourceGroups")
+            if (id.Parent.Parent.Parent.ResourceType != ResourceGroupResource.ResourceType)
             {
                 return false;
             }
