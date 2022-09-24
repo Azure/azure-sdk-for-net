@@ -1,19 +1,16 @@
 {
   "Entries": [
     {
-      "RequestUri": "https://wuppe.api.cognitive.microsoft.com/language/:query-knowledgebases?projectName=190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c\u0026deploymentName=test\u0026api-version=2021-10-01",
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/:query-knowledgebases?projectName=testQA\u0026deploymentName=test\u0026api-version=2021-10-01",
       "RequestMethod": "POST",
       "RequestHeaders": {
         "Accept": "application/json",
         "Content-Length": "76",
         "Content-Type": "application/json",
         "Ocp-Apim-Subscription-Key": "Sanitized",
-        "traceparent": "00-e1aef96bc8e1cd49b0139ec2cf3bd5c0-d6c674b052e6564e-00",
-        "User-Agent": [
-          "azsdk-net-AI.Language.QuestionAnswering/1.0.0-alpha.20211028.1",
-          "(.NET 5.0.11; Microsoft Windows 10.0.22000)"
-        ],
-        "x-ms-client-request-id": "aed79783fb8a645b109bf10c14a34381",
+        "traceparent": "00-d547ca3223a1c2df193246cdcccf0e1d-3f420a06c6247e51-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220921.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "01de01f19dc6c9a234a6179a99dc79af",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,64 +21,50 @@
       },
       "StatusCode": 200,
       "ResponseHeaders": {
-        "apim-request-id": "c487af18-291e-4c86-8efc-c408382d3c9f",
-        "Content-Length": "1459",
+        "apim-request-id": "2343c0dc-9d1c-4d34-830b-6665e6f63b19",
+        "Content-Length": "1207",
         "Content-Type": "application/json; charset=utf-8",
         "csp-billing-usage": "CognitiveServices.TextAnalytics.QuestionAnsweringTextRecords=1",
-        "Date": "Thu, 28 Oct 2021 20:05:21 GMT",
+        "Date": "Thu, 22 Sep 2022 01:01:16 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
         "X-Content-Type-Options": "nosniff",
-        "x-envoy-upstream-service-time": "506"
+        "x-envoy-upstream-service-time": "404"
       },
-      "ResponseBody": [
-        "{\n",
-        "  \u0022answers\u0022: [\n",
-        "    {\n",
-        "      \u0022questions\u0022: [\n",
-        "        \u0022Power and charging\u0022\n",
-        "      ],\n",
-        "      \u0022answer\u0022: \u0022**Power and charging**\\n\\nIt takes two to four hours to charge the Surface Pro 4 battery fully from an empty state. It can take longer if you\u2019re using your Surface for power-intensive activities like gaming or video streaming while you\u2019re charging it.\\n\\nYou can use the USB port on your Surface Pro 4 power supply to charge other devices, like a phone, while your Surface charges. The USB port on the power supply is only for charging, not for data transfer. If you want to use a USB device, plug it into the USB port on your Surface.\u0022,\n",
-        "      \u0022confidenceScore\u0022: 0.6568999999999999,\n",
-        "      \u0022id\u0022: 132,\n",
-        "      \u0022source\u0022: \u0022surface-pro-4-user-guide-EN.pdf\u0022,\n",
-        "      \u0022metadata\u0022: {\n",
-        "        \u0022explicitlytaggedheading\u0022: \u0022power and charging\u0022\n",
-        "      },\n",
-        "      \u0022dialog\u0022: {\n",
-        "        \u0022isContextOnly\u0022: false,\n",
-        "        \u0022prompts\u0022: [\n",
-        "          {\n",
-        "            \u0022displayOrder\u0022: 0,\n",
-        "            \u0022qnaId\u0022: 133,\n",
-        "            \u0022displayText\u0022: \u0022Check the battery level\u0022\n",
-        "          },\n",
-        "          {\n",
-        "            \u0022displayOrder\u0022: 1,\n",
-        "            \u0022qnaId\u0022: 134,\n",
-        "            \u0022displayText\u0022: \u0022Lock screen.\u0022\n",
-        "          },\n",
-        "          {\n",
-        "            \u0022displayOrder\u0022: 2,\n",
-        "            \u0022qnaId\u0022: 135,\n",
-        "            \u0022displayText\u0022: \u0022Desktop taskbar.\u0022\n",
-        "          },\n",
-        "          {\n",
-        "            \u0022displayOrder\u0022: 3,\n",
-        "            \u0022qnaId\u0022: 136,\n",
-        "            \u0022displayText\u0022: \u0022Make your battery last\u0022\n",
-        "          }\n",
-        "        ]\n",
-        "      }\n",
-        "    }\n",
-        "  ]\n",
-        "}"
-      ]
+      "ResponseBody": {
+        "answers": [
+          {
+            "questions": [
+              "Power and charging"
+            ],
+            "answer": "**Power and charging**\n\nSurface Book has two batteries\u2014one in the keyboard and one in the Clipboard. It takes two to four hours to charge Surface Book fully from an empty state. It can take longer if you\u2019re using your Surface Book for power-intensive activities like gaming or video streaming while you\u2019re charging it.\n\nYou can use the USB port on your power supply to charge other devices, like a phone, while your Surface Book charges. Note that the USB port on the power supply is only for charging, not for data transfer. If you want to use a USB device, plug it into the USB port on your Surface Book.",
+            "confidenceScore": 0.4877,
+            "id": 23,
+            "source": "surface-book-user-guide-EN.pdf",
+            "metadata": {},
+            "dialog": {
+              "isContextOnly": false,
+              "prompts": [
+                {
+                  "displayOrder": 0,
+                  "qnaId": 24,
+                  "displayText": "Check the battery level"
+                },
+                {
+                  "displayOrder": 1,
+                  "qnaId": 26,
+                  "displayText": "Making your battery last"
+                }
+              ]
+            }
+          }
+        ]
+      }
     }
   ],
   "Variables": {
-    "QUESTIONANSWERING_ENDPOINT": "https://wuppe.api.cognitive.microsoft.com",
+    "QUESTIONANSWERING_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
     "QUESTIONANSWERING_KEY": "Sanitized",
-    "QUESTIONANSWERING_PROJECT": "190a9e13-8ede-4e4b-a8fd-c4d7f2aeab6c",
-    "RandomSeed": "808174158"
+    "QUESTIONANSWERING_PROJECT": "testQA",
+    "RandomSeed": "1003254936"
   }
 }

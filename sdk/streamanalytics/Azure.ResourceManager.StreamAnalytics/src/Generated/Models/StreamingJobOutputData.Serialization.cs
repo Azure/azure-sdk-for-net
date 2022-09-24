@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(TimeWindow))
             {
                 writer.WritePropertyName("timeWindow");
-                writer.WriteStringValue(TimeWindow.Value);
+                writer.WriteStringValue(TimeWindow.Value, "O");
             }
             if (Optional.IsDefined(SizeWindow))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            timeWindow = property0.Value.GetDateTimeOffset();
+                            timeWindow = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("sizeWindow"))

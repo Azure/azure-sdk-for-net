@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -19,14 +20,18 @@ namespace Azure.Monitor.Ingestion.Tests
         private const int Mb = 1024 * 1024;
         public MonitorIngestionLiveTest(bool isAsync) : base(isAsync)
         {
-            CompareBodies = false; //TODO: https://github.com/Azure/azure-sdk-for-net/issues/30865
         }
 
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
 
-        private LogsIngestionClient CreateClient()
+        private LogsIngestionClient CreateClient(HttpPipelinePolicy policy = null)
         {
-            var clientOptions = InstrumentClientOptions(new LogsIngestionClientOptions());
+            var options = new LogsIngestionClientOptions();
+            if (policy != null)
+            {
+                options.AddPolicy(policy, HttpPipelinePosition.PerCall);
+            }
+            var clientOptions = InstrumentClientOptions(options);
             return InstrumentClient(new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.Credential, clientOptions));
         }
 
@@ -77,6 +82,7 @@ namespace Azure.Monitor.Ingestion.Tests
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
+            Assert.IsEmpty(response.Value.Errors);
         }
 
         private static List<Object> GenerateEntries(int numEntries, DateTime recordingNow)
@@ -105,33 +111,7 @@ namespace Azure.Monitor.Ingestion.Tests
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
-        }
-
-        [Test]
-        public async Task ValidInputFromObjectAsJsonNoBatchingAsync()
-        {
-            LogsIngestionClient client = CreateClient();
-
-            BinaryData data = BinaryData.FromObjectAsJson(
-                // Use an anonymous type to create the payload
-                new[] {
-                    new
-                    {
-                        Time = Recording.Now.DateTime,
-                        Computer = "Computer1",
-                        AdditionalContext = 2,
-                    },
-                    new
-                    {
-                        Time = Recording.Now.DateTime,
-                        Computer = "Computer2",
-                        AdditionalContext = 3
-                    },
-                });
-
-            Response response = await client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, RequestContent.Create(data)).ConfigureAwait(false); //takes StreamName not tablename
-            // Check the response
-            Assert.AreEqual(204, response.Status);
+            Assert.IsEmpty(response.Value.Errors);
         }
 
         [LiveOnly]
@@ -145,6 +125,7 @@ namespace Azure.Monitor.Ingestion.Tests
 
             // Check the response
             Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
+            Assert.IsEmpty(response.Value.Errors);
         }
 
         [LiveOnly]
@@ -158,6 +139,41 @@ namespace Azure.Monitor.Ingestion.Tests
             Assert.AreEqual(UploadLogsStatus.Failure, response.Value.Status);
             Assert.AreEqual(413, response.Value.Errors.FirstOrDefault().Error.Code);
             Assert.AreEqual(10000, response.Value.Errors.FirstOrDefault().FailedLogs.Count());
+        }
+
+        [AsyncOnly]
+        [Test]
+        public async Task ConcurrencyMultiThread()
+        {
+            var policy = new ConcurrencyCounterPolicy(10);
+            LogsIngestionClient client = CreateClient(policy);
+            LogsIngestionClient.SingleUploadThreshold = 100; // make batch size smaller for Uploads for test recording size
+
+            // Make the request
+            UploadLogsOptions options = new UploadLogsOptions();
+            options.MaxConcurrency = 10;
+            var tasks = client.UploadAsync(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(8, Recording.Now.DateTime), options).ConfigureAwait(false);
+
+            var response = await tasks;
+
+            // Check the response
+            Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
+            Assert.IsEmpty(response.Value.Errors);
+        }
+
+        [SyncOnly]
+        [Test]
+        public void ConcurrencySingleThread()
+        {
+            var policy = new ConcurrencyCounterPolicy(10);
+            LogsIngestionClient client = CreateClient(policy);
+
+            LogsIngestionClient.SingleUploadThreshold = 100; // make batch size smaller for Uploads for test recording size
+            var response = client.Upload(TestEnvironment.DCRImmutableId, TestEnvironment.StreamName, GenerateEntries(50, Recording.Now.DateTime));
+
+            // Check the response
+            Assert.AreEqual(UploadLogsStatus.Success, response.Value.Status);
+            Assert.IsEmpty(response.Value.Errors);
         }
     }
 }

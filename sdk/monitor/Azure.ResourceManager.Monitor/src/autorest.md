@@ -211,8 +211,8 @@ rename-mapping:
   LogSearchRuleResource.properties.autoMitigate: IsAutoMitigateEnabled
   ScaleRule: AutoscaleRule
   ScaleRuleMetricDimension: AutoscaleRuleMetricDimension
-  TestNotificationDetailsResponse.completedTime: -|datetime
-  TestNotificationDetailsResponse.createdTime: -|datetime
+  TestNotificationDetailsResponse.completedTime: -|date-time
+  TestNotificationDetailsResponse.createdTime: -|date-time
   HttpRequestInfo: EventDataHttpRequestInfo
   HttpRequestInfo.clientIpAddress: -|ip-address
   MetricAlertAction.actionGroupId: -|arm-id
