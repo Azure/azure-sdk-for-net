@@ -10,6 +10,18 @@
 
 ### Other Changes
 
+## 1.0.1 (2022-09-23)
+
+### Breaking Changes
+- Add new APIs for calculateRefund, return and archive/Unarchive reservation
+- Set the following properties to be `nullable` in CalculateExchange\Exchange flow:
+    - `ExchangePolicyErrors.PolicyErrors`
+    - `ReservationPurchaseContent.AppliedScopes`
+
+### Other Changes
+- Added unit tests for CalculateExchange/Exchange operations
+- Updated unit tests with new test data
+
 ## 1.0.0 (2022-09-08)
 
 This is the first stable release of the Azure Storage management library.
