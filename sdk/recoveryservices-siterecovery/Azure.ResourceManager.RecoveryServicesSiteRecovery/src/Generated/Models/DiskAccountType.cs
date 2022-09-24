@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string StandardLRSValue = "Standard_LRS";
-        private const string PremiumLRSValue = "Premium_LRS";
-        private const string StandardSSDLRSValue = "StandardSSD_LRS";
+        private const string StandardLrsValue = "Standard_LRS";
+        private const string PremiumLrsValue = "Premium_LRS";
+        private const string StandardSsdLrsValue = "StandardSSD_LRS";
 
         /// <summary> Standard_LRS. </summary>
-        public static DiskAccountType StandardLRS { get; } = new DiskAccountType(StandardLRSValue);
+        public static DiskAccountType StandardLrs { get; } = new DiskAccountType(StandardLrsValue);
         /// <summary> Premium_LRS. </summary>
-        public static DiskAccountType PremiumLRS { get; } = new DiskAccountType(PremiumLRSValue);
+        public static DiskAccountType PremiumLrs { get; } = new DiskAccountType(PremiumLrsValue);
         /// <summary> StandardSSD_LRS. </summary>
-        public static DiskAccountType StandardSSDLRS { get; } = new DiskAccountType(StandardSSDLRSValue);
+        public static DiskAccountType StandardSsdLrs { get; } = new DiskAccountType(StandardSsdLrsValue);
         /// <summary> Determines if two <see cref="DiskAccountType"/> values are the same. </summary>
         public static bool operator ==(DiskAccountType left, DiskAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskAccountType"/> values are not the same. </summary>

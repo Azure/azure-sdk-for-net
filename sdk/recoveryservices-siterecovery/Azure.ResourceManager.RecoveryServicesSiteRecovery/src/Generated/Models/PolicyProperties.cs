@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="providerSpecificDetails">
         /// The ReplicationChannelSetting.
         /// Please note <see cref="PolicyProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2APolicyDetails"/>, <see cref="HyperVReplicaPolicyDetails"/>, <see cref="HyperVReplicaBluePolicyDetails"/>, <see cref="HyperVReplicaAzurePolicyDetails"/>, <see cref="HyperVReplicaBasePolicyDetails"/>, <see cref="InMagePolicyDetails"/>, <see cref="InMageAzureV2PolicyDetails"/>, <see cref="InMageBasePolicyDetails"/>, <see cref="InMageRcmPolicyDetails"/>, <see cref="InMageRcmFailbackPolicyDetails"/> and <see cref="VmwareCbtPolicyDetails"/>.
+        /// The available derived classes include <see cref="A2APolicyDetails"/>, <see cref="HyperVReplicaPolicyDetails"/>, <see cref="HyperVReplicaBluePolicyDetails"/>, <see cref="HyperVReplicaAzurePolicyDetails"/>, <see cref="HyperVReplicaBasePolicyDetails"/>, <see cref="InMagePolicyDetails"/>, <see cref="InMageAzureV2PolicyDetails"/>, <see cref="InMageBasePolicyDetails"/>, <see cref="InMageRcmPolicyDetails"/>, <see cref="InMageRcmFailbackPolicyDetails"/> and <see cref="VMwareCbtPolicyDetails"/>.
         /// </param>
         internal PolicyProperties(string friendlyName, PolicyProviderSpecificDetails providerSpecificDetails)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary>
         /// The ReplicationChannelSetting.
         /// Please note <see cref="PolicyProviderSpecificDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="A2APolicyDetails"/>, <see cref="HyperVReplicaPolicyDetails"/>, <see cref="HyperVReplicaBluePolicyDetails"/>, <see cref="HyperVReplicaAzurePolicyDetails"/>, <see cref="HyperVReplicaBasePolicyDetails"/>, <see cref="InMagePolicyDetails"/>, <see cref="InMageAzureV2PolicyDetails"/>, <see cref="InMageBasePolicyDetails"/>, <see cref="InMageRcmPolicyDetails"/>, <see cref="InMageRcmFailbackPolicyDetails"/> and <see cref="VmwareCbtPolicyDetails"/>.
+        /// The available derived classes include <see cref="A2APolicyDetails"/>, <see cref="HyperVReplicaPolicyDetails"/>, <see cref="HyperVReplicaBluePolicyDetails"/>, <see cref="HyperVReplicaAzurePolicyDetails"/>, <see cref="HyperVReplicaBasePolicyDetails"/>, <see cref="InMagePolicyDetails"/>, <see cref="InMageAzureV2PolicyDetails"/>, <see cref="InMageBasePolicyDetails"/>, <see cref="InMageRcmPolicyDetails"/>, <see cref="InMageRcmFailbackPolicyDetails"/> and <see cref="VMwareCbtPolicyDetails"/>.
         /// </summary>
         public PolicyProviderSpecificDetails ProviderSpecificDetails { get; }
     }

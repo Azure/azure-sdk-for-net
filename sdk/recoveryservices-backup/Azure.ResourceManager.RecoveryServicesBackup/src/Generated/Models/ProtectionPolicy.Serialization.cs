@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureIaasVM": return AzureIaaSVMProtectionPolicy.DeserializeAzureIaaSVMProtectionPolicy(element);
+                    case "AzureIaasVM": return AzureIaasVmProtectionPolicy.DeserializeAzureIaasVmProtectionPolicy(element);
                     case "AzureSql": return AzureSqlProtectionPolicy.DeserializeAzureSqlProtectionPolicy(element);
                     case "AzureStorage": return AzureFileShareProtectionPolicy.DeserializeAzureFileShareProtectionPolicy(element);
                     case "AzureWorkload": return AzureVmWorkloadProtectionPolicy.DeserializeAzureVmWorkloadProtectionPolicy(element);

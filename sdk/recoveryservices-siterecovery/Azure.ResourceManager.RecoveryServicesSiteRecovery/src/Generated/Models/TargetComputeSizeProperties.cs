@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="name"> Target compute size name. </param>
         /// <param name="friendlyName"> Target compute size display name. </param>
         /// <param name="cpuCoresCount"> The maximum cpu cores count supported by target compute size. </param>
-        /// <param name="vcpUsAvailable"> The Available vCPUs supported by target compute size. </param>
+        /// <param name="vCpusAvailable"> The Available vCPUs supported by target compute size. </param>
         /// <param name="memoryInGB"> The maximum memory in GB supported by target compute size. </param>
         /// <param name="maxDataDiskCount"> The maximum data disks count supported by target compute size. </param>
         /// <param name="maxNicsCount"> The maximum Nics count supported by target compute size. </param>
         /// <param name="errors"> The reasons why the target compute size is not applicable for the protected item. </param>
         /// <param name="highIopsSupported"> The value indicating whether the target compute size supports high Iops. </param>
         /// <param name="hyperVGenerations"> The supported HyperV Generations. </param>
-        internal TargetComputeSizeProperties(string name, string friendlyName, int? cpuCoresCount, int? vcpUsAvailable, double? memoryInGB, int? maxDataDiskCount, int? maxNicsCount, IReadOnlyList<ComputeSizeErrorDetails> errors, string highIopsSupported, IReadOnlyList<string> hyperVGenerations)
+        internal TargetComputeSizeProperties(string name, string friendlyName, int? cpuCoresCount, int? vCpusAvailable, double? memoryInGB, int? maxDataDiskCount, int? maxNicsCount, IReadOnlyList<ComputeSizeErrorDetails> errors, string highIopsSupported, IReadOnlyList<string> hyperVGenerations)
         {
             Name = name;
             FriendlyName = friendlyName;
             CpuCoresCount = cpuCoresCount;
-            VCPUsAvailable = vcpUsAvailable;
+            VCpusAvailable = vCpusAvailable;
             MemoryInGB = memoryInGB;
             MaxDataDiskCount = maxDataDiskCount;
             MaxNicsCount = maxNicsCount;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The maximum cpu cores count supported by target compute size. </summary>
         public int? CpuCoresCount { get; }
         /// <summary> The Available vCPUs supported by target compute size. </summary>
-        public int? VCPUsAvailable { get; }
+        public int? VCpusAvailable { get; }
         /// <summary> The maximum memory in GB supported by target compute size. </summary>
         public double? MemoryInGB { get; }
         /// <summary> The maximum data disks count supported by target compute size. </summary>

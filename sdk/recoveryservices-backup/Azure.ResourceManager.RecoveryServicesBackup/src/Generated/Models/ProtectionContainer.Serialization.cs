@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     case "AzureWorkloadContainer": return AzureWorkloadContainer.DeserializeAzureWorkloadContainer(element);
                     case "DPMContainer": return DpmContainer.DeserializeDpmContainer(element);
                     case "GenericContainer": return GenericContainer.DeserializeGenericContainer(element);
-                    case "IaasVMContainer": return IaaSVMContainer.DeserializeIaaSVMContainer(element);
+                    case "IaasVMContainer": return IaasVmContainer.DeserializeIaasVmContainer(element);
                     case "Microsoft.ClassicCompute/virtualMachines": return AzureIaaSClassicComputeVmContainer.DeserializeAzureIaaSClassicComputeVmContainer(element);
                     case "Microsoft.Compute/virtualMachines": return AzureIaaSComputeVmContainer.DeserializeAzureIaaSComputeVmContainer(element);
-                    case "SQLAGWorkLoadContainer": return AzureSqlagWorkloadContainerProtectionContainer.DeserializeAzureSqlagWorkloadContainerProtectionContainer(element);
+                    case "SQLAGWorkLoadContainer": return AzureSqlAGWorkloadContainerProtectionContainer.DeserializeAzureSqlAGWorkloadContainerProtectionContainer(element);
                     case "StorageContainer": return AzureStorageContainer.DeserializeAzureStorageContainer(element);
                     case "VMAppContainer": return AzureVmAppContainerProtectionContainer.DeserializeAzureVmAppContainerProtectionContainer(element);
                     case "Windows": return MabContainer.DeserializeMabContainer(element);

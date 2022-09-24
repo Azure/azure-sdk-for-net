@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(VmwareSiteId))
+            if (Optional.IsDefined(VMwareSiteId))
             {
                 writer.WritePropertyName("vmwareSiteId");
-                writer.WriteStringValue(VmwareSiteId);
+                writer.WriteStringValue(VMwareSiteId);
             }
             if (Optional.IsDefined(PhysicalSiteId))
             {

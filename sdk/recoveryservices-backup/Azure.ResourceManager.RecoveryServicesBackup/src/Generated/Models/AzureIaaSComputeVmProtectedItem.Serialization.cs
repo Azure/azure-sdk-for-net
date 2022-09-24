@@ -150,12 +150,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> protectionStatus = default;
             Optional<ProtectionState> protectionState = default;
             Optional<HealthStatus> healthStatus = default;
-            Optional<IList<AzureIaaSVMHealthDetails>> healthDetails = default;
+            Optional<IList<AzureIaasVmHealthDetails>> healthDetails = default;
             Optional<IDictionary<string, KPIResourceHealthDetails>> kpisHealths = default;
             Optional<string> lastBackupStatus = default;
             Optional<DateTimeOffset> lastBackupTime = default;
             Optional<string> protectedItemDataId = default;
-            Optional<AzureIaaSVMProtectedItemExtendedInfo> extendedInfo = default;
+            Optional<AzureIaasVmProtectedItemExtendedInfo> extendedInfo = default;
             Optional<ExtendedProperties> extendedProperties = default;
             string protectedItemType = default;
             Optional<BackupManagementType> backupManagementType = default;
@@ -218,10 +218,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AzureIaaSVMHealthDetails> array = new List<AzureIaaSVMHealthDetails>();
+                    List<AzureIaasVmHealthDetails> array = new List<AzureIaasVmHealthDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureIaaSVMHealthDetails.DeserializeAzureIaaSVMHealthDetails(item));
+                        array.Add(AzureIaasVmHealthDetails.DeserializeAzureIaasVmHealthDetails(item));
                     }
                     healthDetails = array;
                     continue;
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedInfo = AzureIaaSVMProtectedItemExtendedInfo.DeserializeAzureIaaSVMProtectedItemExtendedInfo(property.Value);
+                    extendedInfo = AzureIaasVmProtectedItemExtendedInfo.DeserializeAzureIaasVmProtectedItemExtendedInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("extendedProperties"))

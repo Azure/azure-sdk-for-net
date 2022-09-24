@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="processServers"> The list of process servers. </param>
         internal VMwareV2FabricSpecificDetails(string instanceType, string vmwareSiteId, string physicalSiteId, string migrationSolutionId, string serviceEndpoint, string serviceResourceId, string serviceContainerId, IReadOnlyList<ProcessServerDetails> processServers) : base(instanceType)
         {
-            VmwareSiteId = vmwareSiteId;
+            VMwareSiteId = vmwareSiteId;
             PhysicalSiteId = physicalSiteId;
             MigrationSolutionId = migrationSolutionId;
             ServiceEndpoint = serviceEndpoint;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The ARM Id of the VMware site. </summary>
-        public string VmwareSiteId { get; }
+        public string VMwareSiteId { get; }
         /// <summary> The ARM Id of the physical site. </summary>
         public string PhysicalSiteId { get; }
         /// <summary> The Migration solution ARM Id. </summary>

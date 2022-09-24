@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     case "InMageBasePolicyDetails": return InMageBasePolicyDetails.DeserializeInMageBasePolicyDetails(element);
                     case "InMageRcm": return InMageRcmPolicyDetails.DeserializeInMageRcmPolicyDetails(element);
                     case "InMageRcmFailback": return InMageRcmFailbackPolicyDetails.DeserializeInMageRcmFailbackPolicyDetails(element);
-                    case "VMwareCbt": return VmwareCbtPolicyDetails.DeserializeVmwareCbtPolicyDetails(element);
+                    case "VMwareCbt": return VMwareCbtPolicyDetails.DeserializeVMwareCbtPolicyDetails(element);
                 }
             }
             string instanceType = default;

@@ -18,6 +18,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The migration solution Id. </summary>
         public string MigrationSolutionId { get; set; }
         /// <summary> VMware to Azure provider type. </summary>
-        public string VmwareToAzureProviderType { get; set; }
+        public string VMwareToAzureProviderType { get; set; }
     }
 }

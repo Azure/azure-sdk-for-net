@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public DpmContainer()
         {
             DpmServers = new ChangeTrackingList<string>();
-            ContainerType = ProtectableContainerType.DPMContainer;
+            ContainerType = ProtectableContainerType.DpmContainer;
         }
 
         /// <summary> Initializes a new instance of DpmContainer. </summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="upgradeAvailable"> To check if upgrade available. </param>
         /// <param name="protectionStatus"> Protection status of the container. </param>
         /// <param name="extendedInfo"> Extended Info of the container. </param>
-        internal DpmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, bool? canReRegister, string containerId, long? protectedItemCount, string dpmAgentVersion, IList<string> dpmServers, bool? upgradeAvailable, string protectionStatus, DPMContainerExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
+        internal DpmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, bool? canReRegister, string containerId, long? protectedItemCount, string dpmAgentVersion, IList<string> dpmServers, bool? upgradeAvailable, string protectionStatus, DpmContainerExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
         {
             CanReRegister = canReRegister;
             ContainerId = containerId;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Protection status of the container. </summary>
         public string ProtectionStatus { get; set; }
         /// <summary> Extended Info of the container. </summary>
-        internal DPMContainerExtendedInfo ExtendedInfo { get; set; }
+        internal DpmContainerExtendedInfo ExtendedInfo { get; set; }
         /// <summary> Last refresh time of the DPMContainer. </summary>
         public DateTimeOffset? ExtendedInfoLastRefreshedOn
         {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             set
             {
                 if (ExtendedInfo is null)
-                    ExtendedInfo = new DPMContainerExtendedInfo();
+                    ExtendedInfo = new DpmContainerExtendedInfo();
                 ExtendedInfo.LastRefreshedOn = value;
             }
         }

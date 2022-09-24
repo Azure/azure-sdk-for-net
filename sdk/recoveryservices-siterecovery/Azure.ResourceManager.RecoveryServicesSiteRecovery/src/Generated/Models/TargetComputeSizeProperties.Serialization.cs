@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> name = default;
             Optional<string> friendlyName = default;
             Optional<int> cpuCoresCount = default;
-            Optional<int> vcpUsAvailable = default;
+            Optional<int> vCpusAvailable = default;
             Optional<double> memoryInGB = default;
             Optional<int> maxDataDiskCount = default;
             Optional<int> maxNicsCount = default;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    vcpUsAvailable = property.Value.GetInt32();
+                    vCpusAvailable = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("memoryInGB"))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new TargetComputeSizeProperties(name.Value, friendlyName.Value, Optional.ToNullable(cpuCoresCount), Optional.ToNullable(vcpUsAvailable), Optional.ToNullable(memoryInGB), Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(maxNicsCount), Optional.ToList(errors), highIopsSupported.Value, Optional.ToList(hyperVGenerations));
+            return new TargetComputeSizeProperties(name.Value, friendlyName.Value, Optional.ToNullable(cpuCoresCount), Optional.ToNullable(vCpusAvailable), Optional.ToNullable(memoryInGB), Optional.ToNullable(maxDataDiskCount), Optional.ToNullable(maxNicsCount), Optional.ToList(errors), highIopsSupported.Value, Optional.ToList(hyperVGenerations));
         }
     }
 }

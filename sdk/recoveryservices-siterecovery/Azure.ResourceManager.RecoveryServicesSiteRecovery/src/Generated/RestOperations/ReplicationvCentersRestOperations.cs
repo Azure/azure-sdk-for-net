@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vcenterName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vCenterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             uri.AppendPath("/replicationFabrics/", false);
             uri.AppendPath(fabricName, true);
             uri.AppendPath("/replicationvCenters/", false);
-            uri.AppendPath(vcenterName, true);
+            uri.AppendPath(vCenterName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -151,19 +151,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="vcenterName"> vcenter name. </param>
+        /// <param name="vCenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vcenterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VCenterData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vcenterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vCenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VCenterData>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vCenterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vcenterName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vCenterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -186,19 +186,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="vcenterName"> vcenter name. </param>
+        /// <param name="vCenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vcenterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VCenterData> Get(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vcenterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vCenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VCenterData> Get(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vCenterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vcenterName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vCenterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vcenterName, VCenterCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vCenterName, VCenterCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             uri.AppendPath("/replicationFabrics/", false);
             uri.AppendPath(fabricName, true);
             uri.AppendPath("/replicationvCenters/", false);
-            uri.AppendPath(vcenterName, true);
+            uri.AppendPath(vCenterName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -249,21 +249,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="vcenterName"> vcenter name. </param>
+        /// <param name="vCenterName"> vcenter name. </param>
         /// <param name="content"> The input to the add vCenter operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="vcenterName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vcenterName, VCenterCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="vCenterName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vCenterName, VCenterCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vcenterName, content);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vCenterName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -280,21 +280,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="vcenterName"> vcenter name. </param>
+        /// <param name="vCenterName"> vcenter name. </param>
         /// <param name="content"> The input to the add vCenter operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="vcenterName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vcenterName, VCenterCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="vCenterName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Create(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vCenterName, VCenterCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vcenterName, content);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vCenterName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vcenterName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vCenterName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             uri.AppendPath("/replicationFabrics/", false);
             uri.AppendPath(fabricName, true);
             uri.AppendPath("/replicationvCenters/", false);
-            uri.AppendPath(vcenterName, true);
+            uri.AppendPath(vCenterName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             _userAgent.Apply(message);
@@ -334,19 +334,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="vcenterName"> vcenter name. </param>
+        /// <param name="vCenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vcenterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vcenterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vCenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vCenterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vcenterName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vCenterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -363,19 +363,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="vcenterName"> vcenter name. </param>
+        /// <param name="vCenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vcenterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vcenterName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vCenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vCenterName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vcenterName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vCenterName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vcenterName, VCenterPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vCenterName, VCenterPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             uri.AppendPath("/replicationFabrics/", false);
             uri.AppendPath(fabricName, true);
             uri.AppendPath("/replicationvCenters/", false);
-            uri.AppendPath(vcenterName, true);
+            uri.AppendPath(vCenterName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -420,21 +420,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="vcenterName"> vcenter name. </param>
+        /// <param name="vCenterName"> vcenter name. </param>
         /// <param name="patch"> The input to the update vCenter operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="vcenterName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vcenterName, VCenterPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="vCenterName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vCenterName, VCenterPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vcenterName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vCenterName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -451,21 +451,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
         /// <param name="resourceName"> The name of the recovery services vault. </param>
         /// <param name="fabricName"> Fabric name. </param>
-        /// <param name="vcenterName"> vcenter name. </param>
+        /// <param name="vCenterName"> vcenter name. </param>
         /// <param name="patch"> The input to the update vCenter operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="vcenterName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vcenterName, VCenterPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/>, <paramref name="vCenterName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="fabricName"/> or <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Update(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string vCenterName, VCenterPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(fabricName, nameof(fabricName));
-            Argument.AssertNotNullOrEmpty(vcenterName, nameof(vcenterName));
+            Argument.AssertNotNullOrEmpty(vCenterName, nameof(vCenterName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vcenterName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, fabricName, vCenterName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

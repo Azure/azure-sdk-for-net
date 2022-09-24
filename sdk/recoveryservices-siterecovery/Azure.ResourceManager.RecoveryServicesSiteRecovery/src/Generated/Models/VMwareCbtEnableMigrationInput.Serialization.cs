@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("vmwareMachineId");
-            writer.WriteStringValue(VmwareMachineId);
+            writer.WriteStringValue(VMwareMachineId);
             writer.WritePropertyName("disksToInclude");
             writer.WriteStartArray();
             foreach (var item in DisksToInclude)

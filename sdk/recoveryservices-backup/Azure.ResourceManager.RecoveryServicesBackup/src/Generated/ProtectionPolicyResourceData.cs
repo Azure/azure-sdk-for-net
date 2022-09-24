@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="properties">
         /// ProtectionPolicyResource properties
         /// Please note <see cref="ProtectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureIaaSVMProtectionPolicy"/>, <see cref="AzureSqlProtectionPolicy"/>, <see cref="AzureFileShareProtectionPolicy"/>, <see cref="AzureVmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
+        /// The available derived classes include <see cref="AzureIaasVmProtectionPolicy"/>, <see cref="AzureSqlProtectionPolicy"/>, <see cref="AzureFileShareProtectionPolicy"/>, <see cref="AzureVmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         internal ProtectionPolicyResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ProtectionPolicy properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// ProtectionPolicyResource properties
         /// Please note <see cref="ProtectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureIaaSVMProtectionPolicy"/>, <see cref="AzureSqlProtectionPolicy"/>, <see cref="AzureFileShareProtectionPolicy"/>, <see cref="AzureVmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
+        /// The available derived classes include <see cref="AzureIaasVmProtectionPolicy"/>, <see cref="AzureSqlProtectionPolicy"/>, <see cref="AzureFileShareProtectionPolicy"/>, <see cref="AzureVmWorkloadProtectionPolicy"/>, <see cref="GenericProtectionPolicy"/> and <see cref="MabProtectionPolicy"/>.
         /// </summary>
         public ProtectionPolicy Properties { get; set; }
         /// <summary> Optional ETag. </summary>

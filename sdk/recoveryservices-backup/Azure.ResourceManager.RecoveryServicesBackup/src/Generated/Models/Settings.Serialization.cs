@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("timeZone");
                 writer.WriteStringValue(TimeZone);
             }
-            if (Optional.IsDefined(Issqlcompression))
+            if (Optional.IsDefined(IsSqlCompression))
             {
                 writer.WritePropertyName("issqlcompression");
-                writer.WriteBooleanValue(Issqlcompression.Value);
+                writer.WriteBooleanValue(IsSqlCompression.Value);
             }
             if (Optional.IsDefined(IsCompression))
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         internal static Settings DeserializeSettings(JsonElement element)
         {
             Optional<string> timeZone = default;
-            Optional<bool> issqlcompression = default;
+            Optional<bool> isSqlCompression = default;
             Optional<bool> isCompression = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    issqlcompression = property.Value.GetBoolean();
+                    isSqlCompression = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("isCompression"))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     continue;
                 }
             }
-            return new Settings(timeZone.Value, Optional.ToNullable(issqlcompression), Optional.ToNullable(isCompression));
+            return new Settings(timeZone.Value, Optional.ToNullable(isSqlCompression), Optional.ToNullable(isCompression));
         }
     }
 }

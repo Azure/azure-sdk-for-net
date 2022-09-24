@@ -21,12 +21,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         internal VaultSettingProperties(string migrationSolutionId, string vmwareToAzureProviderType)
         {
             MigrationSolutionId = migrationSolutionId;
-            VmwareToAzureProviderType = vmwareToAzureProviderType;
+            VMwareToAzureProviderType = vmwareToAzureProviderType;
         }
 
         /// <summary> The migration solution ARM Id. </summary>
         public string MigrationSolutionId { get; }
         /// <summary> VMware to Azure provider type. </summary>
-        public string VmwareToAzureProviderType { get; }
+        public string VMwareToAzureProviderType { get; }
     }
 }

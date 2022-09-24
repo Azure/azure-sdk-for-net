@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 throw new ArgumentNullException(nameof(sourceAgentIdentity));
             }
 
-            VmwareSiteId = vmwareSiteId;
+            VMwareSiteId = vmwareSiteId;
             PhysicalSiteId = physicalSiteId;
             SourceAgentIdentity = sourceAgentIdentity;
             InstanceType = "InMageRcm";
         }
 
         /// <summary> The ARM Id of the VMware site. </summary>
-        public string VmwareSiteId { get; }
+        public string VMwareSiteId { get; }
         /// <summary> The ARM Id of the physical site. </summary>
         public string PhysicalSiteId { get; }
         /// <summary> The identity provider input for source agent authentication. </summary>

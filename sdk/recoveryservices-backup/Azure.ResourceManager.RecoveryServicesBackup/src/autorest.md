@@ -45,6 +45,14 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  IaaSVM: IaasVm
+  Iaasvm: IaasVm
+  Sqldb: SqlDB
+  SQLAG: SqlAG
+  Sqlag: SqlAG
+  MAB: Mab
+  DPM: Dpm
+  Issqlcompression: IsSqlCompression
 
 list-exception:
   - /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig

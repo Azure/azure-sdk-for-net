@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SQLAGWorkLoadContainer": return AzureSqlagWorkloadContainerProtectionContainer.DeserializeAzureSqlagWorkloadContainerProtectionContainer(element);
+                    case "SQLAGWorkLoadContainer": return AzureSqlAGWorkloadContainerProtectionContainer.DeserializeAzureSqlAGWorkloadContainerProtectionContainer(element);
                     case "VMAppContainer": return AzureVmAppContainerProtectionContainer.DeserializeAzureVmAppContainerProtectionContainer(element);
                 }
             }

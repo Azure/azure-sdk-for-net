@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetDiskTags"> The tags for the target disks. </param>
         internal VMwareCbtMigrationDetails(string instanceType, string vmwareMachineId, string osType, string firmwareType, string targetGeneration, string licenseType, string sqlServerLicenseType, string dataMoverRunAsAccountId, string snapshotRunAsAccountId, string storageAccountId, string targetVmName, string targetVmSize, string targetLocation, string targetResourceGroupId, string targetAvailabilitySetId, string targetAvailabilityZone, string targetProximityPlacementGroupId, string targetBootDiagnosticsStorageAccountId, IReadOnlyDictionary<string, string> targetVmTags, IReadOnlyList<VMwareCbtProtectedDiskDetails> protectedDisks, string targetNetworkId, string testNetworkId, IReadOnlyList<VMwareCbtNicDetails> vmNics, IReadOnlyDictionary<string, string> targetNicTags, string migrationRecoveryPointId, DateTimeOffset? lastRecoveryPointReceived, string lastRecoveryPointId, int? initialSeedingProgressPercentage, int? migrationProgressPercentage, int? resyncProgressPercentage, int? resumeProgressPercentage, long? initialSeedingRetryCount, long? resyncRetryCount, long? resumeRetryCount, string resyncRequired, ResyncState? resyncState, string performAutoResync, IReadOnlyDictionary<string, string> seedDiskTags, IReadOnlyDictionary<string, string> targetDiskTags) : base(instanceType)
         {
-            VmwareMachineId = vmwareMachineId;
+            VMwareMachineId = vmwareMachineId;
             OSType = osType;
             FirmwareType = firmwareType;
             TargetGeneration = targetGeneration;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The ARM Id of the VM discovered in VMware. </summary>
-        public string VmwareMachineId { get; }
+        public string VMwareMachineId { get; }
         /// <summary> The type of the OS on the VM. </summary>
         public string OSType { get; }
         /// <summary> The firmware type. </summary>

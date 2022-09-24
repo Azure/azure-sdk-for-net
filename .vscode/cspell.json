@@ -588,10 +588,24 @@
       ]
     },
     {
+      "filename": "**/sdk/powerbidedicated/**/*.cs",
+      "words": [
+        "vcore",
+		"pbie"
+      ]
+    },
+    {
       "filename": "**/sdk/privatedns/**/*.cs",
       "words": [
         "cname",
         "ptrdname"
+      ]
+    },
+    {
+      "filename": "**/sdk/providerhub/**/*.cs",
+      "words": [
+        "checkin",
+		"regionality"
       ]
     },
     {
@@ -600,6 +614,39 @@
         "hana",
         "msrp",
         "unprovisioning"
+      ]
+    },
+    {
+      "filename": "**/sdk/recoveryservices-backup/**/*.cs",
+      "words": [
+        "xsmb",
+        "kpis",
+        "hana",
+        "dedup",
+        "xcool",
+        "vmilr",
+        "reregister",
+        "rehydrated",
+        "mab",
+        "dpm"
+      ]
+    },
+    {
+      "filename": "**/sdk/recoveryservices-siterecovery/**/*.cs",
+      "words": [
+        "vcenter",
+        "reassociate",
+        "reprotect",
+        "orignal",
+        "nics",
+        "distro",
+        "bcdr",
+        "vmware",
+        "ahub",
+        "payg",
+        "vcpus",
+        "seleted",
+        "dras"
       ]
     },
     {

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> IaasVMServiceContainer. </summary>
         IaasVmServiceContainer,
         /// <summary> DPMContainer. </summary>
-        DPMContainer,
+        DpmContainer,
         /// <summary> AzureBackupServerContainer. </summary>
         AzureBackupServerContainer,
         /// <summary> MABContainer. </summary>
-        MABContainer,
+        MabContainer,
         /// <summary> Cluster. </summary>
         Cluster,
         /// <summary> AzureSqlContainer. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> VMAppContainer. </summary>
         VmAppContainer,
         /// <summary> SQLAGWorkLoadContainer. </summary>
-        SqlagWorkLoadContainer,
+        SqlAGWorkLoadContainer,
         /// <summary> StorageContainer. </summary>
         StorageContainer,
         /// <summary> GenericContainer. </summary>

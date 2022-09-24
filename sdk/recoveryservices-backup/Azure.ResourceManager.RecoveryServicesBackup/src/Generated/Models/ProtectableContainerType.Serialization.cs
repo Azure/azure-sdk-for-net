@@ -17,15 +17,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectableContainerType.Invalid => "Invalid",
             ProtectableContainerType.IaasVmContainer => "IaasVMContainer",
             ProtectableContainerType.IaasVmServiceContainer => "IaasVMServiceContainer",
-            ProtectableContainerType.DPMContainer => "DPMContainer",
+            ProtectableContainerType.DpmContainer => "DPMContainer",
             ProtectableContainerType.AzureBackupServerContainer => "AzureBackupServerContainer",
-            ProtectableContainerType.MABContainer => "MABContainer",
+            ProtectableContainerType.MabContainer => "MABContainer",
             ProtectableContainerType.Cluster => "Cluster",
             ProtectableContainerType.AzureSqlContainer => "AzureSqlContainer",
             ProtectableContainerType.Windows => "Windows",
             ProtectableContainerType.VCenter => "VCenter",
             ProtectableContainerType.VmAppContainer => "VMAppContainer",
-            ProtectableContainerType.SqlagWorkLoadContainer => "SQLAGWorkLoadContainer",
+            ProtectableContainerType.SqlAGWorkLoadContainer => "SQLAGWorkLoadContainer",
             ProtectableContainerType.StorageContainer => "StorageContainer",
             ProtectableContainerType.GenericContainer => "GenericContainer",
             ProtectableContainerType.MicrosoftClassicComputeVirtualMachines => "Microsoft.ClassicCompute/virtualMachines",
@@ -40,15 +40,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (string.Equals(value, "Invalid", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.Invalid;
             if (string.Equals(value, "IaasVMContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.IaasVmContainer;
             if (string.Equals(value, "IaasVMServiceContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.IaasVmServiceContainer;
-            if (string.Equals(value, "DPMContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.DPMContainer;
+            if (string.Equals(value, "DPMContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.DpmContainer;
             if (string.Equals(value, "AzureBackupServerContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.AzureBackupServerContainer;
-            if (string.Equals(value, "MABContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.MABContainer;
+            if (string.Equals(value, "MABContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.MabContainer;
             if (string.Equals(value, "Cluster", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.Cluster;
             if (string.Equals(value, "AzureSqlContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.AzureSqlContainer;
             if (string.Equals(value, "Windows", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.Windows;
             if (string.Equals(value, "VCenter", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.VCenter;
             if (string.Equals(value, "VMAppContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.VmAppContainer;
-            if (string.Equals(value, "SQLAGWorkLoadContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.SqlagWorkLoadContainer;
+            if (string.Equals(value, "SQLAGWorkLoadContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.SqlAGWorkLoadContainer;
             if (string.Equals(value, "StorageContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.StorageContainer;
             if (string.Equals(value, "GenericContainer", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.GenericContainer;
             if (string.Equals(value, "Microsoft.ClassicCompute/virtualMachines", StringComparison.InvariantCultureIgnoreCase)) return ProtectableContainerType.MicrosoftClassicComputeVirtualMachines;

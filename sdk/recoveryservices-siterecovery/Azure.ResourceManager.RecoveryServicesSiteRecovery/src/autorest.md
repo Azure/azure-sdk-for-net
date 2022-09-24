@@ -16,6 +16,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+rename-mapping:
+  InMageRcmFailbackReplicationDetails.targetvCenterId: TargetVCenterId
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -45,6 +48,11 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  LRS: Lrs
+  SSD: Ssd
+  Vmware: VMware|vmware
+  VCPUs: VCpus
+  Vcenter: VCenter
 
 request-path-to-parent:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/export: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationJobs/{jobName}

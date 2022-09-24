@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<IReadOnlyList<HealthError>> healthErrors = default;
             Optional<int> protectedItemCount = default;
             Optional<IReadOnlyList<string>> accessibleDatastores = default;
-            Optional<string> vcenterId = default;
+            Optional<string> vCenterId = default;
             Optional<DateTimeOffset> lastDiscoveryInUtc = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (property.NameEquals("vcenterId"))
                 {
-                    vcenterId = property.Value.GetString();
+                    vCenterId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("lastDiscoveryInUtc"))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     continue;
                 }
             }
-            return new ReprotectAgentDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(protectedItemCount), Optional.ToList(accessibleDatastores), vcenterId.Value, Optional.ToNullable(lastDiscoveryInUtc));
+            return new ReprotectAgentDetails(id.Value, name.Value, biosId.Value, fabricObjectId.Value, fqdn.Value, version.Value, Optional.ToNullable(lastHeartbeatUtc), Optional.ToNullable(health), Optional.ToList(healthErrors), Optional.ToNullable(protectedItemCount), Optional.ToList(accessibleDatastores), vCenterId.Value, Optional.ToNullable(lastDiscoveryInUtc));
         }
     }
 }

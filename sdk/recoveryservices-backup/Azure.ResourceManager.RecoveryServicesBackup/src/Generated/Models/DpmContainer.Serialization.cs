@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<IList<string>> dpmServers = default;
             Optional<bool> upgradeAvailable = default;
             Optional<string> protectionStatus = default;
-            Optional<DPMContainerExtendedInfo> extendedInfo = default;
+            Optional<DpmContainerExtendedInfo> extendedInfo = default;
             Optional<string> friendlyName = default;
             Optional<BackupManagementType> backupManagementType = default;
             Optional<string> registrationStatus = default;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    extendedInfo = DPMContainerExtendedInfo.DeserializeDPMContainerExtendedInfo(property.Value);
+                    extendedInfo = DpmContainerExtendedInfo.DeserializeDpmContainerExtendedInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("friendlyName"))

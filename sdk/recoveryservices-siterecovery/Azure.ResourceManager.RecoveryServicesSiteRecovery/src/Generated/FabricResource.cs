@@ -285,14 +285,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}
         /// Operation Id: ReplicationvCenters_Get
         /// </summary>
-        /// <param name="vcenterName"> vcenter name. </param>
+        /// <param name="vCenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VCenterResource>> GetVCenterAsync(string vcenterName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VCenterResource>> GetVCenterAsync(string vCenterName, CancellationToken cancellationToken = default)
         {
-            return await GetVCenters().GetAsync(vcenterName, cancellationToken).ConfigureAwait(false);
+            return await GetVCenters().GetAsync(vCenterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -300,14 +300,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationFabrics/{fabricName}/replicationvCenters/{vcenterName}
         /// Operation Id: ReplicationvCenters_Get
         /// </summary>
-        /// <param name="vcenterName"> vcenter name. </param>
+        /// <param name="vCenterName"> vcenter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="vcenterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="vcenterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vCenterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vCenterName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VCenterResource> GetVCenter(string vcenterName, CancellationToken cancellationToken = default)
+        public virtual Response<VCenterResource> GetVCenter(string vCenterName, CancellationToken cancellationToken = default)
         {
-            return GetVCenters().Get(vcenterName, cancellationToken);
+            return GetVCenters().Get(vCenterName, cancellationToken);
         }
 
         /// <summary>

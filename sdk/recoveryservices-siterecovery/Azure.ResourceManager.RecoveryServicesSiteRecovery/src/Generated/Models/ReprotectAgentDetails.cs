@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="healthErrors"> The health errors. </param>
         /// <param name="protectedItemCount"> The protected item count. </param>
         /// <param name="accessibleDatastores"> The list of accessible datastores fetched from discovery. </param>
-        /// <param name="vcenterId"> The Vcenter Id. </param>
+        /// <param name="vCenterId"> The Vcenter Id. </param>
         /// <param name="lastDiscoveryInUtc"> The last time when SDS information discovered in SRS. </param>
-        internal ReprotectAgentDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors, int? protectedItemCount, IReadOnlyList<string> accessibleDatastores, string vcenterId, DateTimeOffset? lastDiscoveryInUtc)
+        internal ReprotectAgentDetails(string id, string name, string biosId, string fabricObjectId, string fqdn, string version, DateTimeOffset? lastHeartbeatUtc, ProtectionHealth? health, IReadOnlyList<HealthError> healthErrors, int? protectedItemCount, IReadOnlyList<string> accessibleDatastores, string vCenterId, DateTimeOffset? lastDiscoveryInUtc)
         {
             Id = id;
             Name = name;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HealthErrors = healthErrors;
             ProtectedItemCount = protectedItemCount;
             AccessibleDatastores = accessibleDatastores;
-            VcenterId = vcenterId;
+            VCenterId = vCenterId;
             LastDiscoveryInUtc = lastDiscoveryInUtc;
         }
 
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The list of accessible datastores fetched from discovery. </summary>
         public IReadOnlyList<string> AccessibleDatastores { get; }
         /// <summary> The Vcenter Id. </summary>
-        public string VcenterId { get; }
+        public string VCenterId { get; }
         /// <summary> The last time when SDS information discovered in SRS. </summary>
         public DateTimeOffset? LastDiscoveryInUtc { get; }
     }

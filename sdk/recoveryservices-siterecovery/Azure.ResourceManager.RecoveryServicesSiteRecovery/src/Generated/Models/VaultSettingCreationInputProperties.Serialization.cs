@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("migrationSolutionId");
                 writer.WriteStringValue(MigrationSolutionId);
             }
-            if (Optional.IsDefined(VmwareToAzureProviderType))
+            if (Optional.IsDefined(VMwareToAzureProviderType))
             {
                 writer.WritePropertyName("vmwareToAzureProviderType");
-                writer.WriteStringValue(VmwareToAzureProviderType);
+                writer.WriteStringValue(VMwareToAzureProviderType);
             }
             writer.WriteEndObject();
         }

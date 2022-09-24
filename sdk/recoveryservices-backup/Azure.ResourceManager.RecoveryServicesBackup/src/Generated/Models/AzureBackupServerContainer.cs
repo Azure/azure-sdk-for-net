@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="upgradeAvailable"> To check if upgrade available. </param>
         /// <param name="protectionStatus"> Protection status of the container. </param>
         /// <param name="extendedInfo"> Extended Info of the container. </param>
-        internal AzureBackupServerContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, bool? canReRegister, string containerId, long? protectedItemCount, string dpmAgentVersion, IList<string> dpmServers, bool? upgradeAvailable, string protectionStatus, DPMContainerExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers, upgradeAvailable, protectionStatus, extendedInfo)
+        internal AzureBackupServerContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, bool? canReRegister, string containerId, long? protectedItemCount, string dpmAgentVersion, IList<string> dpmServers, bool? upgradeAvailable, string protectionStatus, DpmContainerExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers, upgradeAvailable, protectionStatus, extendedInfo)
         {
             ContainerType = containerType;
         }

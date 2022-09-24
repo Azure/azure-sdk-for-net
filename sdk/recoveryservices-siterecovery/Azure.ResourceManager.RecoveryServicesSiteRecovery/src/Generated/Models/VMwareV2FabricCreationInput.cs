@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The ARM Id of the VMware site. </summary>
-        public string VmwareSiteId { get; set; }
+        public string VMwareSiteId { get; set; }
         /// <summary> The ARM Id of the physical site. </summary>
         public string PhysicalSiteId { get; set; }
         /// <summary> The ARM Id of the migration solution. </summary>

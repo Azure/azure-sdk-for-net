@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 switch (discriminator.GetString())
                 {
                     case "AzureFileShareProtectedItem": return AzureFileshareProtectedItem.DeserializeAzureFileshareProtectedItem(element);
-                    case "AzureIaaSVMProtectedItem": return AzureIaaSVMProtectedItem.DeserializeAzureIaaSVMProtectedItem(element);
+                    case "AzureIaaSVMProtectedItem": return AzureIaasVmProtectedItem.DeserializeAzureIaasVmProtectedItem(element);
                     case "AzureVmWorkloadProtectedItem": return AzureVmWorkloadProtectedItem.DeserializeAzureVmWorkloadProtectedItem(element);
                     case "AzureVmWorkloadSAPAseDatabase": return AzureVmWorkloadSAPAseDatabaseProtectedItem.DeserializeAzureVmWorkloadSAPAseDatabaseProtectedItem(element);
                     case "AzureVmWorkloadSAPHanaDBInstance": return AzureVmWorkloadSAPHanaDBInstanceProtectedItem.DeserializeAzureVmWorkloadSAPHanaDBInstanceProtectedItem(element);
                     case "AzureVmWorkloadSAPHanaDatabase": return AzureVmWorkloadSAPHanaDatabaseProtectedItem.DeserializeAzureVmWorkloadSAPHanaDatabaseProtectedItem(element);
                     case "AzureVmWorkloadSQLDatabase": return AzureVmWorkloadSQLDatabaseProtectedItem.DeserializeAzureVmWorkloadSQLDatabaseProtectedItem(element);
-                    case "DPMProtectedItem": return DPMProtectedItem.DeserializeDPMProtectedItem(element);
+                    case "DPMProtectedItem": return DpmProtectedItem.DeserializeDpmProtectedItem(element);
                     case "GenericProtectedItem": return GenericProtectedItem.DeserializeGenericProtectedItem(element);
                     case "MabFileFolderProtectedItem": return MabFileFolderProtectedItem.DeserializeMabFileFolderProtectedItem(element);
                     case "Microsoft.ClassicCompute/virtualMachines": return AzureIaaSClassicComputeVmProtectedItem.DeserializeAzureIaaSClassicComputeVmProtectedItem(element);

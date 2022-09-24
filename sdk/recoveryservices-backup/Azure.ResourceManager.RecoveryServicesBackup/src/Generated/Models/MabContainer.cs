@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of MabContainer. </summary>
         public MabContainer()
         {
-            MabContainerHealthDetails = new ChangeTrackingList<MABContainerHealthDetails>();
+            MabContainerHealthDetails = new ChangeTrackingList<MabContainerHealthDetails>();
             ContainerType = ProtectableContainerType.Windows;
         }
 
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="extendedInfo"> Additional information for this container. </param>
         /// <param name="mabContainerHealthDetails"> Health details on this mab container. </param>
         /// <param name="containerHealthState"> Health state of mab container. </param>
-        internal MabContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, bool? canReRegister, long? containerId, long? protectedItemCount, string agentVersion, MabContainerExtendedInfo extendedInfo, IList<MABContainerHealthDetails> mabContainerHealthDetails, string containerHealthState) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
+        internal MabContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, bool? canReRegister, long? containerId, long? protectedItemCount, string agentVersion, MabContainerExtendedInfo extendedInfo, IList<MabContainerHealthDetails> mabContainerHealthDetails, string containerHealthState) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
         {
             CanReRegister = canReRegister;
             ContainerId = containerId;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Additional information for this container. </summary>
         public MabContainerExtendedInfo ExtendedInfo { get; set; }
         /// <summary> Health details on this mab container. </summary>
-        public IList<MABContainerHealthDetails> MabContainerHealthDetails { get; }
+        public IList<MabContainerHealthDetails> MabContainerHealthDetails { get; }
         /// <summary> Health state of mab container. </summary>
         public string ContainerHealthState { get; set; }
     }

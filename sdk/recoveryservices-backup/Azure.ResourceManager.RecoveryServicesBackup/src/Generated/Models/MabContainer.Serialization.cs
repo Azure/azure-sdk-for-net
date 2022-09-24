@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<long> protectedItemCount = default;
             Optional<string> agentVersion = default;
             Optional<MabContainerExtendedInfo> extendedInfo = default;
-            Optional<IList<MABContainerHealthDetails>> mabContainerHealthDetails = default;
+            Optional<IList<MabContainerHealthDetails>> mabContainerHealthDetails = default;
             Optional<string> containerHealthState = default;
             Optional<string> friendlyName = default;
             Optional<BackupManagementType> backupManagementType = default;
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<MABContainerHealthDetails> array = new List<MABContainerHealthDetails>();
+                    List<MabContainerHealthDetails> array = new List<MabContainerHealthDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MABContainerHealthDetails.DeserializeMABContainerHealthDetails(item));
+                        array.Add(Models.MabContainerHealthDetails.DeserializeMabContainerHealthDetails(item));
                     }
                     mabContainerHealthDetails = array;
                     continue;

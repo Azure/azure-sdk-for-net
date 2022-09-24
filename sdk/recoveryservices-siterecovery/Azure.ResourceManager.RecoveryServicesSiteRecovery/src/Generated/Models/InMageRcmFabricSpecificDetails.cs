@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="agentDetails"> The list of agent details. </param>
         internal InMageRcmFabricSpecificDetails(string instanceType, string vmwareSiteId, string physicalSiteId, string serviceEndpoint, string serviceResourceId, string serviceContainerId, Uri dataPlaneUri, Uri controlPlaneUri, IdentityProviderDetails sourceAgentIdentityDetails, IReadOnlyList<ProcessServerDetails> processServers, IReadOnlyList<RcmProxyDetails> rcmProxies, IReadOnlyList<PushInstallerDetails> pushInstallers, IReadOnlyList<ReplicationAgentDetails> replicationAgents, IReadOnlyList<ReprotectAgentDetails> reprotectAgents, IReadOnlyList<MarsAgentDetails> marsAgents, IReadOnlyList<DraDetails> dras, IReadOnlyList<AgentDetails> agentDetails) : base(instanceType)
         {
-            VmwareSiteId = vmwareSiteId;
+            VMwareSiteId = vmwareSiteId;
             PhysicalSiteId = physicalSiteId;
             ServiceEndpoint = serviceEndpoint;
             ServiceResourceId = serviceResourceId;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The ARM Id of the VMware site. </summary>
-        public string VmwareSiteId { get; }
+        public string VMwareSiteId { get; }
         /// <summary> The ARM Id of the physical site. </summary>
         public string PhysicalSiteId { get; }
         /// <summary> The service endpoint. </summary>

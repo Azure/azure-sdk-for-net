@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> IaaS VM workload-specific backup item representing an Azure Resource Manager virtual machine. </summary>
-    public partial class AzureIaaSComputeVmContainer : IaaSVMContainer
+    public partial class AzureIaaSComputeVmContainer : IaasVmContainer
     {
         /// <summary> Initializes a new instance of AzureIaaSComputeVmContainer. </summary>
         public AzureIaaSComputeVmContainer()

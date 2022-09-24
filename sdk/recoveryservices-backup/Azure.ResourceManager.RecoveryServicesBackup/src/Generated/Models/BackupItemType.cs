@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string VmValue = "VM";
         private const string FileFolderValue = "FileFolder";
         private const string AzureSqlDbValue = "AzureSqlDb";
-        private const string SqldbValue = "SQLDB";
+        private const string SqlDBValue = "SQLDB";
         private const string ExchangeValue = "Exchange";
         private const string SharepointValue = "Sharepoint";
         private const string VMwareVmValue = "VMwareVM";
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> AzureSqlDb. </summary>
         public static BackupItemType AzureSqlDb { get; } = new BackupItemType(AzureSqlDbValue);
         /// <summary> SQLDB. </summary>
-        public static BackupItemType Sqldb { get; } = new BackupItemType(SqldbValue);
+        public static BackupItemType SqlDB { get; } = new BackupItemType(SqlDBValue);
         /// <summary> Exchange. </summary>
         public static BackupItemType Exchange { get; } = new BackupItemType(ExchangeValue);
         /// <summary> Sharepoint. </summary>

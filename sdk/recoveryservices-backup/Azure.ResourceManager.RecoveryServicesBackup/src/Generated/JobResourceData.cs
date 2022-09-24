@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="properties">
         /// JobResource properties
         /// Please note <see cref="Job"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureIaaSVMJob"/>, <see cref="AzureIaaSVMJobV2"/>, <see cref="AzureStorageJob"/>, <see cref="AzureWorkloadJob"/>, <see cref="DpmJob"/>, <see cref="MabJob"/> and <see cref="VaultJob"/>.
+        /// The available derived classes include <see cref="AzureIaasVmJob"/>, <see cref="AzureIaasVmJobV2"/>, <see cref="AzureStorageJob"/>, <see cref="AzureWorkloadJob"/>, <see cref="DpmJob"/>, <see cref="MabJob"/> and <see cref="VaultJob"/>.
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         internal JobResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Job properties, ETag? eTag) : base(id, name, resourceType, systemData, tags, location)
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <summary>
         /// JobResource properties
         /// Please note <see cref="Job"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureIaaSVMJob"/>, <see cref="AzureIaaSVMJobV2"/>, <see cref="AzureStorageJob"/>, <see cref="AzureWorkloadJob"/>, <see cref="DpmJob"/>, <see cref="MabJob"/> and <see cref="VaultJob"/>.
+        /// The available derived classes include <see cref="AzureIaasVmJob"/>, <see cref="AzureIaasVmJobV2"/>, <see cref="AzureStorageJob"/>, <see cref="AzureWorkloadJob"/>, <see cref="DpmJob"/>, <see cref="MabJob"/> and <see cref="VaultJob"/>.
         /// </summary>
         public Job Properties { get; set; }
         /// <summary> Optional ETag. </summary>

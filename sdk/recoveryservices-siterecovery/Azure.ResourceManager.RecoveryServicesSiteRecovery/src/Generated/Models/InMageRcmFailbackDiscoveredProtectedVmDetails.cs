@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             VCenterFqdn = vCenterFqdn;
             Datastores = datastores;
             IPAddresses = ipAddresses;
-            VmwareToolsStatus = vmwareToolsStatus;
+            VMwareToolsStatus = vmwareToolsStatus;
             PowerStatus = powerStatus;
             VmFqdn = vmFqdn;
             OSName = osName;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The list of IP addresses. </summary>
         public IReadOnlyList<string> IPAddresses { get; }
         /// <summary> The VMware tools status. </summary>
-        public string VmwareToolsStatus { get; }
+        public string VMwareToolsStatus { get; }
         /// <summary> The VM power status. </summary>
         public string PowerStatus { get; }
         /// <summary> The VM fqdn. </summary>

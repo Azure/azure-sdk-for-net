@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("vmwareSiteId");
-            writer.WriteStringValue(VmwareSiteId);
+            writer.WriteStringValue(VMwareSiteId);
             writer.WritePropertyName("physicalSiteId");
             writer.WriteStringValue(PhysicalSiteId);
             writer.WritePropertyName("sourceAgentIdentity");

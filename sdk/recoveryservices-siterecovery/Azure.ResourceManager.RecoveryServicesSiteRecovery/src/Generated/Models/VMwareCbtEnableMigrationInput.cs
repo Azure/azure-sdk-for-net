@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 throw new ArgumentNullException(nameof(targetNetworkId));
             }
 
-            VmwareMachineId = vmwareMachineId;
+            VMwareMachineId = vmwareMachineId;
             DisksToInclude = disksToInclude.ToList();
             DataMoverRunAsAccountId = dataMoverRunAsAccountId;
             SnapshotRunAsAccountId = snapshotRunAsAccountId;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> The ARM Id of the VM discovered in VMware. </summary>
-        public string VmwareMachineId { get; }
+        public string VMwareMachineId { get; }
         /// <summary> The disks to include list. </summary>
         public IList<VMwareCbtDiskInput> DisksToInclude { get; }
         /// <summary> License type. </summary>

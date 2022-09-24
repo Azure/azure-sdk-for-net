@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> IaaS VM workload-specific backup item representing the Classic Compute VM. </summary>
-    public partial class AzureIaaSClassicComputeVmProtectableItem : IaaSVMProtectableItem
+    public partial class AzureIaaSClassicComputeVmProtectableItem : IaasVmProtectableItem
     {
         /// <summary> Initializes a new instance of AzureIaaSClassicComputeVmProtectableItem. </summary>
         public AzureIaaSClassicComputeVmProtectableItem()

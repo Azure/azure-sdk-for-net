@@ -17,22 +17,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of Settings. </summary>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;. </param>
-        /// <param name="issqlcompression"> SQL compression flag. </param>
+        /// <param name="isSqlCompression"> SQL compression flag. </param>
         /// <param name="isCompression">
         /// Workload compression flag. This has been added so that &apos;isSqlCompression&apos;
         /// will be deprecated once clients upgrade to consider this flag.
         /// </param>
-        internal Settings(string timeZone, bool? issqlcompression, bool? isCompression)
+        internal Settings(string timeZone, bool? isSqlCompression, bool? isCompression)
         {
             TimeZone = timeZone;
-            Issqlcompression = issqlcompression;
+            IsSqlCompression = isSqlCompression;
             IsCompression = isCompression;
         }
 
         /// <summary> TimeZone optional input as string. For example: TimeZone = &quot;Pacific Standard Time&quot;. </summary>
         public string TimeZone { get; set; }
         /// <summary> SQL compression flag. </summary>
-        public bool? Issqlcompression { get; set; }
+        public bool? IsSqlCompression { get; set; }
         /// <summary>
         /// Workload compression flag. This has been added so that &apos;isSqlCompression&apos;
         /// will be deprecated once clients upgrade to consider this flag.

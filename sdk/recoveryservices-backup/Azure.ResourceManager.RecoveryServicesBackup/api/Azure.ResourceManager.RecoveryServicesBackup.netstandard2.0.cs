@@ -658,66 +658,66 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.AzureFileShareType left, Azure.ResourceManager.RecoveryServicesBackup.Models.AzureFileShareType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AzureIaaSClassicComputeVmContainer : Azure.ResourceManager.RecoveryServicesBackup.Models.IaaSVMContainer
+    public partial class AzureIaaSClassicComputeVmContainer : Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmContainer
     {
         public AzureIaaSClassicComputeVmContainer() { }
     }
-    public partial class AzureIaaSClassicComputeVmProtectableItem : Azure.ResourceManager.RecoveryServicesBackup.Models.IaaSVMProtectableItem
+    public partial class AzureIaaSClassicComputeVmProtectableItem : Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmProtectableItem
     {
         public AzureIaaSClassicComputeVmProtectableItem() { }
     }
-    public partial class AzureIaaSClassicComputeVmProtectedItem : Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaaSVMProtectedItem
+    public partial class AzureIaaSClassicComputeVmProtectedItem : Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaasVmProtectedItem
     {
         public AzureIaaSClassicComputeVmProtectedItem() { }
     }
-    public partial class AzureIaaSComputeVmContainer : Azure.ResourceManager.RecoveryServicesBackup.Models.IaaSVMContainer
+    public partial class AzureIaaSComputeVmContainer : Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmContainer
     {
         public AzureIaaSComputeVmContainer() { }
     }
-    public partial class AzureIaaSComputeVmProtectableItem : Azure.ResourceManager.RecoveryServicesBackup.Models.IaaSVMProtectableItem
+    public partial class AzureIaaSComputeVmProtectableItem : Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmProtectableItem
     {
         public AzureIaaSComputeVmProtectableItem() { }
     }
-    public partial class AzureIaaSComputeVmProtectedItem : Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaaSVMProtectedItem
+    public partial class AzureIaaSComputeVmProtectedItem : Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaasVmProtectedItem
     {
         public AzureIaaSComputeVmProtectedItem() { }
     }
-    public partial class AzureIaaSVMErrorInfo
+    public partial class AzureIaasVmErrorInfo
     {
-        public AzureIaaSVMErrorInfo() { }
+        public AzureIaasVmErrorInfo() { }
         public int? ErrorCode { get { throw null; } }
         public string ErrorString { get { throw null; } }
         public string ErrorTitle { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Recommendations { get { throw null; } }
     }
-    public partial class AzureIaaSVMHealthDetails : Azure.ResourceManager.RecoveryServicesBackup.Models.ResourceHealthDetails
+    public partial class AzureIaasVmHealthDetails : Azure.ResourceManager.RecoveryServicesBackup.Models.ResourceHealthDetails
     {
-        public AzureIaaSVMHealthDetails() { }
+        public AzureIaasVmHealthDetails() { }
     }
-    public partial class AzureIaaSVMJob : Azure.ResourceManager.RecoveryServicesBackup.Models.Job
+    public partial class AzureIaasVmJob : Azure.ResourceManager.RecoveryServicesBackup.Models.Job
     {
-        public AzureIaaSVMJob() { }
+        public AzureIaasVmJob() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.JobSupportedAction> ActionsInfo { get { throw null; } }
         public string ContainerName { get { throw null; } set { } }
         public System.TimeSpan? Duration { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaaSVMErrorInfo> ErrorDetails { get { throw null; } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaaSVMJobExtendedInfo ExtendedInfo { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaasVmErrorInfo> ErrorDetails { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaasVmJobExtendedInfo ExtendedInfo { get { throw null; } set { } }
         public bool? IsUserTriggered { get { throw null; } set { } }
         public string VirtualMachineVersion { get { throw null; } set { } }
     }
-    public partial class AzureIaaSVMJobExtendedInfo
+    public partial class AzureIaasVmJobExtendedInfo
     {
-        public AzureIaaSVMJobExtendedInfo() { }
+        public AzureIaasVmJobExtendedInfo() { }
         public string DynamicErrorMessage { get { throw null; } set { } }
         public string EstimatedRemainingDurationValue { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> InternalPropertyBag { get { throw null; } }
         public double? ProgressPercentage { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> PropertyBag { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaaSVMJobTaskDetails> TasksList { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaasVmJobTaskDetails> TasksList { get { throw null; } }
     }
-    public partial class AzureIaaSVMJobTaskDetails
+    public partial class AzureIaasVmJobTaskDetails
     {
-        public AzureIaaSVMJobTaskDetails() { }
+        public AzureIaasVmJobTaskDetails() { }
         public System.TimeSpan? Duration { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public string InstanceId { get { throw null; } set { } }
@@ -727,23 +727,23 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string TaskExecutionDetails { get { throw null; } set { } }
         public string TaskId { get { throw null; } set { } }
     }
-    public partial class AzureIaaSVMJobV2 : Azure.ResourceManager.RecoveryServicesBackup.Models.Job
+    public partial class AzureIaasVmJobV2 : Azure.ResourceManager.RecoveryServicesBackup.Models.Job
     {
-        public AzureIaaSVMJobV2() { }
+        public AzureIaasVmJobV2() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.JobSupportedAction> ActionsInfo { get { throw null; } }
         public string ContainerName { get { throw null; } set { } }
         public System.TimeSpan? Duration { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaaSVMErrorInfo> ErrorDetails { get { throw null; } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaaSVMJobExtendedInfo ExtendedInfo { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaasVmErrorInfo> ErrorDetails { get { throw null; } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaasVmJobExtendedInfo ExtendedInfo { get { throw null; } set { } }
         public string VirtualMachineVersion { get { throw null; } set { } }
     }
-    public partial class AzureIaaSVMProtectedItem : Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectedItem
+    public partial class AzureIaasVmProtectedItem : Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectedItem
     {
-        public AzureIaaSVMProtectedItem() { }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaaSVMProtectedItemExtendedInfo ExtendedInfo { get { throw null; } set { } }
+        public AzureIaasVmProtectedItem() { }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaasVmProtectedItemExtendedInfo ExtendedInfo { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.ExtendedProperties ExtendedProperties { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaaSVMHealthDetails> HealthDetails { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.AzureIaasVmHealthDetails> HealthDetails { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.HealthStatus? HealthStatus { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.RecoveryServicesBackup.Models.KPIResourceHealthDetails> KpisHealths { get { throw null; } }
         public System.DateTimeOffset? LastBackupOn { get { throw null; } }
@@ -753,9 +753,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string ProtectionStatus { get { throw null; } set { } }
         public string VirtualMachineId { get { throw null; } }
     }
-    public partial class AzureIaaSVMProtectedItemExtendedInfo
+    public partial class AzureIaasVmProtectedItemExtendedInfo
     {
-        public AzureIaaSVMProtectedItemExtendedInfo() { }
+        public AzureIaasVmProtectedItemExtendedInfo() { }
         public System.DateTimeOffset? NewestRecoveryPointInArchive { get { throw null; } set { } }
         public System.DateTimeOffset? OldestRecoveryPoint { get { throw null; } set { } }
         public System.DateTimeOffset? OldestRecoveryPointInArchive { get { throw null; } set { } }
@@ -763,12 +763,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public bool? PolicyInconsistent { get { throw null; } set { } }
         public int? RecoveryPointCount { get { throw null; } set { } }
     }
-    public partial class AzureIaaSVMProtectionPolicy : Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectionPolicy
+    public partial class AzureIaasVmProtectionPolicy : Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectionPolicy
     {
-        public AzureIaaSVMProtectionPolicy() { }
+        public AzureIaasVmProtectionPolicy() { }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.InstantRPAdditionalDetails InstantRPDetails { get { throw null; } set { } }
         public int? InstantRpRetentionRangeInDays { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.IaasvmPolicyType? PolicyType { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmPolicyType? PolicyType { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.RetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.SchedulePolicy SchedulePolicy { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.RecoveryServicesBackup.Models.TieringPolicy> TieringPolicy { get { throw null; } }
@@ -783,9 +783,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public AzureResourceProtectionIntent() { }
         public string FriendlyName { get { throw null; } set { } }
     }
-    public partial class AzureSqlagWorkloadContainerProtectionContainer : Azure.ResourceManager.RecoveryServicesBackup.Models.AzureWorkloadContainer
+    public partial class AzureSqlAGWorkloadContainerProtectionContainer : Azure.ResourceManager.RecoveryServicesBackup.Models.AzureWorkloadContainer
     {
-        public AzureSqlagWorkloadContainerProtectionContainer() { }
+        public AzureSqlAGWorkloadContainerProtectionContainer() { }
     }
     public partial class AzureSqlContainer : Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectionContainer
     {
@@ -1209,7 +1209,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupItemType SAPHanaDBInstance { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupItemType Sharepoint { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupItemType SQLDataBase { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupItemType Sqldb { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupItemType SqlDB { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupItemType SystemState { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupItemType Vm { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupItemType VMwareVm { get { throw null; } }
@@ -1237,9 +1237,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType BackupProtectedItemCountSummary { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType BackupProtectionContainerCountSummary { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType DefaultBackup { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType DPM { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType Dpm { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType Invalid { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType MAB { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType Mab { get { throw null; } }
         public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.BackupManagementType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1463,7 +1463,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType SAPHanaDBInstance { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType Sharepoint { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType SQLDataBase { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType Sqldb { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType SqlDB { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType SystemState { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType Vm { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.DataSourceType VMwareVm { get { throw null; } }
@@ -1581,17 +1581,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string Status { get { throw null; } set { } }
         public string TaskId { get { throw null; } set { } }
     }
-    public partial class DPMProtectedItem : Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectedItem
+    public partial class DpmProtectedItem : Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectedItem
     {
-        public DPMProtectedItem() { }
+        public DpmProtectedItem() { }
         public string BackupEngineName { get { throw null; } set { } }
-        public Azure.ResourceManager.RecoveryServicesBackup.Models.DPMProtectedItemExtendedInfo ExtendedInfo { get { throw null; } set { } }
+        public Azure.ResourceManager.RecoveryServicesBackup.Models.DpmProtectedItemExtendedInfo ExtendedInfo { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectedItemState? ProtectionState { get { throw null; } set { } }
     }
-    public partial class DPMProtectedItemExtendedInfo
+    public partial class DpmProtectedItemExtendedInfo
     {
-        public DPMProtectedItemExtendedInfo() { }
+        public DpmProtectedItemExtendedInfo() { }
         public string DiskStorageUsedInBytes { get { throw null; } set { } }
         public bool? IsCollocated { get { throw null; } set { } }
         public bool? IsPresentOnCloud { get { throw null; } set { } }
@@ -1817,9 +1817,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public IaasVmBackupRequest() { }
         public System.DateTimeOffset? RecoveryPointExpiryTimeInUTC { get { throw null; } set { } }
     }
-    public partial class IaaSVMContainer : Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectionContainer
+    public partial class IaasVmContainer : Azure.ResourceManager.RecoveryServicesBackup.Models.ProtectionContainer
     {
-        public IaaSVMContainer() { }
+        public IaasVmContainer() { }
         public string ResourceGroup { get { throw null; } set { } }
         public string VirtualMachineId { get { throw null; } set { } }
         public string VirtualMachineVersion { get { throw null; } set { } }
@@ -1833,27 +1833,27 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string VirtualMachineId { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct IaasvmPolicyType : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.IaasvmPolicyType>
+    public readonly partial struct IaasVmPolicyType : System.IEquatable<Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmPolicyType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public IaasvmPolicyType(string value) { throw null; }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.IaasvmPolicyType Invalid { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.IaasvmPolicyType V1 { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.IaasvmPolicyType V2 { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.IaasvmPolicyType other) { throw null; }
+        public IaasVmPolicyType(string value) { throw null; }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmPolicyType Invalid { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmPolicyType V1 { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmPolicyType V2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmPolicyType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.IaasvmPolicyType left, Azure.ResourceManager.RecoveryServicesBackup.Models.IaasvmPolicyType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.IaasvmPolicyType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.IaasvmPolicyType left, Azure.ResourceManager.RecoveryServicesBackup.Models.IaasvmPolicyType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmPolicyType left, Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmPolicyType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmPolicyType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmPolicyType left, Azure.ResourceManager.RecoveryServicesBackup.Models.IaasVmPolicyType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IaaSVMProtectableItem : Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadProtectableItem
+    public partial class IaasVmProtectableItem : Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadProtectableItem
     {
-        public IaaSVMProtectableItem() { }
+        public IaasVmProtectableItem() { }
         public string ResourceGroup { get { throw null; } set { } }
         public string VirtualMachineId { get { throw null; } set { } }
         public string VirtualMachineVersion { get { throw null; } set { } }
@@ -2098,7 +2098,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string ContainerHealthState { get { throw null; } set { } }
         public long? ContainerId { get { throw null; } set { } }
         public Azure.ResourceManager.RecoveryServicesBackup.Models.MabContainerExtendedInfo ExtendedInfo { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.MABContainerHealthDetails> MabContainerHealthDetails { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesBackup.Models.MabContainerHealthDetails> MabContainerHealthDetails { get { throw null; } }
         public long? ProtectedItemCount { get { throw null; } set { } }
     }
     public partial class MabContainerExtendedInfo
@@ -2110,9 +2110,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public System.DateTimeOffset? LastRefreshedOn { get { throw null; } set { } }
         public string PolicyName { get { throw null; } set { } }
     }
-    public partial class MABContainerHealthDetails
+    public partial class MabContainerHealthDetails
     {
-        public MABContainerHealthDetails() { }
+        public MabContainerHealthDetails() { }
         public int? Code { get { throw null; } set { } }
         public string Message { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Recommendations { get { throw null; } }
@@ -2184,13 +2184,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType AzureBackupServerContainer { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType AzureSqlContainer { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType Cluster { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType DPMContainer { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType DpmContainer { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType GenericContainer { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType IaasVmContainer { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType IaasVmServiceContainer { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType Invalid { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType MABContainer { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType SqlagWorkLoadContainer { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType MabContainer { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType SqlAGWorkLoadContainer { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType StorageContainer { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType Unknown { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.MabServerType VCenter { get { throw null; } }
@@ -2927,7 +2927,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     {
         public Settings() { }
         public bool? IsCompression { get { throw null; } set { } }
-        public bool? Issqlcompression { get { throw null; } set { } }
+        public bool? IsSqlCompression { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
     }
     public partial class SimpleRetentionPolicy : Azure.ResourceManager.RecoveryServicesBackup.Models.RetentionPolicy
@@ -3326,7 +3326,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadType SAPHanaDBInstance { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadType Sharepoint { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadType SQLDataBase { get { throw null; } }
-        public static Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadType Sqldb { get { throw null; } }
+        public static Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadType SqlDB { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadType SystemState { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadType Vm { get { throw null; } }
         public static Azure.ResourceManager.RecoveryServicesBackup.Models.WorkloadType VMwareVm { get { throw null; } }

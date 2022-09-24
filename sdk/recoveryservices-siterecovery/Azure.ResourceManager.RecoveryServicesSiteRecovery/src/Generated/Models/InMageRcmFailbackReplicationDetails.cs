@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="reprotectAgentName"> The reprotect agent name. </param>
         /// <param name="osType"> The type of the OS on the VM. </param>
         /// <param name="logStorageAccountId"> The log storage account ARM Id. </param>
-        /// <param name="targetvCenterId"> The target vCenter Id. </param>
+        /// <param name="targetVCenterId"> The target vCenter Id. </param>
         /// <param name="targetDataStoreName"> The target datastore name. </param>
         /// <param name="targetVmName"> The target VM name. </param>
         /// <param name="initialReplicationProgressPercentage"> The initial replication progress percentage. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="lastUsedPolicyId"> The policy Id used by the forward replication. </param>
         /// <param name="lastUsedPolicyFriendlyName"> The policy friendly name used by the forward replication. </param>
         /// <param name="isAgentRegistrationSuccessfulAfterFailover"> A value indicating whether agent registration was successful after failover. </param>
-        internal InMageRcmFailbackReplicationDetails(string instanceType, string internalIdentifier, string azureVirtualMachineId, string multiVmGroupName, string reprotectAgentId, string reprotectAgentName, string osType, string logStorageAccountId, string targetvCenterId, string targetDataStoreName, string targetVmName, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, ResyncState? resyncState, IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> protectedDisks, InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmFailbackNicDetails> vmNics, DateTimeOffset? lastPlannedFailoverStartOn, PlannedFailoverStatus? lastPlannedFailoverStatus, InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails, string lastUsedPolicyId, string lastUsedPolicyFriendlyName, bool? isAgentRegistrationSuccessfulAfterFailover) : base(instanceType)
+        internal InMageRcmFailbackReplicationDetails(string instanceType, string internalIdentifier, string azureVirtualMachineId, string multiVmGroupName, string reprotectAgentId, string reprotectAgentName, string osType, string logStorageAccountId, string targetVCenterId, string targetDataStoreName, string targetVmName, int? initialReplicationProgressPercentage, long? initialReplicationProcessedBytes, long? initialReplicationTransferredBytes, VmReplicationProgressHealth? initialReplicationProgressHealth, int? resyncProgressPercentage, long? resyncProcessedBytes, long? resyncTransferredBytes, VmReplicationProgressHealth? resyncProgressHealth, string resyncRequired, ResyncState? resyncState, IReadOnlyList<InMageRcmFailbackProtectedDiskDetails> protectedDisks, InMageRcmFailbackMobilityAgentDetails mobilityAgentDetails, IReadOnlyList<InMageRcmFailbackNicDetails> vmNics, DateTimeOffset? lastPlannedFailoverStartOn, PlannedFailoverStatus? lastPlannedFailoverStatus, InMageRcmFailbackDiscoveredProtectedVmDetails discoveredVmDetails, string lastUsedPolicyId, string lastUsedPolicyFriendlyName, bool? isAgentRegistrationSuccessfulAfterFailover) : base(instanceType)
         {
             InternalIdentifier = internalIdentifier;
             AzureVirtualMachineId = azureVirtualMachineId;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ReprotectAgentName = reprotectAgentName;
             OSType = osType;
             LogStorageAccountId = logStorageAccountId;
-            TargetvCenterId = targetvCenterId;
+            TargetVCenterId = targetVCenterId;
             TargetDataStoreName = targetDataStoreName;
             TargetVmName = targetVmName;
             InitialReplicationProgressPercentage = initialReplicationProgressPercentage;
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> The log storage account ARM Id. </summary>
         public string LogStorageAccountId { get; }
         /// <summary> The target vCenter Id. </summary>
-        public string TargetvCenterId { get; }
+        public string TargetVCenterId { get; }
         /// <summary> The target datastore name. </summary>
         public string TargetDataStoreName { get; }
         /// <summary> The target VM name. </summary>
