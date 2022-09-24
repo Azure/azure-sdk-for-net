@@ -112,6 +112,7 @@ trigger:
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
+    - sdk/providerhub/Azure.ResourceManager.ProviderHub
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/redis/Azure.ResourceManager.Redis
     - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise
@@ -254,6 +255,7 @@ pr:
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
     - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
+    - sdk/providerhub/Azure.ResourceManager.ProviderHub
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/redis/Azure.ResourceManager.Redis
     - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise
