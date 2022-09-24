@@ -7,8 +7,7 @@ pr: none
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    SDKType: mgmtclient
-    ServiceDirectory: quantum
+    ServiceDirectory: recoveryservices
     Artifacts:
-    - name: Azure.ResourceManager.Quantum
-      safeName: AzureResourceManagerQuantum
+    - name: Azure.ResourceManager.RecoveryServices
+      safeName: AzureResourceManagerRecoveryServices
