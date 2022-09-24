@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.Reservations.Tests
         {
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
-            await InitializeClients();
+                await InitializeClients();
 
-            AsyncPageable<TenantResource> tenantResourcesResponse = ArmClient.GetTenants().GetAllAsync();
-            List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
-            Tenant = tenantResources.ToArray()[0];
+                AsyncPageable<TenantResource> tenantResourcesResponse = ArmClient.GetTenants().GetAllAsync();
+                List<TenantResource> tenantResources = await tenantResourcesResponse.ToEnumerableAsync();
+                Tenant = tenantResources.ToArray()[0];
             }
         }
 
         [TestCase]
         [RecordedTest]
-        public async Task TestCalculateExchangeAndPartialExchange()
+        public async Task TestCalculateExchangeAndExchange()
         {
             var calculateExchangeRequestProperties = new CalculateExchangeContentProperties();
             calculateExchangeRequestProperties.ReservationsToExchange.Add(new ReservationToReturn
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             var calculateExchangeResponse = await Tenant.CalculateReservationExchangeAsync(WaitUntil.Completed, calculateExchangeRequest);
 
             Assert.IsNotNull(calculateExchangeResponse.Value);
-            Assert.AreEqual("Succeeded", calculateExchangeResponse.Value.Status.ToString());
+            Assert.AreEqual(CalculateExchangeOperationResultStatus.Succeeded, calculateExchangeResponse.Value.Status);
             Assert.IsNotEmpty(calculateExchangeResponse.Value.Id);
             Assert.IsNotEmpty(calculateExchangeResponse.Value.Name);
             Assert.IsNotNull(calculateExchangeResponse.Value.Properties);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Reservations.Tests
             var exchangeResponse = await Tenant.ExchangeAsync(WaitUntil.Completed, exchangeRequest);
 
             Assert.IsNotNull(exchangeResponse.Value);
-            Assert.AreEqual("Succeeded", exchangeResponse.Value.Status.ToString());
+            Assert.AreEqual(ExchangeOperationResultStatus.Succeeded, exchangeResponse.Value.Status);
             Assert.IsNotEmpty(exchangeResponse.Value.Id);
             Assert.IsNotEmpty(exchangeResponse.Value.Name);
             Assert.IsNotNull(exchangeResponse.Value.Properties);
