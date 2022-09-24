@@ -54,6 +54,9 @@ rename-rules:
   DPM: Dpm
   Issqlcompression: IsSqlCompression
 
+override-operation-name:
+  BackupStatus_Get: GetBackupStatus
+
 list-exception:
   - /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupstorageconfig/vaultstorageconfig
   - /Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/backupProtectionIntent/{intentObjectName}

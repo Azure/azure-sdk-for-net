@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<BackupStatusResponse>> GetBackupStatuAsync(this SubscriptionResource subscriptionResource, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<BackupStatusResponse>> GetBackupStatusAsync(this SubscriptionResource subscriptionResource, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
 
-            return await GetExtensionClient(subscriptionResource).GetBackupStatuAsync(azureRegion, content, cancellationToken).ConfigureAwait(false);
+            return await GetExtensionClient(subscriptionResource).GetBackupStatusAsync(azureRegion, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="azureRegion"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="azureRegion"/> or <paramref name="content"/> is null. </exception>
-        public static Response<BackupStatusResponse> GetBackupStatu(this SubscriptionResource subscriptionResource, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
+        public static Response<BackupStatusResponse> GetBackupStatus(this SubscriptionResource subscriptionResource, string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(azureRegion, nameof(azureRegion));
             Argument.AssertNotNull(content, nameof(content));
 
-            return GetExtensionClient(subscriptionResource).GetBackupStatu(azureRegion, content, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetBackupStatus(azureRegion, content, cancellationToken);
         }
 
         /// <summary>

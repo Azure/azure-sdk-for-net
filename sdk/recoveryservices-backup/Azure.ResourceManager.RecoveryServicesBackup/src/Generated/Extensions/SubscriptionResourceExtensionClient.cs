@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="azureRegion"> Azure region to hit Api. </param>
         /// <param name="content"> Container Backup Status Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BackupStatusResponse>> GetBackupStatuAsync(string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BackupStatusResponse>> GetBackupStatusAsync(string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = BackupStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBackupStatu");
+            using var scope = BackupStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBackupStatus");
             scope.Start();
             try
             {
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="azureRegion"> Azure region to hit Api. </param>
         /// <param name="content"> Container Backup Status Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BackupStatusResponse> GetBackupStatu(string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
+        public virtual Response<BackupStatusResponse> GetBackupStatus(string azureRegion, BackupStatusContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = BackupStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBackupStatu");
+            using var scope = BackupStatusClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBackupStatus");
             scope.Start();
             try
             {
