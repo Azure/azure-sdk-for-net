@@ -8,8 +8,7 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServicesBackup
 namespace: Azure.ResourceManager.RecoveryServicesBackup
-# require: https://github.com/Azure/azure-rest-api-specs/blob/34ba022add0034e30462b76e1548ce5a7e053e33/specification/recoveryservicesbackup/resource-manager/readme.md
-require: D:\Works\Codespace\Azure\tem\azure-rest-api-specs\specification\recoveryservicesbackup\resource-manager\readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/34ba022add0034e30462b76e1548ce5a7e053e33/specification/recoveryservicesbackup/resource-manager/readme.md
 tag: package-2022-06-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
