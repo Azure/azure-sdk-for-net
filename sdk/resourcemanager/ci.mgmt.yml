@@ -114,6 +114,7 @@ trigger:
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
     - sdk/providerhub/Azure.ResourceManager.ProviderHub
     - sdk/purview/Azure.ResourceManager.Purview
+    - sdk/quantum/Azure.ResourceManager.Quantum
     - sdk/redis/Azure.ResourceManager.Redis
     - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise
     - sdk/relay/Azure.ResourceManager.Relay
@@ -257,6 +258,7 @@ pr:
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
     - sdk/providerhub/Azure.ResourceManager.ProviderHub
     - sdk/purview/Azure.ResourceManager.Purview
+    - sdk/quantum/Azure.ResourceManager.Quantum
     - sdk/redis/Azure.ResourceManager.Redis
     - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise
     - sdk/relay/Azure.ResourceManager.Relay
