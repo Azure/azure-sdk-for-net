@@ -116,6 +116,7 @@ trigger:
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/quantum/Azure.ResourceManager.Quantum
     - sdk/recoveryservices/Azure.ResourceManager.RecoveryServices
+    - sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup
     - sdk/redis/Azure.ResourceManager.Redis
     - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise
     - sdk/relay/Azure.ResourceManager.Relay
@@ -261,6 +262,7 @@ pr:
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/quantum/Azure.ResourceManager.Quantum
     - sdk/recoveryservices/Azure.ResourceManager.RecoveryServices
+    - sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup
     - sdk/redis/Azure.ResourceManager.Redis
     - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise
     - sdk/relay/Azure.ResourceManager.Relay
