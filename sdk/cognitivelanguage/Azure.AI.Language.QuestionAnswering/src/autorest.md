@@ -8,14 +8,15 @@ title: Question Answering
 license-header: MICROSOFT_MIT_NO_VERSION
 
 batch:
-- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/2fe971edcf58b3351e6e5e67d269d4b4c7cc2c5f/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering.json
+- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/59ad2b7dd63e952822aa51e11a26a0af5724f996/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering.json
   clear-output-folder: true
   model-namespace: false
   generation1-convenience-client: true
 
-- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/b791f57426508cb2793a8911650a416dcb11c6a6/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering-authoring.json
-# namespace: Azure.AI.Language.QuestionAnswering.Projects
+- input-file: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/59ad2b7dd63e952822aa51e11a26a0af5724f996/specification/cognitiveservices/data-plane/Language/stable/2021-10-01/questionanswering-authoring.json
+  namespace: Azure.AI.Language.QuestionAnswering.Authoring
   add-credentials: true
+  data-plane: true
 
 modelerfour:
   lenient-model-deduplication: true
@@ -71,9 +72,9 @@ directive:
 - where-operation: QuestionAnsweringProjects_DeployProject
   transform: |
     $.responses["200"] = {
-      description: "Deploy job state.",
+      description: "Project deployment details.",
       schema: {
-        "$ref": "#/definitions/JobState"
+        "$ref": "#/definitions/ProjectDeployment"
       }
     };
 
@@ -88,19 +89,27 @@ directive:
 
 - where-operation: QuestionAnsweringProjects_UpdateQnas
   transform: |
+    $["x-ms-pageable"] = {
+      "nextLinkName": "nextLink",
+      "itemName": "value"
+    };
     $.responses["200"] = {
-      description: "Update QnAs job state.",
+      description: "All the QnAs of a project.",
       schema: {
-        "$ref": "#/definitions/JobState"
+        "$ref": "#/definitions/QnaAssets"
       }
     };
 
 - where-operation: QuestionAnsweringProjects_UpdateSources
   transform: |
+    $["x-ms-pageable"] = {
+      "nextLinkName": "nextLink",
+      "itemName": "value"
+    };
     $.responses["200"] = {
-      description: "Update sources job state.",
+      description: "All the sources of a project.",
       schema: {
-        "$ref": "#/definitions/JobState"
+        "$ref": "#/definitions/QnaSources"
       }
     };
 ```

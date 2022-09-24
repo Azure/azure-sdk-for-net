@@ -1,0 +1,227 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/query-knowledgebases/projects/TestProject1811983877?api-version=2021-10-01",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "171",
+        "Content-Type": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-14250547d41e2bca3805f7efaf35821f-33876b5fd092a2e9-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220921.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "2a2fc72d3e5cec00f455e6e5ab46cfe7",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "description": "This is the description for a test project",
+        "language": "en",
+        "multilingualResource": false,
+        "settings": {
+          "defaultAnswer": "No answer found for your question."
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "apim-request-id": "a0cdd28c-1d2b-4617-b817-b26c71058480",
+        "Content-Length": "334",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Sep 2022 00:05:10 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "1225"
+      },
+      "ResponseBody": {
+        "projectName": "TestProject1811983877",
+        "description": "This is the description for a test project",
+        "language": "en",
+        "multilingualResource": false,
+        "createdDateTime": "2022-09-22T00:05:09Z",
+        "lastModifiedDateTime": "2022-09-22T00:05:09Z",
+        "settings": {
+          "defaultAnswer": "No answer found for your question."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/query-knowledgebases/projects/TestProject1811983877?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-ea876cc7f40dcfad98c43bb77a652fea-c1bd4f44f37d8911-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220921.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "ad2afb65afa2a70746421fedaa458427",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "a63c49f0-cf4f-43e7-9fe7-b60e08a126d8",
+        "Content-Length": "334",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Sep 2022 00:05:10 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "15"
+      },
+      "ResponseBody": {
+        "projectName": "TestProject1811983877",
+        "description": "This is the description for a test project",
+        "language": "en",
+        "multilingualResource": false,
+        "createdDateTime": "2022-09-22T00:05:09Z",
+        "lastModifiedDateTime": "2022-09-22T00:05:09Z",
+        "settings": {
+          "defaultAnswer": "No answer found for your question."
+        }
+      }
+    },
+    {
+      "RequestUri": "https://languagesdkresource.cognitiveservices.azure.com/language/query-knowledgebases/projects?api-version=2021-10-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "traceparent": "00-5faf6d2d331d6eada9535bbb1cd3899e-f5ad8548aeb535bd-00",
+        "User-Agent": "azsdk-net-AI.Language.QuestionAnswering/1.1.0-alpha.20220921.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "3342f503c723a0890300ab951d27f63e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "apim-request-id": "0fa28099-3466-446a-8534-79957a19e559",
+        "Content-Length": "3815",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 22 Sep 2022 00:05:10 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "13"
+      },
+      "ResponseBody": {
+        "value": [
+          {
+            "projectName": "IssacNewton",
+            "description": "biography of Sir Issac Newton",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-09-21T13:18:21Z",
+            "lastModifiedDateTime": "2022-09-21T21:37:58Z",
+            "lastDeployedDateTime": "2022-09-21T13:33:01Z",
+            "settings": {
+              "defaultAnswer": "no answer"
+            }
+          },
+          {
+            "projectName": "Microsoft",
+            "description": "test project for some Microsoft QnAs",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-08-03T00:17:01Z",
+            "lastModifiedDateTime": "2022-09-21T13:30:50Z",
+            "settings": {
+              "defaultAnswer": "no answer"
+            }
+          },
+          {
+            "projectName": "QnaScriptDeployed",
+            "description": "magdytest",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-06-05T12:32:12Z",
+            "lastModifiedDateTime": "2022-06-05T12:32:19Z",
+            "lastDeployedDateTime": "2022-06-05T12:32:52Z",
+            "settings": {
+              "defaultAnswer": "No good match found in KB"
+            }
+          },
+          {
+            "projectName": "TestProject1272755456",
+            "description": "This is the description for a test project",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-09-21T20:25:48Z",
+            "lastModifiedDateTime": "2022-09-21T20:26:08Z",
+            "settings": {
+              "defaultAnswer": "No answer found for your question."
+            }
+          },
+          {
+            "projectName": "TestProject1312346708",
+            "description": "This is the description for a test project",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-09-21T20:24:56Z",
+            "lastModifiedDateTime": "2022-09-21T20:25:17Z",
+            "settings": {
+              "defaultAnswer": "No answer found for your question."
+            }
+          },
+          {
+            "projectName": "TestProject1751987747",
+            "description": "This is the description for a test project",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-09-21T20:22:53Z",
+            "lastModifiedDateTime": "2022-09-21T20:23:17Z",
+            "lastDeployedDateTime": "2022-09-21T20:24:02Z",
+            "settings": {
+              "defaultAnswer": "No answer found for your question."
+            }
+          },
+          {
+            "projectName": "TestProject1811983877",
+            "description": "This is the description for a test project",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-09-22T00:05:09Z",
+            "lastModifiedDateTime": "2022-09-22T00:05:09Z",
+            "settings": {
+              "defaultAnswer": "No answer found for your question."
+            }
+          },
+          {
+            "projectName": "TestProject231718900",
+            "description": "This is the description for a test project",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-09-21T20:24:31Z",
+            "lastModifiedDateTime": "2022-09-21T20:24:51Z",
+            "settings": {
+              "defaultAnswer": "No answer found for your question."
+            }
+          },
+          {
+            "projectName": "importedProject",
+            "description": "This is the description for a test project",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-08-02T20:22:24Z",
+            "lastModifiedDateTime": "2022-08-02T22:15:00Z",
+            "settings": {
+              "defaultAnswer": "No answer found for your question."
+            }
+          },
+          {
+            "projectName": "testQA",
+            "description": "",
+            "language": "en",
+            "multilingualResource": false,
+            "createdDateTime": "2022-08-02T16:32:05Z",
+            "lastModifiedDateTime": "2022-08-02T21:55:35Z",
+            "lastDeployedDateTime": "2022-08-02T21:57:25Z",
+            "settings": {
+              "defaultAnswer": "No answer found"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "QUESTIONANSWERING_ENDPOINT": "https://languagesdkresource.cognitiveservices.azure.com/",
+    "QUESTIONANSWERING_KEY": "Sanitized",
+    "RandomSeed": "630380181"
+  }
+}

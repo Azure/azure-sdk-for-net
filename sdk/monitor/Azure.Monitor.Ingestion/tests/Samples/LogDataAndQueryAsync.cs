@@ -80,7 +80,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
 
             LogsQueryClient logsQueryClient = new(credential);
             LogsBatchQuery batch = new();
-            string query = tableName + " | count;";
+            string query = tableName + " | Count;";
             string countQueryId = batch.AddWorkspaceQuery(
                 workspaceId,
                 query,
@@ -88,7 +88,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
 
             Response<LogsBatchQueryResultCollection> queryResponse = await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);
 
-            Console.WriteLine("Table entry count: " + queryResponse.Value.GetResult<int>(countQueryId).Single());
+            Console.WriteLine("Table entry Count: " + queryResponse.Value.GetResult<int>(countQueryId).Single());
             #endregion
         }
     }
