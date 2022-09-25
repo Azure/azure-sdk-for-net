@@ -110,8 +110,14 @@ trigger:
     - sdk/peering/Azure.ResourceManager.Peering
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
+    - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
+    - sdk/providerhub/Azure.ResourceManager.ProviderHub
     - sdk/purview/Azure.ResourceManager.Purview
+    - sdk/quantum/Azure.ResourceManager.Quantum
+    - sdk/recoveryservices/Azure.ResourceManager.RecoveryServices
+    - sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup
+    - sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery
     - sdk/redis/Azure.ResourceManager.Redis
     - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise
     - sdk/relay/Azure.ResourceManager.Relay
@@ -252,8 +258,14 @@ pr:
     - sdk/peering/Azure.ResourceManager.Peering
     - sdk/policyinsights/Azure.ResourceManager.PolicyInsights
     - sdk/postgresql/Azure.ResourceManager.PostgreSql
+    - sdk/powerbidedicated/Azure.ResourceManager.PowerBIDedicated
     - sdk/privatedns/Azure.ResourceManager.PrivateDns
+    - sdk/providerhub/Azure.ResourceManager.ProviderHub
     - sdk/purview/Azure.ResourceManager.Purview
+    - sdk/quantum/Azure.ResourceManager.Quantum
+    - sdk/recoveryservices/Azure.ResourceManager.RecoveryServices
+    - sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup
+    - sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery
     - sdk/redis/Azure.ResourceManager.Redis
     - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise
     - sdk/relay/Azure.ResourceManager.Relay
