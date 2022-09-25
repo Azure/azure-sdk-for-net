@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AudioBase : IUtf8JsonSerializable
+    public partial class MediaAudioBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static AudioBase DeserializeAudioBase(JsonElement element)
+        internal static MediaAudioBase DeserializeMediaAudioBase(JsonElement element)
         {
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new AudioBase(odataType, label.Value, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate));
+            return new MediaAudioBase(odataType, label.Value, Optional.ToNullable(channels), Optional.ToNullable(samplingRate), Optional.ToNullable(bitrate));
         }
     }
 }

@@ -10,22 +10,19 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class UnknownFormatBase : IUtf8JsonSerializable
+    internal partial class UnknownMediaAssetTrackBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(OdataType);
-            writer.WritePropertyName("filenamePattern");
-            writer.WriteStringValue(FilenamePattern);
             writer.WriteEndObject();
         }
 
-        internal static UnknownFormatBase DeserializeUnknownFormatBase(JsonElement element)
+        internal static UnknownMediaAssetTrackBase DeserializeUnknownMediaAssetTrackBase(JsonElement element)
         {
             string odataType = default;
-            string filenamePattern = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"))
@@ -33,13 +30,8 @@ namespace Azure.ResourceManager.Media.Models
                     odataType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("filenamePattern"))
-                {
-                    filenamePattern = property.Value.GetString();
-                    continue;
-                }
             }
-            return new UnknownFormatBase(odataType, filenamePattern);
+            return new UnknownMediaAssetTrackBase(odataType);
         }
     }
 }

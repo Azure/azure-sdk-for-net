@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<DeinterlaceSettings> deinterlace = default;
             Optional<RotationSetting> rotation = default;
             Optional<RectangularWindow> crop = default;
-            Optional<IList<OverlayBase>> overlays = default;
+            Optional<IList<MediaOverlayBase>> overlays = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deinterlace"))
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OverlayBase> array = new List<OverlayBase>();
+                    List<MediaOverlayBase> array = new List<MediaOverlayBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OverlayBase.DeserializeOverlayBase(item));
+                        array.Add(MediaOverlayBase.DeserializeMediaOverlayBase(item));
                     }
                     overlays = array;
                     continue;

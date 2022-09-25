@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class TrackBase : IUtf8JsonSerializable
+    public partial class MediaAssetTrackBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static TrackBase DeserializeTrackBase(JsonElement element)
+        internal static MediaAssetTrackBase DeserializeMediaAssetTrackBase(JsonElement element)
         {
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new UnknownTrackBase(odataType);
+            return new UnknownMediaAssetTrackBase(odataType);
         }
     }
 }

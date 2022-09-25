@@ -122,8 +122,8 @@ namespace Azure.ResourceManager.Media
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackResource> GetMediaAssetTrack(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaAssetTrackResource>> GetMediaAssetTrackAsync(string trackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Media.MediaAssetTrackCollection GetMediaAssetTracks() { throw null; }
-        public virtual Azure.Pageable<System.Uri> GetStorageContainerUris(Azure.ResourceManager.Media.Models.StorageContainerSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.Uri> GetStorageContainerUrisAsync(Azure.ResourceManager.Media.Models.StorageContainerSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.Uri> GetStorageContainerUris(Azure.ResourceManager.Media.Models.MediaAssetStorageContainerSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.Uri> GetStorageContainerUrisAsync(Azure.ResourceManager.Media.Models.MediaAssetStorageContainerSasContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Media.Models.MediaAssetStreamingLocator> GetStreamingLocators(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Media.Models.MediaAssetStreamingLocator> GetStreamingLocatorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaAssetResource> Update(Azure.ResourceManager.Media.MediaAssetData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Media
     {
         public MediaAssetTrackData() { }
         public Azure.ResourceManager.Media.Models.MediaServicesProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.Media.Models.TrackBase Track { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.MediaAssetTrackBase Track { get { throw null; } set { } }
     }
     public partial class MediaAssetTrackResource : Azure.ResourceManager.ArmResource
     {
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.Media
 }
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class AacAudio : Azure.ResourceManager.Media.Models.AudioBase
+    public partial class AacAudio : Azure.ResourceManager.Media.Models.MediaAudioBase
     {
         public AacAudio() { }
         public Azure.ResourceManager.Media.Models.AacAudioProfile? Profile { get { throw null; } set { } }
@@ -807,18 +807,11 @@ namespace Azure.ResourceManager.Media.Models
         public System.Collections.Generic.IDictionary<string, string> ExperimentalOptions { get { throw null; } }
         public Azure.ResourceManager.Media.Models.AudioAnalysisMode? Mode { get { throw null; } set { } }
     }
-    public partial class AudioBase : Azure.ResourceManager.Media.Models.CodecBase
-    {
-        public AudioBase() { }
-        public int? Bitrate { get { throw null; } set { } }
-        public int? Channels { get { throw null; } set { } }
-        public int? SamplingRate { get { throw null; } set { } }
-    }
-    public partial class AudioOverlay : Azure.ResourceManager.Media.Models.OverlayBase
+    public partial class AudioOverlay : Azure.ResourceManager.Media.Models.MediaOverlayBase
     {
         public AudioOverlay(string inputLabel) : base (default(string)) { }
     }
-    public partial class AudioTrack : Azure.ResourceManager.Media.Models.TrackBase
+    public partial class AudioTrack : Azure.ResourceManager.Media.Models.MediaAssetTrackBase
     {
         public AudioTrack() { }
         public int? BitRate { get { throw null; } }
@@ -881,16 +874,11 @@ namespace Azure.ResourceManager.Media.Models
     {
         protected ClipTime() { }
     }
-    public abstract partial class CodecBase
-    {
-        protected CodecBase() { }
-        public string Label { get { throw null; } set { } }
-    }
-    public partial class CodecCopyAudio : Azure.ResourceManager.Media.Models.CodecBase
+    public partial class CodecCopyAudio : Azure.ResourceManager.Media.Models.MediaCodecBase
     {
         public CodecCopyAudio() { }
     }
-    public partial class CodecCopyVideo : Azure.ResourceManager.Media.Models.CodecBase
+    public partial class CodecCopyVideo : Azure.ResourceManager.Media.Models.MediaCodecBase
     {
         public CodecCopyVideo() { }
     }
@@ -1318,7 +1306,7 @@ namespace Azure.ResourceManager.Media.Models
         public FilteringOperations() { }
         public Azure.ResourceManager.Media.Models.RectangularWindow Crop { get { throw null; } set { } }
         public Azure.ResourceManager.Media.Models.DeinterlaceSettings Deinterlace { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.OverlayBase> Overlays { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaOverlayBase> Overlays { get { throw null; } }
         public Azure.ResourceManager.Media.Models.RotationSetting? Rotation { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1372,11 +1360,6 @@ namespace Azure.ResourceManager.Media.Models
     {
         public FilterTrackSelection(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.Models.FilterTrackPropertyCondition> trackSelections) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.FilterTrackPropertyCondition> TrackSelections { get { throw null; } }
-    }
-    public abstract partial class FormatBase
-    {
-        protected FormatBase(string filenamePattern) { }
-        public string FilenamePattern { get { throw null; } set { } }
     }
     public partial class FromAllInputFile : Azure.ResourceManager.Media.Models.MediaJobInputDefinition
     {
@@ -1434,7 +1417,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.H264RateControlMode left, Azure.ResourceManager.Media.Models.H264RateControlMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class H264Video : Azure.ResourceManager.Media.Models.VideoBase
+    public partial class H264Video : Azure.ResourceManager.Media.Models.MediaVideoBase
     {
         public H264Video() { }
         public Azure.ResourceManager.Media.Models.H264Complexity? Complexity { get { throw null; } set { } }
@@ -1492,14 +1475,14 @@ namespace Azure.ResourceManager.Media.Models
         public Azure.ResourceManager.Media.Models.H265VideoProfile? Profile { get { throw null; } set { } }
         public int? ReferenceFrames { get { throw null; } set { } }
     }
-    public partial class H265Video : Azure.ResourceManager.Media.Models.VideoBase
+    public partial class H265Video : Azure.ResourceManager.Media.Models.MediaVideoBase
     {
         public H265Video() { }
         public Azure.ResourceManager.Media.Models.H265Complexity? Complexity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.H265Layer> Layers { get { throw null; } }
         public bool? UseSceneChangeDetection { get { throw null; } set { } }
     }
-    public partial class H265VideoLayer : Azure.ResourceManager.Media.Models.LayerBase
+    public partial class H265VideoLayer : Azure.ResourceManager.Media.Models.MediaLayerBase
     {
         public H265VideoLayer(int bitrate) { }
         public int? BFrames { get { throw null; } set { } }
@@ -1534,13 +1517,6 @@ namespace Azure.ResourceManager.Media.Models
         public string Characteristics { get { throw null; } set { } }
         public bool? IsDefault { get { throw null; } set { } }
         public bool? IsForced { get { throw null; } set { } }
-    }
-    public partial class ImageBase : Azure.ResourceManager.Media.Models.VideoBase
-    {
-        public ImageBase(string start) { }
-        public string Range { get { throw null; } set { } }
-        public string Start { get { throw null; } set { } }
-        public string Step { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct InputVideoStretchMode : System.IEquatable<Azure.ResourceManager.Media.Models.InputVideoStretchMode>
@@ -1627,13 +1603,13 @@ namespace Azure.ResourceManager.Media.Models
     {
         public JpgFormat(string filenamePattern) : base (default(string)) { }
     }
-    public partial class JpgImage : Azure.ResourceManager.Media.Models.ImageBase
+    public partial class JpgImage : Azure.ResourceManager.Media.Models.MediaImageBase
     {
         public JpgImage(string start) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.JpgLayer> Layers { get { throw null; } }
         public int? SpriteColumn { get { throw null; } set { } }
     }
-    public partial class JpgLayer : Azure.ResourceManager.Media.Models.LayerBase
+    public partial class JpgLayer : Azure.ResourceManager.Media.Models.MediaLayerBase
     {
         public JpgLayer() { }
         public int? Quality { get { throw null; } set { } }
@@ -1643,13 +1619,6 @@ namespace Azure.ResourceManager.Media.Models
         public KeyVaultProperties() { }
         public string CurrentKeyIdentifier { get { throw null; } }
         public string KeyIdentifier { get { throw null; } set { } }
-    }
-    public partial class LayerBase
-    {
-        public LayerBase() { }
-        public string Height { get { throw null; } set { } }
-        public string Label { get { throw null; } set { } }
-        public string Width { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LayerEntropyMode : System.IEquatable<Azure.ResourceManager.Media.Models.LayerEntropyMode>
@@ -1833,6 +1802,12 @@ namespace Azure.ResourceManager.Media.Models
         public string AssetFileName { get { throw null; } }
         public string InitializationVector { get { throw null; } }
     }
+    public partial class MediaAssetStorageContainerSasContent
+    {
+        public MediaAssetStorageContainerSasContent() { }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.MediaAssetContainerPermission? Permissions { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaAssetStorageEncryptionFormat : System.IEquatable<Azure.ResourceManager.Media.Models.MediaAssetStorageEncryptionFormat>
     {
@@ -1863,6 +1838,22 @@ namespace Azure.ResourceManager.Media.Models
         public System.Guid? StreamingLocatorId { get { throw null; } }
         public string StreamingPolicyName { get { throw null; } }
     }
+    public abstract partial class MediaAssetTrackBase
+    {
+        protected MediaAssetTrackBase() { }
+    }
+    public partial class MediaAudioBase : Azure.ResourceManager.Media.Models.MediaCodecBase
+    {
+        public MediaAudioBase() { }
+        public int? Bitrate { get { throw null; } set { } }
+        public int? Channels { get { throw null; } set { } }
+        public int? SamplingRate { get { throw null; } set { } }
+    }
+    public abstract partial class MediaCodecBase
+    {
+        protected MediaCodecBase() { }
+        public string Label { get { throw null; } set { } }
+    }
     public partial class MediaEnabledProtocols
     {
         public MediaEnabledProtocols(bool isDownloadEnabled, bool isDashEnabled, bool isHlsEnabled, bool isSmoothStreamingEnabled) { }
@@ -1870,6 +1861,18 @@ namespace Azure.ResourceManager.Media.Models
         public bool IsDownloadEnabled { get { throw null; } set { } }
         public bool IsHlsEnabled { get { throw null; } set { } }
         public bool IsSmoothStreamingEnabled { get { throw null; } set { } }
+    }
+    public abstract partial class MediaFormatBase
+    {
+        protected MediaFormatBase(string filenamePattern) { }
+        public string FilenamePattern { get { throw null; } set { } }
+    }
+    public partial class MediaImageBase : Azure.ResourceManager.Media.Models.MediaVideoBase
+    {
+        public MediaImageBase(string start) { }
+        public string Range { get { throw null; } set { } }
+        public string Start { get { throw null; } set { } }
+        public string Step { get { throw null; } set { } }
     }
     public partial class MediaJobError
     {
@@ -2051,10 +2054,27 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.MediaJobState left, Azure.ResourceManager.Media.Models.MediaJobState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MediaLayerBase
+    {
+        public MediaLayerBase() { }
+        public string Height { get { throw null; } set { } }
+        public string Label { get { throw null; } set { } }
+        public string Width { get { throw null; } set { } }
+    }
     public partial class MediaOutputFile
     {
         public MediaOutputFile(System.Collections.Generic.IEnumerable<string> labels) { }
         public System.Collections.Generic.IList<string> Labels { get { throw null; } }
+    }
+    public abstract partial class MediaOverlayBase
+    {
+        protected MediaOverlayBase(string inputLabel) { }
+        public double? AudioGainLevel { get { throw null; } set { } }
+        public System.TimeSpan? End { get { throw null; } set { } }
+        public System.TimeSpan? FadeInDuration { get { throw null; } set { } }
+        public System.TimeSpan? FadeOutDuration { get { throw null; } set { } }
+        public string InputLabel { get { throw null; } set { } }
+        public System.TimeSpan? Start { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Media.Models.MediaPrivateEndpointConnectionProvisioningState>
@@ -2249,28 +2269,25 @@ namespace Azure.ResourceManager.Media.Models
     {
         protected MediaTransformPreset() { }
     }
+    public partial class MediaVideoBase : Azure.ResourceManager.Media.Models.MediaCodecBase
+    {
+        public MediaVideoBase() { }
+        public System.TimeSpan? KeyFrameInterval { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.InputVideoStretchMode? StretchMode { get { throw null; } set { } }
+        public Azure.ResourceManager.Media.Models.VideoSyncMode? SyncMode { get { throw null; } set { } }
+    }
     public partial class Mp4Format : Azure.ResourceManager.Media.Models.MultiBitrateFormat
     {
         public Mp4Format(string filenamePattern) : base (default(string)) { }
     }
-    public partial class MultiBitrateFormat : Azure.ResourceManager.Media.Models.FormatBase
+    public partial class MultiBitrateFormat : Azure.ResourceManager.Media.Models.MediaFormatBase
     {
         public MultiBitrateFormat(string filenamePattern) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaOutputFile> OutputFiles { get { throw null; } }
     }
-    public partial class OutputImageFileFormat : Azure.ResourceManager.Media.Models.FormatBase
+    public partial class OutputImageFileFormat : Azure.ResourceManager.Media.Models.MediaFormatBase
     {
         public OutputImageFileFormat(string filenamePattern) : base (default(string)) { }
-    }
-    public abstract partial class OverlayBase
-    {
-        protected OverlayBase(string inputLabel) { }
-        public double? AudioGainLevel { get { throw null; } set { } }
-        public System.TimeSpan? End { get { throw null; } set { } }
-        public System.TimeSpan? FadeInDuration { get { throw null; } set { } }
-        public System.TimeSpan? FadeOutDuration { get { throw null; } set { } }
-        public string InputLabel { get { throw null; } set { } }
-        public System.TimeSpan? Start { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PlayerVisibility : System.IEquatable<Azure.ResourceManager.Media.Models.PlayerVisibility>
@@ -2314,12 +2331,12 @@ namespace Azure.ResourceManager.Media.Models
     {
         public PngFormat(string filenamePattern) : base (default(string)) { }
     }
-    public partial class PngImage : Azure.ResourceManager.Media.Models.ImageBase
+    public partial class PngImage : Azure.ResourceManager.Media.Models.MediaImageBase
     {
         public PngImage(string start) : base (default(string)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.PngLayer> Layers { get { throw null; } }
     }
-    public partial class PngLayer : Azure.ResourceManager.Media.Models.LayerBase
+    public partial class PngLayer : Azure.ResourceManager.Media.Models.MediaLayerBase
     {
         public PngLayer() { }
     }
@@ -2395,16 +2412,10 @@ namespace Azure.ResourceManager.Media.Models
     }
     public partial class StandardEncoderPreset : Azure.ResourceManager.Media.Models.MediaTransformPreset
     {
-        public StandardEncoderPreset(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.Models.CodecBase> codecs, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.Models.FormatBase> formats) { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.CodecBase> Codecs { get { throw null; } }
+        public StandardEncoderPreset(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.Models.MediaCodecBase> codecs, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Media.Models.MediaFormatBase> formats) { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaCodecBase> Codecs { get { throw null; } }
         public Azure.ResourceManager.Media.Models.FilteringOperations Filters { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.FormatBase> Formats { get { throw null; } }
-    }
-    public partial class StorageContainerSasContent
-    {
-        public StorageContainerSasContent() { }
-        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.MediaAssetContainerPermission? Permissions { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Media.Models.MediaFormatBase> Formats { get { throw null; } }
     }
     public partial class StorageEncryptedAssetDecryptionInfo
     {
@@ -2597,7 +2608,7 @@ namespace Azure.ResourceManager.Media.Models
         public SyncStorageKeysContent() { }
         public string Id { get { throw null; } set { } }
     }
-    public partial class TextTrack : Azure.ResourceManager.Media.Models.TrackBase
+    public partial class TextTrack : Azure.ResourceManager.Media.Models.MediaAssetTrackBase
     {
         public TextTrack() { }
         public string DisplayName { get { throw null; } set { } }
@@ -2643,10 +2654,6 @@ namespace Azure.ResourceManager.Media.Models
         public static implicit operator Azure.ResourceManager.Media.Models.TrackAttributeFilter (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Media.Models.TrackAttributeFilter left, Azure.ResourceManager.Media.Models.TrackAttributeFilter right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public abstract partial class TrackBase
-    {
-        protected TrackBase() { }
     }
     public abstract partial class TrackDescriptor
     {
@@ -2709,14 +2716,7 @@ namespace Azure.ResourceManager.Media.Models
         public VideoAnalyzerPreset() { }
         public Azure.ResourceManager.Media.Models.InsightsType? InsightsToExtract { get { throw null; } set { } }
     }
-    public partial class VideoBase : Azure.ResourceManager.Media.Models.CodecBase
-    {
-        public VideoBase() { }
-        public System.TimeSpan? KeyFrameInterval { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.InputVideoStretchMode? StretchMode { get { throw null; } set { } }
-        public Azure.ResourceManager.Media.Models.VideoSyncMode? SyncMode { get { throw null; } set { } }
-    }
-    public partial class VideoLayer : Azure.ResourceManager.Media.Models.LayerBase
+    public partial class VideoLayer : Azure.ResourceManager.Media.Models.MediaLayerBase
     {
         public VideoLayer(int bitrate) { }
         public int? BFrames { get { throw null; } set { } }
@@ -2726,7 +2726,7 @@ namespace Azure.ResourceManager.Media.Models
         public int? Slices { get { throw null; } set { } }
         public bool? UseAdaptiveBFrame { get { throw null; } set { } }
     }
-    public partial class VideoOverlay : Azure.ResourceManager.Media.Models.OverlayBase
+    public partial class VideoOverlay : Azure.ResourceManager.Media.Models.MediaOverlayBase
     {
         public VideoOverlay(string inputLabel) : base (default(string)) { }
         public Azure.ResourceManager.Media.Models.RectangularWindow CropRectangle { get { throw null; } set { } }
@@ -2753,7 +2753,7 @@ namespace Azure.ResourceManager.Media.Models
         public static bool operator !=(Azure.ResourceManager.Media.Models.VideoSyncMode left, Azure.ResourceManager.Media.Models.VideoSyncMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VideoTrack : Azure.ResourceManager.Media.Models.TrackBase
+    public partial class VideoTrack : Azure.ResourceManager.Media.Models.MediaAssetTrackBase
     {
         public VideoTrack() { }
     }

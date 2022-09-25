@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="Uri" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Uri> GetStorageContainerUrisAsync(StorageContainerSasContent content, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<Uri> GetStorageContainerUrisAsync(MediaAssetStorageContainerSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Media
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="Uri" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Uri> GetStorageContainerUris(StorageContainerSasContent content, CancellationToken cancellationToken = default)
+        public virtual Pageable<Uri> GetStorageContainerUris(MediaAssetStorageContainerSasContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

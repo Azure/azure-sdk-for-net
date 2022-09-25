@@ -10,13 +10,21 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class UnknownCodecBase : IUtf8JsonSerializable
+    public partial class MediaLayerBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type");
-            writer.WriteStringValue(OdataType);
+            if (Optional.IsDefined(Width))
+            {
+                writer.WritePropertyName("width");
+                writer.WriteStringValue(Width);
+            }
+            if (Optional.IsDefined(Height))
+            {
+                writer.WritePropertyName("height");
+                writer.WriteStringValue(Height);
+            }
             if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label");
@@ -25,15 +33,21 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownCodecBase DeserializeUnknownCodecBase(JsonElement element)
+        internal static MediaLayerBase DeserializeMediaLayerBase(JsonElement element)
         {
-            string odataType = default;
+            Optional<string> width = default;
+            Optional<string> height = default;
             Optional<string> label = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("@odata.type"))
+                if (property.NameEquals("width"))
                 {
-                    odataType = property.Value.GetString();
+                    width = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("height"))
+                {
+                    height = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("label"))
@@ -42,7 +56,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new UnknownCodecBase(odataType, label.Value);
+            return new MediaLayerBase(width.Value, height.Value, label.Value);
         }
     }
 }

@@ -9,19 +9,19 @@ namespace Azure.ResourceManager.Media.Models
 {
     /// <summary>
     /// Base type for concrete track types. A derived type must be used to represent the Track.
-    /// Please note <see cref="TrackBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="MediaAssetTrackBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AudioTrack"/>, <see cref="TextTrack"/> and <see cref="VideoTrack"/>.
     /// </summary>
-    public abstract partial class TrackBase
+    public abstract partial class MediaAssetTrackBase
     {
-        /// <summary> Initializes a new instance of TrackBase. </summary>
-        protected TrackBase()
+        /// <summary> Initializes a new instance of MediaAssetTrackBase. </summary>
+        protected MediaAssetTrackBase()
         {
         }
 
-        /// <summary> Initializes a new instance of TrackBase. </summary>
+        /// <summary> Initializes a new instance of MediaAssetTrackBase. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal TrackBase(string odataType)
+        internal MediaAssetTrackBase(string odataType)
         {
             OdataType = odataType;
         }

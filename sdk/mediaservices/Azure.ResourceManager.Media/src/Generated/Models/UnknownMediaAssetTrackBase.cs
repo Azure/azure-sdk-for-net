@@ -7,12 +7,12 @@
 
 namespace Azure.ResourceManager.Media.Models
 {
-    /// <summary> The UnknownTrackBase. </summary>
-    internal partial class UnknownTrackBase : TrackBase
+    /// <summary> The UnknownMediaAssetTrackBase. </summary>
+    internal partial class UnknownMediaAssetTrackBase : MediaAssetTrackBase
     {
-        /// <summary> Initializes a new instance of UnknownTrackBase. </summary>
+        /// <summary> Initializes a new instance of UnknownMediaAssetTrackBase. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
-        internal UnknownTrackBase(string odataType) : base(odataType)
+        internal UnknownMediaAssetTrackBase(string odataType) : base(odataType)
         {
             OdataType = odataType ?? "Unknown";
         }

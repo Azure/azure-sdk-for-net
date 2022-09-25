@@ -10,10 +10,10 @@ using System;
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The parameters to the list SAS request. </summary>
-    public partial class StorageContainerSasContent
+    public partial class MediaAssetStorageContainerSasContent
     {
-        /// <summary> Initializes a new instance of StorageContainerSasContent. </summary>
-        public StorageContainerSasContent()
+        /// <summary> Initializes a new instance of MediaAssetStorageContainerSasContent. </summary>
+        public MediaAssetStorageContainerSasContent()
         {
         }
 

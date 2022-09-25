@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> The encoder can be configured to produce video and/or images (thumbnails) at different resolutions, by specifying a layer for each desired resolution. A layer represents the properties for the video or image at a resolution. </summary>
-    public partial class LayerBase
+    public partial class MediaLayerBase
     {
-        /// <summary> Initializes a new instance of LayerBase. </summary>
-        public LayerBase()
+        /// <summary> Initializes a new instance of MediaLayerBase. </summary>
+        public MediaLayerBase()
         {
         }
 
-        /// <summary> Initializes a new instance of LayerBase. </summary>
+        /// <summary> Initializes a new instance of MediaLayerBase. </summary>
         /// <param name="width"> The width of the output video for this layer. The value can be absolute (in pixels) or relative (in percentage). For example 50% means the output video has half as many pixels in width as the input. </param>
         /// <param name="height"> The height of the output video for this layer. The value can be absolute (in pixels) or relative (in percentage). For example 50% means the output video has half as many pixels in height as the input. </param>
         /// <param name="label"> The alphanumeric label for this layer, which can be used in multiplexing different video and audio layers, or in naming the output file. </param>
-        internal LayerBase(string width, string height, string label)
+        internal MediaLayerBase(string width, string height, string label)
         {
             Width = width;
             Height = height;

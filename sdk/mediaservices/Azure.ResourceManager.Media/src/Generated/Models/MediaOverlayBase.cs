@@ -11,15 +11,15 @@ namespace Azure.ResourceManager.Media.Models
 {
     /// <summary>
     /// Base type for all overlays - image, audio or video.
-    /// Please note <see cref="OverlayBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="MediaOverlayBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AudioOverlay"/> and <see cref="VideoOverlay"/>.
     /// </summary>
-    public abstract partial class OverlayBase
+    public abstract partial class MediaOverlayBase
     {
-        /// <summary> Initializes a new instance of OverlayBase. </summary>
+        /// <summary> Initializes a new instance of MediaOverlayBase. </summary>
         /// <param name="inputLabel"> The label of the job input which is to be used as an overlay. The Input must specify exactly one file. You can specify an image file in JPG, PNG, GIF or BMP format, or an audio file (such as a WAV, MP3, WMA or M4A file), or a video file. See https://aka.ms/mesformats for the complete list of supported audio and video file formats. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputLabel"/> is null. </exception>
-        protected OverlayBase(string inputLabel)
+        protected MediaOverlayBase(string inputLabel)
         {
             if (inputLabel == null)
             {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             InputLabel = inputLabel;
         }
 
-        /// <summary> Initializes a new instance of OverlayBase. </summary>
+        /// <summary> Initializes a new instance of MediaOverlayBase. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="inputLabel"> The label of the job input which is to be used as an overlay. The Input must specify exactly one file. You can specify an image file in JPG, PNG, GIF or BMP format, or an audio file (such as a WAV, MP3, WMA or M4A file), or a video file. See https://aka.ms/mesformats for the complete list of supported audio and video file formats. </param>
         /// <param name="start"> The start position, with reference to the input video, at which the overlay starts. The value should be in ISO 8601 format. For example, PT05S to start the overlay at 5 seconds into the input video. If not specified the overlay starts from the beginning of the input video. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="fadeInDuration"> The duration over which the overlay fades in onto the input video. The value should be in ISO 8601 duration format. If not specified the default behavior is to have no fade in (same as PT0S). </param>
         /// <param name="fadeOutDuration"> The duration over which the overlay fades out of the input video. The value should be in ISO 8601 duration format. If not specified the default behavior is to have no fade out (same as PT0S). </param>
         /// <param name="audioGainLevel"> The gain level of audio in the overlay. The value should be in the range [0, 1.0]. The default is 1.0. </param>
-        internal OverlayBase(string odataType, string inputLabel, TimeSpan? start, TimeSpan? end, TimeSpan? fadeInDuration, TimeSpan? fadeOutDuration, double? audioGainLevel)
+        internal MediaOverlayBase(string odataType, string inputLabel, TimeSpan? start, TimeSpan? end, TimeSpan? fadeInDuration, TimeSpan? fadeOutDuration, double? audioGainLevel)
         {
             OdataType = odataType;
             InputLabel = inputLabel;

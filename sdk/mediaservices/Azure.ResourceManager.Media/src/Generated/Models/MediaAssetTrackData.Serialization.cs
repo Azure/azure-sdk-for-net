@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Media
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<TrackBase> track = default;
+            Optional<MediaAssetTrackBase> track = default;
             Optional<MediaServicesProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Media
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            track = TrackBase.DeserializeTrackBase(property0.Value);
+                            track = MediaAssetTrackBase.DeserializeMediaAssetTrackBase(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"))

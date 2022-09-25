@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ImageBase : IUtf8JsonSerializable
+    public partial class MediaImageBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static ImageBase DeserializeImageBase(JsonElement element)
+        internal static MediaImageBase DeserializeMediaImageBase(JsonElement element)
         {
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new ImageBase(odataType, label.Value, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), start, step.Value, range.Value);
+            return new MediaImageBase(odataType, label.Value, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), start, step.Value, range.Value);
         }
     }
 }

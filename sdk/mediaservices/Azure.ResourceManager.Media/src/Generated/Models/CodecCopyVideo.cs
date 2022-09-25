@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> A codec flag, which tells the encoder to copy the input video bitstream without re-encoding. </summary>
-    public partial class CodecCopyVideo : CodecBase
+    public partial class CodecCopyVideo : MediaCodecBase
     {
         /// <summary> Initializes a new instance of CodecCopyVideo. </summary>
         public CodecCopyVideo()

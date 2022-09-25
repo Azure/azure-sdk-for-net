@@ -11,15 +11,15 @@ namespace Azure.ResourceManager.Media.Models
 {
     /// <summary>
     /// Base class for output.
-    /// Please note <see cref="FormatBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="MediaFormatBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="OutputImageFileFormat"/>, <see cref="JpgFormat"/>, <see cref="Mp4Format"/>, <see cref="MultiBitrateFormat"/>, <see cref="PngFormat"/> and <see cref="TransportStreamFormat"/>.
     /// </summary>
-    public abstract partial class FormatBase
+    public abstract partial class MediaFormatBase
     {
-        /// <summary> Initializes a new instance of FormatBase. </summary>
+        /// <summary> Initializes a new instance of MediaFormatBase. </summary>
         /// <param name="filenamePattern"> The pattern of the file names for the generated output files. The following macros are supported in the file name: {Basename} - An expansion macro that will use the name of the input video file. If the base name(the file suffix is not included) of the input video file is less than 32 characters long, the base name of input video files will be used. If the length of base name of the input video file exceeds 32 characters, the base name is truncated to the first 32 characters in total length. {Extension} - The appropriate extension for this format. {Label} - The label assigned to the codec/layer. {Index} - A unique index for thumbnails. Only applicable to thumbnails. {Bitrate} - The audio/video bitrate. Not applicable to thumbnails. {Codec} - The type of the audio/video codec. {Resolution} - The video resolution. Any unsubstituted macros will be collapsed and removed from the filename. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filenamePattern"/> is null. </exception>
-        protected FormatBase(string filenamePattern)
+        protected MediaFormatBase(string filenamePattern)
         {
             if (filenamePattern == null)
             {
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Media.Models
             FilenamePattern = filenamePattern;
         }
 
-        /// <summary> Initializes a new instance of FormatBase. </summary>
+        /// <summary> Initializes a new instance of MediaFormatBase. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="filenamePattern"> The pattern of the file names for the generated output files. The following macros are supported in the file name: {Basename} - An expansion macro that will use the name of the input video file. If the base name(the file suffix is not included) of the input video file is less than 32 characters long, the base name of input video files will be used. If the length of base name of the input video file exceeds 32 characters, the base name is truncated to the first 32 characters in total length. {Extension} - The appropriate extension for this format. {Label} - The label assigned to the codec/layer. {Index} - A unique index for thumbnails. Only applicable to thumbnails. {Bitrate} - The audio/video bitrate. Not applicable to thumbnails. {Codec} - The type of the audio/video codec. {Resolution} - The video resolution. Any unsubstituted macros will be collapsed and removed from the filename. </param>
-        internal FormatBase(string odataType, string filenamePattern)
+        internal MediaFormatBase(string odataType, string filenamePattern)
         {
             OdataType = odataType;
             FilenamePattern = filenamePattern;

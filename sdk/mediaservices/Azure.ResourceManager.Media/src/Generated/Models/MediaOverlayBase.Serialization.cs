@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class UnknownOverlayBase : IUtf8JsonSerializable
+    public partial class MediaOverlayBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -48,8 +48,16 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownOverlayBase DeserializeUnknownOverlayBase(JsonElement element)
+        internal static MediaOverlayBase DeserializeMediaOverlayBase(JsonElement element)
         {
+            if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "#Microsoft.Media.AudioOverlay": return AudioOverlay.DeserializeAudioOverlay(element);
+                    case "#Microsoft.Media.VideoOverlay": return VideoOverlay.DeserializeVideoOverlay(element);
+                }
+            }
             string odataType = default;
             string inputLabel = default;
             Optional<TimeSpan> start = default;
@@ -120,7 +128,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new UnknownOverlayBase(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel));
+            return new UnknownMediaOverlayBase(odataType, inputLabel, Optional.ToNullable(start), Optional.ToNullable(end), Optional.ToNullable(fadeInDuration), Optional.ToNullable(fadeOutDuration), Optional.ToNullable(audioGainLevel));
         }
     }
 }

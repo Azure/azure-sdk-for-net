@@ -94,9 +94,9 @@ rename-mapping:
   AssetTrack: MediaAssetTrack
   AssetTrackCollection: MediaAssetTrackListResult
   AttributeFilter: TrackAttributeFilter
-  Audio: AudioBase
+  Audio: MediaAudioBase
   CheckNameAvailabilityInput: MediaServicesNameAvailabilityContent
-  Codec: CodecBase
+  Codec: MediaCodecBase
   Complexity: EncodingComplexity
   ContentKeyPolicy.properties.created: CreatedOn
   ContentKeyPolicy.properties.lastModified: LastModifiedOn
@@ -133,7 +133,7 @@ rename-mapping:
   EntityNameAvailabilityCheckOutput: MediaServicesNameAvailabilityResult
   EntityNameAvailabilityCheckOutput.nameAvailable: IsNameAvailable
   Filters: FilteringOperations
-  Format: FormatBase
+  Format: MediaFormatBase
   GetEdgePoliciesContent: EdgePoliciesRequestContent
   H264Layer.crf: ConstantRateFactor
   H264Video.sceneChangeDetection: UseSceneChangeDetection
@@ -141,7 +141,7 @@ rename-mapping:
   H265VideoLayer.adaptiveBFrame: UseAdaptiveBFrame
   HlsSettings.default: IsDefault
   HlsSettings.forced: IsForced
-  Image: ImageBase
+  Image: MediaImageBase
   ImageFormat: OutputImageFileFormat
   InputDefinition: MediaJobInputDefinition
   InputFile: MediaJobInputFile
@@ -170,8 +170,8 @@ rename-mapping:
   JobRetry: MediaJobRetry
   JobState: MediaJobState
   KeyDelivery: MediaKeyDelivery
-  Layer: LayerBase
-  ListContainerSasInput: StorageContainerSasContent
+  Layer: MediaLayerBase
+  ListContainerSasInput: MediaAssetStorageContainerSasContent
   ListContainerSasInput.expiryTime: ExpireOn
   ListEdgePoliciesInput: EdgePoliciesRequestContent
   LiveEvent.properties.created: CreatedOn
@@ -186,7 +186,7 @@ rename-mapping:
   MediaServiceCollection: MediaServicesAccountListResult
   OnErrorType: MediaTransformOnErrorType
   OutputFile: MediaOutputFile
-  Overlay: OverlayBase
+  Overlay: MediaOverlayBase
   Preset: MediaTransformPreset
   PresetConfigurations: EncoderPresetConfigurations
   Priority: MediaJobPriority
@@ -213,13 +213,14 @@ rename-mapping:
   StreamingPolicy.properties.created: CreatedOn
   StreamingPolicyCollection: StreamingPolicyListResult
   StretchMode: InputVideoStretchMode
+  TrackBase: MediaAssetTrackBase
   TrackSelection: MediaTrackSelection
   Transform: MediaTransform
   Transform.properties.created: CreatedOn
   Transform.properties.lastModified: LastModifiedOn
   TransformCollection: MediaTransformListResult
   TransformOutput: MediaTransformOutput
-  Video: VideoBase
+  Video: MediaVideoBase
   VideoLayer.adaptiveBFrame: UseAdaptiveBFrame
   Visibility: PlayerVisibility
 

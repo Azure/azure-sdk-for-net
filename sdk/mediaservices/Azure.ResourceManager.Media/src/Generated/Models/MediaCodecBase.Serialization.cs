@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class CodecBase : IUtf8JsonSerializable
+    public partial class MediaCodecBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,22 +25,22 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static CodecBase DeserializeCodecBase(JsonElement element)
+        internal static MediaCodecBase DeserializeMediaCodecBase(JsonElement element)
         {
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
                     case "#Microsoft.Media.AacAudio": return AacAudio.DeserializeAacAudio(element);
-                    case "#Microsoft.Media.Audio": return AudioBase.DeserializeAudioBase(element);
+                    case "#Microsoft.Media.Audio": return MediaAudioBase.DeserializeMediaAudioBase(element);
                     case "#Microsoft.Media.CopyAudio": return CodecCopyAudio.DeserializeCodecCopyAudio(element);
                     case "#Microsoft.Media.CopyVideo": return CodecCopyVideo.DeserializeCodecCopyVideo(element);
                     case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element);
                     case "#Microsoft.Media.H265Video": return H265Video.DeserializeH265Video(element);
-                    case "#Microsoft.Media.Image": return ImageBase.DeserializeImageBase(element);
+                    case "#Microsoft.Media.Image": return MediaImageBase.DeserializeMediaImageBase(element);
                     case "#Microsoft.Media.JpgImage": return JpgImage.DeserializeJpgImage(element);
                     case "#Microsoft.Media.PngImage": return PngImage.DeserializePngImage(element);
-                    case "#Microsoft.Media.Video": return VideoBase.DeserializeVideoBase(element);
+                    case "#Microsoft.Media.Video": return MediaVideoBase.DeserializeMediaVideoBase(element);
                 }
             }
             string odataType = default;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new UnknownCodecBase(odataType, label.Value);
+            return new UnknownMediaCodecBase(odataType, label.Value);
         }
     }
 }

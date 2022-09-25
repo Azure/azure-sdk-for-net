@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class VideoBase : IUtf8JsonSerializable
+    public partial class MediaVideoBase : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteEndObject();
         }
 
-        internal static VideoBase DeserializeVideoBase(JsonElement element)
+        internal static MediaVideoBase DeserializeMediaVideoBase(JsonElement element)
         {
             if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Media.Models
                 {
                     case "#Microsoft.Media.H264Video": return H264Video.DeserializeH264Video(element);
                     case "#Microsoft.Media.H265Video": return H265Video.DeserializeH265Video(element);
-                    case "#Microsoft.Media.Image": return ImageBase.DeserializeImageBase(element);
+                    case "#Microsoft.Media.Image": return MediaImageBase.DeserializeMediaImageBase(element);
                     case "#Microsoft.Media.JpgImage": return JpgImage.DeserializeJpgImage(element);
                     case "#Microsoft.Media.PngImage": return PngImage.DeserializePngImage(element);
                 }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Media.Models
                     continue;
                 }
             }
-            return new VideoBase(odataType, label.Value, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode));
+            return new MediaVideoBase(odataType, label.Value, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode));
         }
     }
 }
