@@ -1141,9 +1141,9 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: IntegrationRuntimeStatus_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IntegrationRuntimeStatusResponse>> GetIntegrationRuntimeStatuAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IntegrationRuntimeStatusResponse>> GetIntegrationRuntimeStatusAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _integrationRuntimeStatusClientDiagnostics.CreateScope("IntegrationRuntimeResource.GetIntegrationRuntimeStatu");
+            using var scope = _integrationRuntimeStatusClientDiagnostics.CreateScope("IntegrationRuntimeResource.GetIntegrationRuntimeStatus");
             scope.Start();
             try
             {
@@ -1163,9 +1163,9 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: IntegrationRuntimeStatus_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IntegrationRuntimeStatusResponse> GetIntegrationRuntimeStatu(CancellationToken cancellationToken = default)
+        public virtual Response<IntegrationRuntimeStatusResponse> GetIntegrationRuntimeStatus(CancellationToken cancellationToken = default)
         {
-            using var scope = _integrationRuntimeStatusClientDiagnostics.CreateScope("IntegrationRuntimeResource.GetIntegrationRuntimeStatu");
+            using var scope = _integrationRuntimeStatusClientDiagnostics.CreateScope("IntegrationRuntimeResource.GetIntegrationRuntimeStatus");
             scope.Start();
             try
             {
