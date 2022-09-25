@@ -146,6 +146,7 @@ trigger:
     - sdk/trafficmanager/Azure.ResourceManager.TrafficManager
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
+    - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
 
 pr:
@@ -295,6 +296,7 @@ pr:
     - sdk/trafficmanager/Azure.ResourceManager.TrafficManager
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
+    - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
 
 extends:
