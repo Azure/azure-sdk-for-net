@@ -13,11 +13,14 @@ namespace Azure.ResourceManager.Storage.Models
     {
         /// <summary> The deleted date. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public DateTimeOffset? ExpiresOn {
-            get {
+        public DateTimeOffset? ExpiresOn
+        {
+            get
+            {
                 return ExpireOn;
             }
-            set {
+            set
+            {
                 ExpireOn = value;
             }
         }
