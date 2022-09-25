@@ -142,6 +142,7 @@ trigger:
     - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics
     - sdk/subscription/Azure.ResourceManager.Subscription
     - sdk/support/Azure.ResourceManager.Support
+    - sdk/synapse/Azure.ResourceManager.Synapse
     - sdk/trafficmanager/Azure.ResourceManager.TrafficManager
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
@@ -290,6 +291,7 @@ pr:
     - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics
     - sdk/subscription/Azure.ResourceManager.Subscription
     - sdk/support/Azure.ResourceManager.Support
+    - sdk/synapse/Azure.ResourceManager.Synapse
     - sdk/trafficmanager/Azure.ResourceManager.TrafficManager
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
