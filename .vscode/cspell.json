@@ -817,13 +817,14 @@
     {
       "filename": "**/sdk/synapse/**/*.cs",
       "words": [
-        "kusto`",
+        "kusto",
         "nchar",
         "ntext",
         "nvarchar",
         "apacheavro",
         "scsv",
         "tsve",
+        "sohsv",
         "exprired"
       ]
     },
