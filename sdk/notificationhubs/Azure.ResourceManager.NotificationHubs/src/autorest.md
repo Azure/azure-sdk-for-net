@@ -29,10 +29,10 @@ rename-mapping:
   GcmCredential.properties.googleApiKey: gcmApiKey
   WnsCredential.properties.windowsLiveEndpoint: -|uri
   NotificationHubResource.properties.registrationTtl: -|duration-constant
-  SharedAccessAuthorizationRuleResource.properties.createdTime: CreatedOn|datetime
-  SharedAccessAuthorizationRuleResource.properties.modifiedTime: ModifiedOn|datetime
-  SharedAccessAuthorizationRuleProperties.createdTime: CreatedOn|datetime
-  SharedAccessAuthorizationRuleProperties.modifiedTime: ModifiedOn|datetime
+  SharedAccessAuthorizationRuleResource.properties.createdTime: CreatedOn|date-time
+  SharedAccessAuthorizationRuleResource.properties.modifiedTime: ModifiedOn|date-time
+  SharedAccessAuthorizationRuleProperties.createdTime: CreatedOn|date-time
+  SharedAccessAuthorizationRuleProperties.modifiedTime: ModifiedOn|date-time
   NamespaceResource.properties.enabled: IsEnabled
   NamespaceResource.properties.critical: IsCritical
   NamespaceCreateOrUpdateParameters.properties.enabled: IsEnabled

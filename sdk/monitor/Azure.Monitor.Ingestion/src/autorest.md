@@ -34,3 +34,10 @@ directive:
   where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post.parameters[3]
   transform: $["x-ms-client-default"] = "gzip";
 ```
+### Update auto-generated Upload/UploadAsync methods to internal
+``` yaml
+directive:
+- from: swagger-document
+  where: $.paths["/dataCollectionRules/{ruleId}/streams/{stream}"].post
+  transform: $['x-accessibility'] = "internal";
+```

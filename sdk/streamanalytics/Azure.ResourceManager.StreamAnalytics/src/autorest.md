@@ -29,17 +29,17 @@ rename-mapping:
   ClusterJob.id: -|arm-id
   ClusterInfo.id: -|arm-id
   ClusterProperties.clusterId: -|uuid
-  LastOutputEventTimestamp.lastOutputEventTime: lastOutputEventOn|datetime
-  LastOutputEventTimestamp.lastUpdateTime: lastUpdatedOn|datetime
-  Output.properties.timeWindow: -|datetime
+  LastOutputEventTimestamp.lastOutputEventTime: lastOutputEventOn|date-time
+  LastOutputEventTimestamp.lastUpdateTime: lastUpdatedOn|date-time
+  Output.properties.timeWindow: -|date-time
   PowerBIOutputDataSource.properties.groupId: -|uuid
-  PrivateEndpointProperties.createdDate: createdOn|datetime
+  PrivateEndpointProperties.createdDate: createdOn|date-time
   PrivateLinkServiceConnection.properties.privateLinkServiceId: -|arm-id
-  SampleInputResult.lastArrivalTime: lastArrivedOn|datetime
+  SampleInputResult.lastArrivalTime: lastArrivedOn|date-time
   SubResource.id: -|arm-id
   SubResource.type: -|resource-type
   AzureSqlReferenceInputDataSource.properties.refreshRate: -|date
-  DiagnosticCondition.since: -|datetime
+  DiagnosticCondition.since: -|date-time
   RawReferenceInputDataSource.properties.payload: -|any
   RawStreamInputDataSource.properties.payload: -|any
   AvroSerialization: AvroFormatSerialization
