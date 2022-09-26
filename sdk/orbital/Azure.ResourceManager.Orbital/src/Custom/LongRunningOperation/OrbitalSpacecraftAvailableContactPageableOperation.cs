@@ -4,9 +4,9 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Orbital.Models;
@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.Orbital
 
         public override bool HasValue => _operationInternal.HasCompleted && GetOperationStateFromFinalResponse(_requestMethod, _operationInternal.RawResponse).HasSucceeded;
 
+        [EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public override string Id => throw new NotImplementedException();
 
         public override bool HasCompleted => _operationInternal.HasCompleted;
