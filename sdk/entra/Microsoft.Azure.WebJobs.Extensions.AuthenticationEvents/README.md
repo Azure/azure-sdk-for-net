@@ -1,6 +1,6 @@
 # Authentication Events Trigger for Azure Functions client library for .NET
 
-Authentication Event Trigger for Azure Functions handles all the backend processing, (e.g. token/json schema validation) for incoming Http requests for Authentication events. And provides the developer with a strongly typed, versioned object model to work with, meaning the developer need not have any prior knowledge of the request and response json payloads.
+The Authentication Event Trigger for Azure Functions handles all the backend processing, (e.g. token/json schema validation) for incoming Http requests for Authentication events. And provides the developer with a strongly typed, versioned object model to work with, meaning the developer need not have any prior knowledge of the request and response json payloads.
 
 This project framework provides the following features:
 
