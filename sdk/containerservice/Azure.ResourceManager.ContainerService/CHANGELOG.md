@@ -6,7 +6,7 @@ This is the first stable release of the Container Service Management library.
 
 ### Breaking Changes
 
-- Changed the type of property `ClientId` in `ManagedClusterServicePrincipalProfile` from `string` to `Guid`.
+- Changed the type of property `ClientId` in `ManagedClusterServicePrincipalProfile` from `Guid` to `string`.
 
 ### Bugs Fixed
 
