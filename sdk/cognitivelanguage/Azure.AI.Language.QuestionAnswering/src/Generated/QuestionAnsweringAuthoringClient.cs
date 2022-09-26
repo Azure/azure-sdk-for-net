@@ -93,6 +93,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-project-details
         /// 
         /// Response Body:
         /// 
@@ -159,6 +161,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-project-details
         /// 
         /// Response Body:
         /// 
@@ -250,6 +254,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/create-project
         /// 
         /// Request Body:
         /// 
@@ -355,6 +361,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/create-project
         /// 
         /// Request Body:
         /// 
@@ -432,6 +440,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-delete-status
         /// 
         /// Response Body:
         /// 
@@ -491,6 +501,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-delete-status
         /// 
         /// Response Body:
         /// 
@@ -551,6 +563,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-export-status
         /// 
         /// Response Body:
         /// 
@@ -611,6 +625,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-export-status
         /// 
         /// Response Body:
         /// 
@@ -671,6 +687,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-import-status
         /// 
         /// Response Body:
         /// 
@@ -732,6 +750,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-import-status
         /// 
         /// Response Body:
         /// 
@@ -794,6 +814,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-deploy-status
         /// 
         /// Response Body:
         /// 
@@ -857,6 +879,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-deploy-status
         /// 
         /// Response Body:
         /// 
@@ -935,6 +959,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-synonyms
         /// 
         /// Request Body:
         /// 
@@ -1012,6 +1038,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-synonyms
         /// 
         /// Request Body:
         /// 
@@ -1073,6 +1101,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-sources-status
         /// 
         /// Response Body:
         /// 
@@ -1134,6 +1164,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-sources-status
         /// 
         /// Response Body:
         /// 
@@ -1195,6 +1227,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-qnas-status
         /// 
         /// Response Body:
         /// 
@@ -1256,6 +1290,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-update-qnas-status
         /// 
         /// Response Body:
         /// 
@@ -1332,6 +1368,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/add-feedback
         /// 
         /// Request Body:
         /// 
@@ -1409,6 +1447,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/add-feedback
         /// 
         /// Request Body:
         /// 
@@ -1486,6 +1526,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-projects
         /// 
         /// Response Body:
         /// 
@@ -1569,6 +1611,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-projects
         /// 
         /// Response Body:
         /// 
@@ -1649,6 +1693,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-deployments
         /// 
         /// Response Body:
         /// 
@@ -1723,6 +1769,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/list-deployments
         /// 
         /// Response Body:
         /// 
@@ -1796,6 +1844,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-synonyms
         /// 
         /// Response Body:
         /// 
@@ -1868,6 +1918,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-synonyms
         /// 
         /// Response Body:
         /// 
@@ -1945,6 +1997,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-sources
         /// 
         /// Response Body:
         /// 
@@ -2026,6 +2080,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-sources
         /// 
         /// Response Body:
         /// 
@@ -2124,6 +2180,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-qnas
         /// 
         /// Response Body:
         /// 
@@ -2253,6 +2311,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/get-qnas
         /// 
         /// Response Body:
         /// 
@@ -2350,6 +2410,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/delete-project
         /// 
         /// Response Body:
         /// 
@@ -2411,6 +2473,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/delete-project
         /// 
         /// Response Body:
         /// 
@@ -2489,6 +2553,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/export
         /// 
         /// Response Body:
         /// 
@@ -2566,6 +2632,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/export
         /// 
         /// Response Body:
         /// 
@@ -2725,6 +2793,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/import
         /// 
         /// Request Body:
         /// 
@@ -2948,6 +3018,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request and response payloads.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/import
         /// 
         /// Request Body:
         /// 
@@ -3070,6 +3142,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/deploy-project
         /// 
         /// Response Body:
         /// 
@@ -3126,6 +3200,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the response payload.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/deploy-project
         /// 
         /// Response Body:
         /// 
@@ -3201,6 +3277,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload and one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-sources
         /// 
         /// Request Body:
         /// 
@@ -3312,6 +3390,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload and one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-sources
         /// 
         /// Request Body:
         /// 
@@ -3466,6 +3546,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload and one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-qnas
         /// 
         /// Request Body:
         /// 
@@ -3674,6 +3756,8 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// </example>
         /// <remarks>
         /// Below is the JSON schema for the request payload and one item in the pageable response.
+        /// Additional information can be found in the service REST API documentation:
+        /// https://learn.microsoft.com/rest/api/cognitiveservices/questionanswering/question-answering-projects/update-qnas
         /// 
         /// Request Body:
         /// 
