@@ -1,14 +1,21 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0 (2022-09-26)
 
-### Features Added
+This is the first stable release of the Container Service Management library.
 
 ### Breaking Changes
 
+- Changed the type of property `ClientId` in `ManagedClusterServicePrincipalProfile` from `Guid` to `string`.
+
 ### Bugs Fixed
 
+- Fixed the interim API version issue in the LRO.
+
 ### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.2 (2022-08-29)
 

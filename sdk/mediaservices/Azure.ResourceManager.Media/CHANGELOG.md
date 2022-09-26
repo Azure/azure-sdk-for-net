@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2022-09-25)
+## 1.0.0 (2022-09-26)
 
 This is the first stable release of the Media Management client library.
 
