@@ -12,13 +12,18 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 using OpenTelemetry;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 {
     internal class MockTransmitter : ITransmitter
     {
-        public ConcurrentBag<TelemetryItem> TelemetryItems = new ConcurrentBag<TelemetryItem>();
+        public readonly ConcurrentBag<TelemetryItem> TelemetryItems;
 
         public string InstrumentationKey => "00000000-0000-0000-0000-000000000000";
+
+        public MockTransmitter(ConcurrentBag<TelemetryItem> telemetryItems)
+        {
+            this.TelemetryItems = telemetryItems;
+        }
 
         public ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, bool async, CancellationToken cancellationToken)
         {
