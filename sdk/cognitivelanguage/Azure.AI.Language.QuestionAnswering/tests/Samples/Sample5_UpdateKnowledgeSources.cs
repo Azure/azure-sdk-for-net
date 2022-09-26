@@ -15,8 +15,7 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
     {
         [RecordedTest]
         [SyncOnly]
-        // TODO: Make this test Sync once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-        public async Task KnowledgeSources()
+        public void KnowledgeSources()
         {
             QuestionAnsweringAuthoringClient client = Client;
 
@@ -45,31 +44,27 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-#if SNIPPET
             Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
+#if SNIPPET
             // Updated Knowledge Sources can be retrieved as follows
             Pageable<BinaryData> sources = updateSourcesOperation.Value;
 #else
-            // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Started, testProjectName, updateSourcesRequestContent);
-            await updateSourcesOperation.WaitForCompletionAsync();
-
-            // TODO: Uncomment the following line and delete subsequent lines in this preproc condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
-            // IEnumerable<BinaryData> sources = await updateSourcesOperation.Value.ToEnumerableAsync();
+            // TODO: Remove this condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
             Pageable<BinaryData> sources = client.GetSources(testProjectName);
 #endif
+
             Console.WriteLine("Sources: ");
             foreach (BinaryData source in sources)
             {
                 Console.WriteLine(source);
             }
-            #endregion
+#endregion
 
             Assert.True(updateSourcesOperation.HasCompleted);
             Assert.That(sources.Any(source => source.ToString().Contains(sourceUri)));
 
-            #region Snippet:QuestionAnsweringAuthoringClient_UpdateQnas
+#region Snippet:QuestionAnsweringAuthoringClient_UpdateQnas
 
             string question = "{NewQuestion}";
             string answer = "{NewAnswer}";
@@ -92,18 +87,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-#if SNIPPET
             Operation<Pageable<BinaryData>> updateQnasOperation = Client.UpdateQnas(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
+#if SNIPPET
             // QnAs can be retrieved as follows
             Pageable<BinaryData> qnas = updateQnasOperation.Value;
 #else
-            // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<AsyncPageable<BinaryData>> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Started, testProjectName, updateQnasRequestContent);
-            await updateQnasOperation.WaitForCompletionAsync();
-
-            // TODO: Uncomment the following line and delete subsequent lines in this preproc condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
-            // IEnumerable<BinaryData> qnas = await updateQnasOperation.Value.ToEnumerableAsync();
+            // TODO: Remove this condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
             Pageable<BinaryData> qnas = client.GetQnas(testProjectName);
 #endif
 
@@ -209,18 +199,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-#if SNIPPET
             Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Completed, testProjectName, updateSourcesRequestContent);
 
+#if SNIPPET
             // Updated Knowledge Sources can be retrieved as follows
             AsyncPageable<BinaryData> sources = updateSourcesOperation.Value;
 #else
-            // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<AsyncPageable<BinaryData>> updateSourcesOperation = await client.UpdateSourcesAsync(WaitUntil.Started, testProjectName, updateSourcesRequestContent);
-            await updateSourcesOperation.WaitForCompletionAsync();
-
-            // TODO: Uncomment the following line and delete subsequent lines in this preproc condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
-            // IEnumerable<BinaryData> sources = await updateSourcesOperation.Value.ToEnumerableAsync();
+            // TODO: Remove this condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
             AsyncPageable<BinaryData> sources = client.GetSourcesAsync(testProjectName);
 #endif
 
@@ -256,18 +241,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
                         }
                 });
 
-#if SNIPPET
             Operation<AsyncPageable<BinaryData>> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Completed, testProjectName, updateQnasRequestContent);
 
+#if SNIPPET
             // QnAs can be retrieved as follows
             AsyncPageable<BinaryData> qnas = updateQnasOperation.Value;
 #else
-            // TODO: Remove this region once slowdown bug is fixed. https://github.com/Azure/azure-sdk-for-net/issues/26696
-            Operation<AsyncPageable<BinaryData>> updateQnasOperation = await Client.UpdateQnasAsync(WaitUntil.Started, testProjectName, updateQnasRequestContent);
-            await updateQnasOperation.WaitForCompletionAsync();
-
-            // TODO: Uncomment the following line and delete subsequent lines in this preproc condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
-            // IEnumerable<BinaryData> qnas = await updateQnasOperation.Value.ToEnumerableAsync();
+            // TODO: Remove this condition once https://github.com/Azure/autorest.csharp/issues/2726 is fixed.
             AsyncPageable<BinaryData> qnas = client.GetQnasAsync(testProjectName);
 #endif
 

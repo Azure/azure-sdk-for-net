@@ -74,6 +74,7 @@ Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(Wa
 
 // Knowledge Sources can be retrieved as follows
 Pageable<BinaryData> sources = updateSourcesOperation.Value;
+
 Console.WriteLine("Sources: ");
 foreach (BinaryData source in sources)
 {
@@ -86,6 +87,7 @@ foreach (BinaryData source in sources)
 ```C# Snippet:QuestionAnsweringAuthoringClient_DeployProject
 // Set deployment name and start operation
 string newDeploymentName = "{DeploymentName}";
+
 Operation<BinaryData> deploymentOperation = client.DeployProject(WaitUntil.Completed, newProjectName, newDeploymentName);
 
 // Deployments can be retrieved as follows
@@ -167,6 +169,7 @@ await foreach (BinaryData source in sources)
 ```C# Snippet:QuestionAnsweringAuthoringClient_DeployProjectAsync
 // Set deployment name and start operation
 string newDeploymentName = "{DeploymentName}";
+
 Operation<BinaryData> deploymentOperation = await client.DeployProjectAsync(WaitUntil.Completed, newProjectName, newDeploymentName);
 
 // Deployments can be retrieved as follows

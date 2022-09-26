@@ -43,6 +43,7 @@ Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(Wa
 
 // Updated Knowledge Sources can be retrieved as follows
 Pageable<BinaryData> sources = updateSourcesOperation.Value;
+
 Console.WriteLine("Sources: ");
 foreach (BinaryData source in sources)
 {
