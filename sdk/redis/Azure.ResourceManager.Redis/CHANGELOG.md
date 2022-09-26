@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed the serialization issue of `RedisCommonConfiguration.RdbBackupMaxSnapshotCount`.
+
 ### Other Changes
 
 ## 1.0.0 (2022-08-29)

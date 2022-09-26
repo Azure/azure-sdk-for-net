@@ -6,9 +6,13 @@
 #nullable disable
 
 using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+
+// This customization can be removed after fix https://github.com/Azure/autorest.csharp/issues/2745
+[assembly: CodeGenSuppressType("RedisCommonConfiguration")]
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -30,7 +34,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(RdbBackupMaxSnapshotCount))
             {
                 writer.WritePropertyName("rdb-backup-max-snapshot-count");
-                writer.WriteNumberValue(RdbBackupMaxSnapshotCount.Value);
+                writer.WriteStringValue(RdbBackupMaxSnapshotCount.Value.ToString(CultureInfo.InvariantCulture));
             }
             if (Optional.IsDefined(RdbStorageConnectionString))
             {
@@ -133,7 +137,11 @@ namespace Azure.ResourceManager.Redis.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    rdbBackupMaxSnapshotCount = property.Value.GetInt32();
+                    if (!int.TryParse(property.Value.GetString(), out int rdbBackupMaxSnapshotCountValue))
+                    {
+                        throw new FormatException();
+                    }
+                    rdbBackupMaxSnapshotCount = rdbBackupMaxSnapshotCountValue;
                     continue;
                 }
                 if (property.NameEquals("rdb-storage-connection-string"))
