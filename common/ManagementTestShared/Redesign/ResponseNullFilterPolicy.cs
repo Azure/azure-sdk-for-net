@@ -14,25 +14,25 @@ namespace Azure.ResourceManager.TestFramework
         public override void OnReceivedResponse(HttpMessage message)
         {
             // The delete method response only contains "value":null, after filter, nothing would left
-            if (message.Request.Method != RequestMethod.Delete && message.Response.ContentStream != null)
-            {
-                StreamReader reader = new StreamReader(message.Response.ContentStream);
-                string content = reader.ReadToEnd();
-                if (content.Contains(":null"))
-                {
-                    // Replace "":null, with ,
-                    content = Regex.Replace(content, "(,?)\\s*\\\"[^\\\"]*\\\":null,?|,(})", "$1$2");
-                    // Remove trailing comma
-                    content = Regex.Replace(content, ",}", "}");
-                }
-                var jsonDocument = JsonDocument.Parse(content);
-                var stream = new MemoryStream();
-                Utf8JsonWriter writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true });
-                jsonDocument.WriteTo(writer);
-                writer.Flush();
-                message.Response.ContentStream = stream;
-                message.Response.ContentStream.Position = 0;
-            }
+            //if (message.Request.Method != RequestMethod.Delete && message.Response.ContentStream != null)
+            //{
+            //    StreamReader reader = new StreamReader(message.Response.ContentStream);
+            //    string content = reader.ReadToEnd();
+            //    if (content.Contains(":null"))
+            //    {
+            //        // Replace "":null, with ,
+            //        content = Regex.Replace(content, "(,?)\\s*\\\"[^\\\"]*\\\":null,?|,(})", "$1$2");
+            //        // Remove trailing comma
+            //        content = Regex.Replace(content, ",}", "}");
+            //    }
+            //    var jsonDocument = JsonDocument.Parse(content);
+            //    var stream = new MemoryStream();
+            //    Utf8JsonWriter writer = new Utf8JsonWriter(stream, new JsonWriterOptions { Indented = true });
+            //    jsonDocument.WriteTo(writer);
+            //    writer.Flush();
+            //    message.Response.ContentStream = stream;
+            //    message.Response.ContentStream.Position = 0;
+            //}
         }
     }
 }
