@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WriteStartArray();
             foreach (var item in Days)
             {
-                writer.WriteStringValue(item);
+                writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
             writer.WritePropertyName("hours");
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Monitor.Models
         internal static RecurrentSchedule DeserializeRecurrentSchedule(JsonElement element)
         {
             string timeZone = default;
-            IList<string> days = default;
+            IList<MonitorDayOfWeek> days = default;
             IList<int> hours = default;
             IList<int> minutes = default;
             foreach (var property in element.EnumerateObject())
@@ -57,10 +57,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("days"))
                 {
-                    List<string> array = new List<string>();
+                    List<MonitorDayOfWeek> array = new List<MonitorDayOfWeek>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new MonitorDayOfWeek(item.GetString()));
                     }
                     days = array;
                     continue;
