@@ -8,6 +8,9 @@
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <OutputType>Exe</OutputType>
+
+    <!--Mitigate NU1505	Duplicate PackageDownload items found: Microsoft.NETCore.App.Host.win-x64  https://github.com/dotnet/sdk/issues/24747#issuecomment-1126298533-->
+    <DisableCheckingDuplicateNuGetItems>true</DisableCheckingDuplicateNuGetItems>
   </PropertyGroup>
 
   <ItemGroup>
