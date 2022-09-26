@@ -17,7 +17,6 @@
 * Request and Dependency Success criteria will now be decided based on
   `Activity.Status` ([#31024](https://github.com/Azure/azure-sdk-for-net/pull/31024))
 * Changed `AzureMonitorTraceExporter` to internal ([#31067](https://github.com/Azure/azure-sdk-for-net/pull/31067))
-* Changed default offline storage directory from "Microsoft\ApplicationInsights" to "Microsoft\AzureMonitor" ([#31073](https://github.com/Azure/azure-sdk-for-net/pull/31073))
   Users may override the default location by setting `AzureMonitorExporterOptions.StorageDirectory`.
 
 ### Bugs Fixed
