@@ -21,7 +21,6 @@
 
 ### Bugs Fixed
 
-* Remove populating _MS.AggregationIntervalMs to all metrics ([#29473](https://github.com/Azure/azure-sdk-for-net/pull/29473))
 * Fix shared RoleName/RoleInstance between Trace and Log Exporter ([#26438](https://github.com/Azure/azure-sdk-for-net/pull/26438))
 
 ### Other Changes
