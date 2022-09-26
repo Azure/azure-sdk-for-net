@@ -4,6 +4,7 @@
 
 ### Features Added
 
+* Update OpenTelemetry dependencies ([#31065](https://github.com/Azure/azure-sdk-for-net/pull/31065))
 * Add disable storage switch ([#28446](https://github.com/Azure/azure-sdk-for-net/pull/28446))
 * Added support for exception telemetry from ILogger ([#26670](https://github.com/Azure/azure-sdk-for-net/pull/26670))
 * Add metrics exporter ([#26651](https://github.com/Azure/azure-sdk-for-net/pull/26651))
