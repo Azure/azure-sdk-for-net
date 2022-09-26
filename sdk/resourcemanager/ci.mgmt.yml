@@ -115,6 +115,7 @@ trigger:
     - sdk/providerhub/Azure.ResourceManager.ProviderHub
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/quantum/Azure.ResourceManager.Quantum
+    - sdk/quota/Azure.ResourceManager.Quota
     - sdk/recoveryservices/Azure.ResourceManager.RecoveryServices
     - sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup
     - sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery
@@ -132,6 +133,7 @@ trigger:
     - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
     - sdk/servicefabricmanagedclusters/Azure.ResourceManager.ServiceFabricManagedClusters
     - sdk/servicelinker/Azure.ResourceManager.ServiceLinker
+    - sdk/signalr/Azure.ResourceManager.SignalR
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
     - sdk/storage/Azure.ResourceManager.Storage
@@ -141,9 +143,11 @@ trigger:
     - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics
     - sdk/subscription/Azure.ResourceManager.Subscription
     - sdk/support/Azure.ResourceManager.Support
+    - sdk/synapse/Azure.ResourceManager.Synapse
     - sdk/trafficmanager/Azure.ResourceManager.TrafficManager
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
+    - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
 
 pr:
@@ -262,6 +266,7 @@ pr:
     - sdk/providerhub/Azure.ResourceManager.ProviderHub
     - sdk/purview/Azure.ResourceManager.Purview
     - sdk/quantum/Azure.ResourceManager.Quantum
+    - sdk/quota/Azure.ResourceManager.Quota
     - sdk/recoveryservices/Azure.ResourceManager.RecoveryServices
     - sdk/recoveryservices-backup/Azure.ResourceManager.RecoveryServicesBackup
     - sdk/recoveryservices-siterecovery/Azure.ResourceManager.RecoveryServicesSiteRecovery
@@ -279,6 +284,7 @@ pr:
     - sdk/servicefabric/Azure.ResourceManager.ServiceFabric
     - sdk/servicefabricmanagedclusters/Azure.ResourceManager.ServiceFabricManagedClusters
     - sdk/servicelinker/Azure.ResourceManager.ServiceLinker
+    - sdk/signalr/Azure.ResourceManager.SignalR
     - sdk/sqlmanagement/Azure.ResourceManager.Sql
     - sdk/sqlvirtualmachine/Azure.ResourceManager.SqlVirtualMachine
     - sdk/storage/Azure.ResourceManager.Storage
@@ -288,9 +294,11 @@ pr:
     - sdk/streamanalytics/Azure.ResourceManager.StreamAnalytics
     - sdk/subscription/Azure.ResourceManager.Subscription
     - sdk/support/Azure.ResourceManager.Support
+    - sdk/synapse/Azure.ResourceManager.Synapse
     - sdk/trafficmanager/Azure.ResourceManager.TrafficManager
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
     - sdk/websites/Azure.ResourceManager.AppService
+    - sdk/workloadmonitor/Azure.ResourceManager.WorkloadMonitor
     - sdk/workloads/Azure.ResourceManager.Workloads
 
 extends:

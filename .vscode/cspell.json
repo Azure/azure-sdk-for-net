@@ -815,6 +815,20 @@
       ]
     },
     {
+      "filename": "**/sdk/synapse/**/*.cs",
+      "words": [
+        "kusto",
+        "nchar",
+        "ntext",
+        "nvarchar",
+        "apacheavro",
+        "scsv",
+        "tsve",
+        "sohsv",
+        "exprired"
+      ]
+    },
+    {
       "filename": "**/sdk/textanalytics/**/*.cs",
       "words": [
         "Brcpf",
