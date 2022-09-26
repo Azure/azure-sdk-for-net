@@ -8,7 +8,6 @@
 * Add default storage initialization for logs and metrics ([#28506](https://github.com/Azure/azure-sdk-for-net/pull/28506))
 * Add disable storage switch ([#28446](https://github.com/Azure/azure-sdk-for-net/pull/28446))
 * Added support for exception telemetry from ILogger ([#26670](https://github.com/Azure/azure-sdk-for-net/pull/26670))
-* Storage transmission evaluator ([#26976](https://github.com/Azure/azure-sdk-for-net/pull/26976))
 * Add metrics exporter ([#26651](https://github.com/Azure/azure-sdk-for-net/pull/26651))
 * Add default storage location and initialization for traces ([#26494](https://github.com/Azure/azure-sdk-for-net/pull/26494)
 * Change AzureMonitorExporterLoggingExtensions from internal to public ([#26355](https://github.com/Azure/azure-sdk-for-net/pull/26355))
