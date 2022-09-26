@@ -38,7 +38,9 @@ rename-mapping:
   SampleInputResult.lastArrivalTime: lastArrivedOn|date-time
   SubResource.id: -|arm-id
   SubResource.type: -|resource-type
-  AzureSqlReferenceInputDataSource.properties.refreshRate: -|date
+  AzureSqlReferenceInputDataSource.properties.refreshRate: refreshInterval
+  BlobReferenceInputDataSource.properties.fullSnapshotRefreshRate: fullSnapshotRefreshInterval
+  BlobReferenceInputDataSource.properties.deltaSnapshotRefreshRate: deltaSnapshotRefreshInterval
   DiagnosticCondition.since: -|date-time
   RawReferenceInputDataSource.properties.payload: -|any
   RawStreamInputDataSource.properties.payload: -|any
@@ -230,5 +232,17 @@ directive:
   where: $.definitions.FunctionInput.properties.isConfigurationParameter
   transform: >
         $["x-nullable"] = true;
-
+# Fix RefreshRate
+- from: swagger-document
+  where: $.definitions.AzureSqlReferenceInputDataSourceProperties
+  transform: >
+    $.properties.refreshRate['format'] = 'time';
+- from: swagger-document
+  where: $.definitions.BlobReferenceInputDataSourceProperties
+  transform: >
+    $.properties.fullSnapshotRefreshRate['format'] = 'time';
+- from: swagger-document
+  where: $.definitions.BlobReferenceInputDataSourceProperties
+  transform: >
+    $.properties.deltaSnapshotRefreshRate['format'] = 'time';
 ```

@@ -393,7 +393,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string Container { get { throw null; } set { } }
         public string DateFormat { get { throw null; } set { } }
         public string DeltaPathPattern { get { throw null; } set { } }
+        public System.TimeSpan? DeltaSnapshotRefreshInterval { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use DeltaSnapshotRefreshInterval instead.", false)]
         public string DeltaSnapshotRefreshRate { get { throw null; } set { } }
+        public System.TimeSpan? FullSnapshotRefreshInterval { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use FullSnapshotRefreshInterval instead.", false)]
         public string FullSnapshotRefreshRate { get { throw null; } set { } }
         public string PathPattern { get { throw null; } set { } }
         public int? SourcePartitionCount { get { throw null; } set { } }
@@ -818,6 +824,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public string DeltaSnapshotQuery { get { throw null; } set { } }
         public string FullSnapshotQuery { get { throw null; } set { } }
         public string Password { get { throw null; } set { } }
+        public System.TimeSpan? RefreshInterval { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use RefreshInterval instead.", false)]
         public System.DateTimeOffset? RefreshRate { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.DataRefreshType? RefreshType { get { throw null; } set { } }
         public string Server { get { throw null; } set { } }
