@@ -4,10 +4,8 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Nginx.Models;
 using Azure.ResourceManager.Nginx.Tests.Helpers;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Nginx.Tests.Scenario
@@ -41,6 +39,10 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
             Assert.IsTrue(nginxDeploymentName.Equals(nginxDeployment.Data.Name));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await ResGroup.GetNginxDeployments().CreateOrUpdateAsync(WaitUntil.Completed, nginxDeploymentName, null)).Value);
+
+            NginxDeploymentData nginxDeploymentData = new NginxDeploymentData(Location);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await ResGroup.GetNginxDeployments().CreateOrUpdateAsync(WaitUntil.Completed, null, nginxDeploymentData)).Value);
         }
 
         [TestCase]
@@ -53,6 +55,8 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentResource nginxDeployment2 = await collection.GetAsync(nginxDeploymentName);
 
             ResourceDataHelper.AssertTrackedResource(nginxDeployment1.Data, nginxDeployment2.Data);
+            Assert.ThrowsAsync<RequestFailedException>(async () => _ = await collection.GetAsync(nginxDeploymentName + "1"));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.GetAsync(null));
         }
 
         [TestCase]
@@ -73,12 +77,20 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
         public async Task GetAll()
         {
             NginxDeploymentCollection collection = ResGroup.GetNginxDeployments();
+
+            int count = 0;
+            await foreach (NginxDeploymentResource nginxDeployment in collection.GetAllAsync())
+            {
+                count++;
+            }
+
+            Assert.AreEqual(count, 0);
+
             string nginxDeploymentName1 = Recording.GenerateAssetName("testDeployment-");
             string nginxDeploymentName2 = Recording.GenerateAssetName("testDeployment-");
             _ = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName1);
             _ = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName2);
 
-            int count = 0;
             await foreach (NginxDeploymentResource nginxDeployment in collection.GetAllAsync())
             {
                 count++;

@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Nginx.Models;
 using Azure.ResourceManager.Nginx.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
@@ -45,6 +44,10 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxCertificateResource nginxCertificate = await CreateNginxCertificate(ResGroup, Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
 
             Assert.IsTrue(nginxCertificateName.Equals(nginxCertificate.Data.Name));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.GetNginxCertificates().CreateOrUpdateAsync(WaitUntil.Completed, nginxCertificateName, null)).Value);
+
+            NginxCertificateData nginxCertificateData = new NginxCertificateData(Location);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeployment.GetNginxCertificates().CreateOrUpdateAsync(WaitUntil.Completed, null, nginxCertificateData)).Value);
         }
 
         [TestCase]
@@ -62,6 +65,8 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxCertificateResource nginxCertificate2 = await collection.GetAsync(nginxCertificateName);
 
             ResourceDataHelper.AssertTrackedResource(nginxCertificate1.Data, nginxCertificate2.Data);
+            Assert.ThrowsAsync<RequestFailedException>(async () => _ = await collection.GetAsync(nginxCertificateName + "1"));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = await collection.GetAsync(null));
         }
 
         [TestCase]
@@ -90,6 +95,15 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
 
             NginxCertificateCollection collection = nginxDeployment.GetNginxCertificates();
+
+            int count = 0;
+            await foreach (NginxCertificateResource nginxCertificate in collection.GetAllAsync())
+            {
+                count++;
+            }
+
+            Assert.AreEqual(count, 0);
+
             string nginxCertificateName1 = Recording.GenerateAssetName("testCertificate-");
             string certificateVirtualPath1 = "/etc/cert/nginx.cert";
             string keyVirtualPath1 = "/etc/cert/nginx.key";
@@ -99,7 +113,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             _ = await CreateNginxCertificate(ResGroup, Location, nginxDeployment, nginxCertificateName1, certificateVirtualPath1, keyVirtualPath1);
             _ = await CreateNginxCertificate(ResGroup, Location, nginxDeployment, nginxCertificateName2, certificateVirtualPath2, keyVirtualPath2);
 
-            int count = 0;
             await foreach (NginxCertificateResource nginxCertificate in collection.GetAllAsync())
             {
                 count++;

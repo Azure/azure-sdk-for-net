@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationResource.ValidateResourceId(nginxConfigurationResourceIdentifier);
 
             Assert.IsTrue(nginxConfigurationResourceIdentifier.ResourceType.Equals(NginxConfigurationResource.ResourceType));
+            Assert.Throws<ArgumentException>(() => NginxConfigurationResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
         [TestCase]
@@ -116,6 +118,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationResource nginxConfiguration2 = (await nginxConfiguration.UpdateAsync(WaitUntil.Completed, nginxConfigurationData)).Value;
 
             Assert.AreNotEqual(nginxConfiguration.Data.Properties.RootFile, nginxConfiguration2.Data.Properties.RootFile);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxConfiguration.UpdateAsync(WaitUntil.Completed, null)).Value);
         }
 
         [TestCase]
@@ -131,6 +134,8 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationResource nginxConfiguration2 = await nginxConfiguration.AddTagAsync("Counter", "1");
 
             Assert.AreEqual(nginxConfiguration2.Data.Tags["Counter"], "1");
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxConfiguration.AddTagAsync(null, "1")).Value);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxConfiguration.AddTagAsync("Counter", null)).Value);
         }
 
         [TestCase]
@@ -147,6 +152,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationResource nginxConfiguration2 = await nginxConfiguration.SetTagsAsync(new Dictionary<string, string> { { "Counter", "2" } });
 
             Assert.AreEqual(nginxConfiguration2.Data.Tags["Counter"], "2");
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxConfiguration.SetTagsAsync(null)).Value);
         }
 
         [TestCase]
@@ -163,6 +169,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxConfigurationResource nginxConfiguration2 = await nginxConfiguration.RemoveTagAsync("Counter");
 
             Assert.Null(nginxConfiguration2.Data.Tags["Counter"]);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxConfiguration.RemoveTagAsync(null)).Value);
         }
     }
 }

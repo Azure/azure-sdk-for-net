@@ -45,6 +45,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxCertificateResource.ValidateResourceId(nginxCertificateResourceIdentifier);
 
             Assert.IsTrue(nginxCertificateResourceIdentifier.ResourceType.Equals(NginxCertificateResource.ResourceType));
+            Assert.Throws<ArgumentException>(() => NginxCertificateResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
         [TestCase]
@@ -121,6 +122,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             Assert.AreNotEqual(nginxCertificate.Data.Properties.CertificateVirtualPath, nginxCertificate2.Data.Properties.CertificateVirtualPath);
             Assert.AreNotEqual(nginxCertificate.Data.Properties.KeyVirtualPath, nginxCertificate2.Data.Properties.KeyVirtualPath);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxCertificate.UpdateAsync(WaitUntil.Completed, null)).Value);
         }
 
         [TestCase]
@@ -137,6 +139,8 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxCertificateResource nginxCertificate2 = await nginxCertificate.AddTagAsync("Counter", "1");
 
             Assert.AreEqual(nginxCertificate2.Data.Tags["Counter"], "1");
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxCertificate.AddTagAsync(null, "1")).Value);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxCertificate.AddTagAsync("Counter", null)).Value);
         }
 
         [TestCase]
@@ -154,6 +158,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxCertificateResource nginxCertificate2 = await nginxCertificate.SetTagsAsync(new Dictionary<string, string> { { "Counter", "2" } });
 
             Assert.AreEqual(nginxCertificate2.Data.Tags["Counter"], "2");
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxCertificate.SetTagsAsync(null)).Value);
         }
 
         [TestCase]
@@ -171,6 +176,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxCertificateResource nginxCertificate2 = await nginxCertificate.RemoveTagAsync("Counter");
 
             Assert.Null(nginxCertificate2.Data.Tags["Counter"]);
+            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxCertificate.RemoveTagAsync(null)).Value);
         }
     }
 }
