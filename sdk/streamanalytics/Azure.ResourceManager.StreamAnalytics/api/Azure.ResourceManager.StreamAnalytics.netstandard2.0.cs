@@ -256,6 +256,9 @@ namespace Azure.ResourceManager.StreamAnalytics
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StreamAnalytics.Models.LastOutputEventTimestamp> LastOutputEventTimestamps { get { throw null; } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsDataSerialization Serialization { get { throw null; } set { } }
         public float? SizeWindow { get { throw null; } set { } }
+        public System.TimeSpan? TimeFrame { get { throw null; } set { } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use TimeFrame instead.", false)]
         public System.DateTimeOffset? TimeWindow { get { throw null; } set { } }
         public Azure.ResourceManager.StreamAnalytics.Models.StreamingJobOutputWatermarkProperties WatermarkSettings { get { throw null; } set { } }
     }
