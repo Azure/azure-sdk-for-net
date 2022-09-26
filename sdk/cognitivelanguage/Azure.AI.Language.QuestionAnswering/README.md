@@ -189,6 +189,7 @@ Your projects can be deployed using the `DeployProjectAsync` or the synchronous 
 ```C# Snippet:QuestionAnsweringAuthoringClient_DeployProject
 // Set deployment name and start operation
 string newDeploymentName = "{DeploymentName}";
+
 Operation<BinaryData> deploymentOperation = client.DeployProject(WaitUntil.Completed, newProjectName, newDeploymentName);
 
 // Deployments can be retrieved as follows
@@ -227,6 +228,7 @@ Operation<Pageable<BinaryData>> updateSourcesOperation = client.UpdateSources(Wa
 
 // Knowledge Sources can be retrieved as follows
 Pageable<BinaryData> sources = updateSourcesOperation.Value;
+
 Console.WriteLine("Sources: ");
 foreach (BinaryData source in sources)
 {
