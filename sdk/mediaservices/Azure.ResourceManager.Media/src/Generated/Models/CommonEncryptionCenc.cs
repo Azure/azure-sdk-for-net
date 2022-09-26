@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -46,7 +45,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Optional configuration supporting ClearKey in CommonEncryptionCenc encryption scheme. </summary>
         internal ClearKeyEncryptionConfiguration ClearKeyEncryptionConfiguration { get; set; }
         /// <summary> Template for the URL of the custom service delivering content keys to end user players. Not required when using Azure Media Services for issuing licenses. The template supports replaceable tokens that the service will update at runtime with the value specific to the request.  The currently supported token value is {AlternativeMediaId}, which is replaced with the value of StreamingLocatorId.AlternativeMediaId. </summary>
-        public Uri ClearKeyEncryptionCustomKeysAcquisitionUriTemplate
+        public string ClearKeyEncryptionCustomKeysAcquisitionUriTemplate
         {
             get => ClearKeyEncryptionConfiguration is null ? default : ClearKeyEncryptionConfiguration.CustomKeysAcquisitionUriTemplate;
             set
