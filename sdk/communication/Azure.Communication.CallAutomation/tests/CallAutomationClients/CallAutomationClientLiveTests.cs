@@ -5,8 +5,9 @@ using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
+using Azure.Communication.CallAutomation.Tests.Infrastructure;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
 {
     internal class CallAutomationClientLiveTests : CallAutomationClientLiveTestsBase
     {
@@ -75,7 +76,6 @@ namespace Azure.Communication.CallAutomation
              * 4. hang up the call.
              * 5. once call is hung up, verify that call connection cannot be found.
             */
-
             if (SkipCallAutomationInteractionLiveTests)
                 Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
