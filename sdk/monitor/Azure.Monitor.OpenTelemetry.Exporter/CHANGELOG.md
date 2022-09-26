@@ -5,7 +5,6 @@
 ### Features Added
 
 * Add histogram metric type support ([#27544](https://github.com/Azure/azure-sdk-for-net/pull/27544))
-* Update OTel package dependencies to 1.2.0 ([#28507](https://github.com/Azure/azure-sdk-for-net/pull/28507))
 * Add default storage initialization for logs and metrics ([#28506](https://github.com/Azure/azure-sdk-for-net/pull/28506))
 * Add disable storage switch ([#28446](https://github.com/Azure/azure-sdk-for-net/pull/28446))
 * Transmit from storage ([#26762](https://github.com/Azure/azure-sdk-for-net/pull/26762))
