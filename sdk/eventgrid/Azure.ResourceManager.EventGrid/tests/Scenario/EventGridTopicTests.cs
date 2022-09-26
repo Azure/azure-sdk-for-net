@@ -79,6 +79,29 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsFalse(flag);
         }
 
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task AddRemoveTag(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            string topicName = Recording.GenerateAssetName("EventGridTopic");
+            var topic = await CreateEventGridTopic(_resourceGroup, topicName);
+
+            // AddTag
+            await topic.AddTagAsync("addtagkey", "addtagvalue");
+            topic = await _eventGridTopicCollection.GetAsync(topicName);
+            Assert.AreEqual(1, topic.Data.Tags.Count);
+            KeyValuePair<string, string> tag = topic.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
+            Assert.AreEqual("addtagkey", tag.Key);
+            Assert.AreEqual("addtagvalue", tag.Value);
+
+            // RemoveTag
+            await topic.RemoveTagAsync("addtagkey");
+            topic = await _eventGridTopicCollection.GetAsync(topicName);
+            Assert.AreEqual(0, topic.Data.Tags.Count);
+        }
+
         private void ValidateEventGridTopic(EventGridTopicResource topic, string topicName)
         {
             Assert.IsNotNull(topic);

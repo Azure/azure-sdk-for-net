@@ -79,6 +79,29 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.IsFalse(flag);
         }
 
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task AddRemoveTag(bool? useTagResource)
+        {
+            SetTagResourceUsage(Client, useTagResource);
+            string partnerRegistrationName = Recording.GenerateAssetName("PartnerRegistration");
+            var registration = await CreatePartnerRegistration(_resourceGroup, partnerRegistrationName);
+
+            // AddTag
+            await registration.AddTagAsync("addtagkey", "addtagvalue");
+            registration = await _partnerRegistrationCollection.GetAsync(partnerRegistrationName);
+            Assert.AreEqual(1, registration.Data.Tags.Count);
+            KeyValuePair<string, string> tag = registration.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
+            Assert.AreEqual("addtagkey", tag.Key);
+            Assert.AreEqual("addtagvalue", tag.Value);
+
+            // RemoveTag
+            await registration.RemoveTagAsync("addtagkey");
+            registration = await _partnerRegistrationCollection.GetAsync(partnerRegistrationName);
+            Assert.AreEqual(0, registration.Data.Tags.Count);
+        }
+
         private void ValidatePartnerRegistration(PartnerRegistrationResource partnerRegistration, string partnerRegistrationName)
         {
             Assert.IsNotNull(partnerRegistration);
