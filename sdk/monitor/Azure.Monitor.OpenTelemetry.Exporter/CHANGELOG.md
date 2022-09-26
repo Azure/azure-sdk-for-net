@@ -4,17 +4,17 @@
 
 ### Features Added
 
-
-* Added support for exception telemetry from ILogger ([#26670](https://github.com/Azure/azure-sdk-for-net/pull/26670))
-* Add metrics exporter ([#26651](https://github.com/Azure/azure-sdk-for-net/pull/26651))
-* Change AzureMonitorExporterLoggingExtensions from internal to public ([#26355](https://github.com/Azure/azure-sdk-for-net/pull/26355))
-* Support for exporting Activity exception
-  event ([#29676](https://github.com/Azure/azure-sdk-for-net/pull/29676))
-* Added support for sampling using Application Insights based sampler.  ([#31118](https://github.com/Azure/azure-sdk-for-net/pull/31118))
+* A public "AddAzureMonitorExporter" method is now available for all three signals
+  - `AddAzureMonitorTraceExporter()` for Traces (available in previous version)
+  - `AddAzureMonitorMetricExporter()` for Metrics ([#26651](https://github.com/Azure/azure-sdk-for-net/pull/26651))
+  - `AddAzureMonitorLogExporter()` for Logs ([#26355](https://github.com/Azure/azure-sdk-for-net/pull/26355))
 * Added support for offline storage when ingestion endpoint is unavailable. This is enabled by default.
   - Default directory is "Microsoft\AzureMonitor" ([#31073](https://github.com/Azure/azure-sdk-for-net/pull/31073))
   - Users may override the default location by setting `AzureMonitorExporterOptions.StorageDirectory` ([#26494](https://github.com/Azure/azure-sdk-for-net/pull/26494))
   - Users may disable by setting `AzureMonitorExporterOptions.DisableOfflineStorage` ([#28446](https://github.com/Azure/azure-sdk-for-net/pull/28446))
+* Added support for exception telemetry from ILogger ([#26670](https://github.com/Azure/azure-sdk-for-net/pull/26670))
+* Support for exporting Activity exception event ([#29676](https://github.com/Azure/azure-sdk-for-net/pull/29676))
+* Added support for sampling using Application Insights based sampler.  ([#31118](https://github.com/Azure/azure-sdk-for-net/pull/31118))
 
 ### Breaking Changes
 
