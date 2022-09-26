@@ -88,6 +88,8 @@ rename-mapping:
   Addon: DataBoxEdgeRoleAddon
   AddonState: DataBoxEdgeRoleAddonProvisioningState
   Alert.properties.appearedAtDateTime: AppearedOn
+  BandwidthSchedule.properties.start: StartOn
+  BandwidthSchedule.properties.stop: StopOn
   Container: DataBoxEdgeStorageContainer
   DataBoxEdgeDevice.properties.systemData: SystemData
   DCAccessCode: DataBoxEdgeDataCenterAccessCode
@@ -253,7 +255,9 @@ directive:
     transform: >
       $.locations.items['x-ms-format'] = 'azure-location';
   - from: databoxedge.json
-    where: $.definitions.GenerateCertResponse.properties.expiryTimeInUTC
+    where: $.definitions
     transform: >
-      $.format = 'date-time';
+      $.GenerateCertResponse.properties.expiryTimeInUTC['format'] = 'date-time';
+      $.BandwidthScheduleProperties.properties.start['format'] = 'time';
+      $.BandwidthScheduleProperties.properties.stop['format'] = 'time';
 ```
