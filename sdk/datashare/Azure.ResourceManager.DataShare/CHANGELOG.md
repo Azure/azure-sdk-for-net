@@ -1,14 +1,24 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2022-09-26)
 
-### Features Added
+This is the first stable release of the Data Share Management library.
 
 ### Breaking Changes
 
-### Bugs Fixed
+Polishing since last public beta release:
+- Prepended `DataShare` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters which end with units.
+- Optimized the name of some models and functions.
 
 ### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.1 (2022-08-18)
 
