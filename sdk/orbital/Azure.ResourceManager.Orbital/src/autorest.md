@@ -41,6 +41,8 @@ rename-mapping:
   SpacecraftLink: OrbitalSpacecraftLink
   SpacecraftListResult: OrbitalSpacecraftListResult
   TagsObject: OrbitalSpacecraftTags
+  AvailableContacts: OrbitalSpacecraftAvailableContact
+  ContactParameters: OrbitalSpacecraftContactContent
 
 format-by-name-rules:
   'sourceIPs': 'ip-address'
@@ -78,10 +80,14 @@ rename-rules:
 
 directive:
   - from: orbital.json
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}/listAvailableContacts"].post
+    transform: >
+      delete $['x-ms-pageable'];
+    reason: Pageable LRO not supported by generator. Remove pageable first and fix it by custom code later.
+  - from: orbital.json
     where: $.definitions
     transform: >
       $.AvailableGroundStationProperties['x-ms-client-name'] = 'GroundStationProperties';
       $.ContactProfilesProperties.properties.minimumViableContactDuration['format'] = 'duration';
-  - remove-operation: Spacecrafts_ListAvailableContacts
   - remove-operation: OperationsResults_Get
 ```
