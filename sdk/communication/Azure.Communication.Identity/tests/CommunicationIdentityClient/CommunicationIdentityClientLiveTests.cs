@@ -27,7 +27,7 @@ namespace Azure.Communication.Identity.Tests
         private GetTokenForTeamsUserOptions CTEOptions = new GetTokenForTeamsUserOptions("Sanitized", "Sanitized", "Sanitized");
 
         private const string TOKEN_EXPIRATION_OVERFLOW_MESSAGE = "The tokenExpiresIn argument is out of permitted bounds [1,24] hours. Please refer to the documentation and set the value accordingly.";
-        private const double ALLOWED_DEVIATION = 0.05;
+        private const double TOKEN_EXPIRATION_ALLOWED_DEVIATION = 0.05;
 
         private const string MIN_VALID_EXPIRATION_TIME = "minValidExpirationTime";
         private const string MAX_VALID_EXPIRATION_TIME = "maxValidExpirationTime";
@@ -138,8 +138,11 @@ namespace Azure.Communication.Identity.Tests
 
             if (Mode == RecordedTestMode.Live)
             {
-                var tokenExpirationWithinAllowedDeviation = TokenExpirationWithinAllowedDeviation(tokenExpiresIn, accessToken.Value.AccessToken.ExpiresOn, ALLOWED_DEVIATION);
-                Assert.True(tokenExpirationWithinAllowedDeviation, $"Token expiration is outside of allowed {ALLOWED_DEVIATION * 100}% deviation.");
+                TimeSpan tokenTimeSpan;
+                var tokenExpirationWithinAllowedDeviation = TokenExpirationWithinAllowedDeviation(tokenExpiresIn, accessToken.Value.AccessToken.ExpiresOn, TOKEN_EXPIRATION_ALLOWED_DEVIATION, out tokenTimeSpan);
+                Assert.True(tokenExpirationWithinAllowedDeviation,
+                    $"Token expiration is outside of allowed {TOKEN_EXPIRATION_ALLOWED_DEVIATION * 100}% deviation." +
+                    $"Expected minutes: {tokenExpiresIn.TotalMinutes}, actual minutes: {tokenTimeSpan.TotalMinutes:0.##}.");
             }
         }
 
@@ -173,7 +176,7 @@ namespace Azure.Communication.Identity.Tests
                 CommunicationIdentityClient client = CreateClientWithConnectionString();
                 Response<CommunicationUserIdentifierAndToken> accessToken = await client.CreateUserAndTokenAsync(scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn: tokenExpiresIn);
             }
-            catch (ArgumentException ex)
+            catch (ArgumentOutOfRangeException ex)
             {
                 Assert.NotNull(ex.Message);
                 Assert.True(ex.Message.Contains(TOKEN_EXPIRATION_OVERFLOW_MESSAGE));
@@ -199,8 +202,11 @@ namespace Azure.Communication.Identity.Tests
 
             if (Mode == RecordedTestMode.Live)
             {
-                var tokenExpirationWithinAllowedDeviation = TokenExpirationWithinAllowedDeviation(tokenExpiresIn, accessToken.Value.ExpiresOn, ALLOWED_DEVIATION);
-                Assert.True(tokenExpirationWithinAllowedDeviation, $"Token expiration is outside of allowed {ALLOWED_DEVIATION * 100}% deviation.");
+                TimeSpan tokenTimeSpan;
+                var tokenExpirationWithinAllowedDeviation = TokenExpirationWithinAllowedDeviation(tokenExpiresIn, accessToken.Value.ExpiresOn, TOKEN_EXPIRATION_ALLOWED_DEVIATION, out tokenTimeSpan);
+                Assert.True(tokenExpirationWithinAllowedDeviation,
+                    $"Token expiration is outside of allowed {TOKEN_EXPIRATION_ALLOWED_DEVIATION * 100}% deviation." +
+                    $"Expected minutes: {tokenExpiresIn.TotalMinutes}, actual minutes: {tokenTimeSpan.TotalMinutes:0.##}.");
             }
         }
 
@@ -236,7 +242,7 @@ namespace Azure.Communication.Identity.Tests
                 CommunicationUserIdentifier userIdentifier = await client.CreateUserAsync();
                 Response<AccessToken> accessToken = await client.GetTokenAsync(communicationUser: userIdentifier, scopes: new[] { CommunicationTokenScope.Chat }, tokenExpiresIn: tokenExpiresIn);
             }
-            catch (ArgumentException ex)
+            catch (ArgumentOutOfRangeException ex)
             {
                 Assert.NotNull(ex.Message);
                 Assert.True(ex.Message.Contains(TOKEN_EXPIRATION_OVERFLOW_MESSAGE));
@@ -451,9 +457,9 @@ namespace Azure.Communication.Identity.Tests
             Assert.Fail("An exception should have been thrown.");
         }
 
-        private bool TokenExpirationWithinAllowedDeviation(TimeSpan expectedTokenExpiration, DateTimeOffset tokenExpiresIn, double allowedDeviation)
+        private bool TokenExpirationWithinAllowedDeviation(TimeSpan expectedTokenExpiration, DateTimeOffset tokenExpiresIn, double allowedDeviation, out TimeSpan tokenTimeSpan)
         {
-            var tokenTimeSpan = tokenExpiresIn - DateTimeOffset.UtcNow;
+            tokenTimeSpan = tokenExpiresIn - DateTimeOffset.UtcNow;
             var tokenSeconds = tokenTimeSpan.TotalSeconds;
             var expectedSeconds = expectedTokenExpiration.TotalSeconds;
             var timeDiff = Math.Abs(expectedSeconds - tokenSeconds);

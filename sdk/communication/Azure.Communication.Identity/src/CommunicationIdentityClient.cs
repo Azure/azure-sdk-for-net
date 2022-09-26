@@ -377,7 +377,7 @@ namespace Azure.Communication.Identity
             }
             catch (OverflowException ex)
             {
-                throw new ArgumentException($"The {paramName} argument is out of permitted bounds [1,24] hours. Please refer to the documentation and set the value accordingly.", paramName, ex);
+                throw new ArgumentOutOfRangeException($"The {paramName} argument is out of permitted bounds [1,24] hours. Please refer to the documentation and set the value accordingly.", ex);
             }
         }
     }
