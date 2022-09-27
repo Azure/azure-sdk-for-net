@@ -14,11 +14,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> A class representing the RecordSet data model. </summary>
-    public partial class RecordSetData : ResourceData
+    /// <summary> A class representing the Record data model. </summary>
+    public partial class RecordData : ResourceData
     {
-        /// <summary> Initializes a new instance of RecordSetData. </summary>
-        public RecordSetData()
+        /// <summary> Initializes a new instance of RecordData. </summary>
+        public RecordData()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
             ARecords = new ChangeTrackingList<ARecordInfo>();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Dns
             CaaRecords = new ChangeTrackingList<CaaRecordInfo>();
         }
 
-        /// <summary> Initializes a new instance of RecordSetData. </summary>
+        /// <summary> Initializes a new instance of RecordData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cnameRecordInfo"> The CNAME record in the  record set. </param>
         /// <param name="soaRecordInfo"> The SOA record in the record set. </param>
         /// <param name="caaRecords"> The list of CAA records in the record set. </param>
-        internal RecordSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttlInSeconds, string fqdn, string provisioningState, WritableSubResource targetResource, IList<ARecordInfo> aRecords, IList<AaaaRecordInfo> aaaaRecords, IList<MXRecordInfo> mxRecords, IList<NSRecordInfo> nsRecords, IList<PtrRecordInfo> ptrRecords, IList<SrvRecordInfo> srvRecords, IList<TxtRecordInfo> txtRecords, CnameRecordInfo cnameRecordInfo, SoaRecordInfo soaRecordInfo, IList<CaaRecordInfo> caaRecords) : base(id, name, resourceType, systemData)
+        internal RecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttlInSeconds, string fqdn, string provisioningState, WritableSubResource targetResource, IList<ARecordInfo> aRecords, IList<AaaaRecordInfo> aaaaRecords, IList<MXRecordInfo> mxRecords, IList<NSRecordInfo> nsRecords, IList<PtrRecordInfo> ptrRecords, IList<SrvRecordInfo> srvRecords, IList<TxtRecordInfo> txtRecords, CnameRecordInfo cnameRecordInfo, SoaRecordInfo soaRecordInfo, IList<CaaRecordInfo> caaRecords) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
