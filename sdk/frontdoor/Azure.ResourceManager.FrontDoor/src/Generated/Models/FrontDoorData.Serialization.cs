@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.FrontDoor
                             List<RoutingRuleData> array = new List<RoutingRuleData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(RoutingRuleData.DeserializeRoutingRuleData(item));
+                                //array.Add(RoutingRuleData.DeserializeRoutingRuleData(item));
                             }
                             routingRules = array;
                             continue;

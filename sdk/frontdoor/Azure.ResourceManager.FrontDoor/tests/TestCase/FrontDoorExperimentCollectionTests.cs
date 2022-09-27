@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
             var name = Recording.GenerateAssetName("TestExperiment-");
             var name2 = Recording.GenerateAssetName("TestExperiment-");
             var name3 = Recording.GenerateAssetName("TestExperiment-");
-            var input = ResourceDataHelpers.GetFrontDoorExperimentData(DefaultLocation);
+            var input = ResourceDataHelpers.GetFrontDoorExperimentData("global");
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             FrontDoorExperimentResource experiment1 = lro.Value;
             Assert.AreEqual(name, experiment1.Data.Name);

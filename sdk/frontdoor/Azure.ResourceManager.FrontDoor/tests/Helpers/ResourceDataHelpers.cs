@@ -45,58 +45,6 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
             Assert.AreEqual(data2.Cname, data2.Cname);
         }
 
-        /*public static FrontDoorLoadBalancingSettingsData GetFrontDoorLoadBalancingSettingsData()
-        {
-            var load = new FrontDoorLoadBalancingSettingsData()
-            {
-                Name = "loadBalancingSettings1",
-                AdditionalLatencyMilliseconds = 0,
-                SampleSize = 4,
-                SuccessfulSamplesRequired = 2
-            };
-            return load;
-        }
-
-        public static FrontDoorHealthProbeSettingsData GetFrontDoorHealthProbeSettingsData()
-        {
-            var health = new FrontDoorHealthProbeSettingsData()
-            {
-                Name = "healthProbeSettings1",
-                Path = "/",
-                Protocol = FrontDoorProtocol.Http,
-                IntervalInSeconds = 120,
-                HealthProbeMethod = FrontDoorHealthProbeMethod.Get,
-                EnabledState = HealthProbeEnabled.Enabled
-            };
-            return health;
-        }
-
-        public static FrontendEndpointData GetFrontendEndpointData(string frontdoorName)
-        {
-            var endpoints = new FrontendEndpointData()
-            {
-                Name = "frontendEndpoint1",
-                SessionAffinityEnabledState = SessionAffinityEnabledState.Disabled,
-                SessionAffinityTtlInSeconds = 0,
-                HostName = frontdoorName + ".azurefd.net",
-            };
-            return endpoints;
-        }
-
-        public static FrontDoorBackend GetFrontDoorBackend()
-        {
-            var backends = new FrontDoorBackend()
-            {
-                Address = "contoso1.azurewebsites.net",
-                HttpPort = 80,
-                HttpsPort = 443,
-                EnabledState = BackendEnabledState.Enabled,
-                Weight = 1,
-                Priority = 2
-            };
-            return backends;
-        }*/
-
         public static FrontDoorData GetFrontDoorData(AzureLocation location, string frontDoorName, string resourceGroupName, string subid)
         {
             var load = new FrontDoorLoadBalancingSettingsData()
@@ -236,6 +184,9 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
         public static void AssertFrontDoorNetWorkExperiment(FrontDoorNetworkExperimentProfileData data1, FrontDoorNetworkExperimentProfileData data2)
         {
             AssertTrackedResource(data1, data2);
+            Assert.AreEqual(data1.EnabledState, data2.EnabledState);
+            Assert.AreEqual(data1.ResourceState, data2.ResourceState);
+            Assert.AreEqual(data1.ETag, data2.ETag);
         }
 
         public static FrontDoorNetworkExperimentProfileData GetProfileData(AzureLocation location)

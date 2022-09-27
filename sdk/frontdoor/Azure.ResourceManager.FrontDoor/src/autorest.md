@@ -21,7 +21,7 @@ override-operation-name:
 
 no-property-type-replacement:
 - SubResource
-- object
+- webApplicationFirewallPolicyLink
 rename-mapping:
   Experiment: FrontDoorExperiment
   State: FrontDoorExperimentState
