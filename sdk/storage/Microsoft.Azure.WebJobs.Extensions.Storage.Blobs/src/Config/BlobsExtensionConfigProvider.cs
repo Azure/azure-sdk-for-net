@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -15,7 +14,6 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Microsoft.Azure.WebJobs.Description;
-using Microsoft.Azure.WebJobs.Script.Abstractions.Description.Binding;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Bindings;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners;
@@ -214,21 +212,26 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         {
             var blobPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath);
             var connectionName = blobAttribute.Connection ?? Constants.DefaultAzureStorageConnectionName;
-            return CreateParameterBindingData(connectionName, blobPath.ContainerName, blobPath.BlobName);
+            // return CreateParameterBindingData(connectionName, blobPath.ContainerName, blobPath.BlobName);
+            return CreateParameterBindingData(blobAttribute);
         }
 
         private static ParameterBindingData ConvertToBindingData(BlobBaseClient input, BlobTriggerAttribute blobAttribute)
         {
             var connectionName = blobAttribute.Connection ?? Constants.DefaultAzureStorageConnectionName;
-            return CreateParameterBindingData(connectionName, input.BlobContainerName, input.Name);
+            // return CreateParameterBindingData(connectionName, input.BlobContainerName, input.Name);
+            return CreateParameterBindingData(blobAttribute);
         }
 
-        private static ParameterBindingData CreateParameterBindingData(string connectionName, string containerName, string blobName)
+        private static ParameterBindingData CreateParameterBindingData(Attribute attribute)
         {
-            var bindingData = new ParameterBindingData();
-            bindingData.Properties.Add(Constants.ConnectionName, connectionName);
-            bindingData.Properties.Add(Constants.ContainerName, containerName);
-            bindingData.Properties.Add(Constants.BlobName, blobName);
+            var bindingData = new ParameterBindingData
+            {
+                Version = "1.0.0",
+                ContentType = "blob",
+                Content = attribute
+            };
+
             return bindingData;
         }
 
