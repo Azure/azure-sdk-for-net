@@ -27,6 +27,8 @@ rename-mapping:
   Collection.properties.allSubscriptions: AreAllSubscriptionsSelected
   Collection.properties.approveAllItems: AreAllItemsApproved
   Collection.properties.enabled: IsEnabled
+  TransferOffersResponse: TransferOffersResult
+  TransferOffersProperties: TransferOffersContent
 
 format-by-name-rules:
   'tenantId': 'uuid'

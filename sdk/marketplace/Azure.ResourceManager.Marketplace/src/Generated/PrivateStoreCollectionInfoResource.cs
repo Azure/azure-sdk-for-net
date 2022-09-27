@@ -289,15 +289,15 @@ namespace Azure.ResourceManager.Marketplace
         /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}/transferOffers
         /// Operation Id: PrivateStoreCollection_TransferOffers
         /// </summary>
-        /// <param name="payload"> The TransferOffersProperties to use. </param>
+        /// <param name="content"> The TransferOffersContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<TransferOffersResponse>> TransferOffersAsync(TransferOffersProperties payload = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TransferOffersResult>> TransferOffersAsync(TransferOffersContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.TransferOffers");
             scope.Start();
             try
             {
-                var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.TransferOffersAsync(Id.Parent.Name, Id.Name, payload, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.TransferOffersAsync(Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -312,15 +312,15 @@ namespace Azure.ResourceManager.Marketplace
         /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}/transferOffers
         /// Operation Id: PrivateStoreCollection_TransferOffers
         /// </summary>
-        /// <param name="payload"> The TransferOffersProperties to use. </param>
+        /// <param name="content"> The TransferOffersContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<TransferOffersResponse> TransferOffers(TransferOffersProperties payload = null, CancellationToken cancellationToken = default)
+        public virtual Response<TransferOffersResult> TransferOffers(TransferOffersContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.TransferOffers");
             scope.Start();
             try
             {
-                var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.TransferOffers(Id.Parent.Name, Id.Name, payload, cancellationToken);
+                var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.TransferOffers(Id.Parent.Name, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

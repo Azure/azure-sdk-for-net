@@ -14,10 +14,10 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// Transfer offers properties
     /// Serialized Name: TransferOffersProperties
     /// </summary>
-    public partial class TransferOffersProperties
+    public partial class TransferOffersContent
     {
-        /// <summary> Initializes a new instance of TransferOffersProperties. </summary>
-        public TransferOffersProperties()
+        /// <summary> Initializes a new instance of TransferOffersContent. </summary>
+        public TransferOffersContent()
         {
             TargetCollections = new ChangeTrackingList<string>();
             OfferIdsList = new ChangeTrackingList<string>();

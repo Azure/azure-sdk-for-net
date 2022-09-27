@@ -14,16 +14,16 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// The transfer items response. The response contains two lists that indicate for each collection whether the operation succeeded or failed
     /// Serialized Name: TransferOffersResponse
     /// </summary>
-    public partial class TransferOffersResponse
+    public partial class TransferOffersResult
     {
-        /// <summary> Initializes a new instance of TransferOffersResponse. </summary>
-        internal TransferOffersResponse()
+        /// <summary> Initializes a new instance of TransferOffersResult. </summary>
+        internal TransferOffersResult()
         {
             Succeeded = new ChangeTrackingList<CollectionsDetails>();
             Failed = new ChangeTrackingList<CollectionsDetails>();
         }
 
-        /// <summary> Initializes a new instance of TransferOffersResponse. </summary>
+        /// <summary> Initializes a new instance of TransferOffersResult. </summary>
         /// <param name="succeeded">
         /// Succeeded collections
         /// Serialized Name: TransferOffersResponse.succeeded
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// Failed collections
         /// Serialized Name: TransferOffersResponse.failed
         /// </param>
-        internal TransferOffersResponse(IReadOnlyList<CollectionsDetails> succeeded, IReadOnlyList<CollectionsDetails> failed)
+        internal TransferOffersResult(IReadOnlyList<CollectionsDetails> succeeded, IReadOnlyList<CollectionsDetails> failed)
         {
             Succeeded = succeeded;
             Failed = failed;

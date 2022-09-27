@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class TransferOffersResponse
+    public partial class TransferOffersResult
     {
-        internal static TransferOffersResponse DeserializeTransferOffersResponse(JsonElement element)
+        internal static TransferOffersResult DeserializeTransferOffersResult(JsonElement element)
         {
             Optional<IReadOnlyList<CollectionsDetails>> succeeded = default;
             Optional<IReadOnlyList<CollectionsDetails>> failed = default;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new TransferOffersResponse(Optional.ToList(succeeded), Optional.ToList(failed));
+            return new TransferOffersResult(Optional.ToList(succeeded), Optional.ToList(failed));
         }
     }
 }

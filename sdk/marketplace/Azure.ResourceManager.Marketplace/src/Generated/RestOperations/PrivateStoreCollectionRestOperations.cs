@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateTransferOffersRequest(string privateStoreId, string collectionId, TransferOffersProperties payload)
+        internal HttpMessage CreateTransferOffersRequest(string privateStoreId, string collectionId, TransferOffersContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -410,12 +410,12 @@ namespace Azure.ResourceManager.Marketplace
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (payload != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(payload);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -424,24 +424,24 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> transferring offers (copy or move) from source collection to target collection(s). </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="payload"> The TransferOffersProperties to use. </param>
+        /// <param name="content"> The TransferOffersContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> or <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<TransferOffersResponse>> TransferOffersAsync(string privateStoreId, string collectionId, TransferOffersProperties payload = null, CancellationToken cancellationToken = default)
+        public async Task<Response<TransferOffersResult>> TransferOffersAsync(string privateStoreId, string collectionId, TransferOffersContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            using var message = CreateTransferOffersRequest(privateStoreId, collectionId, payload);
+            using var message = CreateTransferOffersRequest(privateStoreId, collectionId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        TransferOffersResponse value = default;
+                        TransferOffersResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = TransferOffersResponse.DeserializeTransferOffersResponse(document.RootElement);
+                        value = TransferOffersResult.DeserializeTransferOffersResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -452,24 +452,24 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> transferring offers (copy or move) from source collection to target collection(s). </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="payload"> The TransferOffersProperties to use. </param>
+        /// <param name="content"> The TransferOffersContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> or <paramref name="collectionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<TransferOffersResponse> TransferOffers(string privateStoreId, string collectionId, TransferOffersProperties payload = null, CancellationToken cancellationToken = default)
+        public Response<TransferOffersResult> TransferOffers(string privateStoreId, string collectionId, TransferOffersContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            using var message = CreateTransferOffersRequest(privateStoreId, collectionId, payload);
+            using var message = CreateTransferOffersRequest(privateStoreId, collectionId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        TransferOffersResponse value = default;
+                        TransferOffersResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = TransferOffersResponse.DeserializeTransferOffersResponse(document.RootElement);
+                        value = TransferOffersResult.DeserializeTransferOffersResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

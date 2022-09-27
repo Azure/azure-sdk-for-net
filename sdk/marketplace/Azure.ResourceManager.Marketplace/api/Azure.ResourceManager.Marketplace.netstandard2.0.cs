@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Marketplace
         protected AdminApprovalRequestResource() { }
         public virtual Azure.ResourceManager.Marketplace.AdminApprovalRequestData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string privateMarketplaceId, string adminRequestApprovalId) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string privateStoreId, string adminRequestApprovalId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.AdminApprovalRequestResource> Get(string publisherId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.AdminApprovalRequestResource>> GetAsync(string publisherId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.AdminApprovalRequestResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.AdminApprovalRequestData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Marketplace
     {
         public static Azure.ResourceManager.Marketplace.AdminApprovalRequestResource GetAdminApprovalRequestResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.Marketplace.OfferResource GetOfferResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceResource> GetPrivateMarketplace(this Azure.ResourceManager.Resources.TenantResource tenantResource, string privateMarketplaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceResource>> GetPrivateMarketplaceAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string privateMarketplaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource GetPrivateMarketplaceCollectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Marketplace.PrivateMarketplaceResource GetPrivateMarketplaceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
-        public static Azure.ResourceManager.Marketplace.PrivateMarketplaceCollection GetPrivateMarketplaces(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreResource> GetPrivateStore(this Azure.ResourceManager.Resources.TenantResource tenantResource, string privateStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreResource>> GetPrivateStoreAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, string privateStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource GetPrivateStoreCollectionInfoResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Marketplace.PrivateStoreResource GetPrivateStoreResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.Marketplace.PrivateStoreCollection GetPrivateStores(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
         public static Azure.ResourceManager.Marketplace.RequestApprovalResource GetRequestApprovalResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class OfferCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.OfferResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.OfferResource>, System.Collections.IEnumerable
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Marketplace
         public string ModifiedAt { get { throw null; } }
         public string OfferDisplayName { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.MarketplacePlan> Plans { get { throw null; } }
-        public string PrivateMarketplaceId { get { throw null; } }
+        public string PrivateStoreId { get { throw null; } }
         public string PublisherDisplayName { get { throw null; } }
         public System.Collections.Generic.IList<string> SpecificPlanIdsLimitation { get { throw null; } }
         public string UniqueOfferId { get { throw null; } }
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Marketplace
         protected OfferResource() { }
         public virtual Azure.ResourceManager.Marketplace.OfferData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string privateMarketplaceId, string collectionId, string offerId) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string privateStoreId, string collectionId, string offerId) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.OfferResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -100,39 +100,39 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.OfferResource> UpsertOfferWithMultiContext(Azure.ResourceManager.Marketplace.Models.MultiContextAndPlansPayload payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.OfferResource>> UpsertOfferWithMultiContextAsync(Azure.ResourceManager.Marketplace.Models.MultiContextAndPlansPayload payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PrivateMarketplaceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.PrivateMarketplaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.PrivateMarketplaceResource>, System.Collections.IEnumerable
+    public partial class PrivateStoreCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.PrivateStoreResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.PrivateStoreResource>, System.Collections.IEnumerable
     {
-        protected PrivateMarketplaceCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation CreateOrUpdate(Azure.WaitUntil waitUntil, string privateMarketplaceId, Azure.ResourceManager.Marketplace.PrivateMarketplaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateMarketplaceId, Azure.ResourceManager.Marketplace.PrivateMarketplaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<bool> Exists(string privateMarketplaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateMarketplaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceResource> Get(string privateMarketplaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.PrivateMarketplaceResource> GetAll(string useCache = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.PrivateMarketplaceResource> GetAllAsync(string useCache = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceResource>> GetAsync(string privateMarketplaceId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Marketplace.PrivateMarketplaceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.PrivateMarketplaceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Marketplace.PrivateMarketplaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.PrivateMarketplaceResource>.GetEnumerator() { throw null; }
+        protected PrivateStoreCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation CreateOrUpdate(Azure.WaitUntil waitUntil, string privateStoreId, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string privateStoreId, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string privateStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string privateStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreResource> Get(string privateStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.PrivateStoreResource> GetAll(string useCache = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.PrivateStoreResource> GetAllAsync(string useCache = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreResource>> GetAsync(string privateStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Marketplace.PrivateStoreResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.PrivateStoreResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Marketplace.PrivateStoreResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.PrivateStoreResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateMarketplaceCollectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource>, System.Collections.IEnumerable
+    public partial class PrivateStoreCollectionInfoCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>, System.Collections.IEnumerable
     {
-        protected PrivateMarketplaceCollectionCollection() { }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string collectionId, Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string collectionId, Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected PrivateStoreCollectionInfoCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string collectionId, Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string collectionId, Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> Exists(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource> Get(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource>> GetAsync(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource>.GetEnumerator() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> Get(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>> GetAsync(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class PrivateMarketplaceCollectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class PrivateStoreCollectionInfoData : Azure.ResourceManager.Models.ResourceData
     {
-        public PrivateMarketplaceCollectionData() { }
+        public PrivateStoreCollectionInfoData() { }
         public System.DateTimeOffset? ApproveAllItemsModifiedOn { get { throw null; } }
         public bool? AreAllItemsApproved { get { throw null; } }
         public bool? AreAllSubscriptionsSelected { get { throw null; } set { } }
@@ -143,50 +143,50 @@ namespace Azure.ResourceManager.Marketplace
         public long? NumberOfOffers { get { throw null; } }
         public System.Collections.Generic.IList<string> SubscriptionsList { get { throw null; } }
     }
-    public partial class PrivateMarketplaceCollectionResource : Azure.ResourceManager.ArmResource
+    public partial class PrivateStoreCollectionInfoResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected PrivateMarketplaceCollectionResource() { }
-        public virtual Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionData Data { get { throw null; } }
+        protected PrivateStoreCollectionInfoResource() { }
+        public virtual Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource> ApproveAllItems(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource>> ApproveAllItemsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string privateMarketplaceId, string collectionId) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> ApproveAllItems(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>> ApproveAllItemsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string privateStoreId, string collectionId) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Delete(Azure.ResourceManager.Marketplace.Models.Operation? payload = default(Azure.ResourceManager.Marketplace.Models.Operation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(Azure.ResourceManager.Marketplace.Models.Operation? payload = default(Azure.ResourceManager.Marketplace.Models.Operation?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource> DisableApproveAllItems(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource>> DisableApproveAllItemsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> DisableApproveAllItems(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>> DisableApproveAllItemsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.OfferResource> GetOffer(string offerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.OfferResource>> GetOfferAsync(string offerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Marketplace.OfferCollection GetOffers() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.TransferOffersResponse> TransferOffers(Azure.ResourceManager.Marketplace.Models.TransferOffersProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.TransferOffersResponse>> TransferOffersAsync(Azure.ResourceManager.Marketplace.Models.TransferOffersProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.TransferOffersResult> TransferOffers(Azure.ResourceManager.Marketplace.Models.TransferOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.TransferOffersResult>> TransferOffersAsync(Azure.ResourceManager.Marketplace.Models.TransferOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PrivateMarketplaceData : Azure.ResourceManager.Models.ResourceData
+    public partial class PrivateStoreData : Azure.ResourceManager.Models.ResourceData
     {
-        public PrivateMarketplaceData() { }
+        public PrivateStoreData() { }
         public Azure.ResourceManager.Marketplace.Models.Availability? Availability { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Branding { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> CollectionIds { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public bool? IsGov { get { throw null; } set { } }
-        public string PrivateMarketplaceId { get { throw null; } }
-        public string PrivateMarketplaceName { get { throw null; } set { } }
+        public string PrivateStoreId { get { throw null; } }
+        public string PrivateStoreName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.Recipient> Recipients { get { throw null; } }
         public bool? SendToAllMarketplaceAdmins { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
     }
-    public partial class PrivateMarketplaceResource : Azure.ResourceManager.ArmResource
+    public partial class PrivateStoreResource : Azure.ResourceManager.ArmResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
-        protected PrivateMarketplaceResource() { }
-        public virtual Azure.ResourceManager.Marketplace.PrivateMarketplaceData Data { get { throw null; } }
+        protected PrivateStoreResource() { }
+        public virtual Azure.ResourceManager.Marketplace.PrivateStoreData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public virtual Azure.Response AcknowledgeOfferNotification(string offerId, Azure.ResourceManager.Marketplace.Models.AcknowledgeOfferNotificationProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AcknowledgeOfferNotificationAsync(string offerId, Azure.ResourceManager.Marketplace.Models.AcknowledgeOfferNotificationProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -198,21 +198,21 @@ namespace Azure.ResourceManager.Marketplace
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.BulkCollectionsResponse>> BulkCollectionsActionAsync(Azure.ResourceManager.Marketplace.Models.BulkCollectionsPayload payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingResponse> CollectionsToSubscriptionsMapping(Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingPayload payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingResponse>> CollectionsToSubscriptionsMappingAsync(Azure.ResourceManager.Marketplace.Models.CollectionsToSubscriptionsMappingPayload payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string privateMarketplaceId) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string privateStoreId) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.Subscription> FetchAllSubscriptionsInTenant(string nextPageToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.Subscription> FetchAllSubscriptionsInTenantAsync(string nextPageToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.AdminApprovalRequestResource> GetAdminApprovalRequest(string adminRequestApprovalId, string publisherId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.AdminApprovalRequestResource>> GetAdminApprovalRequestAsync(string adminRequestApprovalId, string publisherId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Marketplace.AdminApprovalRequestCollection GetAdminApprovalRequests() { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.NewPlansNotificationsList> GetNewPlansNotifications(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.NewPlansNotificationsList>> GetNewPlansNotificationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource> GetPrivateMarketplaceCollection(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionResource>> GetPrivateMarketplaceCollectionAsync(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.Marketplace.PrivateMarketplaceCollectionCollection GetPrivateMarketplaceCollections() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> GetPrivateStoreCollectionInfo(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>> GetPrivateStoreCollectionInfoAsync(string collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoCollection GetPrivateStoreCollectionInfos() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.RequestApprovalResource> GetRequestApprovalResource(string requestApprovalId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.RequestApprovalResource>> GetRequestApprovalResourceAsync(string requestApprovalId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Marketplace.RequestApprovalResourceCollection GetRequestApprovalResources() { throw null; }
@@ -222,14 +222,14 @@ namespace Azure.ResourceManager.Marketplace
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.SubscriptionsContextList>> GetSubscriptionsContextAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansResponse> QueryApprovedPlans(Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansPayload payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansResponse>> QueryApprovedPlansAsync(Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansPayload payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.PrivateMarketplaceNotificationsState> QueryNotificationsState(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.PrivateMarketplaceNotificationsState>> QueryNotificationsStateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.PrivateStoreNotificationsState> QueryNotificationsState(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.PrivateStoreNotificationsState>> QueryNotificationsStateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.OfferProperties> QueryOffers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.OfferProperties> QueryOffersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.OfferProperties> QueryUserOffers(Azure.ResourceManager.Marketplace.Models.QueryUserOffersProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.OfferProperties> QueryUserOffersAsync(Azure.ResourceManager.Marketplace.Models.QueryUserOffersProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateMarketplaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateMarketplaceData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class RequestApprovalResource : Azure.ResourceManager.ArmResource
     {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Marketplace
         protected RequestApprovalResource() { }
         public virtual Azure.ResourceManager.Marketplace.RequestApprovalResourceData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string privateMarketplaceId, string requestApprovalId) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string privateStoreId, string requestApprovalId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.RequestApprovalResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.RequestApprovalResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryRequestApproval> QueryRequestApproval(Azure.ResourceManager.Marketplace.Models.QueryRequestApprovalProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string ModifiedAt { get { throw null; } }
         public string OfferDisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.MarketplacePlan> Plans { get { throw null; } }
-        public string PrivateMarketplaceId { get { throw null; } }
+        public string PrivateStoreId { get { throw null; } }
         public string PublisherDisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SpecificPlanIdsLimitation { get { throw null; } }
         public string UniqueOfferId { get { throw null; } }
@@ -443,9 +443,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public Operation(string value) { throw null; }
-        public static Azure.ResourceManager.Marketplace.Models.Operation DeletePrivateMarketplaceCollection { get { throw null; } }
-        public static Azure.ResourceManager.Marketplace.Models.Operation DeletePrivateMarketplaceCollectionOffer { get { throw null; } }
-        public static Azure.ResourceManager.Marketplace.Models.Operation DeletePrivateMarketplaceOffer { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.Operation DeletePrivateStoreCollection { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.Operation DeletePrivateStoreCollectionOffer { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.Operation DeletePrivateStoreOffer { get { throw null; } }
         public static Azure.ResourceManager.Marketplace.Models.Operation Ping { get { throw null; } }
         public bool Equals(Azure.ResourceManager.Marketplace.Models.Operation other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -480,9 +480,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string PlanId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.UserRequestDetails> Requesters { get { throw null; } }
     }
-    public partial class PrivateMarketplaceNotificationsState
+    public partial class PrivateStoreNotificationsState
     {
-        internal PrivateMarketplaceNotificationsState() { }
+        internal PrivateStoreNotificationsState() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.RequestApprovalsDetails> ApprovalRequests { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.NewNotifications> NewNotifications { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.StopSellNotifications> StopSellNotifications { get { throw null; } }
@@ -635,16 +635,16 @@ namespace Azure.ResourceManager.Marketplace.Models
         public static bool operator !=(Azure.ResourceManager.Marketplace.Models.SubscriptionState left, Azure.ResourceManager.Marketplace.Models.SubscriptionState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TransferOffersProperties
+    public partial class TransferOffersContent
     {
-        public TransferOffersProperties() { }
+        public TransferOffersContent() { }
         public System.Collections.Generic.IList<string> OfferIdsList { get { throw null; } }
         public string Operation { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> TargetCollections { get { throw null; } }
     }
-    public partial class TransferOffersResponse
+    public partial class TransferOffersResult
     {
-        internal TransferOffersResponse() { }
+        internal TransferOffersResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.CollectionsDetails> Failed { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.CollectionsDetails> Succeeded { get { throw null; } }
     }
