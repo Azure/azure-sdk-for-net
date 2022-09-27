@@ -35,6 +35,7 @@ override-operation-name:
   PolicyStates_TriggerResourceGroupEvaluation: TriggerPolicyStateEvaluation
   PolicyStates_TriggerSubscriptionEvaluation: TriggerPolicyStateEvaluation
   Remediations_ListDeploymentsAtResource: GetDeployments
+  Remediations_CancelAtResource: Cancel
 
 operation-positions:
   PolicyMetadata_List: collection
@@ -69,9 +70,12 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Odata: OData|odata
 
 rename-mapping:
   ComplianceState: PolicyComplianceState
+  Attestation: PolicyAttestation
+  Remediation: PolicyRemediation
   Attestation.properties.expiresOn: ExpireOn
   Attestation.properties.policyAssignmentId: -|arm-id
   Remediation.properties.policyAssignmentId: -|arm-id
@@ -91,6 +95,7 @@ rename-mapping:
   PolicyEvent.resourceId: -|arm-id
   PolicyEvent.policySetDefinitionId: -|arm-id
   PolicyEvent.resourceLocation: -|azure-location
+  PolicyEvent.resourceType: ResourceTypeString
   PolicyEventsResourceType: PolicyEventType
   PolicyReference.policyDefinitionId: -|arm-id
   PolicyReference.policySetDefinitionId: -|arm-id
@@ -100,8 +105,19 @@ rename-mapping:
   PolicyState.policyDefinitionId: -|arm-id
   PolicyState.policySetDefinitionId: -|arm-id
   PolicyState.resourceLocation: -|azure-location
+  PolicyState.resourceType: ResourceTypeString
   PolicyStatesResource: PolicyStateType
   PolicyStatesSummaryResourceType: PolicyStateSummaryType
+  IfNotExistsEvaluationDetails.resourceId: -|arm-id
+  PolicyDefinitionSummary.policyDefinitionId: -|arm-id
+  PolicyTrackedResource: PolicyTrackedResourceRecord
+  PolicyTrackedResource.lastUpdateUtc: LastUpdateOn
+  PolicyTrackedResource.trackedResourceId: -|arm-id
+  RemediationDeployment.remediatedResourceId: -|arm-id
+  RemediationDeployment.deploymentId: -|arm-id
+  RemediationDeployment.resourceLocation: -|azure-location
+  TrackedResourceModificationDetails.deploymentId: -|arm-id
+  QueryOptions: PolicyQuerySettings
 
 directive:
   # TODO: Autorest.csharp should combine these redundancy methods into the scope one automatically.

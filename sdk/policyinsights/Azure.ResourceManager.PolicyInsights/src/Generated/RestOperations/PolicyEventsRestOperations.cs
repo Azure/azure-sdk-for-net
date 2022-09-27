@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListQueryResultsForManagementGroupRequest(string managementGroupName, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForManagementGroupRequest(string managementGroupName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForManagementGroupAsync(string managementGroupName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForManagementGroupAsync(string managementGroupName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForManagementGroup(string managementGroupName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForManagementGroup(string managementGroupName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForSubscriptionRequest(string subscriptionId, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForSubscriptionRequest(string subscriptionId, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionAsync(string subscriptionId, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionAsync(string subscriptionId, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForSubscription(string subscriptionId, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForSubscription(string subscriptionId, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceGroupRequest(string subscriptionId, string resourceGroupName, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForResourceGroupRequest(string subscriptionId, string resourceGroupName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupAsync(string subscriptionId, string resourceGroupName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupAsync(string subscriptionId, string resourceGroupName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroup(string subscriptionId, string resourceGroupName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroup(string subscriptionId, string resourceGroupName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceRequest(string resourceId, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForResourceRequest(string resourceId, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceAsync(string resourceId, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceAsync(string resourceId, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForResource(string resourceId, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForResource(string resourceId, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForPolicySetDefinitionRequest(string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForPolicySetDefinitionRequest(string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicySetDefinitionAsync(string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicySetDefinitionAsync(string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForPolicySetDefinition(string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForPolicySetDefinition(string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForPolicyDefinitionRequest(string subscriptionId, string policyDefinitionName, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForPolicyDefinitionRequest(string subscriptionId, string policyDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicyDefinitionAsync(string subscriptionId, string policyDefinitionName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicyDefinitionAsync(string subscriptionId, string policyDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForPolicyDefinition(string subscriptionId, string policyDefinitionName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForPolicyDefinition(string subscriptionId, string policyDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(string subscriptionId, string policyAssignmentName, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForSubscriptionLevelPolicyAssignmentRequest(string subscriptionId, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(string subscriptionId, string policyAssignmentName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionLevelPolicyAssignmentAsync(string subscriptionId, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
@@ -785,7 +785,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForSubscriptionLevelPolicyAssignment(string subscriptionId, string policyAssignmentName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForSubscriptionLevelPolicyAssignment(string subscriptionId, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
@@ -806,7 +806,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForResourceGroupLevelPolicyAssignmentRequest(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -903,7 +903,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroupLevelPolicyAssignment(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroupLevelPolicyAssignment(string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForManagementGroupNextPageRequest(string nextLink, string managementGroupName, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForManagementGroupNextPageRequest(string nextLink, string managementGroupName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -947,7 +947,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForManagementGroupNextPageAsync(string nextLink, string managementGroupName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForManagementGroupNextPageAsync(string nextLink, string managementGroupName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="managementGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="managementGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForManagementGroupNextPage(string nextLink, string managementGroupName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForManagementGroupNextPage(string nextLink, string managementGroupName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(managementGroupName, nameof(managementGroupName));
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForSubscriptionNextPageRequest(string nextLink, string subscriptionId, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForSubscriptionNextPageRequest(string nextLink, string subscriptionId, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionNextPageAsync(string nextLink, string subscriptionId, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionNextPageAsync(string nextLink, string subscriptionId, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1048,7 +1048,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForSubscriptionNextPage(string nextLink, string subscriptionId, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForSubscriptionNextPage(string nextLink, string subscriptionId, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1069,7 +1069,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1123,7 +1123,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1145,7 +1145,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceNextPageRequest(string nextLink, string resourceId, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForResourceNextPageRequest(string nextLink, string resourceId, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1166,7 +1166,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceNextPageAsync(string nextLink, string resourceId, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceNextPageAsync(string nextLink, string resourceId, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceId, nameof(resourceId));
@@ -1194,7 +1194,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceNextPage(string nextLink, string resourceId, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceNextPage(string nextLink, string resourceId, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceId, nameof(resourceId));
@@ -1215,7 +1215,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForPolicySetDefinitionNextPageRequest(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForPolicySetDefinitionNextPageRequest(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicySetDefinitionNextPageAsync(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicySetDefinitionNextPageAsync(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1269,7 +1269,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForPolicySetDefinitionNextPage(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForPolicySetDefinitionNextPage(string nextLink, string subscriptionId, string policySetDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1291,7 +1291,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForPolicyDefinitionNextPageRequest(string nextLink, string subscriptionId, string policyDefinitionName, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForPolicyDefinitionNextPageRequest(string nextLink, string subscriptionId, string policyDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1314,7 +1314,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicyDefinitionNextPageAsync(string nextLink, string subscriptionId, string policyDefinitionName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForPolicyDefinitionNextPageAsync(string nextLink, string subscriptionId, string policyDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1345,7 +1345,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForPolicyDefinitionNextPage(string nextLink, string subscriptionId, string policyDefinitionName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForPolicyDefinitionNextPage(string nextLink, string subscriptionId, string policyDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1367,7 +1367,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(string nextLink, string subscriptionId, string policyAssignmentName, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageRequest(string nextLink, string subscriptionId, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1390,7 +1390,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(string nextLink, string subscriptionId, string policyAssignmentName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPageAsync(string nextLink, string subscriptionId, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1421,7 +1421,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(string nextLink, string subscriptionId, string policyAssignmentName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForSubscriptionLevelPolicyAssignmentNextPage(string nextLink, string subscriptionId, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1443,7 +1443,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventsResource, QueryOptions queryOptions)
+        internal HttpMessage CreateListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1467,7 +1467,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyEventsQueryResults>> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -1500,7 +1500,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<PolicyEventsQueryResults> ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(string nextLink, string subscriptionId, string resourceGroupName, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));

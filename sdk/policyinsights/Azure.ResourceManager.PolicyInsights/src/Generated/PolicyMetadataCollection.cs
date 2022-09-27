@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="SlimPolicyMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SlimPolicyMetadata> GetAllAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SlimPolicyMetadata> GetAllAsync(PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<SlimPolicyMetadata>> FirstPageFunc(int? pageSizeHint)
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="SlimPolicyMetadata" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SlimPolicyMetadata> GetAll(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<SlimPolicyMetadata> GetAll(PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Page<SlimPolicyMetadata> FirstPageFunc(int? pageSizeHint)
             {

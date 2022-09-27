@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="policyTrackedResourcesResource"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PolicyTrackedResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyTrackedResource> GetQueryResultsForManagementGroupPolicyTrackedResourcesAsync(PolicyTrackedResourcesResourceType policyTrackedResourcesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicyTrackedResourceRecord> GetQueryResultsForManagementGroupPolicyTrackedResourcesAsync(PolicyTrackedResourcesResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<PolicyTrackedResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PolicyTrackedResourceRecord>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetQueryResultsForManagementGroupPolicyTrackedResources");
                 scope.Start();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.PolicyInsights
                     throw;
                 }
             }
-            async Task<Page<PolicyTrackedResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PolicyTrackedResourceRecord>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetQueryResultsForManagementGroupPolicyTrackedResources");
                 scope.Start();
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="policyTrackedResourcesResource"> The name of the virtual resource under PolicyTrackedResources resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyTrackedResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyTrackedResource> GetQueryResultsForManagementGroupPolicyTrackedResources(PolicyTrackedResourcesResourceType policyTrackedResourcesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PolicyTrackedResourceRecord> GetQueryResultsForManagementGroupPolicyTrackedResources(PolicyTrackedResourcesResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            Page<PolicyTrackedResource> FirstPageFunc(int? pageSizeHint)
+            Page<PolicyTrackedResourceRecord> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetQueryResultsForManagementGroupPolicyTrackedResources");
                 scope.Start();
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PolicyInsights
                     throw;
                 }
             }
-            Page<PolicyTrackedResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PolicyTrackedResourceRecord> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = PolicyTrackedResourcesClientDiagnostics.CreateScope("ManagementGroupResourceExtensionClient.GetQueryResultsForManagementGroupPolicyTrackedResources");
                 scope.Start();
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyEvent> GetPolicyEventQueryResultsAsync(PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PolicyEvent>> FirstPageFunc(int? pageSizeHint)
             {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 try
                 {
                     var response = await PolicyEventsRestClient.ListQueryResultsForManagementGroupAsync(Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 try
                 {
                     var response = await PolicyEventsRestClient.ListQueryResultsForManagementGroupNextPageAsync(nextLink, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyEvent> GetPolicyEventQueryResults(PolicyEventType policyEventsResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyEvent> GetPolicyEventQueryResults(PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Page<PolicyEvent> FirstPageFunc(int? pageSizeHint)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 try
                 {
                     var response = PolicyEventsRestClient.ListQueryResultsForManagementGroup(Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 try
                 {
                     var response = PolicyEventsRestClient.ListQueryResultsForManagementGroupNextPage(nextLink, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicyState> GetPolicyStateQueryResultsAsync(PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PolicyState>> FirstPageFunc(int? pageSizeHint)
             {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 try
                 {
                     var response = await PolicyStatesRestClient.ListQueryResultsForManagementGroupAsync(Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 try
                 {
                     var response = await PolicyStatesRestClient.ListQueryResultsForManagementGroupNextPageAsync(nextLink, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyState> GetPolicyStateQueryResults(PolicyStateType policyStatesResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicyState> GetPolicyStateQueryResults(PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Page<PolicyState> FirstPageFunc(int? pageSizeHint)
             {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 try
                 {
                     var response = PolicyStatesRestClient.ListQueryResultsForManagementGroup(Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.PolicyInsights
                 try
                 {
                     var response = PolicyStatesRestClient.ListQueryResultsForManagementGroupNextPage(nextLink, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.OdataNextLink, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicySummary> SummarizePolicyStateAsync(PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<PolicySummary> SummarizePolicyStateAsync(PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             async Task<Page<PolicySummary>> FirstPageFunc(int? pageSizeHint)
             {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicySummary> SummarizePolicyState(PolicyStateSummaryType policyStatesSummaryResource, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<PolicySummary> SummarizePolicyState(PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Page<PolicySummary> FirstPageFunc(int? pageSizeHint)
             {

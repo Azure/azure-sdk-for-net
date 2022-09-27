@@ -20,28 +20,28 @@ using Azure.ResourceManager.PolicyInsights.Models;
 namespace Azure.ResourceManager.PolicyInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AttestationResource" /> and their operations.
-    /// Each <see cref="AttestationResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get an <see cref="AttestationCollection" /> instance call the GetAttestations method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="PolicyAttestationResource" /> and their operations.
+    /// Each <see cref="PolicyAttestationResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
+    /// To get a <see cref="PolicyAttestationCollection" /> instance call the GetPolicyAttestations method from an instance of <see cref="ArmResource" />.
     /// </summary>
-    public partial class AttestationCollection : ArmCollection, IEnumerable<AttestationResource>, IAsyncEnumerable<AttestationResource>
+    public partial class PolicyAttestationCollection : ArmCollection, IEnumerable<PolicyAttestationResource>, IAsyncEnumerable<PolicyAttestationResource>
     {
-        private readonly ClientDiagnostics _attestationClientDiagnostics;
-        private readonly AttestationsRestOperations _attestationRestClient;
+        private readonly ClientDiagnostics _policyAttestationAttestationsClientDiagnostics;
+        private readonly AttestationsRestOperations _policyAttestationAttestationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AttestationCollection"/> class for mocking. </summary>
-        protected AttestationCollection()
+        /// <summary> Initializes a new instance of the <see cref="PolicyAttestationCollection"/> class for mocking. </summary>
+        protected PolicyAttestationCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AttestationCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyAttestationCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AttestationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PolicyAttestationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _attestationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", AttestationResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AttestationResource.ResourceType, out string attestationApiVersion);
-            _attestationRestClient = new AttestationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, attestationApiVersion);
+            _policyAttestationAttestationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", PolicyAttestationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PolicyAttestationResource.ResourceType, out string policyAttestationAttestationsApiVersion);
+            _policyAttestationAttestationsRestClient = new AttestationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, policyAttestationAttestationsApiVersion);
         }
 
         /// <summary>
@@ -55,17 +55,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AttestationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string attestationName, AttestationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PolicyAttestationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string attestationName, PolicyAttestationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _attestationClientDiagnostics.CreateScope("AttestationCollection.CreateOrUpdate");
+            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _attestationRestClient.CreateOrUpdateAtResourceAsync(Id, attestationName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyInsightsArmOperation<AttestationResource>(new AttestationOperationSource(Client), _attestationClientDiagnostics, Pipeline, _attestationRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _policyAttestationAttestationsRestClient.CreateOrUpdateAtResourceAsync(Id, attestationName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(new PolicyAttestationOperationSource(Client), _policyAttestationAttestationsClientDiagnostics, Pipeline, _policyAttestationAttestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -88,17 +88,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AttestationResource> CreateOrUpdate(WaitUntil waitUntil, string attestationName, AttestationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PolicyAttestationResource> CreateOrUpdate(WaitUntil waitUntil, string attestationName, PolicyAttestationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _attestationClientDiagnostics.CreateScope("AttestationCollection.CreateOrUpdate");
+            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _attestationRestClient.CreateOrUpdateAtResource(Id, attestationName, data, cancellationToken);
-                var operation = new PolicyInsightsArmOperation<AttestationResource>(new AttestationOperationSource(Client), _attestationClientDiagnostics, Pipeline, _attestationRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, OperationFinalStateVia.Location);
+                var response = _policyAttestationAttestationsRestClient.CreateOrUpdateAtResource(Id, attestationName, data, cancellationToken);
+                var operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(new PolicyAttestationOperationSource(Client), _policyAttestationAttestationsClientDiagnostics, Pipeline, _policyAttestationAttestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id, attestationName, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -119,18 +119,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
-        public virtual async Task<Response<AttestationResource>> GetAsync(string attestationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyAttestationResource>> GetAsync(string attestationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
 
-            using var scope = _attestationClientDiagnostics.CreateScope("AttestationCollection.Get");
+            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Get");
             scope.Start();
             try
             {
-                var response = await _attestationRestClient.GetAtResourceAsync(Id, attestationName, cancellationToken).ConfigureAwait(false);
+                var response = await _policyAttestationAttestationsRestClient.GetAtResourceAsync(Id, attestationName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AttestationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAttestationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,18 +148,18 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="attestationName"/> is null. </exception>
-        public virtual Response<AttestationResource> Get(string attestationName, CancellationToken cancellationToken = default)
+        public virtual Response<PolicyAttestationResource> Get(string attestationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
 
-            using var scope = _attestationClientDiagnostics.CreateScope("AttestationCollection.Get");
+            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Get");
             scope.Start();
             try
             {
-                var response = _attestationRestClient.GetAtResource(Id, attestationName, cancellationToken);
+                var response = _policyAttestationAttestationsRestClient.GetAtResource(Id, attestationName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AttestationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAttestationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -175,17 +175,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </summary>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AttestationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AttestationResource> GetAllAsync(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PolicyAttestationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PolicyAttestationResource> GetAllAsync(PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<AttestationResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PolicyAttestationResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _attestationClientDiagnostics.CreateScope("AttestationCollection.GetAll");
+                using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _attestationRestClient.ListForResourceAsync(Id, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _policyAttestationAttestationsRestClient.ListForResourceAsync(Id, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -193,14 +193,14 @@ namespace Azure.ResourceManager.PolicyInsights
                     throw;
                 }
             }
-            async Task<Page<AttestationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<PolicyAttestationResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _attestationClientDiagnostics.CreateScope("AttestationCollection.GetAll");
+                using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _attestationRestClient.ListForResourceNextPageAsync(nextLink, Id, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _policyAttestationAttestationsRestClient.ListForResourceNextPageAsync(nextLink, Id, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -218,17 +218,17 @@ namespace Azure.ResourceManager.PolicyInsights
         /// </summary>
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AttestationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AttestationResource> GetAll(QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PolicyAttestationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PolicyAttestationResource> GetAll(PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            Page<AttestationResource> FirstPageFunc(int? pageSizeHint)
+            Page<PolicyAttestationResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _attestationClientDiagnostics.CreateScope("AttestationCollection.GetAll");
+                using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _attestationRestClient.ListForResource(Id, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _policyAttestationAttestationsRestClient.ListForResource(Id, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -236,14 +236,14 @@ namespace Azure.ResourceManager.PolicyInsights
                     throw;
                 }
             }
-            Page<AttestationResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<PolicyAttestationResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _attestationClientDiagnostics.CreateScope("AttestationCollection.GetAll");
+                using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _attestationRestClient.ListForResourceNextPage(nextLink, Id, queryOptions, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _policyAttestationAttestationsRestClient.ListForResourceNextPage(nextLink, Id, queryOptions, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PolicyAttestationResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -267,11 +267,11 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
 
-            using var scope = _attestationClientDiagnostics.CreateScope("AttestationCollection.Exists");
+            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _attestationRestClient.GetAtResourceAsync(Id, attestationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _policyAttestationAttestationsRestClient.GetAtResourceAsync(Id, attestationName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -294,11 +294,11 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
 
-            using var scope = _attestationClientDiagnostics.CreateScope("AttestationCollection.Exists");
+            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationCollection.Exists");
             scope.Start();
             try
             {
-                var response = _attestationRestClient.GetAtResource(Id, attestationName, cancellationToken: cancellationToken);
+                var response = _policyAttestationAttestationsRestClient.GetAtResource(Id, attestationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        IEnumerator<AttestationResource> IEnumerable<AttestationResource>.GetEnumerator()
+        IEnumerator<PolicyAttestationResource> IEnumerable<PolicyAttestationResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.PolicyInsights
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AttestationResource> IAsyncEnumerable<AttestationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PolicyAttestationResource> IAsyncEnumerable<PolicyAttestationResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

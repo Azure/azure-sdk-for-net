@@ -13,15 +13,15 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    /// <summary> A class representing the Remediation data model. </summary>
-    public partial class RemediationData : ResourceData
+    /// <summary> A class representing the PolicyRemediation data model. </summary>
+    public partial class PolicyRemediationData : ResourceData
     {
-        /// <summary> Initializes a new instance of RemediationData. </summary>
-        public RemediationData()
+        /// <summary> Initializes a new instance of PolicyRemediationData. </summary>
+        public PolicyRemediationData()
         {
         }
 
-        /// <summary> Initializes a new instance of RemediationData. </summary>
+        /// <summary> Initializes a new instance of PolicyRemediationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="resourceCount"> Determines the max number of resources that can be remediated by the remediation job. If not provided, the default resource count is used. </param>
         /// <param name="parallelDeployments"> Determines how many resources to remediate at any given time. Can be used to increase or reduce the pace of the remediation. If not provided, the default parallel deployments value is used. </param>
         /// <param name="failureThreshold"> The remediation failure threshold settings. </param>
-        internal RemediationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, ResourceDiscoveryMode? resourceDiscoveryMode, string provisioningState, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, RemediationFilters filter, RemediationDeploymentSummary deploymentStatus, string statusMessage, string correlationId, int? resourceCount, int? parallelDeployments, RemediationPropertiesFailureThreshold failureThreshold) : base(id, name, resourceType, systemData)
+        internal PolicyRemediationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, ResourceDiscoveryMode? resourceDiscoveryMode, string provisioningState, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, RemediationFilters filter, RemediationDeploymentSummary deploymentStatus, string statusMessage, string correlationId, int? resourceCount, int? parallelDeployments, RemediationPropertiesFailureThreshold failureThreshold) : base(id, name, resourceType, systemData)
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;

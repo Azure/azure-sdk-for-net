@@ -13,13 +13,13 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    /// <summary> A class representing the Attestation data model. </summary>
-    public partial class AttestationData : ResourceData
+    /// <summary> A class representing the PolicyAttestation data model. </summary>
+    public partial class PolicyAttestationData : ResourceData
     {
-        /// <summary> Initializes a new instance of AttestationData. </summary>
+        /// <summary> Initializes a new instance of PolicyAttestationData. </summary>
         /// <param name="policyAssignmentId"> The resource ID of the policy assignment that the attestation is setting the state for. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentId"/> is null. </exception>
-        public AttestationData(ResourceIdentifier policyAssignmentId)
+        public PolicyAttestationData(ResourceIdentifier policyAssignmentId)
         {
             if (policyAssignmentId == null)
             {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.PolicyInsights
             Evidence = new ChangeTrackingList<AttestationEvidence>();
         }
 
-        /// <summary> Initializes a new instance of AttestationData. </summary>
+        /// <summary> Initializes a new instance of PolicyAttestationData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="evidence"> The evidence supporting the compliance state set in this attestation. </param>
         /// <param name="provisioningState"> The status of the attestation. </param>
         /// <param name="lastComplianceStateChangeOn"> The time the compliance state was last changed in this attestation. </param>
-        internal AttestationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, PolicyComplianceState? complianceState, DateTimeOffset? expireOn, string owner, string comments, IList<AttestationEvidence> evidence, string provisioningState, DateTimeOffset? lastComplianceStateChangeOn) : base(id, name, resourceType, systemData)
+        internal PolicyAttestationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier policyAssignmentId, string policyDefinitionReferenceId, PolicyComplianceState? complianceState, DateTimeOffset? expireOn, string owner, string comments, IList<AttestationEvidence> evidence, string provisioningState, DateTimeOffset? lastComplianceStateChangeOn) : base(id, name, resourceType, systemData)
         {
             PolicyAssignmentId = policyAssignmentId;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;

@@ -17,46 +17,46 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PolicyInsights
 {
     /// <summary>
-    /// A Class representing an Attestation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AttestationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAttestationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetAttestation method.
+    /// A Class representing a PolicyAttestation along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PolicyAttestationResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetPolicyAttestationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetPolicyAttestation method.
     /// </summary>
-    public partial class AttestationResource : ArmResource
+    public partial class PolicyAttestationResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="AttestationResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PolicyAttestationResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceId, string attestationName)
         {
             var resourceId0 = $"{resourceId}/providers/Microsoft.PolicyInsights/attestations/{attestationName}";
             return new ResourceIdentifier(resourceId0);
         }
 
-        private readonly ClientDiagnostics _attestationClientDiagnostics;
-        private readonly AttestationsRestOperations _attestationRestClient;
-        private readonly AttestationData _data;
+        private readonly ClientDiagnostics _policyAttestationAttestationsClientDiagnostics;
+        private readonly AttestationsRestOperations _policyAttestationAttestationsRestClient;
+        private readonly PolicyAttestationData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="AttestationResource"/> class for mocking. </summary>
-        protected AttestationResource()
+        /// <summary> Initializes a new instance of the <see cref="PolicyAttestationResource"/> class for mocking. </summary>
+        protected PolicyAttestationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AttestationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "PolicyAttestationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AttestationResource(ArmClient client, AttestationData data) : this(client, data.Id)
+        internal PolicyAttestationResource(ArmClient client, PolicyAttestationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AttestationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyAttestationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AttestationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PolicyAttestationResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _attestationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string attestationApiVersion);
-            _attestationRestClient = new AttestationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, attestationApiVersion);
+            _policyAttestationAttestationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string policyAttestationAttestationsApiVersion);
+            _policyAttestationAttestationsRestClient = new AttestationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, policyAttestationAttestationsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PolicyInsights
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AttestationData Data
+        public virtual PolicyAttestationData Data
         {
             get
             {
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Operation Id: Attestations_GetAtResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AttestationResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PolicyAttestationResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _attestationClientDiagnostics.CreateScope("AttestationResource.Get");
+            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationResource.Get");
             scope.Start();
             try
             {
-                var response = await _attestationRestClient.GetAtResourceAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _policyAttestationAttestationsRestClient.GetAtResourceAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AttestationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAttestationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.PolicyInsights
         /// Operation Id: Attestations_GetAtResource
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AttestationResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PolicyAttestationResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _attestationClientDiagnostics.CreateScope("AttestationResource.Get");
+            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationResource.Get");
             scope.Start();
             try
             {
-                var response = _attestationRestClient.GetAtResource(Id.Parent, Id.Name, cancellationToken);
+                var response = _policyAttestationAttestationsRestClient.GetAtResource(Id.Parent, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AttestationResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PolicyAttestationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _attestationClientDiagnostics.CreateScope("AttestationResource.Delete");
+            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationResource.Delete");
             scope.Start();
             try
             {
-                var response = await _attestationRestClient.DeleteAtResourceAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _policyAttestationAttestationsRestClient.DeleteAtResourceAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new PolicyInsightsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -169,11 +169,11 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _attestationClientDiagnostics.CreateScope("AttestationResource.Delete");
+            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationResource.Delete");
             scope.Start();
             try
             {
-                var response = _attestationRestClient.DeleteAtResource(Id.Parent, Id.Name, cancellationToken);
+                var response = _policyAttestationAttestationsRestClient.DeleteAtResource(Id.Parent, Id.Name, cancellationToken);
                 var operation = new PolicyInsightsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -195,16 +195,16 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="data"> The attestation parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AttestationResource>> UpdateAsync(WaitUntil waitUntil, AttestationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PolicyAttestationResource>> UpdateAsync(WaitUntil waitUntil, PolicyAttestationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _attestationClientDiagnostics.CreateScope("AttestationResource.Update");
+            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationResource.Update");
             scope.Start();
             try
             {
-                var response = await _attestationRestClient.CreateOrUpdateAtResourceAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new PolicyInsightsArmOperation<AttestationResource>(new AttestationOperationSource(Client), _attestationClientDiagnostics, Pipeline, _attestationRestClient.CreateCreateOrUpdateAtResourceRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = await _policyAttestationAttestationsRestClient.CreateOrUpdateAtResourceAsync(Id.Parent, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(new PolicyAttestationOperationSource(Client), _policyAttestationAttestationsClientDiagnostics, Pipeline, _policyAttestationAttestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -225,16 +225,16 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="data"> The attestation parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AttestationResource> Update(WaitUntil waitUntil, AttestationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PolicyAttestationResource> Update(WaitUntil waitUntil, PolicyAttestationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _attestationClientDiagnostics.CreateScope("AttestationResource.Update");
+            using var scope = _policyAttestationAttestationsClientDiagnostics.CreateScope("PolicyAttestationResource.Update");
             scope.Start();
             try
             {
-                var response = _attestationRestClient.CreateOrUpdateAtResource(Id.Parent, Id.Name, data, cancellationToken);
-                var operation = new PolicyInsightsArmOperation<AttestationResource>(new AttestationOperationSource(Client), _attestationClientDiagnostics, Pipeline, _attestationRestClient.CreateCreateOrUpdateAtResourceRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
+                var response = _policyAttestationAttestationsRestClient.CreateOrUpdateAtResource(Id.Parent, Id.Name, data, cancellationToken);
+                var operation = new PolicyInsightsArmOperation<PolicyAttestationResource>(new PolicyAttestationOperationSource(Client), _policyAttestationAttestationsClientDiagnostics, Pipeline, _policyAttestationAttestationsRestClient.CreateCreateOrUpdateAtResourceRequest(Id.Parent, Id.Name, data).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

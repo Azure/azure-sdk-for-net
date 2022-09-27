@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.PolicyInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListForResourceRequest(string resourceId, QueryOptions queryOptions)
+        internal HttpMessage CreateListForResourceRequest(string resourceId, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<AttestationListResult>> ListForResourceAsync(string resourceId, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AttestationListResult>> ListForResourceAsync(string resourceId, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public Response<AttestationListResult> ListForResource(string resourceId, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<AttestationListResult> ListForResource(string resourceId, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateAtResourceRequest(string resourceId, string attestationName, AttestationData data)
+        internal HttpMessage CreateCreateOrUpdateAtResourceRequest(string resourceId, string attestationName, PolicyAttestationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="attestationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAtResourceAsync(string resourceId, string attestationName, AttestationData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAtResourceAsync(string resourceId, string attestationName, PolicyAttestationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="attestationName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdateAtResource(string resourceId, string attestationName, AttestationData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdateAtResource(string resourceId, string attestationName, PolicyAttestationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="attestationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AttestationData>> GetAtResourceAsync(string resourceId, string attestationName, CancellationToken cancellationToken = default)
+        public async Task<Response<PolicyAttestationData>> GetAtResourceAsync(string resourceId, string attestationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
@@ -219,13 +219,13 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case 200:
                     {
-                        AttestationData value = default;
+                        PolicyAttestationData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AttestationData.DeserializeAttestationData(document.RootElement);
+                        value = PolicyAttestationData.DeserializePolicyAttestationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AttestationData)null, message.Response);
+                    return Response.FromValue((PolicyAttestationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="attestationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="attestationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AttestationData> GetAtResource(string resourceId, string attestationName, CancellationToken cancellationToken = default)
+        public Response<PolicyAttestationData> GetAtResource(string resourceId, string attestationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNullOrEmpty(attestationName, nameof(attestationName));
@@ -248,13 +248,13 @@ namespace Azure.ResourceManager.PolicyInsights
             {
                 case 200:
                     {
-                        AttestationData value = default;
+                        PolicyAttestationData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AttestationData.DeserializeAttestationData(document.RootElement);
+                        value = PolicyAttestationData.DeserializePolicyAttestationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AttestationData)null, message.Response);
+                    return Response.FromValue((PolicyAttestationData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
-        internal HttpMessage CreateListForResourceNextPageRequest(string nextLink, string resourceId, QueryOptions queryOptions)
+        internal HttpMessage CreateListForResourceNextPageRequest(string nextLink, string resourceId, PolicyQuerySettings queryOptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
-        public async Task<Response<AttestationListResult>> ListForResourceNextPageAsync(string nextLink, string resourceId, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<AttestationListResult>> ListForResourceNextPageAsync(string nextLink, string resourceId, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceId, nameof(resourceId));
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="resourceId"/> is null. </exception>
-        public Response<AttestationListResult> ListForResourceNextPage(string nextLink, string resourceId, QueryOptions queryOptions = null, CancellationToken cancellationToken = default)
+        public Response<AttestationListResult> ListForResourceNextPage(string nextLink, string resourceId, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceId, nameof(resourceId));

@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class PolicyTrackedResource
+    public partial class PolicyTrackedResourceRecord
     {
-        internal static PolicyTrackedResource DeserializePolicyTrackedResource(JsonElement element)
+        internal static PolicyTrackedResourceRecord DeserializePolicyTrackedResourceRecord(JsonElement element)
         {
-            Optional<string> trackedResourceId = default;
+            Optional<ResourceIdentifier> trackedResourceId = default;
             Optional<PolicyDetails> policyDetails = default;
             Optional<TrackedResourceModificationDetails> createdBy = default;
             Optional<TrackedResourceModificationDetails> lastModifiedBy = default;
@@ -24,7 +24,12 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 if (property.NameEquals("trackedResourceId"))
                 {
-                    trackedResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    trackedResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policyDetails"))
@@ -68,7 +73,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     continue;
                 }
             }
-            return new PolicyTrackedResource(trackedResourceId.Value, policyDetails.Value, createdBy.Value, lastModifiedBy.Value, Optional.ToNullable(lastUpdateUtc));
+            return new PolicyTrackedResourceRecord(trackedResourceId.Value, policyDetails.Value, createdBy.Value, lastModifiedBy.Value, Optional.ToNullable(lastUpdateUtc));
         }
     }
 }
