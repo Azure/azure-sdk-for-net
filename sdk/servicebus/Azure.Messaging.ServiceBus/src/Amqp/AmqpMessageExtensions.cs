@@ -107,7 +107,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             }
             throw new NotSupportedException($"{message.Body.BodyType} cannot be retrieved using the {nameof(ServiceBusMessage.Body)} property." +
                 $"Use {nameof(ServiceBusMessage.GetRawAmqpMessage)} to access the underlying Amqp Message object. For more information on how to avoid this error," +
-                $"see https://aka.ms/azsdk/net/servicebus/exceptions/troubleshoot.");
+                "see https://aka.ms/azsdk/net/servicebus/messagebody.");
         }
     }
 }

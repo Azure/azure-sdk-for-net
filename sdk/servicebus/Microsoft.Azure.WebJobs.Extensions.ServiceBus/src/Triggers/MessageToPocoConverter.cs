@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
         private readonly JsonSerializerSettings _jsonSerializerSettings;
 
         private const string TroubleshootingLink =
-            "For more information on how to avoid this error, see https://aka.ms/azsdk/net/servicebus/exceptions/troubleshoot.";
+            "For more information on how to avoid this error, see https://aka.ms/azsdk/net/servicebus/messagebody.";
 
         public MessageToPocoConverter(JsonSerializerSettings jsonSerializerSettings)
         {
