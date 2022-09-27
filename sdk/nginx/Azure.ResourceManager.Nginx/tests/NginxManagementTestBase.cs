@@ -1,6 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Models;
@@ -11,9 +14,6 @@ using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.Nginx.Tests
 {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Nginx.Tests
             configurationProperties.RootFile = rootConfigFile.VirtualPath;
             configurationProperties.Files.Add(rootConfigFile);
 
-            NginxConfigurationData nginxConfigurationData = new NginxConfigurationData(Location);
+            NginxConfigurationData nginxConfigurationData = new NginxConfigurationData(location);
             nginxConfigurationData.Properties = configurationProperties;
             ArmOperation<NginxConfigurationResource> lro = await nginxDeployment.GetNginxConfigurations().CreateOrUpdateAsync(WaitUntil.Completed, nginxConfigurationName, nginxConfigurationData);
             return lro.Value;
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Nginx.Tests
             certificateProperties.KeyVirtualPath = keyVirtualPath;
             certificateProperties.KeyVaultSecretId = TestEnvironment.KeyVaultSecretId;
 
-            NginxCertificateData nginxCertificateData = new NginxCertificateData(Location);
+            NginxCertificateData nginxCertificateData = new NginxCertificateData(location);
             nginxCertificateData.Properties = certificateProperties;
             ArmOperation<NginxCertificateResource> lro = await nginxDeployment.GetNginxCertificates().CreateOrUpdateAsync(WaitUntil.Completed, nginxCertificateName, nginxCertificateData);
             return lro.Value;
