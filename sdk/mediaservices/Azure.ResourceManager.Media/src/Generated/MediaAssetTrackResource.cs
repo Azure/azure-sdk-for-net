@@ -13,7 +13,6 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Media.Models;
 
 namespace Azure.ResourceManager.Media
 {
@@ -34,8 +33,6 @@ namespace Azure.ResourceManager.Media
 
         private readonly ClientDiagnostics _mediaAssetTrackTracksClientDiagnostics;
         private readonly TracksRestOperations _mediaAssetTrackTracksRestClient;
-        private readonly ClientDiagnostics _operationStatusesClientDiagnostics;
-        private readonly OperationStatusesRestOperations _operationStatusesRestClient;
         private readonly MediaAssetTrackData _data;
 
         /// <summary> Initializes a new instance of the <see cref="MediaAssetTrackResource"/> class for mocking. </summary>
@@ -60,8 +57,6 @@ namespace Azure.ResourceManager.Media
             _mediaAssetTrackTracksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Media", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string mediaAssetTrackTracksApiVersion);
             _mediaAssetTrackTracksRestClient = new TracksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, mediaAssetTrackTracksApiVersion);
-            _operationStatusesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Media", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _operationStatusesRestClient = new OperationStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -295,60 +290,6 @@ namespace Azure.ResourceManager.Media
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get asset track operation status.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationStatuses/{operationId}
-        /// Operation Id: OperationStatuses_Get
-        /// </summary>
-        /// <param name="operationId"> Operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual async Task<Response<AssetTrackOperationStatus>> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _operationStatusesClientDiagnostics.CreateScope("MediaAssetTrackResource.GetOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = await _operationStatusesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get asset track operation status.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}/tracks/{trackName}/operationStatuses/{operationId}
-        /// Operation Id: OperationStatuses_Get
-        /// </summary>
-        /// <param name="operationId"> Operation Id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
-        public virtual Response<AssetTrackOperationStatus> GetOperationStatus(string operationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
-
-            using var scope = _operationStatusesClientDiagnostics.CreateScope("MediaAssetTrackResource.GetOperationStatus");
-            scope.Start();
-            try
-            {
-                var response = _operationStatusesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, cancellationToken);
-                return response;
             }
             catch (Exception e)
             {

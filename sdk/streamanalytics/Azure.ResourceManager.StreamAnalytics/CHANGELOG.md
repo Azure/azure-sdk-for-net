@@ -1,14 +1,17 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0 (2022-09-28)
 
 ### Features Added
 
-### Breaking Changes
+- Add `BlobReferenceInputDataSource.DeltaSnapshotRefreshInterval` to replace the old `StreamingJobOutputData.DeltaSnapshotRefreshRate`.
+- Add `BlobReferenceInputDataSource.FullSnapshotRefreshInterval` to replace the old `StreamingJobOutputData.FullSnapshotRefreshRate`.
 
 ### Bugs Fixed
 
-### Other Changes
+- Fix the issue https://github.com/azure/azure-sdk-for-net/issues/31011:
+    - Add `SqlReferenceInputDataSource .RefreshInterval` to replace the old `StreamingJobOutputData.RefreshRate ` which the old property can't be processed properly.
+    - Add `StreamingJobOutputData.TimeFrame` to replace the old `StreamingJobOutputData.TimeWindow` which the old property can't be processed properly.
 
 ## 1.0.0 (2022-09-05)
 

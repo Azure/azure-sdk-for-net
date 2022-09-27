@@ -16,6 +16,18 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+prepend-rp-prefix:
+  - Location
+  - Machine
+  - MachineExtension
+  - ResourceUpdate
+
+rename-mapping:
+  StatusLevelTypes: HybridComputeStatusLevelType
+  StatusTypes: HybridComputeStatusType
+  ServiceStatus: HybridComputeServiceStatus
+  ServiceStatuses: HybridComputeServiceStatuses
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'

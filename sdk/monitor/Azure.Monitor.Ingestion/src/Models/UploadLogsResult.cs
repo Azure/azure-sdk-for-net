@@ -20,6 +20,7 @@ namespace Azure.Monitor.Ingestion
 
         /// <summary>
         /// The list of errors that occurred when uploading logs, if any.
+        /// <remarks> List will be empty when no logs failed to upload. </remarks>
         /// </summary>
         public IReadOnlyList<UploadLogsError> Errors { get; }
 

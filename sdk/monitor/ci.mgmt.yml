@@ -8,6 +8,7 @@ pr: none
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SDKType: mgmtclient
     ServiceDirectory: monitor
     Artifacts:
     - name: Azure.ResourceManager.Monitor

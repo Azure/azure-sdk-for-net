@@ -205,7 +205,7 @@ rename-mapping:
   KeySource.Microsoft.Keyvault: KeyVault
   StorageAccountListKeysResult: StorageAccountGetKeysResult
   TableAccessPolicy: StorageTableAccessPolicy
-  TableAccessPolicy.expiryTime: ExpiresOn
+  TableAccessPolicy.expiryTime: ExpireOn
   TableSignedIdentifier: StorageTableSignedIdentifier
   UpdateHistoryProperty: UpdateHistoryEntry
   UpdateHistoryProperty.update: UpdateType

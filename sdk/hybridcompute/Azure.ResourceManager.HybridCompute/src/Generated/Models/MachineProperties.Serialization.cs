@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
         {
             Optional<LocationData> locationData = default;
             Optional<AgentConfiguration> agentConfiguration = default;
-            Optional<ServiceStatuses> serviceStatuses = default;
+            Optional<HybridComputeServiceStatuses> serviceStatuses = default;
             Optional<CloudMetadata> cloudMetadata = default;
             Optional<OSProfile> osProfile = default;
             Optional<string> provisioningState = default;
-            Optional<StatusType> status = default;
+            Optional<HybridComputeStatusType> status = default;
             Optional<DateTimeOffset> lastStatusChange = default;
             Optional<IReadOnlyList<ResponseError>> errorDetails = default;
             Optional<string> agentVersion = default;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    serviceStatuses = ServiceStatuses.DeserializeServiceStatuses(property.Value);
+                    serviceStatuses = HybridComputeServiceStatuses.DeserializeHybridComputeServiceStatuses(property.Value);
                     continue;
                 }
                 if (property.NameEquals("cloudMetadata"))
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new StatusType(property.Value.GetString());
+                    status = new HybridComputeStatusType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastStatusChange"))

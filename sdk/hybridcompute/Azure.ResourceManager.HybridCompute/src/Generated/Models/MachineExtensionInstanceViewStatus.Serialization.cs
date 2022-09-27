@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         internal static MachineExtensionInstanceViewStatus DeserializeMachineExtensionInstanceViewStatus(JsonElement element)
         {
             Optional<string> code = default;
-            Optional<StatusLevelType> level = default;
+            Optional<HybridComputeStatusLevelType> level = default;
             Optional<string> displayStatus = default;
             Optional<string> message = default;
             Optional<DateTimeOffset> time = default;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    level = new StatusLevelType(property.Value.GetString());
+                    level = new HybridComputeStatusLevelType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("displayStatus"))
