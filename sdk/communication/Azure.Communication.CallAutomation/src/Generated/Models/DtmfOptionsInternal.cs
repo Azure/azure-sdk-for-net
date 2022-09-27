@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Options for DTMF recognition. </summary>
-    public partial class DtmfOptionsInternal
+    internal partial class DtmfOptionsInternal
     {
         /// <summary> Initializes a new instance of DtmfOptionsInternal. </summary>
         public DtmfOptionsInternal()

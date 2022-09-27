@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AddRemoveIncrementalNamedPartition": return AddRemoveIncrementalNamedPartitionScalingMechanism.DeserializeAddRemoveIncrementalNamedPartitionScalingMechanism(element);
+                    case "AddRemoveIncrementalNamedPartition": return NamedPartitionAddOrRemoveScalingMechanism.DeserializeNamedPartitionAddOrRemoveScalingMechanism(element);
                     case "ScalePartitionInstanceCount": return PartitionInstanceCountScalingMechanism.DeserializePartitionInstanceCountScalingMechanism(element);
                 }
             }

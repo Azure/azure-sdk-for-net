@@ -85,6 +85,7 @@ namespace Azure.ResourceManager.Peering.Tests
         [TestCase(true)]
         public async Task AddRemoveTag(bool? useTagResource)
         {
+            SetTagResourceUsage(Client, useTagResource);
             string peeringServiceName = Recording.GenerateAssetName("peeringService");
             var peeringService = await CreateAtmanPeeringService(_resourceGroup, peeringServiceName);
 

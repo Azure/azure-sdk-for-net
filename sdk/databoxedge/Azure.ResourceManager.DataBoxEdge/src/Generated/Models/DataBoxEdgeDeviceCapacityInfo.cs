@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="clusterStorageCapacityInfo"> Cluster capacity data for storage resources (CSV). </param>
         /// <param name="clusterComputeCapacityInfo"> Cluster capacity data for compute resources (Memory and GPU). </param>
         /// <param name="nodeCapacityInfos"> The dictionary of individual node names and node capacities in the cluster. </param>
-        internal DataBoxEdgeDeviceCapacityInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeStamp, ClusterStorageViewData clusterStorageCapacityInfo, ClusterCapacityViewData clusterComputeCapacityInfo, IDictionary<string, HostCapacity> nodeCapacityInfos) : base(id, name, resourceType, systemData)
+        internal DataBoxEdgeDeviceCapacityInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? timeStamp, EdgeClusterStorageViewInfo clusterStorageCapacityInfo, EdgeClusterCapacityViewInfo clusterComputeCapacityInfo, IDictionary<string, HostCapacity> nodeCapacityInfos) : base(id, name, resourceType, systemData)
         {
             TimeStamp = timeStamp;
             ClusterStorageCapacityInfo = clusterStorageCapacityInfo;
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <summary> Timestamp of request in UTC. </summary>
         public DateTimeOffset? TimeStamp { get; set; }
         /// <summary> Cluster capacity data for storage resources (CSV). </summary>
-        public ClusterStorageViewData ClusterStorageCapacityInfo { get; set; }
+        public EdgeClusterStorageViewInfo ClusterStorageCapacityInfo { get; set; }
         /// <summary> Cluster capacity data for compute resources (Memory and GPU). </summary>
-        public ClusterCapacityViewData ClusterComputeCapacityInfo { get; set; }
+        public EdgeClusterCapacityViewInfo ClusterComputeCapacityInfo { get; set; }
         /// <summary> The dictionary of individual node names and node capacities in the cluster. </summary>
         public IDictionary<string, HostCapacity> NodeCapacityInfos { get; }
     }

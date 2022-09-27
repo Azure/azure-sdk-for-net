@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Media.Tests
         private ResourceIdentifier _mediaAssetIdentifier;
         private MediaAssetResource _mediaAssetResource;
 
-        private AssetFilterCollection assetFilterCollection => _mediaAssetResource.GetAssetFilters();
+        private MediaAssetFilterCollection assetFilterCollection => _mediaAssetResource.GetMediaAssetFilters();
 
         public MediaAssetFilterTests(bool isAsync) : base(isAsync)
         {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Media.Tests
             _mediaAssetResource = await Client.GetMediaAssetResource(_mediaAssetIdentifier).GetAsync();
         }
 
-        private async Task<AssetFilterResource> CreateDefaultAssetFilter(string filterName)
+        private async Task<MediaAssetFilterResource> CreateDefaultAssetFilter(string filterName)
         {
-            AssetFilterData data = new AssetFilterData();
+            MediaAssetFilterData data = new MediaAssetFilterData();
             var filter = await assetFilterCollection.CreateOrUpdateAsync(WaitUntil.Completed, filterName, data);
             return filter.Value;
         }

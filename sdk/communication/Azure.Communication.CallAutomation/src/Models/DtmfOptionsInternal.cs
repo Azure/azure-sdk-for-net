@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     [CodeGenModel("DtmfOptions")]
-    public partial class DtmfOptionsInternal
+    internal partial class DtmfOptionsInternal
     {
         /// <summary>
         /// List of tones that will stop the recognition once detected.
