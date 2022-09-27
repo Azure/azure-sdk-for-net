@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         public EndpointTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         { }
 
-        private EndpointResource DefaultEndpointResource =>
-            new EndpointResource(
+        private TrafficManagerEndpointResource DefaultEndpointResource =>
+            new TrafficManagerEndpointResource(
                 Client,
-                EndpointResource.CreateResourceIdentifier(
+                TrafficManagerEndpointResource.CreateResourceIdentifier(
                     _subscription.Data.SubscriptionId,
                     _resourceGroup.Data.Name,
                     _profileName,
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         [RecordedTest]
         public async Task GetTest()
         {
-            EndpointResource endpointResource = await DefaultEndpointResource.GetAsync();
+            TrafficManagerEndpointResource endpointResource = await DefaultEndpointResource.GetAsync();
 
             Assert.IsNotNull(endpointResource);
             Assert.IsTrue(endpointResource.HasData);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         [RecordedTest]
         public async Task UpdateTest()
         {
-            EndpointResource endpointResource = await DefaultEndpointResource.GetAsync();
+            TrafficManagerEndpointResource endpointResource = await DefaultEndpointResource.GetAsync();
             endpointResource.Data.Target = NewEndpointTarget;
             await endpointResource.UpdateAsync(endpointResource.Data);
 
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         [RecordedTest]
         public async Task CreateTest()
         {
-            EndpointData newEndpointData =
-                new EndpointData
+            TrafficManagerEndpointData newEndpointData =
+                new TrafficManagerEndpointData
                 {
                     Name = NewEndpointName,
                     ResourceType = EndpointType,
@@ -78,13 +78,13 @@ namespace Azure.ResourceManager.TrafficManager.Tests
                     Weight = NewEndpointWeight
                 };
 
-            ProfileResource profileResource = await GetDefaultProfile();
+            TrafficManagerProfileResource profileResource = await GetDefaultProfile();
 
-            EndpointCollection endpointCollection = profileResource.GetEndpoints();
+            TrafficManagerEndpointCollection endpointCollection = profileResource.GetTrafficManagerEndpoints();
 
             await endpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, EndpointTypeName, NewEndpointName, newEndpointData);
 
-            EndpointResource endpointResource = await endpointCollection.GetAsync(EndpointTypeName, NewEndpointName);
+            TrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointTypeName, NewEndpointName);
 
             Assert.IsNotNull(endpointResource);
             Assert.IsTrue(endpointResource.HasData);
@@ -97,10 +97,10 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         [RecordedTest]
         public async Task UpdateOnCollectionTest()
         {
-            ProfileResource profileResource = await GetDefaultProfile();
-            EndpointCollection endpointCollection = profileResource.GetEndpoints();
+            TrafficManagerProfileResource profileResource = await GetDefaultProfile();
+            TrafficManagerEndpointCollection endpointCollection = profileResource.GetTrafficManagerEndpoints();
 
-            EndpointResource endpointResource = await DefaultEndpointResource.GetAsync();
+            TrafficManagerEndpointResource endpointResource = await DefaultEndpointResource.GetAsync();
             endpointResource.Data.Target = NewEndpointTarget;
 
             await endpointCollection.CreateOrUpdateAsync(WaitUntil.Completed, EndpointTypeName, endpointResource.Data.Name, endpointResource.Data);
@@ -113,10 +113,10 @@ namespace Azure.ResourceManager.TrafficManager.Tests
         [RecordedTest]
         public async Task GetOnCollectionTest()
         {
-            ProfileResource profileResource = await GetDefaultProfile();
-            EndpointCollection endpointCollection = profileResource.GetEndpoints();
+            TrafficManagerProfileResource profileResource = await GetDefaultProfile();
+            TrafficManagerEndpointCollection endpointCollection = profileResource.GetTrafficManagerEndpoints();
 
-            EndpointResource endpointResource = await endpointCollection.GetAsync(EndpointTypeName, EndpointName1);
+            TrafficManagerEndpointResource endpointResource = await endpointCollection.GetAsync(EndpointTypeName, EndpointName1);
 
             Assert.IsNotNull(endpointResource);
             Assert.IsTrue(endpointResource.HasData);
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.TrafficManager.Tests
 
         private async Task CheckExists(bool expected)
         {
-            ProfileResource profileResource = await GetDefaultProfile();
+            TrafficManagerProfileResource profileResource = await GetDefaultProfile();
 
-            EndpointCollection endpointCollection = profileResource.GetEndpoints();
+            TrafficManagerEndpointCollection endpointCollection = profileResource.GetTrafficManagerEndpoints();
 
             if (expected)
             {
