@@ -17,6 +17,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
     {
         private readonly JsonSerializerSettings _jsonSerializerSettings;
 
+        private const string TroubleshootingLink =
+            "For more information on how to avoid this error, see https://aka.ms/azsdk/net/servicebus/messagebody.";
+
         public MessageToPocoConverter(JsonSerializerSettings jsonSerializerSettings)
         {
             _jsonSerializerSettings = jsonSerializerSettings;
@@ -68,12 +71,12 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
                 else
                 {
                     throw new NotSupportedException(
-                        $"A message with a value type of {value?.GetType()} cannot be bound to a POCO.");
+                        $"A message with a value type of {value?.GetType()} cannot be bound to a POCO. {TroubleshootingLink}");
                 }
             }
             else
             {
-                throw new NotSupportedException("A sequence body message cannot be bound to a POCO.");
+                throw new NotSupportedException($"A sequence body message cannot be bound to a POCO. {TroubleshootingLink}");
             }
 
             try
@@ -89,8 +92,9 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Triggers
  1. If ContentType is 'application/json' deserialize as JSON
  2. If ContentType is not 'application/json' and it is a Data body message, attempt to deserialize using DataContractSerializer, which will handle cases like XML object serialization
  3. If this deserialization fails, do a final attempt at JSON deserialization to catch cases where the content type might be incorrect
-The JSON parser failed: {1}
-", typeof(TElement).Name, e.Message);
+ {1}
+The JSON parser failed: {2}
+", typeof(TElement).Name, TroubleshootingLink, e.Message);
                 throw new InvalidOperationException(msg);
             }
         }
