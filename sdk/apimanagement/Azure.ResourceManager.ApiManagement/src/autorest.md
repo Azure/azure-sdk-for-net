@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: ApiManagement
 namespace: Azure.ResourceManager.ApiManagement
-require: https://github.com/Azure/azure-rest-api-specs/blob/b9b91929c304f8fb44002267b6c98d9fb9dde014/specification/apimanagement/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/2f28b5026a4b44adefd0237087acb0c48cfe31a6/specification/apimanagement/resource-manager/readme.md
 tag: package-2021-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -164,7 +164,7 @@ rename-mapping:
   BackendContract: ApiManagementBackend
   CacheContract: ApiManagementCache
   CertificateContract: ApiManagementCertificate
-  CertificateContract.properties.expirationDate: ExpiresOn
+  CertificateContract.properties.expirationDate: ExpireOn
   CertificateContract.properties.keyVault: KeyVaultDetails
   CertificateCreateOrUpdateParameters.properties.keyVault: KeyVaultDetails
   ContentTypeContract: ApiManagementContentType
@@ -203,7 +203,7 @@ rename-mapping:
   ProductState: ApiManagementProductState
   UserState: ApiManagementUserState
   TagCreateUpdateParameters: ApiManagementTagCreateOrUpdateContent
-  SubscriptionContract.properties.expirationDate: ExpiresOn
+  SubscriptionContract.properties.expirationDate: ExpireOn
   SubscriptionContract.properties.notificationDate: NotifiesOn
   UserContract.properties.registrationDate: RegistriesOn
   AccessInformationSecretsContract: TenantAccessInfoSecretsDetails
@@ -215,7 +215,7 @@ rename-mapping:
   ApiType.graphql: GraphQL
   ProvisioningState: AssociationEntityProvisioningState
   AuthenticationSettingsContract.openid: OpenId
-  CertificateInformation.expiry: ExpiresOn
+  CertificateInformation.expiry: ExpireOn
   Confirmation: ConfirmationEmailType
   Confirmation.signup: SignUp
   ConnectivityCheckProtocol.TCP: Tcp
@@ -239,14 +239,14 @@ rename-mapping:
   PolicyContentFormat.rawxml-link: RawXmlLink
   PolicyIdName: PolicyName
   ProductEntityBaseParameters: ProductEntityBaseProperties
-  SubscriptionUpdateParameters.properties.expirationDate: ExpiresOn
+  SubscriptionUpdateParameters.properties.expirationDate: ExpireOn
   SettingsTypeName: SettingsType
   TagResourceContract: TagResourceContractDetails
   TagResourceContractProperties: AssociatedTagProperties
   ApiTagResourceContractProperties: AssociatedApiProperties
   OperationTagResourceContractProperties: AssociatedOperationProperties
   ProductTagResourceContractProperties: AssociatedProductProperties
-  UserTokenParameters.properties.expiry: ExpiresOn
+  UserTokenParameters.properties.expiry: ExpireOn
   AuthorizationMethod.GET: Get
   AuthorizationMethod.PUT: Put
   GroupContractProperties.builtIn: IsBuiltIn
@@ -320,7 +320,8 @@ directive:
   - from: apimdeployment.json
     where: $.definitions
     transform: >
-      $.Operation['x-ms-client-name'] = 'RestApiOperation';
+      delete $.Operation;
+      delete $.OperationListResult;
       $.VirtualNetworkConfiguration.properties.vnetid['format'] = 'uuid';
       $.VirtualNetworkConfiguration.properties.subnetResourceId['x-ms-format'] = 'arm-id';
       $.ResourceSkuResult.properties.resourceType['x-ms-format'] = 'resource-type';

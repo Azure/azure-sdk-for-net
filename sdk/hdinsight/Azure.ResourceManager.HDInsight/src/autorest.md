@@ -144,8 +144,8 @@ rename-mapping:
   IPConfiguration.properties.primary: IsPrimary
   NameAvailabilityCheckRequestParameters.type: -|resource-type
   NameAvailabilityCheckResult.nameAvailable: IsNameAvailable
-  RuntimeScriptActionDetail.startTime: -|datetime
-  RuntimeScriptActionDetail.endTime: -|datetime
+  RuntimeScriptActionDetail.startTime: -|date-time
+  RuntimeScriptActionDetail.endTime: -|date-time
   DaysOfWeek: HDInsightDayOfWeek
   DiskEncryptionProperties.encryptionAtHost: IsEncryptionAtHostEnabled
   DirectoryType: AuthenticationDirectoryType
@@ -158,6 +158,9 @@ rename-mapping:
   VmSizeProperty.supportedByVirtualMachines: IsSupportedByVirtualMachines
   VmSizeProperty.supportedByWebWorkerRoles: IsSupportedByWebWorkerRoles
   VmSizeCompatibilityFilterV2.computeIsolationSupported: IsComputeIsolationSupported
+  SecurityProfile.ldapsUrls: LdapUris|uri
+  ApplicationProperties.createdDate: CreatedOn|date-time
+  ClusterGetProperties.createdDate: CreatedOn|date-time
 
 prepend-rp-prefix:
 - VmSizeCompatibilityFilterV2
@@ -225,4 +228,13 @@ directive:
           'description': 'The error details.'
         }
       };
+# nullable
+  - from: cluster.json
+    where: $.definitions
+    transform: >
+      $.StorageAccount.properties.msiResourceId['x-nullable'] = true;
+      $.StorageAccount.properties.resourceId['x-nullable'] = true;
+      $.DiskEncryptionProperties.properties.encryptionAlgorithm['x-nullable'] = true;
+      $.DiskEncryptionProperties.properties.msiResourceId['x-nullable'] = true;
+
 ```

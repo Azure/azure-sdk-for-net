@@ -10,6 +10,11 @@
 
 ### Other Changes
 
+## 1.1.1 (2022-09-16)
+
+### Features Added
+Updated `Azure.Communication.Common` version.
+
 ## 1.1.0 (2021-09-15)
 Updated `Azure.Communication.Chat` version.
 

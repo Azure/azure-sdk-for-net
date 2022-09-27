@@ -15,6 +15,9 @@ namespace Azure.Communication.CallingServer
         [Test]
         public async Task PlayAudio()
         {
+            if (SkipCallingServerInteractionLiveTests)
+                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             string callConnectionId = "";
             try

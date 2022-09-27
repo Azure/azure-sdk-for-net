@@ -74,27 +74,26 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests.Scenario
             Assert.IsNotNull(guestAssignmentResourceRetrieved);
 
             // Get reports
-            AsyncPageable<GuestConfigurationAssignmentReport> gcAssignmentReportsRetrieved = guestAssignmentResourceRetrieved.GetGuestConfigurationAssignmentReportsAsync();
+            AsyncPageable<GuestConfigurationAssignmentReport> gcAssignmentReportsRetrieved = guestAssignmentResourceRetrieved.GetReportsAsync();
             await foreach (GuestConfigurationAssignmentReport gcReport in gcAssignmentReportsRetrieved)
             {
                 Assert.NotNull(gcReport);
             }
         }
 
-        // SDK Team has currently disabled Lists for a bug/feature they are implementing.
-        //[TestCase]
-        //public async Task CanListAllGuestConfigurationAssignments()
-        //{
-        //    var resourceGroupName = GuestConfigurationManagementUtilities.DefaultResourceGroupName;
-        //    var vmName = GuestConfigurationManagementUtilities.DefaultAzureVMName;
-        //    GuestConfigurationAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationAssignmentCollectionAsync(resourceGroupName);
+        [TestCase]
+        public async Task CanListAllGuestConfigurationAssignments()
+        {
+            var resourceGroupName = GuestConfigurationManagementUtilities.DefaultResourceGroupName;
+            var vmName = GuestConfigurationManagementUtilities.DefaultAzureVMName;
+            GuestConfigurationVmAssignmentCollection guestConfigurationAssignmentCollection = await GetGuestConfigurationAssignmentCollectionAsync(resourceGroupName, vmName);
 
-        //    // get guest configuration assignments
-        //    var gcAssignments = guestConfigurationAssignmentCollection.GetAllAsync();
-        //    await foreach (GuestConfigurationAssignmentResource gcAssignment in gcAssignments)
-        //    {
-        //        Assert.NotNull(gcAssignment);
-        //    }
-        //}
+            // get guest configuration assignments
+            var gcAssignments = guestConfigurationAssignmentCollection.GetAllAsync();
+            await foreach (GuestConfigurationVmAssignmentResource gcAssignment in gcAssignments)
+            {
+                Assert.NotNull(gcAssignment);
+            }
+        }
     }
 }

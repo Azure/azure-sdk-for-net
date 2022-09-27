@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests
         }
         protected static GuestConfigurationAssignmentProperties GetDefaultGuestConfigurationAssignmentProperties()
         {
-            var configurationParameter = new ConfigurationParameter();
-            var configurationParameterList = new List<ConfigurationParameter>() { configurationParameter };
+            var configurationParameter = new GuestConfigurationParameter();
+            var configurationParameterList = new List<GuestConfigurationParameter>() { configurationParameter };
 
             GuestConfigurationNavigation guestConfigurationNavigation = new(GuestConfigurationManagementUtilities.DefaultKind, GuestConfigurationManagementUtilities.DefaultAssignmentName,
             GuestConfigurationManagementUtilities.DefaultAssignmentVersion, null, null, GuestConfigurationManagementUtilities.DefaultAssignmentType,
@@ -93,14 +93,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Tests
         {
             GuestConfigurationAssignmentProperties properties = GetDefaultGuestConfigurationAssignmentProperties();
 
-            return new GuestConfigurationAssignmentData(
-                id,
-                GuestConfigurationManagementUtilities.DefaultAssignmentName,
-                GuestConfigurationManagementUtilities.DefaultResourceLocation,
-                GuestConfigurationManagementUtilities.DefaultResourceType,
-                properties,
-                new SystemData()
-                );
+            return new GuestConfigurationAssignmentData
+            {
+                Name = GuestConfigurationManagementUtilities.DefaultAssignmentName,
+                Location = GuestConfigurationManagementUtilities.DefaultResourceLocation,
+                Properties = properties
+            };
         }
     }
 }

@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static VmHostPlacementPolicyProperties DeserializeVmHostPlacementPolicyProperties(JsonElement element)
         {
-            IList<string> vmMembers = default;
+            IList<ResourceIdentifier> vmMembers = default;
             IList<string> hostMembers = default;
-            AffinityType affinityType = default;
+            AvsPlacementPolicyAffinityType affinityType = default;
             PlacementPolicyType type = default;
             Optional<PlacementPolicyState> state = default;
             Optional<string> displayName = default;
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 if (property.NameEquals("vmMembers"))
                 {
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        array.Add(new ResourceIdentifier(item.GetString()));
                     }
                     vmMembers = array;
                     continue;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("affinityType"))
                 {
-                    affinityType = new AffinityType(property.Value.GetString());
+                    affinityType = new AvsPlacementPolicyAffinityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("type"))

@@ -6,10 +6,7 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -24,7 +21,7 @@ namespace Azure.ResourceManager.NetApp
     /// Each <see cref="NetAppVolumeGroupResource" /> in the collection will belong to the same instance of <see cref="NetAppAccountResource" />.
     /// To get a <see cref="NetAppVolumeGroupCollection" /> instance call the GetNetAppVolumeGroups method from an instance of <see cref="NetAppAccountResource" />.
     /// </summary>
-    public partial class NetAppVolumeGroupCollection : ArmCollection, IEnumerable<NetAppVolumeGroupResource>, IAsyncEnumerable<NetAppVolumeGroupResource>
+    public partial class NetAppVolumeGroupCollection : ArmCollection
     {
         private readonly ClientDiagnostics _netAppVolumeGroupVolumeGroupsClientDiagnostics;
         private readonly VolumeGroupsRestOperations _netAppVolumeGroupVolumeGroupsRestClient;
@@ -178,60 +175,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// List all volume groups for given account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups
-        /// Operation Id: VolumeGroups_ListByNetAppAccount
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetAppVolumeGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetAppVolumeGroupResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            async Task<Page<NetAppVolumeGroupResource>> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = await _netAppVolumeGroupVolumeGroupsRestClient.ListByNetAppAccountAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetAppVolumeGroupResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
-        /// List all volume groups for given account
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups
-        /// Operation Id: VolumeGroups_ListByNetAppAccount
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetAppVolumeGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetAppVolumeGroupResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            Page<NetAppVolumeGroupResource> FirstPageFunc(int? pageSizeHint)
-            {
-                using var scope = _netAppVolumeGroupVolumeGroupsClientDiagnostics.CreateScope("NetAppVolumeGroupCollection.GetAll");
-                scope.Start();
-                try
-                {
-                    var response = _netAppVolumeGroupVolumeGroupsRestClient.ListByNetAppAccount(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new NetAppVolumeGroupResource(Client, value)), null, response.GetRawResponse());
-                }
-                catch (Exception e)
-                {
-                    scope.Failed(e);
-                    throw;
-                }
-            }
-            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
         /// Operation Id: VolumeGroups_Get
@@ -283,21 +226,6 @@ namespace Azure.ResourceManager.NetApp
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<NetAppVolumeGroupResource> IEnumerable<NetAppVolumeGroupResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<NetAppVolumeGroupResource> IAsyncEnumerable<NetAppVolumeGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

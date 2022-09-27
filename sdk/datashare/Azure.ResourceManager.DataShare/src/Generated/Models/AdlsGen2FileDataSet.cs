@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.DataShare.Models
 {
     /// <summary> An ADLS Gen 2 file data set. </summary>
-    public partial class AdlsGen2FileDataSet : DataSetData
+    public partial class AdlsGen2FileDataSet : ShareDataSetData
     {
         /// <summary> Initializes a new instance of AdlsGen2FileDataSet. </summary>
         /// <param name="filePath"> File path within the file system. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceGroup"> Resource group of storage account. </param>
         /// <param name="storageAccountName"> Storage account name of the source data set. </param>
         /// <param name="subscriptionId"> Subscription id of storage account. </param>
-        internal AdlsGen2FileDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, string dataSetId, string filePath, string fileSystem, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        internal AdlsGen2FileDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, Guid? dataSetId, string filePath, string fileSystem, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
         {
             DataSetId = dataSetId;
             FilePath = filePath;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare.Models
         }
 
         /// <summary> Unique id for identifying a data set resource. </summary>
-        public string DataSetId { get; }
+        public Guid? DataSetId { get; }
         /// <summary> File path within the file system. </summary>
         public string FilePath { get; set; }
         /// <summary> File system to which the file belongs. </summary>

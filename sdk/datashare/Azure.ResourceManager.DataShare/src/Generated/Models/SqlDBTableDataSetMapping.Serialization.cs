@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -42,11 +43,11 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             string databaseName = default;
-            string dataSetId = default;
+            Guid dataSetId = default;
             Optional<DataSetMappingStatus> dataSetMappingStatus = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<DataShareProvisioningState> provisioningState = default;
             string schemaName = default;
-            string sqlServerResourceId = default;
+            ResourceIdentifier sqlServerResourceId = default;
             string tableName = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         }
                         if (property0.NameEquals("dataSetId"))
                         {
-                            dataSetId = property0.Value.GetString();
+                            dataSetId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("dataSetMappingStatus"))
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.DataShare.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new DataShareProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("schemaName"))
@@ -126,7 +127,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         }
                         if (property0.NameEquals("sqlServerResourceId"))
                         {
-                            sqlServerResourceId = property0.Value.GetString();
+                            sqlServerResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("tableName"))

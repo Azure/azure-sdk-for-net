@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.1 (2022-09-27)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed the serialization issue of `RedisCommonConfiguration.RdbBackupMaxSnapshotCount`.
 
 ## 1.0.0 (2022-08-29)
 

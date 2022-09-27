@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Media.Tests
         protected MediaManagementTestBase(bool isAsync, RecordedTestMode mode)
         : base(isAsync, mode)
         {
-            JsonPathSanitizers.Add("$.properties.input.accessToken");
-            JsonPathSanitizers.Add("$.value.[*].properties.input.accessToken");
+            JsonPathSanitizers.Add("$..accessToken");
         }
 
         protected MediaManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            JsonPathSanitizers.Add("$..accessToken");
         }
 
         [SetUp]
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.Media.Tests
             return mediaTransfer.Value;
         }
 
-        protected async Task<LiveEventResource> CreateLiveEvent(MediaServicesAccountResource mediaService, string liveEventName)
+        protected async Task<MediaLiveEventResource> CreateLiveEvent(MediaServicesAccountResource mediaService, string liveEventName)
         {
-            LiveEventData data = new LiveEventData(mediaService.Data.Location)
+            MediaLiveEventData data = new MediaLiveEventData(mediaService.Data.Location)
             {
                 Input = new LiveEventInput(LiveEventInputProtocol.Rtmp),
                 CrossSiteAccessPolicies = new CrossSiteAccessPolicies(),
             };
-            var liveEvent = await mediaService.GetLiveEvents().CreateOrUpdateAsync(WaitUntil.Completed, liveEventName, data);
+            var liveEvent = await mediaService.GetMediaLiveEvents().CreateOrUpdateAsync(WaitUntil.Completed, liveEventName, data);
             return liveEvent.Value;
         }
     }
