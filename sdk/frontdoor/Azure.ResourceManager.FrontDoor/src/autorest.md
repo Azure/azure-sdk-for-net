@@ -203,5 +203,17 @@ directive:
     where: $.definitions.RoutingRuleUpdateParameters.properties.webApplicationFirewallPolicyLink
     transform: >
         $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.Backend.properties.privateLinkResourceId
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.Backend.properties.privateLinkLocation
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.Backend.properties.privateEndpointStatus
+    transform: >
+        $["x-nullable"] = true;
 
 ```
