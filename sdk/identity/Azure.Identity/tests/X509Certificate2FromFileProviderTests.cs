@@ -30,7 +30,7 @@ namespace Azure.Identity.Tests
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await certProvider.GetCertificateAsync(async, default));
 
-            StringAssert.Contains("Password protection for .pem files is not supported.", ex.Message);
+            StringAssert.Contains("Password protection for PEM encoded certificates is not supported.", ex.Message);
         }
 
         [Test]

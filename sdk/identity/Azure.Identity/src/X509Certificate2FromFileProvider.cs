@@ -45,7 +45,7 @@ namespace Azure.Identity
                 case ".pem":
                     if (CertificatePassword != null)
                     {
-                        throw new CredentialUnavailableException("Password protection for .pem files is not supported.");
+                        throw new CredentialUnavailableException("Password protection for PEM encoded certificates is not supported.");
                     }
                     return LoadCertificateFromPemFileAsync(async, CertificatePath, cancellationToken);
                 default:
