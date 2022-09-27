@@ -1,11 +1,10 @@
-# Authentication events trigger for Azure Functions
+# Authentication events trigger for Azure Functions client library for .NET
 
-The authentication events trigger for Azure Functions allows you to implement a custom extension to handle Azure Active Directory (Azure AD) authentication events.  The authentication events trigger handles all the backend processing for incoming HTTP requests for Azure AD authentication events and provides the developer with:
+The authentication events trigger for Azure Functions allows you to implement a custom extension to handle Azure Active Directory (Azure AD) authentication events. The authentication events trigger handles all the backend processing for incoming HTTP requests for Azure AD authentication events and provides the developer with:
 
 - Token validation for securing the API call
 - Object model, typing, and IDE intellisense
 - Inbound and outbound validation of the API request and response schemas
-- Versioning
 
 ## Getting started
 
@@ -19,36 +18,7 @@ dotnet add package Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents --pre
 
 ### Prerequisites
 
-- **Azure Subscription:**  To use Azure services, including Azure Functions, you'll need a subscription.  If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
-- [Visual Studio 2019](https://visualstudio.microsoft.com/vs/) or later for Windows **OR** [Visual Studio Code >= 1.61](https://code.visualstudio.com/download) or later
-- [Dotnet core 3.1](https://dotnet.microsoft.com/download/dotnet/3.1)
-- [Azure function tools 3.30](https://github.com/Azure/azure-functions-core-tools) or later
-- [Nuget](https://learn.microsoft.com/en-us/nuget/install-nuget-client-tools)
-- [Azure Function Core Tools](https://github.com/Azure/azure-functions-core-tools#installing)
-- If using Visual Studio Code the following extensions:
-  - [ms-azuretools.vscode-azurefunctions](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions)
-  - [ms-dotnettools.csharp](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
-
-#### Private preview
-
-* For private preview register a Nuget source either using Nuget''s cli **OR** Visual Studio's Nuget Package Manager.
-  * Generate a GIT Personal Access Token. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens)
-    * When generating the token, it needs to have the following permissions/scope: **read:package**
-    * Authorize **Azure** to use the Personal Access Token. (::Only if you are a member of the Azure Organization on GitHub::)
-
-  * Nuget CLI (**Recommended**):
-    * **GIT-USERNAME**: Your GIT username that you log into GIT with.
-    * **GIT-PERSONAL-ACCESS-TOKEN**: Your GIT Personal access token (see below reference on how to generate one)
-
-    ```shell
-    nuget sources add -Name "Azure" -Source "https://nuget.pkg.github.com/Azure/index.json" -username "**[GIT-USERNAME]**" -password "**[GIT-PERSONAL-ACCESS-TOKEN]**"
-    ```
-
-    * More details can be found here
-      * [Nuget Source](https://learn.microsoft.com/nuget/reference/cli-reference/cli-ref-sources)
-      * [How to Generate a GIT Personal Access Token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-  * Visual Studio's Nuget Package Manager
-    * You'll be prompted for credentials when accessing the source, so keep you Personal Access Token handy as this would be your password.
+- **Azure Subscription:** To use Azure services, including Azure Functions, you'll need a subscription. If you do not have an existing Azure account, you may sign up for a [free trial](https://azure.microsoft.com/free/dotnet/) or use your [Visual Studio Subscription](https://visualstudio.microsoft.com/subscriptions/) benefits when you [create an account](https://account.windowsazure.com/Home/Index).
 
 ### Authenticate the client
 
@@ -63,7 +33,7 @@ There are three approaches to authenticating HTTP requests to your function app 
 
 #### Validate tokens using Azure Functions Azure AD authentication integration
 
-When running your function in production, it is **highly recommended** to use the [Azure Functions Azure AD authentication integration](https://learn.microsoft.com/azure/app-service/configure-authentication-provider-aad#-option-2-use-an-existing-registration-created-separately) for validating incoming tokens.  Set the following function [application settings](https://learn.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal#settings).
+When running your function in production, it is **highly recommended** to use the [Azure Functions Azure AD authentication integration](https://learn.microsoft.com/azure/app-service/configure-authentication-provider-aad#-option-2-use-an-existing-registration-created-separately) for validating incoming tokens. Set the following function [application settings](https://learn.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal#settings).
 
 1. Go to the "Authentication" tab in your Function App
 2. Click on "Add identity provider"
@@ -130,7 +100,7 @@ If you would like to _not_ authenticate the token while in local development, se
   * Follow the project creation prompts
 * Please note: that on a first time run it might take awhile to download the the required packages.
 * For development purpose turn of token validation for testing:
-* Add the **AuthenticationEvents__BypassTokenValidation** application key to the "Values" section in the local.settings.json file and set it's value to **true**.  If you do not have a local.settings.json file in your local environment, create one in the root of your Function App.
+* Add the **AuthenticationEvents__BypassTokenValidation** application key to the "Values" section in the local.settings.json file and set it's value to **true**. If you do not have a local.settings.json file in your local environment, create one in the root of your Function App.
 
 ```json
 {
@@ -153,7 +123,7 @@ Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/a
 
 ### Azure AD custom extensions
 
-Custom extensions allow you to handle Azure AD events, integrate with external systems, and customize what happens in your application authentication experience.  For example, a custom claims provider is a custom extension that allows you to enrich or customize application tokens with information from external systems that can't be stored as part of the Azure AD directory.  
+Custom extensions allow you to handle Azure AD events, integrate with external systems, and customize what happens in your application authentication experience. For example, a custom claims provider is a custom extension that allows you to enrich or customize application tokens with information from external systems that can't be stored as part of the Azure AD directory. 
 
 ### Authentication events trigger
 
@@ -168,7 +138,7 @@ The authentication events trigger output binding allows a function to send authe
 * One the function has been published, there's some good reading about logging and metrics that can be found [here](https://learn.microsoft.com/azure/azure-functions/functions-monitor-log-analytics?tabs=csharp)
 
 * For API Documentation, please see the (Link TBD)
-* Once this moves to preview, we except no breaking changes and would be as simple as removing the the nuget source that points to the private preview.
+* Once this moves to preview, we except no breaking changes and would be as simple as removing the the NuGet source that points to the private preview.
 
 ## Examples
 
