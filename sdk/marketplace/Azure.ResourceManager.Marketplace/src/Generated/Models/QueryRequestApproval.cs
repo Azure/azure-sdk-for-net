@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Gets the request plans with indication on each plan whether is approved by the admin, has pending request or not requested yet. </summary>
+    /// <summary>
+    /// Gets the request plans with indication on each plan whether is approved by the admin, has pending request or not requested yet
+    /// Serialized Name: QueryRequestApproval
+    /// </summary>
     public partial class QueryRequestApproval
     {
         /// <summary> Initializes a new instance of QueryRequestApproval. </summary>
@@ -21,10 +24,22 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of QueryRequestApproval. </summary>
-        /// <param name="uniqueOfferId"> Gets or sets unique offer id. </param>
-        /// <param name="plansDetails"> Gets or sets the plans details. </param>
-        /// <param name="eTag"> Gets or sets e-tag field. </param>
-        /// <param name="messageCode"> Gets or sets the notification message id. </param>
+        /// <param name="uniqueOfferId">
+        /// Gets or sets unique offer id.
+        /// Serialized Name: QueryRequestApproval.uniqueOfferId
+        /// </param>
+        /// <param name="plansDetails">
+        /// Gets or sets the plans details
+        /// Serialized Name: QueryRequestApproval.plansDetails
+        /// </param>
+        /// <param name="eTag">
+        /// Gets or sets e-tag field 
+        /// Serialized Name: QueryRequestApproval.etag
+        /// </param>
+        /// <param name="messageCode">
+        /// Gets or sets the notification message id
+        /// Serialized Name: QueryRequestApproval.messageCode
+        /// </param>
         internal QueryRequestApproval(string uniqueOfferId, IReadOnlyDictionary<string, PlanDetails> plansDetails, ETag? eTag, long? messageCode)
         {
             UniqueOfferId = uniqueOfferId;
@@ -33,13 +48,25 @@ namespace Azure.ResourceManager.Marketplace.Models
             MessageCode = messageCode;
         }
 
-        /// <summary> Gets or sets unique offer id. </summary>
+        /// <summary>
+        /// Gets or sets unique offer id.
+        /// Serialized Name: QueryRequestApproval.uniqueOfferId
+        /// </summary>
         public string UniqueOfferId { get; }
-        /// <summary> Gets or sets the plans details. </summary>
+        /// <summary>
+        /// Gets or sets the plans details
+        /// Serialized Name: QueryRequestApproval.plansDetails
+        /// </summary>
         public IReadOnlyDictionary<string, PlanDetails> PlansDetails { get; }
-        /// <summary> Gets or sets e-tag field. </summary>
+        /// <summary>
+        /// Gets or sets e-tag field 
+        /// Serialized Name: QueryRequestApproval.etag
+        /// </summary>
         public ETag? ETag { get; }
-        /// <summary> Gets or sets the notification message id. </summary>
+        /// <summary>
+        /// Gets or sets the notification message id
+        /// Serialized Name: QueryRequestApproval.messageCode
+        /// </summary>
         public long? MessageCode { get; }
     }
 }

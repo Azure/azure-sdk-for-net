@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,7 +14,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    public partial class AdminRequestApprovalsResourceData : IUtf8JsonSerializable
+    public partial class AdminApprovalRequestData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -69,7 +70,7 @@ namespace Azure.ResourceManager.Marketplace
             writer.WriteEndObject();
         }
 
-        internal static AdminRequestApprovalsResourceData DeserializeAdminRequestApprovalsResourceData(JsonElement element)
+        internal static AdminApprovalRequestData DeserializeAdminApprovalRequestData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Marketplace
             Optional<string> administrator = default;
             Optional<IReadOnlyList<PlanRequesterDetails>> plans = default;
             Optional<IList<string>> collectionIds = default;
-            Optional<string> icon = default;
+            Optional<Uri> icon = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -203,14 +204,19 @@ namespace Azure.ResourceManager.Marketplace
                         }
                         if (property0.NameEquals("icon"))
                         {
-                            icon = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                icon = null;
+                                continue;
+                            }
+                            icon = new Uri(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new AdminRequestApprovalsResourceData(id, name, type, systemData.Value, offerId.Value, displayName.Value, publisherId.Value, Optional.ToNullable(adminAction), Optional.ToList(approvedPlans), comment.Value, administrator.Value, Optional.ToList(plans), Optional.ToList(collectionIds), icon.Value);
+            return new AdminApprovalRequestData(id, name, type, systemData.Value, offerId.Value, displayName.Value, publisherId.Value, Optional.ToNullable(adminAction), Optional.ToList(approvedPlans), comment.Value, administrator.Value, Optional.ToList(plans), Optional.ToList(collectionIds), icon.Value);
         }
     }
 }

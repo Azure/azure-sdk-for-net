@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Stop sell notification details. </summary>
+    /// <summary>
+    /// Stop sell notification details
+    /// Serialized Name: StopSellNotifications
+    /// </summary>
     public partial class StopSellNotifications
     {
         /// <summary> Initializes a new instance of StopSellNotifications. </summary>
@@ -20,12 +23,30 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of StopSellNotifications. </summary>
-        /// <param name="offerId"> Gets offer id. </param>
-        /// <param name="displayName"> Gets offer display name. </param>
-        /// <param name="isEntire"> Gets a value indicating whether entire offer is in stop sell or only few of its plans. </param>
-        /// <param name="messageCode"> Gets or sets the notification message id. </param>
-        /// <param name="icon"> Gets or sets the icon url. </param>
-        /// <param name="plans"> Gets or sets removed plans notifications. </param>
+        /// <param name="offerId">
+        /// Gets offer id
+        /// Serialized Name: StopSellNotifications.offerId
+        /// </param>
+        /// <param name="displayName">
+        /// Gets offer display name
+        /// Serialized Name: StopSellNotifications.displayName
+        /// </param>
+        /// <param name="isEntire">
+        /// Gets a value indicating whether entire offer is in stop sell or only few of its plans
+        /// Serialized Name: StopSellNotifications.isEntire
+        /// </param>
+        /// <param name="messageCode">
+        /// Gets or sets the notification message id
+        /// Serialized Name: StopSellNotifications.messageCode
+        /// </param>
+        /// <param name="icon">
+        /// Gets or sets the icon url
+        /// Serialized Name: StopSellNotifications.icon
+        /// </param>
+        /// <param name="plans">
+        /// Gets or sets removed plans notifications
+        /// Serialized Name: StopSellNotifications.plans
+        /// </param>
         internal StopSellNotifications(string offerId, string displayName, bool? isEntire, long? messageCode, string icon, IReadOnlyList<PlanNotificationDetails> plans)
         {
             OfferId = offerId;
@@ -36,17 +57,35 @@ namespace Azure.ResourceManager.Marketplace.Models
             Plans = plans;
         }
 
-        /// <summary> Gets offer id. </summary>
+        /// <summary>
+        /// Gets offer id
+        /// Serialized Name: StopSellNotifications.offerId
+        /// </summary>
         public string OfferId { get; }
-        /// <summary> Gets offer display name. </summary>
+        /// <summary>
+        /// Gets offer display name
+        /// Serialized Name: StopSellNotifications.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> Gets a value indicating whether entire offer is in stop sell or only few of its plans. </summary>
+        /// <summary>
+        /// Gets a value indicating whether entire offer is in stop sell or only few of its plans
+        /// Serialized Name: StopSellNotifications.isEntire
+        /// </summary>
         public bool? IsEntire { get; }
-        /// <summary> Gets or sets the notification message id. </summary>
+        /// <summary>
+        /// Gets or sets the notification message id
+        /// Serialized Name: StopSellNotifications.messageCode
+        /// </summary>
         public long? MessageCode { get; }
-        /// <summary> Gets or sets the icon url. </summary>
+        /// <summary>
+        /// Gets or sets the icon url
+        /// Serialized Name: StopSellNotifications.icon
+        /// </summary>
         public string Icon { get; }
-        /// <summary> Gets or sets removed plans notifications. </summary>
+        /// <summary>
+        /// Gets or sets removed plans notifications
+        /// Serialized Name: StopSellNotifications.plans
+        /// </summary>
         public IReadOnlyList<PlanNotificationDetails> Plans { get; }
     }
 }

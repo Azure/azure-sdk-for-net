@@ -11,27 +11,36 @@ using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> The CollectionsList. </summary>
+    /// <summary>
+    /// The CollectionsList.
+    /// Serialized Name: CollectionsList
+    /// </summary>
     internal partial class CollectionsList
     {
         /// <summary> Initializes a new instance of CollectionsList. </summary>
         internal CollectionsList()
         {
-            Value = new ChangeTrackingList<CollectionData>();
+            Value = new ChangeTrackingList<PrivateMarketplaceCollectionData>();
         }
 
         /// <summary> Initializes a new instance of CollectionsList. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> URL to get the next set of offer list results if there are any. </param>
-        internal CollectionsList(IReadOnlyList<CollectionData> value, string nextLink)
+        /// <param name="value"> Serialized Name: CollectionsList.value. </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of offer list results if there are any.
+        /// Serialized Name: CollectionsList.nextLink
+        /// </param>
+        internal CollectionsList(IReadOnlyList<PrivateMarketplaceCollectionData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
-        public IReadOnlyList<CollectionData> Value { get; }
-        /// <summary> URL to get the next set of offer list results if there are any. </summary>
+        /// <summary> Serialized Name: CollectionsList.value. </summary>
+        public IReadOnlyList<PrivateMarketplaceCollectionData> Value { get; }
+        /// <summary>
+        /// URL to get the next set of offer list results if there are any.
+        /// Serialized Name: CollectionsList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

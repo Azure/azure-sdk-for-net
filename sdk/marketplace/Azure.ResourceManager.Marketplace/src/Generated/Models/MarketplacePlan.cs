@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> The MarketplacePlan. </summary>
+    /// <summary>
+    /// The MarketplacePlan.
+    /// Serialized Name: Plan
+    /// </summary>
     public partial class MarketplacePlan
     {
         /// <summary> Initializes a new instance of MarketplacePlan. </summary>
@@ -16,12 +19,30 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of MarketplacePlan. </summary>
-        /// <param name="skuId"> Identifier for this plan. </param>
-        /// <param name="planId"> Text identifier for this plan. </param>
-        /// <param name="planDisplayName"> Friendly name for the plan for display in the marketplace. </param>
-        /// <param name="accessibility"> Plan accessibility. </param>
-        /// <param name="altStackReference"> Alternative stack type. </param>
-        /// <param name="stackType"> Stack type (classic or arm). </param>
+        /// <param name="skuId">
+        /// Identifier for this plan
+        /// Serialized Name: Plan.skuId
+        /// </param>
+        /// <param name="planId">
+        /// Text identifier for this plan
+        /// Serialized Name: Plan.planId
+        /// </param>
+        /// <param name="planDisplayName">
+        /// Friendly name for the plan for display in the marketplace
+        /// Serialized Name: Plan.planDisplayName
+        /// </param>
+        /// <param name="accessibility">
+        /// Plan accessibility
+        /// Serialized Name: Plan.accessibility
+        /// </param>
+        /// <param name="altStackReference">
+        /// Alternative stack type
+        /// Serialized Name: Plan.altStackReference
+        /// </param>
+        /// <param name="stackType">
+        /// Stack type (classic or arm)
+        /// Serialized Name: Plan.stackType
+        /// </param>
         internal MarketplacePlan(string skuId, string planId, string planDisplayName, Accessibility? accessibility, string altStackReference, string stackType)
         {
             SkuId = skuId;
@@ -32,17 +53,35 @@ namespace Azure.ResourceManager.Marketplace.Models
             StackType = stackType;
         }
 
-        /// <summary> Identifier for this plan. </summary>
+        /// <summary>
+        /// Identifier for this plan
+        /// Serialized Name: Plan.skuId
+        /// </summary>
         public string SkuId { get; }
-        /// <summary> Text identifier for this plan. </summary>
+        /// <summary>
+        /// Text identifier for this plan
+        /// Serialized Name: Plan.planId
+        /// </summary>
         public string PlanId { get; }
-        /// <summary> Friendly name for the plan for display in the marketplace. </summary>
+        /// <summary>
+        /// Friendly name for the plan for display in the marketplace
+        /// Serialized Name: Plan.planDisplayName
+        /// </summary>
         public string PlanDisplayName { get; }
-        /// <summary> Plan accessibility. </summary>
+        /// <summary>
+        /// Plan accessibility
+        /// Serialized Name: Plan.accessibility
+        /// </summary>
         public Accessibility? Accessibility { get; set; }
-        /// <summary> Alternative stack type. </summary>
+        /// <summary>
+        /// Alternative stack type
+        /// Serialized Name: Plan.altStackReference
+        /// </summary>
         public string AltStackReference { get; }
-        /// <summary> Stack type (classic or arm). </summary>
+        /// <summary>
+        /// Stack type (classic or arm)
+        /// Serialized Name: Plan.stackType
+        /// </summary>
         public string StackType { get; }
     }
 }

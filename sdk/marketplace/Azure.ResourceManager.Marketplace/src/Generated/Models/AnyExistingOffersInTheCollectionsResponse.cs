@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Response object of query if are there existing offers in the collections. </summary>
+    /// <summary>
+    /// Response object of query if are there existing offers in the collections.
+    /// Serialized Name: AnyExistingOffersInTheCollectionsResponse
+    /// </summary>
     public partial class AnyExistingOffersInTheCollectionsResponse
     {
         /// <summary> Initializes a new instance of AnyExistingOffersInTheCollectionsResponse. </summary>
@@ -16,13 +19,19 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of AnyExistingOffersInTheCollectionsResponse. </summary>
-        /// <param name="value"> Boolean answer, true if exists at least a single offer in an enabled collection, otherwise, false. </param>
+        /// <param name="value">
+        /// Boolean answer, true if exists at least a single offer in an enabled collection, otherwise, false.
+        /// Serialized Name: AnyExistingOffersInTheCollectionsResponse.value
+        /// </param>
         internal AnyExistingOffersInTheCollectionsResponse(bool? value)
         {
             Value = value;
         }
 
-        /// <summary> Boolean answer, true if exists at least a single offer in an enabled collection, otherwise, false. </summary>
+        /// <summary>
+        /// Boolean answer, true if exists at least a single offer in an enabled collection, otherwise, false.
+        /// Serialized Name: AnyExistingOffersInTheCollectionsResponse.value
+        /// </summary>
         public bool? Value { get; }
     }
 }

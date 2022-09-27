@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Withdraw properties. </summary>
+    /// <summary>
+    /// Withdraw properties
+    /// Serialized Name: WithdrawProperties
+    /// </summary>
     public partial class WithdrawProperties
     {
         /// <summary> Initializes a new instance of WithdrawProperties. </summary>
@@ -15,9 +18,15 @@ namespace Azure.ResourceManager.Marketplace.Models
         {
         }
 
-        /// <summary> Gets or sets Plan Id. </summary>
+        /// <summary>
+        /// Gets or sets Plan Id 
+        /// Serialized Name: WithdrawProperties.properties.planId
+        /// </summary>
         public string PlanId { get; set; }
-        /// <summary> The offer&apos;s publisher id. </summary>
+        /// <summary>
+        /// The offer&apos;s publisher id
+        /// Serialized Name: WithdrawProperties.properties.publisherId
+        /// </summary>
         public string PublisherId { get; set; }
     }
 }

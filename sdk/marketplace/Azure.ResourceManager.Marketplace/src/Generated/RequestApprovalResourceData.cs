@@ -26,12 +26,30 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="offerId"> Gets or sets unique offer id. </param>
-        /// <param name="offerDisplayName"> Gets offer display name. </param>
-        /// <param name="publisherId"> The offer&apos;s publisher id. </param>
-        /// <param name="plansDetails"> Gets or sets the plans details. </param>
-        /// <param name="isClosed"> Gets a value indicating whether the request is closed. </param>
-        /// <param name="messageCode"> Gets or sets the request approval message code. </param>
+        /// <param name="offerId">
+        /// Gets or sets unique offer id.
+        /// Serialized Name: RequestApprovalResource.properties.offerId
+        /// </param>
+        /// <param name="offerDisplayName">
+        /// Gets offer display name
+        /// Serialized Name: RequestApprovalResource.properties.offerDisplayName
+        /// </param>
+        /// <param name="publisherId">
+        /// The offer&apos;s publisher id
+        /// Serialized Name: RequestApprovalResource.properties.publisherId
+        /// </param>
+        /// <param name="plansDetails">
+        /// Gets or sets the plans details
+        /// Serialized Name: RequestApprovalResource.properties.plansDetails
+        /// </param>
+        /// <param name="isClosed">
+        /// Gets a value indicating whether the request is closed
+        /// Serialized Name: RequestApprovalResource.properties.isClosed
+        /// </param>
+        /// <param name="messageCode">
+        /// Gets or sets the request approval message code
+        /// Serialized Name: RequestApprovalResource.properties.messageCode
+        /// </param>
         internal RequestApprovalResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string offerId, string offerDisplayName, string publisherId, IList<PlanDetails> plansDetails, bool? isClosed, long? messageCode) : base(id, name, resourceType, systemData)
         {
             OfferId = offerId;
@@ -42,17 +60,35 @@ namespace Azure.ResourceManager.Marketplace
             MessageCode = messageCode;
         }
 
-        /// <summary> Gets or sets unique offer id. </summary>
+        /// <summary>
+        /// Gets or sets unique offer id.
+        /// Serialized Name: RequestApprovalResource.properties.offerId
+        /// </summary>
         public string OfferId { get; set; }
-        /// <summary> Gets offer display name. </summary>
+        /// <summary>
+        /// Gets offer display name
+        /// Serialized Name: RequestApprovalResource.properties.offerDisplayName
+        /// </summary>
         public string OfferDisplayName { get; }
-        /// <summary> The offer&apos;s publisher id. </summary>
+        /// <summary>
+        /// The offer&apos;s publisher id
+        /// Serialized Name: RequestApprovalResource.properties.publisherId
+        /// </summary>
         public string PublisherId { get; set; }
-        /// <summary> Gets or sets the plans details. </summary>
+        /// <summary>
+        /// Gets or sets the plans details
+        /// Serialized Name: RequestApprovalResource.properties.plansDetails
+        /// </summary>
         public IList<PlanDetails> PlansDetails { get; }
-        /// <summary> Gets a value indicating whether the request is closed. </summary>
+        /// <summary>
+        /// Gets a value indicating whether the request is closed
+        /// Serialized Name: RequestApprovalResource.properties.isClosed
+        /// </summary>
         public bool? IsClosed { get; }
-        /// <summary> Gets or sets the request approval message code. </summary>
+        /// <summary>
+        /// Gets or sets the request approval message code
+        /// Serialized Name: RequestApprovalResource.properties.messageCode
+        /// </summary>
         public long? MessageCode { get; set; }
     }
 }

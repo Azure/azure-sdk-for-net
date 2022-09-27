@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> List of all new plans notifications for public offers. </summary>
+    /// <summary>
+    /// List of all new plans notifications for public offers
+    /// Serialized Name: NewPlansNotificationsList
+    /// </summary>
     public partial class NewPlansNotificationsList
     {
         /// <summary> Initializes a new instance of NewPlansNotificationsList. </summary>
@@ -20,13 +23,13 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of NewPlansNotificationsList. </summary>
-        /// <param name="newPlansNotifications"></param>
+        /// <param name="newPlansNotifications"> Serialized Name: NewPlansNotificationsList.newPlansNotifications. </param>
         internal NewPlansNotificationsList(IReadOnlyList<NewNotifications> newPlansNotifications)
         {
             NewPlansNotifications = newPlansNotifications;
         }
 
-        /// <summary> Gets the new plans notifications. </summary>
+        /// <summary> Serialized Name: NewPlansNotificationsList.newPlansNotifications. </summary>
         public IReadOnlyList<NewNotifications> NewPlansNotifications { get; }
     }
 }

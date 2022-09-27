@@ -9,7 +9,10 @@ using System;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Return plan with request details. </summary>
+    /// <summary>
+    /// Return plan with request details
+    /// Serialized Name: PlanDetails
+    /// </summary>
     public partial class PlanDetails
     {
         /// <summary> Initializes a new instance of PlanDetails. </summary>
@@ -18,12 +21,30 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of PlanDetails. </summary>
-        /// <param name="planId"> Gets or sets Plan Id. </param>
-        /// <param name="status"> Gets the plan status. </param>
-        /// <param name="requestDate"> Gets request date. </param>
-        /// <param name="justification"> Gets or sets user&apos;s justification for the plan&apos;s request. </param>
-        /// <param name="subscriptionId"> Gets or sets the subscription id that the user is requesting to add the plan to. </param>
-        /// <param name="subscriptionName"> Gets or sets the subscription name that the user is requesting to add the plan to. </param>
+        /// <param name="planId">
+        /// Gets or sets Plan Id 
+        /// Serialized Name: PlanDetails.planId
+        /// </param>
+        /// <param name="status">
+        /// Gets the plan status
+        /// Serialized Name: PlanDetails.status
+        /// </param>
+        /// <param name="requestDate">
+        /// Gets request date
+        /// Serialized Name: PlanDetails.requestDate
+        /// </param>
+        /// <param name="justification">
+        /// Gets or sets user&apos;s justification for the plan&apos;s request
+        /// Serialized Name: PlanDetails.justification
+        /// </param>
+        /// <param name="subscriptionId">
+        /// Gets or sets the subscription id that the user is requesting to add the plan to
+        /// Serialized Name: PlanDetails.subscriptionId
+        /// </param>
+        /// <param name="subscriptionName">
+        /// Gets or sets the subscription name that the user is requesting to add the plan to
+        /// Serialized Name: PlanDetails.subscriptionName
+        /// </param>
         internal PlanDetails(string planId, Status? status, BinaryData requestDate, string justification, string subscriptionId, string subscriptionName)
         {
             PlanId = planId;
@@ -34,12 +55,19 @@ namespace Azure.ResourceManager.Marketplace.Models
             SubscriptionName = subscriptionName;
         }
 
-        /// <summary> Gets or sets Plan Id. </summary>
+        /// <summary>
+        /// Gets or sets Plan Id 
+        /// Serialized Name: PlanDetails.planId
+        /// </summary>
         public string PlanId { get; set; }
-        /// <summary> Gets the plan status. </summary>
+        /// <summary>
+        /// Gets the plan status
+        /// Serialized Name: PlanDetails.status
+        /// </summary>
         public Status? Status { get; }
         /// <summary>
         /// Gets request date
+        /// Serialized Name: PlanDetails.requestDate
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -69,11 +97,20 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// </para>
         /// </summary>
         public BinaryData RequestDate { get; }
-        /// <summary> Gets or sets user&apos;s justification for the plan&apos;s request. </summary>
+        /// <summary>
+        /// Gets or sets user&apos;s justification for the plan&apos;s request
+        /// Serialized Name: PlanDetails.justification
+        /// </summary>
         public string Justification { get; set; }
-        /// <summary> Gets or sets the subscription id that the user is requesting to add the plan to. </summary>
+        /// <summary>
+        /// Gets or sets the subscription id that the user is requesting to add the plan to
+        /// Serialized Name: PlanDetails.subscriptionId
+        /// </summary>
         public string SubscriptionId { get; set; }
-        /// <summary> Gets or sets the subscription name that the user is requesting to add the plan to. </summary>
+        /// <summary>
+        /// Gets or sets the subscription name that the user is requesting to add the plan to
+        /// Serialized Name: PlanDetails.subscriptionName
+        /// </summary>
         public string SubscriptionName { get; set; }
     }
 }

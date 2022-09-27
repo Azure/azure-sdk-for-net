@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Plan accessibility. </summary>
+    /// <summary>
+    /// Plan accessibility
+    /// Serialized Name: Accessibility
+    /// </summary>
     public readonly partial struct Accessibility : IEquatable<Accessibility>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Marketplace.Models
         private const string PrivateTenantOnLevelValue = "PrivateTenantOnLevel";
         private const string PrivateSubscriptionOnLevelValue = "PrivateSubscriptionOnLevel";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: Accessibility.Unknown
+        /// </summary>
         public static Accessibility Unknown { get; } = new Accessibility(UnknownValue);
-        /// <summary> Public. </summary>
+        /// <summary>
+        /// Public
+        /// Serialized Name: Accessibility.Public
+        /// </summary>
         public static Accessibility Public { get; } = new Accessibility(PublicValue);
-        /// <summary> PrivateTenantOnLevel. </summary>
+        /// <summary>
+        /// PrivateTenantOnLevel
+        /// Serialized Name: Accessibility.PrivateTenantOnLevel
+        /// </summary>
         public static Accessibility PrivateTenantOnLevel { get; } = new Accessibility(PrivateTenantOnLevelValue);
-        /// <summary> PrivateSubscriptionOnLevel. </summary>
+        /// <summary>
+        /// PrivateSubscriptionOnLevel
+        /// Serialized Name: Accessibility.PrivateSubscriptionOnLevel
+        /// </summary>
         public static Accessibility PrivateSubscriptionOnLevel { get; } = new Accessibility(PrivateSubscriptionOnLevelValue);
         /// <summary> Determines if two <see cref="Accessibility"/> values are the same. </summary>
         public static bool operator ==(Accessibility left, Accessibility right) => left.Equals(right);

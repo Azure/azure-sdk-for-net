@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Collection name and id. </summary>
+    /// <summary>
+    /// Collection name and id.
+    /// Serialized Name: CollectionsDetails
+    /// </summary>
     public partial class CollectionsDetails
     {
         /// <summary> Initializes a new instance of CollectionsDetails. </summary>
@@ -16,17 +19,29 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of CollectionsDetails. </summary>
-        /// <param name="collectionName"> Collection name. </param>
-        /// <param name="collectionId"> Collection id. </param>
+        /// <param name="collectionName">
+        /// Collection name.
+        /// Serialized Name: CollectionsDetails.collectionName
+        /// </param>
+        /// <param name="collectionId">
+        /// Collection id.
+        /// Serialized Name: CollectionsDetails.collectionId
+        /// </param>
         internal CollectionsDetails(string collectionName, string collectionId)
         {
             CollectionName = collectionName;
             CollectionId = collectionId;
         }
 
-        /// <summary> Collection name. </summary>
+        /// <summary>
+        /// Collection name.
+        /// Serialized Name: CollectionsDetails.collectionName
+        /// </summary>
         public string CollectionName { get; }
-        /// <summary> Collection id. </summary>
+        /// <summary>
+        /// Collection id.
+        /// Serialized Name: CollectionsDetails.collectionId
+        /// </summary>
         public string CollectionId { get; }
     }
 }

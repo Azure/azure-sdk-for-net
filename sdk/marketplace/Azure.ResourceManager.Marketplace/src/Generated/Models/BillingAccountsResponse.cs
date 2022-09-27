@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Billing accounts response object. </summary>
+    /// <summary>
+    /// Billing accounts response object
+    /// Serialized Name: BillingAccountsResponse
+    /// </summary>
     public partial class BillingAccountsResponse
     {
         /// <summary> Initializes a new instance of BillingAccountsResponse. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of BillingAccountsResponse. </summary>
-        /// <param name="billingAccounts"> Billing accounts list. </param>
+        /// <param name="billingAccounts">
+        /// Billing accounts list
+        /// Serialized Name: BillingAccountsResponse.billingAccounts
+        /// </param>
         internal BillingAccountsResponse(IReadOnlyList<string> billingAccounts)
         {
             BillingAccounts = billingAccounts;
         }
 
-        /// <summary> Billing accounts list. </summary>
+        /// <summary>
+        /// Billing accounts list
+        /// Serialized Name: BillingAccountsResponse.billingAccounts
+        /// </summary>
         public IReadOnlyList<string> BillingAccounts { get; }
     }
 }

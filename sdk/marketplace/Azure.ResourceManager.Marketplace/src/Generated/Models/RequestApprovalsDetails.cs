@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Request approvals details. </summary>
+    /// <summary>
+    /// Request approvals details
+    /// Serialized Name: RequestApprovalsDetails
+    /// </summary>
     public partial class RequestApprovalsDetails
     {
         /// <summary> Initializes a new instance of RequestApprovalsDetails. </summary>
@@ -20,12 +23,30 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of RequestApprovalsDetails. </summary>
-        /// <param name="offerId"> Gets offer id. </param>
-        /// <param name="displayName"> Gets offer display name. </param>
-        /// <param name="publisherId"> Gets or sets publisher id. </param>
-        /// <param name="messageCode"> Gets or sets the notification message id. </param>
-        /// <param name="icon"> Gets or sets the icon url. </param>
-        /// <param name="plans"> Gets or sets removed plans notifications. </param>
+        /// <param name="offerId">
+        /// Gets offer id
+        /// Serialized Name: RequestApprovalsDetails.offerId
+        /// </param>
+        /// <param name="displayName">
+        /// Gets offer display name
+        /// Serialized Name: RequestApprovalsDetails.displayName
+        /// </param>
+        /// <param name="publisherId">
+        /// Gets or sets publisher id
+        /// Serialized Name: RequestApprovalsDetails.publisherId
+        /// </param>
+        /// <param name="messageCode">
+        /// Gets or sets the notification message id
+        /// Serialized Name: RequestApprovalsDetails.messageCode
+        /// </param>
+        /// <param name="icon">
+        /// Gets or sets the icon url
+        /// Serialized Name: RequestApprovalsDetails.icon
+        /// </param>
+        /// <param name="plans">
+        /// Gets or sets removed plans notifications
+        /// Serialized Name: RequestApprovalsDetails.plans
+        /// </param>
         internal RequestApprovalsDetails(string offerId, string displayName, string publisherId, long? messageCode, string icon, IReadOnlyList<PlanNotificationDetails> plans)
         {
             OfferId = offerId;
@@ -36,17 +57,35 @@ namespace Azure.ResourceManager.Marketplace.Models
             Plans = plans;
         }
 
-        /// <summary> Gets offer id. </summary>
+        /// <summary>
+        /// Gets offer id
+        /// Serialized Name: RequestApprovalsDetails.offerId
+        /// </summary>
         public string OfferId { get; }
-        /// <summary> Gets offer display name. </summary>
+        /// <summary>
+        /// Gets offer display name
+        /// Serialized Name: RequestApprovalsDetails.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> Gets or sets publisher id. </summary>
+        /// <summary>
+        /// Gets or sets publisher id
+        /// Serialized Name: RequestApprovalsDetails.publisherId
+        /// </summary>
         public string PublisherId { get; }
-        /// <summary> Gets or sets the notification message id. </summary>
+        /// <summary>
+        /// Gets or sets the notification message id
+        /// Serialized Name: RequestApprovalsDetails.messageCode
+        /// </summary>
         public long? MessageCode { get; }
-        /// <summary> Gets or sets the icon url. </summary>
+        /// <summary>
+        /// Gets or sets the icon url
+        /// Serialized Name: RequestApprovalsDetails.icon
+        /// </summary>
         public string Icon { get; }
-        /// <summary> Gets or sets removed plans notifications. </summary>
+        /// <summary>
+        /// Gets or sets removed plans notifications
+        /// Serialized Name: RequestApprovalsDetails.plans
+        /// </summary>
         public IReadOnlyList<PlanNotificationDetails> Plans { get; }
     }
 }

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Bulk collections action properties. </summary>
+    /// <summary>
+    /// Bulk collections action properties
+    /// Serialized Name: BulkCollectionsPayload
+    /// </summary>
     public partial class BulkCollectionsPayload
     {
         /// <summary> Initializes a new instance of BulkCollectionsPayload. </summary>
@@ -19,9 +22,15 @@ namespace Azure.ResourceManager.Marketplace.Models
             CollectionIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> collection ids list that the action is performed on. </summary>
+        /// <summary>
+        /// collection ids list that the action is performed on
+        /// Serialized Name: BulkCollectionsPayload.properties.collectionIds
+        /// </summary>
         public IList<string> CollectionIds { get; }
-        /// <summary> Action to perform (For example: EnableCollections, DisableCollections). </summary>
+        /// <summary>
+        /// Action to perform (For example: EnableCollections, DisableCollections)
+        /// Serialized Name: BulkCollectionsPayload.properties.action
+        /// </summary>
         public string Action { get; set; }
     }
 }

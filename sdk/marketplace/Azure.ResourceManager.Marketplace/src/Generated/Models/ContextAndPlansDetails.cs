@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Object of plans per context. </summary>
+    /// <summary>
+    /// Object of plans per context.
+    /// Serialized Name: ContextAndPlansDetails
+    /// </summary>
     public partial class ContextAndPlansDetails
     {
         /// <summary> Initializes a new instance of ContextAndPlansDetails. </summary>
@@ -19,9 +22,15 @@ namespace Azure.ResourceManager.Marketplace.Models
             PlanIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Plan&apos;s context, e.g. subscription ID, tenant ID. </summary>
+        /// <summary>
+        /// Plan&apos;s context, e.g. subscription ID, tenant ID.
+        /// Serialized Name: ContextAndPlansDetails.context
+        /// </summary>
         public string Context { get; set; }
-        /// <summary> List of plan IDs. </summary>
+        /// <summary>
+        /// List of plan IDs.
+        /// Serialized Name: ContextAndPlansDetails.planIds
+        /// </summary>
         public IList<string> PlanIds { get; }
     }
 }

@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> user request details. </summary>
+    /// <summary>
+    /// user request details
+    /// Serialized Name: UserRequestDetails
+    /// </summary>
     public partial class UserRequestDetails
     {
         /// <summary> Initializes a new instance of UserRequestDetails. </summary>
@@ -16,11 +19,26 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of UserRequestDetails. </summary>
-        /// <param name="user"> Gets user id. </param>
-        /// <param name="date"> Gets request date. </param>
-        /// <param name="justification"> Gets justification. </param>
-        /// <param name="subscriptionId"> Gets the subscription id that the user is requesting to add the plan to. </param>
-        /// <param name="subscriptionName"> Gets the subscription name that the user is requesting to add the plan to. </param>
+        /// <param name="user">
+        /// Gets user id
+        /// Serialized Name: UserRequestDetails.user
+        /// </param>
+        /// <param name="date">
+        /// Gets request date
+        /// Serialized Name: UserRequestDetails.date
+        /// </param>
+        /// <param name="justification">
+        /// Gets justification
+        /// Serialized Name: UserRequestDetails.justification
+        /// </param>
+        /// <param name="subscriptionId">
+        /// Gets the subscription id that the user is requesting to add the plan to
+        /// Serialized Name: UserRequestDetails.subscriptionId
+        /// </param>
+        /// <param name="subscriptionName">
+        /// Gets the subscription name that the user is requesting to add the plan to
+        /// Serialized Name: UserRequestDetails.subscriptionName
+        /// </param>
         internal UserRequestDetails(string user, string date, string justification, string subscriptionId, string subscriptionName)
         {
             User = user;
@@ -30,15 +48,30 @@ namespace Azure.ResourceManager.Marketplace.Models
             SubscriptionName = subscriptionName;
         }
 
-        /// <summary> Gets user id. </summary>
+        /// <summary>
+        /// Gets user id
+        /// Serialized Name: UserRequestDetails.user
+        /// </summary>
         public string User { get; }
-        /// <summary> Gets request date. </summary>
+        /// <summary>
+        /// Gets request date
+        /// Serialized Name: UserRequestDetails.date
+        /// </summary>
         public string Date { get; }
-        /// <summary> Gets justification. </summary>
+        /// <summary>
+        /// Gets justification
+        /// Serialized Name: UserRequestDetails.justification
+        /// </summary>
         public string Justification { get; }
-        /// <summary> Gets the subscription id that the user is requesting to add the plan to. </summary>
+        /// <summary>
+        /// Gets the subscription id that the user is requesting to add the plan to
+        /// Serialized Name: UserRequestDetails.subscriptionId
+        /// </summary>
         public string SubscriptionId { get; }
-        /// <summary> Gets the subscription name that the user is requesting to add the plan to. </summary>
+        /// <summary>
+        /// Gets the subscription name that the user is requesting to add the plan to
+        /// Serialized Name: UserRequestDetails.subscriptionName
+        /// </summary>
         public string SubscriptionName { get; }
     }
 }

@@ -9,7 +9,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> The subscriptions list to get the related collections. </summary>
+    /// <summary>
+    /// The subscriptions list to get the related collections
+    /// Serialized Name: CollectionsToSubscriptionsMappingPayload
+    /// </summary>
     public partial class CollectionsToSubscriptionsMappingPayload
     {
         /// <summary> Initializes a new instance of CollectionsToSubscriptionsMappingPayload. </summary>
@@ -17,9 +20,15 @@ namespace Azure.ResourceManager.Marketplace.Models
         {
         }
 
-        /// <summary> Subscriptions ids list. </summary>
+        /// <summary>
+        /// Subscriptions ids list
+        /// Serialized Name: CollectionsToSubscriptionsMappingPayload.properties
+        /// </summary>
         internal CollectionsToSubscriptionsMappingProperties Properties { get; set; }
-        /// <summary> Subscriptions ids list. </summary>
+        /// <summary>
+        /// Subscriptions ids list
+        /// Serialized Name: CollectionsToSubscriptionsMappingProperties.subscriptionIds
+        /// </summary>
         public IList<string> CollectionsToSubscriptionsMappingSubscriptionIds
         {
             get

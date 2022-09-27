@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Request details needed to get the plans statuses. </summary>
+    /// <summary>
+    /// Request details needed to get the plans statuses
+    /// Serialized Name: RequestDetails
+    /// </summary>
     public partial class RequestDetails
     {
         /// <summary> Initializes a new instance of RequestDetails. </summary>
@@ -19,11 +22,20 @@ namespace Azure.ResourceManager.Marketplace.Models
             PlanIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> The offer&apos;s publisher id. </summary>
+        /// <summary>
+        /// The offer&apos;s publisher id
+        /// Serialized Name: RequestDetails.publisherId
+        /// </summary>
         public string PublisherId { get; set; }
-        /// <summary> Current plans list. </summary>
+        /// <summary>
+        /// Current plans list
+        /// Serialized Name: RequestDetails.planIds
+        /// </summary>
         public IList<string> PlanIds { get; }
-        /// <summary> Gets or sets the subscription id. </summary>
+        /// <summary>
+        /// Gets or sets the subscription id
+        /// Serialized Name: RequestDetails.subscriptionId
+        /// </summary>
         public string SubscriptionId { get; set; }
     }
 }

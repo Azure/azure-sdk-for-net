@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Query approved plans payload. </summary>
+    /// <summary>
+    /// Query approved plans payload
+    /// Serialized Name: QueryApprovedPlansPayload
+    /// </summary>
     public partial class QueryApprovedPlansPayload
     {
         /// <summary> Initializes a new instance of QueryApprovedPlansPayload. </summary>
@@ -20,11 +23,20 @@ namespace Azure.ResourceManager.Marketplace.Models
             SubscriptionIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Offer id. </summary>
+        /// <summary>
+        /// Offer id
+        /// Serialized Name: QueryApprovedPlansPayload.properties.offerId
+        /// </summary>
         public string OfferId { get; set; }
-        /// <summary> Offer plan ids. </summary>
+        /// <summary>
+        /// Offer plan ids
+        /// Serialized Name: QueryApprovedPlansPayload.properties.planIds
+        /// </summary>
         public IList<string> PlanIds { get; }
-        /// <summary> List of subscription IDs. </summary>
+        /// <summary>
+        /// List of subscription IDs
+        /// Serialized Name: QueryApprovedPlansPayload.properties.subscriptionIds
+        /// </summary>
         public IList<string> SubscriptionIds { get; }
     }
 }

@@ -16,7 +16,18 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
- 
+mgmt-debug: 
+  show-serialized-names: true
+
+rename-mapping:
+  AdminRequestApprovalsResource: AdminApprovalRequest
+  AdminRequestApprovalsResource.properties.icon: -|uri
+  Collection: PrivateMarketplaceCollection
+  Collection.properties.collectionId: -|uuid
+  Collection.properties.allSubscriptions: AreAllSubscriptionsSelected
+  Collection.properties.approveAllItems: AreAllItemsApproved
+  Collection.properties.enabled: IsEnabled
+
 
 format-by-name-rules:
   'tenantId': 'uuid'

@@ -105,39 +105,39 @@ namespace Azure.ResourceManager.Marketplace
         }
         #endregion
 
-        #region AdminRequestApprovalsResource
+        #region AdminApprovalRequestResource
         /// <summary>
-        /// Gets an object representing an <see cref="AdminRequestApprovalsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AdminRequestApprovalsResource.CreateResourceIdentifier" /> to create an <see cref="AdminRequestApprovalsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AdminApprovalRequestResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AdminApprovalRequestResource.CreateResourceIdentifier" /> to create an <see cref="AdminApprovalRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdminRequestApprovalsResource" /> object. </returns>
-        public static AdminRequestApprovalsResource GetAdminRequestApprovalsResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AdminApprovalRequestResource" /> object. </returns>
+        public static AdminApprovalRequestResource GetAdminApprovalRequestResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AdminRequestApprovalsResource.ValidateResourceId(id);
-                return new AdminRequestApprovalsResource(client, id);
+                AdminApprovalRequestResource.ValidateResourceId(id);
+                return new AdminApprovalRequestResource(client, id);
             }
             );
         }
         #endregion
 
-        #region CollectionResource
+        #region PrivateMarketplaceCollectionResource
         /// <summary>
-        /// Gets an object representing a <see cref="CollectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CollectionResource.CreateResourceIdentifier" /> to create a <see cref="CollectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PrivateMarketplaceCollectionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateMarketplaceCollectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateMarketplaceCollectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CollectionResource" /> object. </returns>
-        public static CollectionResource GetCollectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateMarketplaceCollectionResource" /> object. </returns>
+        public static PrivateMarketplaceCollectionResource GetPrivateMarketplaceCollectionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                CollectionResource.ValidateResourceId(id);
-                return new CollectionResource(client, id);
+                PrivateMarketplaceCollectionResource.ValidateResourceId(id);
+                return new PrivateMarketplaceCollectionResource(client, id);
             }
             );
         }

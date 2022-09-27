@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Private plans subscriptions. </summary>
+    /// <summary>
+    /// Private plans subscriptions
+    /// Serialized Name: StopSellSubscriptions
+    /// </summary>
     public partial class StopSellSubscriptions
     {
         /// <summary> Initializes a new instance of StopSellSubscriptions. </summary>
@@ -19,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Subscriptions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Gets the subscriptions. </summary>
+        /// <summary> Serialized Name: StopSellSubscriptions.subscriptions. </summary>
         public IList<string> Subscriptions { get; }
     }
 }

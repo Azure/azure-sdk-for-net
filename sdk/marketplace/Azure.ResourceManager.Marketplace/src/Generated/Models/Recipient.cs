@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Describes the json payload for a notified recipient for new requests. </summary>
+    /// <summary>
+    /// Describes the json payload for a notified recipient for new requests
+    /// Serialized Name: Recipient
+    /// </summary>
     public partial class Recipient
     {
         /// <summary> Initializes a new instance of Recipient. </summary>
@@ -16,9 +19,18 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of Recipient. </summary>
-        /// <param name="principalId"> Principal ID. </param>
-        /// <param name="emailAddress"> Email Address. </param>
-        /// <param name="displayName"> Display Name. </param>
+        /// <param name="principalId">
+        /// Principal ID
+        /// Serialized Name: Recipient.principalId
+        /// </param>
+        /// <param name="emailAddress">
+        /// Email Address
+        /// Serialized Name: Recipient.emailAddress
+        /// </param>
+        /// <param name="displayName">
+        /// Display Name
+        /// Serialized Name: Recipient.displayName
+        /// </param>
         internal Recipient(string principalId, string emailAddress, string displayName)
         {
             PrincipalId = principalId;
@@ -26,11 +38,20 @@ namespace Azure.ResourceManager.Marketplace.Models
             DisplayName = displayName;
         }
 
-        /// <summary> Principal ID. </summary>
+        /// <summary>
+        /// Principal ID
+        /// Serialized Name: Recipient.principalId
+        /// </summary>
         public string PrincipalId { get; set; }
-        /// <summary> Email Address. </summary>
+        /// <summary>
+        /// Email Address
+        /// Serialized Name: Recipient.emailAddress
+        /// </summary>
         public string EmailAddress { get; }
-        /// <summary> Display Name. </summary>
+        /// <summary>
+        /// Display Name
+        /// Serialized Name: Recipient.displayName
+        /// </summary>
         public string DisplayName { get; }
     }
 }

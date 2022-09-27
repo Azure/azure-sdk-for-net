@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </summary>
+    /// <summary>
+    /// The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted.
+    /// Serialized Name: SubscriptionState
+    /// </summary>
     public readonly partial struct SubscriptionState : IEquatable<SubscriptionState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.Marketplace.Models
         private const string DisabledValue = "Disabled";
         private const string DeletedValue = "Deleted";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: SubscriptionState.Enabled
+        /// </summary>
         public static SubscriptionState Enabled { get; } = new SubscriptionState(EnabledValue);
-        /// <summary> Warned. </summary>
+        /// <summary>
+        /// Warned
+        /// Serialized Name: SubscriptionState.Warned
+        /// </summary>
         public static SubscriptionState Warned { get; } = new SubscriptionState(WarnedValue);
-        /// <summary> PastDue. </summary>
+        /// <summary>
+        /// PastDue
+        /// Serialized Name: SubscriptionState.PastDue
+        /// </summary>
         public static SubscriptionState PastDue { get; } = new SubscriptionState(PastDueValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: SubscriptionState.Disabled
+        /// </summary>
         public static SubscriptionState Disabled { get; } = new SubscriptionState(DisabledValue);
-        /// <summary> Deleted. </summary>
+        /// <summary>
+        /// Deleted
+        /// Serialized Name: SubscriptionState.Deleted
+        /// </summary>
         public static SubscriptionState Deleted { get; } = new SubscriptionState(DeletedValue);
         /// <summary> Determines if two <see cref="SubscriptionState"/> values are the same. </summary>
         public static bool operator ==(SubscriptionState left, SubscriptionState right) => left.Equals(right);

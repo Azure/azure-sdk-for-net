@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> List of stop sell offers and plans notifications. </summary>
+    /// <summary>
+    /// List of stop sell offers and plans notifications.
+    /// Serialized Name: StopSellOffersPlansNotificationsList
+    /// </summary>
     public partial class StopSellOffersPlansNotificationsList
     {
         /// <summary> Initializes a new instance of StopSellOffersPlansNotificationsList. </summary>
@@ -20,13 +23,13 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of StopSellOffersPlansNotificationsList. </summary>
-        /// <param name="stopSellNotifications"></param>
+        /// <param name="stopSellNotifications"> Serialized Name: StopSellOffersPlansNotificationsList.stopSellNotifications. </param>
         internal StopSellOffersPlansNotificationsList(IReadOnlyList<StopSellOffersPlansNotificationsListProperties> stopSellNotifications)
         {
             StopSellNotifications = stopSellNotifications;
         }
 
-        /// <summary> Gets the stop sell notifications. </summary>
+        /// <summary> Serialized Name: StopSellOffersPlansNotificationsList.stopSellNotifications. </summary>
         public IReadOnlyList<StopSellOffersPlansNotificationsListProperties> StopSellNotifications { get; }
     }
 }

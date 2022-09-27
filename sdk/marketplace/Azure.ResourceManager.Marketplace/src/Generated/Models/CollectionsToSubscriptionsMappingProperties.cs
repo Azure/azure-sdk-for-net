@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> The subscriptions list to get the related collections. </summary>
+    /// <summary>
+    /// The subscriptions list to get the related collections
+    /// Serialized Name: CollectionsToSubscriptionsMappingProperties
+    /// </summary>
     internal partial class CollectionsToSubscriptionsMappingProperties
     {
         /// <summary> Initializes a new instance of CollectionsToSubscriptionsMappingProperties. </summary>
@@ -19,7 +22,10 @@ namespace Azure.ResourceManager.Marketplace.Models
             SubscriptionIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Subscriptions ids list. </summary>
+        /// <summary>
+        /// Subscriptions ids list
+        /// Serialized Name: CollectionsToSubscriptionsMappingProperties.subscriptionIds
+        /// </summary>
         public IList<string> SubscriptionIds { get; }
     }
 }

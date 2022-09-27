@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    public partial class CollectionData : IUtf8JsonSerializable
+    public partial class PrivateMarketplaceCollectionData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WritePropertyName("claim");
                 writer.WriteStringValue(Claim);
             }
-            if (Optional.IsDefined(AllSubscriptions))
+            if (Optional.IsDefined(AreAllSubscriptionsSelected))
             {
                 writer.WritePropertyName("allSubscriptions");
-                writer.WriteBooleanValue(AllSubscriptions.Value);
+                writer.WriteBooleanValue(AreAllSubscriptionsSelected.Value);
             }
             if (Optional.IsCollectionDefined(SubscriptionsList))
             {
@@ -45,22 +45,22 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled");
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
-        internal static CollectionData DeserializeCollectionData(JsonElement element)
+        internal static PrivateMarketplaceCollectionData DeserializePrivateMarketplaceCollectionData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> collectionId = default;
+            Optional<Guid> collectionId = default;
             Optional<string> collectionName = default;
             Optional<string> claim = default;
             Optional<bool> allSubscriptions = default;
@@ -107,7 +107,12 @@ namespace Azure.ResourceManager.Marketplace
                     {
                         if (property0.NameEquals("collectionId"))
                         {
-                            collectionId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            collectionId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("collectionName"))
@@ -189,7 +194,7 @@ namespace Azure.ResourceManager.Marketplace
                     continue;
                 }
             }
-            return new CollectionData(id, name, type, systemData.Value, collectionId.Value, collectionName.Value, claim.Value, Optional.ToNullable(allSubscriptions), Optional.ToNullable(approveAllItems), Optional.ToNullable(approveAllItemsModifiedAt), Optional.ToList(subscriptionsList), Optional.ToNullable(enabled), Optional.ToNullable(numberOfOffers));
+            return new PrivateMarketplaceCollectionData(id, name, type, systemData.Value, Optional.ToNullable(collectionId), collectionName.Value, claim.Value, Optional.ToNullable(allSubscriptions), Optional.ToNullable(approveAllItems), Optional.ToNullable(approveAllItemsModifiedAt), Optional.ToList(subscriptionsList), Optional.ToNullable(enabled), Optional.ToNullable(numberOfOffers));
         }
     }
 }

@@ -11,27 +11,36 @@ using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> List of admin request approval resources. </summary>
+    /// <summary>
+    /// List of admin request approval resources
+    /// Serialized Name: AdminRequestApprovalsList
+    /// </summary>
     internal partial class AdminRequestApprovalsList
     {
         /// <summary> Initializes a new instance of AdminRequestApprovalsList. </summary>
         internal AdminRequestApprovalsList()
         {
-            Value = new ChangeTrackingList<AdminRequestApprovalsResourceData>();
+            Value = new ChangeTrackingList<AdminApprovalRequestData>();
         }
 
         /// <summary> Initializes a new instance of AdminRequestApprovalsList. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> URL to get the next set of notifications list results if there are any. </param>
-        internal AdminRequestApprovalsList(IReadOnlyList<AdminRequestApprovalsResourceData> value, string nextLink)
+        /// <param name="value"> Serialized Name: AdminRequestApprovalsList.value. </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of notifications list results if there are any.
+        /// Serialized Name: AdminRequestApprovalsList.nextLink
+        /// </param>
+        internal AdminRequestApprovalsList(IReadOnlyList<AdminApprovalRequestData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
-        public IReadOnlyList<AdminRequestApprovalsResourceData> Value { get; }
-        /// <summary> URL to get the next set of notifications list results if there are any. </summary>
+        /// <summary> Serialized Name: AdminRequestApprovalsList.value. </summary>
+        public IReadOnlyList<AdminApprovalRequestData> Value { get; }
+        /// <summary>
+        /// URL to get the next set of notifications list results if there are any.
+        /// Serialized Name: AdminRequestApprovalsList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

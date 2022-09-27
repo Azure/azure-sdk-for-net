@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Query approved plans response. </summary>
+    /// <summary>
+    /// Query approved plans response
+    /// Serialized Name: QueryApprovedPlansResponse
+    /// </summary>
     public partial class QueryApprovedPlansResponse
     {
         /// <summary> Initializes a new instance of QueryApprovedPlansResponse. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of QueryApprovedPlansResponse. </summary>
-        /// <param name="details"> A list indicating for each plan which subscriptions are approved. Plan Id is unique. </param>
+        /// <param name="details">
+        /// A list indicating for each plan which subscriptions are approved. Plan Id is unique
+        /// Serialized Name: QueryApprovedPlansResponse.details
+        /// </param>
         internal QueryApprovedPlansResponse(IReadOnlyList<QueryApprovedPlansDetails> details)
         {
             Details = details;
         }
 
-        /// <summary> A list indicating for each plan which subscriptions are approved. Plan Id is unique. </summary>
+        /// <summary>
+        /// A list indicating for each plan which subscriptions are approved. Plan Id is unique
+        /// Serialized Name: QueryApprovedPlansResponse.details
+        /// </summary>
         public IReadOnlyList<QueryApprovedPlansDetails> Details { get; }
     }
 }

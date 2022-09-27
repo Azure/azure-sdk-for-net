@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static AdminRequestApprovalsList DeserializeAdminRequestApprovalsList(JsonElement element)
         {
-            Optional<IReadOnlyList<AdminRequestApprovalsResourceData>> value = default;
+            Optional<IReadOnlyList<AdminApprovalRequestData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AdminRequestApprovalsResourceData> array = new List<AdminRequestApprovalsResourceData>();
+                    List<AdminApprovalRequestData> array = new List<AdminApprovalRequestData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdminRequestApprovalsResourceData.DeserializeAdminRequestApprovalsResourceData(item));
+                        array.Add(AdminApprovalRequestData.DeserializeAdminApprovalRequestData(item));
                     }
                     value = array;
                     continue;

@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> The transfer items response. The response contains two lists that indicate for each collection whether the operation succeeded or failed. </summary>
+    /// <summary>
+    /// The transfer items response. The response contains two lists that indicate for each collection whether the operation succeeded or failed
+    /// Serialized Name: TransferOffersResponse
+    /// </summary>
     public partial class TransferOffersResponse
     {
         /// <summary> Initializes a new instance of TransferOffersResponse. </summary>
@@ -21,17 +24,29 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of TransferOffersResponse. </summary>
-        /// <param name="succeeded"> Succeeded collections. </param>
-        /// <param name="failed"> Failed collections. </param>
+        /// <param name="succeeded">
+        /// Succeeded collections
+        /// Serialized Name: TransferOffersResponse.succeeded
+        /// </param>
+        /// <param name="failed">
+        /// Failed collections
+        /// Serialized Name: TransferOffersResponse.failed
+        /// </param>
         internal TransferOffersResponse(IReadOnlyList<CollectionsDetails> succeeded, IReadOnlyList<CollectionsDetails> failed)
         {
             Succeeded = succeeded;
             Failed = failed;
         }
 
-        /// <summary> Succeeded collections. </summary>
+        /// <summary>
+        /// Succeeded collections
+        /// Serialized Name: TransferOffersResponse.succeeded
+        /// </summary>
         public IReadOnlyList<CollectionsDetails> Succeeded { get; }
-        /// <summary> Failed collections. </summary>
+        /// <summary>
+        /// Failed collections
+        /// Serialized Name: TransferOffersResponse.failed
+        /// </summary>
         public IReadOnlyList<CollectionsDetails> Failed { get; }
     }
 }

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
     /// A class representing a collection of <see cref="OfferResource" /> and their operations.
-    /// Each <see cref="OfferResource" /> in the collection will belong to the same instance of <see cref="CollectionResource" />.
-    /// To get an <see cref="OfferCollection" /> instance call the GetOffers method from an instance of <see cref="CollectionResource" />.
+    /// Each <see cref="OfferResource" /> in the collection will belong to the same instance of <see cref="PrivateMarketplaceCollectionResource" />.
+    /// To get an <see cref="OfferCollection" /> instance call the GetOffers method from an instance of <see cref="PrivateMarketplaceCollectionResource" />.
     /// </summary>
     public partial class OfferCollection : ArmCollection, IEnumerable<OfferResource>, IAsyncEnumerable<OfferResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Marketplace
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != CollectionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, CollectionResource.ResourceType), nameof(id));
+            if (id.ResourceType != PrivateMarketplaceCollectionResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateMarketplaceCollectionResource.ResourceType), nameof(id));
         }
 
         /// <summary>

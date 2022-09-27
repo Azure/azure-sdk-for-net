@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CollectionResource" /> and their operations.
-    /// Each <see cref="CollectionResource" /> in the collection will belong to the same instance of <see cref="PrivateStoreResource" />.
-    /// To get a <see cref="CollectionCollection" /> instance call the GetCollections method from an instance of <see cref="PrivateStoreResource" />.
+    /// A class representing a collection of <see cref="PrivateMarketplaceCollectionResource" /> and their operations.
+    /// Each <see cref="PrivateMarketplaceCollectionResource" /> in the collection will belong to the same instance of <see cref="PrivateStoreResource" />.
+    /// To get a <see cref="PrivateMarketplaceCollectionCollection" /> instance call the GetPrivateMarketplaceCollections method from an instance of <see cref="PrivateStoreResource" />.
     /// </summary>
-    public partial class CollectionCollection : ArmCollection, IEnumerable<CollectionResource>, IAsyncEnumerable<CollectionResource>
+    public partial class PrivateMarketplaceCollectionCollection : ArmCollection, IEnumerable<PrivateMarketplaceCollectionResource>, IAsyncEnumerable<PrivateMarketplaceCollectionResource>
     {
-        private readonly ClientDiagnostics _collectionPrivateStoreCollectionClientDiagnostics;
-        private readonly PrivateStoreCollectionRestOperations _collectionPrivateStoreCollectionRestClient;
+        private readonly ClientDiagnostics _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics;
+        private readonly PrivateStoreCollectionRestOperations _privateMarketplaceCollectionPrivateStoreCollectionRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CollectionCollection"/> class for mocking. </summary>
-        protected CollectionCollection()
+        /// <summary> Initializes a new instance of the <see cref="PrivateMarketplaceCollectionCollection"/> class for mocking. </summary>
+        protected PrivateMarketplaceCollectionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CollectionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateMarketplaceCollectionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal CollectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PrivateMarketplaceCollectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _collectionPrivateStoreCollectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", CollectionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CollectionResource.ResourceType, out string collectionPrivateStoreCollectionApiVersion);
-            _collectionPrivateStoreCollectionRestClient = new PrivateStoreCollectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, collectionPrivateStoreCollectionApiVersion);
+            _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", PrivateMarketplaceCollectionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PrivateMarketplaceCollectionResource.ResourceType, out string privateMarketplaceCollectionPrivateStoreCollectionApiVersion);
+            _privateMarketplaceCollectionPrivateStoreCollectionRestClient = new PrivateStoreCollectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateMarketplaceCollectionPrivateStoreCollectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,21 +60,21 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="data"> The Collection to use. </param>
+        /// <param name="data"> The PrivateMarketplaceCollection to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CollectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string collectionId, CollectionData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PrivateMarketplaceCollectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string collectionId, PrivateMarketplaceCollectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _collectionPrivateStoreCollectionClientDiagnostics.CreateScope("CollectionCollection.CreateOrUpdate");
+            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _collectionPrivateStoreCollectionRestClient.CreateOrUpdateAsync(Id.Name, collectionId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<CollectionResource>(Response.FromValue(new CollectionResource(Client, response), response.GetRawResponse()));
+                var response = await _privateMarketplaceCollectionPrivateStoreCollectionRestClient.CreateOrUpdateAsync(Id.Name, collectionId, data, cancellationToken).ConfigureAwait(false);
+                var operation = new MarketplaceArmOperation<PrivateMarketplaceCollectionResource>(Response.FromValue(new PrivateMarketplaceCollectionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,21 +93,21 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="data"> The Collection to use. </param>
+        /// <param name="data"> The PrivateMarketplaceCollection to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CollectionResource> CreateOrUpdate(WaitUntil waitUntil, string collectionId, CollectionData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PrivateMarketplaceCollectionResource> CreateOrUpdate(WaitUntil waitUntil, string collectionId, PrivateMarketplaceCollectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _collectionPrivateStoreCollectionClientDiagnostics.CreateScope("CollectionCollection.CreateOrUpdate");
+            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _collectionPrivateStoreCollectionRestClient.CreateOrUpdate(Id.Name, collectionId, data, cancellationToken);
-                var operation = new MarketplaceArmOperation<CollectionResource>(Response.FromValue(new CollectionResource(Client, response), response.GetRawResponse()));
+                var response = _privateMarketplaceCollectionPrivateStoreCollectionRestClient.CreateOrUpdate(Id.Name, collectionId, data, cancellationToken);
+                var operation = new MarketplaceArmOperation<PrivateMarketplaceCollectionResource>(Response.FromValue(new PrivateMarketplaceCollectionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -128,18 +128,18 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        public virtual async Task<Response<CollectionResource>> GetAsync(string collectionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateMarketplaceCollectionResource>> GetAsync(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            using var scope = _collectionPrivateStoreCollectionClientDiagnostics.CreateScope("CollectionCollection.Get");
+            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _collectionPrivateStoreCollectionRestClient.GetAsync(Id.Name, collectionId, cancellationToken).ConfigureAwait(false);
+                var response = await _privateMarketplaceCollectionPrivateStoreCollectionRestClient.GetAsync(Id.Name, collectionId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CollectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateMarketplaceCollectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,18 +157,18 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        public virtual Response<CollectionResource> Get(string collectionId, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateMarketplaceCollectionResource> Get(string collectionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            using var scope = _collectionPrivateStoreCollectionClientDiagnostics.CreateScope("CollectionCollection.Get");
+            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionCollection.Get");
             scope.Start();
             try
             {
-                var response = _collectionPrivateStoreCollectionRestClient.Get(Id.Name, collectionId, cancellationToken);
+                var response = _privateMarketplaceCollectionPrivateStoreCollectionRestClient.Get(Id.Name, collectionId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CollectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateMarketplaceCollectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -183,17 +183,17 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStoreCollection_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CollectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CollectionResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateMarketplaceCollectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateMarketplaceCollectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CollectionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PrivateMarketplaceCollectionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _collectionPrivateStoreCollectionClientDiagnostics.CreateScope("CollectionCollection.GetAll");
+                using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _collectionPrivateStoreCollectionRestClient.ListAsync(Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new CollectionResource(Client, value)), null, response.GetRawResponse());
+                    var response = await _privateMarketplaceCollectionPrivateStoreCollectionRestClient.ListAsync(Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateMarketplaceCollectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -210,17 +210,17 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStoreCollection_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CollectionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CollectionResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateMarketplaceCollectionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateMarketplaceCollectionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<CollectionResource> FirstPageFunc(int? pageSizeHint)
+            Page<PrivateMarketplaceCollectionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _collectionPrivateStoreCollectionClientDiagnostics.CreateScope("CollectionCollection.GetAll");
+                using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _collectionPrivateStoreCollectionRestClient.List(Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new CollectionResource(Client, value)), null, response.GetRawResponse());
+                    var response = _privateMarketplaceCollectionPrivateStoreCollectionRestClient.List(Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new PrivateMarketplaceCollectionResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -244,11 +244,11 @@ namespace Azure.ResourceManager.Marketplace
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            using var scope = _collectionPrivateStoreCollectionClientDiagnostics.CreateScope("CollectionCollection.Exists");
+            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _collectionPrivateStoreCollectionRestClient.GetAsync(Id.Name, collectionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _privateMarketplaceCollectionPrivateStoreCollectionRestClient.GetAsync(Id.Name, collectionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -271,11 +271,11 @@ namespace Azure.ResourceManager.Marketplace
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            using var scope = _collectionPrivateStoreCollectionClientDiagnostics.CreateScope("CollectionCollection.Exists");
+            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _collectionPrivateStoreCollectionRestClient.Get(Id.Name, collectionId, cancellationToken: cancellationToken);
+                var response = _privateMarketplaceCollectionPrivateStoreCollectionRestClient.Get(Id.Name, collectionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        IEnumerator<CollectionResource> IEnumerable<CollectionResource>.GetEnumerator()
+        IEnumerator<PrivateMarketplaceCollectionResource> IEnumerable<PrivateMarketplaceCollectionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Marketplace
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<CollectionResource> IAsyncEnumerable<CollectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<PrivateMarketplaceCollectionResource> IAsyncEnumerable<PrivateMarketplaceCollectionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

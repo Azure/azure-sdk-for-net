@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> A map of collections subscriptions details. </summary>
+    /// <summary>
+    /// A map of collections subscriptions details
+    /// Serialized Name: CollectionsToSubscriptionsMappingResponse
+    /// </summary>
     public partial class CollectionsToSubscriptionsMappingResponse
     {
         /// <summary> Initializes a new instance of CollectionsToSubscriptionsMappingResponse. </summary>
@@ -20,13 +23,19 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of CollectionsToSubscriptionsMappingResponse. </summary>
-        /// <param name="details"> The map of collections subscriptions. </param>
+        /// <param name="details">
+        /// The map of collections subscriptions
+        /// Serialized Name: CollectionsToSubscriptionsMappingResponse.details
+        /// </param>
         internal CollectionsToSubscriptionsMappingResponse(IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails> details)
         {
             Details = details;
         }
 
-        /// <summary> The map of collections subscriptions. </summary>
+        /// <summary>
+        /// The map of collections subscriptions
+        /// Serialized Name: CollectionsToSubscriptionsMappingResponse.details
+        /// </summary>
         public IReadOnlyDictionary<string, CollectionsSubscriptionsMappingDetails> Details { get; }
     }
 }

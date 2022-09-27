@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AdminRequestApprovalsResource" /> and their operations.
-    /// Each <see cref="AdminRequestApprovalsResource" /> in the collection will belong to the same instance of <see cref="PrivateStoreResource" />.
-    /// To get an <see cref="AdminRequestApprovalsResourceCollection" /> instance call the GetAdminRequestApprovalsResources method from an instance of <see cref="PrivateStoreResource" />.
+    /// A class representing a collection of <see cref="AdminApprovalRequestResource" /> and their operations.
+    /// Each <see cref="AdminApprovalRequestResource" /> in the collection will belong to the same instance of <see cref="PrivateStoreResource" />.
+    /// To get an <see cref="AdminApprovalRequestCollection" /> instance call the GetAdminApprovalRequests method from an instance of <see cref="PrivateStoreResource" />.
     /// </summary>
-    public partial class AdminRequestApprovalsResourceCollection : ArmCollection, IEnumerable<AdminRequestApprovalsResource>, IAsyncEnumerable<AdminRequestApprovalsResource>
+    public partial class AdminApprovalRequestCollection : ArmCollection, IEnumerable<AdminApprovalRequestResource>, IAsyncEnumerable<AdminApprovalRequestResource>
     {
-        private readonly ClientDiagnostics _adminRequestApprovalsResourcePrivateStoreClientDiagnostics;
-        private readonly PrivateStoreRestOperations _adminRequestApprovalsResourcePrivateStoreRestClient;
+        private readonly ClientDiagnostics _adminApprovalRequestPrivateStoreClientDiagnostics;
+        private readonly PrivateStoreRestOperations _adminApprovalRequestPrivateStoreRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="AdminRequestApprovalsResourceCollection"/> class for mocking. </summary>
-        protected AdminRequestApprovalsResourceCollection()
+        /// <summary> Initializes a new instance of the <see cref="AdminApprovalRequestCollection"/> class for mocking. </summary>
+        protected AdminApprovalRequestCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="AdminRequestApprovalsResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AdminApprovalRequestCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal AdminRequestApprovalsResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AdminApprovalRequestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _adminRequestApprovalsResourcePrivateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", AdminRequestApprovalsResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(AdminRequestApprovalsResource.ResourceType, out string adminRequestApprovalsResourcePrivateStoreApiVersion);
-            _adminRequestApprovalsResourcePrivateStoreRestClient = new PrivateStoreRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, adminRequestApprovalsResourcePrivateStoreApiVersion);
+            _adminApprovalRequestPrivateStoreClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", AdminApprovalRequestResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AdminApprovalRequestResource.ResourceType, out string adminApprovalRequestPrivateStoreApiVersion);
+            _adminApprovalRequestPrivateStoreRestClient = new PrivateStoreRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, adminApprovalRequestPrivateStoreApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -60,21 +60,21 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
-        /// <param name="data"> The AdminRequestApprovalsResource to use. </param>
+        /// <param name="data"> The AdminApprovalRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<AdminRequestApprovalsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string adminRequestApprovalId, AdminRequestApprovalsResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AdminApprovalRequestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string adminRequestApprovalId, AdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _adminRequestApprovalsResourcePrivateStoreClientDiagnostics.CreateScope("AdminRequestApprovalsResourceCollection.CreateOrUpdate");
+            using var scope = _adminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("AdminApprovalRequestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _adminRequestApprovalsResourcePrivateStoreRestClient.UpdateAdminRequestApprovalAsync(Id.Name, adminRequestApprovalId, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<AdminRequestApprovalsResource>(Response.FromValue(new AdminRequestApprovalsResource(Client, response), response.GetRawResponse()));
+                var response = await _adminApprovalRequestPrivateStoreRestClient.UpdateAdminRequestApprovalAsync(Id.Name, adminRequestApprovalId, data, cancellationToken).ConfigureAwait(false);
+                var operation = new MarketplaceArmOperation<AdminApprovalRequestResource>(Response.FromValue(new AdminApprovalRequestResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -93,21 +93,21 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
-        /// <param name="data"> The AdminRequestApprovalsResource to use. </param>
+        /// <param name="data"> The AdminApprovalRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<AdminRequestApprovalsResource> CreateOrUpdate(WaitUntil waitUntil, string adminRequestApprovalId, AdminRequestApprovalsResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AdminApprovalRequestResource> CreateOrUpdate(WaitUntil waitUntil, string adminRequestApprovalId, AdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _adminRequestApprovalsResourcePrivateStoreClientDiagnostics.CreateScope("AdminRequestApprovalsResourceCollection.CreateOrUpdate");
+            using var scope = _adminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("AdminApprovalRequestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _adminRequestApprovalsResourcePrivateStoreRestClient.UpdateAdminRequestApproval(Id.Name, adminRequestApprovalId, data, cancellationToken);
-                var operation = new MarketplaceArmOperation<AdminRequestApprovalsResource>(Response.FromValue(new AdminRequestApprovalsResource(Client, response), response.GetRawResponse()));
+                var response = _adminApprovalRequestPrivateStoreRestClient.UpdateAdminRequestApproval(Id.Name, adminRequestApprovalId, data, cancellationToken);
+                var operation = new MarketplaceArmOperation<AdminApprovalRequestResource>(Response.FromValue(new AdminApprovalRequestResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -129,19 +129,19 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
-        public virtual async Task<Response<AdminRequestApprovalsResource>> GetAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AdminApprovalRequestResource>> GetAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
             Argument.AssertNotNull(publisherId, nameof(publisherId));
 
-            using var scope = _adminRequestApprovalsResourcePrivateStoreClientDiagnostics.CreateScope("AdminRequestApprovalsResourceCollection.Get");
+            using var scope = _adminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("AdminApprovalRequestCollection.Get");
             scope.Start();
             try
             {
-                var response = await _adminRequestApprovalsResourcePrivateStoreRestClient.GetAdminRequestApprovalAsync(Id.Name, adminRequestApprovalId, publisherId, cancellationToken).ConfigureAwait(false);
+                var response = await _adminApprovalRequestPrivateStoreRestClient.GetAdminRequestApprovalAsync(Id.Name, adminRequestApprovalId, publisherId, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AdminRequestApprovalsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AdminApprovalRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -160,19 +160,19 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
-        public virtual Response<AdminRequestApprovalsResource> Get(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
+        public virtual Response<AdminApprovalRequestResource> Get(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
             Argument.AssertNotNull(publisherId, nameof(publisherId));
 
-            using var scope = _adminRequestApprovalsResourcePrivateStoreClientDiagnostics.CreateScope("AdminRequestApprovalsResourceCollection.Get");
+            using var scope = _adminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("AdminApprovalRequestCollection.Get");
             scope.Start();
             try
             {
-                var response = _adminRequestApprovalsResourcePrivateStoreRestClient.GetAdminRequestApproval(Id.Name, adminRequestApprovalId, publisherId, cancellationToken);
+                var response = _adminApprovalRequestPrivateStoreRestClient.GetAdminRequestApproval(Id.Name, adminRequestApprovalId, publisherId, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AdminRequestApprovalsResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AdminApprovalRequestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,17 +187,17 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStore_AdminRequestApprovalsList
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AdminRequestApprovalsResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AdminRequestApprovalsResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AdminApprovalRequestResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AdminApprovalRequestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<AdminRequestApprovalsResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AdminApprovalRequestResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _adminRequestApprovalsResourcePrivateStoreClientDiagnostics.CreateScope("AdminRequestApprovalsResourceCollection.GetAll");
+                using var scope = _adminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("AdminApprovalRequestCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = await _adminRequestApprovalsResourcePrivateStoreRestClient.AdminRequestApprovalsListAsync(Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new AdminRequestApprovalsResource(Client, value)), null, response.GetRawResponse());
+                    var response = await _adminApprovalRequestPrivateStoreRestClient.AdminRequestApprovalsListAsync(Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => new AdminApprovalRequestResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -214,17 +214,17 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStore_AdminRequestApprovalsList
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AdminRequestApprovalsResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AdminRequestApprovalsResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AdminApprovalRequestResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AdminApprovalRequestResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<AdminRequestApprovalsResource> FirstPageFunc(int? pageSizeHint)
+            Page<AdminApprovalRequestResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _adminRequestApprovalsResourcePrivateStoreClientDiagnostics.CreateScope("AdminRequestApprovalsResourceCollection.GetAll");
+                using var scope = _adminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("AdminApprovalRequestCollection.GetAll");
                 scope.Start();
                 try
                 {
-                    var response = _adminRequestApprovalsResourcePrivateStoreRestClient.AdminRequestApprovalsList(Id.Name, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new AdminRequestApprovalsResource(Client, value)), null, response.GetRawResponse());
+                    var response = _adminApprovalRequestPrivateStoreRestClient.AdminRequestApprovalsList(Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => new AdminApprovalRequestResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -250,11 +250,11 @@ namespace Azure.ResourceManager.Marketplace
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
             Argument.AssertNotNull(publisherId, nameof(publisherId));
 
-            using var scope = _adminRequestApprovalsResourcePrivateStoreClientDiagnostics.CreateScope("AdminRequestApprovalsResourceCollection.Exists");
+            using var scope = _adminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("AdminApprovalRequestCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _adminRequestApprovalsResourcePrivateStoreRestClient.GetAdminRequestApprovalAsync(Id.Name, adminRequestApprovalId, publisherId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _adminApprovalRequestPrivateStoreRestClient.GetAdminRequestApprovalAsync(Id.Name, adminRequestApprovalId, publisherId, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -279,11 +279,11 @@ namespace Azure.ResourceManager.Marketplace
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
             Argument.AssertNotNull(publisherId, nameof(publisherId));
 
-            using var scope = _adminRequestApprovalsResourcePrivateStoreClientDiagnostics.CreateScope("AdminRequestApprovalsResourceCollection.Exists");
+            using var scope = _adminApprovalRequestPrivateStoreClientDiagnostics.CreateScope("AdminApprovalRequestCollection.Exists");
             scope.Start();
             try
             {
-                var response = _adminRequestApprovalsResourcePrivateStoreRestClient.GetAdminRequestApproval(Id.Name, adminRequestApprovalId, publisherId, cancellationToken: cancellationToken);
+                var response = _adminApprovalRequestPrivateStoreRestClient.GetAdminRequestApproval(Id.Name, adminRequestApprovalId, publisherId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        IEnumerator<AdminRequestApprovalsResource> IEnumerable<AdminRequestApprovalsResource>.GetEnumerator()
+        IEnumerator<AdminApprovalRequestResource> IEnumerable<AdminApprovalRequestResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Marketplace
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<AdminRequestApprovalsResource> IAsyncEnumerable<AdminRequestApprovalsResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AdminApprovalRequestResource> IAsyncEnumerable<AdminApprovalRequestResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

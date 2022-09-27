@@ -11,7 +11,10 @@ using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Describes the json payload for the list of available private stores (between zero and one, inclusive). </summary>
+    /// <summary>
+    /// Describes the json payload for the list of available private stores (between zero and one, inclusive)
+    /// Serialized Name: PrivateStoreList
+    /// </summary>
     internal partial class PrivateStoreList
     {
         /// <summary> Initializes a new instance of PrivateStoreList. </summary>
@@ -21,17 +24,23 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of PrivateStoreList. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"> URL to get the next set of PrivateStore list results if there are any. </param>
+        /// <param name="value"> Serialized Name: PrivateStoreList.value. </param>
+        /// <param name="nextLink">
+        /// URL to get the next set of PrivateStore list results if there are any.
+        /// Serialized Name: PrivateStoreList.nextLink
+        /// </param>
         internal PrivateStoreList(IReadOnlyList<PrivateStoreData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Gets the value. </summary>
+        /// <summary> Serialized Name: PrivateStoreList.value. </summary>
         public IReadOnlyList<PrivateStoreData> Value { get; }
-        /// <summary> URL to get the next set of PrivateStore list results if there are any. </summary>
+        /// <summary>
+        /// URL to get the next set of PrivateStore list results if there are any.
+        /// Serialized Name: PrivateStoreList.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

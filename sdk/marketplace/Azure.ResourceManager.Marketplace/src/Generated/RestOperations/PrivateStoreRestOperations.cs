@@ -1193,7 +1193,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/>, <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdminRequestApprovalsResourceData>> GetAdminRequestApprovalAsync(string privateStoreId, string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
+        public async Task<Response<AdminApprovalRequestData>> GetAdminRequestApprovalAsync(string privateStoreId, string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
@@ -1205,13 +1205,13 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case 200:
                     {
-                        AdminRequestApprovalsResourceData value = default;
+                        AdminApprovalRequestData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AdminRequestApprovalsResourceData.DeserializeAdminRequestApprovalsResourceData(document.RootElement);
+                        value = AdminApprovalRequestData.DeserializeAdminApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AdminRequestApprovalsResourceData)null, message.Response);
+                    return Response.FromValue((AdminApprovalRequestData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1224,7 +1224,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/>, <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdminRequestApprovalsResourceData> GetAdminRequestApproval(string privateStoreId, string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
+        public Response<AdminApprovalRequestData> GetAdminRequestApproval(string privateStoreId, string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
@@ -1236,19 +1236,19 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case 200:
                     {
-                        AdminRequestApprovalsResourceData value = default;
+                        AdminApprovalRequestData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AdminRequestApprovalsResourceData.DeserializeAdminRequestApprovalsResourceData(document.RootElement);
+                        value = AdminApprovalRequestData.DeserializeAdminApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AdminRequestApprovalsResourceData)null, message.Response);
+                    return Response.FromValue((AdminApprovalRequestData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateAdminRequestApprovalRequest(string privateStoreId, string adminRequestApprovalId, AdminRequestApprovalsResourceData data)
+        internal HttpMessage CreateUpdateAdminRequestApprovalRequest(string privateStoreId, string adminRequestApprovalId, AdminApprovalRequestData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1273,11 +1273,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Update the admin action, weather the request is approved or rejected and the approved plans. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
-        /// <param name="data"> The AdminRequestApprovalsResource to use. </param>
+        /// <param name="data"> The AdminApprovalRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/>, <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdminRequestApprovalsResourceData>> UpdateAdminRequestApprovalAsync(string privateStoreId, string adminRequestApprovalId, AdminRequestApprovalsResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AdminApprovalRequestData>> UpdateAdminRequestApprovalAsync(string privateStoreId, string adminRequestApprovalId, AdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
@@ -1289,9 +1289,9 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case 200:
                     {
-                        AdminRequestApprovalsResourceData value = default;
+                        AdminApprovalRequestData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AdminRequestApprovalsResourceData.DeserializeAdminRequestApprovalsResourceData(document.RootElement);
+                        value = AdminApprovalRequestData.DeserializeAdminApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1302,11 +1302,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Update the admin action, weather the request is approved or rejected and the approved plans. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
-        /// <param name="data"> The AdminRequestApprovalsResource to use. </param>
+        /// <param name="data"> The AdminApprovalRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/>, <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdminRequestApprovalsResourceData> UpdateAdminRequestApproval(string privateStoreId, string adminRequestApprovalId, AdminRequestApprovalsResourceData data, CancellationToken cancellationToken = default)
+        public Response<AdminApprovalRequestData> UpdateAdminRequestApproval(string privateStoreId, string adminRequestApprovalId, AdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
@@ -1318,9 +1318,9 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case 200:
                     {
-                        AdminRequestApprovalsResourceData value = default;
+                        AdminApprovalRequestData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AdminRequestApprovalsResourceData.DeserializeAdminRequestApprovalsResourceData(document.RootElement);
+                        value = AdminApprovalRequestData.DeserializeAdminApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

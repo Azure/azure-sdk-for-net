@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Set the Operation for the POST method. Ping or Delete. </summary>
+    /// <summary>
+    /// Set the Operation for the POST method. Ping or Delete
+    /// Serialized Name: Operation
+    /// </summary>
     public readonly partial struct Operation : IEquatable<Operation>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Marketplace.Models
         private const string DeletePrivateStoreCollectionOfferValue = "DeletePrivateStoreCollectionOffer";
         private const string PingValue = "Ping";
 
-        /// <summary> DeletePrivateStoreOffer. </summary>
+        /// <summary>
+        /// DeletePrivateStoreOffer
+        /// Serialized Name: Operation.DeletePrivateStoreOffer
+        /// </summary>
         public static Operation DeletePrivateStoreOffer { get; } = new Operation(DeletePrivateStoreOfferValue);
-        /// <summary> DeletePrivateStoreCollection. </summary>
+        /// <summary>
+        /// DeletePrivateStoreCollection
+        /// Serialized Name: Operation.DeletePrivateStoreCollection
+        /// </summary>
         public static Operation DeletePrivateStoreCollection { get; } = new Operation(DeletePrivateStoreCollectionValue);
-        /// <summary> DeletePrivateStoreCollectionOffer. </summary>
+        /// <summary>
+        /// DeletePrivateStoreCollectionOffer
+        /// Serialized Name: Operation.DeletePrivateStoreCollectionOffer
+        /// </summary>
         public static Operation DeletePrivateStoreCollectionOffer { get; } = new Operation(DeletePrivateStoreCollectionOfferValue);
-        /// <summary> Ping. </summary>
+        /// <summary>
+        /// Ping
+        /// Serialized Name: Operation.Ping
+        /// </summary>
         public static Operation Ping { get; } = new Operation(PingValue);
         /// <summary> Determines if two <see cref="Operation"/> values are the same. </summary>
         public static bool operator ==(Operation left, Operation right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Gets or sets admin action. </summary>
+    /// <summary>
+    /// Gets or sets admin action
+    /// Serialized Name: AdminAction
+    /// </summary>
     public readonly partial struct AdminAction : IEquatable<AdminAction>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.Marketplace.Models
         private const string ApprovedValue = "Approved";
         private const string RejectedValue = "Rejected";
 
-        /// <summary> Approved. </summary>
+        /// <summary>
+        /// Approved
+        /// Serialized Name: AdminAction.Approved
+        /// </summary>
         public static AdminAction Approved { get; } = new AdminAction(ApprovedValue);
-        /// <summary> Rejected. </summary>
+        /// <summary>
+        /// Rejected
+        /// Serialized Name: AdminAction.Rejected
+        /// </summary>
         public static AdminAction Rejected { get; } = new AdminAction(RejectedValue);
         /// <summary> Determines if two <see cref="AdminAction"/> values are the same. </summary>
         public static bool operator ==(AdminAction left, AdminAction right) => left.Equals(right);

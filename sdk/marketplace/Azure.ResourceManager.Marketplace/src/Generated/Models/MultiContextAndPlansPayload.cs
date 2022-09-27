@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Payload object for upsert offer with multiple context and plans. </summary>
+    /// <summary>
+    /// Payload object for upsert offer with multiple context and plans.
+    /// Serialized Name: MultiContextAndPlansPayload
+    /// </summary>
     public partial class MultiContextAndPlansPayload
     {
         /// <summary> Initializes a new instance of MultiContextAndPlansPayload. </summary>
@@ -20,11 +23,17 @@ namespace Azure.ResourceManager.Marketplace.Models
             PlansContext = new ChangeTrackingList<ContextAndPlansDetails>();
         }
 
-        /// <summary> The offer ID which contains the plans. </summary>
+        /// <summary>
+        /// The offer ID which contains the plans.
+        /// Serialized Name: MultiContextAndPlansPayload.properties.offerId
+        /// </summary>
         public string OfferId { get; set; }
-        /// <summary> The offer&apos;s eTag. </summary>
+        /// <summary>
+        /// The offer&apos;s eTag.
+        /// Serialized Name: MultiContextAndPlansPayload.properties.eTag
+        /// </summary>
         public ETag? ETag { get; set; }
-        /// <summary> Gets the plans context. </summary>
+        /// <summary> Serialized Name: MultiContextAndPlansPayload.properties.plansContext. </summary>
         public IList<ContextAndPlansDetails> PlansContext { get; }
     }
 }

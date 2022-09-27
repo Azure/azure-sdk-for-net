@@ -7,7 +7,10 @@
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> The details to get the request plans statuses. </summary>
+    /// <summary>
+    /// The details to get the request plans statuses
+    /// Serialized Name: QueryRequestApprovalProperties
+    /// </summary>
     public partial class QueryRequestApprovalProperties
     {
         /// <summary> Initializes a new instance of QueryRequestApprovalProperties. </summary>
@@ -15,7 +18,10 @@ namespace Azure.ResourceManager.Marketplace.Models
         {
         }
 
-        /// <summary> The details to get the request plans statuses. </summary>
+        /// <summary>
+        /// The details to get the request plans statuses
+        /// Serialized Name: QueryRequestApprovalProperties.properties
+        /// </summary>
         public RequestDetails Properties { get; set; }
     }
 }

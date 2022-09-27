@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> New plans notification details. </summary>
+    /// <summary>
+    /// New plans notification details
+    /// Serialized Name: NewNotifications
+    /// </summary>
     public partial class NewNotifications
     {
         /// <summary> Initializes a new instance of NewNotifications. </summary>
@@ -20,12 +23,30 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of NewNotifications. </summary>
-        /// <param name="offerId"> Gets offer id. </param>
-        /// <param name="displayName"> Gets offer display name. </param>
-        /// <param name="isFuturePlansEnabled"> Gets a value indicating whether future plans is enabled. </param>
-        /// <param name="messageCode"> Gets or sets the notification message id. </param>
-        /// <param name="icon"> Gets or sets the icon url. </param>
-        /// <param name="plans"> Gets or sets removed plans notifications. </param>
+        /// <param name="offerId">
+        /// Gets offer id
+        /// Serialized Name: NewNotifications.offerId
+        /// </param>
+        /// <param name="displayName">
+        /// Gets offer display name
+        /// Serialized Name: NewNotifications.displayName
+        /// </param>
+        /// <param name="isFuturePlansEnabled">
+        /// Gets a value indicating whether future plans is enabled.
+        /// Serialized Name: NewNotifications.isFuturePlansEnabled
+        /// </param>
+        /// <param name="messageCode">
+        /// Gets or sets the notification message id
+        /// Serialized Name: NewNotifications.messageCode
+        /// </param>
+        /// <param name="icon">
+        /// Gets or sets the icon url
+        /// Serialized Name: NewNotifications.icon
+        /// </param>
+        /// <param name="plans">
+        /// Gets or sets removed plans notifications
+        /// Serialized Name: NewNotifications.plans
+        /// </param>
         internal NewNotifications(string offerId, string displayName, bool? isFuturePlansEnabled, long? messageCode, string icon, IReadOnlyList<PlanNotificationDetails> plans)
         {
             OfferId = offerId;
@@ -36,17 +57,35 @@ namespace Azure.ResourceManager.Marketplace.Models
             Plans = plans;
         }
 
-        /// <summary> Gets offer id. </summary>
+        /// <summary>
+        /// Gets offer id
+        /// Serialized Name: NewNotifications.offerId
+        /// </summary>
         public string OfferId { get; }
-        /// <summary> Gets offer display name. </summary>
+        /// <summary>
+        /// Gets offer display name
+        /// Serialized Name: NewNotifications.displayName
+        /// </summary>
         public string DisplayName { get; }
-        /// <summary> Gets a value indicating whether future plans is enabled. </summary>
+        /// <summary>
+        /// Gets a value indicating whether future plans is enabled.
+        /// Serialized Name: NewNotifications.isFuturePlansEnabled
+        /// </summary>
         public bool? IsFuturePlansEnabled { get; }
-        /// <summary> Gets or sets the notification message id. </summary>
+        /// <summary>
+        /// Gets or sets the notification message id
+        /// Serialized Name: NewNotifications.messageCode
+        /// </summary>
         public long? MessageCode { get; }
-        /// <summary> Gets or sets the icon url. </summary>
+        /// <summary>
+        /// Gets or sets the icon url
+        /// Serialized Name: NewNotifications.icon
+        /// </summary>
         public string Icon { get; }
-        /// <summary> Gets or sets removed plans notifications. </summary>
+        /// <summary>
+        /// Gets or sets removed plans notifications
+        /// Serialized Name: NewNotifications.plans
+        /// </summary>
         public IReadOnlyList<PlanNotificationDetails> Plans { get; }
     }
 }

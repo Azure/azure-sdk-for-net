@@ -10,7 +10,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Query user&apos;s offers properties. </summary>
+    /// <summary>
+    /// Query user&apos;s offers properties
+    /// Serialized Name: QueryUserOffersProperties
+    /// </summary>
     public partial class QueryUserOffersProperties
     {
         /// <summary> Initializes a new instance of QueryUserOffersProperties. </summary>
@@ -20,9 +23,15 @@ namespace Azure.ResourceManager.Marketplace.Models
             SubscriptionIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> List of offer IDs. </summary>
+        /// <summary>
+        /// List of offer IDs
+        /// Serialized Name: QueryUserOffersProperties.properties.offerIds
+        /// </summary>
         public IList<string> OfferIds { get; }
-        /// <summary> List of subscription IDs. </summary>
+        /// <summary>
+        /// List of subscription IDs
+        /// Serialized Name: QueryUserOffersProperties.properties.subscriptionIds
+        /// </summary>
         public IList<string> SubscriptionIds { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Gets the plan status. </summary>
+    /// <summary>
+    /// Gets the plan status
+    /// Serialized Name: Status
+    /// </summary>
     public readonly partial struct Status : IEquatable<Status>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.Marketplace.Models
         private const string ApprovedValue = "Approved";
         private const string NoneValue = "None";
 
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: Status.Pending
+        /// </summary>
         public static Status Pending { get; } = new Status(PendingValue);
-        /// <summary> Rejected. </summary>
+        /// <summary>
+        /// Rejected
+        /// Serialized Name: Status.Rejected
+        /// </summary>
         public static Status Rejected { get; } = new Status(RejectedValue);
-        /// <summary> Approved. </summary>
+        /// <summary>
+        /// Approved
+        /// Serialized Name: Status.Approved
+        /// </summary>
         public static Status Approved { get; } = new Status(ApprovedValue);
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: Status.None
+        /// </summary>
         public static Status None { get; } = new Status(NoneValue);
         /// <summary> Determines if two <see cref="Status"/> values are the same. </summary>
         public static bool operator ==(Status left, Status right) => left.Equals(right);
