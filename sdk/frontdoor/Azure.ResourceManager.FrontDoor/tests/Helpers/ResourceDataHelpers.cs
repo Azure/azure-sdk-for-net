@@ -9,6 +9,8 @@ using NUnit.Framework;
 using Azure.Core;
 using System;
 using System.Text;
+using Azure.ResourceManager.Resources;
+using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
 {
@@ -33,6 +35,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
             Assert.AreEqual(r1.Location, r2.Location);
             Assert.AreEqual(r1.Tags, r2.Tags);
         }
+
         #region FrontDoor
         public static void AssertFrontDoor(FrontDoorData data1, FrontDoorData data2)
         {
@@ -42,23 +45,108 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
             Assert.AreEqual(data2.Cname, data2.Cname);
         }
 
-        public static FrontDoorData GetFrontDoorData(AzureLocation location)
+        /*public static FrontDoorLoadBalancingSettingsData GetFrontDoorLoadBalancingSettingsData()
         {
+            var load = new FrontDoorLoadBalancingSettingsData()
+            {
+                Name = "loadBalancingSettings1",
+                AdditionalLatencyMilliseconds = 0,
+                SampleSize = 4,
+                SuccessfulSamplesRequired = 2
+            };
+            return load;
+        }
+
+        public static FrontDoorHealthProbeSettingsData GetFrontDoorHealthProbeSettingsData()
+        {
+            var health = new FrontDoorHealthProbeSettingsData()
+            {
+                Name = "healthProbeSettings1",
+                Path = "/",
+                Protocol = FrontDoorProtocol.Http,
+                IntervalInSeconds = 120,
+                HealthProbeMethod = FrontDoorHealthProbeMethod.Get,
+                EnabledState = HealthProbeEnabled.Enabled
+            };
+            return health;
+        }
+
+        public static FrontendEndpointData GetFrontendEndpointData(string frontdoorName)
+        {
+            var endpoints = new FrontendEndpointData()
+            {
+                Name = "frontendEndpoint1",
+                SessionAffinityEnabledState = SessionAffinityEnabledState.Disabled,
+                SessionAffinityTtlInSeconds = 0,
+                HostName = frontdoorName + ".azurefd.net",
+            };
+            return endpoints;
+        }
+
+        public static FrontDoorBackend GetFrontDoorBackend()
+        {
+            var backends = new FrontDoorBackend()
+            {
+                Address = "contoso1.azurewebsites.net",
+                HttpPort = 80,
+                HttpsPort = 443,
+                EnabledState = BackendEnabledState.Enabled,
+                Weight = 1,
+                Priority = 2
+            };
+            return backends;
+        }*/
+
+        public static FrontDoorData GetFrontDoorData(AzureLocation location, string frontDoorName, string resourceGroupName, string subid)
+        {
+            var load = new FrontDoorLoadBalancingSettingsData()
+            {
+                Name = "loadBalancingSettings1",
+                AdditionalLatencyMilliseconds = 0,
+                SampleSize = 4,
+                SuccessfulSamplesRequired = 2
+            };
+            var health = new FrontDoorHealthProbeSettingsData()
+            {
+                Name = "healthProbeSettings1",
+                Path = "/",
+                Protocol = FrontDoorProtocol.Http,
+                IntervalInSeconds = 120,
+                HealthProbeMethod = FrontDoorHealthProbeMethod.Get,
+                EnabledState = HealthProbeEnabled.Enabled
+            };
+            var endpoints = new FrontendEndpointData()
+            {
+                Name = "frontendEndpoint1",
+                SessionAffinityEnabledState = SessionAffinityEnabledState.Disabled,
+                SessionAffinityTtlInSeconds = 0,
+                HostName = frontDoorName + ".azurefd.net",
+            };
+            var backends = new FrontDoorBackend()
+            {
+                Address = "contoso1.azurewebsites.net",
+                HttpPort = 80,
+                HttpsPort = 443,
+                EnabledState = BackendEnabledState.Enabled,
+                Weight = 1,
+                Priority = 2
+            };
             var data = new FrontDoorData(location)
             {
                 RoutingRules =
                 {
                     new RoutingRuleData()
                     {
+                        Name = "routingrule1",
                         PatternsToMatch =
                         {
                             "/*"
                         },
                         FrontendEndpoints =
                         {
-                            new WritableSubResource()
+                            new Models.SubResource()
                             {
-                                Id = new ResourceIdentifier("wait for string")
+                                Id = subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/frontendEndpoints/frontendEndpoint1"
                             }
                         },
                         AcceptedProtocols =
@@ -69,28 +157,48 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
                         RouteConfiguration = new ForwardingConfiguration()
                         {
                             ForwardingProtocol = FrontDoorForwardingProtocol.MatchRequest,
-                            BackendPool = new WritableSubResource()
+                            BackendPool = new Models.SubResource()
                             {
-                                Id = new ResourceIdentifier("wait")
+                                Id = subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/backendPools/backendPool1"
                             }
                         }
                     }
                 },
                 HealthProbeSettings =
                 {
-                    new FrontDoorHealthProbeSettingsData()
-                    {
-                        Path = "/",
-                        Protocol = FrontDoorProtocol.Http,
-                        IntervalInSeconds = 120,
-                        HealthProbeMethod = FrontDoorHealthProbeMethod.Get,
-                        EnabledState = HealthProbeEnabled.Enabled
-                    }
+                    health
                 },
                 BackendPoolsSettings = new BackendPoolsSettings()
                 {
                     SendRecvTimeoutInSeconds = 123
                 },
+                LoadBalancingSettings =
+                {
+                    load
+                },
+                FrontendEndpoints =
+                {
+                    endpoints
+                },
+                BackendPools =
+                {
+                    new FrontDoorBackendPool()
+                    {
+                        Name = "backendPool1",
+                        LoadBalancingSettings = new Models.SubResource()
+                        {
+                            Id = subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/loadBalancingSettings/loadBalancingSettings1"
+                        },
+                        HealthProbeSettings = new Models.SubResource()
+                        {
+                            Id = subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/healthProbeSettings/healthProbeSettings1"
+                        },
+                        Backends =
+                        {
+                            backends
+                        }
+                    }
+                }
             };
             return data;
         }

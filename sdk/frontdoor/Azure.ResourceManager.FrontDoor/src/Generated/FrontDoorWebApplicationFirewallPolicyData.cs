@@ -21,9 +21,9 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="location"> The location. </param>
         public FrontDoorWebApplicationFirewallPolicyData(AzureLocation location) : base(location)
         {
-            FrontendEndpointLinks = new ChangeTrackingList<SubResource>();
-            RoutingRuleLinks = new ChangeTrackingList<SubResource>();
-            SecurityPolicyLinks = new ChangeTrackingList<SubResource>();
+            FrontendEndpointLinks = new ChangeTrackingList<Resources.Models.SubResource>();
+            RoutingRuleLinks = new ChangeTrackingList<Resources.Models.SubResource>();
+            SecurityPolicyLinks = new ChangeTrackingList<Resources.Models.SubResource>();
         }
 
         /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicyData. </summary>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="securityPolicyLinks"> Describes Security Policy associated with this Web Application Firewall policy. </param>
         /// <param name="provisioningState"> Provisioning state of the policy. </param>
         /// <param name="resourceState"> Resource status of the policy. </param>
-        internal FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, FrontDoorSku sku, FrontDoorWebApplicationFirewallPolicySettings policySettings, CustomRuleList customRuleList, ManagedRuleSetList managedRules, IReadOnlyList<SubResource> frontendEndpointLinks, IReadOnlyList<SubResource> routingRuleLinks, IReadOnlyList<SubResource> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState) : base(id, name, resourceType, systemData, tags, location)
+        internal FrontDoorWebApplicationFirewallPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, FrontDoorSku sku, FrontDoorWebApplicationFirewallPolicySettings policySettings, CustomRuleList customRuleList, ManagedRuleSetList managedRules, IReadOnlyList<Resources.Models.SubResource> frontendEndpointLinks, IReadOnlyList<Resources.Models.SubResource> routingRuleLinks, IReadOnlyList<Resources.Models.SubResource> securityPolicyLinks, string provisioningState, FrontDoorWebApplicationFirewallPolicyResourceState? resourceState) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             Sku = sku;
@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.FrontDoor
         }
 
         /// <summary> Describes Frontend Endpoints associated with this Web Application Firewall policy. </summary>
-        public IReadOnlyList<SubResource> FrontendEndpointLinks { get; }
+        public IReadOnlyList<Resources.Models.SubResource> FrontendEndpointLinks { get; }
         /// <summary> Describes Routing Rules associated with this Web Application Firewall policy. </summary>
-        public IReadOnlyList<SubResource> RoutingRuleLinks { get; }
+        public IReadOnlyList<Resources.Models.SubResource> RoutingRuleLinks { get; }
         /// <summary> Describes Security Policy associated with this Web Application Firewall policy. </summary>
-        public IReadOnlyList<SubResource> SecurityPolicyLinks { get; }
+        public IReadOnlyList<Resources.Models.SubResource> SecurityPolicyLinks { get; }
         /// <summary> Provisioning state of the policy. </summary>
         public string ProvisioningState { get; }
         /// <summary> Resource status of the policy. </summary>

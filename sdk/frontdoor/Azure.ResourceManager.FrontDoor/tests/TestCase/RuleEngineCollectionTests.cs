@@ -21,11 +21,24 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
         {
         }
 
+        private async Task<ResourceGroupResource> GetResourceGroupAsync()
+        {
+            var resourceGroup = await CreateResourceGroupAsync();
+            return resourceGroup;
+        }
+        private FrontDoorCollection GetFrontDoorCollectionAsync(ResourceGroupResource resourceGroup)
+        {
+            return resourceGroup.GetFrontDoors();
+        }
+
         private async Task<FrontDoorRulesEngineCollection> GetFrontDoorRulesEngineCollectionAsync()
         {
-            var collection = (await CreateResourceGroupAsync()).GetFrontDoors();
-            var input = ResourceDataHelpers.GetFrontDoorData(DefaultLocation);
-            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, Recording.GenerateAssetName("testfrontdoor"), input);
+            var resourceGroup = await GetResourceGroupAsync();
+            var collection = GetFrontDoorCollectionAsync(resourceGroup);
+            var groupName = resourceGroup.Data.Name;
+            var frontdoorName = Recording.GenerateAssetName("testfrontdoor");
+            var input = ResourceDataHelpers.GetFrontDoorData("global", frontdoorName, groupName, DefaultSubscription.Data.Id);
+            var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, frontdoorName, input);
             var frontDoor = lro.Value;
             return frontDoor.GetFrontDoorRulesEngines();
         }

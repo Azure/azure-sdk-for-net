@@ -8,6 +8,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.FrontDoor.Tests.Helpers;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
@@ -19,10 +20,22 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
         {
         }
 
+        private async Task<ResourceGroupResource> GetResourceGroupAsync()
+        {
+            var resourceGroup = await CreateResourceGroupAsync();
+            return resourceGroup;
+        }
+        private FrontDoorCollection GetFrontDoorCollectionAsync(ResourceGroupResource resourceGroup)
+        {
+            return resourceGroup.GetFrontDoors();
+        }
+
         private async Task<FrontDoorResource> CreateAccountResourceAsync(string doorName)
         {
-            var collection = (await CreateResourceGroupAsync()).GetFrontDoors();
-            var input = ResourceDataHelpers.GetFrontDoorData(DefaultLocation);
+            var resourceGroup = await GetResourceGroupAsync();
+            var collection = GetFrontDoorCollectionAsync(resourceGroup);
+            var groupName = resourceGroup.Data.Name;
+            var input = ResourceDataHelpers.GetFrontDoorData("global", doorName, groupName, DefaultSubscription.Id);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, doorName, input);
             return lro.Value;
         }

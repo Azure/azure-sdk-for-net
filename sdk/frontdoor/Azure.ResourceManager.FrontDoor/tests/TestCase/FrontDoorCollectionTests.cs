@@ -20,10 +20,13 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
             : base(isAsync, RecordedTestMode.Record)
         {
         }
-
-        private async Task<FrontDoorCollection> GetFrontDoorCollectionAsync()
+        private async Task<ResourceGroupResource> GetResourceGroupAsync()
         {
             var resourceGroup = await CreateResourceGroupAsync();
+            return resourceGroup;
+        }
+            private FrontDoorCollection GetFrontDoorCollectionAsync(ResourceGroupResource resourceGroup)
+        {
             return resourceGroup.GetFrontDoors();
         }
 
@@ -32,11 +35,13 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
         public async Task FrontDoorApiTests()
         {
             //1.CreateorUpdate
-            var collection = await GetFrontDoorCollectionAsync();
+            var resourceGroup = await GetResourceGroupAsync();
+            var collection = GetFrontDoorCollectionAsync(resourceGroup);
+            var groupName = resourceGroup.Data.Name;
             var name = Recording.GenerateAssetName("TestFrontDoor-");
             var name2 = Recording.GenerateAssetName("TestFrontDoor-");
             var name3 = Recording.GenerateAssetName("TestFrontDoor-");
-            var input = ResourceDataHelpers.GetFrontDoorData(DefaultLocation);
+            var input = ResourceDataHelpers.GetFrontDoorData("global", name, groupName, DefaultSubscription.Data.Id);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             FrontDoorResource door1 = lro.Value;
             Assert.AreEqual(name, door1.Data.Name);

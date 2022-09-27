@@ -19,6 +19,9 @@ override-operation-name:
   Endpoints_PurgeContent: PurgeContent
   FrontDoorNameAvailabilityWithSubscription_Check: CheckFrontDoorNameAvailability
 
+no-property-type-replacement:
+- SubResource
+- object
 rename-mapping:
   Experiment: FrontDoorExperiment
   State: FrontDoorExperimentState
@@ -184,5 +187,21 @@ directive:
     where: $.definitions
     transform: >
       $.FrontendEndpointUpdateParameters.properties.sessionAffinityTtlSeconds['x-ms-client-name'] = 'SessionAffinityTtlInSeconds';
+  - from: swagger-document
+    where: $.definitions.ForwardingConfiguration.properties.cacheConfiguration
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RoutingRuleUpdateParameters.properties.rulesEngine
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.FrontendEndpointUpdateParameters.properties.webApplicationFirewallPolicyLink
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RoutingRuleUpdateParameters.properties.webApplicationFirewallPolicyLink
+    transform: >
+        $["x-nullable"] = true;
 
 ```

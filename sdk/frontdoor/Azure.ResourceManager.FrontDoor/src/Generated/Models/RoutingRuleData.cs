@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Initializes a new instance of RoutingRuleData. </summary>
         public RoutingRuleData()
         {
-            FrontendEndpoints = new ChangeTrackingList<WritableSubResource>();
+            FrontendEndpoints = new ChangeTrackingList<SubResource>();
             AcceptedProtocols = new ChangeTrackingList<FrontDoorProtocol>();
             PatternsToMatch = new ChangeTrackingList<string>();
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="rulesEngine"> A reference to a specific Rules Engine Configuration to apply to this route. </param>
         /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for each routing rule (if applicable). </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal RoutingRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IList<WritableSubResource> frontendEndpoints, IList<FrontDoorProtocol> acceptedProtocols, IList<string> patternsToMatch, RoutingRuleEnabledState? enabledState, RouteConfiguration routeConfiguration, WritableSubResource rulesEngine, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
+        internal RoutingRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IList<SubResource> frontendEndpoints, IList<FrontDoorProtocol> acceptedProtocols, IList<string> patternsToMatch, RoutingRuleEnabledState? enabledState, RouteConfiguration routeConfiguration, SubResource rulesEngine, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
         {
             FrontendEndpoints = frontendEndpoints;
             AcceptedProtocols = acceptedProtocols;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Frontend endpoints associated with this rule. </summary>
-        public IList<WritableSubResource> FrontendEndpoints { get; }
+        public IList<SubResource> FrontendEndpoints { get; }
         /// <summary> Protocol schemes to match for this rule. </summary>
         public IList<FrontDoorProtocol> AcceptedProtocols { get; }
         /// <summary> The route patterns of the rule. </summary>
@@ -65,15 +65,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// </summary>
         public RouteConfiguration RouteConfiguration { get; set; }
         /// <summary> A reference to a specific Rules Engine Configuration to apply to this route. </summary>
-        internal WritableSubResource RulesEngine { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier RulesEngineId
+        internal SubResource RulesEngine { get; set; }
+        /// <summary> Resource ID. </summary>
+        public string RulesEngineId
         {
             get => RulesEngine is null ? default : RulesEngine.Id;
             set
             {
                 if (RulesEngine is null)
-                    RulesEngine = new WritableSubResource();
+                    RulesEngine = new SubResource();
                 RulesEngine.Id = value;
             }
         }
