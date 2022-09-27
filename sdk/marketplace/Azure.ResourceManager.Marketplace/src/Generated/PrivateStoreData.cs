@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Initializes a new instance of PrivateStoreData. </summary>
         public PrivateStoreData()
         {
-            CollectionIds = new ChangeTrackingList<string>();
+            CollectionIds = new ChangeTrackingList<Guid>();
             Branding = new ChangeTrackingDictionary<string, string>();
             Recipients = new ChangeTrackingList<Recipient>();
         }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Marketplace
         /// Gets or sets whether to send email to all marketplace admins for new requests
         /// Serialized Name: PrivateStore.properties.notificationsSettings.sendToAllMarketplaceAdmins
         /// </param>
-        internal PrivateStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Availability? availability, string privateStoreId, ETag? eTag, string privateStoreName, Guid? tenantId, bool? isGov, IReadOnlyList<string> collectionIds, IDictionary<string, string> branding, IList<Recipient> recipients, bool? sendToAllMarketplaceAdmins) : base(id, name, resourceType, systemData)
+        internal PrivateStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateStoreAvailability? availability, Guid? privateStoreId, ETag? eTag, string privateStoreName, Guid? tenantId, bool? isGov, IReadOnlyList<Guid> collectionIds, IDictionary<string, string> branding, IList<Recipient> recipients, bool? sendToAllMarketplaceAdmins) : base(id, name, resourceType, systemData)
         {
             Availability = availability;
             PrivateStoreId = privateStoreId;
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Marketplace
         /// Indicates private store availability
         /// Serialized Name: PrivateStore.properties.availability
         /// </summary>
-        public Availability? Availability { get; set; }
+        public PrivateStoreAvailability? Availability { get; set; }
         /// <summary>
         /// Private Store id
         /// Serialized Name: PrivateStore.properties.privateStoreId
         /// </summary>
-        public string PrivateStoreId { get; }
+        public Guid? PrivateStoreId { get; }
         /// <summary>
         /// Identifier for purposes of race condition
         /// Serialized Name: PrivateStore.properties.eTag
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Marketplace
         /// Gets list of associated collection ids
         /// Serialized Name: PrivateStore.properties.collectionIds
         /// </summary>
-        public IReadOnlyList<string> CollectionIds { get; }
+        public IReadOnlyList<Guid> CollectionIds { get; }
         /// <summary>
         /// Gets or sets list of branding characteristics
         /// Serialized Name: PrivateStore.properties.branding

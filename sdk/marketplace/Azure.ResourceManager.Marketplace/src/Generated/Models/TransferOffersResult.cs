@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of TransferOffersResult. </summary>
         internal TransferOffersResult()
         {
-            Succeeded = new ChangeTrackingList<CollectionsDetails>();
-            Failed = new ChangeTrackingList<CollectionsDetails>();
+            Succeeded = new ChangeTrackingList<PrivateStoreCollectionDetails>();
+            Failed = new ChangeTrackingList<PrivateStoreCollectionDetails>();
         }
 
         /// <summary> Initializes a new instance of TransferOffersResult. </summary>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// Failed collections
         /// Serialized Name: TransferOffersResponse.failed
         /// </param>
-        internal TransferOffersResult(IReadOnlyList<CollectionsDetails> succeeded, IReadOnlyList<CollectionsDetails> failed)
+        internal TransferOffersResult(IReadOnlyList<PrivateStoreCollectionDetails> succeeded, IReadOnlyList<PrivateStoreCollectionDetails> failed)
         {
             Succeeded = succeeded;
             Failed = failed;
@@ -42,11 +42,11 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// Succeeded collections
         /// Serialized Name: TransferOffersResponse.succeeded
         /// </summary>
-        public IReadOnlyList<CollectionsDetails> Succeeded { get; }
+        public IReadOnlyList<PrivateStoreCollectionDetails> Succeeded { get; }
         /// <summary>
         /// Failed collections
         /// Serialized Name: TransferOffersResponse.failed
         /// </summary>
-        public IReadOnlyList<CollectionsDetails> Failed { get; }
+        public IReadOnlyList<PrivateStoreCollectionDetails> Failed { get; }
     }
 }

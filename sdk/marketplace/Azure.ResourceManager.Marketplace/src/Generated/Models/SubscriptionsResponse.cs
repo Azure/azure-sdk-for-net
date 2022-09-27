@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of SubscriptionsResponse. </summary>
         internal SubscriptionsResponse()
         {
-            Value = new ChangeTrackingList<Subscription>();
+            Value = new ChangeTrackingList<MarketplaceSubscription>();
         }
 
         /// <summary> Initializes a new instance of SubscriptionsResponse. </summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// Number of subscriptions on the page
         /// Serialized Name: SubscriptionsResponse.count
         /// </param>
-        internal SubscriptionsResponse(IReadOnlyList<Subscription> value, string skipToken, long? count)
+        internal SubscriptionsResponse(IReadOnlyList<MarketplaceSubscription> value, string skipToken, long? count)
         {
             Value = value;
             SkipToken = skipToken;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// An array of subscriptions.
         /// Serialized Name: SubscriptionsResponse.value
         /// </summary>
-        public IReadOnlyList<Subscription> Value { get; }
+        public IReadOnlyList<MarketplaceSubscription> Value { get; }
         /// <summary>
         /// The skip token to retrieve the next page.
         /// Serialized Name: SubscriptionsResponse.skipToken

@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static TransferOffersResult DeserializeTransferOffersResult(JsonElement element)
         {
-            Optional<IReadOnlyList<CollectionsDetails>> succeeded = default;
-            Optional<IReadOnlyList<CollectionsDetails>> failed = default;
+            Optional<IReadOnlyList<PrivateStoreCollectionDetails>> succeeded = default;
+            Optional<IReadOnlyList<PrivateStoreCollectionDetails>> failed = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("succeeded"))
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CollectionsDetails> array = new List<CollectionsDetails>();
+                    List<PrivateStoreCollectionDetails> array = new List<PrivateStoreCollectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CollectionsDetails.DeserializeCollectionsDetails(item));
+                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item));
                     }
                     succeeded = array;
                     continue;
@@ -41,10 +41,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<CollectionsDetails> array = new List<CollectionsDetails>();
+                    List<PrivateStoreCollectionDetails> array = new List<PrivateStoreCollectionDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CollectionsDetails.DeserializeCollectionsDetails(item));
+                        array.Add(PrivateStoreCollectionDetails.DeserializePrivateStoreCollectionDetails(item));
                     }
                     failed = array;
                     continue;

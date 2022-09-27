@@ -20,13 +20,43 @@ mgmt-debug:
   show-serialized-names: true
 
 rename-mapping:
-  AdminRequestApprovalsResource: AdminApprovalRequest
-  AdminRequestApprovalsResource.properties.icon: -|uri
-  Collection: PrivateStoreCollectionInfo
+  AcknowledgeOfferNotificationProperties: AcknowledgeOfferNotificationContent
+  AcknowledgeOfferNotificationProperties.properties.acknowledge: IsAcknowledgeActionFlagEnabled
+  AcknowledgeOfferNotificationProperties.properties.dismiss: IsDismissActionFlagEnabled
+  AcknowledgeOfferNotificationProperties.properties.removeOffer: IsRemoveOfferActionFlagEnabled
+  Accessibility: PrivateStoreOfferPlanAccessibility
+  AdminAction: MarketplaceAdminAction
+  AdminRequestApprovalsResource: MarketplaceAdminApprovalRequest
+  AdminRequestApprovalsResource.properties.collectionIds: -|uuid
+  AdminRequestApprovalsResource.properties.icon: iconUri|uri
+  AdminRequestApprovalsList: MarketplaceAdminApprovalRequestList
+  AnyExistingOffersInTheCollectionsResponse: AnyExistingOffersInTheCollectionsResult
+  Availability: PrivateStoreAvailability
+  BillingAccountsResponse: PrivateStoreBillingAccountsResult
+  BulkCollectionsPayload: BulkCollectionsActionContent
+  BulkCollectionsPayload.properties.collectionIds: -|uuid
+  BulkCollectionsResponse: BulkCollectionsActionResult
+  Collection: PrivateStoreCollectionInfo    # Add `Info` prefix to make a little better for `CollectionCollection`
   Collection.properties.collectionId: -|uuid
   Collection.properties.allSubscriptions: AreAllSubscriptionsSelected
   Collection.properties.approveAllItems: AreAllItemsApproved
   Collection.properties.enabled: IsEnabled
+  CollectionsDetails.collectionId: -|uuid
+  CollectionsDetails: PrivateStoreCollectionDetails
+  CollectionsToSubscriptionsMappingPayload: CollectionsToSubscriptionsMappingContent
+  CollectionsToSubscriptionsMappingResponse: CollectionsToSubscriptionsMappingResult
+  MultiContextAndPlansPayload: MultiContextAndPlansContent
+  NewNotifications.icon: iconUri|uri
+  NewNotifications: NewPrivateStoreOfferPlanNotification
+  NewPlansNotificationsList: NewPrivateStoreOfferPlanNotificationList
+  Offer: PrivateStoreOffer
+  OfferProperties: PrivateStoreOfferResult
+  Operation: PrivateStoreOperation
+  Plan: PrivateStoreOfferPlan
+  PrivateStore.properties.collectionIds: -|uuid
+  PrivateStore.properties.privateStoreId: -|uuid
+  RequestApprovalResource: MarketplaceApprovalRequest
+  Subscription: MarketplaceSubscription
   TransferOffersResponse: TransferOffersResult
   TransferOffersProperties: TransferOffersContent
 
@@ -38,7 +68,9 @@ format-by-name-rules:
   '*Uris': 'Uri'
 
 override-operation-name:
-  PrivateStoreCollection_Post: Delete
+  PrivateStoreCollection_Post: DeletePrivateStoreCollection
+  PrivateStoreCollectionOffer_Post: DeletePrivateStoreOffer
+  PrivateStore_FetchAllSubscriptionsInTenant: FetchAllMarketplaceSubscriptions
 
 rename-rules:
   CPU: Cpu
@@ -62,5 +94,22 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+directive:
+  - from: Marketplace.json
+    where: $.parameters
+    transform: >
+      $.PrivateStoreIdParameter['format'] = 'uuid';
+      $.CollectionIdParameter['format'] = 'uuid';
+  - from: Marketplace.json
+    where: $.definitions
+    transform: >
+      $.OfferProperties.properties.createdAt['format'] = 'date-time';
+      $.OfferProperties.properties.createdAt['x-ms-client-name'] = 'CreatedOn';
+      $.OfferProperties.properties.modifiedAt['format'] = 'date-time';
+      $.OfferProperties.properties.modifiedAt['x-ms-client-name'] = 'ModifiedOn';
+      $.OfferProperties.properties.updateSuppressedDueIdempotence['x-ms-client-name'] = 'IsUpdateSuppressedDueIdempotence';
+      $.OfferProperties.properties.privateStoreId['format'] = 'uuid';
+      $.OfferProperties.properties.iconFileUris.additionalProperties['format'] = 'url';
 
 ```

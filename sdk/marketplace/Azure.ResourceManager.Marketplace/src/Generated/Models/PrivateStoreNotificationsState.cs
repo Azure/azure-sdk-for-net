@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal PrivateStoreNotificationsState()
         {
             StopSellNotifications = new ChangeTrackingList<StopSellNotifications>();
-            NewNotifications = new ChangeTrackingList<NewNotifications>();
+            NewNotifications = new ChangeTrackingList<NewPrivateStoreOfferPlanNotification>();
             ApprovalRequests = new ChangeTrackingList<RequestApprovalsDetails>();
         }
 
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <param name="stopSellNotifications"> Serialized Name: PrivateStoreNotificationsState.stopSellNotifications. </param>
         /// <param name="newNotifications"> Serialized Name: PrivateStoreNotificationsState.newNotifications. </param>
         /// <param name="approvalRequests"> Serialized Name: PrivateStoreNotificationsState.approvalRequests. </param>
-        internal PrivateStoreNotificationsState(IReadOnlyList<StopSellNotifications> stopSellNotifications, IReadOnlyList<NewNotifications> newNotifications, IReadOnlyList<RequestApprovalsDetails> approvalRequests)
+        internal PrivateStoreNotificationsState(IReadOnlyList<StopSellNotifications> stopSellNotifications, IReadOnlyList<NewPrivateStoreOfferPlanNotification> newNotifications, IReadOnlyList<RequestApprovalsDetails> approvalRequests)
         {
             StopSellNotifications = stopSellNotifications;
             NewNotifications = newNotifications;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Serialized Name: PrivateStoreNotificationsState.stopSellNotifications. </summary>
         public IReadOnlyList<StopSellNotifications> StopSellNotifications { get; }
         /// <summary> Serialized Name: PrivateStoreNotificationsState.newNotifications. </summary>
-        public IReadOnlyList<NewNotifications> NewNotifications { get; }
+        public IReadOnlyList<NewPrivateStoreOfferPlanNotification> NewNotifications { get; }
         /// <summary> Serialized Name: PrivateStoreNotificationsState.approvalRequests. </summary>
         public IReadOnlyList<RequestApprovalsDetails> ApprovalRequests { get; }
     }

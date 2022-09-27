@@ -43,10 +43,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PrivateStoreResource>> GetPrivateStoreAsync(this TenantResource tenantResource, string privateStoreId, CancellationToken cancellationToken = default)
+        public static async Task<Response<PrivateStoreResource>> GetPrivateStoreAsync(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
         {
             return await tenantResource.GetPrivateStores().GetAsync(privateStoreId, cancellationToken).ConfigureAwait(false);
         }
@@ -59,10 +57,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PrivateStoreResource> GetPrivateStore(this TenantResource tenantResource, string privateStoreId, CancellationToken cancellationToken = default)
+        public static Response<PrivateStoreResource> GetPrivateStore(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
         {
             return tenantResource.GetPrivateStores().Get(privateStoreId, cancellationToken);
         }
@@ -86,39 +82,39 @@ namespace Azure.ResourceManager.Marketplace
         }
         #endregion
 
-        #region RequestApprovalResource
+        #region MarketplaceApprovalRequestResource
         /// <summary>
-        /// Gets an object representing a <see cref="RequestApprovalResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="RequestApprovalResource.CreateResourceIdentifier" /> to create a <see cref="RequestApprovalResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MarketplaceApprovalRequestResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MarketplaceApprovalRequestResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceApprovalRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RequestApprovalResource" /> object. </returns>
-        public static RequestApprovalResource GetRequestApprovalResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MarketplaceApprovalRequestResource" /> object. </returns>
+        public static MarketplaceApprovalRequestResource GetMarketplaceApprovalRequestResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                RequestApprovalResource.ValidateResourceId(id);
-                return new RequestApprovalResource(client, id);
+                MarketplaceApprovalRequestResource.ValidateResourceId(id);
+                return new MarketplaceApprovalRequestResource(client, id);
             }
             );
         }
         #endregion
 
-        #region AdminApprovalRequestResource
+        #region MarketplaceAdminApprovalRequestResource
         /// <summary>
-        /// Gets an object representing an <see cref="AdminApprovalRequestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AdminApprovalRequestResource.CreateResourceIdentifier" /> to create an <see cref="AdminApprovalRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="MarketplaceAdminApprovalRequestResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MarketplaceAdminApprovalRequestResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAdminApprovalRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AdminApprovalRequestResource" /> object. </returns>
-        public static AdminApprovalRequestResource GetAdminApprovalRequestResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="MarketplaceAdminApprovalRequestResource" /> object. </returns>
+        public static MarketplaceAdminApprovalRequestResource GetMarketplaceAdminApprovalRequestResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                AdminApprovalRequestResource.ValidateResourceId(id);
-                return new AdminApprovalRequestResource(client, id);
+                MarketplaceAdminApprovalRequestResource.ValidateResourceId(id);
+                return new MarketplaceAdminApprovalRequestResource(client, id);
             }
             );
         }
@@ -143,20 +139,20 @@ namespace Azure.ResourceManager.Marketplace
         }
         #endregion
 
-        #region OfferResource
+        #region PrivateStoreOfferResource
         /// <summary>
-        /// Gets an object representing an <see cref="OfferResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OfferResource.CreateResourceIdentifier" /> to create an <see cref="OfferResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PrivateStoreOfferResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateStoreOfferResource.CreateResourceIdentifier" /> to create a <see cref="PrivateStoreOfferResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OfferResource" /> object. </returns>
-        public static OfferResource GetOfferResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateStoreOfferResource" /> object. </returns>
+        public static PrivateStoreOfferResource GetPrivateStoreOfferResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                OfferResource.ValidateResourceId(id);
-                return new OfferResource(client, id);
+                PrivateStoreOfferResource.ValidateResourceId(id);
+                return new PrivateStoreOfferResource(client, id);
             }
             );
         }

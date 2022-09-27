@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of QueryOffers. </summary>
         internal QueryOffers()
         {
-            Value = new ChangeTrackingList<OfferProperties>();
+            Value = new ChangeTrackingList<PrivateStoreOfferResult>();
         }
 
         /// <summary> Initializes a new instance of QueryOffers. </summary>
@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// URL to get the next set of PrivateStore list results if there are any.
         /// Serialized Name: QueryOffers.nextLink
         /// </param>
-        internal QueryOffers(IReadOnlyList<OfferProperties> value, string nextLink)
+        internal QueryOffers(IReadOnlyList<PrivateStoreOfferResult> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Serialized Name: QueryOffers.value. </summary>
-        public IReadOnlyList<OfferProperties> Value { get; }
+        public IReadOnlyList<PrivateStoreOfferResult> Value { get; }
         /// <summary>
         /// URL to get the next set of PrivateStore list results if there are any.
         /// Serialized Name: QueryOffers.nextLink
