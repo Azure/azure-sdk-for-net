@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// Indicates private store availability
-    /// Serialized Name: Availability
-    /// </summary>
+    /// <summary> Indicates private store availability. </summary>
     public readonly partial struct PrivateStoreAvailability : IEquatable<PrivateStoreAvailability>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         private const string EnabledValue = "enabled";
         private const string DisabledValue = "disabled";
 
-        /// <summary>
-        /// enabled
-        /// Serialized Name: Availability.enabled
-        /// </summary>
+        /// <summary> enabled. </summary>
         public static PrivateStoreAvailability Enabled { get; } = new PrivateStoreAvailability(EnabledValue);
-        /// <summary>
-        /// disabled
-        /// Serialized Name: Availability.disabled
-        /// </summary>
+        /// <summary> disabled. </summary>
         public static PrivateStoreAvailability Disabled { get; } = new PrivateStoreAvailability(DisabledValue);
         /// <summary> Determines if two <see cref="PrivateStoreAvailability"/> values are the same. </summary>
         public static bool operator ==(PrivateStoreAvailability left, PrivateStoreAvailability right) => left.Equals(right);

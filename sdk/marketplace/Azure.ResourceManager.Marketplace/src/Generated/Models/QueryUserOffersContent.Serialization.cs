@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class QueryUserOffersProperties : IUtf8JsonSerializable
+    public partial class QueryUserOffersContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

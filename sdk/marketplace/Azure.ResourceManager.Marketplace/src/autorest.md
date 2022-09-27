@@ -16,15 +16,12 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
-mgmt-debug: 
-  show-serialized-names: true
-
 rename-mapping:
   AcknowledgeOfferNotificationProperties: AcknowledgeOfferNotificationContent
   AcknowledgeOfferNotificationProperties.properties.acknowledge: IsAcknowledgeActionFlagEnabled
   AcknowledgeOfferNotificationProperties.properties.dismiss: IsDismissActionFlagEnabled
   AcknowledgeOfferNotificationProperties.properties.removeOffer: IsRemoveOfferActionFlagEnabled
-  Accessibility: PrivateStoreOfferPlanAccessibility
+  Accessibility: PrivateStorePlanAccessibility
   AdminAction: MarketplaceAdminAction
   AdminRequestApprovalsResource: MarketplaceAdminApprovalRequest
   AdminRequestApprovalsResource.properties.collectionIds: -|uuid
@@ -47,18 +44,34 @@ rename-mapping:
   CollectionsToSubscriptionsMappingResponse: CollectionsToSubscriptionsMappingResult
   MultiContextAndPlansPayload: MultiContextAndPlansContent
   NewNotifications.icon: iconUri|uri
-  NewNotifications: NewPrivateStoreOfferPlanNotification
-  NewPlansNotificationsList: NewPrivateStoreOfferPlanNotificationList
+  NewNotifications: NewPlanNotification
+  NewPlansNotificationsList: NewPlanNotificationListResult
   Offer: PrivateStoreOffer
   OfferProperties: PrivateStoreOfferResult
   Operation: PrivateStoreOperation
-  Plan: PrivateStoreOfferPlan
+  Plan: PrivateStorePlan
+  PlanDetails: PrivateStorePlanDetails
   PrivateStore.properties.collectionIds: -|uuid
   PrivateStore.properties.privateStoreId: -|uuid
+  QueryApprovedPlansPayload: QueryApprovedPlansContent
+  QueryApprovedPlansResponse: QueryApprovedPlansResult
+  QueryRequestApproval: QueryApprovalRequestResult
+  QueryRequestApprovalProperties: QueryApprovalRequestContent
+  QueryUserOffersProperties:  QueryUserOffersContent
+  Recipient: NotificationRecipient
+  Recipient.principalId: -|uuid
   RequestApprovalResource: MarketplaceApprovalRequest
+  Status: PrivateStorePlanStatus
+  StopSellOffersPlansNotificationsListProperties: StopSellOffersPlansNotificationsResult
+  StopSellOffersPlansNotificationsListProperties.icon: iconUri|uri
+  StopSellOffersPlansNotificationsListProperties.publicContext: hasPublicContext
+  StopSellOffersPlansNotificationsListProperties.isEntire: isEntireInStopSell
   Subscription: MarketplaceSubscription
+  SubscriptionState: MarketplaceSubscriptionState
   TransferOffersResponse: TransferOffersResult
   TransferOffersProperties: TransferOffersContent
+  UserRequestDetails: PlanRequesterInfo
+  WithdrawProperties: WithdrawPlanContent
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -71,6 +84,7 @@ override-operation-name:
   PrivateStoreCollection_Post: DeletePrivateStoreCollection
   PrivateStoreCollectionOffer_Post: DeletePrivateStoreOffer
   PrivateStore_FetchAllSubscriptionsInTenant: FetchAllMarketplaceSubscriptions
+  PrivateStore_QueryRequestApproval: QueryApprovalRequest
 
 rename-rules:
   CPU: Cpu
@@ -111,5 +125,6 @@ directive:
       $.OfferProperties.properties.updateSuppressedDueIdempotence['x-ms-client-name'] = 'IsUpdateSuppressedDueIdempotence';
       $.OfferProperties.properties.privateStoreId['format'] = 'uuid';
       $.OfferProperties.properties.iconFileUris.additionalProperties['format'] = 'url';
+      $.QueryRequestApprovalProperties.properties.properties['x-ms-client-flatten'] = true;
 
 ```

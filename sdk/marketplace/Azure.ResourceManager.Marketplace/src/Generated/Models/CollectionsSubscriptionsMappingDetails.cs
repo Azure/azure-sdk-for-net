@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// Collection name and related subscriptions list
-    /// Serialized Name: CollectionsSubscriptionsMappingDetails
-    /// </summary>
+    /// <summary> Collection name and related subscriptions list. </summary>
     public partial class CollectionsSubscriptionsMappingDetails
     {
         /// <summary> Initializes a new instance of CollectionsSubscriptionsMappingDetails. </summary>
@@ -23,29 +20,17 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of CollectionsSubscriptionsMappingDetails. </summary>
-        /// <param name="collectionName">
-        /// Collection name
-        /// Serialized Name: CollectionsSubscriptionsMappingDetails.collectionName
-        /// </param>
-        /// <param name="subscriptions">
-        /// Subscriptions ids list
-        /// Serialized Name: CollectionsSubscriptionsMappingDetails.subscriptions
-        /// </param>
+        /// <param name="collectionName"> Collection name. </param>
+        /// <param name="subscriptions"> Subscriptions ids list. </param>
         internal CollectionsSubscriptionsMappingDetails(string collectionName, IReadOnlyList<string> subscriptions)
         {
             CollectionName = collectionName;
             Subscriptions = subscriptions;
         }
 
-        /// <summary>
-        /// Collection name
-        /// Serialized Name: CollectionsSubscriptionsMappingDetails.collectionName
-        /// </summary>
+        /// <summary> Collection name. </summary>
         public string CollectionName { get; }
-        /// <summary>
-        /// Subscriptions ids list
-        /// Serialized Name: CollectionsSubscriptionsMappingDetails.subscriptions
-        /// </summary>
+        /// <summary> Subscriptions ids list. </summary>
         public IReadOnlyList<string> Subscriptions { get; }
     }
 }

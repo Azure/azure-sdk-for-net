@@ -5,21 +5,22 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class StopSellOffersPlansNotificationsListProperties
+    public partial class StopSellOffersPlansNotificationsResult
     {
-        internal static StopSellOffersPlansNotificationsListProperties DeserializeStopSellOffersPlansNotificationsListProperties(JsonElement element)
+        internal static StopSellOffersPlansNotificationsResult DeserializeStopSellOffersPlansNotificationsResult(JsonElement element)
         {
             Optional<string> offerId = default;
             Optional<string> displayName = default;
             Optional<bool> isEntire = default;
             Optional<long> messageCode = default;
-            Optional<string> icon = default;
+            Optional<Uri> icon = default;
             Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
             Optional<bool> publicContext = default;
             Optional<IReadOnlyList<string>> subscriptionsIds = default;
@@ -57,7 +58,12 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 if (property.NameEquals("icon"))
                 {
-                    icon = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        icon = null;
+                        continue;
+                    }
+                    icon = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("plans"))
@@ -101,7 +107,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new StopSellOffersPlansNotificationsListProperties(offerId.Value, displayName.Value, Optional.ToNullable(isEntire), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans), Optional.ToNullable(publicContext), Optional.ToList(subscriptionsIds));
+            return new StopSellOffersPlansNotificationsResult(offerId.Value, displayName.Value, Optional.ToNullable(isEntire), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans), Optional.ToNullable(publicContext), Optional.ToList(subscriptionsIds));
         }
     }
 }

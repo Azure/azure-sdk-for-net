@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class QueryRequestApproval
+    public partial class QueryApprovalRequestResult
     {
-        internal static QueryRequestApproval DeserializeQueryRequestApproval(JsonElement element)
+        internal static QueryApprovalRequestResult DeserializeQueryApprovalRequestResult(JsonElement element)
         {
             Optional<string> uniqueOfferId = default;
-            Optional<IReadOnlyDictionary<string, PlanDetails>> plansDetails = default;
+            Optional<IReadOnlyDictionary<string, PrivateStorePlanDetails>> plansDetails = default;
             Optional<ETag> etag = default;
             Optional<long> messageCode = default;
             foreach (var property in element.EnumerateObject())
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    Dictionary<string, PlanDetails> dictionary = new Dictionary<string, PlanDetails>();
+                    Dictionary<string, PrivateStorePlanDetails> dictionary = new Dictionary<string, PrivateStorePlanDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, PlanDetails.DeserializePlanDetails(property0.Value));
+                        dictionary.Add(property0.Name, PrivateStorePlanDetails.DeserializePrivateStorePlanDetails(property0.Value));
                     }
                     plansDetails = dictionary;
                     continue;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new QueryRequestApproval(uniqueOfferId.Value, Optional.ToDictionary(plansDetails), Optional.ToNullable(etag), Optional.ToNullable(messageCode));
+            return new QueryApprovalRequestResult(uniqueOfferId.Value, Optional.ToDictionary(plansDetails), Optional.ToNullable(etag), Optional.ToNullable(messageCode));
         }
     }
 }

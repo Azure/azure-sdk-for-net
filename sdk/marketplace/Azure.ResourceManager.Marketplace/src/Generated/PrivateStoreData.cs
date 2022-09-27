@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Marketplace
         {
             CollectionIds = new ChangeTrackingList<Guid>();
             Branding = new ChangeTrackingDictionary<string, string>();
-            Recipients = new ChangeTrackingList<Recipient>();
+            Recipients = new ChangeTrackingList<NotificationRecipient>();
         }
 
         /// <summary> Initializes a new instance of PrivateStoreData. </summary>
@@ -30,47 +30,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="availability">
-        /// Indicates private store availability
-        /// Serialized Name: PrivateStore.properties.availability
-        /// </param>
-        /// <param name="privateStoreId">
-        /// Private Store id
-        /// Serialized Name: PrivateStore.properties.privateStoreId
-        /// </param>
-        /// <param name="eTag">
-        /// Identifier for purposes of race condition
-        /// Serialized Name: PrivateStore.properties.eTag
-        /// </param>
-        /// <param name="privateStoreName">
-        /// Private Store Name
-        /// Serialized Name: PrivateStore.properties.privateStoreName
-        /// </param>
-        /// <param name="tenantId">
-        /// Tenant id
-        /// Serialized Name: PrivateStore.properties.tenantId
-        /// </param>
-        /// <param name="isGov">
-        /// Is government
-        /// Serialized Name: PrivateStore.properties.isGov
-        /// </param>
-        /// <param name="collectionIds">
-        /// Gets list of associated collection ids
-        /// Serialized Name: PrivateStore.properties.collectionIds
-        /// </param>
-        /// <param name="branding">
-        /// Gets or sets list of branding characteristics
-        /// Serialized Name: PrivateStore.properties.branding
-        /// </param>
-        /// <param name="recipients">
-        /// Gets or sets list of notified recipients for new requests
-        /// Serialized Name: PrivateStore.properties.notificationsSettings.recipients
-        /// </param>
-        /// <param name="sendToAllMarketplaceAdmins">
-        /// Gets or sets whether to send email to all marketplace admins for new requests
-        /// Serialized Name: PrivateStore.properties.notificationsSettings.sendToAllMarketplaceAdmins
-        /// </param>
-        internal PrivateStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateStoreAvailability? availability, Guid? privateStoreId, ETag? eTag, string privateStoreName, Guid? tenantId, bool? isGov, IReadOnlyList<Guid> collectionIds, IDictionary<string, string> branding, IList<Recipient> recipients, bool? sendToAllMarketplaceAdmins) : base(id, name, resourceType, systemData)
+        /// <param name="availability"> Indicates private store availability. </param>
+        /// <param name="privateStoreId"> Private Store id. </param>
+        /// <param name="eTag"> Identifier for purposes of race condition. </param>
+        /// <param name="privateStoreName"> Private Store Name. </param>
+        /// <param name="tenantId"> Tenant id. </param>
+        /// <param name="isGov"> Is government. </param>
+        /// <param name="collectionIds"> Gets list of associated collection ids. </param>
+        /// <param name="branding"> Gets or sets list of branding characteristics. </param>
+        /// <param name="recipients"> Gets or sets list of notified recipients for new requests. </param>
+        /// <param name="sendToAllMarketplaceAdmins"> Gets or sets whether to send email to all marketplace admins for new requests. </param>
+        internal PrivateStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PrivateStoreAvailability? availability, Guid? privateStoreId, ETag? eTag, string privateStoreName, Guid? tenantId, bool? isGov, IReadOnlyList<Guid> collectionIds, IDictionary<string, string> branding, IList<NotificationRecipient> recipients, bool? sendToAllMarketplaceAdmins) : base(id, name, resourceType, systemData)
         {
             Availability = availability;
             PrivateStoreId = privateStoreId;
@@ -84,55 +54,25 @@ namespace Azure.ResourceManager.Marketplace
             SendToAllMarketplaceAdmins = sendToAllMarketplaceAdmins;
         }
 
-        /// <summary>
-        /// Indicates private store availability
-        /// Serialized Name: PrivateStore.properties.availability
-        /// </summary>
+        /// <summary> Indicates private store availability. </summary>
         public PrivateStoreAvailability? Availability { get; set; }
-        /// <summary>
-        /// Private Store id
-        /// Serialized Name: PrivateStore.properties.privateStoreId
-        /// </summary>
+        /// <summary> Private Store id. </summary>
         public Guid? PrivateStoreId { get; }
-        /// <summary>
-        /// Identifier for purposes of race condition
-        /// Serialized Name: PrivateStore.properties.eTag
-        /// </summary>
+        /// <summary> Identifier for purposes of race condition. </summary>
         public ETag? ETag { get; set; }
-        /// <summary>
-        /// Private Store Name
-        /// Serialized Name: PrivateStore.properties.privateStoreName
-        /// </summary>
+        /// <summary> Private Store Name. </summary>
         public string PrivateStoreName { get; set; }
-        /// <summary>
-        /// Tenant id
-        /// Serialized Name: PrivateStore.properties.tenantId
-        /// </summary>
+        /// <summary> Tenant id. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary>
-        /// Is government
-        /// Serialized Name: PrivateStore.properties.isGov
-        /// </summary>
+        /// <summary> Is government. </summary>
         public bool? IsGov { get; set; }
-        /// <summary>
-        /// Gets list of associated collection ids
-        /// Serialized Name: PrivateStore.properties.collectionIds
-        /// </summary>
+        /// <summary> Gets list of associated collection ids. </summary>
         public IReadOnlyList<Guid> CollectionIds { get; }
-        /// <summary>
-        /// Gets or sets list of branding characteristics
-        /// Serialized Name: PrivateStore.properties.branding
-        /// </summary>
+        /// <summary> Gets or sets list of branding characteristics. </summary>
         public IDictionary<string, string> Branding { get; }
-        /// <summary>
-        /// Gets or sets list of notified recipients for new requests
-        /// Serialized Name: PrivateStore.properties.notificationsSettings.recipients
-        /// </summary>
-        public IList<Recipient> Recipients { get; }
-        /// <summary>
-        /// Gets or sets whether to send email to all marketplace admins for new requests
-        /// Serialized Name: PrivateStore.properties.notificationsSettings.sendToAllMarketplaceAdmins
-        /// </summary>
+        /// <summary> Gets or sets list of notified recipients for new requests. </summary>
+        public IList<NotificationRecipient> Recipients { get; }
+        /// <summary> Gets or sets whether to send email to all marketplace admins for new requests. </summary>
         public bool? SendToAllMarketplaceAdmins { get; set; }
     }
 }

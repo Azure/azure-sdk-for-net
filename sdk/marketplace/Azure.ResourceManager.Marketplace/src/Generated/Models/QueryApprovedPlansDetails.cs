@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// Query approved plans response
-    /// Serialized Name: QueryApprovedPlansDetails
-    /// </summary>
+    /// <summary> Query approved plans response. </summary>
     public partial class QueryApprovedPlansDetails
     {
         /// <summary> Initializes a new instance of QueryApprovedPlansDetails. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of QueryApprovedPlansDetails. </summary>
-        /// <param name="planId">
-        /// Plan id
-        /// Serialized Name: QueryApprovedPlansDetails.planId
-        /// </param>
-        /// <param name="subscriptionIds">
-        /// Approved subscription ids list. In case all subscriptions are approved for a plan, allSubscriptions flag is true and list is empty ( else flag is set to false). In case both subscriptions list is empty and allSubscriptions flag is false, the plan is not approved for any subscription.
-        /// Serialized Name: QueryApprovedPlansDetails.subscriptionIds
-        /// </param>
-        /// <param name="allSubscriptions">
-        /// Indicates whether all subscriptions are approved for this plan
-        /// Serialized Name: QueryApprovedPlansDetails.allSubscriptions
-        /// </param>
+        /// <param name="planId"> Plan id. </param>
+        /// <param name="subscriptionIds"> Approved subscription ids list. In case all subscriptions are approved for a plan, allSubscriptions flag is true and list is empty ( else flag is set to false). In case both subscriptions list is empty and allSubscriptions flag is false, the plan is not approved for any subscription. </param>
+        /// <param name="allSubscriptions"> Indicates whether all subscriptions are approved for this plan. </param>
         internal QueryApprovedPlansDetails(string planId, IReadOnlyList<string> subscriptionIds, bool? allSubscriptions)
         {
             PlanId = planId;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             AllSubscriptions = allSubscriptions;
         }
 
-        /// <summary>
-        /// Plan id
-        /// Serialized Name: QueryApprovedPlansDetails.planId
-        /// </summary>
+        /// <summary> Plan id. </summary>
         public string PlanId { get; }
-        /// <summary>
-        /// Approved subscription ids list. In case all subscriptions are approved for a plan, allSubscriptions flag is true and list is empty ( else flag is set to false). In case both subscriptions list is empty and allSubscriptions flag is false, the plan is not approved for any subscription.
-        /// Serialized Name: QueryApprovedPlansDetails.subscriptionIds
-        /// </summary>
+        /// <summary> Approved subscription ids list. In case all subscriptions are approved for a plan, allSubscriptions flag is true and list is empty ( else flag is set to false). In case both subscriptions list is empty and allSubscriptions flag is false, the plan is not approved for any subscription. </summary>
         public IReadOnlyList<string> SubscriptionIds { get; }
-        /// <summary>
-        /// Indicates whether all subscriptions are approved for this plan
-        /// Serialized Name: QueryApprovedPlansDetails.allSubscriptions
-        /// </summary>
+        /// <summary> Indicates whether all subscriptions are approved for this plan. </summary>
         public bool? AllSubscriptions { get; }
     }
 }

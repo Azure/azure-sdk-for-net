@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Marketplace
             Optional<IList<string>> specificPlanIdsLimitation = default;
             Optional<bool> updateSuppressedDueIdempotence = default;
             Optional<IDictionary<string, Uri>> iconFileUris = default;
-            Optional<IList<PrivateStoreOfferPlan>> plans = default;
+            Optional<IList<PrivateStorePlan>> plans = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -222,10 +222,10 @@ namespace Azure.ResourceManager.Marketplace
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PrivateStoreOfferPlan> array = new List<PrivateStoreOfferPlan>();
+                            List<PrivateStorePlan> array = new List<PrivateStorePlan>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateStoreOfferPlan.DeserializePrivateStoreOfferPlan(item));
+                                array.Add(PrivateStorePlan.DeserializePrivateStorePlan(item));
                             }
                             plans = array;
                             continue;

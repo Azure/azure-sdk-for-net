@@ -11,10 +11,7 @@ using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// List of admin request approval resources
-    /// Serialized Name: AdminRequestApprovalsList
-    /// </summary>
+    /// <summary> List of admin request approval resources. </summary>
     internal partial class MarketplaceAdminApprovalRequestList
     {
         /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestList. </summary>
@@ -24,23 +21,17 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of MarketplaceAdminApprovalRequestList. </summary>
-        /// <param name="value"> Serialized Name: AdminRequestApprovalsList.value. </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of notifications list results if there are any.
-        /// Serialized Name: AdminRequestApprovalsList.nextLink
-        /// </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"> URL to get the next set of notifications list results if there are any. </param>
         internal MarketplaceAdminApprovalRequestList(IReadOnlyList<MarketplaceAdminApprovalRequestData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Serialized Name: AdminRequestApprovalsList.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<MarketplaceAdminApprovalRequestData> Value { get; }
-        /// <summary>
-        /// URL to get the next set of notifications list results if there are any.
-        /// Serialized Name: AdminRequestApprovalsList.nextLink
-        /// </summary>
+        /// <summary> URL to get the next set of notifications list results if there are any. </summary>
         public string NextLink { get; }
     }
 }

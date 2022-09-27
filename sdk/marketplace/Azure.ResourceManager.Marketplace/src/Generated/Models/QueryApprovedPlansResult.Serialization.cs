@@ -11,30 +11,30 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class NewPrivateStoreOfferPlanNotificationList
+    public partial class QueryApprovedPlansResult
     {
-        internal static NewPrivateStoreOfferPlanNotificationList DeserializeNewPrivateStoreOfferPlanNotificationList(JsonElement element)
+        internal static QueryApprovedPlansResult DeserializeQueryApprovedPlansResult(JsonElement element)
         {
-            Optional<IReadOnlyList<NewPrivateStoreOfferPlanNotification>> newPlansNotifications = default;
+            Optional<IReadOnlyList<QueryApprovedPlansDetails>> details = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("newPlansNotifications"))
+                if (property.NameEquals("details"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NewPrivateStoreOfferPlanNotification> array = new List<NewPrivateStoreOfferPlanNotification>();
+                    List<QueryApprovedPlansDetails> array = new List<QueryApprovedPlansDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewPrivateStoreOfferPlanNotification.DeserializeNewPrivateStoreOfferPlanNotification(item));
+                        array.Add(QueryApprovedPlansDetails.DeserializeQueryApprovedPlansDetails(item));
                     }
-                    newPlansNotifications = array;
+                    details = array;
                     continue;
                 }
             }
-            return new NewPrivateStoreOfferPlanNotificationList(Optional.ToList(newPlansNotifications));
+            return new QueryApprovedPlansResult(Optional.ToList(details));
         }
     }
 }

@@ -7,10 +7,7 @@
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// Subscription information.
-    /// Serialized Name: Subscription
-    /// </summary>
+    /// <summary> Subscription information. </summary>
     public partial class MarketplaceSubscription
     {
         /// <summary> Initializes a new instance of MarketplaceSubscription. </summary>
@@ -19,23 +16,11 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of MarketplaceSubscription. </summary>
-        /// <param name="id">
-        /// The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000.
-        /// Serialized Name: Subscription.id
-        /// </param>
-        /// <param name="subscriptionId">
-        /// The subscription ID.
-        /// Serialized Name: Subscription.subscriptionId
-        /// </param>
-        /// <param name="displayName">
-        /// The subscription display name.
-        /// Serialized Name: Subscription.displayName
-        /// </param>
-        /// <param name="state">
-        /// The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted.
-        /// Serialized Name: Subscription.state
-        /// </param>
-        internal MarketplaceSubscription(string id, string subscriptionId, string displayName, SubscriptionState? state)
+        /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000. </param>
+        /// <param name="subscriptionId"> The subscription ID. </param>
+        /// <param name="displayName"> The subscription display name. </param>
+        /// <param name="state"> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </param>
+        internal MarketplaceSubscription(string id, string subscriptionId, string displayName, MarketplaceSubscriptionState? state)
         {
             Id = id;
             SubscriptionId = subscriptionId;
@@ -43,25 +28,13 @@ namespace Azure.ResourceManager.Marketplace.Models
             State = state;
         }
 
-        /// <summary>
-        /// The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000.
-        /// Serialized Name: Subscription.id
-        /// </summary>
+        /// <summary> The fully qualified ID for the subscription. For example, /subscriptions/00000000-0000-0000-0000-000000000000. </summary>
         public string Id { get; }
-        /// <summary>
-        /// The subscription ID.
-        /// Serialized Name: Subscription.subscriptionId
-        /// </summary>
+        /// <summary> The subscription ID. </summary>
         public string SubscriptionId { get; }
-        /// <summary>
-        /// The subscription display name.
-        /// Serialized Name: Subscription.displayName
-        /// </summary>
+        /// <summary> The subscription display name. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted.
-        /// Serialized Name: Subscription.state
-        /// </summary>
-        public SubscriptionState? State { get; }
+        /// <summary> The subscription state. Possible values are Enabled, Warned, PastDue, Disabled, and Deleted. </summary>
+        public MarketplaceSubscriptionState? State { get; }
     }
 }

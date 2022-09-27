@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Marketplace
         public long? MessageCode { get { throw null; } set { } }
         public string OfferDisplayName { get { throw null; } }
         public string OfferId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.PlanDetails> PlansDetails { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.PrivateStorePlanDetails> PlansDetails { get { throw null; } }
         public string PublisherId { get { throw null; } set { } }
     }
     public partial class MarketplaceApprovalRequestResource : Azure.ResourceManager.ArmResource
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Marketplace
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(System.Guid privateStoreId, string requestApprovalId) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryRequestApproval> QueryRequestApproval(Azure.ResourceManager.Marketplace.Models.QueryRequestApprovalProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryRequestApproval>> QueryRequestApprovalAsync(Azure.ResourceManager.Marketplace.Models.QueryRequestApprovalProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestResult> QueryApprovalRequest(Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestResult>> QueryApprovalRequestAsync(Azure.ResourceManager.Marketplace.Models.QueryApprovalRequestContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response WithdrawPlan(Azure.ResourceManager.Marketplace.Models.WithdrawProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> WithdrawPlanAsync(Azure.ResourceManager.Marketplace.Models.WithdrawProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response WithdrawPlan(Azure.ResourceManager.Marketplace.Models.WithdrawPlanContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> WithdrawPlanAsync(Azure.ResourceManager.Marketplace.Models.WithdrawPlanContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public static partial class MarketplaceExtensions
     {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Marketplace
         public bool? IsGov { get { throw null; } set { } }
         public System.Guid? PrivateStoreId { get { throw null; } }
         public string PrivateStoreName { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.Recipient> Recipients { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.NotificationRecipient> Recipients { get { throw null; } }
         public bool? SendToAllMarketplaceAdmins { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
     }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Marketplace
         public bool? IsUpdateSuppressedDueIdempotence { get { throw null; } set { } }
         public System.DateTimeOffset? ModifiedOn { get { throw null; } }
         public string OfferDisplayName { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferPlan> Plans { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.PrivateStorePlan> Plans { get { throw null; } }
         public System.Guid? PrivateStoreId { get { throw null; } }
         public string PublisherDisplayName { get { throw null; } }
         public System.Collections.Generic.IList<string> SpecificPlanIdsLimitation { get { throw null; } }
@@ -252,8 +252,8 @@ namespace Azure.ResourceManager.Marketplace
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource> GetMarketplaceApprovalRequest(string requestApprovalId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource>> GetMarketplaceApprovalRequestAsync(string requestApprovalId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestCollection GetMarketplaceApprovalRequests() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.NewPrivateStoreOfferPlanNotificationList> GetNewPlansNotifications(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.NewPrivateStoreOfferPlanNotificationList>> GetNewPlansNotificationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.NewPlanNotificationListResult> GetNewPlansNotifications(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.NewPlanNotificationListResult>> GetNewPlansNotificationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource> GetPrivateStoreCollectionInfo(System.Guid collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource>> GetPrivateStoreCollectionInfoAsync(System.Guid collectionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoCollection GetPrivateStoreCollectionInfos() { throw null; }
@@ -261,14 +261,14 @@ namespace Azure.ResourceManager.Marketplace
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsList>> GetStopSellOffersPlansNotificationsAsync(Azure.ResourceManager.Marketplace.Models.StopSellSubscriptions stopSellSubscriptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.SubscriptionsContextList> GetSubscriptionsContext(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.SubscriptionsContextList>> GetSubscriptionsContextAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansResponse> QueryApprovedPlans(Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansPayload payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansResponse>> QueryApprovedPlansAsync(Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansPayload payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansResult> QueryApprovedPlans(Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansResult>> QueryApprovedPlansAsync(Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.Models.PrivateStoreNotificationsState> QueryNotificationsState(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.Models.PrivateStoreNotificationsState>> QueryNotificationsStateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> QueryOffers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> QueryOffersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> QueryUserOffers(Azure.ResourceManager.Marketplace.Models.QueryUserOffersProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> QueryUserOffersAsync(Azure.ResourceManager.Marketplace.Models.QueryUserOffersProperties payload = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> QueryUserOffers(Azure.ResourceManager.Marketplace.Models.QueryUserOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferResult> QueryUserOffersAsync(Azure.ResourceManager.Marketplace.Models.QueryUserOffersContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Marketplace.PrivateStoreData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -346,8 +346,29 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal MarketplaceSubscription() { }
         public string DisplayName { get { throw null; } }
         public string Id { get { throw null; } }
-        public Azure.ResourceManager.Marketplace.Models.SubscriptionState? State { get { throw null; } }
+        public Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState? State { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MarketplaceSubscriptionState : System.IEquatable<Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MarketplaceSubscriptionState(string value) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState Enabled { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState PastDue { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState Warned { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState left, Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState left, Azure.ResourceManager.Marketplace.Models.MarketplaceSubscriptionState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class MultiContextAndPlansContent
     {
@@ -356,9 +377,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string OfferId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Marketplace.Models.ContextAndPlansDetails> PlansContext { get { throw null; } }
     }
-    public partial class NewPrivateStoreOfferPlanNotification
+    public partial class NewPlanNotification
     {
-        internal NewPrivateStoreOfferPlanNotification() { }
+        internal NewPlanNotification() { }
         public string DisplayName { get { throw null; } }
         public System.Uri IconUri { get { throw null; } }
         public bool? IsFuturePlansEnabled { get { throw null; } }
@@ -366,20 +387,17 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string OfferId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails> Plans { get { throw null; } }
     }
-    public partial class NewPrivateStoreOfferPlanNotificationList
+    public partial class NewPlanNotificationListResult
     {
-        internal NewPrivateStoreOfferPlanNotificationList() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.NewPrivateStoreOfferPlanNotification> NewPlansNotifications { get { throw null; } }
+        internal NewPlanNotificationListResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.NewPlanNotification> NewPlansNotifications { get { throw null; } }
     }
-    public partial class PlanDetails
+    public partial class NotificationRecipient
     {
-        public PlanDetails() { }
-        public string Justification { get { throw null; } set { } }
-        public string PlanId { get { throw null; } set { } }
-        public System.BinaryData RequestDate { get { throw null; } }
-        public Azure.ResourceManager.Marketplace.Models.Status? Status { get { throw null; } }
-        public string SubscriptionId { get { throw null; } set { } }
-        public string SubscriptionName { get { throw null; } set { } }
+        public NotificationRecipient() { }
+        public string DisplayName { get { throw null; } }
+        public string EmailAddress { get { throw null; } }
+        public System.Guid? PrincipalId { get { throw null; } set { } }
     }
     public partial class PlanNotificationDetails
     {
@@ -392,7 +410,16 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal PlanRequesterDetails() { }
         public string PlanDisplayName { get { throw null; } }
         public string PlanId { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.UserRequestDetails> Requesters { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PlanRequesterInfo> Requesters { get { throw null; } }
+    }
+    public partial class PlanRequesterInfo
+    {
+        internal PlanRequesterInfo() { }
+        public string Date { get { throw null; } }
+        public string Justification { get { throw null; } }
+        public string SubscriptionId { get { throw null; } }
+        public string SubscriptionName { get { throw null; } }
+        public string User { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PrivateStoreAvailability : System.IEquatable<Azure.ResourceManager.Marketplace.Models.PrivateStoreAvailability>
@@ -427,38 +454,8 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal PrivateStoreNotificationsState() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.RequestApprovalsDetails> ApprovalRequests { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.NewPrivateStoreOfferPlanNotification> NewNotifications { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.NewPlanNotification> NewNotifications { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.StopSellNotifications> StopSellNotifications { get { throw null; } }
-    }
-    public partial class PrivateStoreOfferPlan
-    {
-        public PrivateStoreOfferPlan() { }
-        public Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferPlanAccessibility? Accessibility { get { throw null; } set { } }
-        public string AltStackReference { get { throw null; } }
-        public string PlanDisplayName { get { throw null; } }
-        public string PlanId { get { throw null; } }
-        public string SkuId { get { throw null; } }
-        public string StackType { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PrivateStoreOfferPlanAccessibility : System.IEquatable<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferPlanAccessibility>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PrivateStoreOfferPlanAccessibility(string value) { throw null; }
-        public static Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferPlanAccessibility PrivateSubscriptionOnLevel { get { throw null; } }
-        public static Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferPlanAccessibility PrivateTenantOnLevel { get { throw null; } }
-        public static Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferPlanAccessibility Public { get { throw null; } }
-        public static Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferPlanAccessibility Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferPlanAccessibility other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferPlanAccessibility left, Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferPlanAccessibility right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferPlanAccessibility (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferPlanAccessibility left, Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferPlanAccessibility right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class PrivateStoreOfferResult
     {
@@ -469,7 +466,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         public bool? IsUpdateSuppressedDueIdempotence { get { throw null; } }
         public System.DateTimeOffset? ModifiedOn { get { throw null; } }
         public string OfferDisplayName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PrivateStoreOfferPlan> Plans { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PrivateStorePlan> Plans { get { throw null; } }
         public System.Guid? PrivateStoreId { get { throw null; } }
         public string PublisherDisplayName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SpecificPlanIdsLimitation { get { throw null; } }
@@ -495,6 +492,88 @@ namespace Azure.ResourceManager.Marketplace.Models
         public static bool operator !=(Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation left, Azure.ResourceManager.Marketplace.Models.PrivateStoreOperation right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class PrivateStorePlan
+    {
+        public PrivateStorePlan() { }
+        public Azure.ResourceManager.Marketplace.Models.PrivateStorePlanAccessibility? Accessibility { get { throw null; } set { } }
+        public string AltStackReference { get { throw null; } }
+        public string PlanDisplayName { get { throw null; } }
+        public string PlanId { get { throw null; } }
+        public string SkuId { get { throw null; } }
+        public string StackType { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PrivateStorePlanAccessibility : System.IEquatable<Azure.ResourceManager.Marketplace.Models.PrivateStorePlanAccessibility>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PrivateStorePlanAccessibility(string value) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStorePlanAccessibility PrivateSubscriptionOnLevel { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStorePlanAccessibility PrivateTenantOnLevel { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStorePlanAccessibility Public { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStorePlanAccessibility Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Marketplace.Models.PrivateStorePlanAccessibility other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Marketplace.Models.PrivateStorePlanAccessibility left, Azure.ResourceManager.Marketplace.Models.PrivateStorePlanAccessibility right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Marketplace.Models.PrivateStorePlanAccessibility (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Marketplace.Models.PrivateStorePlanAccessibility left, Azure.ResourceManager.Marketplace.Models.PrivateStorePlanAccessibility right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class PrivateStorePlanDetails
+    {
+        public PrivateStorePlanDetails() { }
+        public string Justification { get { throw null; } set { } }
+        public string PlanId { get { throw null; } set { } }
+        public System.BinaryData RequestDate { get { throw null; } }
+        public Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus? Status { get { throw null; } }
+        public string SubscriptionId { get { throw null; } set { } }
+        public string SubscriptionName { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PrivateStorePlanStatus : System.IEquatable<Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PrivateStorePlanStatus(string value) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus Approved { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus None { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus Pending { get { throw null; } }
+        public static Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus Rejected { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus left, Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus left, Azure.ResourceManager.Marketplace.Models.PrivateStorePlanStatus right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class QueryApprovalRequestContent
+    {
+        public QueryApprovalRequestContent() { }
+        public System.Collections.Generic.IList<string> PlanIds { get { throw null; } }
+        public string PublisherId { get { throw null; } set { } }
+        public string SubscriptionId { get { throw null; } set { } }
+    }
+    public partial class QueryApprovalRequestResult
+    {
+        internal QueryApprovalRequestResult() { }
+        public Azure.ETag? ETag { get { throw null; } }
+        public long? MessageCode { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Marketplace.Models.PrivateStorePlanDetails> PlansDetails { get { throw null; } }
+        public string UniqueOfferId { get { throw null; } }
+    }
+    public partial class QueryApprovedPlansContent
+    {
+        public QueryApprovedPlansContent() { }
+        public string OfferId { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> PlanIds { get { throw null; } }
+        public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
+    }
     public partial class QueryApprovedPlansDetails
     {
         internal QueryApprovedPlansDetails() { }
@@ -502,43 +581,16 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string PlanId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SubscriptionIds { get { throw null; } }
     }
-    public partial class QueryApprovedPlansPayload
+    public partial class QueryApprovedPlansResult
     {
-        public QueryApprovedPlansPayload() { }
-        public string OfferId { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> PlanIds { get { throw null; } }
-        public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
-    }
-    public partial class QueryApprovedPlansResponse
-    {
-        internal QueryApprovedPlansResponse() { }
+        internal QueryApprovedPlansResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.QueryApprovedPlansDetails> Details { get { throw null; } }
     }
-    public partial class QueryRequestApproval
+    public partial class QueryUserOffersContent
     {
-        internal QueryRequestApproval() { }
-        public Azure.ETag? ETag { get { throw null; } }
-        public long? MessageCode { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Marketplace.Models.PlanDetails> PlansDetails { get { throw null; } }
-        public string UniqueOfferId { get { throw null; } }
-    }
-    public partial class QueryRequestApprovalProperties
-    {
-        public QueryRequestApprovalProperties() { }
-        public Azure.ResourceManager.Marketplace.Models.RequestDetails Properties { get { throw null; } set { } }
-    }
-    public partial class QueryUserOffersProperties
-    {
-        public QueryUserOffersProperties() { }
+        public QueryUserOffersContent() { }
         public System.Collections.Generic.IList<string> OfferIds { get { throw null; } }
         public System.Collections.Generic.IList<string> SubscriptionIds { get { throw null; } }
-    }
-    public partial class Recipient
-    {
-        public Recipient() { }
-        public string DisplayName { get { throw null; } }
-        public string EmailAddress { get { throw null; } }
-        public string PrincipalId { get { throw null; } set { } }
     }
     public partial class RequestApprovalsDetails
     {
@@ -549,33 +601,6 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string OfferId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails> Plans { get { throw null; } }
         public string PublisherId { get { throw null; } }
-    }
-    public partial class RequestDetails
-    {
-        public RequestDetails() { }
-        public System.Collections.Generic.IList<string> PlanIds { get { throw null; } }
-        public string PublisherId { get { throw null; } set { } }
-        public string SubscriptionId { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.Marketplace.Models.Status>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Status(string value) { throw null; }
-        public static Azure.ResourceManager.Marketplace.Models.Status Approved { get { throw null; } }
-        public static Azure.ResourceManager.Marketplace.Models.Status None { get { throw null; } }
-        public static Azure.ResourceManager.Marketplace.Models.Status Pending { get { throw null; } }
-        public static Azure.ResourceManager.Marketplace.Models.Status Rejected { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Marketplace.Models.Status other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Marketplace.Models.Status left, Azure.ResourceManager.Marketplace.Models.Status right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Marketplace.Models.Status (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Marketplace.Models.Status left, Azure.ResourceManager.Marketplace.Models.Status right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class StopSellNotifications
     {
@@ -590,18 +615,18 @@ namespace Azure.ResourceManager.Marketplace.Models
     public partial class StopSellOffersPlansNotificationsList
     {
         internal StopSellOffersPlansNotificationsList() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsListProperties> StopSellNotifications { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.StopSellOffersPlansNotificationsResult> StopSellNotifications { get { throw null; } }
     }
-    public partial class StopSellOffersPlansNotificationsListProperties
+    public partial class StopSellOffersPlansNotificationsResult
     {
-        internal StopSellOffersPlansNotificationsListProperties() { }
+        internal StopSellOffersPlansNotificationsResult() { }
         public string DisplayName { get { throw null; } }
-        public string Icon { get { throw null; } }
-        public bool? IsEntire { get { throw null; } }
+        public bool? HasPublicContext { get { throw null; } }
+        public System.Uri IconUri { get { throw null; } }
+        public bool? IsEntireInStopSell { get { throw null; } }
         public long? MessageCode { get { throw null; } }
         public string OfferId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PlanNotificationDetails> Plans { get { throw null; } }
-        public bool? PublicContext { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SubscriptionsIds { get { throw null; } }
     }
     public partial class StopSellSubscriptions
@@ -613,27 +638,6 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal SubscriptionsContextList() { }
         public System.Collections.Generic.IReadOnlyList<string> SubscriptionsIds { get { throw null; } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SubscriptionState : System.IEquatable<Azure.ResourceManager.Marketplace.Models.SubscriptionState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SubscriptionState(string value) { throw null; }
-        public static Azure.ResourceManager.Marketplace.Models.SubscriptionState Deleted { get { throw null; } }
-        public static Azure.ResourceManager.Marketplace.Models.SubscriptionState Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Marketplace.Models.SubscriptionState Enabled { get { throw null; } }
-        public static Azure.ResourceManager.Marketplace.Models.SubscriptionState PastDue { get { throw null; } }
-        public static Azure.ResourceManager.Marketplace.Models.SubscriptionState Warned { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Marketplace.Models.SubscriptionState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Marketplace.Models.SubscriptionState left, Azure.ResourceManager.Marketplace.Models.SubscriptionState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Marketplace.Models.SubscriptionState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Marketplace.Models.SubscriptionState left, Azure.ResourceManager.Marketplace.Models.SubscriptionState right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class TransferOffersContent
     {
@@ -648,18 +652,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails> Failed { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Marketplace.Models.PrivateStoreCollectionDetails> Succeeded { get { throw null; } }
     }
-    public partial class UserRequestDetails
+    public partial class WithdrawPlanContent
     {
-        internal UserRequestDetails() { }
-        public string Date { get { throw null; } }
-        public string Justification { get { throw null; } }
-        public string SubscriptionId { get { throw null; } }
-        public string SubscriptionName { get { throw null; } }
-        public string User { get { throw null; } }
-    }
-    public partial class WithdrawProperties
-    {
-        public WithdrawProperties() { }
+        public WithdrawPlanContent() { }
         public string PlanId { get { throw null; } set { } }
         public string PublisherId { get { throw null; } set { } }
     }

@@ -29,46 +29,16 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="offerId">
-        /// Gets or sets offer Id
-        /// Serialized Name: AdminRequestApprovalsResource.properties.offerId
-        /// </param>
-        /// <param name="displayName">
-        /// Gets display name
-        /// Serialized Name: AdminRequestApprovalsResource.properties.displayName
-        /// </param>
-        /// <param name="publisherId">
-        /// Gets or sets publisher Id
-        /// Serialized Name: AdminRequestApprovalsResource.properties.publisherId
-        /// </param>
-        /// <param name="adminAction">
-        /// Gets or sets admin action
-        /// Serialized Name: AdminRequestApprovalsResource.properties.adminAction
-        /// </param>
-        /// <param name="approvedPlans">
-        /// Gets or sets Approved plans ids, empty in case of rejected
-        /// Serialized Name: AdminRequestApprovalsResource.properties.approvedPlans
-        /// </param>
-        /// <param name="comment">
-        /// Gets or sets admin comment
-        /// Serialized Name: AdminRequestApprovalsResource.properties.comment
-        /// </param>
-        /// <param name="administrator">
-        /// Gets or sets admin details
-        /// Serialized Name: AdminRequestApprovalsResource.properties.administrator
-        /// </param>
-        /// <param name="plans">
-        /// Gets list of plans with requesters details
-        /// Serialized Name: AdminRequestApprovalsResource.properties.plans
-        /// </param>
-        /// <param name="collectionIds">
-        /// Gets or sets list of associated collection ids
-        /// Serialized Name: AdminRequestApprovalsResource.properties.collectionIds
-        /// </param>
-        /// <param name="iconUri">
-        /// The offer icon url.
-        /// Serialized Name: AdminRequestApprovalsResource.properties.icon
-        /// </param>
+        /// <param name="offerId"> Gets or sets offer Id. </param>
+        /// <param name="displayName"> Gets display name. </param>
+        /// <param name="publisherId"> Gets or sets publisher Id. </param>
+        /// <param name="adminAction"> Gets or sets admin action. </param>
+        /// <param name="approvedPlans"> Gets or sets Approved plans ids, empty in case of rejected. </param>
+        /// <param name="comment"> Gets or sets admin comment. </param>
+        /// <param name="administrator"> Gets or sets admin details. </param>
+        /// <param name="plans"> Gets list of plans with requesters details. </param>
+        /// <param name="collectionIds"> Gets or sets list of associated collection ids. </param>
+        /// <param name="iconUri"> The offer icon url. </param>
         internal MarketplaceAdminApprovalRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string offerId, string displayName, string publisherId, MarketplaceAdminAction? adminAction, IList<string> approvedPlans, string comment, string administrator, IReadOnlyList<PlanRequesterDetails> plans, IList<Guid> collectionIds, Uri iconUri) : base(id, name, resourceType, systemData)
         {
             OfferId = offerId;
@@ -83,55 +53,25 @@ namespace Azure.ResourceManager.Marketplace
             IconUri = iconUri;
         }
 
-        /// <summary>
-        /// Gets or sets offer Id
-        /// Serialized Name: AdminRequestApprovalsResource.properties.offerId
-        /// </summary>
+        /// <summary> Gets or sets offer Id. </summary>
         public string OfferId { get; set; }
-        /// <summary>
-        /// Gets display name
-        /// Serialized Name: AdminRequestApprovalsResource.properties.displayName
-        /// </summary>
+        /// <summary> Gets display name. </summary>
         public string DisplayName { get; }
-        /// <summary>
-        /// Gets or sets publisher Id
-        /// Serialized Name: AdminRequestApprovalsResource.properties.publisherId
-        /// </summary>
+        /// <summary> Gets or sets publisher Id. </summary>
         public string PublisherId { get; set; }
-        /// <summary>
-        /// Gets or sets admin action
-        /// Serialized Name: AdminRequestApprovalsResource.properties.adminAction
-        /// </summary>
+        /// <summary> Gets or sets admin action. </summary>
         public MarketplaceAdminAction? AdminAction { get; set; }
-        /// <summary>
-        /// Gets or sets Approved plans ids, empty in case of rejected
-        /// Serialized Name: AdminRequestApprovalsResource.properties.approvedPlans
-        /// </summary>
+        /// <summary> Gets or sets Approved plans ids, empty in case of rejected. </summary>
         public IList<string> ApprovedPlans { get; }
-        /// <summary>
-        /// Gets or sets admin comment
-        /// Serialized Name: AdminRequestApprovalsResource.properties.comment
-        /// </summary>
+        /// <summary> Gets or sets admin comment. </summary>
         public string Comment { get; set; }
-        /// <summary>
-        /// Gets or sets admin details
-        /// Serialized Name: AdminRequestApprovalsResource.properties.administrator
-        /// </summary>
+        /// <summary> Gets or sets admin details. </summary>
         public string Administrator { get; set; }
-        /// <summary>
-        /// Gets list of plans with requesters details
-        /// Serialized Name: AdminRequestApprovalsResource.properties.plans
-        /// </summary>
+        /// <summary> Gets list of plans with requesters details. </summary>
         public IReadOnlyList<PlanRequesterDetails> Plans { get; }
-        /// <summary>
-        /// Gets or sets list of associated collection ids
-        /// Serialized Name: AdminRequestApprovalsResource.properties.collectionIds
-        /// </summary>
+        /// <summary> Gets or sets list of associated collection ids. </summary>
         public IList<Guid> CollectionIds { get; }
-        /// <summary>
-        /// The offer icon url.
-        /// Serialized Name: AdminRequestApprovalsResource.properties.icon
-        /// </summary>
+        /// <summary> The offer icon url. </summary>
         public Uri IconUri { get; }
     }
 }

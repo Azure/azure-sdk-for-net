@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// The bulk collections response. The response contains two lists that indicate for each collection whether the operation succeeded or failed
-    /// Serialized Name: BulkCollectionsResponse
-    /// </summary>
+    /// <summary> The bulk collections response. The response contains two lists that indicate for each collection whether the operation succeeded or failed. </summary>
     public partial class BulkCollectionsActionResult
     {
         /// <summary> Initializes a new instance of BulkCollectionsActionResult. </summary>
@@ -24,29 +21,17 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of BulkCollectionsActionResult. </summary>
-        /// <param name="succeeded">
-        /// Succeeded collections
-        /// Serialized Name: BulkCollectionsResponse.succeeded
-        /// </param>
-        /// <param name="failed">
-        /// Failed collections
-        /// Serialized Name: BulkCollectionsResponse.failed
-        /// </param>
+        /// <param name="succeeded"> Succeeded collections. </param>
+        /// <param name="failed"> Failed collections. </param>
         internal BulkCollectionsActionResult(IReadOnlyList<PrivateStoreCollectionDetails> succeeded, IReadOnlyList<PrivateStoreCollectionDetails> failed)
         {
             Succeeded = succeeded;
             Failed = failed;
         }
 
-        /// <summary>
-        /// Succeeded collections
-        /// Serialized Name: BulkCollectionsResponse.succeeded
-        /// </summary>
+        /// <summary> Succeeded collections. </summary>
         public IReadOnlyList<PrivateStoreCollectionDetails> Succeeded { get; }
-        /// <summary>
-        /// Failed collections
-        /// Serialized Name: BulkCollectionsResponse.failed
-        /// </summary>
+        /// <summary> Failed collections. </summary>
         public IReadOnlyList<PrivateStoreCollectionDetails> Failed { get; }
     }
 }

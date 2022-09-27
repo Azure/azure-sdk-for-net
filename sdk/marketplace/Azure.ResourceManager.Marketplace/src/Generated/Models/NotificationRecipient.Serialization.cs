@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class Recipient : IUtf8JsonSerializable
+    public partial class NotificationRecipient : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -18,21 +19,26 @@ namespace Azure.ResourceManager.Marketplace.Models
             if (Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId");
-                writer.WriteStringValue(PrincipalId);
+                writer.WriteStringValue(PrincipalId.Value);
             }
             writer.WriteEndObject();
         }
 
-        internal static Recipient DeserializeRecipient(JsonElement element)
+        internal static NotificationRecipient DeserializeNotificationRecipient(JsonElement element)
         {
-            Optional<string> principalId = default;
+            Optional<Guid> principalId = default;
             Optional<string> emailAddress = default;
             Optional<string> displayName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"))
                 {
-                    principalId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("emailAddress"))
@@ -46,7 +52,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new Recipient(principalId.Value, emailAddress.Value, displayName.Value);
+            return new NotificationRecipient(Optional.ToNullable(principalId), emailAddress.Value, displayName.Value);
         }
     }
 }

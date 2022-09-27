@@ -10,15 +10,17 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class RequestDetails : IUtf8JsonSerializable
+    public partial class QueryApprovedPlansContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PublisherId))
+            writer.WritePropertyName("properties");
+            writer.WriteStartObject();
+            if (Optional.IsDefined(OfferId))
             {
-                writer.WritePropertyName("publisherId");
-                writer.WriteStringValue(PublisherId);
+                writer.WritePropertyName("offerId");
+                writer.WriteStringValue(OfferId);
             }
             if (Optional.IsCollectionDefined(PlanIds))
             {
@@ -30,11 +32,17 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SubscriptionId))
+            if (Optional.IsCollectionDefined(SubscriptionIds))
             {
-                writer.WritePropertyName("subscriptionId");
-                writer.WriteStringValue(SubscriptionId);
+                writer.WritePropertyName("subscriptionIds");
+                writer.WriteStartArray();
+                foreach (var item in SubscriptionIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }

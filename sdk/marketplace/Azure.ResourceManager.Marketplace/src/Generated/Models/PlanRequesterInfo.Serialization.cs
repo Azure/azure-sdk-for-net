@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class UserRequestDetails
+    public partial class PlanRequesterInfo
     {
-        internal static UserRequestDetails DeserializeUserRequestDetails(JsonElement element)
+        internal static PlanRequesterInfo DeserializePlanRequesterInfo(JsonElement element)
         {
             Optional<string> user = default;
             Optional<string> date = default;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new UserRequestDetails(user.Value, date.Value, justification.Value, subscriptionId.Value, subscriptionName.Value);
+            return new PlanRequesterInfo(user.Value, date.Value, justification.Value, subscriptionId.Value, subscriptionName.Value);
         }
     }
 }

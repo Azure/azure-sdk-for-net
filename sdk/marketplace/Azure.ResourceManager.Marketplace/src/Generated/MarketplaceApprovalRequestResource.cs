@@ -200,15 +200,15 @@ namespace Azure.ResourceManager.Marketplace
         /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}/query
         /// Operation Id: PrivateStore_QueryRequestApproval
         /// </summary>
-        /// <param name="payload"> The QueryRequestApprovalProperties to use. </param>
+        /// <param name="content"> The QueryApprovalRequestContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<QueryRequestApproval>> QueryRequestApprovalAsync(QueryRequestApprovalProperties payload = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueryApprovalRequestResult>> QueryApprovalRequestAsync(QueryApprovalRequestContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestResource.QueryRequestApproval");
+            using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestResource.QueryApprovalRequest");
             scope.Start();
             try
             {
-                var response = await _marketplaceApprovalRequestPrivateStoreRestClient.QueryRequestApprovalAsync(Guid.Parse(Id.Parent.Name), Id.Name, payload, cancellationToken).ConfigureAwait(false);
+                var response = await _marketplaceApprovalRequestPrivateStoreRestClient.QueryRequestApprovalAsync(Guid.Parse(Id.Parent.Name), Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -223,15 +223,15 @@ namespace Azure.ResourceManager.Marketplace
         /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}/query
         /// Operation Id: PrivateStore_QueryRequestApproval
         /// </summary>
-        /// <param name="payload"> The QueryRequestApprovalProperties to use. </param>
+        /// <param name="content"> The QueryApprovalRequestContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<QueryRequestApproval> QueryRequestApproval(QueryRequestApprovalProperties payload = null, CancellationToken cancellationToken = default)
+        public virtual Response<QueryApprovalRequestResult> QueryApprovalRequest(QueryApprovalRequestContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestResource.QueryRequestApproval");
+            using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestResource.QueryApprovalRequest");
             scope.Start();
             try
             {
-                var response = _marketplaceApprovalRequestPrivateStoreRestClient.QueryRequestApproval(Guid.Parse(Id.Parent.Name), Id.Name, payload, cancellationToken);
+                var response = _marketplaceApprovalRequestPrivateStoreRestClient.QueryRequestApproval(Guid.Parse(Id.Parent.Name), Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -246,15 +246,15 @@ namespace Azure.ResourceManager.Marketplace
         /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}/withdrawPlan
         /// Operation Id: PrivateStore_WithdrawPlan
         /// </summary>
-        /// <param name="payload"> The WithdrawProperties to use. </param>
+        /// <param name="content"> The WithdrawPlanContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> WithdrawPlanAsync(WithdrawProperties payload = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> WithdrawPlanAsync(WithdrawPlanContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestResource.WithdrawPlan");
             scope.Start();
             try
             {
-                var response = await _marketplaceApprovalRequestPrivateStoreRestClient.WithdrawPlanAsync(Guid.Parse(Id.Parent.Name), Id.Name, payload, cancellationToken).ConfigureAwait(false);
+                var response = await _marketplaceApprovalRequestPrivateStoreRestClient.WithdrawPlanAsync(Guid.Parse(Id.Parent.Name), Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -269,15 +269,15 @@ namespace Azure.ResourceManager.Marketplace
         /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/requestApprovals/{requestApprovalId}/withdrawPlan
         /// Operation Id: PrivateStore_WithdrawPlan
         /// </summary>
-        /// <param name="payload"> The WithdrawProperties to use. </param>
+        /// <param name="content"> The WithdrawPlanContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response WithdrawPlan(WithdrawProperties payload = null, CancellationToken cancellationToken = default)
+        public virtual Response WithdrawPlan(WithdrawPlanContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _marketplaceApprovalRequestPrivateStoreClientDiagnostics.CreateScope("MarketplaceApprovalRequestResource.WithdrawPlan");
             scope.Start();
             try
             {
-                var response = _marketplaceApprovalRequestPrivateStoreRestClient.WithdrawPlan(Guid.Parse(Id.Parent.Name), Id.Name, payload, cancellationToken);
+                var response = _marketplaceApprovalRequestPrivateStoreRestClient.WithdrawPlan(Guid.Parse(Id.Parent.Name), Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)

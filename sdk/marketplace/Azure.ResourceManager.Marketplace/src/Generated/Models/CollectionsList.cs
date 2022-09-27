@@ -11,10 +11,7 @@ using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// The CollectionsList.
-    /// Serialized Name: CollectionsList
-    /// </summary>
+    /// <summary> The CollectionsList. </summary>
     internal partial class CollectionsList
     {
         /// <summary> Initializes a new instance of CollectionsList. </summary>
@@ -24,23 +21,17 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of CollectionsList. </summary>
-        /// <param name="value"> Serialized Name: CollectionsList.value. </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of offer list results if there are any.
-        /// Serialized Name: CollectionsList.nextLink
-        /// </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"> URL to get the next set of offer list results if there are any. </param>
         internal CollectionsList(IReadOnlyList<PrivateStoreCollectionInfoData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Serialized Name: CollectionsList.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<PrivateStoreCollectionInfoData> Value { get; }
-        /// <summary>
-        /// URL to get the next set of offer list results if there are any.
-        /// Serialized Name: CollectionsList.nextLink
-        /// </summary>
+        /// <summary> URL to get the next set of offer list results if there are any. </summary>
         public string NextLink { get; }
     }
 }

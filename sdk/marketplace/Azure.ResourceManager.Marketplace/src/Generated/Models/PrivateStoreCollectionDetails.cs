@@ -9,10 +9,7 @@ using System;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// Collection name and id.
-    /// Serialized Name: CollectionsDetails
-    /// </summary>
+    /// <summary> Collection name and id. </summary>
     public partial class PrivateStoreCollectionDetails
     {
         /// <summary> Initializes a new instance of PrivateStoreCollectionDetails. </summary>
@@ -21,29 +18,17 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of PrivateStoreCollectionDetails. </summary>
-        /// <param name="collectionName">
-        /// Collection name.
-        /// Serialized Name: CollectionsDetails.collectionName
-        /// </param>
-        /// <param name="collectionId">
-        /// Collection id.
-        /// Serialized Name: CollectionsDetails.collectionId
-        /// </param>
+        /// <param name="collectionName"> Collection name. </param>
+        /// <param name="collectionId"> Collection id. </param>
         internal PrivateStoreCollectionDetails(string collectionName, Guid? collectionId)
         {
             CollectionName = collectionName;
             CollectionId = collectionId;
         }
 
-        /// <summary>
-        /// Collection name.
-        /// Serialized Name: CollectionsDetails.collectionName
-        /// </summary>
+        /// <summary> Collection name. </summary>
         public string CollectionName { get; }
-        /// <summary>
-        /// Collection id.
-        /// Serialized Name: CollectionsDetails.collectionId
-        /// </summary>
+        /// <summary> Collection id. </summary>
         public Guid? CollectionId { get; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         internal static PrivateStoreNotificationsState DeserializePrivateStoreNotificationsState(JsonElement element)
         {
             Optional<IReadOnlyList<StopSellNotifications>> stopSellNotifications = default;
-            Optional<IReadOnlyList<NewPrivateStoreOfferPlanNotification>> newNotifications = default;
+            Optional<IReadOnlyList<NewPlanNotification>> newNotifications = default;
             Optional<IReadOnlyList<RequestApprovalsDetails>> approvalRequests = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<NewPrivateStoreOfferPlanNotification> array = new List<NewPrivateStoreOfferPlanNotification>();
+                    List<NewPlanNotification> array = new List<NewPlanNotification>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NewPrivateStoreOfferPlanNotification.DeserializeNewPrivateStoreOfferPlanNotification(item));
+                        array.Add(NewPlanNotification.DeserializeNewPlanNotification(item));
                     }
                     newNotifications = array;
                     continue;

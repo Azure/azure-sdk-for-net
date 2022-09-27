@@ -10,22 +10,32 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class WithdrawProperties : IUtf8JsonSerializable
+    public partial class QueryApprovalRequestContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(PlanId))
-            {
-                writer.WritePropertyName("planId");
-                writer.WriteStringValue(PlanId);
-            }
             if (Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId");
                 writer.WriteStringValue(PublisherId);
+            }
+            if (Optional.IsCollectionDefined(PlanIds))
+            {
+                writer.WritePropertyName("planIds");
+                writer.WriteStartArray();
+                foreach (var item in PlanIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId");
+                writer.WriteStringValue(SubscriptionId);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

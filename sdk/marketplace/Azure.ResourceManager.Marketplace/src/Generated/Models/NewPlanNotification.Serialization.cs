@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class NewPrivateStoreOfferPlanNotification
+    public partial class NewPlanNotification
     {
-        internal static NewPrivateStoreOfferPlanNotification DeserializeNewPrivateStoreOfferPlanNotification(JsonElement element)
+        internal static NewPlanNotification DeserializeNewPlanNotification(JsonElement element)
         {
             Optional<string> offerId = default;
             Optional<string> displayName = default;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new NewPrivateStoreOfferPlanNotification(offerId.Value, displayName.Value, Optional.ToNullable(isFuturePlansEnabled), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans));
+            return new NewPlanNotification(offerId.Value, displayName.Value, Optional.ToNullable(isFuturePlansEnabled), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans));
         }
     }
 }

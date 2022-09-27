@@ -26,42 +26,15 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="collectionId">
-        /// Gets collection Id.
-        /// Serialized Name: Collection.properties.collectionId
-        /// </param>
-        /// <param name="collectionName">
-        /// Gets or sets collection name.
-        /// Serialized Name: Collection.properties.collectionName
-        /// </param>
-        /// <param name="claim">
-        /// Gets or sets the association with Commercial&apos;s Billing Account.
-        /// Serialized Name: Collection.properties.claim
-        /// </param>
-        /// <param name="areAllSubscriptionsSelected">
-        /// Indicating whether all subscriptions are selected (=true) or not (=false).
-        /// Serialized Name: Collection.properties.allSubscriptions
-        /// </param>
-        /// <param name="areAllItemsApproved">
-        /// Indicating whether all items are approved for this collection (=true) or not (=false).
-        /// Serialized Name: Collection.properties.approveAllItems
-        /// </param>
-        /// <param name="approveAllItemsModifiedOn">
-        /// Gets the modified date of all items approved.
-        /// Serialized Name: Collection.properties.approveAllItemsModifiedAt
-        /// </param>
-        /// <param name="subscriptionsList">
-        /// Gets or sets subscription ids list. Empty list indicates all subscriptions are selected, null indicates no update is done, explicit list indicates the explicit selected subscriptions. On insert, null is considered as bad request
-        /// Serialized Name: Collection.properties.subscriptionsList
-        /// </param>
-        /// <param name="isEnabled">
-        /// Indicating whether the collection is enabled or disabled.
-        /// Serialized Name: Collection.properties.enabled
-        /// </param>
-        /// <param name="numberOfOffers">
-        /// Gets the number of offers associated with the collection.
-        /// Serialized Name: Collection.properties.numberOfOffers
-        /// </param>
+        /// <param name="collectionId"> Gets collection Id. </param>
+        /// <param name="collectionName"> Gets or sets collection name. </param>
+        /// <param name="claim"> Gets or sets the association with Commercial&apos;s Billing Account. </param>
+        /// <param name="areAllSubscriptionsSelected"> Indicating whether all subscriptions are selected (=true) or not (=false). </param>
+        /// <param name="areAllItemsApproved"> Indicating whether all items are approved for this collection (=true) or not (=false). </param>
+        /// <param name="approveAllItemsModifiedOn"> Gets the modified date of all items approved. </param>
+        /// <param name="subscriptionsList"> Gets or sets subscription ids list. Empty list indicates all subscriptions are selected, null indicates no update is done, explicit list indicates the explicit selected subscriptions. On insert, null is considered as bad request. </param>
+        /// <param name="isEnabled"> Indicating whether the collection is enabled or disabled. </param>
+        /// <param name="numberOfOffers"> Gets the number of offers associated with the collection. </param>
         internal PrivateStoreCollectionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? collectionId, string collectionName, string claim, bool? areAllSubscriptionsSelected, bool? areAllItemsApproved, DateTimeOffset? approveAllItemsModifiedOn, IList<string> subscriptionsList, bool? isEnabled, long? numberOfOffers) : base(id, name, resourceType, systemData)
         {
             CollectionId = collectionId;
@@ -75,50 +48,23 @@ namespace Azure.ResourceManager.Marketplace
             NumberOfOffers = numberOfOffers;
         }
 
-        /// <summary>
-        /// Gets collection Id.
-        /// Serialized Name: Collection.properties.collectionId
-        /// </summary>
+        /// <summary> Gets collection Id. </summary>
         public Guid? CollectionId { get; }
-        /// <summary>
-        /// Gets or sets collection name.
-        /// Serialized Name: Collection.properties.collectionName
-        /// </summary>
+        /// <summary> Gets or sets collection name. </summary>
         public string CollectionName { get; set; }
-        /// <summary>
-        /// Gets or sets the association with Commercial&apos;s Billing Account.
-        /// Serialized Name: Collection.properties.claim
-        /// </summary>
+        /// <summary> Gets or sets the association with Commercial&apos;s Billing Account. </summary>
         public string Claim { get; set; }
-        /// <summary>
-        /// Indicating whether all subscriptions are selected (=true) or not (=false).
-        /// Serialized Name: Collection.properties.allSubscriptions
-        /// </summary>
+        /// <summary> Indicating whether all subscriptions are selected (=true) or not (=false). </summary>
         public bool? AreAllSubscriptionsSelected { get; set; }
-        /// <summary>
-        /// Indicating whether all items are approved for this collection (=true) or not (=false).
-        /// Serialized Name: Collection.properties.approveAllItems
-        /// </summary>
+        /// <summary> Indicating whether all items are approved for this collection (=true) or not (=false). </summary>
         public bool? AreAllItemsApproved { get; }
-        /// <summary>
-        /// Gets the modified date of all items approved.
-        /// Serialized Name: Collection.properties.approveAllItemsModifiedAt
-        /// </summary>
+        /// <summary> Gets the modified date of all items approved. </summary>
         public DateTimeOffset? ApproveAllItemsModifiedOn { get; }
-        /// <summary>
-        /// Gets or sets subscription ids list. Empty list indicates all subscriptions are selected, null indicates no update is done, explicit list indicates the explicit selected subscriptions. On insert, null is considered as bad request
-        /// Serialized Name: Collection.properties.subscriptionsList
-        /// </summary>
+        /// <summary> Gets or sets subscription ids list. Empty list indicates all subscriptions are selected, null indicates no update is done, explicit list indicates the explicit selected subscriptions. On insert, null is considered as bad request. </summary>
         public IList<string> SubscriptionsList { get; }
-        /// <summary>
-        /// Indicating whether the collection is enabled or disabled.
-        /// Serialized Name: Collection.properties.enabled
-        /// </summary>
+        /// <summary> Indicating whether the collection is enabled or disabled. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary>
-        /// Gets the number of offers associated with the collection.
-        /// Serialized Name: Collection.properties.numberOfOffers
-        /// </summary>
+        /// <summary> Gets the number of offers associated with the collection. </summary>
         public long? NumberOfOffers { get; }
     }
 }

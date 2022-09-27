@@ -5,34 +5,35 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary> Request approvals details. </summary>
-    public partial class RequestApprovalsDetails
+    /// <summary> New plans notification details. </summary>
+    public partial class NewPlanNotification
     {
-        /// <summary> Initializes a new instance of RequestApprovalsDetails. </summary>
-        internal RequestApprovalsDetails()
+        /// <summary> Initializes a new instance of NewPlanNotification. </summary>
+        internal NewPlanNotification()
         {
             Plans = new ChangeTrackingList<PlanNotificationDetails>();
         }
 
-        /// <summary> Initializes a new instance of RequestApprovalsDetails. </summary>
+        /// <summary> Initializes a new instance of NewPlanNotification. </summary>
         /// <param name="offerId"> Gets offer id. </param>
         /// <param name="displayName"> Gets offer display name. </param>
-        /// <param name="publisherId"> Gets or sets publisher id. </param>
+        /// <param name="isFuturePlansEnabled"> Gets a value indicating whether future plans is enabled. </param>
         /// <param name="messageCode"> Gets or sets the notification message id. </param>
-        /// <param name="icon"> Gets or sets the icon url. </param>
+        /// <param name="iconUri"> Gets or sets the icon url. </param>
         /// <param name="plans"> Gets or sets removed plans notifications. </param>
-        internal RequestApprovalsDetails(string offerId, string displayName, string publisherId, long? messageCode, string icon, IReadOnlyList<PlanNotificationDetails> plans)
+        internal NewPlanNotification(string offerId, string displayName, bool? isFuturePlansEnabled, long? messageCode, Uri iconUri, IReadOnlyList<PlanNotificationDetails> plans)
         {
             OfferId = offerId;
             DisplayName = displayName;
-            PublisherId = publisherId;
+            IsFuturePlansEnabled = isFuturePlansEnabled;
             MessageCode = messageCode;
-            Icon = icon;
+            IconUri = iconUri;
             Plans = plans;
         }
 
@@ -40,12 +41,12 @@ namespace Azure.ResourceManager.Marketplace.Models
         public string OfferId { get; }
         /// <summary> Gets offer display name. </summary>
         public string DisplayName { get; }
-        /// <summary> Gets or sets publisher id. </summary>
-        public string PublisherId { get; }
+        /// <summary> Gets a value indicating whether future plans is enabled. </summary>
+        public bool? IsFuturePlansEnabled { get; }
         /// <summary> Gets or sets the notification message id. </summary>
         public long? MessageCode { get; }
         /// <summary> Gets or sets the icon url. </summary>
-        public string Icon { get; }
+        public Uri IconUri { get; }
         /// <summary> Gets or sets removed plans notifications. </summary>
         public IReadOnlyList<PlanNotificationDetails> Plans { get; }
     }

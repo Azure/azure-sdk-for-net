@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Marketplace
             Optional<bool> isGov = default;
             Optional<IReadOnlyList<Guid>> collectionIds = default;
             Optional<IDictionary<string, string>> branding = default;
-            Optional<IList<Recipient>> recipients = default;
+            Optional<IList<NotificationRecipient>> recipients = default;
             Optional<bool> sendToAllMarketplaceAdmins = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -233,10 +233,10 @@ namespace Azure.ResourceManager.Marketplace
                                         property1.ThrowNonNullablePropertyIsNull();
                                         continue;
                                     }
-                                    List<Recipient> array = new List<Recipient>();
+                                    List<NotificationRecipient> array = new List<NotificationRecipient>();
                                     foreach (var item in property1.Value.EnumerateArray())
                                     {
-                                        array.Add(Recipient.DeserializeRecipient(item));
+                                        array.Add(NotificationRecipient.DeserializeNotificationRecipient(item));
                                     }
                                     recipients = array;
                                     continue;

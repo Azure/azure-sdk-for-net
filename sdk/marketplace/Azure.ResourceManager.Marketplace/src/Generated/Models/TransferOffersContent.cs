@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// Transfer offers properties
-    /// Serialized Name: TransferOffersProperties
-    /// </summary>
+    /// <summary> Transfer offers properties. </summary>
     public partial class TransferOffersContent
     {
         /// <summary> Initializes a new instance of TransferOffersContent. </summary>
@@ -23,20 +20,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             OfferIdsList = new ChangeTrackingList<string>();
         }
 
-        /// <summary>
-        /// Target collections ids
-        /// Serialized Name: TransferOffersProperties.properties.targetCollections
-        /// </summary>
+        /// <summary> Target collections ids. </summary>
         public IList<string> TargetCollections { get; }
-        /// <summary>
-        /// Operation to perform (For example: Copy or Move)
-        /// Serialized Name: TransferOffersProperties.properties.operation
-        /// </summary>
+        /// <summary> Operation to perform (For example: Copy or Move). </summary>
         public string Operation { get; set; }
-        /// <summary>
-        /// Offers ids list to transfer from source collection to target collection(s)
-        /// Serialized Name: TransferOffersProperties.properties.offerIdsList
-        /// </summary>
+        /// <summary> Offers ids list to transfer from source collection to target collection(s). </summary>
         public IList<string> OfferIdsList { get; }
     }
 }

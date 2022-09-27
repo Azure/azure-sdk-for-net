@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Marketplace
             Optional<string> offerId = default;
             Optional<string> offerDisplayName = default;
             Optional<string> publisherId = default;
-            Optional<IList<PlanDetails>> plansDetails = default;
+            Optional<IList<PrivateStorePlanDetails>> plansDetails = default;
             Optional<bool> isClosed = default;
             Optional<long> messageCode = default;
             foreach (var property in element.EnumerateObject())
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.Marketplace
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<PlanDetails> array = new List<PlanDetails>();
+                            List<PrivateStorePlanDetails> array = new List<PrivateStorePlanDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PlanDetails.DeserializePlanDetails(item));
+                                array.Add(PrivateStorePlanDetails.DeserializePrivateStorePlanDetails(item));
                             }
                             plansDetails = array;
                             continue;

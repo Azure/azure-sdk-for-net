@@ -10,26 +10,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// List of stop sell offers and plans notifications.
-    /// Serialized Name: StopSellOffersPlansNotificationsList
-    /// </summary>
+    /// <summary> List of stop sell offers and plans notifications. </summary>
     public partial class StopSellOffersPlansNotificationsList
     {
         /// <summary> Initializes a new instance of StopSellOffersPlansNotificationsList. </summary>
         internal StopSellOffersPlansNotificationsList()
         {
-            StopSellNotifications = new ChangeTrackingList<StopSellOffersPlansNotificationsListProperties>();
+            StopSellNotifications = new ChangeTrackingList<StopSellOffersPlansNotificationsResult>();
         }
 
         /// <summary> Initializes a new instance of StopSellOffersPlansNotificationsList. </summary>
-        /// <param name="stopSellNotifications"> Serialized Name: StopSellOffersPlansNotificationsList.stopSellNotifications. </param>
-        internal StopSellOffersPlansNotificationsList(IReadOnlyList<StopSellOffersPlansNotificationsListProperties> stopSellNotifications)
+        /// <param name="stopSellNotifications"></param>
+        internal StopSellOffersPlansNotificationsList(IReadOnlyList<StopSellOffersPlansNotificationsResult> stopSellNotifications)
         {
             StopSellNotifications = stopSellNotifications;
         }
 
-        /// <summary> Serialized Name: StopSellOffersPlansNotificationsList.stopSellNotifications. </summary>
-        public IReadOnlyList<StopSellOffersPlansNotificationsListProperties> StopSellNotifications { get; }
+        /// <summary> Gets the stop sell notifications. </summary>
+        public IReadOnlyList<StopSellOffersPlansNotificationsResult> StopSellNotifications { get; }
     }
 }

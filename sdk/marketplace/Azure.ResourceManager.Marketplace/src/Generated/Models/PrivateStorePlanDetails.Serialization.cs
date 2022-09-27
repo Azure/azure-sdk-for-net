@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class PlanDetails : IUtf8JsonSerializable
+    public partial class PrivateStorePlanDetails : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteEndObject();
         }
 
-        internal static PlanDetails DeserializePlanDetails(JsonElement element)
+        internal static PrivateStorePlanDetails DeserializePrivateStorePlanDetails(JsonElement element)
         {
             Optional<string> planId = default;
-            Optional<Status> status = default;
+            Optional<PrivateStorePlanStatus> status = default;
             Optional<BinaryData> requestDate = default;
             Optional<string> justification = default;
             Optional<string> subscriptionId = default;
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    status = new Status(property.Value.GetString());
+                    status = new PrivateStorePlanStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("requestDate"))
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new PlanDetails(planId.Value, Optional.ToNullable(status), requestDate.Value, justification.Value, subscriptionId.Value, subscriptionName.Value);
+            return new PrivateStorePlanDetails(planId.Value, Optional.ToNullable(status), requestDate.Value, justification.Value, subscriptionId.Value, subscriptionName.Value);
         }
     }
 }

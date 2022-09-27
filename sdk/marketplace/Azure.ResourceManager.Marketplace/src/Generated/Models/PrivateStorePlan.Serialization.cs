@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class PrivateStoreOfferPlan : IUtf8JsonSerializable
+    public partial class PrivateStorePlan : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Marketplace.Models
             writer.WriteEndObject();
         }
 
-        internal static PrivateStoreOfferPlan DeserializePrivateStoreOfferPlan(JsonElement element)
+        internal static PrivateStorePlan DeserializePrivateStorePlan(JsonElement element)
         {
             Optional<string> skuId = default;
             Optional<string> planId = default;
             Optional<string> planDisplayName = default;
-            Optional<PrivateStoreOfferPlanAccessibility> accessibility = default;
+            Optional<PrivateStorePlanAccessibility> accessibility = default;
             Optional<string> altStackReference = default;
             Optional<string> stackType = default;
             foreach (var property in element.EnumerateObject())
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    accessibility = new PrivateStoreOfferPlanAccessibility(property.Value.GetString());
+                    accessibility = new PrivateStorePlanAccessibility(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("altStackReference"))
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     continue;
                 }
             }
-            return new PrivateStoreOfferPlan(skuId.Value, planId.Value, planDisplayName.Value, Optional.ToNullable(accessibility), altStackReference.Value, stackType.Value);
+            return new PrivateStorePlan(skuId.Value, planId.Value, planDisplayName.Value, Optional.ToNullable(accessibility), altStackReference.Value, stackType.Value);
         }
     }
 }

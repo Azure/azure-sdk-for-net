@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             Optional<string> id = default;
             Optional<string> subscriptionId = default;
             Optional<string> displayName = default;
-            Optional<SubscriptionState> state = default;
+            Optional<MarketplaceSubscriptionState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    state = new SubscriptionState(property.Value.GetString());
+                    state = new MarketplaceSubscriptionState(property.Value.GetString());
                     continue;
                 }
             }

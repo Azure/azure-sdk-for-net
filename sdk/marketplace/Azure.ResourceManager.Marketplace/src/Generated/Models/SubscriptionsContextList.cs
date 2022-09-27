@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// List of subscription Ids in the private store
-    /// Serialized Name: SubscriptionsContextList
-    /// </summary>
+    /// <summary> List of subscription Ids in the private store. </summary>
     public partial class SubscriptionsContextList
     {
         /// <summary> Initializes a new instance of SubscriptionsContextList. </summary>
@@ -23,13 +20,13 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of SubscriptionsContextList. </summary>
-        /// <param name="subscriptionsIds"> Serialized Name: SubscriptionsContextList.subscriptionsIds. </param>
+        /// <param name="subscriptionsIds"></param>
         internal SubscriptionsContextList(IReadOnlyList<string> subscriptionsIds)
         {
             SubscriptionsIds = subscriptionsIds;
         }
 
-        /// <summary> Serialized Name: SubscriptionsContextList.subscriptionsIds. </summary>
+        /// <summary> Gets the subscriptions ids. </summary>
         public IReadOnlyList<string> SubscriptionsIds { get; }
     }
 }

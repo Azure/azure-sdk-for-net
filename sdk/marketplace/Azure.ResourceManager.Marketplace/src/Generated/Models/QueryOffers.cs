@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// List of offers
-    /// Serialized Name: QueryOffers
-    /// </summary>
+    /// <summary> List of offers. </summary>
     internal partial class QueryOffers
     {
         /// <summary> Initializes a new instance of QueryOffers. </summary>
@@ -23,23 +20,17 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of QueryOffers. </summary>
-        /// <param name="value"> Serialized Name: QueryOffers.value. </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of PrivateStore list results if there are any.
-        /// Serialized Name: QueryOffers.nextLink
-        /// </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"> URL to get the next set of PrivateStore list results if there are any. </param>
         internal QueryOffers(IReadOnlyList<PrivateStoreOfferResult> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Serialized Name: QueryOffers.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<PrivateStoreOfferResult> Value { get; }
-        /// <summary>
-        /// URL to get the next set of PrivateStore list results if there are any.
-        /// Serialized Name: QueryOffers.nextLink
-        /// </summary>
+        /// <summary> URL to get the next set of PrivateStore list results if there are any. </summary>
         public string NextLink { get; }
     }
 }

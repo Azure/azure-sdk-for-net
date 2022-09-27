@@ -11,10 +11,7 @@ using Azure.ResourceManager.Marketplace;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// The OfferListResponse.
-    /// Serialized Name: OfferListResponse
-    /// </summary>
+    /// <summary> The OfferListResponse. </summary>
     internal partial class OfferListResponse
     {
         /// <summary> Initializes a new instance of OfferListResponse. </summary>
@@ -24,23 +21,17 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of OfferListResponse. </summary>
-        /// <param name="value"> Serialized Name: OfferListResponse.value. </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of offer list results if there are any.
-        /// Serialized Name: OfferListResponse.nextLink
-        /// </param>
+        /// <param name="value"></param>
+        /// <param name="nextLink"> URL to get the next set of offer list results if there are any. </param>
         internal OfferListResponse(IReadOnlyList<PrivateStoreOfferData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> Serialized Name: OfferListResponse.value. </summary>
+        /// <summary> Gets the value. </summary>
         public IReadOnlyList<PrivateStoreOfferData> Value { get; }
-        /// <summary>
-        /// URL to get the next set of offer list results if there are any.
-        /// Serialized Name: OfferListResponse.nextLink
-        /// </summary>
+        /// <summary> URL to get the next set of offer list results if there are any. </summary>
         public string NextLink { get; }
     }
 }

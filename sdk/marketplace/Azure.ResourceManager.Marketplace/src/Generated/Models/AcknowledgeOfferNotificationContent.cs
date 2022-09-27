@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// Notification update request payload
-    /// Serialized Name: AcknowledgeOfferNotificationProperties
-    /// </summary>
+    /// <summary> Notification update request payload. </summary>
     public partial class AcknowledgeOfferNotificationContent
     {
         /// <summary> Initializes a new instance of AcknowledgeOfferNotificationContent. </summary>
@@ -23,30 +20,15 @@ namespace Azure.ResourceManager.Marketplace.Models
             RemovePlans = new ChangeTrackingList<string>();
         }
 
-        /// <summary>
-        /// Gets or sets a value indicating whether acknowledge action flag is enabled
-        /// Serialized Name: AcknowledgeOfferNotificationProperties.properties.acknowledge
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether acknowledge action flag is enabled. </summary>
         public bool? IsAcknowledgeActionFlagEnabled { get; set; }
-        /// <summary>
-        /// Gets or sets a value indicating whether dismiss action flag is enabled
-        /// Serialized Name: AcknowledgeOfferNotificationProperties.properties.dismiss
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether dismiss action flag is enabled. </summary>
         public bool? IsDismissActionFlagEnabled { get; set; }
-        /// <summary>
-        /// Gets or sets a value indicating whether remove offer action flag is enabled
-        /// Serialized Name: AcknowledgeOfferNotificationProperties.properties.removeOffer
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether remove offer action flag is enabled. </summary>
         public bool? IsRemoveOfferActionFlagEnabled { get; set; }
-        /// <summary>
-        /// Gets or sets added plans
-        /// Serialized Name: AcknowledgeOfferNotificationProperties.properties.addPlans
-        /// </summary>
+        /// <summary> Gets or sets added plans. </summary>
         public IList<string> AddPlans { get; }
-        /// <summary>
-        /// Gets or sets remove plans
-        /// Serialized Name: AcknowledgeOfferNotificationProperties.properties.removePlans
-        /// </summary>
+        /// <summary> Gets or sets remove plans. </summary>
         public IList<string> RemovePlans { get; }
     }
 }

@@ -10,10 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// Subscription list operation response.
-    /// Serialized Name: SubscriptionsResponse
-    /// </summary>
+    /// <summary> Subscription list operation response. </summary>
     internal partial class SubscriptionsResponse
     {
         /// <summary> Initializes a new instance of SubscriptionsResponse. </summary>
@@ -23,18 +20,9 @@ namespace Azure.ResourceManager.Marketplace.Models
         }
 
         /// <summary> Initializes a new instance of SubscriptionsResponse. </summary>
-        /// <param name="value">
-        /// An array of subscriptions.
-        /// Serialized Name: SubscriptionsResponse.value
-        /// </param>
-        /// <param name="skipToken">
-        /// The skip token to retrieve the next page.
-        /// Serialized Name: SubscriptionsResponse.skipToken
-        /// </param>
-        /// <param name="count">
-        /// Number of subscriptions on the page
-        /// Serialized Name: SubscriptionsResponse.count
-        /// </param>
+        /// <param name="value"> An array of subscriptions. </param>
+        /// <param name="skipToken"> The skip token to retrieve the next page. </param>
+        /// <param name="count"> Number of subscriptions on the page. </param>
         internal SubscriptionsResponse(IReadOnlyList<MarketplaceSubscription> value, string skipToken, long? count)
         {
             Value = value;
@@ -42,20 +30,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             Count = count;
         }
 
-        /// <summary>
-        /// An array of subscriptions.
-        /// Serialized Name: SubscriptionsResponse.value
-        /// </summary>
+        /// <summary> An array of subscriptions. </summary>
         public IReadOnlyList<MarketplaceSubscription> Value { get; }
-        /// <summary>
-        /// The skip token to retrieve the next page.
-        /// Serialized Name: SubscriptionsResponse.skipToken
-        /// </summary>
+        /// <summary> The skip token to retrieve the next page. </summary>
         public string SkipToken { get; }
-        /// <summary>
-        /// Number of subscriptions on the page
-        /// Serialized Name: SubscriptionsResponse.count
-        /// </summary>
+        /// <summary> Number of subscriptions on the page. </summary>
         public long? Count { get; }
     }
 }

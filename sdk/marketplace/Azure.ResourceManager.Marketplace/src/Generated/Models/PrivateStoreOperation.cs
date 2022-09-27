@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// Set the Operation for the POST method. Ping or Delete
-    /// Serialized Name: Operation
-    /// </summary>
+    /// <summary> Set the Operation for the POST method. Ping or Delete. </summary>
     public readonly partial struct PrivateStoreOperation : IEquatable<PrivateStoreOperation>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Marketplace.Models
         private const string DeletePrivateStoreCollectionOfferValue = "DeletePrivateStoreCollectionOffer";
         private const string PingValue = "Ping";
 
-        /// <summary>
-        /// DeletePrivateStoreOffer
-        /// Serialized Name: Operation.DeletePrivateStoreOffer
-        /// </summary>
+        /// <summary> DeletePrivateStoreOffer. </summary>
         public static PrivateStoreOperation DeletePrivateStoreOffer { get; } = new PrivateStoreOperation(DeletePrivateStoreOfferValue);
-        /// <summary>
-        /// DeletePrivateStoreCollection
-        /// Serialized Name: Operation.DeletePrivateStoreCollection
-        /// </summary>
+        /// <summary> DeletePrivateStoreCollection. </summary>
         public static PrivateStoreOperation DeletePrivateStoreCollection { get; } = new PrivateStoreOperation(DeletePrivateStoreCollectionValue);
-        /// <summary>
-        /// DeletePrivateStoreCollectionOffer
-        /// Serialized Name: Operation.DeletePrivateStoreCollectionOffer
-        /// </summary>
+        /// <summary> DeletePrivateStoreCollectionOffer. </summary>
         public static PrivateStoreOperation DeletePrivateStoreCollectionOffer { get; } = new PrivateStoreOperation(DeletePrivateStoreCollectionOfferValue);
-        /// <summary>
-        /// Ping
-        /// Serialized Name: Operation.Ping
-        /// </summary>
+        /// <summary> Ping. </summary>
         public static PrivateStoreOperation Ping { get; } = new PrivateStoreOperation(PingValue);
         /// <summary> Determines if two <see cref="PrivateStoreOperation"/> values are the same. </summary>
         public static bool operator ==(PrivateStoreOperation left, PrivateStoreOperation right) => left.Equals(right);

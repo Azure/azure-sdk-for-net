@@ -12,10 +12,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    /// <summary>
-    /// The PrivateStoreOfferResult.
-    /// Serialized Name: OfferProperties
-    /// </summary>
+    /// <summary> The PrivateStoreOfferResult. </summary>
     public partial class PrivateStoreOfferResult
     {
         /// <summary> Initializes a new instance of PrivateStoreOfferResult. </summary>
@@ -23,55 +20,22 @@ namespace Azure.ResourceManager.Marketplace.Models
         {
             SpecificPlanIdsLimitation = new ChangeTrackingList<string>();
             IconFileUris = new ChangeTrackingDictionary<string, Uri>();
-            Plans = new ChangeTrackingList<PrivateStoreOfferPlan>();
+            Plans = new ChangeTrackingList<PrivateStorePlan>();
         }
 
         /// <summary> Initializes a new instance of PrivateStoreOfferResult. </summary>
-        /// <param name="uniqueOfferId">
-        /// Offers unique id
-        /// Serialized Name: OfferProperties.uniqueOfferId
-        /// </param>
-        /// <param name="offerDisplayName">
-        /// It will be displayed prominently in the marketplace
-        /// Serialized Name: OfferProperties.offerDisplayName
-        /// </param>
-        /// <param name="publisherDisplayName">
-        /// Publisher name that will be displayed prominently in the marketplace
-        /// Serialized Name: OfferProperties.publisherDisplayName
-        /// </param>
-        /// <param name="eTag">
-        /// Identifier for purposes of race condition
-        /// Serialized Name: OfferProperties.eTag
-        /// </param>
-        /// <param name="privateStoreId">
-        /// Private store unique id
-        /// Serialized Name: OfferProperties.privateStoreId
-        /// </param>
-        /// <param name="createdOn">
-        /// Private store offer creation date
-        /// Serialized Name: OfferProperties.createdAt
-        /// </param>
-        /// <param name="modifiedOn">
-        /// Private store offer modification date
-        /// Serialized Name: OfferProperties.modifiedAt
-        /// </param>
-        /// <param name="specificPlanIdsLimitation">
-        /// Plan ids limitation for this offer
-        /// Serialized Name: OfferProperties.specificPlanIdsLimitation
-        /// </param>
-        /// <param name="isUpdateSuppressedDueIdempotence">
-        /// Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated.
-        /// Serialized Name: OfferProperties.updateSuppressedDueIdempotence
-        /// </param>
-        /// <param name="iconFileUris">
-        /// Icon File Uris
-        /// Serialized Name: OfferProperties.iconFileUris
-        /// </param>
-        /// <param name="plans">
-        /// Offer plans
-        /// Serialized Name: OfferProperties.plans
-        /// </param>
-        internal PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IReadOnlyList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, IReadOnlyList<PrivateStoreOfferPlan> plans)
+        /// <param name="uniqueOfferId"> Offers unique id. </param>
+        /// <param name="offerDisplayName"> It will be displayed prominently in the marketplace. </param>
+        /// <param name="publisherDisplayName"> Publisher name that will be displayed prominently in the marketplace. </param>
+        /// <param name="eTag"> Identifier for purposes of race condition. </param>
+        /// <param name="privateStoreId"> Private store unique id. </param>
+        /// <param name="createdOn"> Private store offer creation date. </param>
+        /// <param name="modifiedOn"> Private store offer modification date. </param>
+        /// <param name="specificPlanIdsLimitation"> Plan ids limitation for this offer. </param>
+        /// <param name="isUpdateSuppressedDueIdempotence"> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </param>
+        /// <param name="iconFileUris"> Icon File Uris. </param>
+        /// <param name="plans"> Offer plans. </param>
+        internal PrivateStoreOfferResult(string uniqueOfferId, string offerDisplayName, string publisherDisplayName, ETag? eTag, Guid? privateStoreId, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IReadOnlyList<string> specificPlanIdsLimitation, bool? isUpdateSuppressedDueIdempotence, IReadOnlyDictionary<string, Uri> iconFileUris, IReadOnlyList<PrivateStorePlan> plans)
         {
             UniqueOfferId = uniqueOfferId;
             OfferDisplayName = offerDisplayName;
@@ -86,60 +50,27 @@ namespace Azure.ResourceManager.Marketplace.Models
             Plans = plans;
         }
 
-        /// <summary>
-        /// Offers unique id
-        /// Serialized Name: OfferProperties.uniqueOfferId
-        /// </summary>
+        /// <summary> Offers unique id. </summary>
         public string UniqueOfferId { get; }
-        /// <summary>
-        /// It will be displayed prominently in the marketplace
-        /// Serialized Name: OfferProperties.offerDisplayName
-        /// </summary>
+        /// <summary> It will be displayed prominently in the marketplace. </summary>
         public string OfferDisplayName { get; }
-        /// <summary>
-        /// Publisher name that will be displayed prominently in the marketplace
-        /// Serialized Name: OfferProperties.publisherDisplayName
-        /// </summary>
+        /// <summary> Publisher name that will be displayed prominently in the marketplace. </summary>
         public string PublisherDisplayName { get; }
-        /// <summary>
-        /// Identifier for purposes of race condition
-        /// Serialized Name: OfferProperties.eTag
-        /// </summary>
+        /// <summary> Identifier for purposes of race condition. </summary>
         public ETag? ETag { get; }
-        /// <summary>
-        /// Private store unique id
-        /// Serialized Name: OfferProperties.privateStoreId
-        /// </summary>
+        /// <summary> Private store unique id. </summary>
         public Guid? PrivateStoreId { get; }
-        /// <summary>
-        /// Private store offer creation date
-        /// Serialized Name: OfferProperties.createdAt
-        /// </summary>
+        /// <summary> Private store offer creation date. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Private store offer modification date
-        /// Serialized Name: OfferProperties.modifiedAt
-        /// </summary>
+        /// <summary> Private store offer modification date. </summary>
         public DateTimeOffset? ModifiedOn { get; }
-        /// <summary>
-        /// Plan ids limitation for this offer
-        /// Serialized Name: OfferProperties.specificPlanIdsLimitation
-        /// </summary>
+        /// <summary> Plan ids limitation for this offer. </summary>
         public IReadOnlyList<string> SpecificPlanIdsLimitation { get; }
-        /// <summary>
-        /// Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated.
-        /// Serialized Name: OfferProperties.updateSuppressedDueIdempotence
-        /// </summary>
+        /// <summary> Indicating whether the offer was not updated to db (true = not updated). If the allow list is identical to the existed one in db, the offer would not be updated. </summary>
         public bool? IsUpdateSuppressedDueIdempotence { get; }
-        /// <summary>
-        /// Icon File Uris
-        /// Serialized Name: OfferProperties.iconFileUris
-        /// </summary>
+        /// <summary> Icon File Uris. </summary>
         public IReadOnlyDictionary<string, Uri> IconFileUris { get; }
-        /// <summary>
-        /// Offer plans
-        /// Serialized Name: OfferProperties.plans
-        /// </summary>
-        public IReadOnlyList<PrivateStoreOfferPlan> Plans { get; }
+        /// <summary> Offer plans. </summary>
+        public IReadOnlyList<PrivateStorePlan> Plans { get; }
     }
 }
