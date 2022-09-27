@@ -77,9 +77,9 @@ namespace Azure.Storage.Blobs.DataMovement
         {
             _commitBlockHandler += async (BlobStageBlockEventArgs args) =>
             {
-                Interlocked.Add(ref _bytesTransferred, args.BytesTransferred);
                 if (args.Success)
                 {
+                    Interlocked.Add(ref _bytesTransferred, args.BytesTransferred);
                     // Use progress tracker to get the amount of bytes transferred
                     if (_bytesTransferred == _expectedLength)
                     {
@@ -99,6 +99,7 @@ namespace Azure.Storage.Blobs.DataMovement
                                 _cancellationToken));
                         _triggerCancellationTask();
                     }
+                    _uploadOptions?.ProgressHandler?.Report(_bytesTransferred);
                 }
                 else
                 {
@@ -112,6 +113,7 @@ namespace Azure.Storage.Blobs.DataMovement
                                 new Exception("Failure on stageblock"),
                                 false,
                                 _cancellationToken));
+                        _uploadOptions?.ProgressHandler.Report(_bytesTransferred);
                     _triggerCancellationTask();
                 }
             };

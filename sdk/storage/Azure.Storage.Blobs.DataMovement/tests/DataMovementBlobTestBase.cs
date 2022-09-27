@@ -478,5 +478,8 @@ namespace Azure.Storage.Blobs.DataMovement.Tests.Shared
                 }
             }
         }
+
+        public BlobClientOptions GetOptions(bool parallelRange = false)
+            => BlobsClientBuilder.GetOptions(parallelRange);
     }
 }

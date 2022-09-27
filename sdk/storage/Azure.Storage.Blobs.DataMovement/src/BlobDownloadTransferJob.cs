@@ -12,6 +12,11 @@ using Azure.Storage.DataMovement;
 using Azure.Storage.Blobs;
 using Azure.Core;
 using System.Collections.Generic;
+using System.Xml.Linq;
+using System.IO;
+using System.Diagnostics;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Azure.Storage.Blobs.DataMovement
 {
@@ -56,6 +61,12 @@ namespace Azure.Storage.Blobs.DataMovement
         public ClientDiagnostics Diagnostics => _diagnostics;
 
         /// <summary>
+        /// Internal Download Chunk Controller that manages when the chunks
+        /// have completed and writes to the file
+        /// </summary>
+        internal DownloadChunkController _downloadChunkController;
+
+        /// <summary>
         /// Constructor. Creates Single Blob Download Job.
         ///
         /// TODO: better description, also for parameters.
@@ -98,54 +109,17 @@ namespace Azure.Storage.Blobs.DataMovement
             _diagnostics = new ClientDiagnostics(BlobBaseClientInternals.GetClientOptions(sourceClient));
         }
 
-#pragma warning disable CA1801 // Review unused parameters
-        public Action ProcessDownloadTransfer(bool async = true)
-#pragma warning restore CA1801 // Review unused parameters
+        /// <summary>
+        /// Creates the next Transfer Chunk to process
+        /// </summary>
+        /// <returns></returns>
+        public override async Task ProcessPartToChunkAsync()
         {
-            return () =>
+            // Attempt temporary download path
+            if (await CreateDownloadFilePath().ConfigureAwait(false))
             {
-                /* TODO: replace with Azure.Core.Diagnotiscs logger
-                Logger.LogAsync(DataMovementLogLevel.Information,
-                    $"Processing Upload Transfer source: {SourceBlobClient.Uri.AbsoluteUri}; destination: {DestinationLocalPath}", async).EnsureCompleted();
-                */
-                // Do only blockblob upload for now for now
-                try
-                {
-                    TransferStatus = StorageTransferStatus.InProgress;
-                    Response response = SourceBlobClient.DownloadTo(DestinationLocalPath, transferOptions: Options?.TransferOptions ?? default);
-                    if (response != null)
-                    {
-                        /* TODO: replace with Azure.Core.Diagnotiscs logger
-                        Logger.LogAsync(DataMovementLogLevel.Information, $"Transfer succeeded on from source:{SourceBlobClient} to destination:{DestinationLocalPath}", async).EnsureCompleted();
-                        */
-                    }
-                    else
-                    {
-                        /* TODO: replace with Azure.Core.Diagnotiscs logger
-                        Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to unknown reasons. Upload Transfer returned null results", async).EnsureCompleted();
-                        */
-                    }
-                }
-                //TODO: catch other type of exceptions and handle gracefully
-#pragma warning disable CS0168 // Variable is declared but never used
-                catch (RequestFailedException ex)
-#pragma warning restore CS0168 // Variable is declared but never used
-                {
-                    /* TODO: replace with Azure.Core.Diagnotiscs logger
-                    Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to the following: {ex.ErrorCode}: {ex.Message}", async).EnsureCompleted();
-                    */
-                    // Progress Handling is already done by the upload call
-                }
-#pragma warning disable CS0168 // Variable is declared but never used
-                catch (Exception ex)
-#pragma warning restore CS0168 // Variable is declared but never used
-                {
-                    /* TODO: replace with Azure.Core.Diagnotiscs logger
-                    Logger.LogAsync(DataMovementLogLevel.Error, $"Upload Transfer Failed due to the following: {ex.Message}", async).EnsureCompleted();
-                    */
-                    // Progress Handling is already done by the upload call
-                }
-            };
+                await InitiateDownload().ConfigureAwait(false);
+            }
         }
 
         /// <summary>
@@ -219,10 +193,7 @@ namespace Azure.Storage.Blobs.DataMovement
                 }
                 TransferStatus = StorageTransferStatus.Queued;
             }
-            // Read in Job Plan File
-            // JobPlanReader.Read(file)
             TransferStatus = StorageTransferStatus.Queued;
-            //return ProcessDownloadTransfer();
         }
 
         /// <summary>
@@ -274,30 +245,457 @@ namespace Azure.Storage.Blobs.DataMovement
             yield return new BlobDownloadPartInternal(this);
         }
 
-        public override async Task ProcessPartToChunkAsync()
+        #region PartitionedDownloader
+        /// <summary>
+        /// Initializes the temporary file path for the blob to be downloaded to.
+        /// </summary>
+        private async Task<bool> CreateDownloadFilePath()
         {
-            PartitionedProgressIncrementer progressIncrementer;
-            if (Options?.ProgressHandler != default)
+            try
             {
-                progressIncrementer = new PartitionedProgressIncrementer(Options.ProgressHandler);
+                if (!File.Exists(DestinationLocalPath))
+                {
+                    File.Create(DestinationLocalPath).Close();
+                    FileAttributes attributes = File.GetAttributes(DestinationLocalPath);
+                    File.SetAttributes(DestinationLocalPath, attributes | FileAttributes.Temporary);
+                    return true;
+                }
+                else
+                {
+                    // TODO: if there's an error handling enum to overwrite the file we have to check
+                    // for that instead of throwing an error
+                    Options?.GetDownloadFailed()?.Invoke(new BlobDownloadFailedEventArgs(
+                        TransferId,
+                        SourceBlobClient,
+                        DestinationLocalPath,
+                        new IOException($"File path `{DestinationLocalPath}` already exists. Cannot overwite file"),
+                        false,
+                        CancellationTokenSource.Token));
+                    await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                Options?.GetDownloadFailed()?.Invoke(new BlobDownloadFailedEventArgs(
+                        TransferId,
+                        SourceBlobClient,
+                        DestinationLocalPath,
+                        ex,
+                        false,
+                        CancellationTokenSource.Token));
+                await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Just start downloading using an initial range.  If it's a
+        /// small blob, we'll get the whole thing in one shot.  If it's
+        /// a large blob, we'll get its full size in Content-Range and
+        /// can keep downloading it in segments.
+        ///
+        /// After this response comes back and there's more to download
+        /// then we will trigger more to download since we now know the
+        /// content length.
+        /// </summary>
+        internal async Task InitiateDownload()
+        {
+            await OnTransferStatusChanged(StorageTransferStatus.InProgress, true).ConfigureAwait(false);
+
+            // Set initial range size
+
+            long initialRangeSize = Constants.Blob.Block.DefaultInitalDownloadRangeSize;
+            if (Options.TransferOptions.InitialTransferSize.HasValue
+                && Options.TransferOptions.InitialTransferSize.Value > 0)
+            {
+                // Custom initial range size
+                initialRangeSize = _options.TransferOptions.InitialTransferSize.Value;
+            }
+
+            try
+            {
+                Task<Response<BlobDownloadStreamingResult>> initialResponseTask =
+                    SourceBlobClient.DownloadStreamingAsync(
+                        new HttpRange(0, initialRangeSize),
+                        conditions: default, // TODO: Not accepting specific conditions currently.
+                        rangeGetContentHash: default, // TODO: contentrangehash issue
+                        default,
+                        CancellationTokenSource.Token);
+
+                Response<BlobDownloadStreamingResult> initialResponse = null;
+                try
+                {
+                    initialResponse = await initialResponseTask.ConfigureAwait(false);
+                }
+                catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.InvalidRange)
+                {
+                    // Range not accepted, we need to attempt to use a default range
+                    initialResponse = await SourceBlobClient.DownloadStreamingAsync(
+                        range: default,
+                        conditions: default,
+                        rangeGetContentHash: default,
+                        default,
+                        CancellationTokenSource.Token)
+                        .ConfigureAwait(false);
+                }
+
+                // If the initial request returned no content (i.e., a 304),
+                // we'll pass that back to the user immediately
+                if (initialResponse.IsUnavailable())
+                {
+                    // Invoke event handler and progress handler
+                    return;
+                }
+
+                // Check if that was the entire blob, if so finish now.
+                // If the first segment was the entire blob, we'll copy that to
+                // the output stream and finish now
+                long initialLength = initialResponse.Value.Details.ContentLength;
+                long totalLength = ParseRangeTotalLength(initialResponse.Value.Details.ContentRange);
+                if (initialLength == totalLength)
+                {
+                    // Complete download since it was done in one go
+                    await CopyToStreamInternal(initialResponse.Value.Content).ConfigureAwait(false);
+                    Options?.ProgressHandler?.Report(initialLength);
+
+                    await QueueChunkTask(
+                        async () =>
+                        await CompleteFileDownload().ConfigureAwait(false))
+                        .ConfigureAwait(false);
+                }
+                else
+                {
+                    // Capture the etag from the first segment and construct
+                    // conditions to ensure the blob doesn't change while we're
+                    // downloading the remaining segments
+                    ETag etag = initialResponse.Value.Details.ETag;
+                    BlobRequestConditions conditionsWithEtag;
+
+                    // TODO: allow user to sumbit custom ETag and BlobRequestConditions
+                    /*
+                    if (conditions != default)
+                    {
+                        conditionsWithEtag = new BlobRequestConditions()
+                        {
+                            TagConditions = conditions.TagConditions,
+                            IfMatch = etag,
+                            IfNoneMatch = conditions.IfNoneMatch,
+                            IfModifiedSince = conditions.IfModifiedSince,
+                            IfUnmodifiedSince = conditions.IfUnmodifiedSince,
+                            LeaseId = conditions.LeaseId
+                        };
+                    }
+                    */
+                    conditionsWithEtag = new BlobRequestConditions { IfMatch = etag };
+
+                    await CopyToStreamInternal(initialResponse.Value.Content).ConfigureAwait(false);
+                    Options?.ProgressHandler?.Report(initialLength);
+
+                    // Set rangeSize
+                    int rangeSize = Constants.DefaultBufferSize;
+                    if (Options.TransferOptions.MaximumTransferSize.HasValue
+                        && Options.TransferOptions.MaximumTransferSize.Value > 0)
+                    {
+                        rangeSize = Math.Min((int) Options.TransferOptions.MaximumTransferSize.Value, Constants.Blob.Block.MaxDownloadBytes);
+                    }
+
+                    // Get list of ranges of the blob
+                    IList<HttpRange> ranges = GetRangesList(initialLength, totalLength, rangeSize);
+                    // Create Download Chunk event handler to manage when the ranges finish downloading
+                    _downloadChunkController = GetDownloadChunkController(
+                        currentTranferred: initialLength,
+                        expectedLength: totalLength,
+                        ranges: ranges,
+                        job: this);
+
+                    // Fill the queue with tasks to download each of the remaining
+                    // ranges in the blob
+                    foreach (HttpRange httpRange in ranges)
+                    {
+                        // Add the next Task (which will start the download but
+                        // return before it's completed downloading)
+                        await QueueChunkTask( async () =>
+                            await DownloadStreamingInternal(
+                                range: httpRange,
+                                conditions: conditionsWithEtag,
+                                rangeGetContentHash: false).ConfigureAwait(false)).ConfigureAwait(false);
+                    }
+                }
+            }
+            // Expand Exception Handling
+            catch (Exception ex)
+            {
+                // The file either does not exist any more, got moved, or renamed.
+                Options?.GetDownloadFailed()?.Invoke(new BlobDownloadFailedEventArgs(
+                    TransferId,
+                    SourceBlobClient,
+                    DestinationLocalPath,
+                    ex,
+                    false,
+                    CancellationTokenSource.Token));
+                await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+            }
+        }
+
+        internal async Task CompleteFileDownload()
+        {
+            CancellationHelper.ThrowIfCancellationRequested(CancellationTokenSource.Token);
+
+            // If the file requires client side encrytion, flush the crypto stream before finishing the download.
+            if (BlobBaseClientInternals.GetUsingClientSideEncryption(SourceBlobClient))
+            {
+                await FlushFinalCryptoStreamInternal().ConfigureAwait(false);
+            }
+
+            if (File.Exists(DestinationLocalPath))
+            {
+                // Make file visible
+                FileAttributes attributes = File.GetAttributes(DestinationLocalPath);
+                File.SetAttributes(DestinationLocalPath, attributes | FileAttributes.Normal);
             }
             else
             {
-                // Create new progress tracker in the case that
-                progressIncrementer = new PartitionedProgressIncrementer(new Progress<long>());
+                // The file either does not exist any more, got moved, or renamed.
+                Options?.GetDownloadFailed()?.Invoke(new BlobDownloadFailedEventArgs(
+                    TransferId,
+                    SourceBlobClient,
+                    DestinationLocalPath,
+                    new IOException($"Could not complete download. Destination file `{DestinationLocalPath}` could not be found."),
+                    false,
+                    CancellationTokenSource.Token));
             }
-
-            var downloader = new ParallelPartitionedDownloader<BlobSingleDownloadOptions>(
-                //TODO: replace with job
-                client: SourceBlobClient,
-                options: Options);
-
-            CancellationToken cancellationToken = CancellationTokenSource.Token;
-            // TODO: Flush File
-
-            // This will internally use the queueChunkTask to add all the tasks to channel.
-            // TODO: change DownloadTo to queued chunk task
-            await downloader.DownloadToAsync(default, default, cancellationToken).ConfigureAwait(false);
+            await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
         }
+
+        internal async Task DownloadStreamingInternal(
+            HttpRange range,
+            BlobRequestConditions conditions,
+            bool rangeGetContentHash)
+        {
+            try
+            {
+                using BlobDownloadStreamingResult result = await SourceBlobClient.DownloadStreamingAsync(
+                    range,
+                    conditions,
+                    rangeGetContentHash,
+                    default,
+                    CancellationTokenSource.Token).ConfigureAwait(false);
+                await _downloadChunkController.InvokeEvent(new BlobDownloadRangeEventArgs(
+                    transferId: TransferId,
+                    success: true,
+                    offset: range.Offset,
+                    bytesTransferred: (long) range.Length,
+                    result: result,
+                    false,
+                    CancellationTokenSource.Token)).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex)
+            {
+                Options?.GetDownloadFailed()?.Invoke(new BlobDownloadFailedEventArgs(
+                    TransferId,
+                    SourceBlobClient,
+                    DestinationLocalPath,
+                    ex,
+                    false,
+                    CancellationTokenSource.Token));
+                await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+            }
+            catch (IOException ex)
+            {
+                Options?.GetDownloadFailed()?.Invoke(new BlobDownloadFailedEventArgs(
+                                TransferId,
+                                SourceBlobClient,
+                                DestinationLocalPath,
+                                ex,
+                                false,
+                                CancellationTokenSource.Token));
+                StorageTransferStatus status = StorageTransferStatus.Completed;
+                if (!ErrorHandling.HasFlag(ErrorHandlingOptions.ContinueOnLocalFilesystemFailure))
+                {
+                    PauseTransferJob();
+                    status = StorageTransferStatus.Paused;
+                }
+                await OnTransferStatusChanged(status, true).ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+                // Job was cancelled
+                await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                // Unexpected exception
+                Options?.GetDownloadFailed()?.Invoke(new BlobDownloadFailedEventArgs(
+                                TransferId,
+                                SourceBlobClient,
+                                DestinationLocalPath,
+                                ex,
+                                false,
+                                CancellationTokenSource.Token));
+                PauseTransferJob();
+                await OnTransferStatusChanged(StorageTransferStatus.Paused, true).ConfigureAwait(false);
+            }
+        }
+
+        public async Task CopyToStreamInternal(Stream source)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(CancellationTokenSource.Token);
+
+            try
+            {
+                using (FileStream fileStream = new FileStream(
+                    DestinationLocalPath,
+                    FileMode.Append,
+                    FileAccess.Write))
+                {
+                    await source.CopyToAsync(
+                        fileStream,
+                        Constants.DefaultDownloadCopyBufferSize,
+                        CancellationTokenSource.Token)
+                        .ConfigureAwait(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                Options?.GetDownloadFailed()?.Invoke(new BlobDownloadFailedEventArgs(
+                    TransferId,
+                    SourceBlobClient,
+                    DestinationLocalPath,
+                    new Exception($"Failed to Write to File: {DestinationLocalPath}", ex),
+                    false,
+                    CancellationTokenSource.Token));
+                TriggerJobCancellation();
+                await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+            }
+        }
+
+        public async Task WriteChunkToTempFile(string chunkFilePath, Stream source)
+        {
+            CancellationHelper.ThrowIfCancellationRequested(CancellationTokenSource.Token);
+
+            try
+            {
+                using (FileStream fileStream = File.OpenWrite(chunkFilePath))
+                {
+                    await source.CopyToAsync(
+                        fileStream,
+                        Constants.DefaultDownloadCopyBufferSize,
+                        CancellationTokenSource.Token)
+                        .ConfigureAwait(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                Options?.GetDownloadFailed()?.Invoke(new BlobDownloadFailedEventArgs(
+                    TransferId,
+                    SourceBlobClient,
+                    DestinationLocalPath,
+                    new Exception($"Failed to Write to Chunk File: {DestinationLocalPath}", ex),
+                    false,
+                    CancellationTokenSource.Token));
+                TriggerJobCancellation();
+                await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+            }
+        }
+        // If Encryption is enabled this is required to flush
+        private async Task FlushFinalCryptoStreamInternal()
+        {
+            CancellationHelper.ThrowIfCancellationRequested(CancellationTokenSource.Token);
+
+            try
+            {
+                using (Stream fileStream = new FileStream(
+                    DestinationLocalPath,
+                    FileMode.Open,
+                    FileAccess.Read))
+                {
+                    if (fileStream is System.Security.Cryptography.CryptoStream cryptoStream)
+                    {
+                        cryptoStream.FlushFinalBlock();
+                    }
+                    else if (fileStream is Cryptography.AuthenticatedRegionCryptoStream authRegionCryptoStream)
+                    {
+                        await authRegionCryptoStream.FlushFinalInternal(async: true, CancellationTokenSource.Token).ConfigureAwait(false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Options?.GetDownloadFailed()?.Invoke(new BlobDownloadFailedEventArgs(
+                                TransferId,
+                                SourceBlobClient,
+                                DestinationLocalPath,
+                                ex,
+                                false,
+                                CancellationTokenSource.Token));
+                await OnTransferStatusChanged(StorageTransferStatus.Completed, true).ConfigureAwait(false);
+            }
+        }
+
+        internal static DownloadChunkController GetDownloadChunkController(
+            long currentTranferred,
+            long expectedLength,
+            IList<HttpRange> ranges,
+            BlobDownloadTransferJob job)
+            => new DownloadChunkController(
+                currentTranferred,
+                expectedLength,
+                ranges,
+                GetDownloadChunkControllerBehaviors(job),
+                job.Options?.ProgressHandler,
+                job.CancellationTokenSource.Token);
+
+        internal static DownloadChunkController.Behaviors GetDownloadChunkControllerBehaviors(BlobDownloadTransferJob job)
+        {
+            return new DownloadChunkController.Behaviors()
+            {
+                CopyToDestinationFile = (result) => job.CopyToStreamInternal(result),
+                CopyToChunkFile = (chunkFilePath, source) => job.WriteChunkToTempFile(chunkFilePath, source),
+                InvokeFailedHandler = (ex) =>
+                {
+                    job.Options?.GetDownloadFailed()?.Invoke(
+                    new BlobDownloadFailedEventArgs(
+                    job.TransferId,
+                    job.SourceBlobClient,
+                    job.DestinationLocalPath,
+                    ex,
+                    false,
+                    job.CancellationTokenSource.Token));
+                    // Trigger job cancellation if the failed handler is enabled
+                    job.TriggerJobCancellation();
+                },
+                UpdateTransferStatus = (status) => job.QueueChunkTask(
+                    async () =>
+                    await job.OnTransferStatusChanged(status, true).ConfigureAwait(false)),
+                QueueCompleteFileDownload = () => job.QueueChunkTask(
+                    async () =>
+                    await job.CompleteFileDownload().ConfigureAwait(false))
+            };
+        }
+
+        private static long ParseRangeTotalLength(string range)
+        {
+            if (range == null)
+            {
+                return 0;
+            }
+            int lengthSeparator = range.IndexOf("/", StringComparison.InvariantCultureIgnoreCase);
+            if (lengthSeparator == -1)
+            {
+                throw BlobErrors.ParsingFullHttpRangeFailed(range);
+            }
+            return long.Parse(range.Substring(lengthSeparator + 1), CultureInfo.InvariantCulture);
+        }
+
+        private static IList<HttpRange> GetRangesList(long initialLength, long totalLength, int rangeSize)
+        {
+            IList<HttpRange> list = new List<HttpRange>();
+            for (long offset = initialLength; offset < totalLength; offset += rangeSize)
+            {
+                list.Add(new HttpRange(offset, Math.Min(totalLength - offset, rangeSize)));
+            }
+            return list;
+        }
+        #endregion PartitionedDownloader
     }
 }

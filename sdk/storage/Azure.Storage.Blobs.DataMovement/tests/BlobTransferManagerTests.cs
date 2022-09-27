@@ -17,6 +17,11 @@ using Azure.Storage.DataMovement;
 using System.Net;
 using Azure.Core;
 using System.Threading;
+using Azure.Storage.Test;
+using System.Drawing;
+using Castle.Core.Internal;
+using Microsoft.CodeAnalysis;
+using NUnit.Framework.Internal;
 
 namespace Azure.Storage.Blobs.DataMovement.Tests
 {
@@ -38,6 +43,64 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
                     "baz/foo/bar",
                     "baz/bar/foo"
             };
+
+        internal class VerifyUploadBlobContentInfo
+        {
+            public readonly string LocalPath;
+            public BlobBaseClient Client;
+            public BlobSingleUploadOptions UploadOptions;
+            public AutoResetEvent CompletedStatusWait;
+
+            public VerifyUploadBlobContentInfo(
+                string sourceFile,
+                BlobBaseClient blobClient,
+                BlobSingleUploadOptions uploadOptions,
+                AutoResetEvent completedStatusWait)
+            {
+                LocalPath = sourceFile;
+                Client = blobClient;
+                UploadOptions = uploadOptions;
+                CompletedStatusWait = completedStatusWait;
+            }
+        };
+
+        internal class VerifyDownloadBlobContentInfo
+        {
+            public readonly string SourceLocalPath;
+            public readonly string DestinationLocalPath;
+            public BlobSingleDownloadOptions DownloadOptions;
+            public AutoResetEvent CompletedStatusWait;
+
+            public VerifyDownloadBlobContentInfo(
+                string sourceFile,
+                string destinationFile,
+                BlobSingleDownloadOptions downloadOptions,
+                AutoResetEvent completedStatusWait)
+            {
+                SourceLocalPath = sourceFile;
+                DestinationLocalPath = destinationFile;
+                DownloadOptions = downloadOptions;
+                CompletedStatusWait = completedStatusWait;
+            }
+        };
+
+        internal BlobSingleUploadOptions CopySingleUploadOptions(BlobSingleUploadOptions options)
+        {
+            BlobSingleUploadOptions newOptions = new BlobSingleUploadOptions()
+            {
+                HttpHeaders = options.HttpHeaders,
+                Metadata = options.Metadata,
+                Tags = options.Tags,
+                Conditions = options.Conditions,
+                ProgressHandler = options.ProgressHandler,
+                AccessTier = options.AccessTier,
+                TransferOptions = options.TransferOptions,
+                ImmutabilityPolicy = options.ImmutabilityPolicy,
+                LegalHold = options.LegalHold,
+                TransferValidationOptions = options.TransferValidationOptions
+            };
+            return newOptions;
+        }
 
         private async Task SetUpDirectoryForListing(BlobContainerClient container)
         {
@@ -64,11 +127,63 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
             await blobs[3].SetMetadataAsync(metadata);
         }
 
-        internal class CheckDirectoryCompletionProgress : IProgress<long>
+        /// <summary>
+        /// Verifies Upload blob contents
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="blob"></param>
+        /// <returns></returns>
+        private static async Task DownloadAndAssertAsync(Stream stream, BlobBaseClient blob)
+        {
+            var actual = new byte[Constants.DefaultBufferSize];
+            using var actualStream = new MemoryStream(actual);
+
+            // reset the stream before validating
+            stream.Seek(0, SeekOrigin.Begin);
+            long size = stream.Length;
+            // we are testing Upload, not download: so we download in partitions to avoid the default timeout
+            for (var i = 0; i < size; i += Constants.DefaultBufferSize * 5 / 2)
+            {
+                var startIndex = i;
+                var count = Math.Min(Constants.DefaultBufferSize, (int)(size - startIndex));
+
+                Response<BlobDownloadInfo> download = await blob.DownloadAsync(new HttpRange(startIndex, count));
+                actualStream.Seek(0, SeekOrigin.Begin);
+                await download.Value.Content.CopyToAsync(actualStream);
+
+                var buffer = new byte[count];
+                stream.Seek(i, SeekOrigin.Begin);
+                await stream.ReadAsync(buffer, 0, count);
+
+                TestHelper.AssertSequenceEqual(
+                    buffer,
+                    actual.AsSpan(0, count).ToArray());
+            }
+        }
+
+        private static void CompareSourceAndDestinationFiles(string sourceFile, string destinationFile)
+        {
+            FileStream sourceStream;
+            FileStream destinationStream;
+
+            // Open the two files.
+            using (sourceStream = new FileStream(sourceFile, FileMode.Open))
+            {
+                using (destinationStream = new FileStream(destinationFile, FileMode.Open))
+                {
+                    // Read and compare a byte from each file until either a
+                    // non-matching set of bytes is found or until the end of
+                    // sourceFile is reached.
+                    TestHelper.AssertSequenceEqual(sourceStream.AsBytes(), destinationStream.AsBytes());
+                }
+            }
+        }
+
+        internal class CheckBlobCompletionProgress : IProgress<long>
         {
             private long _expectedSize { get; }
             private AutoResetEvent _completeEvent { get; }
-            public CheckDirectoryCompletionProgress(long expectedSize, AutoResetEvent completeEvent)
+            public CheckBlobCompletionProgress(long expectedSize, AutoResetEvent completeEvent)
             {
                 _expectedSize = expectedSize;
                 _completeEvent = completeEvent;
@@ -114,482 +229,637 @@ namespace Azure.Storage.Blobs.DataMovement.Tests
         }
 
         #region SingleUpload
+
+        /// <summary>
+        /// Upload and verify the contents of the blob
+        ///
+        /// By default in this function an event arguement will be added to the options event handler
+        /// to detect when the upload has finished.
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="waitTimeInSec"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        private async Task UploadBlobsAndVerify(
+            BlobContainerClient container,
+            long size = Constants.KB,
+            int waitTimeInSec = 10,
+            int blobCount = 1,
+            StorageTransferManagerOptions transferManagerOptions = default,
+            List<string> blobNames = default,
+            List<BlobSingleUploadOptions> options = default)
+        {
+            // Populate blobNames list for number of blobs to be created
+            if (blobNames.IsNullOrEmpty())
+            {
+                blobNames ??= new List<string>();
+                for (int i = 0; i < blobCount; i++)
+                {
+                    blobNames.Add(GetNewBlobName());
+                }
+            }
+            else
+            {
+                // If blobNames is popluated make sure these number of blobs match
+                Assert.AreEqual(blobCount, blobNames.Count);
+            }
+
+            // Populate blobNames list for number of blobs to be created
+            if (options.IsNullOrEmpty())
+            {
+                options ??= new List<BlobSingleUploadOptions>(blobCount);
+                for (int i = 0; i < blobCount; i++)
+                {
+                    options.Add(new BlobSingleUploadOptions());
+                }
+            }
+            else
+            {
+                // If blobNames is popluated make sure these number of blobs match
+                Assert.AreEqual(blobCount, options.Count);
+            }
+
+            transferManagerOptions ??= new StorageTransferManagerOptions()
+            {
+                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure
+            };
+
+            List<VerifyUploadBlobContentInfo> uploadedBlobInfo = new List<VerifyUploadBlobContentInfo>(blobCount);
+            try
+            {
+                // Initialize BlobTransferManager
+                BlobTransferManager blobTransferManager = new BlobTransferManager(transferManagerOptions);
+
+                // Set up blob to upload
+                for (int i = 0; i < blobCount; i++)
+                {
+                    using Stream originalStream = await CreateLimitedMemoryStream(size);
+                    string localSourceFile = Path.GetTempFileName();
+                    // create a new file and copy contents of stream into it, and then close the FileStream
+                    // so the StagedUploadAsync call is not prevented from reading using its FileStream.
+                    using (FileStream fileStream = File.Create(localSourceFile))
+                    {
+                        await originalStream.CopyToAsync(fileStream);
+                    }
+
+                    // Set up destination client
+                    BlockBlobClient destClient = container.GetBlockBlobClient(blobNames[i]);
+
+                    AutoResetEvent completedStatusWait = new AutoResetEvent(false);
+                    options[i].TransferStatusEventHandler += async (StorageTransferStatusEventArgs args) =>
+                    {
+                        // Assert
+                        if (args.StorageTransferStatus == StorageTransferStatus.Completed)
+                        {
+                            bool exists = await destClient.ExistsAsync();
+                            Assert.IsTrue(exists);
+                            completedStatusWait.Set();
+                        }
+                    };
+                    options[i].UploadFailedEventHandler += (BlobUploadFailedEventArgs args) =>
+                    {
+                        if (args.Exception != null)
+                        {
+                            Assert.Fail(args.Exception.Message);
+                            completedStatusWait.Set();
+                        }
+                        return Task.CompletedTask;
+                    };
+
+                    uploadedBlobInfo.Add(new VerifyUploadBlobContentInfo(
+                        localSourceFile,
+                        destClient,
+                        options[i],
+                        completedStatusWait));
+
+                    // Act
+                    await blobTransferManager.ScheduleUploadAsync(localSourceFile, destClient, options[i]).ConfigureAwait(false);
+                }
+
+                for (int i = 0; i < blobCount; i++)
+                {
+                    // Assert
+                    Assert.IsTrue(uploadedBlobInfo[i].CompletedStatusWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
+
+                    // Verify Upload
+                    using (FileStream fileStream = File.OpenRead(uploadedBlobInfo[i].LocalPath))
+                    {
+                        await DownloadAndAssertAsync(fileStream, uploadedBlobInfo[i].Client).ConfigureAwait(false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+            finally
+            {
+                // Cleanup - temporary local files (blobs cleaned up by diposing container)
+                for (int i = 0; i < blobCount; i++)
+                {
+                    if (File.Exists(uploadedBlobInfo[i].LocalPath))
+                    {
+                        File.Delete(uploadedBlobInfo[i].LocalPath);
+                    }
+                }
+            }
+        }
+
         [RecordedTest]
         [TestCase(0, 10)]
         [TestCase(Constants.KB, 10)]
         [TestCase(4 * Constants.MB, 20)]
         [TestCase(257 * Constants.MB, 200)]
         [TestCase(Constants.GB, 500)]
-        public async Task ScheduleUpload_Progress()
+        public async Task ScheduleUpload_Progress(long size, int waitTimeInSec)
         {
+            AutoResetEvent CompletedProgressBytesWait = new AutoResetEvent(false);
+            BlobSingleUploadOptions options = new BlobSingleUploadOptions()
+            {
+                ProgressHandler = new CheckBlobCompletionProgress(size, CompletedProgressBytesWait)
+            };
+
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
-            // Set up blob to upload
-            var blobName = GetNewBlobName();
-            string tempfolder = Path.GetTempPath();
-            string directoryName = GetNewBlobDirectoryName();
-            long size = Constants.KB;
-            try
-            {
-                string directory = CreateRandomDirectory(tempfolder, directoryName);
-                string localSourceFile = await CreateRandomFileAsync(directory, size: size).ConfigureAwait(false);
+            List<BlobSingleUploadOptions> optionsList = new List<BlobSingleUploadOptions>() { options };
+            await UploadBlobsAndVerify(
+                testContainer.Container,
+                size,
+                waitTimeInSec,
+                blobCount: optionsList.Count,
+                options: optionsList).ConfigureAwait(false);
 
-                // Set up destination client
-                BlockBlobClient destClient = testContainer.Container.GetBlockBlobClient(blobName);
-
-                StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
-                {
-                    ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
-                    MaximumConcurrency = 1,
-                };
-                BlobTransferManager blobTransferManager = new BlobTransferManager(managerOptions);
-
-                AutoResetEvent CompletedWait = new AutoResetEvent(false);
-                BlobSingleUploadOptions options = new BlobSingleUploadOptions()
-                {
-                    ProgressHandler = new CheckDirectoryCompletionProgress(size, CompletedWait)
-                };
-                // Act
-                await blobTransferManager.ScheduleUploadAsync(localSourceFile, destClient, options).ConfigureAwait(false);
-
-                // Assert
-                Assert.IsTrue(CompletedWait.WaitOne(TimeSpan.FromSeconds(10)));
-            }
-            finally
-            {
-                // Cleanup
-                if (Directory.Exists(directoryName))
-                {
-                    Directory.Delete(directoryName, true);
-                }
-            }
+            // Assert
+            Assert.IsTrue(CompletedProgressBytesWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
         }
 
         [RecordedTest]
         public async Task ScheduleUpload_EventHandler()
         {
+            AutoResetEvent InProgressWait = new AutoResetEvent(false);
+
+            BlobSingleUploadOptions options = new BlobSingleUploadOptions();
+            options.TransferStatusEventHandler += (StorageTransferStatusEventArgs args) =>
+            {
+                // Assert
+                if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
+                {
+                    InProgressWait.Set();
+                }
+                return Task.CompletedTask;
+            };
+            options.UploadFailedEventHandler += (BlobUploadFailedEventArgs args) =>
+            {
+                if (args.Exception != null)
+                {
+                    Assert.Fail(args.Exception.Message);
+                    InProgressWait.Set();
+                }
+                return Task.CompletedTask;
+            };
+
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
-            // Set up blob to upload
-            var blobName = GetNewBlobName();
-            string tempfolder = Path.GetTempPath();
-            string directoryName = GetNewBlobDirectoryName();
-            try
-            {
-                string directory = CreateRandomDirectory(tempfolder, directoryName);
-                string localSourceFile = await CreateRandomFileAsync(directory).ConfigureAwait(false);
+            List<BlobSingleUploadOptions> optionsList = new List<BlobSingleUploadOptions>() { options };
+            await UploadBlobsAndVerify(
+                container: testContainer.Container,
+                blobCount: optionsList.Count,
+                options: optionsList).ConfigureAwait(false);
 
-                // Set up destination client
-                BlockBlobClient destClient = testContainer.Container.GetBlockBlobClient(blobName);
-
-                StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
-                {
-                    ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
-                    MaximumConcurrency = 1,
-                };
-                BlobTransferManager blobTransferManager = new BlobTransferManager(managerOptions);
-
-                AutoResetEvent InProgressWait = new AutoResetEvent(false);
-                AutoResetEvent CompletedWait = new AutoResetEvent(false);
-                BlobSingleUploadOptions options = new BlobSingleUploadOptions();
-                options.TransferStatusEventHandler += async (StorageTransferStatusEventArgs args) =>
-                {
-                    // Assert
-                    if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
-                    {
-                        InProgressWait.Set();
-                    }
-                    if (args.StorageTransferStatus == StorageTransferStatus.Completed)
-                    {
-                        bool exists = await destClient.ExistsAsync();
-                        Assert.IsTrue(exists);
-                        CompletedWait.Set();
-                    }
-                };
-                // Act
-                await blobTransferManager.ScheduleUploadAsync(localSourceFile, destClient, options).ConfigureAwait(false);
-
-                // Assert
-                Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(400)));
-                Assert.IsTrue(CompletedWait.WaitOne(TimeSpan.FromSeconds(400)));
-            }
-            finally
-            {
-                // Cleanup
-                if (Directory.Exists(directoryName))
-                {
-                    Directory.Delete(directoryName, true);
-                }
-            }
+            // Assert
+            Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(400)));
         }
 
         [RecordedTest]
         [TestCase(0, 10)]
+        [TestCase(100, 10)]
         [TestCase(Constants.KB, 10)]
         [TestCase(4 * Constants.MB, 20)]
         [TestCase(257 * Constants.MB, 200)]
         [TestCase(Constants.GB, 500)]
         public async Task ScheduleUpload_BlobSize(long fileSize, int waitTimeInSec)
         {
+            AutoResetEvent InProgressWait = new AutoResetEvent(false);
+            BlobSingleUploadOptions options = new BlobSingleUploadOptions();
+
             // Arrange
-            //await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
-
-            // Set up blob to upload
             var blobName = GetNewBlobName();
-            string tempfolder = Path.GetTempPath();
-            string directoryName = GetNewBlobDirectoryName();
-            try
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            BlockBlobClient destClient = testContainer.Container.GetBlockBlobClient(blobName);
+
+            options.TransferStatusEventHandler += (StorageTransferStatusEventArgs args) =>
             {
-                string directory = CreateRandomDirectory(tempfolder, directoryName);
-                string localSourceFile = await CreateRandomFileAsync(parentPath: directory, size: fileSize).ConfigureAwait(false);
-
-                // Set up destination client
-                BlockBlobClient destClient = testContainer.Container.GetBlockBlobClient(blobName);
-
-                StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
-                {
-                    ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
-                };
-                BlobTransferManager blobTransferManager = new BlobTransferManager(managerOptions);
-
-                AutoResetEvent InProgressWait = new AutoResetEvent(false);
-                AutoResetEvent CompletedWait = new AutoResetEvent(false);
-                BlobSingleUploadOptions options = new BlobSingleUploadOptions();
-                options.TransferStatusEventHandler += async (StorageTransferStatusEventArgs args) =>
-                {
-                    // Assert
-                    if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
-                    {
-                        InProgressWait.Set();
-                    }
-                    if (args.StorageTransferStatus == StorageTransferStatus.Completed)
-                    {
-                        bool exists = await destClient.ExistsAsync();
-                        Assert.IsTrue(exists);
-                        CompletedWait.Set();
-                    }
-                };
-                options.UploadFailedEventHandler += (BlobUploadFailedEventArgs args) =>
-                {
-                    if (args.Exception != null)
-                    {
-                        Assert.Fail(args.Exception.Message);
-                        InProgressWait.Set();
-                        CompletedWait.Set();
-                    }
-                    return Task.CompletedTask;
-                };
-                // Act
-                await blobTransferManager.ScheduleUploadAsync(localSourceFile, destClient, options).ConfigureAwait(false);
-
                 // Assert
-                Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
-                Assert.IsTrue(CompletedWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
-            }
-            finally
-            {
-                // Cleanup
-                if (Directory.Exists(directoryName))
+                if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
                 {
-                    Directory.Delete(directoryName, true);
+                    InProgressWait.Set();
                 }
-            }
+                return Task.CompletedTask;
+            };
+            options.UploadFailedEventHandler += (BlobUploadFailedEventArgs args) =>
+            {
+                if (args.Exception != null)
+                {
+                    Assert.Fail(args.Exception.Message);
+                    InProgressWait.Set();
+                }
+                return Task.CompletedTask;
+            };
+
+            List<string> blobNames = new List<string>() { blobName };
+            List<BlobSingleUploadOptions> optionsList = new List<BlobSingleUploadOptions>() { options };
+
+            await UploadBlobsAndVerify(
+                size: fileSize,
+                waitTimeInSec: waitTimeInSec,
+                container: testContainer.Container,
+                blobCount: blobNames.Count(),
+                blobNames: blobNames,
+                options: optionsList).ConfigureAwait(false);
+
+            // Assert
+            Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
         }
 
         [RecordedTest]
-        [TestCase(1, 20)]
-        [TestCase(4, 20)]
-        [TestCase(16, 20)]
-        public async Task ScheduleUpload_Concurrency(int concurrency, int waitTimeInSec)
+        [TestCase(1, 257 * Constants.MB, 200)]
+        [TestCase(1, Constants.MB, 200)]
+        [TestCase(4, 257 * Constants.MB, 200)]
+        [TestCase(16, 257 * Constants.MB, 200)]
+        public async Task ScheduleUpload_Concurrency(int concurrency, int size, int waitTimeInSec)
+        {
+            // Arrange
+            var blobName = GetNewBlobName();
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+            BlockBlobClient destClient = testContainer.Container.GetBlockBlobClient(blobName);
+
+            List<string> blobNames = new List<string>() { blobName };
+
+            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            {
+                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                MaximumConcurrency = concurrency,
+            };
+
+            await UploadBlobsAndVerify(
+                size: size,
+                waitTimeInSec: waitTimeInSec,
+                container: testContainer.Container,
+                blobCount: blobNames.Count(),
+                blobNames: blobNames).ConfigureAwait(false);
+        }
+
+        [RecordedTest]
+        [TestCase(2, 0, 30)]
+        [TestCase(2, 4 * Constants.MB, 300)]
+        [TestCase(6, 4 * Constants.MB, 300)]
+        [TestCase(2, 257 * Constants.MB, 400)]
+        [TestCase(6, 257 * Constants.MB, 400)]
+        [TestCase(2, Constants.GB, 1000)]
+        public async Task ScheduleUpload_Multiple(int blobCount, long fileSize, int waitTimeInSec)
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
-            // Set up blob to upload
-            var blobName = GetNewBlobName();
-            string tempfolder = Path.GetTempPath();
-            string directoryName = GetNewBlobDirectoryName();
-            try
-            {
-                string directory = CreateRandomDirectory(tempfolder, directoryName);
-                string localSourceFile = await CreateRandomFileAsync(parentPath: directory, size: 4 * Constants.MB).ConfigureAwait(false);
-
-                // Set up destination client
-                BlockBlobClient destClient = testContainer.Container.GetBlockBlobClient(blobName);
-
-                StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
-                {
-                    ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
-                    MaximumConcurrency = concurrency,
-                };
-                BlobTransferManager blobTransferManager = new BlobTransferManager(managerOptions);
-
-                AutoResetEvent InProgressWait = new AutoResetEvent(false);
-                AutoResetEvent CompletedWait = new AutoResetEvent(false);
-                BlobSingleUploadOptions options = new BlobSingleUploadOptions();
-                options.TransferStatusEventHandler += async (StorageTransferStatusEventArgs args) =>
-                {
-                    // Assert
-                    if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
-                    {
-                        InProgressWait.Set();
-                    }
-                    else if (args.StorageTransferStatus == StorageTransferStatus.Completed)
-                    {
-                        CompletedWait.Set();
-                        bool exists = await destClient.ExistsAsync();
-                        Assert.IsTrue(exists);
-                    }
-                };
-                // Act
-                await blobTransferManager.ScheduleUploadAsync(localSourceFile, destClient, options).ConfigureAwait(false);
-
-                // Assert
-                Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
-                Assert.IsTrue(CompletedWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
-            }
-            finally
-            {
-                // Cleanup
-                if (Directory.Exists(directoryName))
-                {
-                    Directory.Delete(directoryName, true);
-                }
-            }
-        }
-
-        [RecordedTest]
-        [TestCase(0, 30)]
-        [TestCase(4 * Constants.MB, 300)]
-        [TestCase(257 * Constants.MB, 400)]
-        [TestCase(Constants.GB, 1000)]
-        public async Task ScheduleUpload_Two(long fileSize, int waitTimeInSec)
-        {
-            // Arrange
-            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
-
-            // Set up blob to upload
-            var blobName = GetNewBlobName();
-            var blobName2 = GetNewBlobName();
-            string tempfolder = Path.GetTempPath();
-            string directoryName = GetNewBlobDirectoryName();
-            try
-            {
-                string directory = CreateRandomDirectory(tempfolder, directoryName);
-                string localSourceFile = await CreateRandomFileAsync(parentPath: directory, size: fileSize).ConfigureAwait(false);
-                string localSourceFile2 = await CreateRandomFileAsync(parentPath: directory, size: fileSize).ConfigureAwait(false);
-
-                // Set up destination client
-                BlockBlobClient destClient = testContainer.Container.GetBlockBlobClient(blobName);
-                BlockBlobClient destClient2 = testContainer.Container.GetBlockBlobClient(blobName2);
-
-                StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
-                {
-                    ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
-                    MaximumConcurrency = 1,
-                };
-                BlobTransferManager blobTransferManager = new BlobTransferManager(managerOptions);
-
-                AutoResetEvent InProgressWait = new AutoResetEvent(false);
-                AutoResetEvent CompletedWait = new AutoResetEvent(false);
-                AutoResetEvent InProgressWait2 = new AutoResetEvent(false);
-                AutoResetEvent CompletedWait2 = new AutoResetEvent(false);
-                BlobSingleUploadOptions options = new BlobSingleUploadOptions();
-                BlobSingleUploadOptions options2 = new BlobSingleUploadOptions();
-                options.TransferStatusEventHandler += async (StorageTransferStatusEventArgs args) =>
-                {
-                    // Assert
-                    if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
-                    {
-                        InProgressWait.Set();
-                    }
-                    if (args.StorageTransferStatus == StorageTransferStatus.Completed)
-                    {
-                        bool exists = await destClient.ExistsAsync();
-                        Assert.IsTrue(exists);
-                        CompletedWait.Set();
-                    }
-                };
-                options2.TransferStatusEventHandler += async (StorageTransferStatusEventArgs args) =>
-                {
-                    // Assert
-                    if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
-                    {
-                        InProgressWait2.Set();
-                    }
-                    if (args.StorageTransferStatus == StorageTransferStatus.Completed)
-                    {
-                        bool exists = await destClient2.ExistsAsync();
-                        Assert.IsTrue(exists);
-                        CompletedWait2.Set();
-                    }
-                };
-                // Act
-                await blobTransferManager.ScheduleUploadAsync(localSourceFile, destClient, options).ConfigureAwait(false);
-                await blobTransferManager.ScheduleUploadAsync(localSourceFile2, destClient2, options2).ConfigureAwait(false);
-
-                // Assert
-                Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
-                Assert.IsTrue(CompletedWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
-                Assert.IsTrue(InProgressWait2.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
-                Assert.IsTrue(CompletedWait2.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
-            }
-            finally
-            {
-                // Cleanup
-                if (Directory.Exists(directoryName))
-                {
-                    Directory.Delete(directoryName, true);
-                }
-            }
+            await UploadBlobsAndVerify(
+                size: fileSize,
+                waitTimeInSec: waitTimeInSec,
+                container: testContainer.Container,
+                blobCount: blobCount).ConfigureAwait(false);
         }
         #endregion SingleUpload
 
         #region SingleDownload
+        /// <summary>
+        /// Upload and verify the contents of the blob
+        ///
+        /// By default in this function an event arguement will be added to the options event handler
+        /// to detect when the upload has finished.
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="waitTimeInSec"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        private async Task DownloadBlobsAndVerify(
+            BlobContainerClient container,
+            long size = Constants.KB,
+            int waitTimeInSec = 10,
+            int blobCount = 1,
+            StorageTransferManagerOptions transferManagerOptions = default,
+            List<string> blobNames = default,
+            List<BlobSingleDownloadOptions> options = default)
+        {
+            // Populate blobNames list for number of blobs to be created
+            if (blobNames.IsNullOrEmpty())
+            {
+                blobNames ??= new List<string>();
+                for (int i = 0; i < blobCount; i++)
+                {
+                    blobNames.Add(GetNewBlobName());
+                }
+            }
+            else
+            {
+                // If blobNames is popluated make sure these number of blobs match
+                Assert.AreEqual(blobCount, blobNames.Count);
+            }
+
+            // Populate blobNames list for number of blobs to be created
+            if (options.IsNullOrEmpty())
+            {
+                options ??= new List<BlobSingleDownloadOptions>(blobCount);
+                for (int i = 0; i < blobCount; i++)
+                {
+                    options.Add(new BlobSingleDownloadOptions());
+                }
+            }
+            else
+            {
+                // If blobNames is popluated make sure these number of blobs match
+                Assert.AreEqual(blobCount, options.Count);
+            }
+
+            transferManagerOptions ??= new StorageTransferManagerOptions()
+            {
+                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure
+            };
+
+            List<VerifyDownloadBlobContentInfo> downloadedBlobInfo = new List<VerifyDownloadBlobContentInfo>(blobCount);
+            try
+            {
+                // Initialize BlobTransferManager
+                BlobTransferManager blobTransferManager = new BlobTransferManager(transferManagerOptions);
+
+                // Upload set of VerifyDownloadBlobContentInfo blobs to download
+                for (int i = 0; i < blobCount; i++)
+                {
+                    // Set up Blob to be downloaded
+                    var data = GetRandomBuffer(size);
+                    using Stream originalStream = await CreateLimitedMemoryStream(size);
+                    string localSourceFile = Path.GetTempFileName();
+                    BlobClient originalBlob = InstrumentClient(container.GetBlobClient(blobNames[i]));
+                    // create a new file and copy contents of stream into it, and then close the FileStream
+                    // so the StagedUploadAsync call is not prevented from reading using its FileStream.
+                    using (FileStream fileStream = File.Create(localSourceFile))
+                    {
+                        // Copy source to a file, so we can verify the source against downloaded blob later
+                        await originalStream.CopyToAsync(fileStream);
+                        // Upload blob to storage account
+                        originalStream.Position = 0;
+                        await originalBlob.UploadAsync(originalStream);
+                    }
+
+                    // Set up event handler for the respective blob
+                    AutoResetEvent completedStatusWait = new AutoResetEvent(false);
+                    options[i].TransferStatusEventHandler += (StorageTransferStatusEventArgs args) =>
+                    {
+                        // Assert
+                        if (args.StorageTransferStatus == StorageTransferStatus.Completed)
+                        {
+                            completedStatusWait.Set();
+                        }
+                        return Task.CompletedTask;
+                    };
+                    options[i].DownloadFailedEventHandler += (BlobDownloadFailedEventArgs args) =>
+                    {
+                        if (args.Exception != null)
+                        {
+                            Assert.Fail(args.Exception.Message);
+                            completedStatusWait.Set();
+                        }
+                        return Task.CompletedTask;
+                    };
+
+                    // Create destination file path
+                    string destFile = Path.GetTempPath() + Path.GetRandomFileName();
+
+                    downloadedBlobInfo.Add(new VerifyDownloadBlobContentInfo(
+                        localSourceFile,
+                        destFile,
+                        options[i],
+                        completedStatusWait));
+                }
+
+                // Schedule all download blobs consecutively
+                for (int i = 0; i < downloadedBlobInfo.Count; i++)
+                {
+                    // Create a special blob client for downloading that will
+                    // assign client request IDs based on the range so that out
+                    // of order operations still get predictable IDs and the
+                    // recordings work correctly
+                    var credential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+                    BlobUriBuilder blobUriBuilder = new BlobUriBuilder(container.Uri)
+                    {
+                        BlobName = blobNames[i]
+                    };
+                    BlobClient sourceBlobClient = InstrumentClient(new BlobClient(blobUriBuilder.ToUri(), credential, GetOptions(true)));
+
+                    // Act
+                    await blobTransferManager.ScheduleDownloadAsync(
+                        sourceBlobClient,
+                        downloadedBlobInfo[i].DestinationLocalPath,
+                        options[i]).ConfigureAwait(false);
+                }
+
+                for (int i = 0; i < downloadedBlobInfo.Count; i++)
+                {
+                    // Assert
+                    Assert.IsTrue(downloadedBlobInfo[i].CompletedStatusWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
+
+                    // Verify Upload
+                    CompareSourceAndDestinationFiles(downloadedBlobInfo[i].SourceLocalPath, downloadedBlobInfo[i].DestinationLocalPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail(ex.Message);
+            }
+            finally
+            {
+                // Cleanup - temporary local files (blobs cleaned up by diposing container)
+                for (int i = 0; i < downloadedBlobInfo.Count; i++)
+                {
+                    if (File.Exists(downloadedBlobInfo[i].SourceLocalPath))
+                    {
+                        File.Delete(downloadedBlobInfo[i].SourceLocalPath);
+                    }
+                    if (File.Exists(downloadedBlobInfo[i].DestinationLocalPath))
+                    {
+                        File.Delete(downloadedBlobInfo[i].DestinationLocalPath);
+                    }
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task ScheduleDownload()
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+
+            // No Option Download bag or manager options bag, plain download
+            await DownloadBlobsAndVerify(
+                testContainer.Container,
+                waitTimeInSec: 10,
+                size: 0,
+                blobCount: 1).ConfigureAwait(false);
+        }
+
+        [RecordedTest]
+        [TestCase(0, 10)]
+        [TestCase(Constants.KB, 10)]
+        [TestCase(4 * Constants.MB, 20)]
+        [TestCase(257 * Constants.MB, 400)]
+        [TestCase(Constants.GB, 800)]
+        public async Task ScheduleDownload_Progress(long size, int waitTimeInSec)
+        {
+            AutoResetEvent CompletedProgressBytesWait = new AutoResetEvent(false);
+            BlobSingleDownloadOptions options = new BlobSingleDownloadOptions()
+            {
+                ProgressHandler = new CheckBlobCompletionProgress(size, CompletedProgressBytesWait)
+            };
+
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+
+            List<BlobSingleDownloadOptions> optionsList = new List<BlobSingleDownloadOptions>() { options };
+            await DownloadBlobsAndVerify(
+                testContainer.Container,
+                waitTimeInSec: waitTimeInSec,
+                size: size,
+                options: optionsList).ConfigureAwait(false);
+
+            // Assert
+            Assert.IsTrue(CompletedProgressBytesWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
+        }
+
         [RecordedTest]
         public async Task ScheduleDownload_EventHandler()
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
-            // Set up blob to upload
-            var blobName = GetNewBlobName();
-            string tempFolder = Path.GetTempPath();
-            string tempFile = tempFolder + Recording.Random.NewGuid().ToString();
-            string directoryName = GetNewBlobDirectoryName();
-            try
+            int waitTimeInSec = 10;
+            AutoResetEvent InProgressWait = new AutoResetEvent(false);
+            BlobSingleDownloadOptions options = new BlobSingleDownloadOptions();
+            options.TransferStatusEventHandler += (StorageTransferStatusEventArgs args) =>
             {
-                string directory = CreateRandomDirectory(tempFolder, directoryName);
-                string localSourceFile = await CreateRandomFileAsync(directory).ConfigureAwait(false);
-
-                // Set up source client
-                BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(blobName);
-                var data = GetRandomBuffer(4 * Constants.KB);
-                Response<BlobContentInfo> response;
-                using (var stream = new MemoryStream(data))
-                {
-                    response = await sourceClient.UploadAsync(
-                        content: stream);
-                };
-
-                StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
-                {
-                    ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
-                    MaximumConcurrency = 1,
-                };
-                BlobTransferManager blobTransferManager = new BlobTransferManager(managerOptions);
-
-                AutoResetEvent InProgressWait = new AutoResetEvent(false);
-                AutoResetEvent CompletedWait = new AutoResetEvent(false);
-                BlobSingleDownloadOptions options = new BlobSingleDownloadOptions();
-                options.TransferStatusEventHandler += async (StorageTransferStatusEventArgs args) =>
-                {
-                    // Assert
-                    if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
-                    {
-                        InProgressWait.Set();
-                    }
-                    if (args.StorageTransferStatus == StorageTransferStatus.Completed)
-                    {
-                        CompletedWait.Set();
-                        bool exists = File.Exists(tempFile);
-                        Assert.IsTrue(exists);
-
-                        // Clean up
-                        await sourceClient.DeleteAsync();
-                    }
-                };
-                // Act
-                await blobTransferManager.ScheduleDownloadAsync(sourceClient, tempFile, options).ConfigureAwait(false);
-
                 // Assert
-                Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(10)));
-                Assert.IsTrue(CompletedWait.WaitOne(TimeSpan.FromSeconds(10)));
-            }
-            finally
-            {
-                // Cleanup
-                if (Directory.Exists(directoryName))
+                if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
                 {
-                    Directory.Delete(directoryName, true);
+                    InProgressWait.Set();
                 }
-            }
+                return Task.CompletedTask;
+            };
+            options.DownloadFailedEventHandler += (BlobDownloadFailedEventArgs args) =>
+            {
+                if (args.Exception != null)
+                {
+                    Assert.Fail(args.Exception.Message);
+                    InProgressWait.Set();
+                }
+                return Task.CompletedTask;
+            };
+
+            List<BlobSingleDownloadOptions> optionsList = new List<BlobSingleDownloadOptions>() { options };
+            await DownloadBlobsAndVerify(
+                testContainer.Container,
+                waitTimeInSec: waitTimeInSec,
+                options: optionsList).ConfigureAwait(false);
+
+            // Assert
+            Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
         }
 
         [RecordedTest]
-        [TestCase(0)]
-        [TestCase(4 * Constants.MB)]
-        [TestCase(Constants.GB)]
-        public async Task ScheduleDownload_BlobSize(long size)
+        [TestCase(0, 10)]
+        [TestCase(100, 10)]
+        [TestCase(Constants.KB, 10)]
+        [TestCase(4 * Constants.MB, 20)]
+        [TestCase(257 * Constants.MB, 200)]
+        [TestCase(Constants.GB, 1000)]
+        public async Task ScheduleDownload_BlobSize(long size, int waitTimeInSec)
         {
             // Arrange
             await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
 
-            // Set up blob to upload
-            var blobName = GetNewBlobName();
-            string tempFolder = Path.GetTempPath();
-            string tempFile = tempFolder + Recording.Random.NewGuid().ToString();
-            string directoryName = GetNewBlobDirectoryName();
-            try
+            AutoResetEvent InProgressWait = new AutoResetEvent(false);
+            BlobSingleDownloadOptions options = new BlobSingleDownloadOptions();
+            options.TransferStatusEventHandler += (StorageTransferStatusEventArgs args) =>
             {
-                string directory = CreateRandomDirectory(tempFolder, directoryName);
-                string localSourceFile = await CreateRandomFileAsync(directory).ConfigureAwait(false);
-
-                // Set up source client
-                BlockBlobClient sourceClient = testContainer.Container.GetBlockBlobClient(blobName);
-                var data = GetRandomBuffer(size);
-                Response<BlobContentInfo> response;
-                using (var stream = new MemoryStream(data))
-                {
-                    response = await sourceClient.UploadAsync(
-                        content: stream);
-                };
-
-                StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
-                {
-                    ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
-                    MaximumConcurrency = 1,
-                };
-                BlobTransferManager blobTransferManager = new BlobTransferManager(managerOptions);
-
-                AutoResetEvent InProgressWait = new AutoResetEvent(false);
-                AutoResetEvent CompletedWait = new AutoResetEvent(false);
-                BlobSingleDownloadOptions options = new BlobSingleDownloadOptions();
-                options.TransferStatusEventHandler += async (StorageTransferStatusEventArgs args) =>
-                {
-                    // Assert
-                    if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
-                    {
-                        InProgressWait.Set();
-                    }
-                    if (args.StorageTransferStatus == StorageTransferStatus.Completed)
-                    {
-                        CompletedWait.Set();
-                        bool exists = File.Exists(tempFile);
-                        Assert.IsTrue(exists);
-
-                        // Clean up
-                        await sourceClient.DeleteAsync();
-                    }
-                };
-                // Act
-                await blobTransferManager.ScheduleDownloadAsync(sourceClient, tempFile, options).ConfigureAwait(false);
-
                 // Assert
-                Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(10)));
-                Assert.IsTrue(CompletedWait.WaitOne(TimeSpan.FromSeconds(10)));
-            }
-            finally
-            {
-                // Cleanup
-                if (Directory.Exists(directoryName))
+                if (args.StorageTransferStatus == StorageTransferStatus.InProgress)
                 {
-                    Directory.Delete(directoryName, true);
+                    InProgressWait.Set();
                 }
-            }
+                return Task.CompletedTask;
+            };
+            options.DownloadFailedEventHandler += (BlobDownloadFailedEventArgs args) =>
+            {
+                if (args.Exception != null)
+                {
+                    Assert.Fail(args.Exception.Message);
+                    InProgressWait.Set();
+                }
+                return Task.CompletedTask;
+            };
+
+            List<BlobSingleDownloadOptions> optionsList = new List<BlobSingleDownloadOptions>() { options };
+            await DownloadBlobsAndVerify(
+                testContainer.Container,
+                size: size,
+                waitTimeInSec: waitTimeInSec,
+                options: optionsList).ConfigureAwait(false);
+
+            // Assert
+            Assert.IsTrue(InProgressWait.WaitOne(TimeSpan.FromSeconds(waitTimeInSec)));
+        }
+
+        [RecordedTest]
+        [TestCase(2, 0, 30)]
+        [TestCase(2, 4 * Constants.MB, 300)]
+        [TestCase(6, 4 * Constants.MB, 300)]
+        [TestCase(2, 257 * Constants.MB, 400)]
+        [TestCase(6, 257 * Constants.MB, 400)]
+        [TestCase(2, Constants.GB, 1000)]
+        public async Task ScheduleDownload_Multiple(int blobCount, long size, int waitTimeInSec)
+        {
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+
+            await DownloadBlobsAndVerify(
+                testContainer.Container,
+                blobCount: blobCount,
+                size: size,
+                waitTimeInSec: waitTimeInSec).ConfigureAwait(false);
+        }
+
+        [RecordedTest]
+        [TestCase(2, 0, 30)]
+        [TestCase(2, 4 * Constants.MB, 300)]
+        [TestCase(6, 4 * Constants.MB, 300)]
+        [TestCase(2, 257 * Constants.MB, 400)]
+        [TestCase(6, 257 * Constants.MB, 400)]
+        [TestCase(2, Constants.GB, 1000)]
+        public async Task ScheduleDownload_Concurrency(int concurrency, int size, int waitTimeInSec)
+        {
+            AutoResetEvent CompletedProgressBytesWait = new AutoResetEvent(false);
+
+            StorageTransferManagerOptions managerOptions = new StorageTransferManagerOptions()
+            {
+                ErrorHandling = ErrorHandlingOptions.ContinueOnServiceFailure,
+                MaximumConcurrency = concurrency,
+            };
+
+            // Arrange
+            await using DisposingBlobContainer testContainer = await GetTestContainerAsync();
+
+            await DownloadBlobsAndVerify(
+                testContainer.Container,
+                waitTimeInSec: waitTimeInSec,
+                transferManagerOptions: managerOptions).ConfigureAwait(false);
         }
         #endregion SingleDownload
 

@@ -152,5 +152,13 @@ namespace Azure.Storage.Blobs.DataMovement
         /// </summary>
         /// <returns>An IEnumerable that contains the job chunks</returns>
         public abstract Task ProcessPartToChunkAsync();
+
+        public void TriggerJobCancellation()
+        {
+            if (!CancellationTokenSource.IsCancellationRequested)
+            {
+                CancellationTokenSource.Cancel();
+            }
+        }
     }
 }

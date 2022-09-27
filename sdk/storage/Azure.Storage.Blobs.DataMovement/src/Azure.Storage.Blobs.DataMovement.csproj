@@ -63,6 +63,7 @@
     <Compile Include="$(AzureStorageSharedSources)NonCryptographicHashAlgorithmHasher.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)NonDisposingStream.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)PartitionedUploader.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedSources)PartitionedStream.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)PooledMemoryStream.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)ProgressIncrementingStream.cs" LinkBase="Shared\Storage" />
     <Compile Include="$(AzureStorageSharedSources)SasExtensions.cs" LinkBase="Shared\Storage" />
