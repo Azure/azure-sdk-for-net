@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static CollectionsList DeserializeCollectionsList(JsonElement element)
         {
-            Optional<IReadOnlyList<PrivateMarketplaceCollectionData>> value = default;
+            Optional<IReadOnlyList<PrivateStoreCollectionInfoData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<PrivateMarketplaceCollectionData> array = new List<PrivateMarketplaceCollectionData>();
+                    List<PrivateStoreCollectionInfoData> array = new List<PrivateStoreCollectionInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateMarketplaceCollectionData.DeserializePrivateMarketplaceCollectionData(item));
+                        array.Add(PrivateStoreCollectionInfoData.DeserializePrivateStoreCollectionInfoData(item));
                     }
                     value = array;
                     continue;

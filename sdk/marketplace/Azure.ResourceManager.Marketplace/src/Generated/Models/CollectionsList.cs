@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// <summary> Initializes a new instance of CollectionsList. </summary>
         internal CollectionsList()
         {
-            Value = new ChangeTrackingList<PrivateMarketplaceCollectionData>();
+            Value = new ChangeTrackingList<PrivateStoreCollectionInfoData>();
         }
 
         /// <summary> Initializes a new instance of CollectionsList. </summary>
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// URL to get the next set of offer list results if there are any.
         /// Serialized Name: CollectionsList.nextLink
         /// </param>
-        internal CollectionsList(IReadOnlyList<PrivateMarketplaceCollectionData> value, string nextLink)
+        internal CollectionsList(IReadOnlyList<PrivateStoreCollectionInfoData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> Serialized Name: CollectionsList.value. </summary>
-        public IReadOnlyList<PrivateMarketplaceCollectionData> Value { get; }
+        public IReadOnlyList<PrivateStoreCollectionInfoData> Value { get; }
         /// <summary>
         /// URL to get the next set of offer list results if there are any.
         /// Serialized Name: CollectionsList.nextLink

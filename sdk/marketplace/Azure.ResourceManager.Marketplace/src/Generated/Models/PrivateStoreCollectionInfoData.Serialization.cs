@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    public partial class PrivateMarketplaceCollectionData : IUtf8JsonSerializable
+    public partial class PrivateStoreCollectionInfoData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Marketplace
             writer.WriteEndObject();
         }
 
-        internal static PrivateMarketplaceCollectionData DeserializePrivateMarketplaceCollectionData(JsonElement element)
+        internal static PrivateStoreCollectionInfoData DeserializePrivateStoreCollectionInfoData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Marketplace
                     continue;
                 }
             }
-            return new PrivateMarketplaceCollectionData(id, name, type, systemData.Value, Optional.ToNullable(collectionId), collectionName.Value, claim.Value, Optional.ToNullable(allSubscriptions), Optional.ToNullable(approveAllItems), Optional.ToNullable(approveAllItemsModifiedAt), Optional.ToList(subscriptionsList), Optional.ToNullable(enabled), Optional.ToNullable(numberOfOffers));
+            return new PrivateStoreCollectionInfoData(id, name, type, systemData.Value, Optional.ToNullable(collectionId), collectionName.Value, claim.Value, Optional.ToNullable(allSubscriptions), Optional.ToNullable(approveAllItems), Optional.ToNullable(approveAllItemsModifiedAt), Optional.ToList(subscriptionsList), Optional.ToNullable(enabled), Optional.ToNullable(numberOfOffers));
         }
     }
 }

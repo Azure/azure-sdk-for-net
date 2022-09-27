@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Marketplace
     /// A Class representing an Offer along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OfferResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetOfferResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateMarketplaceCollectionResource" /> using the GetOffer method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreCollectionInfoResource" /> using the GetOffer method.
     /// </summary>
     public partial class OfferResource : ArmResource
     {

@@ -18,46 +18,46 @@ using Azure.ResourceManager.Marketplace.Models;
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
-    /// A Class representing a PrivateMarketplaceCollection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateMarketplaceCollectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPrivateMarketplaceCollectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreResource" /> using the GetPrivateMarketplaceCollection method.
+    /// A Class representing a PrivateStoreCollectionInfo along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateStoreCollectionInfoResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetPrivateStoreCollectionInfoResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreResource" /> using the GetPrivateStoreCollectionInfo method.
     /// </summary>
-    public partial class PrivateMarketplaceCollectionResource : ArmResource
+    public partial class PrivateStoreCollectionInfoResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="PrivateMarketplaceCollectionResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="PrivateStoreCollectionInfoResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string privateStoreId, string collectionId)
         {
             var resourceId = $"/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics;
-        private readonly PrivateStoreCollectionRestOperations _privateMarketplaceCollectionPrivateStoreCollectionRestClient;
-        private readonly PrivateMarketplaceCollectionData _data;
+        private readonly ClientDiagnostics _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics;
+        private readonly PrivateStoreCollectionRestOperations _privateStoreCollectionInfoPrivateStoreCollectionRestClient;
+        private readonly PrivateStoreCollectionInfoData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateMarketplaceCollectionResource"/> class for mocking. </summary>
-        protected PrivateMarketplaceCollectionResource()
+        /// <summary> Initializes a new instance of the <see cref="PrivateStoreCollectionInfoResource"/> class for mocking. </summary>
+        protected PrivateStoreCollectionInfoResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PrivateMarketplaceCollectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "PrivateStoreCollectionInfoResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal PrivateMarketplaceCollectionResource(ArmClient client, PrivateMarketplaceCollectionData data) : this(client, data.Id)
+        internal PrivateStoreCollectionInfoResource(ArmClient client, PrivateStoreCollectionInfoData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="PrivateMarketplaceCollectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateStoreCollectionInfoResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal PrivateMarketplaceCollectionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PrivateStoreCollectionInfoResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string privateMarketplaceCollectionPrivateStoreCollectionApiVersion);
-            _privateMarketplaceCollectionPrivateStoreCollectionRestClient = new PrivateStoreCollectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateMarketplaceCollectionPrivateStoreCollectionApiVersion);
+            _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Marketplace", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string privateStoreCollectionInfoPrivateStoreCollectionApiVersion);
+            _privateStoreCollectionInfoPrivateStoreCollectionRestClient = new PrivateStoreCollectionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, privateStoreCollectionInfoPrivateStoreCollectionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual PrivateMarketplaceCollectionData Data
+        public virtual PrivateStoreCollectionInfoData Data
         {
             get
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Marketplace
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of OfferResources in the PrivateMarketplaceCollection. </summary>
+        /// <summary> Gets a collection of OfferResources in the PrivateStoreCollectionInfo. </summary>
         /// <returns> An object representing collection of OfferResources and their operations over a OfferResource. </returns>
         public virtual OfferCollection GetOffers()
         {
@@ -130,16 +130,16 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStoreCollection_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateMarketplaceCollectionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreCollectionInfoResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionResource.Get");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.Get");
             scope.Start();
             try
             {
-                var response = await _privateMarketplaceCollectionPrivateStoreCollectionRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.GetAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateMarketplaceCollectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -154,16 +154,16 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStoreCollection_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateMarketplaceCollectionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PrivateStoreCollectionInfoResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionResource.Get");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.Get");
             scope.Start();
             try
             {
-                var response = _privateMarketplaceCollectionPrivateStoreCollectionRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.Get(Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new PrivateMarketplaceCollectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionResource.Delete");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.Delete");
             scope.Start();
             try
             {
-                var response = await _privateMarketplaceCollectionPrivateStoreCollectionRestClient.DeleteAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.DeleteAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 var operation = new MarketplaceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -207,11 +207,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionResource.Delete");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.Delete");
             scope.Start();
             try
             {
-                var response = _privateMarketplaceCollectionPrivateStoreCollectionRestClient.Delete(Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.Delete(Id.Parent.Name, Id.Name, cancellationToken);
                 var operation = new MarketplaceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -230,19 +230,19 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStoreCollection_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The PrivateMarketplaceCollection to use. </param>
+        /// <param name="info"> The PrivateStoreCollectionInfo to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PrivateMarketplaceCollectionResource>> UpdateAsync(WaitUntil waitUntil, PrivateMarketplaceCollectionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual async Task<ArmOperation<PrivateStoreCollectionInfoResource>> UpdateAsync(WaitUntil waitUntil, PrivateStoreCollectionInfoData info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionResource.Update");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.Update");
             scope.Start();
             try
             {
-                var response = await _privateMarketplaceCollectionPrivateStoreCollectionRestClient.CreateOrUpdateAsync(Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<PrivateMarketplaceCollectionResource>(Response.FromValue(new PrivateMarketplaceCollectionResource(Client, response), response.GetRawResponse()));
+                var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateOrUpdateAsync(Id.Parent.Name, Id.Name, info, cancellationToken).ConfigureAwait(false);
+                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -260,19 +260,19 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStoreCollection_CreateOrUpdate
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The PrivateMarketplaceCollection to use. </param>
+        /// <param name="info"> The PrivateStoreCollectionInfo to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PrivateMarketplaceCollectionResource> Update(WaitUntil waitUntil, PrivateMarketplaceCollectionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual ArmOperation<PrivateStoreCollectionInfoResource> Update(WaitUntil waitUntil, PrivateStoreCollectionInfoData info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionResource.Update");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.Update");
             scope.Start();
             try
             {
-                var response = _privateMarketplaceCollectionPrivateStoreCollectionRestClient.CreateOrUpdate(Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MarketplaceArmOperation<PrivateMarketplaceCollectionResource>(Response.FromValue(new PrivateMarketplaceCollectionResource(Client, response), response.GetRawResponse()));
+                var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateOrUpdate(Id.Parent.Name, Id.Name, info, cancellationToken);
+                var operation = new MarketplaceArmOperation<PrivateStoreCollectionInfoResource>(Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -293,11 +293,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<TransferOffersResponse>> TransferOffersAsync(TransferOffersProperties payload = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionResource.TransferOffers");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.TransferOffers");
             scope.Start();
             try
             {
-                var response = await _privateMarketplaceCollectionPrivateStoreCollectionRestClient.TransferOffersAsync(Id.Parent.Name, Id.Name, payload, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.TransferOffersAsync(Id.Parent.Name, Id.Name, payload, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -316,11 +316,11 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<TransferOffersResponse> TransferOffers(TransferOffersProperties payload = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionResource.TransferOffers");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.TransferOffers");
             scope.Start();
             try
             {
-                var response = _privateMarketplaceCollectionPrivateStoreCollectionRestClient.TransferOffers(Id.Parent.Name, Id.Name, payload, cancellationToken);
+                var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.TransferOffers(Id.Parent.Name, Id.Name, payload, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -336,14 +336,14 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStoreCollection_ApproveAllItems
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateMarketplaceCollectionResource>> ApproveAllItemsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreCollectionInfoResource>> ApproveAllItemsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionResource.ApproveAllItems");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.ApproveAllItems");
             scope.Start();
             try
             {
-                var response = await _privateMarketplaceCollectionPrivateStoreCollectionRestClient.ApproveAllItemsAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PrivateMarketplaceCollectionResource(Client, response.Value), response.GetRawResponse());
+                var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.ApproveAllItemsAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -358,14 +358,14 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStoreCollection_ApproveAllItems
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateMarketplaceCollectionResource> ApproveAllItems(CancellationToken cancellationToken = default)
+        public virtual Response<PrivateStoreCollectionInfoResource> ApproveAllItems(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionResource.ApproveAllItems");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.ApproveAllItems");
             scope.Start();
             try
             {
-                var response = _privateMarketplaceCollectionPrivateStoreCollectionRestClient.ApproveAllItems(Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new PrivateMarketplaceCollectionResource(Client, response.Value), response.GetRawResponse());
+                var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.ApproveAllItems(Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -380,14 +380,14 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStoreCollection_DisableApproveAllItems
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateMarketplaceCollectionResource>> DisableApproveAllItemsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreCollectionInfoResource>> DisableApproveAllItemsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionResource.DisableApproveAllItems");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.DisableApproveAllItems");
             scope.Start();
             try
             {
-                var response = await _privateMarketplaceCollectionPrivateStoreCollectionRestClient.DisableApproveAllItemsAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new PrivateMarketplaceCollectionResource(Client, response.Value), response.GetRawResponse());
+                var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.DisableApproveAllItemsAsync(Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -402,14 +402,14 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStoreCollection_DisableApproveAllItems
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateMarketplaceCollectionResource> DisableApproveAllItems(CancellationToken cancellationToken = default)
+        public virtual Response<PrivateStoreCollectionInfoResource> DisableApproveAllItems(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionResource.DisableApproveAllItems");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.DisableApproveAllItems");
             scope.Start();
             try
             {
-                var response = _privateMarketplaceCollectionPrivateStoreCollectionRestClient.DisableApproveAllItems(Id.Parent.Name, Id.Name, cancellationToken);
-                return Response.FromValue(new PrivateMarketplaceCollectionResource(Client, response.Value), response.GetRawResponse());
+                var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.DisableApproveAllItems(Id.Parent.Name, Id.Name, cancellationToken);
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -425,13 +425,13 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="payload"> The Operation to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> PostAsync(Models.Operation? payload = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(Models.Operation? payload = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionResource.Post");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.Delete");
             scope.Start();
             try
             {
-                var response = await _privateMarketplaceCollectionPrivateStoreCollectionRestClient.PostAsync(Id.Parent.Name, Id.Name, payload, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.PostAsync(Id.Parent.Name, Id.Name, payload, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -448,13 +448,13 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="payload"> The Operation to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response Post(Models.Operation? payload = null, CancellationToken cancellationToken = default)
+        public virtual Response Delete(Models.Operation? payload = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateMarketplaceCollectionPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateMarketplaceCollectionResource.Post");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.Delete");
             scope.Start();
             try
             {
-                var response = _privateMarketplaceCollectionPrivateStoreCollectionRestClient.Post(Id.Parent.Name, Id.Name, payload, cancellationToken);
+                var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.Post(Id.Parent.Name, Id.Name, payload, cancellationToken);
                 return response;
             }
             catch (Exception e)

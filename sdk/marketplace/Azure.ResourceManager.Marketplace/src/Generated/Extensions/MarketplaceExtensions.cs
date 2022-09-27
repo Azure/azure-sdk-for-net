@@ -124,20 +124,20 @@ namespace Azure.ResourceManager.Marketplace
         }
         #endregion
 
-        #region PrivateMarketplaceCollectionResource
+        #region PrivateStoreCollectionInfoResource
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateMarketplaceCollectionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateMarketplaceCollectionResource.CreateResourceIdentifier" /> to create a <see cref="PrivateMarketplaceCollectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PrivateStoreCollectionInfoResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PrivateStoreCollectionInfoResource.CreateResourceIdentifier" /> to create a <see cref="PrivateStoreCollectionInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateMarketplaceCollectionResource" /> object. </returns>
-        public static PrivateMarketplaceCollectionResource GetPrivateMarketplaceCollectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateStoreCollectionInfoResource" /> object. </returns>
+        public static PrivateStoreCollectionInfoResource GetPrivateStoreCollectionInfoResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                PrivateMarketplaceCollectionResource.ValidateResourceId(id);
-                return new PrivateMarketplaceCollectionResource(client, id);
+                PrivateStoreCollectionInfoResource.ValidateResourceId(id);
+                return new PrivateStoreCollectionInfoResource(client, id);
             }
             );
         }

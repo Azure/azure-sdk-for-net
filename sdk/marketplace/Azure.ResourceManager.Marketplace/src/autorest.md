@@ -22,12 +22,11 @@ mgmt-debug:
 rename-mapping:
   AdminRequestApprovalsResource: AdminApprovalRequest
   AdminRequestApprovalsResource.properties.icon: -|uri
-  Collection: PrivateMarketplaceCollection
+  Collection: PrivateStoreCollectionInfo
   Collection.properties.collectionId: -|uuid
   Collection.properties.allSubscriptions: AreAllSubscriptionsSelected
   Collection.properties.approveAllItems: AreAllItemsApproved
   Collection.properties.enabled: IsEnabled
-
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -35,6 +34,9 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+
+override-operation-name:
+  PrivateStoreCollection_Post: Delete
 
 rename-rules:
   CPU: Cpu

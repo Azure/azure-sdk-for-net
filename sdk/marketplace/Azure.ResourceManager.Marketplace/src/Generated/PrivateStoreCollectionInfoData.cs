@@ -12,16 +12,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Marketplace
 {
-    /// <summary> A class representing the PrivateMarketplaceCollection data model. </summary>
-    public partial class PrivateMarketplaceCollectionData : ResourceData
+    /// <summary> A class representing the PrivateStoreCollectionInfo data model. </summary>
+    public partial class PrivateStoreCollectionInfoData : ResourceData
     {
-        /// <summary> Initializes a new instance of PrivateMarketplaceCollectionData. </summary>
-        public PrivateMarketplaceCollectionData()
+        /// <summary> Initializes a new instance of PrivateStoreCollectionInfoData. </summary>
+        public PrivateStoreCollectionInfoData()
         {
             SubscriptionsList = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of PrivateMarketplaceCollectionData. </summary>
+        /// <summary> Initializes a new instance of PrivateStoreCollectionInfoData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Marketplace
         /// Gets the number of offers associated with the collection.
         /// Serialized Name: Collection.properties.numberOfOffers
         /// </param>
-        internal PrivateMarketplaceCollectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? collectionId, string collectionName, string claim, bool? areAllSubscriptionsSelected, bool? areAllItemsApproved, DateTimeOffset? approveAllItemsModifiedOn, IList<string> subscriptionsList, bool? isEnabled, long? numberOfOffers) : base(id, name, resourceType, systemData)
+        internal PrivateStoreCollectionInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? collectionId, string collectionName, string claim, bool? areAllSubscriptionsSelected, bool? areAllItemsApproved, DateTimeOffset? approveAllItemsModifiedOn, IList<string> subscriptionsList, bool? isEnabled, long? numberOfOffers) : base(id, name, resourceType, systemData)
         {
             CollectionId = collectionId;
             CollectionName = collectionName;

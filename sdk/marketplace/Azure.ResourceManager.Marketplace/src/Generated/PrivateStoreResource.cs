@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.Marketplace
             return GetAdminApprovalRequests().Get(adminRequestApprovalId, publisherId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of PrivateMarketplaceCollectionResources in the PrivateStore. </summary>
-        /// <returns> An object representing collection of PrivateMarketplaceCollectionResources and their operations over a PrivateMarketplaceCollectionResource. </returns>
-        public virtual PrivateMarketplaceCollectionCollection GetPrivateMarketplaceCollections()
+        /// <summary> Gets a collection of PrivateStoreCollectionInfoResources in the PrivateStore. </summary>
+        /// <returns> An object representing collection of PrivateStoreCollectionInfoResources and their operations over a PrivateStoreCollectionInfoResource. </returns>
+        public virtual PrivateStoreCollectionInfoCollection GetPrivateStoreCollectionInfos()
         {
-            return GetCachedClient(Client => new PrivateMarketplaceCollectionCollection(Client, Id));
+            return GetCachedClient(Client => new PrivateStoreCollectionInfoCollection(Client, Id));
         }
 
         /// <summary>
@@ -181,9 +181,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateMarketplaceCollectionResource>> GetPrivateMarketplaceCollectionAsync(string collectionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreCollectionInfoResource>> GetPrivateStoreCollectionInfoAsync(string collectionId, CancellationToken cancellationToken = default)
         {
-            return await GetPrivateMarketplaceCollections().GetAsync(collectionId, cancellationToken).ConfigureAwait(false);
+            return await GetPrivateStoreCollectionInfos().GetAsync(collectionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PrivateMarketplaceCollectionResource> GetPrivateMarketplaceCollection(string collectionId, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateStoreCollectionInfoResource> GetPrivateStoreCollectionInfo(string collectionId, CancellationToken cancellationToken = default)
         {
-            return GetPrivateMarketplaceCollections().Get(collectionId, cancellationToken);
+            return GetPrivateStoreCollectionInfos().Get(collectionId, cancellationToken);
         }
 
         /// <summary>
