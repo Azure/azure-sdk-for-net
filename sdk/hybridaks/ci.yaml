@@ -1,0 +1,32 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger:
+  branches:
+    include:
+    - main
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/hybridaks/
+
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/hybridaks/
+    - sdk/resourcemanager/
+
+extends:
+  template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: hybridaks
+    ArtifactName: packages
+    Artifacts:
+    - name: Azure.ResourceManager.HybridContainerService
+      safeName: AzureResourceManagerHybridContainerService
