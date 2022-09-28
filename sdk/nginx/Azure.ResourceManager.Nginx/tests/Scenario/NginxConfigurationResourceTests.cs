@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -119,57 +118,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             Assert.AreNotEqual(nginxConfiguration.Data.Properties.RootFile, nginxConfiguration2.Data.Properties.RootFile);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxConfiguration.UpdateAsync(WaitUntil.Completed, null)).Value);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task AddTag()
-        {
-            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
-            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
-
-            string nginxConfigurationName = "default";
-            string virtualPath = "/etc/nginx/nginx.conf";
-            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(ResGroup, Location, nginxDeployment, nginxConfigurationName, virtualPath);
-            NginxConfigurationResource nginxConfiguration2 = await nginxConfiguration.AddTagAsync("Counter", "1");
-
-            Assert.AreEqual(nginxConfiguration2.Data.Tags["Counter"], "1");
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxConfiguration.AddTagAsync(null, "1")).Value);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxConfiguration.AddTagAsync("Counter", null)).Value);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task SetTags()
-        {
-            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
-            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
-
-            string nginxConfigurationName = "default";
-            string virtualPath = "/etc/nginx/nginx.conf";
-            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(ResGroup, Location, nginxDeployment, nginxConfigurationName, virtualPath);
-            _ = await nginxConfiguration.AddTagAsync("Counter", "1");
-            NginxConfigurationResource nginxConfiguration2 = await nginxConfiguration.SetTagsAsync(new Dictionary<string, string> { { "Counter", "2" } });
-
-            Assert.AreEqual(nginxConfiguration2.Data.Tags["Counter"], "2");
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxConfiguration.SetTagsAsync(null)).Value);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task RemoveTag()
-        {
-            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
-            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
-
-            string nginxConfigurationName = "default";
-            string virtualPath = "/etc/nginx/nginx.conf";
-            NginxConfigurationResource nginxConfiguration = await CreateNginxConfiguration(ResGroup, Location, nginxDeployment, nginxConfigurationName, virtualPath);
-            _ = await nginxConfiguration.AddTagAsync("Counter", "1");
-            NginxConfigurationResource nginxConfiguration2 = await nginxConfiguration.RemoveTagAsync("Counter");
-
-            Assert.Null(nginxConfiguration2.Data.Tags["Counter"]);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxConfiguration.RemoveTagAsync(null)).Value);
         }
     }
 }

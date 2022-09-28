@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -123,60 +120,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             Assert.AreNotEqual(nginxCertificate.Data.Properties.CertificateVirtualPath, nginxCertificate2.Data.Properties.CertificateVirtualPath);
             Assert.AreNotEqual(nginxCertificate.Data.Properties.KeyVirtualPath, nginxCertificate2.Data.Properties.KeyVirtualPath);
             Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxCertificate.UpdateAsync(WaitUntil.Completed, null)).Value);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task AddTag()
-        {
-            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
-            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
-
-            string nginxCertificateName = Recording.GenerateAssetName("testCertificate-");
-            string certificateVirtualPath = "/etc/cert/nginx.cert";
-            string keyVirtualPath = "/etc/cert/nginx.key";
-            NginxCertificateResource nginxCertificate = await CreateNginxCertificate(ResGroup, Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
-            NginxCertificateResource nginxCertificate2 = await nginxCertificate.AddTagAsync("Counter", "1");
-
-            Assert.AreEqual(nginxCertificate2.Data.Tags["Counter"], "1");
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxCertificate.AddTagAsync(null, "1")).Value);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxCertificate.AddTagAsync("Counter", null)).Value);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task SetTags()
-        {
-            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
-            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
-
-            string nginxCertificateName = Recording.GenerateAssetName("testCertificate-");
-            string certificateVirtualPath = "/etc/cert/nginx.cert";
-            string keyVirtualPath = "/etc/cert/nginx.key";
-            NginxCertificateResource nginxCertificate = await CreateNginxCertificate(ResGroup, Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
-            _ = await nginxCertificate.AddTagAsync("Counter", "1");
-            NginxCertificateResource nginxCertificate2 = await nginxCertificate.SetTagsAsync(new Dictionary<string, string> { { "Counter", "2" } });
-
-            Assert.AreEqual(nginxCertificate2.Data.Tags["Counter"], "2");
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxCertificate.SetTagsAsync(null)).Value);
-        }
-
-        [TestCase]
-        [RecordedTest]
-        public async Task RemoveTag()
-        {
-            string nginxDeploymentName = Recording.GenerateAssetName("testDeployment-");
-            NginxDeploymentResource nginxDeployment = await CreateNginxDeployment(ResGroup, Location, nginxDeploymentName);
-
-            string nginxCertificateName = Recording.GenerateAssetName("testCertificate-");
-            string certificateVirtualPath = "/etc/cert/nginx.cert";
-            string keyVirtualPath = "/etc/cert/nginx.key";
-            NginxCertificateResource nginxCertificate = await CreateNginxCertificate(ResGroup, Location, nginxDeployment, nginxCertificateName, certificateVirtualPath, keyVirtualPath);
-            _ = await nginxCertificate.AddTagAsync("Counter", "1");
-            NginxCertificateResource nginxCertificate2 = await nginxCertificate.RemoveTagAsync("Counter");
-
-            Assert.Null(nginxCertificate2.Data.Tags["Counter"]);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxCertificate.RemoveTagAsync(null)).Value);
         }
     }
 }
