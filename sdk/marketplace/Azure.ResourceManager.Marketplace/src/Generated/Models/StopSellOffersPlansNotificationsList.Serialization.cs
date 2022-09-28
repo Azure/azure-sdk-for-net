@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static StopSellOffersPlansNotificationsList DeserializeStopSellOffersPlansNotificationsList(JsonElement element)
         {
-            Optional<IReadOnlyList<StopSellOffersPlansNotificationsListProperties>> stopSellNotifications = default;
+            Optional<IReadOnlyList<StopSellOffersPlansNotificationsResult>> stopSellNotifications = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stopSellNotifications"))
@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<StopSellOffersPlansNotificationsListProperties> array = new List<StopSellOffersPlansNotificationsListProperties>();
+                    List<StopSellOffersPlansNotificationsResult> array = new List<StopSellOffersPlansNotificationsResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StopSellOffersPlansNotificationsListProperties.DeserializeStopSellOffersPlansNotificationsListProperties(item));
+                        array.Add(StopSellOffersPlansNotificationsResult.DeserializeStopSellOffersPlansNotificationsResult(item));
                     }
                     stopSellNotifications = array;
                     continue;
