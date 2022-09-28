@@ -63,32 +63,6 @@ namespace Azure.ResourceManager.DataFactory.Tests
             await CreateLinkedService(_dataFactory, _linkedServiceName, key.Value, _storageAccount.Id.Name);
         }
 
-        [RecordedTest]
-        public async Task UseConstantFilename()
-        {
-            string datasetName = Recording.GenerateAssetName("dataset");
-            FactoryLinkedServiceReference linkedServiceReference = new FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
-            AzureBlobDataset abDataset = new AzureBlobDataset(linkedServiceReference);
-            abDataset.FileName = BinaryData.FromObjectAsJson("foo");
-            FactoryDatasetData data = new FactoryDatasetData(abDataset);
-            var dataset = (await _dataFactory.GetFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data)).Value;
-            Assert.IsNotNull(dataset);
-            Assert.AreEqual(datasetName, dataset.Data.Name);
-        }
-
-        [RecordedTest]
-        public async Task UseComplexConstantFilename()
-        {
-            string datasetName = Recording.GenerateAssetName("dataset");
-            FactoryLinkedServiceReference linkedServiceReference = new FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
-            AzureBlobDataset abDataset = new AzureBlobDataset(linkedServiceReference);
-            abDataset.FileName = BinaryData.FromObjectAsJson(new { type = "string", value = "foo" });
-            FactoryDatasetData data = new FactoryDatasetData(abDataset);
-            var dataset = (await _dataFactory.GetFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data)).Value;
-            Assert.IsNotNull(dataset);
-            Assert.AreEqual(datasetName, dataset.Data.Name);
-        }
-
         [TestCase(true)]
         [TestCase(false)]
         [RecordedTest]
