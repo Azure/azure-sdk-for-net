@@ -41,6 +41,9 @@ rename-mapping:
   SpacecraftLink: OrbitalSpacecraftLink
   SpacecraftListResult: OrbitalSpacecraftListResult
   TagsObject: OrbitalSpacecraftTags
+  AvailableContacts: OrbitalSpacecraftAvailableContact
+  ContactParameters: OrbitalSpacecraftContactContent
+  AvailableContactsListResult: OrbitalSpacecraftAvailableContactListResult
 
 format-by-name-rules:
   'sourceIPs': 'ip-address'
@@ -76,12 +79,25 @@ rename-rules:
   UDP: Udp
   TCP: Tcp
 
+override-operation-name:
+  Spacecrafts_ListAvailableContacts: GetAllAvailableContacts # Remove this once we support pageable LRO
+
 directive:
+  - from: orbital.json
+    where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Orbital/spacecrafts/{spacecraftName}/listAvailableContacts"].post
+    transform: >
+      delete $['x-ms-pageable'];
+    reason: Remove this once we support pageable LRO. This is temporary but has correct results as according to service team, they always return all results in the first page.
+  - from: orbital.json
+    where: $.definitions
+    transform: >
+      $.AvailableContactsListResult.properties.value['x-ms-client-name'] = 'Values';
+      delete $.AvailableContactsListResult.properties.nextLink;
+    reason: Make the model non-pageable. Remove this once we support pageable LRO.
   - from: orbital.json
     where: $.definitions
     transform: >
       $.AvailableGroundStationProperties['x-ms-client-name'] = 'GroundStationProperties';
       $.ContactProfilesProperties.properties.minimumViableContactDuration['format'] = 'duration';
-  - remove-operation: Spacecrafts_ListAvailableContacts
   - remove-operation: OperationsResults_Get
 ```
