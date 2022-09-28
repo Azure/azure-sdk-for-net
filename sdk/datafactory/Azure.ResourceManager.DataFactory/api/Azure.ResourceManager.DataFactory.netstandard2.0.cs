@@ -30,6 +30,21 @@ namespace Azure.ResourceManager.DataFactory
         public Azure.ResourceManager.DataFactory.Models.FactoryRepoConfiguration RepoConfiguration { get { throw null; } set { } }
         public string Version { get { throw null; } }
     }
+    public static partial class DataFactoryExpression
+    {
+        public static Azure.ResourceManager.DataFactory.DataFactoryExpression<T> FromExpression<T>(string expression) { throw null; }
+        public static Azure.ResourceManager.DataFactory.DataFactoryExpression<T> FromValue<T>(T value) { throw null; }
+    }
+    public partial class DataFactoryExpression<T>
+    {
+        protected DataFactoryExpression() { }
+        public DataFactoryExpression(string expression) { }
+        public DataFactoryExpression(T value) { }
+        public string GetString() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override string ToString() { throw null; }
+        public bool TryGetValue(out T value) { throw null; }
+    }
     public static partial class DataFactoryExtensions
     {
         public static Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource> ConfigureFactoryRepoInformation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationId, Azure.ResourceManager.DataFactory.Models.FactoryRepoUpdate factoryRepoUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -828,7 +843,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public AzureBlobDataset(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference linkedServiceName) : base (default(Azure.ResourceManager.DataFactory.Models.FactoryLinkedServiceReference)) { }
         public Azure.ResourceManager.DataFactory.Models.DatasetCompression Compression { get { throw null; } set { } }
         public System.BinaryData FileName { get { throw null; } set { } }
-        public System.BinaryData FolderPath { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.DataFactoryExpression<string> FolderPath { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat Format { get { throw null; } set { } }
         public System.BinaryData ModifiedDatetimeEnd { get { throw null; } set { } }
         public System.BinaryData ModifiedDatetimeStart { get { throw null; } set { } }
