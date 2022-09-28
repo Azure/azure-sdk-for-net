@@ -3,12 +3,7 @@
 ## 1.0.0-beta.4 (Unreleased)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added Upload method that takes in RequestContent and gzips input for efficiency
 
 ## 1.0.0-beta.3 (2022-09-23)
 ## Features Added
