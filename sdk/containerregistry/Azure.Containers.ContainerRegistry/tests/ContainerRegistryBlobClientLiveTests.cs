@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,7 @@ namespace Azure.Containers.ContainerRegistry.Tests
     [NonParallelizable]
     public class ContainerRegistryBlobClientLiveTests : ContainerRegistryRecordedTestBase
     {
-        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync)
+        public ContainerRegistryBlobClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
         }
 
@@ -273,77 +274,86 @@ namespace Azure.Containers.ContainerRegistry.Tests
             downloadResult.Value.Dispose();
         }
 
-        //[RecordedTest]
-        //public async Task CanPushArtifact()
-        //{
-        //    // Arrange
-        //    var client = CreateBlobClient("oci-artifact");
+        [RecordedTest]
+        public async Task CanPushArtifact()
+        {
+            // Arrange
+            var client = CreateBlobClient("oci-artifact-test");
 
-        //    await UploadManifestPrerequisites(client);
+            // Act
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact-big");
+            var manifestFilePath = Path.Combine(path, "manifest.json");
 
-        //    // Act
-        //    var manifest = CreateManifest();
-        //    var uploadResult = await client.UploadManifestAsync(manifest);
-        //    string digest = uploadResult.Value.Digest;
+            // Upload config and layers
+            foreach (var file in Directory.GetFiles(path))
+            {
+                if (file != manifestFilePath)
+                {
+                    using (var fs = File.OpenRead(file))
+                    {
+                        var uploadResult = await client.UploadBlobAsync(fs);
+                        Console.WriteLine(uploadResult.Value.Digest);
+                    }
+                }
+            }
 
-        //    // Assert
-        //    DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
-        //    using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
-        //    Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
-        //    Assert.AreEqual(digest, downloadResultValue.Digest);
-        //    ValidateManifest(downloadResultValue.Manifest);
+            // Finally, upload manifest
+            using (var fs = File.OpenRead(manifestFilePath))
+            {
+                await client.UploadManifestAsync(fs, new UploadManifestOptions("v1"));
+            }
 
-        //    // Clean up
-        //    await client.DeleteManifestAsync(digest);
-        //}
+            // Assert
 
-        //[RecordedTest]
-        //public async Task CanPullArtifact()
-        //{
-        //    // Arrange
-        //    var client = CreateBlobClient("oci-artifact");
+            // Clean up
+        }
 
-        //    //// Arrange
-        //    //var repository = "library/hello-world";
+        [RecordedTest]
+        public async Task CanPullArtifact()
+        {
+            // Arrange
+            var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact-test");
+            var client = CreateBlobClient("oci-artifact-test");
 
-        //    //// This digest is pulling invalid blobs right now
-        //    ////var digest = "sha256:90e120baffe5afa60dd5a24abcd051db49bd6aee391174da5e825ee6ee5a12a0";
-        //    //var digest = "sha256:1b26826f602946860c279fce658f31050cff2c596583af237d971f4629b57792";
-        //    //var client = CreateClient();
-        //    //var artifact = client.GetArtifact(repository, digest);
-        //    string path = @"C:\temp\acr\test-pull";
+            // Act
 
-        //    // Act
+            // Get Manifest
 
-        //    // Get Manifest
+            var manifestResult = await client.DownloadManifestAsync(new DownloadManifestOptions("v1"));
 
-        //    // TODO: do we need digest in this method if artifact was instantiated with it?
-        //    // TODO: How should we handle/communicate the difference in semantics between download
-        //    // with digest and download with tag?
-        //    var manifestResult = await client.DownloadManifestAsync(digest);
+            // Write manifest to file
+            Directory.CreateDirectory(path);
+            string manifestFile = Path.Combine(path, "manifest.json");
+            using (FileStream fs = File.Create(manifestFile))
+            {
+                Stream stream = manifestResult.Value.ManifestStream;
+                await stream.CopyToAsync(fs).ConfigureAwait(false);
+            }
 
-        //    // Write manifest to file
-        //    Directory.CreateDirectory(path);
-        //    string manifestFile = Path.Combine(path, "manifest.json");
-        //    using (FileStream fs = File.Create(manifestFile))
-        //    {
-        //        Stream stream = manifestResult.Value.Content;
-        //        await stream.CopyToAsync(fs).ConfigureAwait(false);
-        //    }
+            OciManifest manifest = manifestResult.Value.Manifest;
 
-        //    // Write Config and Layers
-        //    foreach (var artifactFile in manifestResult.Value.ArtifactFiles)
-        //    {
-        //        string fileName = Path.Combine(path, artifactFile.FileName ?? TrimSha(artifactFile.Digest));
+            // Write Config
+            string configFileName = Path.Combine(path, "config.json");
+            using (FileStream fs = File.Create(configFileName))
+            {
+                var layerResult = await client.DownloadBlobAsync(manifest.Config.Digest);
+                Stream stream = layerResult.Value.Content;
+                await stream.CopyToAsync(fs).ConfigureAwait(false);
+            }
 
-        //        using (FileStream fs = File.Create(fileName))
-        //        {
-        //            var layerResult = await downloadClient.DownloadBlobAsync(artifactFile.Digest);
-        //            Stream stream = layerResult.Value.Content;
-        //            await stream.CopyToAsync(fs).ConfigureAwait(false);
-        //        }
-        //    }
-        //}
+            // Write Layers
+            foreach (var layerFile in manifest.Layers)
+            {
+                string fileName = Path.Combine(path, TrimSha(layerFile.Digest));
+
+                using (FileStream fs = File.Create(fileName))
+                {
+                    var layerResult = await client.DownloadBlobAsync(layerFile.Digest);
+                    Stream stream = layerResult.Value.Content;
+                    await stream.CopyToAsync(fs).ConfigureAwait(false);
+                }
+            }
+        }
 
         private static string TrimSha(string digest)
         {
