@@ -71,7 +71,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// The Uri of the Table.
+        /// The Uri of the table.
         /// </summary>
         public virtual Uri Uri { get; }
 

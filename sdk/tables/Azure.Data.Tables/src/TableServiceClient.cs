@@ -60,7 +60,7 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
-        /// The Uri for the Table account.
+        /// The Uri for the table account.
         /// </summary>
         public virtual Uri Uri { get; }
 
