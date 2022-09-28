@@ -60,8 +60,10 @@ rename-mapping:
   QueryUserOffersProperties:  QueryUserOffersContent
   Recipient: NotificationRecipient
   Recipient.principalId: -|uuid
+  RequestApprovalsDetails.icon: iconUri|uri
   RequestApprovalResource: MarketplaceApprovalRequest
   Status: PrivateStorePlanStatus
+  StopSellNotifications.icon: iconUri|uri
   StopSellOffersPlansNotificationsListProperties: StopSellOffersPlansNotificationsResult
   StopSellOffersPlansNotificationsListProperties.icon: iconUri|uri
   StopSellOffersPlansNotificationsListProperties.publicContext: hasPublicContext
@@ -81,8 +83,8 @@ format-by-name-rules:
   '*Uris': 'Uri'
 
 override-operation-name:
-  PrivateStoreCollection_Post: DeletePrivateStoreCollection
-  PrivateStoreCollectionOffer_Post: DeletePrivateStoreOffer
+  PrivateStoreCollection_Post: Delete
+  PrivateStoreCollectionOffer_Post: Delete
   PrivateStore_FetchAllSubscriptionsInTenant: FetchAllMarketplaceSubscriptions
   PrivateStore_QueryRequestApproval: QueryApprovalRequest
 

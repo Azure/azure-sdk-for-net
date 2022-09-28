@@ -425,9 +425,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="payload"> The PrivateStoreOperation to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> DeletePrivateStoreCollectionAsync(PrivateStoreOperation? payload = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(PrivateStoreOperation? payload = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.DeletePrivateStoreCollection");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.Delete");
             scope.Start();
             try
             {
@@ -448,9 +448,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="payload"> The PrivateStoreOperation to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response DeletePrivateStoreCollection(PrivateStoreOperation? payload = null, CancellationToken cancellationToken = default)
+        public virtual Response Delete(PrivateStoreOperation? payload = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.DeletePrivateStoreCollection");
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoResource.Delete");
             scope.Start();
             try
             {
