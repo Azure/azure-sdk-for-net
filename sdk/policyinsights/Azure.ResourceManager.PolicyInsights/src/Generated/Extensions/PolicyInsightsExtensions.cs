@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicyTrackedResourceRecord> GetQueryResultsForSubscriptionPolicyTrackedResourcesAsync(this SubscriptionResource subscriptionResource, PolicyTrackedResourcesResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(this SubscriptionResource subscriptionResource, PolicyTrackedResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetQueryResultsForSubscriptionPolicyTrackedResourcesAsync(policyTrackedResourcesResource, queryOptions, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourcesResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicyTrackedResourceRecord> GetQueryResultsForSubscriptionPolicyTrackedResources(this SubscriptionResource subscriptionResource, PolicyTrackedResourcesResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public static Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(this SubscriptionResource subscriptionResource, PolicyTrackedResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetQueryResultsForSubscriptionPolicyTrackedResources(policyTrackedResourcesResource, queryOptions, cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetPolicyTrackedResourceQueryResults(policyTrackedResourcesResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -134,126 +134,6 @@ namespace Azure.ResourceManager.PolicyInsights
         public static Pageable<PolicyEvent> GetPolicyEventQueryResults(this SubscriptionResource subscriptionResource, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetPolicyEventQueryResults(policyEventsResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy set definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForPolicySetDefinition
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEventsAsync(this SubscriptionResource subscriptionResource, string policySetDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            return GetExtensionClient(subscriptionResource).GetQueryResultsForPolicySetDefinitionPolicyEventsAsync(policySetDefinitionName, policyEventsResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy set definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForPolicySetDefinition
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicyEvent> GetQueryResultsForPolicySetDefinitionPolicyEvents(this SubscriptionResource subscriptionResource, string policySetDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            return GetExtensionClient(subscriptionResource).GetQueryResultsForPolicySetDefinitionPolicyEvents(policySetDefinitionName, policyEventsResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForPolicyDefinition
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEventsAsync(this SubscriptionResource subscriptionResource, string policyDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            return GetExtensionClient(subscriptionResource).GetQueryResultsForPolicyDefinitionPolicyEventsAsync(policyDefinitionName, policyEventsResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForPolicyDefinition
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicyEvent> GetQueryResultsForPolicyDefinitionPolicyEvents(this SubscriptionResource subscriptionResource, string policyDefinitionName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            return GetExtensionClient(subscriptionResource).GetQueryResultsForPolicyDefinitionPolicyEvents(policyDefinitionName, policyEventsResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForSubscriptionLevelPolicyAssignment
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsAsync(this SubscriptionResource subscriptionResource, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            return GetExtensionClient(subscriptionResource).GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEventsAsync(policyAssignmentName, policyEventsResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy events for the subscription level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForSubscriptionLevelPolicyAssignment
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicyEvent> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents(this SubscriptionResource subscriptionResource, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            return GetExtensionClient(subscriptionResource).GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyEvents(policyAssignmentName, policyEventsResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -296,9 +176,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicySummary> SummarizePolicyStateAsync(this SubscriptionResource subscriptionResource, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this SubscriptionResource subscriptionResource, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).SummarizePolicyStateAsync(policyStatesSummaryResource, queryOptions, cancellationToken);
+            return GetExtensionClient(subscriptionResource).SummarizePolicyStatesAsync(policyStatesSummaryResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -311,9 +191,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicySummary> SummarizePolicyState(this SubscriptionResource subscriptionResource, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public static Pageable<PolicySummary> SummarizePolicyStates(this SubscriptionResource subscriptionResource, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).SummarizePolicyState(policyStatesSummaryResource, queryOptions, cancellationToken);
+            return GetExtensionClient(subscriptionResource).SummarizePolicyStates(policyStatesSummaryResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -340,246 +220,6 @@ namespace Azure.ResourceManager.PolicyInsights
         public static ArmOperation TriggerPolicyStateEvaluation(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).TriggerPolicyStateEvaluation(waitUntil, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy set definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForPolicySetDefinition
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStatesAsync(this SubscriptionResource subscriptionResource, string policySetDefinitionName, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            return GetExtensionClient(subscriptionResource).GetQueryResultsForPolicySetDefinitionPolicyStatesAsync(policySetDefinitionName, policyStatesResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy set definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForPolicySetDefinition
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicyState> GetQueryResultsForPolicySetDefinitionPolicyStates(this SubscriptionResource subscriptionResource, string policySetDefinitionName, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            return GetExtensionClient(subscriptionResource).GetQueryResultsForPolicySetDefinitionPolicyStates(policySetDefinitionName, policyStatesResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy set definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForPolicySetDefinition
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicySummary> SummarizeForPolicySetDefinitionPolicyStatesAsync(this SubscriptionResource subscriptionResource, string policySetDefinitionName, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            return GetExtensionClient(subscriptionResource).SummarizeForPolicySetDefinitionPolicyStatesAsync(policySetDefinitionName, policyStatesSummaryResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy set definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForPolicySetDefinition
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policySetDefinitionName"> Policy set definition name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policySetDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policySetDefinitionName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicySummary> SummarizeForPolicySetDefinitionPolicyStates(this SubscriptionResource subscriptionResource, string policySetDefinitionName, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policySetDefinitionName, nameof(policySetDefinitionName));
-
-            return GetExtensionClient(subscriptionResource).SummarizeForPolicySetDefinitionPolicyStates(policySetDefinitionName, policyStatesSummaryResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForPolicyDefinition
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicyState> GetQueryResultsForPolicyDefinitionPolicyStatesAsync(this SubscriptionResource subscriptionResource, string policyDefinitionName, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            return GetExtensionClient(subscriptionResource).GetQueryResultsForPolicyDefinitionPolicyStatesAsync(policyDefinitionName, policyStatesResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForPolicyDefinition
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicyState> GetQueryResultsForPolicyDefinitionPolicyStates(this SubscriptionResource subscriptionResource, string policyDefinitionName, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            return GetExtensionClient(subscriptionResource).GetQueryResultsForPolicyDefinitionPolicyStates(policyDefinitionName, policyStatesResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForPolicyDefinition
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicySummary> SummarizeForPolicyDefinitionPolicyStatesAsync(this SubscriptionResource subscriptionResource, string policyDefinitionName, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            return GetExtensionClient(subscriptionResource).SummarizeForPolicyDefinitionPolicyStatesAsync(policyDefinitionName, policyStatesSummaryResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy definition.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyDefinitions/{policyDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForPolicyDefinition
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policyDefinitionName"> Policy definition name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyDefinitionName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicySummary> SummarizeForPolicyDefinitionPolicyStates(this SubscriptionResource subscriptionResource, string policyDefinitionName, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyDefinitionName, nameof(policyDefinitionName));
-
-            return GetExtensionClient(subscriptionResource).SummarizeForPolicyDefinitionPolicyStates(policyDefinitionName, policyStatesSummaryResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(this SubscriptionResource subscriptionResource, string policyAssignmentName, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            return GetExtensionClient(subscriptionResource).GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(policyAssignmentName, policyStatesResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the subscription level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForSubscriptionLevelPolicyAssignment
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicyState> GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates(this SubscriptionResource subscriptionResource, string policyAssignmentName, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            return GetExtensionClient(subscriptionResource).GetQueryResultsForSubscriptionLevelPolicyAssignmentPolicyStates(policyAssignmentName, policyStatesResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicySummary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(this SubscriptionResource subscriptionResource, string policyAssignmentName, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            return GetExtensionClient(subscriptionResource).SummarizeForSubscriptionLevelPolicyAssignmentPolicyStatesAsync(policyAssignmentName, policyStatesSummaryResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the subscription level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForSubscriptionLevelPolicyAssignment
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicySummary> SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates(this SubscriptionResource subscriptionResource, string policyAssignmentName, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            return GetExtensionClient(subscriptionResource).SummarizeForSubscriptionLevelPolicyAssignmentPolicyStates(policyAssignmentName, policyStatesSummaryResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -633,9 +273,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicyTrackedResourceRecord> GetQueryResultsForResourceGroupPolicyTrackedResourcesAsync(this ResourceGroupResource resourceGroupResource, PolicyTrackedResourcesResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(this ResourceGroupResource resourceGroupResource, PolicyTrackedResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetQueryResultsForResourceGroupPolicyTrackedResourcesAsync(policyTrackedResourcesResource, queryOptions, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourcesResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -648,9 +288,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicyTrackedResourceRecord> GetQueryResultsForResourceGroupPolicyTrackedResources(this ResourceGroupResource resourceGroupResource, PolicyTrackedResourcesResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public static Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(this ResourceGroupResource resourceGroupResource, PolicyTrackedResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).GetQueryResultsForResourceGroupPolicyTrackedResources(policyTrackedResourcesResource, queryOptions, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).GetPolicyTrackedResourceQueryResults(policyTrackedResourcesResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -681,46 +321,6 @@ namespace Azure.ResourceManager.PolicyInsights
         public static Pageable<PolicyEvent> GetPolicyEventQueryResults(this ResourceGroupResource resourceGroupResource, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).GetPolicyEventQueryResults(policyEventsResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy events for the resource group level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForResourceGroupLevelPolicyAssignment
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicyEvent> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEventsAsync(this ResourceGroupResource resourceGroupResource, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            return GetExtensionClient(resourceGroupResource).GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEventsAsync(policyAssignmentName, policyEventsResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy events for the resource group level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForResourceGroupLevelPolicyAssignment
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyEvent" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicyEvent> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEvents(this ResourceGroupResource resourceGroupResource, string policyAssignmentName, PolicyEventType policyEventsResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            return GetExtensionClient(resourceGroupResource).GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyEvents(policyAssignmentName, policyEventsResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -763,9 +363,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicySummary> SummarizeForResourceGroupPolicyStatesAsync(this ResourceGroupResource resourceGroupResource, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this ResourceGroupResource resourceGroupResource, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).SummarizeForResourceGroupPolicyStatesAsync(policyStatesSummaryResource, queryOptions, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).SummarizePolicyStatesAsync(policyStatesSummaryResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -778,9 +378,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicySummary> SummarizeForResourceGroupPolicyStates(this ResourceGroupResource resourceGroupResource, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public static Pageable<PolicySummary> SummarizePolicyStates(this ResourceGroupResource resourceGroupResource, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(resourceGroupResource).SummarizeForResourceGroupPolicyStates(policyStatesSummaryResource, queryOptions, cancellationToken);
+            return GetExtensionClient(resourceGroupResource).SummarizePolicyStates(policyStatesSummaryResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -807,86 +407,6 @@ namespace Azure.ResourceManager.PolicyInsights
         public static ArmOperation TriggerPolicyStateEvaluation(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(resourceGroupResource).TriggerPolicyStateEvaluation(waitUntil, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the resource group level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForResourceGroupLevelPolicyAssignment
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesAsync(this ResourceGroupResource resourceGroupResource, string policyAssignmentName, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            return GetExtensionClient(resourceGroupResource).GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStatesAsync(policyAssignmentName, policyStatesResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Queries policy states for the resource group level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForResourceGroupLevelPolicyAssignment
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicyState" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicyState> GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStates(this ResourceGroupResource resourceGroupResource, string policyAssignmentName, PolicyStateType policyStatesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            return GetExtensionClient(resourceGroupResource).GetQueryResultsForResourceGroupLevelPolicyAssignmentPolicyStates(policyAssignmentName, policyStatesResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the resource group level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForResourceGroupLevelPolicyAssignment
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicySummary> SummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesAsync(this ResourceGroupResource resourceGroupResource, string policyAssignmentName, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            return GetExtensionClient(resourceGroupResource).SummarizeForResourceGroupLevelPolicyAssignmentPolicyStatesAsync(policyAssignmentName, policyStatesSummaryResource, queryOptions, cancellationToken);
-        }
-
-        /// <summary>
-        /// Summarizes policy states for the resource group level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{authorizationNamespace}/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForResourceGroupLevelPolicyAssignment
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="policyAssignmentName"> Policy assignment name. </param>
-        /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
-        /// <param name="queryOptions"> Parameter group. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicySummary> SummarizeForResourceGroupLevelPolicyAssignmentPolicyStates(this ResourceGroupResource resourceGroupResource, string policyAssignmentName, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(policyAssignmentName, nameof(policyAssignmentName));
-
-            return GetExtensionClient(resourceGroupResource).SummarizeForResourceGroupLevelPolicyAssignmentPolicyStates(policyAssignmentName, policyStatesSummaryResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -940,9 +460,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicyTrackedResourceRecord> GetQueryResultsForManagementGroupPolicyTrackedResourcesAsync(this ManagementGroupResource managementGroupResource, PolicyTrackedResourcesResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResultsAsync(this ManagementGroupResource managementGroupResource, PolicyTrackedResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(managementGroupResource).GetQueryResultsForManagementGroupPolicyTrackedResourcesAsync(policyTrackedResourcesResource, queryOptions, cancellationToken);
+            return GetExtensionClient(managementGroupResource).GetPolicyTrackedResourceQueryResultsAsync(policyTrackedResourcesResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -955,9 +475,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicyTrackedResourceRecord" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicyTrackedResourceRecord> GetQueryResultsForManagementGroupPolicyTrackedResources(this ManagementGroupResource managementGroupResource, PolicyTrackedResourcesResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public static Pageable<PolicyTrackedResourceRecord> GetPolicyTrackedResourceQueryResults(this ManagementGroupResource managementGroupResource, PolicyTrackedResourceType policyTrackedResourcesResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(managementGroupResource).GetQueryResultsForManagementGroupPolicyTrackedResources(policyTrackedResourcesResource, queryOptions, cancellationToken);
+            return GetExtensionClient(managementGroupResource).GetPolicyTrackedResourceQueryResults(policyTrackedResourcesResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -1030,9 +550,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PolicySummary> SummarizePolicyStateAsync(this ManagementGroupResource managementGroupResource, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public static AsyncPageable<PolicySummary> SummarizePolicyStatesAsync(this ManagementGroupResource managementGroupResource, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(managementGroupResource).SummarizePolicyStateAsync(policyStatesSummaryResource, queryOptions, cancellationToken);
+            return GetExtensionClient(managementGroupResource).SummarizePolicyStatesAsync(policyStatesSummaryResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
@@ -1045,9 +565,9 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <param name="queryOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PolicySummary" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PolicySummary> SummarizePolicyState(this ManagementGroupResource managementGroupResource, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
+        public static Pageable<PolicySummary> SummarizePolicyStates(this ManagementGroupResource managementGroupResource, PolicyStateSummaryType policyStatesSummaryResource, PolicyQuerySettings queryOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(managementGroupResource).SummarizePolicyState(policyStatesSummaryResource, queryOptions, cancellationToken);
+            return GetExtensionClient(managementGroupResource).SummarizePolicyStates(policyStatesSummaryResource, queryOptions, cancellationToken);
         }
 
         /// <summary>
