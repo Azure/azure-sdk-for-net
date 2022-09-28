@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationAssignmentData> GetGuestConfigurationAssignmentQueryResultsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentDataAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<GuestConfigurationAssignmentData>> FirstPageFunc(int? pageSizeHint)
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="GuestConfigurationAssignmentData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationAssignmentData> GetGuestConfigurationAssignmentQueryResults(CancellationToken cancellationToken = default)
+        public virtual Pageable<GuestConfigurationAssignmentData> GetAllGuestConfigurationAssignmentData(CancellationToken cancellationToken = default)
         {
             Page<GuestConfigurationAssignmentData> FirstPageFunc(int? pageSizeHint)
             {
