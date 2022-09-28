@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Dynatrace.Tests
         public async Task CreateOrUpdate()
         {
             string monitorName = Recording.GenerateAssetName("testDT-");
-            MonitorResource monitorResource = await CreateMonitorResourceAsync(monitorName);
+            DynatraceMonitorResource monitorResource = await CreateMonitorResourceAsync(monitorName);
             Assert.AreEqual(monitorName, monitorResource.Data.Name);
         }
 
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Dynatrace.Tests
             var input = GetMonitorInput();
 
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, monitorName, input);
-            MonitorResource monitorResource1 = lro.Value;
+            DynatraceMonitorResource monitorResource1 = lro.Value;
 
-            MonitorResource monitorResource2 = await collection.GetAsync(monitorName);
+            DynatraceMonitorResource monitorResource2 = await collection.GetAsync(monitorName);
 
             Assert.AreEqual(monitorResource1.Data.Name, monitorResource2.Data.Name);
             Assert.AreEqual(monitorResource1.Data.Id, monitorResource2.Data.Id);

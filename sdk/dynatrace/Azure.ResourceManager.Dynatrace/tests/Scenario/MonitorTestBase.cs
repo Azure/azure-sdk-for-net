@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Dynatrace.Tests
         {
         }
 
-        protected async Task<MonitorResourceCollection> GetMonitorResourceCollectionAsync()
+        protected async Task<DynatraceMonitorCollection> GetMonitorResourceCollectionAsync()
         {
             _genericResourceCollection = Client.GetGenericResources();
             _resourceGroup = await CreateResourceGroupAsync();
-            return _resourceGroup.GetMonitorResources();
+            return _resourceGroup.GetDynatraceMonitors();
         }
 
-        protected async Task<MonitorResource> CreateMonitorResourceAsync(string monitorName)
+        protected async Task<DynatraceMonitorResource> CreateMonitorResourceAsync(string monitorName)
         {
             var collection = await GetMonitorResourceCollectionAsync();
             var input = GetMonitorInput();
@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.Dynatrace.Tests
             return lro.Value;
         }
 
-        public MonitorResourceData GetMonitorInput()
+        public DynatraceMonitorData GetMonitorInput()
         {
             var aadDomains = new List<string>();
             aadDomains.Add("SDKTest");
 
-            return new MonitorResourceData(DefaultLocation)
+            return new DynatraceMonitorData(DefaultLocation)
             {
-                UserInfo = new UserInfo
+                UserInfo = new DynatraceMonitorUserInfo
                 {
                     FirstName = "Divyansh",
                     LastName = "Agarwal",
@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.Dynatrace.Tests
                     Country = "US",
                     EmailAddress = "agarwald@microsoft.com"
                 },
-                PlanData = new PlanData
+                PlanData = new DynatraceBillingPlanInfo
                 {
                     UsageType = "COMMITTED",
                     BillingCycle = "Monthly",
-                    PlanDetails = "azureportalintegration_privatepreview",
+                    PlanDetails = "dynatraceapitestplan",
                     EffectiveOn = new System.DateTimeOffset(2022, 5, 26, 8, 12, 30, new System.TimeSpan(1,0,0))
                 },
                 DynatraceEnvironmentProperties = new DynatraceEnvironmentProperties
                 {
                     SingleSignOnProperties = new DynatraceSingleSignOnProperties(
-                        SingleSignOnState.Disable,
+                        DynatraceSingleSignOnState.Disable,
                         null,
                         new System.Uri("http://www.contoso.com/"),
                         aadDomains,
-                        ProvisioningState.Accepted
+                        DynatraceProvisioningState.Accepted
                     )
                 }
             };
