@@ -17,21 +17,15 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         /// <summary> Initializes a new instance of DynatraceSingleSignOnResourceListResult. </summary>
         /// <param name="value"> The items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> or <paramref name="nextLink"/> is null. </exception>
-        internal DynatraceSingleSignOnResourceListResult(IEnumerable<DynatraceSingleSignOnResourceData> value, string nextLink)
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal DynatraceSingleSignOnResourceListResult(IEnumerable<DynatraceSingleSignOnResourceData> value)
         {
             if (value == null)
             {
                 throw new ArgumentNullException(nameof(value));
             }
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
 
             Value = value.ToList();
-            NextLink = nextLink;
         }
 
         /// <summary> Initializes a new instance of DynatraceSingleSignOnResourceListResult. </summary>

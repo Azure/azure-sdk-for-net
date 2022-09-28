@@ -15,12 +15,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static AppServiceListResponse DeserializeAppServiceListResponse(JsonElement element)
         {
-            IReadOnlyList<AppServiceInfo> value = default;
-            string nextLink = default;
+            Optional<IReadOnlyList<AppServiceInfo>> value = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
                     List<AppServiceInfo> array = new List<AppServiceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -35,7 +40,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new AppServiceListResponse(value, nextLink);
+            return new AppServiceListResponse(Optional.ToList(value), nextLink.Value);
         }
     }
 }

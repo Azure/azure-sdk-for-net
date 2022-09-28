@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         internal static TagRuleListResult DeserializeTagRuleListResult(JsonElement element)
         {
             IReadOnlyList<TagRuleData> value = default;
-            string nextLink = default;
+            Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new TagRuleListResult(value, nextLink);
+            return new TagRuleListResult(value, nextLink.Value);
         }
     }
 }
