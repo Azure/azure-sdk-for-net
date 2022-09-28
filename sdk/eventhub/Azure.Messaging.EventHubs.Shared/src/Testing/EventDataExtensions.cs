@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // If the events are the same instance, they're equal.  This should only happen
             // if both are null or they are the exact same instance.
 
-            if (Object.ReferenceEquals(instance, other))
+            if (ReferenceEquals(instance, other))
             {
                 return true;
             }
@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Since we know that the event bodies and system properties are equal, if the property sets are the
             // same instance, then we know that the events are equal.  This should only happen if both are null.
 
-            if (Object.ReferenceEquals(instance.Properties, other.Properties))
+            if (ReferenceEquals(instance.Properties, other.Properties))
             {
                 return true;
             }

@@ -499,14 +499,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if (sourceMessage.Properties.UserId.HasValue)
                 {
-                    if (MemoryMarshal.TryGetArray(sourceMessage.Properties.UserId.Value, out var segment))
-                    {
-                        message.Properties.UserId = segment;
-                    }
-                    else
-                    {
-                        message.Properties.UserId = new ArraySegment<byte>(sourceMessage.Properties.UserId.Value.ToArray());
-                    }
+                    message.Properties.UserId = new ArraySegment<byte>(sourceMessage.Properties.UserId.Value.ToArray());
                 }
             }
 
@@ -847,6 +840,17 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         private static IEnumerable<Data> TranslateDataBody(IEnumerable<ReadOnlyMemory<byte>> dataBody)
         {
+            // If the incoming body size cannot be determined by its type,
+            // assume the majority case of a single segment.
+
+            var segments = dataBody switch
+            {
+                ReadOnlyMemory<byte>[] bodyArray => new List<Data>(bodyArray.Length),
+                ICollection<ReadOnlyMemory<byte>> bodyList => new List<Data>(bodyList.Count),
+                IReadOnlyCollection<ReadOnlyMemory<byte>> bodyList => new List<Data>(bodyList.Count),
+                _ => new List<Data>(1)
+            };
+
             foreach (var bodySegment in dataBody)
             {
                 if (!MemoryMarshal.TryGetArray(bodySegment, out ArraySegment<byte> dataSegment))
@@ -854,11 +858,13 @@ namespace Azure.Messaging.EventHubs.Amqp
                     dataSegment = new ArraySegment<byte>(bodySegment.ToArray());
                 }
 
-                yield return new Data
+                segments.Add(new Data
                 {
                     Value = dataSegment
-                };
+                });
             }
+
+            return segments;
         }
 
         /// <summary>
@@ -906,7 +912,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns><c>true</c> if the body was successfully read; otherwise, <c>false</c>.</returns>
         ///
-        private static bool TryGetDataBody(AmqpMessage source, out AmqpMessageBody dataBody)
+        private static bool TryGetDataBody(AmqpMessage source,
+                                           out AmqpMessageBody dataBody)
         {
             if (((source.BodyType & SectionFlag.Data) == 0) || (source.DataBody == null))
             {
@@ -927,7 +934,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns><c>true</c> if the body was successfully read; otherwise, <c>false</c>.</returns>
         ///
-        private static bool TryGetSequenceBody(AmqpMessage source, out AmqpMessageBody sequenceBody)
+        private static bool TryGetSequenceBody(AmqpMessage source,
+                                               out AmqpMessageBody sequenceBody)
         {
             if ((source.BodyType & SectionFlag.AmqpSequence) == 0)
             {
@@ -955,7 +963,8 @@ namespace Azure.Messaging.EventHubs.Amqp
         ///
         /// <returns><c>true</c> if the body was successfully read; otherwise, <c>false</c>.</returns>
         ///
-        private static bool TryGetValueBody(AmqpMessage source, out AmqpMessageBody valueBody)
+        private static bool TryGetValueBody(AmqpMessage source,
+                                            out AmqpMessageBody valueBody)
         {
             if (((source.BodyType & SectionFlag.AmqpValue) == 0) || (source.ValueBody?.Value == null))
             {

@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Producer;
@@ -295,6 +297,51 @@ namespace Azure.Messaging.EventHubs.Tests
             }
 
             Assert.That(batch.Count, Is.EqualTo(eventMessages.Length), "The count should have been set when the batch was updated.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpEventBatch.TryAdd" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void TryAddCopiesTheBody()
+        {
+            var converter = new AmqpMessageConverter();
+            var options = new CreateBatchOptions { MaximumSizeInBytes = 5000 };
+            var buffer = new byte[10];
+
+            using var batch = new AmqpEventBatch(converter, options, default);
+
+            // Add a set of events to the batch which explicitly mutate and share the
+            // buffer between them.
+
+            for (var index = 0; index < 9; ++index)
+            {
+                Array.Clear(buffer, 0, buffer.Length);
+
+                // Load a new value into the shared buffer and add an event for it
+                // into the batch.
+
+                Encoding.UTF8.GetBytes(index.ToString()).CopyTo(buffer, 0);
+
+                batch.TryAdd(new EventData(buffer)
+                {
+                    MessageId = index.ToString()
+                });
+            }
+
+            var messageIds = new HashSet<string>();
+
+            foreach (var message in batch.AsReadOnlyCollection<AmqpMessage>())
+            {
+                var data = converter.CreateEventFromMessage(message);
+                var body = data.EventBody.ToString();
+
+                Assert.That(data.MessageId, Is.Not.Null.And.Not.Empty, "The identifier should be populated.");
+                Assert.That(messageIds.Contains(data.MessageId), Is.False, "The identifier should be unique.");
+                Assert.That(body.StartsWith(data.MessageId), Is.True, "The event body should match the identifier.");
+            }
         }
 
         /// <summary>

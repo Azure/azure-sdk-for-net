@@ -2,11 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using Azure.Core;
+using Azure.Core.Amqp;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Producer;
 using Microsoft.Azure.Amqp;
 
@@ -39,6 +42,9 @@ namespace Azure.Messaging.EventHubs.Amqp
 
         /// <summary>The set of events that have been added to the batch, in their <see cref="AmqpMessage" /> serialized format.</summary>
         private readonly List<AmqpMessage> _batchMessages = new();
+
+        /// <summary>The set of buffers rented from the shared array pool which must be returned on disposal.</summary>
+        private readonly List<byte[]> _rentedBuffers = new();
 
         /// <summary>The first sequence number of the batch; if not sequenced, <c>null</c>.</summary>
         private int? _startingSequenceNumber;
@@ -157,6 +163,28 @@ namespace Azure.Messaging.EventHubs.Amqp
                 _sizeBytes = size;
                 _batchMessages.Add(message);
 
+                // For a data body, the message converter will marshal the ReadOnlyMemory into an
+                // ArraySegment projection to avoid allocating.  To ensure the batch is immutable,
+                // it will need to own a buffer for the data body to guard against mutation of the
+                // source event.
+                //
+                // Because the batch is disposable and allows for deterministic clean-up, rent buffers
+                // from the shared pool rather than allocating a dedicated instance for each body segment.
+
+                if (eventData.GetRawAmqpMessage().Body.BodyType == AmqpMessageBodyType.Data)
+                {
+                   foreach (var bodySegment in message.DataBody)
+                   {
+                       var bodyArraySegment = (ArraySegment<byte>)bodySegment.Value;
+                       var buffer = ArrayPool<byte>.Shared.Rent(bodyArraySegment.Count);
+
+                       _rentedBuffers.Add(buffer);
+                       CopyArraySegmentTo(bodyArraySegment, buffer);
+
+                       bodySegment.Value = new ArraySegment<byte>(buffer, 0, bodyArraySegment.Count);
+                   }
+                }
+
                 return true;
             }
             finally
@@ -179,6 +207,8 @@ namespace Azure.Messaging.EventHubs.Amqp
 
             _batchMessages.Clear();
             _sizeBytes = _reservedOverheadBytes;
+
+            ReturnRentedBuffers(_rentedBuffers);
         }
 
         /// <summary>
@@ -253,7 +283,56 @@ namespace Azure.Messaging.EventHubs.Amqp
         public override void Dispose()
         {
             _disposed = true;
+
+            // Rented buffers are returned when the batch is
+            // cleared.
+
             Clear();
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///   Finalizes an instance of the <see cref="AmqpEventBatch"/> class.
+        /// </summary>
+        ///
+        ~AmqpEventBatch()
+        {
+            ReturnRentedBuffers(_rentedBuffers);
+        }
+
+        /// <summary>
+        ///   Returns any rented buffers held by the batch back into the
+        ///   shared array pool.
+        /// </summary>
+        ///
+        /// <param name="rentedBuffers">The set of rented buffers to return.</param>
+        ///
+        /// <remarks>
+        ///   If an attempt is made to return a buffer that is no longer rented, the
+        ///   failure will be ignored and the remaining buffers returned.
+        /// </remarks>
+        ///
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void ReturnRentedBuffers(List<byte[]> rentedBuffers)
+        {
+            foreach (var rentedBuffer in rentedBuffers)
+            {
+                try
+                {
+                    ArrayPool<byte>.Shared.Return(rentedBuffer);
+                }
+                catch (ArgumentException)
+                {
+                    // Ignore.
+                    //
+                    // This occurs when the buffer passed is not rented. If this scenario
+                    // is encountered, it likely indicates an error happened during TryAdd
+                    // when renting the buffer or at Dispose.  The remainder of the rented
+                    // buffers should still be returned.
+                }
+            }
+
+            rentedBuffers.Clear();
         }
 
         /// <summary>
@@ -273,6 +352,26 @@ namespace Azure.Messaging.EventHubs.Amqp
             }
 
             return currentSequence;
+        }
+
+        /// <summary>
+        ///   Performs the tasks needed to copy the content from an array segment
+        ///   to a destination array.
+        /// </summary>
+        ///
+        /// <param name="source">The array segment to read content from.</param>
+        /// <param name="destination">The array to copy the segment content to.</param>
+        ///
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static void CopyArraySegmentTo(ArraySegment<byte> source,
+                                               byte[] destination)
+        {
+            var index = -1;
+
+            foreach (var item in source)
+            {
+                destination[++index] = item;
+            }
         }
     }
 }

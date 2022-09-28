@@ -1292,6 +1292,88 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task ProducerCanSendBatchWithMultipleDataBodySegments()
+        {
+            await using EventHubScope scope = await EventHubScope.CreateAsync(4);
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName);
+
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).First();
+            var batchOptions = new CreateBatchOptions { PartitionId = partition };
+            var sourceEvents = new Dictionary<string, EventData>();
+
+            using var batch = await producer.CreateBatchAsync(batchOptions, cancellationSource.Token);
+
+            for (var index = 0; index < 20; ++index)
+            {
+                var eventData = EventGenerator.CreateSmallEvents(1).Single();
+                eventData.MessageId = index.ToString();
+
+                var message = eventData.GetRawAmqpMessage();
+
+                var body = new ReadOnlyMemory<byte>[]
+                {
+                    Encoding.UTF8.GetBytes($"first-{ index }"),
+                    Encoding.UTF8.GetBytes($"second-{ index }"),
+                    Encoding.UTF8.GetBytes($"third-{ index }"),
+                };
+
+                message.Body = AmqpMessageBody.FromData(body);
+                sourceEvents.Add(index.ToString(), eventData);
+
+                if (!batch.TryAdd(eventData))
+                {
+                    throw new Exception($"The event at index: { index } could not be added to the batch.");
+                }
+            }
+
+            // Publish the batch.
+
+            await producer.SendAsync(batch);
+
+            // Validate the events.
+
+            var readEvents = 0;
+
+            await using var consumer = new EventHubConsumerClient(
+                EventHubConsumerClient.DefaultConsumerGroupName,
+                EventHubsTestEnvironment.Instance.EventHubsConnectionString,
+                scope.EventHubName);
+
+            try
+            {
+                await foreach (var receivedEvent in consumer.ReadEventsFromPartitionAsync(partition, EventPosition.Earliest, cancellationSource.Token))
+                {
+                    Assert.That(receivedEvent.Data, Is.Not.Null, "No read should have an empty event.");
+
+                    var sourceEvent = sourceEvents[receivedEvent.Data.MessageId];
+                    Assert.That(sourceEvent, Is.Not.Null, $"A source event for id: { receivedEvent.Data.MessageId} was not found.");
+                    Assert.That(receivedEvent.Data.IsEquivalentTo(sourceEvent), Is.True, $"The events for id: { receivedEvent.Data.MessageId} did not match.");
+
+                    ++readEvents;
+
+                    if (readEvents >= sourceEvents.Keys.Count)
+                    {
+                        break;
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+            }
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "Cancellation should not have been signaled.");
+            Assert.That(readEvents, Is.EqualTo(sourceEvents.Keys.Count), "The expected number of events should have been read.");
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubProducerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
+        [Test]
         public async Task ProducerCanSendEventsWithValueBodies()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
