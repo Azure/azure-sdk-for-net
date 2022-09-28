@@ -87,4 +87,5 @@ rename-mapping:
   EnvironmentInfo: DynatraceEnvironmentInfo
   EnvironmentInfo.logsIngestionEndpoint: -|Uri
   SSOStatus: DynatraceSsoStatus
+
 ```
