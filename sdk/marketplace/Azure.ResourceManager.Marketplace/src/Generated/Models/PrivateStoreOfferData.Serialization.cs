@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsUpdateSuppressedDueIdempotence))
+            if (Optional.IsDefined(IsUpdateSuppressedDueToIdempotence))
             {
                 writer.WritePropertyName("updateSuppressedDueIdempotence");
-                writer.WriteBooleanValue(IsUpdateSuppressedDueIdempotence.Value);
+                writer.WriteBooleanValue(IsUpdateSuppressedDueToIdempotence.Value);
             }
             if (Optional.IsCollectionDefined(IconFileUris))
             {

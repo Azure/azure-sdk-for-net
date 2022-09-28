@@ -517,9 +517,9 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStore_BillingAccounts
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PrivateStoreBillingAccountsResult>> BillingAccountsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreBillingAccountsResult>> FetchBillingAccountsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.BillingAccounts");
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchBillingAccounts");
             scope.Start();
             try
             {
@@ -539,9 +539,9 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStore_BillingAccounts
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PrivateStoreBillingAccountsResult> BillingAccounts(CancellationToken cancellationToken = default)
+        public virtual Response<PrivateStoreBillingAccountsResult> FetchBillingAccounts(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.BillingAccounts");
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchBillingAccounts");
             scope.Start();
             try
             {
@@ -562,9 +562,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"> The CollectionsToSubscriptionsMappingContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CollectionsToSubscriptionsMappingResult>> CollectionsToSubscriptionsMappingAsync(CollectionsToSubscriptionsMappingContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CollectionsToSubscriptionsMappingResult>> FetchCollectionsToSubscriptionsMappingAsync(CollectionsToSubscriptionsMappingContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.CollectionsToSubscriptionsMapping");
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchCollectionsToSubscriptionsMapping");
             scope.Start();
             try
             {
@@ -585,9 +585,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"> The CollectionsToSubscriptionsMappingContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CollectionsToSubscriptionsMappingResult> CollectionsToSubscriptionsMapping(CollectionsToSubscriptionsMappingContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<CollectionsToSubscriptionsMappingResult> FetchCollectionsToSubscriptionsMapping(CollectionsToSubscriptionsMappingContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.CollectionsToSubscriptionsMapping");
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchCollectionsToSubscriptionsMapping");
             scope.Start();
             try
             {
@@ -654,9 +654,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"> The BulkCollectionsActionContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BulkCollectionsActionResult>> BulkCollectionsActionAsync(BulkCollectionsActionContent content = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BulkCollectionsActionResult>> PerformActionOnBulkCollectionsAsync(BulkCollectionsActionContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.BulkCollectionsAction");
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.PerformActionOnBulkCollections");
             scope.Start();
             try
             {
@@ -677,9 +677,9 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="content"> The BulkCollectionsActionContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BulkCollectionsActionResult> BulkCollectionsAction(BulkCollectionsActionContent content = null, CancellationToken cancellationToken = default)
+        public virtual Response<BulkCollectionsActionResult> PerformActionOnBulkCollections(BulkCollectionsActionContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.BulkCollectionsAction");
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.PerformActionOnBulkCollections");
             scope.Start();
             try
             {
