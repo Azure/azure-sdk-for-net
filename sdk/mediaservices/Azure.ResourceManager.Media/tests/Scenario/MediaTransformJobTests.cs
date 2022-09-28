@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Media.Tests
         private MediaTransformResource _mediaTransform;
         private MediaServicesAccountResource _mediaService;
 
-        private MediaTransformJobCollection mediaTransformJobCollection => _mediaTransform.GetMediaTransformJobs();
+        private MediaJobCollection mediaTransformJobCollection => _mediaTransform.GetMediaJobs();
 
         public MediaTransformJobTests(bool isAsync) : base(isAsync)
         {
@@ -43,15 +43,15 @@ namespace Azure.ResourceManager.Media.Tests
             _mediaTransform = await Client.GetMediaTransformResource(_mediaTransformIdentifier).GetAsync();
         }
 
-        private async Task<MediaTransformJobResource> CreateDefautMediaTransferJob(string jobName)
+        private async Task<MediaJobResource> CreateDefautMediaTransferJob(string jobName)
         {
             // create two asset
             var inputAsset = await _mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("empty-asset-input"), new MediaAssetData());
             var outputAsset = await _mediaService.GetMediaAssets().CreateOrUpdateAsync(WaitUntil.Completed, SessionRecording.GenerateAssetName("empty-asset-output"), new MediaAssetData());
 
-            MediaTransformJobData data = new MediaTransformJobData();
-            data.Input = new MediaTransformJobInputAsset(inputAsset.Value.Data.Name);
-            data.Outputs.Add(new MediaTransformJobOutputAsset(outputAsset.Value.Data.Name));
+            MediaJobData data = new MediaJobData();
+            data.Input = new MediaJobInputAsset(inputAsset.Value.Data.Name);
+            data.Outputs.Add(new MediaJobOutputAsset(outputAsset.Value.Data.Name));
             var job = await mediaTransformJobCollection.CreateOrUpdateAsync(WaitUntil.Completed, jobName, data);
             return job.Value;
         }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Media.Tests
             var list = await mediaTransformJobCollection.GetAllAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(list);
             // Cancel
-            while (result.Value.Data.State != JobState.Canceled)
+            while (result.Value.Data.State != MediaJobState.Canceled)
             {
                 var cancelResult = await job.CancelJobAsync();
                 Assert.IsTrue(cancelResult.Status == 200);

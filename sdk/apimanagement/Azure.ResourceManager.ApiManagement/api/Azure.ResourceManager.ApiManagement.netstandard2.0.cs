@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ApiManagement
     public partial class ApiManagementCertificateData : Azure.ResourceManager.Models.ResourceData
     {
         public ApiManagementCertificateData() { }
-        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.KeyVaultContractProperties KeyVaultDetails { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
         public string Thumbprint { get { throw null; } set { } }
@@ -2209,7 +2209,7 @@ namespace Azure.ResourceManager.ApiManagement
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public System.DateTimeOffset? NotifiesOn { get { throw null; } set { } }
         public string OwnerId { get { throw null; } set { } }
         public string PrimaryKey { get { throw null; } set { } }
@@ -2905,7 +2905,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         public ApiManagementSubscriptionPatch() { }
         public bool? AllowTracing { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
-        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public string OwnerId { get { throw null; } set { } }
         public string PrimaryKey { get { throw null; } set { } }
         public string Scope { get { throw null; } set { } }
@@ -3311,8 +3311,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
     }
     public partial class CertificateInformation
     {
-        public CertificateInformation(System.DateTimeOffset expiresOn, string thumbprint, string subject) { }
-        public System.DateTimeOffset ExpiresOn { get { throw null; } set { } }
+        public CertificateInformation(System.DateTimeOffset expireOn, string thumbprint, string subject) { }
+        public System.DateTimeOffset ExpireOn { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
         public string Thumbprint { get { throw null; } set { } }
     }
@@ -4637,7 +4637,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public partial class UserTokenContent
     {
         public UserTokenContent() { }
-        public System.DateTimeOffset? ExpiresOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
         public Azure.ResourceManager.ApiManagement.Models.TokenGenerationUsedKeyType? KeyType { get { throw null; } set { } }
     }
     public partial class UserTokenResult

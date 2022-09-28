@@ -263,15 +263,14 @@ namespace Azure.Containers.ContainerRegistry.Tests
                 digest = uploadResult.Value.Digest;
             }
 
-            // Enable download code once Test proxy SSL issue is resolved [https://github.com/Azure/azure-sdk-tools/issues/2982]
             // Assert
-            //var downloadResult = await client.DownloadBlobAsync(digest);
-            //Assert.AreEqual(digest, downloadResult.Value.Digest);
-            //Assert.AreEqual(streamLength, downloadResult.Value.Content.Length);
+            var downloadResult = await client.DownloadBlobAsync(digest);
+            Assert.AreEqual(digest, downloadResult.Value.Digest);
+            Assert.AreEqual(streamLength, downloadResult.Value.Content.Length);
 
             //// Clean up
-            //await client.DeleteBlobAsync(digest);
-            //downloadResult.Value.Dispose();
+            await client.DeleteBlobAsync(digest);
+            downloadResult.Value.Dispose();
         }
     }
 }

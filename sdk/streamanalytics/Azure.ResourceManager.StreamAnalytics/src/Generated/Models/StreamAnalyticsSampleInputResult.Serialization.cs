@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    lastArrivalTime = property.Value.GetDateTimeOffset();
+                    lastArrivalTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("error"))

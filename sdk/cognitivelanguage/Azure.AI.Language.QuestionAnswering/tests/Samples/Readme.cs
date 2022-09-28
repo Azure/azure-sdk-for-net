@@ -2,7 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.AI.Language.QuestionAnswering.Projects;
+#region Snippet:QuestionAnsweringClient_Namespace
+using Azure.AI.Language.QuestionAnswering;
+#endregion
+#region Snippet:QuestionAnsweringAuthoringClient_Namespace
+using Azure.AI.Language.QuestionAnswering.Authoring;
+#endregion
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
@@ -19,13 +24,13 @@ namespace Azure.AI.Language.QuestionAnswering.Tests.Samples
             #endregion
         }
 
-        public void CreateQuestionAnsweringProjectsClient()
+        public void CreateQuestionAnsweringAuthoringClient()
         {
-            #region Snippet:QuestionAnsweringProjectsClient_Create
+            #region Snippet:QuestionAnsweringAuthoringClient_Create
             Uri endpoint = new Uri("{LanguageEndpoint}");
             AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
 
-            QuestionAnsweringProjectsClient client = new QuestionAnsweringProjectsClient(endpoint, credential);
+            QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
             #endregion
         }
 

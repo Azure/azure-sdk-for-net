@@ -14,6 +14,13 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+partial-resources:
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{virtualNetworkName}: VirtualNetwork
+
+override-operation-name:
+  DnsResolvers_ListByVirtualNetwork: GetDnsResolvers
+  DnsForwardingRulesets_ListByVirtualNetwork: GetDnsForwardingRulesets
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'

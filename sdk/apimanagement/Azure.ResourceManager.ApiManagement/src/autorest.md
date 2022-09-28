@@ -166,7 +166,7 @@ rename-mapping:
   BackendContract: ApiManagementBackend
   CacheContract: ApiManagementCache
   CertificateContract: ApiManagementCertificate
-  CertificateContract.properties.expirationDate: ExpiresOn
+  CertificateContract.properties.expirationDate: ExpireOn
   CertificateContract.properties.keyVault: KeyVaultDetails
   CertificateCreateOrUpdateParameters.properties.keyVault: KeyVaultDetails
   ContentTypeContract: ApiManagementContentType
@@ -205,7 +205,7 @@ rename-mapping:
   ProductState: ApiManagementProductState
   UserState: ApiManagementUserState
   TagCreateUpdateParameters: ApiManagementTagCreateOrUpdateContent
-  SubscriptionContract.properties.expirationDate: ExpiresOn
+  SubscriptionContract.properties.expirationDate: ExpireOn
   SubscriptionContract.properties.notificationDate: NotifiesOn
   UserContract.properties.registrationDate: RegistriesOn
   AccessInformationSecretsContract: TenantAccessInfoSecretsDetails
@@ -217,7 +217,7 @@ rename-mapping:
   ApiType.graphql: GraphQL
   ProvisioningState: AssociationEntityProvisioningState
   AuthenticationSettingsContract.openid: OpenId
-  CertificateInformation.expiry: ExpiresOn
+  CertificateInformation.expiry: ExpireOn
   Confirmation: ConfirmationEmailType
   Confirmation.signup: SignUp
   ConnectivityCheckProtocol.TCP: Tcp
@@ -241,14 +241,14 @@ rename-mapping:
   PolicyContentFormat.rawxml-link: RawXmlLink
   PolicyIdName: PolicyName
   ProductEntityBaseParameters: ProductEntityBaseProperties
-  SubscriptionUpdateParameters.properties.expirationDate: ExpiresOn
+  SubscriptionUpdateParameters.properties.expirationDate: ExpireOn
   SettingsTypeName: SettingsType
   TagResourceContract: TagResourceContractDetails
   TagResourceContractProperties: AssociatedTagProperties
   ApiTagResourceContractProperties: AssociatedApiProperties
   OperationTagResourceContractProperties: AssociatedOperationProperties
   ProductTagResourceContractProperties: AssociatedProductProperties
-  UserTokenParameters.properties.expiry: ExpiresOn
+  UserTokenParameters.properties.expiry: ExpireOn
   AuthorizationMethod.GET: Get
   AuthorizationMethod.PUT: Put
   GroupContractProperties.builtIn: IsBuiltIn
