@@ -4,9 +4,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-using Microsoft.Extensions.Logging;
 using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
@@ -73,22 +71,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
         public static void AssertLog_As_MessageTelemetry(
             TelemetryItem telemetryItem,
-            LogLevel expectedLogLevel,
+            string expectedSeverityLevel,
             string expectedMessage,
-            IDictionary<string, string> expectedMeessageProperties)
+            IDictionary<string, string> expectedMeessageProperties,
+            string expectedSpanId,
+            string expectedTraceId)
         {
             Assert.Equal("Message", telemetryItem.Name); // telemetry type
             Assert.Equal("MessageData", telemetryItem.Data.BaseType); // telemetry data type
             Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
 
-            Assert.Equal(3, telemetryItem.Tags.Count);
+            var expectedTagsCount = 3;
+
+            if (expectedSpanId != null && expectedTraceId != null)
+            {
+                expectedTagsCount = 5;
+
+                Assert.Equal(expectedSpanId, telemetryItem.Tags["ai.operation.parentId"]);
+                Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
+            }
+
+            Assert.Equal(expectedTagsCount, telemetryItem.Tags.Count);
             Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
             Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
 
             var messageData = (MessageData)telemetryItem.Data.BaseData;
-            Assert.Equal(LogsHelper.GetSeverityLevel(expectedLogLevel), messageData.SeverityLevel);
+            Assert.Equal(expectedSeverityLevel, messageData.SeverityLevel);
             Assert.Equal(expectedMessage, messageData.Message);
 
             foreach (var prop in expectedMeessageProperties)
@@ -99,7 +109,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
         public static void AssertLog_As_ExceptionTelemetry(
             TelemetryItem telemetryItem,
-            LogLevel expectedLogLevel,
+            string expectedSeverityLevel,
             string expectedMessage,
             string expectedTypeName)
         {
@@ -114,7 +124,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
 
             var telemetryExceptionData = (TelemetryExceptionData)telemetryItem.Data.BaseData;
-            Assert.Equal(LogsHelper.GetSeverityLevel(expectedLogLevel), telemetryExceptionData.SeverityLevel);
+            Assert.Equal(expectedSeverityLevel, telemetryExceptionData.SeverityLevel);
 
             Assert.Equal(1, telemetryExceptionData.Exceptions.Count);
 
@@ -127,6 +137,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
         public static void AssertActivity_As_DependencyTelemetry(
             TelemetryItem telemetryItem,
             string expectedName,
+            string expectedTraceId,
             IDictionary<string, string> expectedProperties)
         {
             Assert.Equal("RemoteDependency", telemetryItem.Name); // telemetry type
@@ -135,7 +146,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
 
             Assert.Equal(4, telemetryItem.Tags.Count);
-            Assert.Contains("ai.operation.id", telemetryItem.Tags.Keys);
+            Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
             Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
             Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
@@ -143,9 +154,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             var remoteDependencyData = (RemoteDependencyData)telemetryItem.Data.BaseData;
             Assert.Equal(expectedName, remoteDependencyData.Name);
 
-            foreach (var prop in expectedProperties)
+            if (expectedProperties == null)
             {
-                Assert.Equal(prop.Value, remoteDependencyData.Properties[prop.Key]);
+                Assert.Empty(remoteDependencyData.Properties);
+            }
+            else
+            {
+                foreach (var prop in expectedProperties)
+                {
+                    Assert.Equal(prop.Value, remoteDependencyData.Properties[prop.Key]);
+                }
             }
         }
 
@@ -153,6 +171,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             TelemetryItem telemetryItem,
             ActivityKind activityKind,
             string expectedName,
+            string expectedTraceId,
             IDictionary<string, string> expectedProperties)
         {
             Assert.Equal("Request", telemetryItem.Name); // telemetry type
@@ -171,8 +190,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             }
 
             Assert.Equal(expectedTagsCount, telemetryItem.Tags.Count);
-
-            Assert.Contains("ai.operation.id", telemetryItem.Tags.Keys);
+            Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
             Assert.Contains("ai.cloud.role", telemetryItem.Tags.Keys);
             Assert.Contains("ai.cloud.roleInstance", telemetryItem.Tags.Keys);
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
@@ -180,9 +198,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             var requestData = (RequestData)telemetryItem.Data.BaseData;
             Assert.Equal(expectedName, requestData.Name);
 
-            foreach (var prop in expectedProperties)
+            if (expectedProperties == null)
             {
-                Assert.Equal(prop.Value, requestData.Properties[prop.Key]);
+                Assert.Empty(requestData.Properties);
+            }
+            else
+            {
+                foreach (var prop in expectedProperties)
+                {
+                    Assert.Equal(prop.Value, requestData.Properties[prop.Key]);
+                }
             }
         }
     }

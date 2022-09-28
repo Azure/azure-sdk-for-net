@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
@@ -19,14 +20,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.TelemetryItemValidation
     /// </summary>
     public class LogsTests
     {
+        private const string activitySourceName = "MyCompany.MyProduct.MyLibrary";
+        private static readonly ActivitySource activitySource = new(activitySourceName);
+
         [Theory]
-        [InlineData(LogLevel.Trace)]
-        [InlineData(LogLevel.Debug)]
-        [InlineData(LogLevel.Information)]
-        [InlineData(LogLevel.Warning)]
-        [InlineData(LogLevel.Error)]
-        [InlineData(LogLevel.Critical)]
-        public void VerifyLog(LogLevel logLevel)
+        [InlineData(LogLevel.Information, "Information")]
+        [InlineData(LogLevel.Warning, "Warning")]
+        [InlineData(LogLevel.Error, "Error")]
+        [InlineData(LogLevel.Critical, "Critical")]
+        [InlineData(LogLevel.Debug, "Verbose")]
+        [InlineData(LogLevel.Trace, "Verbose")]
+        public void VerifyLog(LogLevel logLevel, string expectedSeverityLevel)
         {
             // SETUP
             ConcurrentBag<TelemetryItem> telemetryItems = null;
@@ -59,19 +63,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.TelemetryItemValidation
 
             TelemetryItemValidationHelper.AssertLog_As_MessageTelemetry(
                 telemetryItem: telemetryItem,
-                expectedLogLevel: logLevel,
+                expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Hello {name}.",
-                expectedMeessageProperties: new Dictionary<string, string> { { "name", "World" }});
+                expectedMeessageProperties: new Dictionary<string, string> { { "name", "World" }},
+                expectedSpanId: null,
+                expectedTraceId: null);
         }
 
         [Theory(Skip = "Bug: ILogger message is overwriting the Exception.Message.")]
-        [InlineData(LogLevel.Trace)]
-        [InlineData(LogLevel.Debug)]
-        [InlineData(LogLevel.Information)]
-        [InlineData(LogLevel.Warning)]
-        [InlineData(LogLevel.Error)]
-        [InlineData(LogLevel.Critical)]
-        public void VerifyException(LogLevel logLevel)
+        [InlineData(LogLevel.Information, "Information")]
+        [InlineData(LogLevel.Warning, "Warning")]
+        [InlineData(LogLevel.Error, "Error")]
+        [InlineData(LogLevel.Critical, "Critical")]
+        [InlineData(LogLevel.Debug, "Verbose")]
+        [InlineData(LogLevel.Trace, "Verbose")]
+        public void VerifyException(LogLevel logLevel, string expectedSeverityLevel)
         {
             // SETUP
             ConcurrentBag<TelemetryItem> telemetryItems = null;
@@ -112,7 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.TelemetryItemValidation
 
             TelemetryItemValidationHelper.AssertLog_As_ExceptionTelemetry(
                 telemetryItem: telemetryItem,
-                expectedLogLevel: logLevel,
+                expectedSeverityLevel: expectedSeverityLevel,
                 expectedMessage: "Test Exception", // TODO: this fails. Currently the ILogger message is overwriting the Exception.Message.
                 expectedTypeName: "System.Exception");
         }

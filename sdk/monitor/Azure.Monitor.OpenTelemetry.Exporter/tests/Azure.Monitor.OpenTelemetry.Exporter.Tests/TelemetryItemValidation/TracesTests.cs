@@ -7,7 +7,9 @@ using System.Diagnostics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
+using Microsoft.Extensions.Logging;
 using OpenTelemetry;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
 using Xunit;
 
@@ -35,10 +37,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.TelemetryItemValidation
                 .Build();
 
             // ACT
+            string traceId;
             using (var activity = activitySource.StartActivity(name: "SayHello", kind: activityKind ))
             {
-                activity?.SetTag("foo", 1);
-                activity?.SetTag("baz", new int[] { 1, 2, 3 });
+                traceId = activity.TraceId.ToHexString();
+
+                activity.SetTag("integer", 1);
+                activity.SetTag("message", "Hello World!");
+                activity.SetTag("intArray", new int[] { 1, 2, 3 });
                 activity?.SetStatus(ActivityStatusCode.Ok);
             }
 
@@ -52,7 +58,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.TelemetryItemValidation
             TelemetryItemValidationHelper.AssertActivity_As_DependencyTelemetry(
                 telemetryItem: telemetryItem,
                 expectedName: "SayHello",
-                expectedProperties: new Dictionary<string, string> { { "foo", "1" }, { "baz", "1,2,3" } });
+                expectedTraceId: traceId,
+                expectedProperties: new Dictionary<string, string> { { "integer", "1" }, { "message", "Hello World!" }, { "intArray", "1,2,3" } });
         }
 
         [Theory]
@@ -67,10 +74,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.TelemetryItemValidation
                 .Build();
 
             // ACT
+            string traceId;
             using (var activity = activitySource.StartActivity(name: "SayHello", kind: activityKind))
             {
-                activity?.SetTag("foo", 1);
-                activity?.SetTag("baz", new int[] { 1, 2, 3 });
+                traceId = activity.TraceId.ToHexString();
+
+                activity.SetTag("integer", 1);
+                activity.SetTag("message", "Hello World!");
+                activity.SetTag("intArray", new int[] { 1, 2, 3 });
                 activity?.SetStatus(ActivityStatusCode.Ok);
             }
 
@@ -85,7 +96,79 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.TelemetryItemValidation
                 telemetryItem: telemetryItem,
                 activityKind: activityKind,
                 expectedName: "SayHello",
-                expectedProperties: new Dictionary<string, string> { { "foo", "1" }, { "baz", "1,2,3" } });
+                expectedTraceId: traceId,
+                expectedProperties: new Dictionary<string, string> { { "integer", "1" }, { "message", "Hello World!" }, { "intArray", "1,2,3" } });
+        }
+
+        [Theory]
+        [InlineData(LogLevel.Information, "Information")]
+        [InlineData(LogLevel.Warning, "Warning")]
+        [InlineData(LogLevel.Error, "Error")]
+        [InlineData(LogLevel.Critical, "Critical")]
+        [InlineData(LogLevel.Debug, "Verbose")]
+        [InlineData(LogLevel.Trace, "Verbose")]
+        public void VerifyLogWithinActivity(LogLevel logLevel, string expectedSeverityLevel)
+        {
+            // SETUP
+            ConcurrentBag<TelemetryItem> logTelemetryItems = null;
+
+            var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource(activitySourceName)
+                .AddAzureMonitorTraceExporterForTest(out ConcurrentBag<TelemetryItem> activityTelemetryItems)
+                .Build();
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddFilter<OpenTelemetryLoggerProvider>("*", logLevel)
+                    .AddOpenTelemetry(options =>
+                    {
+                        options.AddAzureMonitorLogExporterForTest(out logTelemetryItems);
+                    });
+            });
+
+            // ACT
+            string spanId, traceId;
+
+            using (var activity = activitySource.StartActivity(name: "SayHello"))
+            {
+                spanId = activity.SpanId.ToHexString();
+                traceId = activity.TraceId.ToHexString();
+
+                var logger = loggerFactory.CreateLogger<LogsTests>();
+
+                logger.Log(
+                    logLevel: logLevel,
+                    eventId: 0,
+                    exception: null,
+                    message: "Hello {name}.",
+                    args: new object[] { "World" });
+            }
+
+            // CLEANUP
+            tracerProvider.Dispose();
+            loggerFactory.Dispose();
+
+            // ASSERT
+            Assert.True(activityTelemetryItems.Any(), "test project did not capture telemetry");
+            var activityTelemetryItem = activityTelemetryItems.Single();
+
+            TelemetryItemValidationHelper.AssertActivity_As_DependencyTelemetry(
+                telemetryItem: activityTelemetryItem,
+                expectedName: "SayHello",
+                expectedTraceId: traceId,
+                expectedProperties: null);
+
+            Assert.True(logTelemetryItems.Any(), "Unit test failed to collect telemetry.");
+            var logTelemetryItem = logTelemetryItems.Single();
+
+            TelemetryItemValidationHelper.AssertLog_As_MessageTelemetry(
+                telemetryItem: logTelemetryItem,
+                expectedSeverityLevel: expectedSeverityLevel,
+                expectedMessage: "Hello {name}.",
+                expectedMeessageProperties: new Dictionary<string, string> { { "name", "World" } },
+                expectedSpanId: spanId,
+                expectedTraceId: traceId);
         }
     }
 }
