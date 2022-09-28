@@ -15,7 +15,6 @@
         "Pool": "azsdk-pool-mms-ubuntu-2004-general",
         "TestTargetFramework": "net6.0"
       },
-
       "Windows2019_NET6.0": {
         "OSVmImage": "MMS2019",
         "Pool": "azsdk-pool-mms-win-2019-general",
@@ -26,7 +25,6 @@
         "Pool": "azsdk-pool-mms-win-2019-general",
         "TestTargetFramework": "net461"
       },
-
       "macos-11_NETCore3.1": {
         "OSVmImage": "macos-11",
         "Pool": "Azure Pipelines",
@@ -39,28 +37,355 @@
       }
     },
     "AdditionalTestArguments": [
-        "/p:UseProjectReferenceToAzureClients=false",
-        "/p:UseProjectReferenceToAzureClients=true"
+      "/p:UseProjectReferenceToAzureClients=false",
+      "/p:UseProjectReferenceToAzureClients=true"
     ],
     "BuildConfiguration": [
-        "Debug",
-        "Release"
-    ]
+      "Debug",
+      "Release"
+    ],
+    "OverrideFiles": {
+      "DependencyGroupoutputFolder/0": {
+        "ServiceDirectories": [
+          "advisor\\Azure.ResourceManager.Advisor",
+          "agrifood\\Azure.ResourceManager.AgFoodPlatform",
+          "alertsmanagement\\Azure.ResourceManager.AlertsManagement",
+          "apimanagement\\Azure.ResourceManager.ApiManagement",
+          "appconfiguration\\Azure.ResourceManager.AppConfiguration",
+          "applicationinsights\\Azure.ResourceManager.ApplicationInsights",
+          "appplatform\\Azure.ResourceManager.AppPlatform",
+          "$(RepoRoot)sdk\\arc-scvmm\\Azure.ResourceManager.ArcScVmm\\tests\\Azure.ResourceManager.ArcScVmm.Tests.csproj",
+          "attestation\\Azure.ResourceManager.Attestation",
+          "authorization\\Azure.ResourceManager.Authorization",
+          "automanage\\Azure.ResourceManager.Automanage",
+          "automation\\Azure.ResourceManager.Automation",
+          "avs\\Azure.ResourceManager.Avs",
+          "azurestackhci\\Azure.ResourceManager.Hci",
+          "batch\\Azure.ResourceManager.Batch",
+          "billing\\Azure.ResourceManager.Billing",
+          "blueprint\\Azure.ResourceManager.Blueprint",
+          "botservice\\Azure.ResourceManager.BotService",
+          "cdn\\Azure.ResourceManager.Cdn",
+          "changeanalysis\\Azure.ResourceManager.ChangeAnalysis"
+        ],
+        "ProjectListOverrideFile": "outputFolder/ProjectListOverrideFile_Project_0.props"
+      },
+      "DependencyGroupoutputFolder/1": {
+        "ServiceDirectories": [
+          "chaos\\Azure.ResourceManager.Chaos",
+          "cognitiveservices\\Azure.ResourceManager.CognitiveServices",
+          "communication\\Azure.ResourceManager.Communication",
+          "compute\\Azure.ResourceManager.Compute",
+          "confidentialledger\\Azure.ResourceManager.ConfidentialLedger",
+          "confluent\\Azure.ResourceManager.Confluent",
+          "connectedvmwarevsphere\\Azure.ResourceManager.ConnectedVMwarevSphere",
+          "consumption\\Azure.ResourceManager.Consumption",
+          "containerapps\\Azure.ResourceManager.AppContainers",
+          "containerinstance\\Azure.ResourceManager.ContainerInstance",
+          "containerregistry\\Azure.ResourceManager.ContainerRegistry",
+          "containerservice\\Azure.ResourceManager.ContainerService",
+          "cosmosdb\\Azure.ResourceManager.CosmosDB",
+          "$(RepoRoot)sdk\\customer-insights\\Azure.ResourceManager.CustomerInsights\\tests\\Azure.ResourceManager.CustomerInsights.Tests.csproj",
+          "databoxedge\\Azure.ResourceManager.DataBoxEdge",
+          "databox\\Azure.ResourceManager.DataBox",
+          "datadog\\Azure.ResourceManager.Datadog",
+          "datafactory\\Azure.ResourceManager.DataFactory",
+          "$(RepoRoot)sdk\\datalake-analytics\\Azure.ResourceManager.DataLakeAnalytics\\tests\\Azure.ResourceManager.DataLakeAnalytics.Tests.csproj",
+          "$(RepoRoot)sdk\\datalake-store\\Azure.ResourceManager.DataLakeStore\\tests\\Azure.ResourceManager.DataLakeStore.Tests.csproj"
+        ],
+        "ProjectListOverrideFile": "outputFolder/ProjectListOverrideFile_Project_1.props"
+      },
+      "DependencyGroupoutputFolder/2": {
+        "ServiceDirectories": [
+          "datamigration\\Azure.ResourceManager.DataMigration",
+          "datashare\\Azure.ResourceManager.DataShare",
+          "deploymentmanager\\Azure.ResourceManager.DeploymentManager",
+          "desktopvirtualization\\Azure.ResourceManager.DesktopVirtualization",
+          "deviceprovisioningservices\\Azure.ResourceManager.DeviceProvisioningServices",
+          "deviceupdate\\Azure.ResourceManager.DeviceUpdate",
+          "devspaces\\Azure.ResourceManager.DevSpaces",
+          "devtestlabs\\Azure.ResourceManager.DevTestLabs",
+          "digitaltwins\\Azure.ResourceManager.DigitalTwins",
+          "dnsresolver\\Azure.ResourceManager.DnsResolver",
+          "dns\\Azure.ResourceManager.Dns",
+          "dynatrace\\Azure.ResourceManager.Dynatrace",
+          "edgeorder\\Azure.ResourceManager.EdgeOrder",
+          "elasticsan\\Azure.ResourceManager.ElasticSan",
+          "elastic\\Azure.ResourceManager.Elastic",
+          "eventgrid\\Azure.ResourceManager.EventGrid",
+          "eventhub\\Azure.ResourceManager.EventHubs",
+          "extendedlocation\\Azure.ResourceManager.ExtendedLocations",
+          "fluidrelay\\Azure.ResourceManager.FluidRelay",
+          "frontdoor\\Azure.ResourceManager.FrontDoor"
+        ],
+        "ProjectListOverrideFile": "outputFolder/ProjectListOverrideFile_Project_2.props"
+      },
+      "DependencyGroupoutputFolder/3": {
+        "ServiceDirectories": [
+          "grafana\\Azure.ResourceManager.Grafana",
+          "guestconfiguration\\Azure.ResourceManager.GuestConfiguration",
+          "hdinsight\\Azure.ResourceManager.HDInsight",
+          "healthbot\\Azure.ResourceManager.Healthbot",
+          "healthcareapis\\Azure.ResourceManager.HealthcareApis",
+          "hybridcompute\\Azure.ResourceManager.HybridCompute",
+          "hybridconnectivity\\Azure.ResourceManager.HybridConnectivity",
+          "hybridkubernetes\\Azure.ResourceManager.Kubernetes",
+          "iotcentral\\Azure.ResourceManager.IotCentral",
+          "iothub\\Azure.ResourceManager.IotHub",
+          "keyvault\\Azure.ResourceManager.KeyVault",
+          "kubernetesconfiguration\\Azure.ResourceManager.KubernetesConfiguration",
+          "kusto\\Azure.ResourceManager.Kusto",
+          "labservices\\Azure.ResourceManager.LabServices",
+          "logic\\Azure.ResourceManager.Logic",
+          "machinelearningcompute\\Azure.ResourceManager.MachineLearningCompute",
+          "machinelearningservices\\Azure.ResourceManager.MachineLearning",
+          "maintenance\\Azure.ResourceManager.Maintenance",
+          "managednetwork\\Azure.ResourceManager.ManagedNetwork",
+          "managedserviceidentity\\Azure.ResourceManager.ManagedServiceIdentities"
+        ],
+        "ProjectListOverrideFile": "outputFolder/ProjectListOverrideFile_Project_3.props"
+      },
+      "DependencyGroupoutputFolder/4": {
+        "ServiceDirectories": [
+          "managedservices\\Azure.ResourceManager.ManagedServices",
+          "managementpartner\\Azure.ResourceManager.ManagementPartner",
+          "maps\\Azure.ResourceManager.Maps",
+          "marketplaceordering\\Azure.ResourceManager.MarketplaceOrdering",
+          "marketplace\\Azure.ResourceManager.Marketplace",
+          "mediaservices\\Azure.ResourceManager.Media",
+          "mixedreality\\Azure.ResourceManager.MixedReality",
+          "monitor\\Azure.ResourceManager.Monitor",
+          "mysql\\Azure.ResourceManager.MySql",
+          "netapp\\Azure.ResourceManager.NetApp",
+          "networkfunction\\Azure.ResourceManager.NetworkFunction",
+          "network\\Azure.ResourceManager.Network",
+          "notificationhubs\\Azure.ResourceManager.NotificationHubs",
+          "openenergyplatform\\Azure.ResourceManager.EnergyServices",
+          "operationalinsights\\Azure.ResourceManager.OperationalInsights",
+          "orbital\\Azure.ResourceManager.Orbital",
+          "peering\\Azure.ResourceManager.Peering",
+          "policyinsights\\Azure.ResourceManager.PolicyInsights",
+          "postgresql\\Azure.ResourceManager.PostgreSql",
+          "privatedns\\Azure.ResourceManager.PrivateDns"
+        ],
+        "ProjectListOverrideFile": "outputFolder/ProjectListOverrideFile_Project_4.props"
+      },
+      "DependencyGroupoutputFolder/5": {
+        "ServiceDirectories": [
+          "purview\\Azure.ResourceManager.Purview",
+          "redisenterprise\\Azure.ResourceManager.RedisEnterprise",
+          "redis\\Azure.ResourceManager.Redis",
+          "relay\\Azure.ResourceManager.Relay",
+          "reservations\\Azure.ResourceManager.Reservations",
+          "resourcegraph\\Azure.ResourceManager.ResourceGraph",
+          "resourcemanager\\Azure.ResourceManager\\tests",
+          "resourcemover\\Azure.ResourceManager.ResourceMover",
+          "resources\\Azure.ResourceManager.Resources",
+          "search\\Azure.ResourceManager.Search",
+          "securitycenter\\Azure.ResourceManager.SecurityCenter",
+          "securityinsights\\Azure.ResourceManager.SecurityInsights",
+          "servicebus\\Azure.ResourceManager.ServiceBus",
+          "servicefabricmanagedclusters\\Azure.ResourceManager.ServiceFabricManagedClusters",
+          "servicefabric\\Azure.ResourceManager.ServiceFabric",
+          "servicelinker\\Azure.ResourceManager.ServiceLinker",
+          "sqlmanagement\\Azure.ResourceManager.Sql",
+          "sqlvirtualmachine\\Azure.ResourceManager.SqlVirtualMachine",
+          "storagecache\\Azure.ResourceManager.StorageCache",
+          "storagepool\\Azure.ResourceManager.StoragePool"
+        ],
+        "ProjectListOverrideFile": "outputFolder/ProjectListOverrideFile_Project_5.props"
+      },
+      "DependencyGroupoutputFolder/6": {
+        "ServiceDirectories": [
+          "storagesync\\Azure.ResourceManager.StorageSync",
+          "storage\\Azure.ResourceManager.Storage",
+          "$(RepoRoot)sdk\\storage\\Azure.Storage.Blobs\\tests\\Azure.Storage.Blobs.Tests.csproj",
+          "streamanalytics\\Azure.ResourceManager.StreamAnalytics",
+          "subscription\\Azure.ResourceManager.Subscription",
+          "support\\Azure.ResourceManager.Support",
+          "trafficmanager\\Azure.ResourceManager.TrafficManager",
+          "webpubsub\\Azure.ResourceManager.WebPubSub",
+          "websites\\Azure.ResourceManager.AppService",
+          "workloads\\Azure.ResourceManager.Workloads",
+          "advisor\\Azure.ResourceManager.Advisor",
+          "agrifood\\Azure.ResourceManager.AgFoodPlatform",
+          "alertsmanagement\\Azure.ResourceManager.AlertsManagement",
+          "apimanagement\\Azure.ResourceManager.ApiManagement",
+          "appconfiguration\\Azure.ResourceManager.AppConfiguration",
+          "applicationinsights\\Azure.ResourceManager.ApplicationInsights",
+          "appplatform\\Azure.ResourceManager.AppPlatform",
+          "$(RepoRoot)sdk\\arc-scvmm\\Azure.ResourceManager.ArcScVmm\\src\\Azure.ResourceManager.ArcScVmm.csproj",
+          "attestation\\Azure.ResourceManager.Attestation",
+          "authorization\\Azure.ResourceManager.Authorization"
+        ],
+        "ProjectListOverrideFile": "outputFolder/ProjectListOverrideFile_Project_6.props"
+      },
+      "DependencyGroupoutputFolder/7": {
+        "ServiceDirectories": [
+          "automanage\\Azure.ResourceManager.Automanage",
+          "automation\\Azure.ResourceManager.Automation",
+          "avs\\Azure.ResourceManager.Avs",
+          "azurestackhci\\Azure.ResourceManager.Hci",
+          "batch\\Azure.ResourceManager.Batch",
+          "billing\\Azure.ResourceManager.Billing",
+          "blueprint\\Azure.ResourceManager.Blueprint",
+          "botservice\\Azure.ResourceManager.BotService",
+          "cdn\\Azure.ResourceManager.Cdn",
+          "changeanalysis\\Azure.ResourceManager.ChangeAnalysis",
+          "chaos\\Azure.ResourceManager.Chaos",
+          "cognitiveservices\\Azure.ResourceManager.CognitiveServices",
+          "communication\\Azure.ResourceManager.Communication",
+          "compute\\Azure.ResourceManager.Compute",
+          "confidentialledger\\Azure.ResourceManager.ConfidentialLedger",
+          "confluent\\Azure.ResourceManager.Confluent",
+          "connectedvmwarevsphere\\Azure.ResourceManager.ConnectedVMwarevSphere",
+          "consumption\\Azure.ResourceManager.Consumption",
+          "containerapps\\Azure.ResourceManager.AppContainers",
+          "containerinstance\\Azure.ResourceManager.ContainerInstance"
+        ],
+        "ProjectListOverrideFile": "outputFolder/ProjectListOverrideFile_Project_7.props"
+      },
+      "DependencyGroupoutputFolder/8": {
+        "ServiceDirectories": [
+          "containerregistry\\Azure.ResourceManager.ContainerRegistry",
+          "containerservice\\Azure.ResourceManager.ContainerService",
+          "cosmosdb\\Azure.ResourceManager.CosmosDB",
+          "$(RepoRoot)sdk\\customer-insights\\Azure.ResourceManager.CustomerInsights\\src\\Azure.ResourceManager.CustomerInsights.csproj",
+          "databoxedge\\Azure.ResourceManager.DataBoxEdge",
+          "databox\\Azure.ResourceManager.DataBox",
+          "datadog\\Azure.ResourceManager.Datadog",
+          "datafactory\\Azure.ResourceManager.DataFactory",
+          "$(RepoRoot)sdk\\datalake-analytics\\Azure.ResourceManager.DataLakeAnalytics\\src\\Azure.ResourceManager.DataLakeAnalytics.csproj",
+          "$(RepoRoot)sdk\\datalake-store\\Azure.ResourceManager.DataLakeStore\\src\\Azure.ResourceManager.DataLakeStore.csproj",
+          "datamigration\\Azure.ResourceManager.DataMigration",
+          "datashare\\Azure.ResourceManager.DataShare",
+          "deploymentmanager\\Azure.ResourceManager.DeploymentManager",
+          "desktopvirtualization\\Azure.ResourceManager.DesktopVirtualization",
+          "deviceprovisioningservices\\Azure.ResourceManager.DeviceProvisioningServices",
+          "deviceupdate\\Azure.ResourceManager.DeviceUpdate",
+          "devspaces\\Azure.ResourceManager.DevSpaces",
+          "devtestlabs\\Azure.ResourceManager.DevTestLabs",
+          "digitaltwins\\Azure.ResourceManager.DigitalTwins",
+          "dnsresolver\\Azure.ResourceManager.DnsResolver"
+        ],
+        "ProjectListOverrideFile": "outputFolder/ProjectListOverrideFile_Project_8.props"
+      },
+      "DependencyGroupoutputFolder/9": {
+        "ServiceDirectories": [
+          "dns\\Azure.ResourceManager.Dns",
+          "dynatrace\\Azure.ResourceManager.Dynatrace",
+          "edgeorder\\Azure.ResourceManager.EdgeOrder",
+          "elasticsan\\Azure.ResourceManager.ElasticSan",
+          "elastic\\Azure.ResourceManager.Elastic",
+          "eventgrid\\Azure.ResourceManager.EventGrid",
+          "eventhub\\Azure.ResourceManager.EventHubs",
+          "extendedlocation\\Azure.ResourceManager.ExtendedLocations",
+          "fluidrelay\\Azure.ResourceManager.FluidRelay",
+          "frontdoor\\Azure.ResourceManager.FrontDoor",
+          "grafana\\Azure.ResourceManager.Grafana",
+          "guestconfiguration\\Azure.ResourceManager.GuestConfiguration",
+          "hdinsight\\Azure.ResourceManager.HDInsight",
+          "healthbot\\Azure.ResourceManager.Healthbot",
+          "healthcareapis\\Azure.ResourceManager.HealthcareApis",
+          "hybridcompute\\Azure.ResourceManager.HybridCompute",
+          "hybridconnectivity\\Azure.ResourceManager.HybridConnectivity",
+          "hybridkubernetes\\Azure.ResourceManager.Kubernetes",
+          "iotcentral\\Azure.ResourceManager.IotCentral",
+          "iothub\\Azure.ResourceManager.IotHub"
+        ],
+        "ProjectListOverrideFile": "outputFolder/ProjectListOverrideFile_Project_9.props"
+      },
+      "DependencyGroupoutputFolder/10": {
+        "ServiceDirectories": [
+          "keyvault\\Azure.ResourceManager.KeyVault",
+          "kubernetesconfiguration\\Azure.ResourceManager.KubernetesConfiguration",
+          "kusto\\Azure.ResourceManager.Kusto",
+          "labservices\\Azure.ResourceManager.LabServices",
+          "logic\\Azure.ResourceManager.Logic",
+          "machinelearningcompute\\Azure.ResourceManager.MachineLearningCompute",
+          "machinelearningservices\\Azure.ResourceManager.MachineLearning",
+          "maintenance\\Azure.ResourceManager.Maintenance",
+          "managednetwork\\Azure.ResourceManager.ManagedNetwork",
+          "managedserviceidentity\\Azure.ResourceManager.ManagedServiceIdentities",
+          "managedservices\\Azure.ResourceManager.ManagedServices",
+          "managementpartner\\Azure.ResourceManager.ManagementPartner",
+          "maps\\Azure.ResourceManager.Maps",
+          "marketplaceordering\\Azure.ResourceManager.MarketplaceOrdering",
+          "marketplace\\Azure.ResourceManager.Marketplace",
+          "mediaservices\\Azure.ResourceManager.Media",
+          "mixedreality\\Azure.ResourceManager.MixedReality",
+          "monitor\\Azure.ResourceManager.Monitor",
+          "mysql\\Azure.ResourceManager.MySql",
+          "netapp\\Azure.ResourceManager.NetApp"
+        ],
+        "ProjectListOverrideFile": "outputFolder/ProjectListOverrideFile_Project_10.props"
+      },
+      "DependencyGroupoutputFolder/11": {
+        "ServiceDirectories": [
+          "networkfunction\\Azure.ResourceManager.NetworkFunction",
+          "network\\Azure.ResourceManager.Network",
+          "notificationhubs\\Azure.ResourceManager.NotificationHubs",
+          "openenergyplatform\\Azure.ResourceManager.EnergyServices",
+          "operationalinsights\\Azure.ResourceManager.OperationalInsights",
+          "orbital\\Azure.ResourceManager.Orbital",
+          "peering\\Azure.ResourceManager.Peering",
+          "policyinsights\\Azure.ResourceManager.PolicyInsights",
+          "postgresql\\Azure.ResourceManager.PostgreSql",
+          "privatedns\\Azure.ResourceManager.PrivateDns",
+          "purview\\Azure.ResourceManager.Purview",
+          "redisenterprise\\Azure.ResourceManager.RedisEnterprise",
+          "redis\\Azure.ResourceManager.Redis",
+          "relay\\Azure.ResourceManager.Relay",
+          "reservations\\Azure.ResourceManager.Reservations",
+          "resourcegraph\\Azure.ResourceManager.ResourceGraph",
+          "resourcemover\\Azure.ResourceManager.ResourceMover",
+          "resources\\Azure.ResourceManager.Resources",
+          "search\\Azure.ResourceManager.Search",
+          "securitycenter\\Azure.ResourceManager.SecurityCenter"
+        ],
+        "ProjectListOverrideFile": "outputFolder/ProjectListOverrideFile_Project_11.props"
+      }
+    }
   },
   "include": [
     {
       "Agent": {
-          "Windows2019": {
-              "OSVmImage": "MMS2019",
-              "Pool": "azsdk-pool-mms-win-2019-general",
-              "TestTargetFramework": "netcoreapp3.1"
-          }
+        "Windows2019": {
+          "OSVmImage": "MMS2019",
+          "Pool": "azsdk-pool-mms-win-2019-general",
+          "TestTargetFramework": "netcoreapp3.1"
+        }
       },
       "TestMode": {
-          "netcoreapp31_Coverage_Record": {
-              "SupportsRecording": true,
-              "CollectCoverage": true
-          }
+        "netcoreapp31_Coverage_Record": {
+          "SupportsRecording": true,
+          "CollectCoverage": true
+        }
+      },
+      "OverrideFiles": {
+        "DependencyGroupoutputFolder/12": {
+          "ServiceDirectories": [
+            "securityinsights\\Azure.ResourceManager.SecurityInsights",
+            "servicebus\\Azure.ResourceManager.ServiceBus",
+            "servicefabricmanagedclusters\\Azure.ResourceManager.ServiceFabricManagedClusters",
+            "servicefabric\\Azure.ResourceManager.ServiceFabric",
+            "servicelinker\\Azure.ResourceManager.ServiceLinker",
+            "sqlmanagement\\Azure.ResourceManager.Sql",
+            "sqlvirtualmachine\\Azure.ResourceManager.SqlVirtualMachine",
+            "storagecache\\Azure.ResourceManager.StorageCache",
+            "storagepool\\Azure.ResourceManager.StoragePool",
+            "storagesync\\Azure.ResourceManager.StorageSync",
+            "storage\\Azure.ResourceManager.Storage",
+            "streamanalytics\\Azure.ResourceManager.StreamAnalytics",
+            "subscription\\Azure.ResourceManager.Subscription",
+            "support\\Azure.ResourceManager.Support",
+            "trafficmanager\\Azure.ResourceManager.TrafficManager",
+            "webpubsub\\Azure.ResourceManager.WebPubSub",
+            "websites\\Azure.ResourceManager.AppService",
+            "workloads\\Azure.ResourceManager.Workloads"
+          ],
+          "ProjectListOverrideFile": "outputFolder/ProjectListOverrideFile_Project_12.props"
+        }
       }
     }
   ]

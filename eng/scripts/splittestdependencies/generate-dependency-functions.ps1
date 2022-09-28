@@ -17,7 +17,12 @@ function Split-Project-File-To-Groups($ProjectFile, $NumberOfTestsPerJob, $Exclu
       if(!$projGroup[$groupNum]) {
         $projGroup[$groupNum] = [System.Collections.ArrayList]::new()
       }
-      $projGroup[$groupNum].Add($projects[$i]) > $null
+      $serviceDir = $projects[$i] -replace '^.*(sdk[/|\\]\w+[/|\\]Azure.ResourceManager.\w+)[/|\\].*$', '$1'
+      $projectInfo = New-Object -Typename PSCustomObject -Property @{
+        PkgPath = $projects[$i]
+        ServiceDirectory = $serviceDir
+      }
+      $projGroup[$groupNum].Add($projectInfo) > $null
       $i += 1
     }
     return ,$projGroup
@@ -33,7 +38,7 @@ function Write-Test-Dependency-Group-To-Files($ProjectFileConfigName, $ProjectGr
   }
   $null = New-Item -Path $MatrixOutputFolder -ItemType "directory" -Force 
   $numOfGroups = $ProjectGroups.Count
-  $allOutputFiles = @()
+  $projectListInfoArray = @()
   for ($i = 0; $i -lt $numOfGroups; $i++) {
     $projectFilePath = "${ProjectFileConfigName}_Project_$i.props"
     $null = New-Item -Path "$MatrixOutputFolder/$projectFilePath" -ItemType "file" -Force
@@ -42,30 +47,39 @@ function Write-Test-Dependency-Group-To-Files($ProjectFileConfigName, $ProjectGr
     $projectNode = $templateXml.SelectNodes("/Project")
     $itemGroupNode=$templateXml.CreateNode("element", "ItemGroup", "")
     $projectNode.AppendChild($itemGroupNode) > $null
+    $ServiceDirectories = @()
     foreach($pkg in $ProjectGroups[$i]) {
       $newElem = $templateXml.CreateNode("element", "ProjectReference", "")
       $newElemAttr = $templateXml.CreateAttribute("Include")
-      $newElemAttr.InnerText = $pkg
+      $newElemAttr.InnerText = $pkg.PkgPath
       $newElem.Attributes.Append($newElemAttr) > $null
       $itemGroupNode.AppendChild($newElem) > $null
+      $ServiceDirectories += $pkg.ServiceDirectory
     }
-    $null = $templateXml.Save("$MatrixOutputFolder/$projectFilePath")
-    $allOutputFiles += $projectFilePath
+    $ServiceDirectories = $ServiceDirectories | Get-Unique
+    $null = $templateXml.Save("azure-sdk-for-net/$MatrixOutputFolder/$projectFilePath")
+    $projectListInfo = New-Object -Typename PSCustomObject -Property @{
+      ProjectListFile = "$MatrixOutputFolder/$projectFilePath"
+      ServiceDirectories = $ServiceDirectories
+    }
+    $projectListInfoArray += $projectListInfo
   }
-  return ,$allOutputFiles
+  return $projectListInfoArray
 }
 
 # Add new property in the platform-matrix json and assign the values of the project file paths.
-function Write-Project-Files-To-Matrix($ProjectFiles, $MatrixJsonPath, $MatrixOutputFolder, $ProjectFileConfigName) {
+function Write-Project-Files-To-Matrix($ProjListInfos, $MatrixJsonPath, $MatrixOutputFolder, $ProjectFileConfigName, $ServiceDirectories) {
   if (!(Test-Path $MatrixOutputFolder)) {
     New-Item -Path $MatrixOutputFolder -ItemType "directory" -Force > $null
   }
   $platformJson = Get-Content $MatrixJsonPath | ConvertFrom-Json
   $overrideFiles = New-Object PSObject
-  foreach ($projectFile in $ProjectFiles) {
-    $n = $projectFile -replace "$([regex]::escape($ProjectFileConfigName))_Project_(\d+).props", '$1'
+  foreach ($projectListInfo in $ProjListInfos) {
+    $n = $projectListInfo.ProjectListFile -replace "$([regex]::escape($ProjectFileConfigName))_Project_(\d+).props", '$1'
+    # Write $ServiceDirectories into the job matrix
     $PropertyOverride = New-Object -Typename PSCustomObject -Property @{
-      $($ProjectFileConfigName) = $ProjectFile
+      $($ProjectFileConfigName) = $projectListInfo.ProjectListFile
+      ServiceDirectories = $projectListInfo.ServiceDirectories
     }
     $overrideFiles | Add-Member -Name "DependencyGroup$n" -value $PropertyOverride -MemberType NoteProperty
   }

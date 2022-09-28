@@ -27,7 +27,7 @@ parameters:
 
 jobs:
   - job:
-    displayName: "Code Generation"
+    displayName: "Analyze"
     dependsOn: ${{ parameters.DependsOn }}
     timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
     condition: and(succeededOrFailed(), ne(variables['Skip.CodeGen'], true), ne(${{ parameters.Matrix }}, '{}'), ne('${{ parameters.ProjectListOverrideFilePropertyName }}', ''))
@@ -46,7 +46,8 @@ jobs:
             Paths:
             - "/*"
             - "!SessionRecords"
-            - "/sdk/*/**/SessionRecords"
+            - "!/sdk/*/**/SessionRecords"
+            - $(ServiceDirectories)
       - task: DownloadPipelineArtifact@2
         inputs:
           artifact: DependencyTestProjectReferences
