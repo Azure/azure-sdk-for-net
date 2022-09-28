@@ -60,6 +60,11 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
+        /// The Uri for the Table account.
+        /// </summary>
+        public virtual Uri Uri { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TableServiceClient"/> using the specified <see cref="Uri" /> containing a shared access signature (SAS)
         /// token credential.
         /// </summary>
@@ -203,10 +208,14 @@ namespace Azure.Data.Tables
             TableConnectionString connString = TableConnectionString.Parse(connectionString);
             _accountName = connString._accountName;
             _endpoint = connString.TableStorageUri.PrimaryUri;
-
             options ??= TableClientOptions.DefaultOptions;
             var endpointString = connString.TableStorageUri.PrimaryUri.AbsoluteUri;
             _endpoint = new Uri(endpointString);
+            Uri = _endpoint.Query switch
+            {
+                string s when !string.IsNullOrEmpty(s) => new(_endpoint.AbsoluteUri.Replace(_endpoint.Query, string.Empty)),
+                _ => _endpoint
+            };
             _tableUriBuilder = new TableUriBuilder(_endpoint);
             var secondaryEndpoint = connString.TableStorageUri.SecondaryUri?.AbsoluteUri;
             _isCosmosEndpoint = IsPremiumEndpoint(connString.TableStorageUri.PrimaryUri);
@@ -254,6 +263,11 @@ namespace Azure.Data.Tables
 
             _tableUriBuilder = new TableUriBuilder(endpoint);
             _endpoint = endpoint;
+            Uri = _endpoint.Query switch
+            {
+                string s when !string.IsNullOrEmpty(s) => new(_endpoint.AbsoluteUri.Replace(_endpoint.Query, string.Empty)),
+                _ => _endpoint
+            };
             options ??= TableClientOptions.DefaultOptions;
             _isCosmosEndpoint = IsPremiumEndpoint(_endpoint);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
@@ -282,6 +296,11 @@ namespace Azure.Data.Tables
 
             _tableUriBuilder = new TableUriBuilder(endpoint);
             _endpoint = endpoint;
+            Uri = _endpoint.Query switch
+            {
+                string s when !string.IsNullOrEmpty(s) => new(_endpoint.AbsoluteUri.Replace(_endpoint.Query, string.Empty)),
+                _ => _endpoint
+            };
             options ??= TableClientOptions.DefaultOptions;
             _isCosmosEndpoint = IsPremiumEndpoint(_endpoint);
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();

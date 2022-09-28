@@ -71,6 +71,11 @@ namespace Azure.Data.Tables
         }
 
         /// <summary>
+        /// The Uri of the Table.
+        /// </summary>
+        public virtual Uri Uri { get; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TableClient"/> using the specified <see cref="Uri" /> which contains a SAS token.
         /// See <see cref="GetSasBuilder(TableSasPermissions, DateTimeOffset)" /> for creating a SAS token.
         /// </summary>
@@ -231,6 +236,7 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
+            Uri = new Uri(_endpoint, Name);
         }
 
         /// <summary>
@@ -282,6 +288,7 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
+            Uri = new Uri(_endpoint, Name);
         }
 
         internal TableClient(Uri endpoint, string tableName, TableSharedKeyPipelinePolicy policy, AzureSasCredential sasCredential, TableClientOptions options)
@@ -332,6 +339,7 @@ namespace Azure.Data.Tables
             _tableOperations = new TableRestClient(_diagnostics, _pipeline, _endpoint.AbsoluteUri, _version);
             _batchOperations = new TableRestClient(_diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             Name = tableName;
+            Uri = new Uri(_endpoint, Name);
         }
 
         internal TableClient(
@@ -358,6 +366,7 @@ namespace Azure.Data.Tables
             _batchOperations = new TableRestClient(diagnostics, CreateBatchPipeline(), _tableOperations.endpoint, _tableOperations.clientVersion);
             _version = version;
             Name = table;
+            Uri = new Uri(_endpoint, Name);
             _accountName = accountName;
             _diagnostics = diagnostics;
             _isCosmosEndpoint = isPremiumEndpoint;
