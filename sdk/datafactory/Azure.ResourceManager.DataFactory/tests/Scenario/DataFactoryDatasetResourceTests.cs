@@ -8,6 +8,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Storage;
+using Microsoft.Identity.Client.Extensions.Msal;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DataFactory.Tests.Scenario
@@ -18,8 +19,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         private string _linkedServiceName;
         private ResourceGroupResource _resourceGroup;
         private DataFactoryResource _dataFactory;
+        private StorageAccountResource _storageAccount;
         public DataFactoryDatasetResourceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -27,15 +29,16 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         public async Task TestSetUp()
         {
             // Create a resource group
-            string dataFactoryName = Recording.GenerateAssetName("DataFactory-");
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             _resourceGroup = await CreateResourceGroup(subscription, "DataFactory-RG-", AzureLocation.WestUS2);
             // Create a DataFactory and a LinkedService
-            _dataFactory = await CreateDataFactory(_resourceGroup, dataFactoryName);
+            _dataFactory = await CreateDataFactory(_resourceGroup);
             // Create a LinkedService
-            _accessKey = await GetStorageAccountAccessKey(_resourceGroup);
+            _storageAccount = await GetStorageAccountAsync(_resourceGroup);
+            var key = await _storageAccount.GetKeysAsync().FirstOrDefaultAsync(_ => true);
+            _accessKey = key.Value;
             _linkedServiceName = Recording.GenerateAssetName("LinkedService");
-            await CreateLinkedService(_dataFactory, _linkedServiceName, _accessKey);
+            await CreateLinkedService(_dataFactory, _linkedServiceName, _accessKey, _storageAccount.Id.Name);
         }
 
         [TearDown]
@@ -112,48 +115,6 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             await dataset.DeleteAsync(WaitUntil.Completed);
             flag = await _dataFactory.GetFactoryDatasets().ExistsAsync(datasetName);
             Assert.IsFalse(flag);
-        }
-
-        [RecordedTest]
-        public async Task UseConstantFilename()
-        {
-            string datasetName = Recording.GenerateAssetName("dataset");
-            FactoryLinkedServiceReference linkedServiceReference = new FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
-            AzureBlobDataset abDataset = new AzureBlobDataset(linkedServiceReference);
-            abDataset.FileName = BinaryData.FromObjectAsJson("foo");
-            FactoryDatasetData data = new FactoryDatasetData(abDataset);
-            var dataset = (await _dataFactory.GetFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data)).Value;
-            Assert.IsNotNull(dataset);
-            Assert.AreEqual(datasetName, dataset.Data.Name);
-        }
-
-        [RecordedTest]
-        public async Task UseComplexConstantFilename()
-        {
-            string datasetName = Recording.GenerateAssetName("dataset");
-            FactoryLinkedServiceReference linkedServiceReference = new FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
-            AzureBlobDataset abDataset = new AzureBlobDataset(linkedServiceReference);
-            abDataset.FileName = BinaryData.FromObjectAsJson(new { type="string", value="foo" });
-            FactoryDatasetData data = new FactoryDatasetData(abDataset);
-            var dataset = (await _dataFactory.GetFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data)).Value;
-            Assert.IsNotNull(dataset);
-            Assert.AreEqual(datasetName, dataset.Data.Name);
-        }
-
-        [RecordedTest]
-        public async Task UseExpressionFilename()
-        {
-            string datasetName = Recording.GenerateAssetName("dataset");
-            FactoryLinkedServiceReference linkedServiceReference = new FactoryLinkedServiceReference(FactoryLinkedServiceReferenceType.LinkedServiceReference, _linkedServiceName);
-            AzureBlobDataset abDataset = new AzureBlobDataset(linkedServiceReference);
-            abDataset.FileName = BinaryData.FromObjectAsJson(new { type = "expression", value = "@dataset().MyFileName" });
-            abDataset.Format = new DatasetStorageFormat();
-            abDataset.Format.DatasetStorageFormatType = "TextFormat";
-            abDataset.Parameters.Add("MyFileName", new EntityParameterSpecification(EntityParameterType.String));
-            FactoryDatasetData data = new FactoryDatasetData(abDataset);
-            var dataset = (await _dataFactory.GetFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data)).Value;
-            Assert.IsNotNull(dataset);
-            Assert.AreEqual(datasetName, dataset.Data.Name);
         }
     }
 }

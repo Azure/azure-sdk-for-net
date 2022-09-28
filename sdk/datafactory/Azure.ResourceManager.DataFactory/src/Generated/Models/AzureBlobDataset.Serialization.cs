@@ -79,11 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(FolderPath);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(FolderPath.ToString()).RootElement);
-#endif
+                writer.WriteObjectValue(FolderPath);
             }
             if (Optional.IsDefined(TableRootLocation))
             {
@@ -154,7 +150,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
             Optional<DatasetFolder> folder = default;
-            Optional<BinaryData> folderPath = default;
+            Optional<DataFactoryExpression<string>> folderPath = default;
             Optional<BinaryData> tableRootLocation = default;
             Optional<BinaryData> fileName = default;
             Optional<BinaryData> modifiedDatetimeStart = default;
@@ -256,7 +252,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            folderPath = BinaryData.FromString(property0.Value.GetRawText());
+                            folderPath = DataFactoryExpression<string>.DeserializeActivityDependency(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("tableRootLocation"))
@@ -273,7 +269,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                fileName = null;
                                 continue;
                             }
                             fileName = BinaryData.FromString(property0.Value.GetRawText());

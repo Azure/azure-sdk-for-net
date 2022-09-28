@@ -2,5 +2,14 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.DataFactory.csproj" />
     <ProjectReference Include="..\..\..\storage\Azure.ResourceManager.Storage\src\Azure.ResourceManager.Storage.csproj" />
+    <ProjectReference Include="..\..\..\storage\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\PipelineRunTests\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\PipelineRunTests\emp.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>

@@ -1,6 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+//string vs expression that evaluates to a string
+//array vs expression
+//boolean vs expression that evaluates to a bool
+//integer vs expression
+//object vs expression
+
+//securestring??
+//float??
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns></returns>
         public static DataFactoryExpression<T> FromValue<T>(T value)
         {
-            return new DataFactoryExpression<T>(typeof(T).Name, value);
+            return new DataFactoryExpression<T>(value);
         }
     }
 }

@@ -3,7 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Text;
+using System.Text.Json;
+using Azure.Core;
+using Azure.ResourceManager.DataFactory.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
@@ -12,39 +17,135 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     /// <typeparam name="T"></typeparam>
 #pragma warning disable SA1649 // File name should match first type name
-    public class DataFactoryExpression<T>
+    public class DataFactoryExpression<T> : IUtf8JsonSerializable
 #pragma warning restore SA1649 // File name should match first type name
     {
         /// <summary>
         /// .
         /// </summary>
-        public string Type { get; }
+        internal string Type { get; }
 
         /// <summary>
         /// .
         /// </summary>
-        public T Value { get; }
+        internal bool HasValue { get; }
 
         /// <summary>
         /// .
         /// </summary>
-        public string Expression { get; }
+        internal T Value { get; }
+
+        /// <summary>
+        /// .
+        /// </summary>
+        internal string Expression { get; }
 
         /// <summary>
         /// .
         /// </summary>
         protected DataFactoryExpression() { }
 
-        internal DataFactoryExpression(string type, T value)
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="value"></param>
+        public DataFactoryExpression(T value)
         {
-            Type = type;
             Value = value;
+            HasValue = true;
+            Expression = value.ToString();
         }
 
-        internal DataFactoryExpression(string expression)
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <param name="expression"></param>
+        public DataFactoryExpression(string expression)
         {
-            Type = "Expression";
-            Expression = expression;
+            if (!expression.Contains("@"))
+            {
+                Value = (T)(object)expression;
+                HasValue = true;
+                Expression = expression;
+            }
+            else
+            {
+                Type = "Expression";
+                Expression = expression;
+            }
+        }
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString()
+        {
+            if (HasValue)
+                return Value.ToString();
+            return Expression;
+        }
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <returns></returns>
+        public string GetString() => ToString();
+
+        /// <summary>
+        /// .
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public bool TryGetValue(out T value)
+        {
+            value = default;
+            if (HasValue)
+            {
+                value = Value;
+                return true;
+            }
+            return false;
+        }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            if (HasValue)
+            {
+                writer.WriteObjectValue(Value);
+            }
+            else
+            {
+                writer.WriteStartObject();
+                writer.WritePropertyName("type");
+                writer.WriteStringValue(Type);
+                writer.WritePropertyName("value");
+                writer.WriteStringValue(Expression);
+                writer.WriteEndObject();
+            }
+        }
+
+        internal static DataFactoryExpression<T> DeserializeActivityDependency(JsonElement element)
+        {
+            string expression = default;
+
+            if (element.ValueKind == JsonValueKind.Object)
+            {
+                foreach (var property in element.EnumerateObject())
+                {
+                    if (property.NameEquals("value"))
+                    {
+                        expression = property.Value.GetString();
+                        continue;
+                    }
+                }
+                return new DataFactoryExpression<T>(expression);
+            }
+            else
+            {
+                return new DataFactoryExpression<T>((T)element.GetObject());
+            }
         }
     }
 }
