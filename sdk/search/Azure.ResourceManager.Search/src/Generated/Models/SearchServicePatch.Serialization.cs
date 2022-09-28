@@ -80,18 +80,18 @@ namespace Azure.ResourceManager.Search.Models
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            Core.ResourceType type = default;
+            ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<int> replicaCount = default;
             Optional<int> partitionCount = default;
-            Optional<HostingMode> hostingMode = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<SearchServiceHostingMode> hostingMode = default;
+            Optional<SearchServicePublicNetworkAccess> publicNetworkAccess = default;
             Optional<SearchServiceStatus> status = default;
             Optional<string> statusDetails = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<SearchServiceProvisioningState> provisioningState = default;
             Optional<NetworkRuleSet> networkRuleSet = default;
             Optional<IReadOnlyList<SearchPrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<IReadOnlyList<SharedPrivateLinkResourceData>> sharedPrivateLinkResources = default;
+            Optional<IReadOnlyList<SharedSearchServicePrivateLinkResourceData>> sharedPrivateLinkResources = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = new Core.ResourceType(property.Value.GetString());
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("systemData"))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Search.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostingMode = property0.Value.GetString().ToHostingMode();
+                            hostingMode = property0.Value.GetString().ToSearchServiceHostingMode();
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"))
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Search.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = property0.Value.GetString().ToPublicNetworkAccess();
+                            publicNetworkAccess = property0.Value.GetString().ToSearchServicePublicNetworkAccess();
                             continue;
                         }
                         if (property0.NameEquals("status"))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Search.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToProvisioningState();
+                            provisioningState = property0.Value.GetString().ToSearchServiceProvisioningState();
                             continue;
                         }
                         if (property0.NameEquals("networkRuleSet"))
@@ -265,10 +265,10 @@ namespace Azure.ResourceManager.Search.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<SharedPrivateLinkResourceData> array = new List<SharedPrivateLinkResourceData>();
+                            List<SharedSearchServicePrivateLinkResourceData> array = new List<SharedSearchServicePrivateLinkResourceData>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SharedPrivateLinkResourceData.DeserializeSharedPrivateLinkResourceData(item));
+                                array.Add(SharedSearchServicePrivateLinkResourceData.DeserializeSharedSearchServicePrivateLinkResourceData(item));
                             }
                             sharedPrivateLinkResources = array;
                             continue;

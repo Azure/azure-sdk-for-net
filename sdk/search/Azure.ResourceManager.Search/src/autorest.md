@@ -16,6 +16,30 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+rename-mapping:
+  AdminKeyKind: SearchServiceAdminKeyKind
+  AdminKeyResult: SearchServiceAdminKeyResult
+  CheckNameAvailabilityInput: SearchServiceNameAvailabilityContent
+  CheckNameAvailabilityOutput: SearchServiceNameAvailabilityResult
+  HostingMode: SearchServiceHostingMode
+  IpRule: SearchServiceIPRule
+  PrivateEndpointConnectionProperties: SearchServicePrivateEndpointConnectionProperties
+  PrivateEndpointConnectionPropertiesPrivateLinkServiceConnectionState: SearchServicePrivateLinkServiceConnectionState
+  PrivateLinkServiceConnectionStatus: SearchServicePrivateLinkServiceConnectionStatus
+  ProvisioningState: SearchServiceProvisioningState
+  PublicNetworkAccess: SearchServicePublicNetworkAccess
+  QueryKey: SearchServiceQueryKey
+  ResourceType: SearchServiceResourceType
+  ShareablePrivateLinkResourceProperties: ShareableSearchServicePrivateLinkResourceProperties
+  ShareablePrivateLinkResourceType: ShareableSearchServicePrivateLinkResourceType
+  SharedPrivateLinkResource: SharedSearchServicePrivateLinkResource
+  SharedPrivateLinkResourceProperties: SharedSearchServicePrivateLinkResourceProperties
+  SharedPrivateLinkResourceProperties.privateLinkResourceId: -|arm-id
+  SharedPrivateLinkResourceProperties.resourceRegion: -|azure-location
+  SharedPrivateLinkResourceProvisioningState: SharedSearchServicePrivateLinkResourceProvisioningState
+  SharedPrivateLinkResourceStatus: SharedSearchServicePrivateLinkResourceStatus
+  UnavailableNameReason: SearchServiceUnavailableNameReason
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -45,5 +69,8 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+override-operation-name:
+  Services_CheckNameAvailability: CheckSearchServiceNameAvailability
 
 ```
