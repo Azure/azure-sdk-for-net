@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of MonitoredResourceListResponse. </summary>
         internal MonitoredResourceListResponse()
         {
-            Value = new ChangeTrackingList<MonitoredResourceDetails>();
+            Value = new ChangeTrackingList<DynatraceMonitoredResourceDetails>();
         }
 
         /// <summary> Initializes a new instance of MonitoredResourceListResponse. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal MonitoredResourceListResponse(IReadOnlyList<MonitoredResourceDetails> value, string nextLink)
+        internal MonitoredResourceListResponse(IReadOnlyList<DynatraceMonitoredResourceDetails> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on this page. </summary>
-        public IReadOnlyList<MonitoredResourceDetails> Value { get; }
+        public IReadOnlyList<DynatraceMonitoredResourceDetails> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }
     }

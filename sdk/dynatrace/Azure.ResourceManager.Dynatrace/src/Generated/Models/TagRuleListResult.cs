@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of TagRuleListResult. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal TagRuleListResult(IEnumerable<TagRuleData> value)
+        internal TagRuleListResult(IEnumerable<DynatraceTagRuleData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of TagRuleListResult. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal TagRuleListResult(IReadOnlyList<TagRuleData> value, string nextLink)
+        internal TagRuleListResult(IReadOnlyList<DynatraceTagRuleData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on this page. </summary>
-        public IReadOnlyList<TagRuleData> Value { get; }
+        public IReadOnlyList<DynatraceTagRuleData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }
     }

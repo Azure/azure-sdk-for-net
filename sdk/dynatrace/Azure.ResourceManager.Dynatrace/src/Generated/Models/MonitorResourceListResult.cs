@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of MonitorResourceListResult. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MonitorResourceListResult(IEnumerable<MonitorResourceData> value)
+        internal MonitorResourceListResult(IEnumerable<DynatraceMonitorData> value)
         {
             if (value == null)
             {
@@ -31,14 +31,14 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of MonitorResourceListResult. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal MonitorResourceListResult(IReadOnlyList<MonitorResourceData> value, string nextLink)
+        internal MonitorResourceListResult(IReadOnlyList<DynatraceMonitorData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on this page. </summary>
-        public IReadOnlyList<MonitorResourceData> Value { get; }
+        public IReadOnlyList<DynatraceMonitorData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }
     }

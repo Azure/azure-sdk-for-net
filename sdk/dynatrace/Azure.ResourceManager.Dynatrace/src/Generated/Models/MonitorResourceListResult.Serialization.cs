@@ -16,16 +16,16 @@ namespace Azure.ResourceManager.Dynatrace.Models
     {
         internal static MonitorResourceListResult DeserializeMonitorResourceListResult(JsonElement element)
         {
-            IReadOnlyList<MonitorResourceData> value = default;
+            IReadOnlyList<DynatraceMonitorData> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<MonitorResourceData> array = new List<MonitorResourceData>();
+                    List<DynatraceMonitorData> array = new List<DynatraceMonitorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MonitorResourceData.DeserializeMonitorResourceData(item));
+                        array.Add(DynatraceMonitorData.DeserializeDynatraceMonitorData(item));
                     }
                     value = array;
                     continue;

@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of AppServiceListResponse. </summary>
         internal AppServiceListResponse()
         {
-            Value = new ChangeTrackingList<AppServiceInfo>();
+            Value = new ChangeTrackingList<DynatraceOneAgentEnabledAppServiceInfo>();
         }
 
         /// <summary> Initializes a new instance of AppServiceListResponse. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal AppServiceListResponse(IReadOnlyList<AppServiceInfo> value, string nextLink)
+        internal AppServiceListResponse(IReadOnlyList<DynatraceOneAgentEnabledAppServiceInfo> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on this page. </summary>
-        public IReadOnlyList<AppServiceInfo> Value { get; }
+        public IReadOnlyList<DynatraceOneAgentEnabledAppServiceInfo> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }
     }

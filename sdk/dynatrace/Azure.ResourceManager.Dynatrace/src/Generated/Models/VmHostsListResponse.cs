@@ -16,20 +16,20 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> Initializes a new instance of VmHostsListResponse. </summary>
         internal VmHostsListResponse()
         {
-            Value = new ChangeTrackingList<VmInfo>();
+            Value = new ChangeTrackingList<DynatraceMonitorVmInfo>();
         }
 
         /// <summary> Initializes a new instance of VmHostsListResponse. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal VmHostsListResponse(IReadOnlyList<VmInfo> value, string nextLink)
+        internal VmHostsListResponse(IReadOnlyList<DynatraceMonitorVmInfo> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The items on this page. </summary>
-        public IReadOnlyList<VmInfo> Value { get; }
+        public IReadOnlyList<DynatraceMonitorVmInfo> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public string NextLink { get; }
     }
