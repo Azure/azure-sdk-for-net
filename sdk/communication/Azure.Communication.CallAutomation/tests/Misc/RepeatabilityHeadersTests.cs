@@ -19,26 +19,13 @@ namespace Azure.Communication.CallAutomation.Tests.Misc
         }
 
         [Test]
-        public void RepeatablityHeaders_IsValid_BothHeadersAreEmpty()
-        {
-            // arrange
-            var headers = new RepeatabilityHeaders {
-                RepeatabilityRequestId = Guid.Empty,
-                RepeatabilityFirstSent = ""
-            };
-
-            // act & assert
-            Assert.IsTrue(headers.IsValidRepeatabilityHeaders());
-        }
-
-        [Test]
         public void RepeatablityHeaders_IsValid_BothHeadersAreSet()
         {
             // arrange
             var headers = new RepeatabilityHeaders
             {
                 RepeatabilityRequestId = Guid.NewGuid(),
-                RepeatabilityFirstSent = DateTimeOffset.Now.ToString("R")
+                RepeatabilityFirstSent = DateTimeOffset.Now
             };
 
             // act & assert
@@ -46,14 +33,28 @@ namespace Azure.Communication.CallAutomation.Tests.Misc
         }
 
         [Test]
-        public void RepeatablityHeaders_IsInvalid_RequestIdIsEmptyAndFirstSentIsNot()
+        public void RepeatablityHeaders_IsInvalid_RepeatabilityRequestIdIsDefaultValue()
         {
             // arrange
             var headers = new RepeatabilityHeaders
             {
                 RepeatabilityRequestId = Guid.Empty,
-                RepeatabilityFirstSent = DateTimeOffset.Now.ToString("R")
-        };
+                RepeatabilityFirstSent = DateTimeOffset.Now
+            };
+
+            // act & assert
+            Assert.IsFalse(headers.IsValidRepeatabilityHeaders());
+        }
+
+        [Test]
+        public void RepeatablityHeaders_IsInvalid_RepeatabilityFirstSentIsDefaultValue()
+        {
+            // arrange
+            var headers = new RepeatabilityHeaders
+            {
+                RepeatabilityRequestId = Guid.NewGuid(),
+                RepeatabilityFirstSent = new DateTimeOffset()
+            };
 
             // act & assert
             Assert.IsFalse(headers.IsValidRepeatabilityHeaders());
@@ -78,7 +79,7 @@ namespace Azure.Communication.CallAutomation.Tests.Misc
             // arrange
             var headers = new RepeatabilityHeaders
             {
-                RepeatabilityFirstSent = DateTimeOffset.Now.ToString("R")
+                RepeatabilityFirstSent = DateTimeOffset.Now
             };
 
             // act & assert
