@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
                             ForwardingProtocol = FrontDoorForwardingProtocol.MatchRequest,
                             BackendPool = new Models.SubResource()
                             {
-                                Id = subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/backendPools/backendPool1"
+                                Id = subid + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.Network/Frontdoors/" + frontDoorName + "/BackendPools/backendPool1"
                             }
                         }
                     }

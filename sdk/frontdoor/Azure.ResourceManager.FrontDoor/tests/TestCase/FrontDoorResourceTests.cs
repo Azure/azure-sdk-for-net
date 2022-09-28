@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
         public async Task FrontDoorResourceApiTests()
         {
             //1.Get
-            var doorName = Recording.GenerateAssetName("testaccount");
+            var doorName = Recording.GenerateAssetName("testfrontdoor");
             var door1 = await CreateAccountResourceAsync(doorName);
             FrontDoorResource door2 = await door1.GetAsync();
 
