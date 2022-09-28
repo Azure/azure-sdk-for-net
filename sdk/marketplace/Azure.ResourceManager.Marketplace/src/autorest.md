@@ -87,6 +87,9 @@ override-operation-name:
   PrivateStoreCollectionOffer_Post: Delete
   PrivateStore_FetchAllSubscriptionsInTenant: FetchAllMarketplaceSubscriptions
   PrivateStore_QueryRequestApproval: QueryApprovalRequest
+  PrivateStore_BillingAccounts: FetchBillingAccounts
+  PrivateStore_BulkCollectionsAction: PerformActionOnBulkCollections
+  PrivateStore_CollectionsToSubscriptionsMapping: FetchCollectionsToSubscriptionsMapping
 
 rename-rules:
   CPU: Cpu
@@ -124,7 +127,7 @@ directive:
       $.OfferProperties.properties.createdAt['x-ms-client-name'] = 'CreatedOn';
       $.OfferProperties.properties.modifiedAt['format'] = 'date-time';
       $.OfferProperties.properties.modifiedAt['x-ms-client-name'] = 'ModifiedOn';
-      $.OfferProperties.properties.updateSuppressedDueIdempotence['x-ms-client-name'] = 'IsUpdateSuppressedDueIdempotence';
+      $.OfferProperties.properties.updateSuppressedDueIdempotence['x-ms-client-name'] = 'IsUpdateSuppressedDueToIdempotence';
       $.OfferProperties.properties.privateStoreId['format'] = 'uuid';
       $.OfferProperties.properties.iconFileUris.additionalProperties['format'] = 'url';
       $.QueryRequestApprovalProperties.properties.properties['x-ms-client-flatten'] = true;
