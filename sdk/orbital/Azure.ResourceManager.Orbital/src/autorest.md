@@ -42,7 +42,7 @@ rename-mapping:
   SpacecraftListResult: OrbitalSpacecraftListResult
   TagsObject: OrbitalSpacecraftTags
   AvailableContacts: OrbitalSpacecraftAvailableContact
-  ContactParameters: OrbitalSpacecraftContactContent
+  ContactParameters: OrbitalSpacecraftAvailableContactsContent
   AvailableContactsListResult: OrbitalSpacecraftAvailableContactListResult
 
 format-by-name-rules:

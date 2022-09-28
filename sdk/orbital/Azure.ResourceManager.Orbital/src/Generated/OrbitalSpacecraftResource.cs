@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="content"> The parameters to provide for the contacts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<OrbitalSpacecraftAvailableContactListResult>> GetAllAvailableContactsAsync(WaitUntil waitUntil, OrbitalSpacecraftContactContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<OrbitalSpacecraftAvailableContactListResult>> GetAllAvailableContactsAsync(WaitUntil waitUntil, OrbitalSpacecraftAvailableContactsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Orbital
         /// <param name="content"> The parameters to provide for the contacts. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<OrbitalSpacecraftAvailableContactListResult> GetAllAvailableContacts(WaitUntil waitUntil, OrbitalSpacecraftContactContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<OrbitalSpacecraftAvailableContactListResult> GetAllAvailableContacts(WaitUntil waitUntil, OrbitalSpacecraftAvailableContactsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 

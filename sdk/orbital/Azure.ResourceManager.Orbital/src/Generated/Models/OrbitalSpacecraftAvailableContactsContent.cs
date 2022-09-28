@@ -12,15 +12,15 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Orbital.Models
 {
     /// <summary> Parameters that define the contact resource. </summary>
-    public partial class OrbitalSpacecraftContactContent
+    public partial class OrbitalSpacecraftAvailableContactsContent
     {
-        /// <summary> Initializes a new instance of OrbitalSpacecraftContactContent. </summary>
+        /// <summary> Initializes a new instance of OrbitalSpacecraftAvailableContactsContent. </summary>
         /// <param name="contactProfile"> The reference to the contact profile resource. </param>
         /// <param name="groundStationName"> Name of Azure Ground Station. </param>
         /// <param name="startOn"> Start time of a contact (ISO 8601 UTC standard). </param>
         /// <param name="endOn"> End time of a contact (ISO 8601 UTC standard). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactProfile"/> or <paramref name="groundStationName"/> is null. </exception>
-        public OrbitalSpacecraftContactContent(WritableSubResource contactProfile, string groundStationName, DateTimeOffset startOn, DateTimeOffset endOn)
+        public OrbitalSpacecraftAvailableContactsContent(WritableSubResource contactProfile, string groundStationName, DateTimeOffset startOn, DateTimeOffset endOn)
         {
             if (contactProfile == null)
             {
