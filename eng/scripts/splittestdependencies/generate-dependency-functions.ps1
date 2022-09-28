@@ -57,7 +57,7 @@ function Write-Test-Dependency-Group-To-Files($ProjectFileConfigName, $ProjectGr
       $ServiceDirectories += $pkg.ServiceDirectory
     }
     $ServiceDirectories = $ServiceDirectories | Get-Unique
-    $null = $templateXml.Save("azure-sdk-for-net/$MatrixOutputFolder/$projectFilePath")
+    $null = $templateXml.Save("$MatrixOutputFolder/$projectFilePath")
     $projectListInfo = New-Object -Typename PSCustomObject -Property @{
       ProjectListFile = "$MatrixOutputFolder/$projectFilePath"
       ServiceDirectories = $ServiceDirectories
