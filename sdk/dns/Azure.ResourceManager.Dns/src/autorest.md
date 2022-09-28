@@ -71,11 +71,11 @@ rename-rules:
   CaaRecord: CaaRecordInfo
 
 override-operation-name:
-  RecordSets_ListByDnsZone: GetRecords
-  RecordSets_ListAllByDnsZone: GetAllRecords
+  RecordSets_ListByDnsZone: GetRecordsInDnsZone # Change back to GetRecords once the polymorphic resource change is merged.
+  RecordSets_ListAllByDnsZone: GetAllRecordsInDnsZone # Change back to GetAllRecords once the polymorphic resource change is merged.
   DnsResourceReference_GetByTargetResources: GetDnsResourceReferencesByTargetResources
   Zones_List: GetDnsZones
-  
+
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/A: ARecord
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/AAAA: AaaaRecord
