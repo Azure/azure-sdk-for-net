@@ -7,6 +7,11 @@ using Azure.Core.TestFramework;
 #region Snippet:ConversationAnalysisClient_Namespaces
 using Azure.Core;
 using Azure.AI.Language.Conversations;
+#endregion
+#region Snippet:ConversationAuthoringClient_Namespace
+using Azure.AI.Language.Conversations.Authoring;
+#endregion
+#region Snippet:Conversation_Identity_Namespace
 using Azure.Identity;
 #endregion
 
