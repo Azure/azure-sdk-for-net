@@ -10,6 +10,7 @@ using Azure.Communication.CallAutomation.Tests.Infrastructure;
 using Azure.Communication.Identity;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Castle.Core.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.Amqp.Framing;
 using NUnit.Framework;
@@ -24,7 +25,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
         }
 
         [RecordedTest]
-        public async Task RemoveAUserFromGroupCallTest()
+        public async Task RemoveAUserCallTest()
         {
             /* Tests: CreateCall, AnswerCall, RemoveParticipants, ParticipantsUpdated
              * Test case: ACS to ACS call
@@ -36,6 +37,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             */
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
+            string? callConnectionId = null;
 
             try
             {
@@ -48,7 +50,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
                 // create call and assert response
                 CreateCallResult response = await client.CreateCallAsync(new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"))).ConfigureAwait(false);
-                string callConnectionId = response.CallConnectionProperties.CallConnectionId;
+                callConnectionId = response.CallConnectionProperties.CallConnectionId;
                 Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
 
                 // wait for incomingcall context
@@ -74,7 +76,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 Assert.AreEqual(CallConnectionState.Connected, properties.Value.CallConnectionState);
 
                 // try RemoveParticipants
-                string operationContext1 = Guid.NewGuid().ToString();
+                string operationContext1 = "MyTestOperationcontext";
                 Response<RemoveParticipantsResult> removePartResponse = await response.CallConnection.RemoveParticipantsAsync(new CommunicationIdentifier[] { target }, operationContext1);
                 Assert.IsTrue(!removePartResponse.GetRawResponse().IsError);
                 Assert.AreEqual(operationContext1, removePartResponse.Value.OperationContext);
@@ -84,10 +86,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                 Assert.IsNotNull(disconnectedEvent);
                 Assert.IsTrue(disconnectedEvent is CallDisconnected);
                 Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+                callConnectionId = null;
             }
             catch (Exception ex)
             {
                 Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                if (!string.IsNullOrEmpty(callConnectionId))
+                {
+                    await client.GetCallConnection(callConnectionId).HangUpAsync(true).ConfigureAwait(false);
+                }
             }
         }
     }
