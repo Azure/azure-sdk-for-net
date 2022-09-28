@@ -30,7 +30,6 @@
 
 * Update OpenTelemetry dependencies ([#31065](https://github.com/Azure/azure-sdk-for-net/pull/31065))
   - OpenTelemetry v1.3.1
-  - OpenTelemetry.Exporter.InMemory v1.3.1
   - OpenTelemetry.Extensions.PersistentStorage v1.0.0-beta.1
 
 ## 1.0.0-beta.3 (2021-10-04)
