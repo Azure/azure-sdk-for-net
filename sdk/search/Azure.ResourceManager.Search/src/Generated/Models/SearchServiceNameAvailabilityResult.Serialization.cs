@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Search.Models
         internal static SearchServiceNameAvailabilityResult DeserializeSearchServiceNameAvailabilityResult(JsonElement element)
         {
             Optional<bool> nameAvailable = default;
-            Optional<SearchServiceUnavailableNameReason> reason = default;
+            Optional<SearchServiceNameUnavailableReason> reason = default;
             Optional<string> message = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Search.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    reason = new SearchServiceUnavailableNameReason(property.Value.GetString());
+                    reason = new SearchServiceNameUnavailableReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("message"))

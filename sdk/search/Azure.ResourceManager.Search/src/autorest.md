@@ -38,7 +38,7 @@ rename-mapping:
   SharedPrivateLinkResourceProperties.resourceRegion: -|azure-location
   SharedPrivateLinkResourceProvisioningState: SharedSearchServicePrivateLinkResourceProvisioningState
   SharedPrivateLinkResourceStatus: SharedSearchServicePrivateLinkResourceStatus
-  UnavailableNameReason: SearchServiceUnavailableNameReason
+  UnavailableNameReason: SearchServiceNameUnavailableReason
 
 format-by-name-rules:
   'tenantId': 'uuid'

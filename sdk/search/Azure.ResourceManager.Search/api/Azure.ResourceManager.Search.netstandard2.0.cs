@@ -203,7 +203,25 @@ namespace Azure.ResourceManager.Search.Models
         internal SearchServiceNameAvailabilityResult() { }
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
-        public Azure.ResourceManager.Search.Models.SearchServiceUnavailableNameReason? Reason { get { throw null; } }
+        public Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason? Reason { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SearchServiceNameUnavailableReason : System.IEquatable<Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SearchServiceNameUnavailableReason(string value) { throw null; }
+        public static Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason AlreadyExists { get { throw null; } }
+        public static Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason Invalid { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason left, Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason left, Azure.ResourceManager.Search.Models.SearchServiceNameUnavailableReason right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class SearchServicePatch : Azure.ResourceManager.Models.TrackedResourceData
     {
@@ -283,24 +301,6 @@ namespace Azure.ResourceManager.Search.Models
         Degraded = 3,
         Disabled = 4,
         Error = 5,
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SearchServiceUnavailableNameReason : System.IEquatable<Azure.ResourceManager.Search.Models.SearchServiceUnavailableNameReason>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SearchServiceUnavailableNameReason(string value) { throw null; }
-        public static Azure.ResourceManager.Search.Models.SearchServiceUnavailableNameReason AlreadyExists { get { throw null; } }
-        public static Azure.ResourceManager.Search.Models.SearchServiceUnavailableNameReason Invalid { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Search.Models.SearchServiceUnavailableNameReason other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Search.Models.SearchServiceUnavailableNameReason left, Azure.ResourceManager.Search.Models.SearchServiceUnavailableNameReason right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Search.Models.SearchServiceUnavailableNameReason (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Search.Models.SearchServiceUnavailableNameReason left, Azure.ResourceManager.Search.Models.SearchServiceUnavailableNameReason right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public enum SearchSkuName
     {

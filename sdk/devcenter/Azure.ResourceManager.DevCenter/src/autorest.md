@@ -16,8 +16,6 @@ modelerfour:
   flatten-payloads: false
 tag: package-2022-08-01-preview
 
- 
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
