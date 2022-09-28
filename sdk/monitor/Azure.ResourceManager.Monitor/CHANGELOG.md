@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,20 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-09-26)
+
+This is the first stable release of the Monitor Management library.
+
+### Breaking Changes
+
+- The type of `MonitorScaleCapacity.minimum`, `MonitorScaleCapacity.maximum` and `MonitorScaleCapacity.default` were changed to `integer`.
+- The type of `RecurrentSchedule.Days` was changed to `MonitorDayOfWeek`.
+
+### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.3 (2022-08-29)
 

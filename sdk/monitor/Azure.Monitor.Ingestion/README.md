@@ -152,7 +152,7 @@ TokenCredential credential = new DefaultAzureCredential();
 
 LogsQueryClient logsQueryClient = new(credential);
 LogsBatchQuery batch = new();
-string query = tableName + " | count;";
+string query = tableName + " | Count;";
 string countQueryId = batch.AddWorkspaceQuery(
     workspaceId,
     query,
@@ -160,7 +160,7 @@ string countQueryId = batch.AddWorkspaceQuery(
 
 Response<LogsBatchQueryResultCollection> queryResponse = logsQueryClient.QueryBatch(batch);
 
-Console.WriteLine("Table entry count: " + queryResponse.Value.GetResult<int>(countQueryId).Single());
+Console.WriteLine("Table entry Count: " + queryResponse.Value.GetResult<int>(countQueryId).Single());
 ```
 
 ## Troubleshooting
