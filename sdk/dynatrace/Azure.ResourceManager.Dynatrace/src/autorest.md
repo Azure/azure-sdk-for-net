@@ -53,7 +53,7 @@ rename-mapping:
   ProvisioningState: DynatraceProvisioningState
   SingleSignOnStates: DynatraceSingleSignOnState
   MonitorResource: DynatraceMonitor
-  AccountInfoSecure: DynatraceAccountCredentials
+  AccountInfoSecure: DynatraceAccountCredentialsInfo
   AppServiceInfo: DynatraceOneAgentEnabledAppServiceInfo
   AppServiceInfo.resourceId: -|arm-id
   VMInfo: DynatraceMonitorVmInfo
@@ -78,7 +78,7 @@ rename-mapping:
   TagAction: DynatraceMonitorResourceTagAction
   AccountInfo: DynatraceAccountInfo
   AutoUpdateSetting: DynatraceOneAgentAutoUpdateSetting
-  AvailabilityState: DynatraceOneAgentAvailabilityStatus
+  AvailabilityState: DynatraceOneAgentAvailabilityState
   LogModule: DynatraceLogModuleState
   MonitoringType: DynatraceOneAgentMonitoringType
   UpdateStatus: DynatraceOneAgentUpdateStatus

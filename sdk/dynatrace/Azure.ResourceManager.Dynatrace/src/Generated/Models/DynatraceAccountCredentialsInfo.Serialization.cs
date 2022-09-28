@@ -10,9 +10,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceAccountCredentials
+    public partial class DynatraceAccountCredentialsInfo
     {
-        internal static DynatraceAccountCredentials DeserializeDynatraceAccountCredentials(JsonElement element)
+        internal static DynatraceAccountCredentialsInfo DeserializeDynatraceAccountCredentialsInfo(JsonElement element)
         {
             Optional<string> accountId = default;
             Optional<string> apiKey = default;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     continue;
                 }
             }
-            return new DynatraceAccountCredentials(accountId.Value, apiKey.Value, regionId.Value);
+            return new DynatraceAccountCredentialsInfo(accountId.Value, apiKey.Value, regionId.Value);
         }
     }
 }

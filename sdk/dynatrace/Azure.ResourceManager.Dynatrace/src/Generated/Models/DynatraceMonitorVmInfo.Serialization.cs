@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<DynatraceOneAgentMonitoringType> monitoringType = default;
             Optional<DynatraceOneAgentAutoUpdateSetting> autoUpdateSetting = default;
             Optional<DynatraceOneAgentUpdateStatus> updateStatus = default;
-            Optional<DynatraceOneAgentAvailabilityStatus> availabilityState = default;
+            Optional<DynatraceOneAgentAvailabilityState> availabilityState = default;
             Optional<DynatraceLogModuleState> logModule = default;
             Optional<string> hostGroup = default;
             Optional<string> hostName = default;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    availabilityState = new DynatraceOneAgentAvailabilityStatus(property.Value.GetString());
+                    availabilityState = new DynatraceOneAgentAvailabilityState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("logModule"))

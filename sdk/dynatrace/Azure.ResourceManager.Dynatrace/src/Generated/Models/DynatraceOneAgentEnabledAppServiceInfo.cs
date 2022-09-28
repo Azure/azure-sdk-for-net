@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="logModule"> Tells whether log modules are enabled or not. </param>
         /// <param name="hostGroup"> The name of the host group. </param>
         /// <param name="hostName"> The name of the host. </param>
-        internal DynatraceOneAgentEnabledAppServiceInfo(ResourceIdentifier resourceId, string version, DynatraceOneAgentMonitoringType? monitoringType, DynatraceOneAgentAutoUpdateSetting? autoUpdateSetting, DynatraceOneAgentUpdateStatus? updateStatus, DynatraceOneAgentAvailabilityStatus? availabilityState, DynatraceLogModuleState? logModule, string hostGroup, string hostName)
+        internal DynatraceOneAgentEnabledAppServiceInfo(ResourceIdentifier resourceId, string version, DynatraceOneAgentMonitoringType? monitoringType, DynatraceOneAgentAutoUpdateSetting? autoUpdateSetting, DynatraceOneAgentUpdateStatus? updateStatus, DynatraceOneAgentAvailabilityState? availabilityState, DynatraceLogModuleState? logModule, string hostGroup, string hostName)
         {
             ResourceId = resourceId;
             Version = version;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <summary> The current update status of OneAgent. </summary>
         public DynatraceOneAgentUpdateStatus? UpdateStatus { get; }
         /// <summary> The availability state of OneAgent. </summary>
-        public DynatraceOneAgentAvailabilityStatus? AvailabilityState { get; }
+        public DynatraceOneAgentAvailabilityState? AvailabilityState { get; }
         /// <summary> Tells whether log modules are enabled or not. </summary>
         public DynatraceLogModuleState? LogModule { get; }
         /// <summary> The name of the host group. </summary>

@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: Monitors_GetAccountCredentials
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DynatraceAccountCredentials>> GetAccountCredentialsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DynatraceAccountCredentialsInfo>> GetAccountCredentialsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetAccountCredentials");
             scope.Start();
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// Operation Id: Monitors_GetAccountCredentials
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DynatraceAccountCredentials> GetAccountCredentials(CancellationToken cancellationToken = default)
+        public virtual Response<DynatraceAccountCredentialsInfo> GetAccountCredentials(CancellationToken cancellationToken = default)
         {
             using var scope = _dynatraceMonitorMonitorsClientDiagnostics.CreateScope("DynatraceMonitorResource.GetAccountCredentials");
             scope.Start();
