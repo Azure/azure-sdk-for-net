@@ -71,8 +71,7 @@ rename-rules:
   CaaRecord: CaaRecordInfo
 
 override-operation-name:
-  RecordSets_ListByDnsZone: GetRecordsInDnsZone # Change back to GetRecords once the polymorphic resource change is merged.
-  RecordSets_ListAllByDnsZone: GetAllRecordsInDnsZone # Change back to GetAllRecords once the polymorphic resource change is merged.
+  RecordSets_ListByDnsZone: GetAllRecordData # Change back to GetRecords once the polymorphic resource change is merged.
   DnsResourceReference_GetByTargetResources: GetDnsResourceReferencesByTargetResources
   Zones_List: GetDnsZones
 
@@ -89,6 +88,7 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}|Microsoft.Network/dnsZones/TXT: TxtRecord
 
 directive:
+  - remove-operation: RecordSets_ListAllByDnsZone
   - from: swagger-document
     where: $.definitions
     transform: >
