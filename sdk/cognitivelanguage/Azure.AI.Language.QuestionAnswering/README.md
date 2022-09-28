@@ -47,8 +47,8 @@ using Azure.AI.Language.QuestionAnswering;
 With your **endpoint** and **API key** you can instantiate a `QuestionAnsweringClient`:
 
 ```C# Snippet:QuestionAnsweringClient_Create
-Uri endpoint = new Uri("{LanguageEndpoint}");
-AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);
 ```
@@ -64,8 +64,8 @@ using Azure.AI.Language.QuestionAnswering.Authoring;
 With your **endpoint** and **API key**, you can instantiate a `QuestionAnsweringAuthoringClient`:
 
 ```C# Snippet:QuestionAnsweringAuthoringClient_Create
-Uri endpoint = new Uri("{LanguageEndpoint}");
-AzureKeyCredential credential = new AzureKeyCredential("{ApiKey}");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com/");
+AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
 QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(endpoint, credential);
 ```
@@ -75,7 +75,7 @@ QuestionAnsweringAuthoringClient client = new QuestionAnsweringAuthoringClient(e
 You can also create a `QuestionAnsweringClient` or `QuestionAnsweringAuthoringClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
 Using the [DefaultAzureCredential] you can authenticate a service using Managed Identity or a service principal, authenticate as a developer working on an application, and more all without changing code.
 
-Before you can use the `DefaultAzureCredential`, or any credential type from [Azure.Identity][azure_identity], youll first need to [install the Azure.Identity package][azure_identity_install].
+Before you can use the `DefaultAzureCredential`, or any credential type from [Azure.Identity][azure_identity], you'll first need to [install the Azure.Identity package][azure_identity_install].
 
 To use `DefaultAzureCredential` with a client ID and secret, you'll need to set the `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, and `AZURE_CLIENT_SECRET` environment variables; alternatively, you can pass those values
 to the `ClientSecretCredential` also in Azure.Identity.
@@ -89,7 +89,7 @@ using Azure.Identity;
 Then you can create an instance of `DefaultAzureCredential` and pass it to a new instance of your client:
 
 ```C# Snippet:QuestionAnsweringClient_CreateWithDefaultAzureCredential
-Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
+Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 DefaultAzureCredential credential = new DefaultAzureCredential();
 
 QuestionAnsweringClient client = new QuestionAnsweringClient(endpoint, credential);

@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public void CreateConversationAuthoringClient()
         {
             #region Snippet:ConversationAuthoringClient_Create
-            Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
             AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
             ConversationAuthoringClient client = new ConversationAuthoringClient(endpoint, credential);

@@ -22,7 +22,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public void CreateConversationAnalysisClient()
         {
             #region Snippet:ConversationAnalysisClient_Create
-            Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
             AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
 
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
@@ -32,7 +32,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         public void CreateConversationAnalysisClientWithDefaultAzureCredential()
         {
             #region Snippet:ConversationAnalysisClient_CreateWithDefaultAzureCredential
-            Uri endpoint = new Uri("https://myaccount.cognitive.microsoft.com");
+            Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
             DefaultAzureCredential credential = new DefaultAzureCredential();
 
             ConversationAnalysisClient client = new ConversationAnalysisClient(endpoint, credential);
