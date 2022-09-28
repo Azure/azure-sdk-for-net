@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Billing
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="PaymentMethodResource" /> or <see cref="BillingAccountPaymentMethodResource" />. </summary>
     public abstract partial class BasePaymentMethodResource : ArmResource
     {
         internal static BasePaymentMethodResource GetResource(ArmClient client, PaymentMethodData data)

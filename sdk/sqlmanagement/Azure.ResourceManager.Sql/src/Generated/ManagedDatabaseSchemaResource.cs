@@ -112,7 +112,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get managed database schema
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}
         /// Operation Id: ManagedDatabaseSchemas_Get
@@ -150,7 +149,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get managed database schema
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}
         /// Operation Id: ManagedDatabaseSchemas_Get

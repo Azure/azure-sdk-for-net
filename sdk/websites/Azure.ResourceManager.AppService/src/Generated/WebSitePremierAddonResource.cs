@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_GetPremierAddOn
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_GetPremierAddOn
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Delete a premier add-on from an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_DeletePremierAddOn
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Delete a premier add-on from an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_DeletePremierAddOn
@@ -206,7 +202,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Description for Updates a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_UpdatePremierAddOn
@@ -243,12 +238,13 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new async Task<Response<WebSitePremierAddonResource>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
+
             var result = await UpdateCoreAsync(premierAddOn, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((WebSitePremierAddonResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Description for Updates a named add-on of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}
         /// Operation Id: WebApps_UpdatePremierAddOn
@@ -285,6 +281,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new Response<WebSitePremierAddonResource> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
+
             var result = UpdateCore(premierAddOn, cancellationToken);
             return Response.FromValue((WebSitePremierAddonResource)result.Value, result.GetRawResponse());
         }

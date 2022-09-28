@@ -150,7 +150,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets the details of the Issue for an API specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}
         /// Operation Id: ApiIssue_Get
@@ -190,7 +189,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets the details of the Issue for an API specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/issues/{issueId}
         /// Operation Id: ApiIssue_Get

@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Returns whether Scm basic auth is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
         /// Operation Id: WebApps_GetScmAllowedSlot
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Returns whether Scm basic auth is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
         /// Operation Id: WebApps_GetScmAllowedSlot
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation CreateOrUpdate
         /// Description for Updates whether user publishing credentials are allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
         /// Operation Id: WebApps_UpdateScmAllowedSlot
@@ -193,12 +190,13 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new async Task<ArmOperation<ScmSiteSlotBasicPublishingCredentialsPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             return new AppServiceArmOperation<ScmSiteSlotBasicPublishingCredentialsPolicyResource>(Response.FromValue((ScmSiteSlotBasicPublishingCredentialsPolicyResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation CreateOrUpdate
         /// Description for Updates whether user publishing credentials are allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/scm
         /// Operation Id: WebApps_UpdateScmAllowedSlot
@@ -240,6 +238,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new ArmOperation<ScmSiteSlotBasicPublishingCredentialsPolicyResource> CreateOrUpdate(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = CreateOrUpdateCore(waitUntil, data, cancellationToken);
             return new AppServiceArmOperation<ScmSiteSlotBasicPublishingCredentialsPolicyResource>(Response.FromValue((ScmSiteSlotBasicPublishingCredentialsPolicyResource)result.Value, result.GetRawResponse()));
         }

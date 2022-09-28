@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="TenantAssessmentMetadataResource" /> or <see cref="SubscriptionAssessmentMetadataResource" />. </summary>
     public abstract partial class SecurityAssessmentMetadataResponseResource : ArmResource
     {
         internal static SecurityAssessmentMetadataResponseResource GetResource(ArmClient client, SecurityAssessmentMetadataResponseData data)

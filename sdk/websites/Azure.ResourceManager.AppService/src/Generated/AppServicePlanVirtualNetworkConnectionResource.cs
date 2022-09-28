@@ -113,7 +113,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Get a Virtual Network associated with an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: AppServicePlans_GetVnetFromServerFarm
@@ -151,7 +150,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Get a Virtual Network associated with an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}
         /// Operation Id: AppServicePlans_GetVnetFromServerFarm

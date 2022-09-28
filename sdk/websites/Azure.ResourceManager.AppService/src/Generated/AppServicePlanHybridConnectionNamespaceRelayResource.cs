@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Retrieve a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_GetHybridConnection
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Retrieve a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_GetHybridConnection
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Delete a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_DeleteHybridConnection
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Delete a Hybrid Connection in use in an App Service plan.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}
         /// Operation Id: AppServicePlans_DeleteHybridConnection

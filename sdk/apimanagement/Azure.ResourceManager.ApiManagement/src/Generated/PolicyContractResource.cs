@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="ApiOperationPolicyResource" />, <see cref="ApiPolicyResource" />, <see cref="ApiManagementPolicyResource" /> or <see cref="ApiManagementProductPolicyResource" />. </summary>
     public abstract partial class PolicyContractResource : ArmResource
     {
         internal static PolicyContractResource GetResource(ArmClient client, PolicyContractData data)
@@ -215,6 +215,8 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public async Task<ArmOperation<PolicyContractResource>> UpdateAsync(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(waitUntil, data, ifMatch, cancellationToken).ConfigureAwait(false);
         }
 
@@ -235,6 +237,8 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public ArmOperation<PolicyContractResource> Update(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(waitUntil, data, ifMatch, cancellationToken);
         }
 

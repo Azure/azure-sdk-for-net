@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
         /// Operation Id: WebApps_GetTriggeredWebJobHistory
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets a triggered web job&apos;s history by its ID for an app, , or a deployment slot.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}
         /// Operation Id: WebApps_GetTriggeredWebJobHistory

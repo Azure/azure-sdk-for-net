@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Get the status of the last MSDeploy operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy
         /// Operation Id: WebApps_GetMSDeployStatusSlot
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Get the status of the last MSDeploy operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy
         /// Operation Id: WebApps_GetMSDeployStatusSlot
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation CreateOrUpdate
         /// Description for Invoke the MSDeploy web app extension.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy
         /// Operation Id: WebApps_CreateMSDeployOperationSlot
@@ -194,6 +191,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new async Task<ArmOperation<SiteSlotExtensionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(msDeploy, nameof(msDeploy));
+
             var result = await CreateOrUpdateCoreAsync(waitUntil, msDeploy, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
@@ -204,7 +203,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation CreateOrUpdate
         /// Description for Invoke the MSDeploy web app extension.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/extensions/MSDeploy
         /// Operation Id: WebApps_CreateMSDeployOperationSlot
@@ -246,6 +244,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new ArmOperation<SiteSlotExtensionResource> CreateOrUpdate(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(msDeploy, nameof(msDeploy));
+
             var result = CreateOrUpdateCore(waitUntil, msDeploy, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {

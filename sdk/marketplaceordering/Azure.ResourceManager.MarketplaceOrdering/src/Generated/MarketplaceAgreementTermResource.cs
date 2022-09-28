@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get marketplace terms.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/offerTypes/{offerType}/publishers/{publisherId}/offers/{offerId}/plans/{planId}/agreements/current
         /// Operation Id: MarketplaceAgreements_Get
@@ -115,7 +114,6 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get marketplace terms.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.MarketplaceOrdering/offerTypes/{offerType}/publishers/{publisherId}/offers/{offerId}/plans/{planId}/agreements/current
         /// Operation Id: MarketplaceAgreements_Get

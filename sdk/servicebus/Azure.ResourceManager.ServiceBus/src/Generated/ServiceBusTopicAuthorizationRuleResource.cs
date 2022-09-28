@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Returns the specified authorization rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}
         /// Operation Id: TopicAuthorizationRules_Get
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Returns the specified authorization rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}
         /// Operation Id: TopicAuthorizationRules_Get
@@ -262,8 +260,8 @@ namespace Azure.ResourceManager.ServiceBus
                 throw;
             }
         }
+
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Gets the primary and secondary connection strings for the topic.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}/ListKeys
         /// Operation Id: TopicAuthorizationRules_ListKeys
@@ -286,7 +284,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Gets the primary and secondary connection strings for the topic.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}/ListKeys
         /// Operation Id: TopicAuthorizationRules_ListKeys

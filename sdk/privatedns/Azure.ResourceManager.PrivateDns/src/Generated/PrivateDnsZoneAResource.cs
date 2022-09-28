@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a record set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Get
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a record set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Get
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a record set from a Private DNS zone. This operation cannot be undone.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Delete
@@ -180,7 +177,6 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a record set from a Private DNS zone. This operation cannot be undone.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Delete
@@ -208,7 +204,6 @@ namespace Azure.ResourceManager.PrivateDns
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Updates a record set within a Private DNS zone.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Update
@@ -247,12 +242,13 @@ namespace Azure.ResourceManager.PrivateDns
         [ForwardsClientCalls]
         public new async Task<Response<PrivateDnsZoneAResource>> UpdateAsync(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(data, ifMatch, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((PrivateDnsZoneAResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Updates a record set within a Private DNS zone.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Update
@@ -291,6 +287,8 @@ namespace Azure.ResourceManager.PrivateDns
         [ForwardsClientCalls]
         public new Response<PrivateDnsZoneAResource> Update(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(data, ifMatch, cancellationToken);
             return Response.FromValue((PrivateDnsZoneAResource)result.Value, result.GetRawResponse());
         }

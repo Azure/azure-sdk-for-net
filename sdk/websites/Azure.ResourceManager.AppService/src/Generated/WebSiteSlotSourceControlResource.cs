@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_GetSourceControlSlot
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_GetSourceControlSlot
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Deletes the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_DeleteSourceControlSlot
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Deletes the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_DeleteSourceControlSlot
@@ -207,7 +203,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Description for Updates the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_UpdateSourceControlSlot
@@ -244,12 +239,13 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new async Task<Response<WebSiteSlotSourceControlResource>> UpdateAsync(SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((WebSiteSlotSourceControlResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Description for Updates the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_UpdateSourceControlSlot
@@ -286,12 +282,13 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new Response<WebSiteSlotSourceControlResource> Update(SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(data, cancellationToken);
             return Response.FromValue((WebSiteSlotSourceControlResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation CreateOrUpdate
         /// Description for Updates the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_CreateOrUpdateSourceControlSlot
@@ -333,6 +330,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new async Task<ArmOperation<WebSiteSlotSourceControlResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
@@ -343,7 +342,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation CreateOrUpdate
         /// Description for Updates the source control configuration of an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/sourcecontrols/web
         /// Operation Id: WebApps_CreateOrUpdateSourceControlSlot
@@ -385,6 +383,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new ArmOperation<WebSiteSlotSourceControlResource> CreateOrUpdate(WaitUntil waitUntil, SiteSourceControlData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = CreateOrUpdateCore(waitUntil, data, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {

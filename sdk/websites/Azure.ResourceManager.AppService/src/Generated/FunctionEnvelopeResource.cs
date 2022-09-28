@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SiteFunctionResource" /> or <see cref="SiteSlotFunctionResource" />. </summary>
     public abstract partial class FunctionEnvelopeResource : ArmResource
     {
         internal static FunctionEnvelopeResource GetResource(ArmClient client, FunctionEnvelopeData data)
@@ -166,6 +166,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public async Task<ArmOperation<FunctionEnvelopeResource>> UpdateAsync(WaitUntil waitUntil, FunctionEnvelopeData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -184,6 +186,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public ArmOperation<FunctionEnvelopeResource> Update(WaitUntil waitUntil, FunctionEnvelopeData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(waitUntil, data, cancellationToken);
         }
     }

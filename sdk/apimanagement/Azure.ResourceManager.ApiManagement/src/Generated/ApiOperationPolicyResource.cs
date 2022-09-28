@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get the policy configuration at the API Operation level.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}
         /// Operation Id: ApiOperationPolicy_Get
@@ -116,7 +115,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get the policy configuration at the API Operation level.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}
         /// Operation Id: ApiOperationPolicy_Get
@@ -156,7 +154,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes the policy configuration at the Api Operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}
         /// Operation Id: ApiOperationPolicy_Delete
@@ -184,7 +181,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes the policy configuration at the Api Operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}
         /// Operation Id: ApiOperationPolicy_Delete
@@ -212,7 +208,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates or updates policy configuration for the API Operation level.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}
         /// Operation Id: ApiOperationPolicy_CreateOrUpdate
@@ -256,12 +251,13 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public new async Task<ArmOperation<ApiOperationPolicyResource>> UpdateAsync(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(waitUntil, data, ifMatch, cancellationToken).ConfigureAwait(false);
             return new ApiManagementArmOperation<ApiOperationPolicyResource>(Response.FromValue((ApiOperationPolicyResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates or updates policy configuration for the API Operation level.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}
         /// Operation Id: ApiOperationPolicy_CreateOrUpdate
@@ -305,12 +301,13 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public new ArmOperation<ApiOperationPolicyResource> Update(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(waitUntil, data, ifMatch, cancellationToken);
             return new ApiManagementArmOperation<ApiOperationPolicyResource>(Response.FromValue((ApiOperationPolicyResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation GetEntityTag
         /// Gets the entity state (Etag) version of the API operation policy specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}
         /// Operation Id: ApiOperationPolicy_GetEntityTag
@@ -333,7 +330,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation GetEntityTag
         /// Gets the entity state (Etag) version of the API operation policy specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}
         /// Operation Id: ApiOperationPolicy_GetEntityTag

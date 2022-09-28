@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets the sensitivity label of a given column
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
         /// Operation Id: SensitivityLabels_Get
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets the sensitivity label of a given column
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
         /// Operation Id: SensitivityLabels_Get
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes the sensitivity label of a given column
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
         /// Operation Id: SensitivityLabels_Delete
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes the sensitivity label of a given column
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
         /// Operation Id: SensitivityLabels_Delete
@@ -206,7 +202,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates or updates the sensitivity label of a given column
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
         /// Operation Id: SensitivityLabels_CreateOrUpdate
@@ -245,23 +240,6 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The column sensitivity label resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        [ForwardsClientCalls]
-        public new async Task<ArmOperation<SqlDatabaseSensitivityLabelResource>> UpdateAsync(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
-        {
-            var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
-            return new SqlArmOperation<SqlDatabaseSensitivityLabelResource>(Response.FromValue((SqlDatabaseSensitivityLabelResource)result.Value, result.GetRawResponse()));
-        }
-
-        /// <summary>
-        /// The core implementation for operation Update
-        /// Creates or updates the sensitivity label of a given column
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
-        /// Operation Id: SensitivityLabels_CreateOrUpdate
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The column sensitivity label resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         protected override ArmOperation<SensitivityLabelResource> UpdateCore(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
@@ -281,22 +259,6 @@ namespace Azure.ResourceManager.Sql
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Creates or updates the sensitivity label of a given column
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
-        /// Operation Id: SensitivityLabels_CreateOrUpdate
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The column sensitivity label resource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        [ForwardsClientCalls]
-        public new ArmOperation<SqlDatabaseSensitivityLabelResource> Update(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
-        {
-            var result = UpdateCore(waitUntil, data, cancellationToken);
-            return new SqlArmOperation<SqlDatabaseSensitivityLabelResource>(Response.FromValue((SqlDatabaseSensitivityLabelResource)result.Value, result.GetRawResponse()));
         }
     }
 }

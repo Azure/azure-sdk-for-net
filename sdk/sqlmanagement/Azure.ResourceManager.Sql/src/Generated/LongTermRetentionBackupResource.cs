@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SubscriptionLongTermRetentionBackupResource" /> or <see cref="ResourceGroupLongTermRetentionBackupResource" />. </summary>
     public abstract partial class LongTermRetentionBackupResource : ArmResource
     {
         internal static LongTermRetentionBackupResource GetResource(ArmClient client, LongTermRetentionBackupData data)

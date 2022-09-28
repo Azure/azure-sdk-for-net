@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="WebSiteSlotWebJobResource" /> or <see cref="WebSiteWebJobResource" />. </summary>
     public abstract partial class WebJobResource : ArmResource
     {
         internal static WebJobResource GetResource(ArmClient client, WebJobData data)

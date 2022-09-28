@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SiteHostNameBindingResource" /> or <see cref="SiteSlotHostNameBindingResource" />. </summary>
     public abstract partial class HostNameBindingResource : ArmResource
     {
         internal static HostNameBindingResource GetResource(ArmClient client, HostNameBindingData data)
@@ -166,6 +166,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public async Task<ArmOperation<HostNameBindingResource>> UpdateAsync(WaitUntil waitUntil, HostNameBindingData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -184,6 +186,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public ArmOperation<HostNameBindingResource> Update(WaitUntil waitUntil, HostNameBindingData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(waitUntil, data, cancellationToken);
         }
     }

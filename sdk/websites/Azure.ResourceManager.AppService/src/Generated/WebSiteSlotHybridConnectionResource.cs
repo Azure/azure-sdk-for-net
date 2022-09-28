@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets a hybrid connection configuration by its name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_GetRelayServiceConnectionSlot
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets a hybrid connection configuration by its name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_GetRelayServiceConnectionSlot
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Deletes a relay service connection by its name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_DeleteRelayServiceConnectionSlot
@@ -178,7 +175,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Deletes a relay service connection by its name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_DeleteRelayServiceConnectionSlot
@@ -205,7 +201,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_UpdateRelayServiceConnectionSlot
@@ -242,12 +237,13 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new async Task<Response<WebSiteSlotHybridConnectionResource>> UpdateAsync(RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((WebSiteSlotHybridConnectionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Description for Creates a new hybrid connection configuration (PUT), or updates an existing one (PATCH).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}
         /// Operation Id: WebApps_UpdateRelayServiceConnectionSlot
@@ -284,6 +280,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new Response<WebSiteSlotHybridConnectionResource> Update(RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(data, cancellationToken);
             return Response.FromValue((WebSiteSlotHybridConnectionResource)result.Value, result.GetRawResponse());
         }

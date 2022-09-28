@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Blueprint
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="BlueprintArtifactResource" /> or <see cref="BlueprintVersionArtifactResource" />. </summary>
     public abstract partial class ArtifactResource : ArmResource
     {
         internal static ArtifactResource GetResource(ArmClient client, ArtifactData data)

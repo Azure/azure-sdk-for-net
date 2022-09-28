@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="WebSitePremierAddonResource" /> or <see cref="WebSiteSlotPremierAddOnResource" />. </summary>
     public abstract partial class PremierAddOnResource : ArmResource
     {
         internal static PremierAddOnResource GetResource(ArmClient client, PremierAddOnData data)
@@ -165,6 +165,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public async Task<Response<PremierAddOnResource>> UpdateAsync(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
+
             return await UpdateCoreAsync(premierAddOn, cancellationToken).ConfigureAwait(false);
         }
 
@@ -181,6 +183,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public Response<PremierAddOnResource> Update(PremierAddOnPatchResource premierAddOn, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(premierAddOn, nameof(premierAddOn));
+
             return UpdateCore(premierAddOn, cancellationToken);
         }
     }

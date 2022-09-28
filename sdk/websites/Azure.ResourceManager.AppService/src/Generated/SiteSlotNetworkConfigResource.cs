@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets a Swift Virtual Network connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkConfig/virtualNetwork
         /// Operation Id: WebApps_GetSwiftVirtualNetworkConnectionSlot
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets a Swift Virtual Network connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkConfig/virtualNetwork
         /// Operation Id: WebApps_GetSwiftVirtualNetworkConnectionSlot
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Deletes a Swift Virtual Network connection from an app (or deployment slot).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkConfig/virtualNetwork
         /// Operation Id: WebApps_DeleteSwiftVirtualNetworkSlot
@@ -178,7 +175,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Deletes a Swift Virtual Network connection from an app (or deployment slot).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkConfig/virtualNetwork
         /// Operation Id: WebApps_DeleteSwiftVirtualNetworkSlot
@@ -205,7 +201,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkConfig/virtualNetwork
@@ -244,12 +239,13 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new async Task<Response<SiteSlotNetworkConfigResource>> UpdateAsync(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((SiteSlotNetworkConfigResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkConfig/virtualNetwork
@@ -288,12 +284,13 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new Response<SiteSlotNetworkConfigResource> Update(SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(data, cancellationToken);
             return Response.FromValue((SiteSlotNetworkConfigResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation CreateOrUpdate
         /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkConfig/virtualNetwork
@@ -337,12 +334,13 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new async Task<ArmOperation<SiteSlotNetworkConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             return new AppServiceArmOperation<SiteSlotNetworkConfigResource>(Response.FromValue((SiteSlotNetworkConfigResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation CreateOrUpdate
         /// Description for Integrates this Web App with a Virtual Network. This requires that 1) &quot;swiftSupported&quot; is true when doing a GET against this resource, and 2) that the target Subnet has already been delegated, and is not
         /// in use by another App Service Plan other than the one this App is in.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/networkConfig/virtualNetwork
@@ -386,6 +384,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new ArmOperation<SiteSlotNetworkConfigResource> CreateOrUpdate(WaitUntil waitUntil, SwiftVirtualNetworkData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = CreateOrUpdateCore(waitUntil, data, cancellationToken);
             return new AppServiceArmOperation<SiteSlotNetworkConfigResource>(Response.FromValue((SiteSlotNetworkConfigResource)result.Value, result.GetRawResponse()));
         }

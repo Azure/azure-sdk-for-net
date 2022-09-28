@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.EventGrid
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
     internal partial class ResourceGroupResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _eventSubscriptionClientDiagnostics;
-        private EventSubscriptionsRestOperations _eventSubscriptionRestClient;
+        private ClientDiagnostics _eventSubscriptionsClientDiagnostics;
+        private EventSubscriptionsRestOperations _eventSubscriptionsRestClient;
         private ClientDiagnostics _eventGridTopicTopicsClientDiagnostics;
         private TopicsRestOperations _eventGridTopicTopicsRestClient;
 
@@ -37,8 +37,8 @@ namespace Azure.ResourceManager.EventGrid
         {
         }
 
-        private ClientDiagnostics EventSubscriptionClientDiagnostics => _eventSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventSubscriptionResource.ResourceType.Namespace, Diagnostics);
-        private EventSubscriptionsRestOperations EventSubscriptionRestClient => _eventSubscriptionRestClient ??= new EventSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventSubscriptionResource.ResourceType));
+        private ClientDiagnostics EventSubscriptionsClientDiagnostics => _eventSubscriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private EventSubscriptionsRestOperations EventSubscriptionsRestClient => _eventSubscriptionsRestClient ??= new EventSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics EventGridTopicTopicsClientDiagnostics => _eventGridTopicTopicsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EventGrid", EventGridTopicResource.ResourceType.Namespace, Diagnostics);
         private TopicsRestOperations EventGridTopicTopicsRestClient => _eventGridTopicTopicsRestClient ??= new TopicsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EventGridTopicResource.ResourceType));
 
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.EventGrid
         {
             async Task<Page<BaseEventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
+                using var scope = EventSubscriptionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
-                    var response = await EventSubscriptionRestClient.ListGlobalByResourceGroupForTopicTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, topicTypeName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await EventSubscriptionsRestClient.ListGlobalByResourceGroupForTopicTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, topicTypeName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => BaseEventSubscriptionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -174,11 +174,11 @@ namespace Azure.ResourceManager.EventGrid
             }
             async Task<Page<BaseEventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
+                using var scope = EventSubscriptionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
-                    var response = await EventSubscriptionRestClient.ListGlobalByResourceGroupForTopicTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, topicTypeName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await EventSubscriptionsRestClient.ListGlobalByResourceGroupForTopicTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, topicTypeName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => BaseEventSubscriptionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -204,11 +204,11 @@ namespace Azure.ResourceManager.EventGrid
         {
             Page<BaseEventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
+                using var scope = EventSubscriptionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
-                    var response = EventSubscriptionRestClient.ListGlobalByResourceGroupForTopicType(Id.SubscriptionId, Id.ResourceGroupName, topicTypeName, filter, top, cancellationToken: cancellationToken);
+                    var response = EventSubscriptionsRestClient.ListGlobalByResourceGroupForTopicType(Id.SubscriptionId, Id.ResourceGroupName, topicTypeName, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => BaseEventSubscriptionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -219,11 +219,11 @@ namespace Azure.ResourceManager.EventGrid
             }
             Page<BaseEventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
+                using var scope = EventSubscriptionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetGlobalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
-                    var response = EventSubscriptionRestClient.ListGlobalByResourceGroupForTopicTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, topicTypeName, filter, top, cancellationToken: cancellationToken);
+                    var response = EventSubscriptionsRestClient.ListGlobalByResourceGroupForTopicTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, topicTypeName, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => BaseEventSubscriptionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -249,11 +249,11 @@ namespace Azure.ResourceManager.EventGrid
         {
             async Task<Page<BaseEventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptions");
+                using var scope = EventSubscriptionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptions");
                 scope.Start();
                 try
                 {
-                    var response = await EventSubscriptionRestClient.ListRegionalByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, location, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await EventSubscriptionsRestClient.ListRegionalByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, location, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => BaseEventSubscriptionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -264,11 +264,11 @@ namespace Azure.ResourceManager.EventGrid
             }
             async Task<Page<BaseEventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptions");
+                using var scope = EventSubscriptionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptions");
                 scope.Start();
                 try
                 {
-                    var response = await EventSubscriptionRestClient.ListRegionalByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await EventSubscriptionsRestClient.ListRegionalByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => BaseEventSubscriptionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -294,11 +294,11 @@ namespace Azure.ResourceManager.EventGrid
         {
             Page<BaseEventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptions");
+                using var scope = EventSubscriptionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptions");
                 scope.Start();
                 try
                 {
-                    var response = EventSubscriptionRestClient.ListRegionalByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, location, filter, top, cancellationToken: cancellationToken);
+                    var response = EventSubscriptionsRestClient.ListRegionalByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, location, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => BaseEventSubscriptionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -309,11 +309,11 @@ namespace Azure.ResourceManager.EventGrid
             }
             Page<BaseEventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptions");
+                using var scope = EventSubscriptionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptions");
                 scope.Start();
                 try
                 {
-                    var response = EventSubscriptionRestClient.ListRegionalByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, filter, top, cancellationToken: cancellationToken);
+                    var response = EventSubscriptionsRestClient.ListRegionalByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => BaseEventSubscriptionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -340,11 +340,11 @@ namespace Azure.ResourceManager.EventGrid
         {
             async Task<Page<BaseEventSubscriptionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
+                using var scope = EventSubscriptionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
-                    var response = await EventSubscriptionRestClient.ListRegionalByResourceGroupForTopicTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, location, topicTypeName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await EventSubscriptionsRestClient.ListRegionalByResourceGroupForTopicTypeAsync(Id.SubscriptionId, Id.ResourceGroupName, location, topicTypeName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => BaseEventSubscriptionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -355,11 +355,11 @@ namespace Azure.ResourceManager.EventGrid
             }
             async Task<Page<BaseEventSubscriptionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
+                using var scope = EventSubscriptionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
-                    var response = await EventSubscriptionRestClient.ListRegionalByResourceGroupForTopicTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, topicTypeName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await EventSubscriptionsRestClient.ListRegionalByResourceGroupForTopicTypeNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, topicTypeName, filter, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => BaseEventSubscriptionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -386,11 +386,11 @@ namespace Azure.ResourceManager.EventGrid
         {
             Page<BaseEventSubscriptionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
+                using var scope = EventSubscriptionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
-                    var response = EventSubscriptionRestClient.ListRegionalByResourceGroupForTopicType(Id.SubscriptionId, Id.ResourceGroupName, location, topicTypeName, filter, top, cancellationToken: cancellationToken);
+                    var response = EventSubscriptionsRestClient.ListRegionalByResourceGroupForTopicType(Id.SubscriptionId, Id.ResourceGroupName, location, topicTypeName, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => BaseEventSubscriptionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -401,11 +401,11 @@ namespace Azure.ResourceManager.EventGrid
             }
             Page<BaseEventSubscriptionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = EventSubscriptionClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
+                using var scope = EventSubscriptionsClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetRegionalEventSubscriptionsForTopicType");
                 scope.Start();
                 try
                 {
-                    var response = EventSubscriptionRestClient.ListRegionalByResourceGroupForTopicTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, topicTypeName, filter, top, cancellationToken: cancellationToken);
+                    var response = EventSubscriptionsRestClient.ListRegionalByResourceGroupForTopicTypeNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, topicTypeName, filter, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => BaseEventSubscriptionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

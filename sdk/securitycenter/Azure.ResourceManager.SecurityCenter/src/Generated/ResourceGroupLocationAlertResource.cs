@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get an alert that is associated a resource group or a resource in a resource group
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}
         /// Operation Id: Alerts_GetResourceGroupLevel
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get an alert that is associated a resource group or a resource in a resource group
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}
         /// Operation Id: Alerts_GetResourceGroupLevel

@@ -28,8 +28,8 @@ namespace Azure.ResourceManager.Sql
     {
         private readonly ClientDiagnostics _sqlServerJobExecutionJobExecutionsClientDiagnostics;
         private readonly JobExecutionsRestOperations _sqlServerJobExecutionJobExecutionsRestClient;
-        private readonly ClientDiagnostics _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics;
-        private readonly JobTargetExecutionsRestOperations _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient;
+        private readonly ClientDiagnostics _jobTargetExecutionsClientDiagnostics;
+        private readonly JobTargetExecutionsRestOperations _jobTargetExecutionsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SqlServerJobExecutionCollection"/> class for mocking. </summary>
         protected SqlServerJobExecutionCollection()
@@ -44,9 +44,8 @@ namespace Azure.ResourceManager.Sql
             _sqlServerJobExecutionJobExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerJobExecutionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SqlServerJobExecutionResource.ResourceType, out string sqlServerJobExecutionJobExecutionsApiVersion);
             _sqlServerJobExecutionJobExecutionsRestClient = new JobExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerJobExecutionJobExecutionsApiVersion);
-            _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerJobExecutionStepTargetResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SqlServerJobExecutionStepTargetResource.ResourceType, out string sqlServerJobExecutionStepTargetJobTargetExecutionsApiVersion);
-            _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient = new JobTargetExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerJobExecutionStepTargetJobTargetExecutionsApiVersion);
+            _jobTargetExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _jobTargetExecutionsRestClient = new JobTargetExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -274,17 +273,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SqlServerJobExecutionResource> GetJobTargetExecutionsAsync(Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BaseSqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BaseSqlServerJobExecutionResource> GetJobTargetExecutionsAsync(Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<SqlServerJobExecutionResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<BaseSqlServerJobExecutionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionCollection.GetJobTargetExecutions");
+                using var scope = _jobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionCollection.GetJobTargetExecutions");
                 scope.Start();
                 try
                 {
-                    var response = await _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.ListByJobExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _jobTargetExecutionsRestClient.ListByJobExecutionAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => BaseSqlServerJobExecutionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -292,14 +291,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            async Task<Page<SqlServerJobExecutionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<BaseSqlServerJobExecutionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionCollection.GetJobTargetExecutions");
+                using var scope = _jobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionCollection.GetJobTargetExecutions");
                 scope.Start();
                 try
                 {
-                    var response = await _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.ListByJobExecutionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = await _jobTargetExecutionsRestClient.ListByJobExecutionNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.Value.Select(value => BaseSqlServerJobExecutionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -324,17 +323,17 @@ namespace Azure.ResourceManager.Sql
         /// <param name="skip"> The number of elements in the collection to skip. </param>
         /// <param name="top"> The number of elements to return from the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SqlServerJobExecutionResource> GetJobTargetExecutions(Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BaseSqlServerJobExecutionResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BaseSqlServerJobExecutionResource> GetJobTargetExecutions(Guid jobExecutionId, DateTimeOffset? createTimeMin = null, DateTimeOffset? createTimeMax = null, DateTimeOffset? endTimeMin = null, DateTimeOffset? endTimeMax = null, bool? isActive = null, int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            Page<SqlServerJobExecutionResource> FirstPageFunc(int? pageSizeHint)
+            Page<BaseSqlServerJobExecutionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionCollection.GetJobTargetExecutions");
+                using var scope = _jobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionCollection.GetJobTargetExecutions");
                 scope.Start();
                 try
                 {
-                    var response = _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.ListByJobExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _jobTargetExecutionsRestClient.ListByJobExecution(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => BaseSqlServerJobExecutionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -342,14 +341,14 @@ namespace Azure.ResourceManager.Sql
                     throw;
                 }
             }
-            Page<SqlServerJobExecutionResource> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<BaseSqlServerJobExecutionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _sqlServerJobExecutionStepTargetJobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionCollection.GetJobTargetExecutions");
+                using var scope = _jobTargetExecutionsClientDiagnostics.CreateScope("SqlServerJobExecutionCollection.GetJobTargetExecutions");
                 scope.Start();
                 try
                 {
-                    var response = _sqlServerJobExecutionStepTargetJobTargetExecutionsRestClient.ListByJobExecutionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => new SqlServerJobExecutionResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
+                    var response = _jobTargetExecutionsRestClient.ListByJobExecutionNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, jobExecutionId, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.Value.Select(value => BaseSqlServerJobExecutionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

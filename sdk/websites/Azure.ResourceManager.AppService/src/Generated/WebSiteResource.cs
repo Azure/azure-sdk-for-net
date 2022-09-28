@@ -1027,7 +1027,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets the details of a web, mobile, or API app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_Get
@@ -1065,7 +1064,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets the details of a web, mobile, or API app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_Get
@@ -1103,7 +1101,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Deletes a web, mobile, or API app, or one of the deployment slots.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_Delete
@@ -1132,7 +1129,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Deletes a web, mobile, or API app, or one of the deployment slots.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_Delete
@@ -1161,7 +1157,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_Update
@@ -1198,12 +1193,13 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new async Task<Response<WebSiteResource>> UpdateAsync(SitePatchInfo info, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(info, nameof(info));
+
             var result = await UpdateCoreAsync(info, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((WebSiteResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Description for Creates a new web, mobile, or API app in an existing resource group, or updates an existing app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}
         /// Operation Id: WebApps_Update
@@ -1240,6 +1236,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new Response<WebSiteResource> Update(SitePatchInfo info, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(info, nameof(info));
+
             var result = UpdateCore(info, cancellationToken);
             return Response.FromValue((WebSiteResource)result.Value, result.GetRawResponse());
         }

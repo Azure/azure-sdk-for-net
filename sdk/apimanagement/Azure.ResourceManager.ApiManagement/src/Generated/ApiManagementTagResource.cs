@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets the details of the tag specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}
         /// Operation Id: Tag_Get
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets the details of the tag specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}
         /// Operation Id: Tag_Get

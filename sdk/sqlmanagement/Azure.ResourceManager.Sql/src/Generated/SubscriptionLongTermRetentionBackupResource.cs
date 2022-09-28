@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a long term retention backup.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}
         /// Operation Id: LongTermRetentionBackups_Get
@@ -115,7 +114,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a long term retention backup.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}
         /// Operation Id: LongTermRetentionBackups_Get
@@ -153,7 +151,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a long term retention backup.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}
         /// Operation Id: LongTermRetentionBackups_Delete
@@ -180,7 +177,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a long term retention backup.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Sql/locations/{locationName}/longTermRetentionServers/{longTermRetentionServerName}/longTermRetentionDatabases/{longTermRetentionDatabaseName}/longTermRetentionBackups/{backupName}
         /// Operation Id: LongTermRetentionBackups_Delete

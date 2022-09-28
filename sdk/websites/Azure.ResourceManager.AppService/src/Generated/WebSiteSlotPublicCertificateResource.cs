@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Get the named public certificate for an app (or deployment slot, if specified).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}
         /// Operation Id: WebApps_GetPublicCertificateSlot
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Get the named public certificate for an app (or deployment slot, if specified).
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}
         /// Operation Id: WebApps_GetPublicCertificateSlot
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Deletes a hostname binding for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}
         /// Operation Id: WebApps_DeletePublicCertificateSlot
@@ -178,7 +175,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Deletes a hostname binding for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}
         /// Operation Id: WebApps_DeletePublicCertificateSlot
@@ -205,7 +201,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Description for Creates a hostname binding for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}
         /// Operation Id: WebApps_CreateOrUpdatePublicCertificateSlot
@@ -247,12 +242,13 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new async Task<ArmOperation<WebSiteSlotPublicCertificateResource>> UpdateAsync(WaitUntil waitUntil, PublicCertificateData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             return new AppServiceArmOperation<WebSiteSlotPublicCertificateResource>(Response.FromValue((WebSiteSlotPublicCertificateResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Description for Creates a hostname binding for an app.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publicCertificates/{publicCertificateName}
         /// Operation Id: WebApps_CreateOrUpdatePublicCertificateSlot
@@ -294,6 +290,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new ArmOperation<WebSiteSlotPublicCertificateResource> Update(WaitUntil waitUntil, PublicCertificateData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(waitUntil, data, cancellationToken);
             return new AppServiceArmOperation<WebSiteSlotPublicCertificateResource>(Response.FromValue((WebSiteSlotPublicCertificateResource)result.Value, result.GetRawResponse()));
         }

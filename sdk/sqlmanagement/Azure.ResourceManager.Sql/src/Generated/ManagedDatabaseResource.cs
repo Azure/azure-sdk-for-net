@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _managedDatabaseClientDiagnostics;
         private readonly ManagedDatabasesRestOperations _managedDatabaseRestClient;
-        private readonly ClientDiagnostics _managedDatabaseColumnClientDiagnostics;
-        private readonly ManagedDatabaseColumnsRestOperations _managedDatabaseColumnRestClient;
+        private readonly ClientDiagnostics _managedDatabaseColumnsClientDiagnostics;
+        private readonly ManagedDatabaseColumnsRestOperations _managedDatabaseColumnsRestClient;
         private readonly ClientDiagnostics _managedDatabaseQueriesClientDiagnostics;
         private readonly ManagedDatabaseQueriesRestOperations _managedDatabaseQueriesRestClient;
         private readonly ClientDiagnostics _managedDatabaseSecurityEventsClientDiagnostics;
         private readonly ManagedDatabaseSecurityEventsRestOperations _managedDatabaseSecurityEventsRestClient;
-        private readonly ClientDiagnostics _managedDatabaseSensitivityLabelClientDiagnostics;
-        private readonly ManagedDatabaseSensitivityLabelsRestOperations _managedDatabaseSensitivityLabelRestClient;
+        private readonly ClientDiagnostics _managedDatabaseSensitivityLabelsClientDiagnostics;
+        private readonly ManagedDatabaseSensitivityLabelsRestOperations _managedDatabaseSensitivityLabelsRestClient;
         private readonly ManagedDatabaseData _data;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseResource"/> class for mocking. </summary>
@@ -68,16 +68,14 @@ namespace Azure.ResourceManager.Sql
             _managedDatabaseClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string managedDatabaseApiVersion);
             _managedDatabaseRestClient = new ManagedDatabasesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseApiVersion);
-            _managedDatabaseColumnClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseColumnResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagedDatabaseColumnResource.ResourceType, out string managedDatabaseColumnApiVersion);
-            _managedDatabaseColumnRestClient = new ManagedDatabaseColumnsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseColumnApiVersion);
+            _managedDatabaseColumnsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _managedDatabaseColumnsRestClient = new ManagedDatabaseColumnsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _managedDatabaseQueriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _managedDatabaseQueriesRestClient = new ManagedDatabaseQueriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _managedDatabaseSecurityEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _managedDatabaseSecurityEventsRestClient = new ManagedDatabaseSecurityEventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _managedDatabaseSensitivityLabelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseSensitivityLabelResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagedDatabaseSensitivityLabelResource.ResourceType, out string managedDatabaseSensitivityLabelApiVersion);
-            _managedDatabaseSensitivityLabelRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseSensitivityLabelApiVersion);
+            _managedDatabaseSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -551,11 +549,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<DatabaseColumnResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
+                using var scope = _managedDatabaseColumnsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseColumnRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedDatabaseColumnsRestClient.ListByDatabaseAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => DatabaseColumnResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -566,11 +564,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<DatabaseColumnResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
+                using var scope = _managedDatabaseColumnsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseColumnRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedDatabaseColumnsRestClient.ListByDatabaseNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => DatabaseColumnResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -598,11 +596,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<DatabaseColumnResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
+                using var scope = _managedDatabaseColumnsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseColumnRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
+                    var response = _managedDatabaseColumnsRestClient.ListByDatabase(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => DatabaseColumnResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -613,11 +611,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<DatabaseColumnResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _managedDatabaseColumnClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
+                using var scope = _managedDatabaseColumnsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetManagedDatabaseColumnsByDatabase");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseColumnRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
+                    var response = _managedDatabaseColumnsRestClient.ListByDatabaseNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schema, table, column, orderBy, skiptoken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => DatabaseColumnResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -949,11 +947,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<SensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
+                using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseSensitivityLabelRestClient.ListCurrentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListCurrentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => SensitivityLabelResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -964,11 +962,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SensitivityLabelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
+                using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseSensitivityLabelRestClient.ListCurrentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListCurrentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => SensitivityLabelResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -994,11 +992,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<SensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
+                using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseSensitivityLabelRestClient.ListCurrent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
+                    var response = _managedDatabaseSensitivityLabelsRestClient.ListCurrent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => SensitivityLabelResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1009,11 +1007,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SensitivityLabelResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
+                using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetCurrentManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseSensitivityLabelRestClient.ListCurrentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
+                    var response = _managedDatabaseSensitivityLabelsRestClient.ListCurrentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, count, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => SensitivityLabelResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1037,11 +1035,11 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
 
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateManagedDatabaseSensitivityLabel");
+            using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseSensitivityLabelRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sensitivityLabelUpdateList, cancellationToken).ConfigureAwait(false);
+                var response = await _managedDatabaseSensitivityLabelsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sensitivityLabelUpdateList, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1063,11 +1061,11 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(sensitivityLabelUpdateList, nameof(sensitivityLabelUpdateList));
 
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateManagedDatabaseSensitivityLabel");
+            using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = _managedDatabaseSensitivityLabelRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sensitivityLabelUpdateList, cancellationToken);
+                var response = _managedDatabaseSensitivityLabelsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sensitivityLabelUpdateList, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1091,11 +1089,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<SensitivityLabelResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
+                using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseSensitivityLabelRestClient.ListRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => SensitivityLabelResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1106,11 +1104,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<SensitivityLabelResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
+                using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = await _managedDatabaseSensitivityLabelRestClient.ListRecommendedNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _managedDatabaseSensitivityLabelsRestClient.ListRecommendedNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => SensitivityLabelResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1136,11 +1134,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<SensitivityLabelResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
+                using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseSensitivityLabelRestClient.ListRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
+                    var response = _managedDatabaseSensitivityLabelsRestClient.ListRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => SensitivityLabelResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1151,11 +1149,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<SensitivityLabelResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
+                using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.GetRecommendedManagedDatabaseSensitivityLabels");
                 scope.Start();
                 try
                 {
-                    var response = _managedDatabaseSensitivityLabelRestClient.ListRecommendedNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
+                    var response = _managedDatabaseSensitivityLabelsRestClient.ListRecommendedNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, includeDisabledRecommendations, filter, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => SensitivityLabelResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -1179,11 +1177,11 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(recommendedSensitivityLabelUpdateList, nameof(recommendedSensitivityLabelUpdateList));
 
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateRecommendedManagedDatabaseSensitivityLabel");
+            using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateRecommendedManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseSensitivityLabelRestClient.UpdateRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedSensitivityLabelUpdateList, cancellationToken).ConfigureAwait(false);
+                var response = await _managedDatabaseSensitivityLabelsRestClient.UpdateRecommendedAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedSensitivityLabelUpdateList, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1205,11 +1203,11 @@ namespace Azure.ResourceManager.Sql
         {
             Argument.AssertNotNull(recommendedSensitivityLabelUpdateList, nameof(recommendedSensitivityLabelUpdateList));
 
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateRecommendedManagedDatabaseSensitivityLabel");
+            using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseResource.UpdateRecommendedManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = _managedDatabaseSensitivityLabelRestClient.UpdateRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedSensitivityLabelUpdateList, cancellationToken);
+                var response = _managedDatabaseSensitivityLabelsRestClient.UpdateRecommended(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recommendedSensitivityLabelUpdateList, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -113,7 +113,6 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get a workflow run action repetition.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}
         /// Operation Id: WorkflowRunActionRepetitions_Get
@@ -151,7 +150,6 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get a workflow run action repetition.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/repetitions/{repetitionName}
         /// Operation Id: WorkflowRunActionRepetitions_Get

@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get properties of an event subscription.
         /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: EventSubscriptions_Get
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get properties of an event subscription.
         /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: EventSubscriptions_Get
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete an existing event subscription.
         /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: EventSubscriptions_Delete
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete an existing event subscription.
         /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: EventSubscriptions_Delete
@@ -206,7 +202,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Asynchronously updates an existing event subscription.
         /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: EventSubscriptions_Update
@@ -248,6 +243,8 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public new async Task<ArmOperation<EventSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             var result = await UpdateCoreAsync(waitUntil, patch, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
@@ -258,7 +255,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Asynchronously updates an existing event subscription.
         /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: EventSubscriptions_Update
@@ -300,6 +296,8 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public new ArmOperation<EventSubscriptionResource> Update(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             var result = UpdateCore(waitUntil, patch, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {
@@ -310,7 +308,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation GetFullUri
         /// Get the full endpoint URL for an event subscription.
         /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getFullUrl
         /// Operation Id: EventSubscriptions_GetFullUrl
@@ -333,7 +330,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation GetFullUri
         /// Get the full endpoint URL for an event subscription.
         /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getFullUrl
         /// Operation Id: EventSubscriptions_GetFullUrl
@@ -356,12 +352,12 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation GetDeliveryAttributes
         /// Get all delivery attributes for an event subscription.
         /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes
         /// Operation Id: EventSubscriptions_GetDeliveryAttributes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
         protected override AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesCoreAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DeliveryAttributeMapping>> FirstPageFunc(int? pageSizeHint)
@@ -383,12 +379,12 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation GetDeliveryAttributes
         /// Get all delivery attributes for an event subscription.
         /// Request Path: /{scope}/providers/Microsoft.EventGrid/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes
         /// Operation Id: EventSubscriptions_GetDeliveryAttributes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
         protected override Pageable<DeliveryAttributeMapping> GetDeliveryAttributesCore(CancellationToken cancellationToken = default)
         {
             Page<DeliveryAttributeMapping> FirstPageFunc(int? pageSizeHint)

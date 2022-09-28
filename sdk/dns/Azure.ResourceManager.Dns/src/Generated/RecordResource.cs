@@ -15,10 +15,10 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Dns
 {
-    /// <summary> TODO. </summary>
-    public abstract partial class RecordSetResource : ArmResource
+    /// <summary> This is the base client representation of the following resources <see cref="ARecordResource" />, <see cref="AaaaRecordResource" />, <see cref="CaaRecordResource" />, <see cref="CnameRecordResource" />, <see cref="MXRecordResource" />, <see cref="NSRecordResource" />, <see cref="PtrRecordResource" />, <see cref="SoaRecordResource" />, <see cref="SrvRecordResource" /> or <see cref="TxtRecordResource" />. </summary>
+    public abstract partial class RecordResource : ArmResource
     {
-        internal static RecordSetResource GetResource(ArmClient client, RecordSetData data)
+        internal static RecordResource GetResource(ArmClient client, RecordData data)
         {
             if (IsARecordResource(data.Id))
             {
@@ -213,26 +213,26 @@ namespace Azure.ResourceManager.Dns
             return true;
         }
 
-        private readonly RecordSetData _data;
+        private readonly RecordData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="RecordSetResource"/> class for mocking. </summary>
-        protected RecordSetResource()
+        /// <summary> Initializes a new instance of the <see cref="RecordResource"/> class for mocking. </summary>
+        protected RecordResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RecordSetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "RecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal RecordSetResource(ArmClient client, RecordSetData data) : this(client, data.Id)
+        internal RecordResource(ArmClient client, RecordData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecordSetResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal RecordSetResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal RecordResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual RecordSetData Data
+        public virtual RecordData Data
         {
             get
             {
@@ -253,24 +253,24 @@ namespace Azure.ResourceManager.Dns
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Task<Response<RecordSetResource>> GetCoreAsync(CancellationToken cancellationToken = default);
+        protected abstract Task<Response<RecordResource>> GetCoreAsync(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public async Task<Response<RecordSetResource>> GetAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<RecordResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             return await GetCoreAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> The core implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected abstract Response<RecordSetResource> GetCore(CancellationToken cancellationToken = default);
+        protected abstract Response<RecordResource> GetCore(CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Get. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public Response<RecordSetResource> Get(CancellationToken cancellationToken = default)
+        public Response<RecordResource> Get(CancellationToken cancellationToken = default)
         {
             return GetCore(cancellationToken);
         }
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected abstract Task<Response<RecordSetResource>> UpdateCoreAsync(RecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default);
+        protected abstract Task<Response<RecordResource>> UpdateCoreAsync(RecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Update. </summary>
         /// <param name="data"> Parameters supplied to the Update operation. </param>
@@ -320,8 +320,10 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public async Task<Response<RecordSetResource>> UpdateAsync(RecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<RecordResource>> UpdateAsync(RecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(data, ifMatch, cancellationToken).ConfigureAwait(false);
         }
 
@@ -330,7 +332,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected abstract Response<RecordSetResource> UpdateCore(RecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default);
+        protected abstract Response<RecordResource> UpdateCore(RecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default);
 
         /// <summary> The default implementation for operation Update. </summary>
         /// <param name="data"> Parameters supplied to the Update operation. </param>
@@ -338,8 +340,10 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public Response<RecordSetResource> Update(RecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<RecordResource> Update(RecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(data, ifMatch, cancellationToken);
         }
     }

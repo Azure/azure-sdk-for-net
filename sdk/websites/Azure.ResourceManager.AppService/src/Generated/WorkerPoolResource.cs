@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="HostingEnvironmentMultiRolePoolResource" /> or <see cref="HostingEnvironmentWorkerPoolResource" />. </summary>
     public abstract partial class WorkerPoolResource : ArmResource
     {
         internal static WorkerPoolResource GetResource(ArmClient client, WorkerPoolData data)
@@ -141,6 +141,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public async Task<Response<WorkerPoolResource>> UpdateAsync(WorkerPoolData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -157,6 +159,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public Response<WorkerPoolResource> Update(WorkerPoolData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(data, cancellationToken);
         }
     }

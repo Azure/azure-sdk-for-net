@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Logic
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="LogicWorkflowRunResource" /> or <see cref="LogicWorkflowRunOperationResource" />. </summary>
     public abstract partial class BaseLogicWorkflowRunResource : ArmResource
     {
         internal static BaseLogicWorkflowRunResource GetResource(ArmClient client, LogicWorkflowRunData data)

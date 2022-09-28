@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get a specific application for the requested scope by applicationId
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}
         /// Operation Id: Application_Get
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get a specific application for the requested scope by applicationId
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}
         /// Operation Id: Application_Get
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete an Application over a given scope
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}
         /// Operation Id: Application_Delete
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete an Application over a given scope
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}
         /// Operation Id: Application_Delete
@@ -206,7 +202,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates or update a security application on the given subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}
         /// Operation Id: Application_CreateOrUpdate
@@ -248,12 +243,13 @@ namespace Azure.ResourceManager.SecurityCenter
         [ForwardsClientCalls]
         public new async Task<ArmOperation<SubscriptionApplicationResource>> UpdateAsync(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             return new SecurityCenterArmOperation<SubscriptionApplicationResource>(Response.FromValue((SubscriptionApplicationResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates or update a security application on the given subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/applications/{applicationId}
         /// Operation Id: Application_CreateOrUpdate
@@ -295,6 +291,8 @@ namespace Azure.ResourceManager.SecurityCenter
         [ForwardsClientCalls]
         public new ArmOperation<SubscriptionApplicationResource> Update(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(waitUntil, data, cancellationToken);
             return new SecurityCenterArmOperation<SubscriptionApplicationResource>(Response.FromValue((SubscriptionApplicationResource)result.Value, result.GetRawResponse()));
         }

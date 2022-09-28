@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="CertificateOrderDetectorResource" />, <see cref="HostingEnvironmentDetectorResource" />, <see cref="SiteDetectorResource" /> or <see cref="SiteSlotDetectorResource" />. </summary>
     public abstract partial class AppServiceDetectorResource : ArmResource
     {
         internal static AppServiceDetectorResource GetResource(ArmClient client, AppServiceDetectorData data)

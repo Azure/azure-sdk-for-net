@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
         /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}
         /// Operation Id: PaymentMethods_GetByBillingAccount
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a payment method available for a billing account. The operation is supported only for billing accounts with agreement type Microsoft Customer Agreement.
         /// Request Path: /providers/Microsoft.Billing/billingAccounts/{billingAccountName}/paymentMethods/{paymentMethodName}
         /// Operation Id: PaymentMethods_GetByBillingAccount

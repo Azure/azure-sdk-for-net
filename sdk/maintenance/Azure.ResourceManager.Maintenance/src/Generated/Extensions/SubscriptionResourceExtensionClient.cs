@@ -118,17 +118,17 @@ namespace Azure.ResourceManager.Maintenance
         /// Operation Id: MaintenanceConfigurations_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BaseMaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BaseMaintenanceConfigurationResource> GetMaintenanceConfigurationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MaintenanceConfigurationResource> GetMaintenanceConfigurationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<BaseMaintenanceConfigurationResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MaintenanceConfigurationResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = MaintenanceConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMaintenanceConfigurations");
                 scope.Start();
                 try
                 {
                     var response = await MaintenanceConfigurationRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value.Select(value => BaseMaintenanceConfigurationResource.GetResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MaintenanceConfigurationResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -145,17 +145,17 @@ namespace Azure.ResourceManager.Maintenance
         /// Operation Id: MaintenanceConfigurations_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BaseMaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BaseMaintenanceConfigurationResource> GetMaintenanceConfigurations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MaintenanceConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MaintenanceConfigurationResource> GetMaintenanceConfigurations(CancellationToken cancellationToken = default)
         {
-            Page<BaseMaintenanceConfigurationResource> FirstPageFunc(int? pageSizeHint)
+            Page<MaintenanceConfigurationResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = MaintenanceConfigurationClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetMaintenanceConfigurations");
                 scope.Start();
                 try
                 {
                     var response = MaintenanceConfigurationRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value.Select(value => BaseMaintenanceConfigurationResource.GetResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Value.Select(value => new MaintenanceConfigurationResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {

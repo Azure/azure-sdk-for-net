@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get tag associated with the Operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/tags/{tagId}
         /// Operation Id: Tag_GetByOperation
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get tag associated with the Operation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/tags/{tagId}
         /// Operation Id: Tag_GetByOperation

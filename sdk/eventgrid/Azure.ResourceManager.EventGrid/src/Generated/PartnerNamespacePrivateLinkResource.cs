@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get properties of a private link resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}
         /// Operation Id: PrivateLinkResources_Get
@@ -115,7 +114,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get properties of a private link resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateLinkResources/{privateLinkResourceName}
         /// Operation Id: PrivateLinkResources_Get

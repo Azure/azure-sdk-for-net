@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _sqlServerJobJobsClientDiagnostics;
         private readonly JobsRestOperations _sqlServerJobJobsRestClient;
-        private readonly ClientDiagnostics _sqlServerJobExecutionJobExecutionsClientDiagnostics;
-        private readonly JobExecutionsRestOperations _sqlServerJobExecutionJobExecutionsRestClient;
+        private readonly ClientDiagnostics _jobExecutionsClientDiagnostics;
+        private readonly JobExecutionsRestOperations _jobExecutionsRestClient;
         private readonly SqlServerJobData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SqlServerJobResource"/> class for mocking. </summary>
@@ -59,9 +59,8 @@ namespace Azure.ResourceManager.Sql
             _sqlServerJobJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string sqlServerJobJobsApiVersion);
             _sqlServerJobJobsRestClient = new JobsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerJobJobsApiVersion);
-            _sqlServerJobExecutionJobExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerJobExecutionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SqlServerJobExecutionResource.ResourceType, out string sqlServerJobExecutionJobExecutionsApiVersion);
-            _sqlServerJobExecutionJobExecutionsRestClient = new JobExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerJobExecutionJobExecutionsApiVersion);
+            _jobExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _jobExecutionsRestClient = new JobExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -361,14 +360,14 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<SqlServerJobExecutionResource>> CreateJobExecutionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BaseSqlServerJobExecutionResource>> CreateJobExecutionAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobExecutionJobExecutionsClientDiagnostics.CreateScope("SqlServerJobResource.CreateJobExecution");
+            using var scope = _jobExecutionsClientDiagnostics.CreateScope("SqlServerJobResource.CreateJobExecution");
             scope.Start();
             try
             {
-                var response = await _sqlServerJobExecutionJobExecutionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerJobExecutionResource>(new SqlServerJobExecutionOperationSource(Client), _sqlServerJobExecutionJobExecutionsClientDiagnostics, Pipeline, _sqlServerJobExecutionJobExecutionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _jobExecutionsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<BaseSqlServerJobExecutionResource>(new BaseSqlServerJobExecutionOperationSource(Client), _jobExecutionsClientDiagnostics, Pipeline, _jobExecutionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -387,14 +386,14 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<SqlServerJobExecutionResource> CreateJobExecution(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BaseSqlServerJobExecutionResource> CreateJobExecution(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _sqlServerJobExecutionJobExecutionsClientDiagnostics.CreateScope("SqlServerJobResource.CreateJobExecution");
+            using var scope = _jobExecutionsClientDiagnostics.CreateScope("SqlServerJobResource.CreateJobExecution");
             scope.Start();
             try
             {
-                var response = _sqlServerJobExecutionJobExecutionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerJobExecutionResource>(new SqlServerJobExecutionOperationSource(Client), _sqlServerJobExecutionJobExecutionsClientDiagnostics, Pipeline, _sqlServerJobExecutionJobExecutionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _jobExecutionsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new SqlArmOperation<BaseSqlServerJobExecutionResource>(new BaseSqlServerJobExecutionOperationSource(Client), _jobExecutionsClientDiagnostics, Pipeline, _jobExecutionsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

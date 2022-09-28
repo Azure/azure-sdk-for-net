@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an authorization rule for a queue by rule name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}
         /// Operation Id: QueueAuthorizationRules_Get
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an authorization rule for a queue by rule name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}
         /// Operation Id: QueueAuthorizationRules_Get
@@ -262,8 +260,8 @@ namespace Azure.ResourceManager.ServiceBus
                 throw;
             }
         }
+
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Primary and secondary connection strings to the queue.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}/ListKeys
         /// Operation Id: QueueAuthorizationRules_ListKeys
@@ -286,7 +284,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Primary and secondary connection strings to the queue.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/queues/{queueName}/authorizationRules/{authorizationRuleName}/ListKeys
         /// Operation Id: QueueAuthorizationRules_ListKeys

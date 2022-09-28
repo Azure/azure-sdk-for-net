@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BaseScheduleResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BaseScheduleResource> GetSchedulesAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ScheduleResource> GetSchedulesAsync(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSchedulesAsync(expand, filter, top, orderby, cancellationToken);
         }
@@ -125,8 +125,8 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: &apos;$top=10&apos;. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: &apos;$orderby=name desc&apos;. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BaseScheduleResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BaseScheduleResource> GetSchedules(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ScheduleResource> GetSchedules(this SubscriptionResource subscriptionResource, string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetSchedules(expand, filter, top, orderby, cancellationToken);
         }

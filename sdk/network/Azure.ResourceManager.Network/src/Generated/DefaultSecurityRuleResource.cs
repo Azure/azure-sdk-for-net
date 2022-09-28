@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get the specified default network security rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}
         /// Operation Id: DefaultSecurityRules_Get
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get the specified default network security rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/defaultSecurityRules/{defaultSecurityRuleName}
         /// Operation Id: DefaultSecurityRules_Get

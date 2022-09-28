@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedDatabaseSensitivityLabelCollection : ArmCollection
     {
+        private readonly ClientDiagnostics _managedDatabaseSensitivityLabelsClientDiagnostics;
+        private readonly ManagedDatabaseSensitivityLabelsRestOperations _managedDatabaseSensitivityLabelsRestClient;
         private readonly ClientDiagnostics _managedDatabaseSensitivityLabelClientDiagnostics;
         private readonly ManagedDatabaseSensitivityLabelsRestOperations _managedDatabaseSensitivityLabelRestClient;
 
@@ -37,6 +39,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal ManagedDatabaseSensitivityLabelCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _managedDatabaseSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _managedDatabaseSensitivityLabelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseSensitivityLabelResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ManagedDatabaseSensitivityLabelResource.ResourceType, out string managedDatabaseSensitivityLabelApiVersion);
             _managedDatabaseSensitivityLabelRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseSensitivityLabelApiVersion);
@@ -60,16 +64,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The column sensitivity label resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ManagedDatabaseSensitivityLabelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SensitivityLabelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelCollection.CreateOrUpdate");
+            using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseSensitivityLabelRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<ManagedDatabaseSensitivityLabelResource>(Response.FromValue(new ManagedDatabaseSensitivityLabelResource(Client, response), response.GetRawResponse()));
+                var response = await _managedDatabaseSensitivityLabelsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<SensitivityLabelResource>(Response.FromValue(SensitivityLabelResource.GetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,16 +94,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The column sensitivity label resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ManagedDatabaseSensitivityLabelResource> CreateOrUpdate(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SensitivityLabelResource> CreateOrUpdate(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelCollection.CreateOrUpdate");
+            using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseSensitivityLabelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _managedDatabaseSensitivityLabelRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<ManagedDatabaseSensitivityLabelResource>(Response.FromValue(new ManagedDatabaseSensitivityLabelResource(Client, response), response.GetRawResponse()));
+                var response = _managedDatabaseSensitivityLabelsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new SqlArmOperation<SensitivityLabelResource>(Response.FromValue(SensitivityLabelResource.GetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

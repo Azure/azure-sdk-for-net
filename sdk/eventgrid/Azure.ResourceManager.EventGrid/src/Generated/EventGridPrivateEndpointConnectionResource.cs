@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="EventGridTopicPrivateEndpointConnectionResource" />, <see cref="EventGridDomainPrivateEndpointConnectionResource" /> or <see cref="EventGridPartnerNamespacePrivateEndpointConnectionResource" />. </summary>
     public abstract partial class EventGridPrivateEndpointConnectionResource : ArmResource
     {
         internal static EventGridPrivateEndpointConnectionResource GetResource(ArmClient client, EventGridPrivateEndpointConnectionData data)
@@ -185,6 +185,8 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public async Task<ArmOperation<EventGridPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -203,6 +205,8 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public ArmOperation<EventGridPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(waitUntil, data, cancellationToken);
         }
     }

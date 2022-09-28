@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="LogsSiteConfigResource" /> or <see cref="LogsSiteSlotConfigResource" />. </summary>
     public abstract partial class SiteLogsConfigResource : ArmResource
     {
         internal static SiteLogsConfigResource GetResource(ArmClient client, SiteLogsConfigData data)
@@ -148,6 +148,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public async Task<ArmOperation<SiteLogsConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -166,6 +168,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public ArmOperation<SiteLogsConfigResource> CreateOrUpdate(WaitUntil waitUntil, SiteLogsConfigData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return CreateOrUpdateCore(waitUntil, data, cancellationToken);
         }
     }

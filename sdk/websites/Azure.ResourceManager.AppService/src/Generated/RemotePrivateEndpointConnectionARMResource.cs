@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="HostingEnvironmentPrivateEndpointConnectionResource" />, <see cref="StaticSitePrivateEndpointConnectionResource" />, <see cref="SitePrivateEndpointConnectionResource" /> or <see cref="SiteSlotPrivateEndpointConnectionResource" />. </summary>
     public abstract partial class RemotePrivateEndpointConnectionARMResource : ArmResource
     {
         internal static RemotePrivateEndpointConnectionARMResource GetResource(ArmClient client, RemotePrivateEndpointConnectionARMResourceData data)
@@ -205,6 +205,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public async Task<ArmOperation<RemotePrivateEndpointConnectionARMResource>> UpdateAsync(WaitUntil waitUntil, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(info, nameof(info));
+
             return await UpdateCoreAsync(waitUntil, info, cancellationToken).ConfigureAwait(false);
         }
 
@@ -223,6 +225,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public ArmOperation<RemotePrivateEndpointConnectionARMResource> Update(WaitUntil waitUntil, PrivateLinkConnectionApprovalRequestInfo info, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(info, nameof(info));
+
             return UpdateCore(waitUntil, info, cancellationToken);
         }
     }

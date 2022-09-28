@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get a specific application for the requested scope by applicationId
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
         /// Operation Id: SecurityConnectorApplications_Get
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get a specific application for the requested scope by applicationId
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
         /// Operation Id: SecurityConnectorApplications_Get
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete an Application over a given scope
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
         /// Operation Id: SecurityConnectorApplications_Delete
@@ -178,7 +175,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete an Application over a given scope
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
         /// Operation Id: SecurityConnectorApplications_Delete
@@ -205,7 +201,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates or update a security Application on the given security connector.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
         /// Operation Id: SecurityConnectorApplications_CreateOrUpdate
@@ -247,12 +242,13 @@ namespace Azure.ResourceManager.SecurityCenter
         [ForwardsClientCalls]
         public new async Task<ArmOperation<SecurityConnectorApplicationResource>> UpdateAsync(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             return new SecurityCenterArmOperation<SecurityConnectorApplicationResource>(Response.FromValue((SecurityConnectorApplicationResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates or update a security Application on the given security connector.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/securityConnectors/{securityConnectorName}/providers/Microsoft.Security/applications/{applicationId}
         /// Operation Id: SecurityConnectorApplications_CreateOrUpdate
@@ -294,6 +290,8 @@ namespace Azure.ResourceManager.SecurityCenter
         [ForwardsClientCalls]
         public new ArmOperation<SecurityConnectorApplicationResource> Update(WaitUntil waitUntil, ApplicationData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(waitUntil, data, cancellationToken);
             return new SecurityCenterArmOperation<SecurityConnectorApplicationResource>(Response.FromValue((SecurityConnectorApplicationResource)result.Value, result.GetRawResponse()));
         }

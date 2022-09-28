@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets the details of the Diagnostic for an API specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/diagnostics/{diagnosticId}
         /// Operation Id: ApiDiagnostic_Get
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets the details of the Diagnostic for an API specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/diagnostics/{diagnosticId}
         /// Operation Id: ApiDiagnostic_Get
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes the specified Diagnostic from an API.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/diagnostics/{diagnosticId}
         /// Operation Id: ApiDiagnostic_Delete
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes the specified Diagnostic from an API.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/diagnostics/{diagnosticId}
         /// Operation Id: ApiDiagnostic_Delete
@@ -207,7 +203,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Updates the details of the Diagnostic for an API specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/diagnostics/{diagnosticId}
         /// Operation Id: ApiDiagnostic_Update
@@ -246,12 +241,13 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public new async Task<Response<ApiDiagnosticResource>> UpdateAsync(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(ifMatch, data, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((ApiDiagnosticResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Updates the details of the Diagnostic for an API specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/diagnostics/{diagnosticId}
         /// Operation Id: ApiDiagnostic_Update
@@ -290,12 +286,13 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public new Response<ApiDiagnosticResource> Update(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(ifMatch, data, cancellationToken);
             return Response.FromValue((ApiDiagnosticResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation GetEntityTag
         /// Gets the entity state (Etag) version of the Diagnostic for an API specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/diagnostics/{diagnosticId}
         /// Operation Id: ApiDiagnostic_GetEntityTag
@@ -318,7 +315,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation GetEntityTag
         /// Gets the entity state (Etag) version of the Diagnostic for an API specified by its identifier.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/diagnostics/{diagnosticId}
         /// Operation Id: ApiDiagnostic_GetEntityTag

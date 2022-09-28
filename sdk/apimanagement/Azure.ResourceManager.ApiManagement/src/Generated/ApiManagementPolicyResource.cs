@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get the Global policy definition of the Api Management service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
         /// Operation Id: Policy_Get
@@ -116,7 +115,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get the Global policy definition of the Api Management service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
         /// Operation Id: Policy_Get
@@ -156,7 +154,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes the global policy configuration of the Api Management Service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
         /// Operation Id: Policy_Delete
@@ -184,7 +181,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes the global policy configuration of the Api Management Service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
         /// Operation Id: Policy_Delete
@@ -212,7 +208,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates or updates the global policy configuration of the Api Management service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
         /// Operation Id: Policy_CreateOrUpdate
@@ -256,12 +251,13 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public new async Task<ArmOperation<ApiManagementPolicyResource>> UpdateAsync(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(waitUntil, data, ifMatch, cancellationToken).ConfigureAwait(false);
             return new ApiManagementArmOperation<ApiManagementPolicyResource>(Response.FromValue((ApiManagementPolicyResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates or updates the global policy configuration of the Api Management service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
         /// Operation Id: Policy_CreateOrUpdate
@@ -305,12 +301,13 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public new ArmOperation<ApiManagementPolicyResource> Update(WaitUntil waitUntil, PolicyContractData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(waitUntil, data, ifMatch, cancellationToken);
             return new ApiManagementArmOperation<ApiManagementPolicyResource>(Response.FromValue((ApiManagementPolicyResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation GetEntityTag
         /// Gets the entity state (Etag) version of the Global policy definition in the Api Management service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
         /// Operation Id: Policy_GetEntityTag
@@ -333,7 +330,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// The core implementation for operation GetEntityTag
         /// Gets the entity state (Etag) version of the Global policy definition in the Api Management service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policies/{policyId}
         /// Operation Id: Policy_GetEntityTag

@@ -114,7 +114,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}
         /// Operation Id: WebApps_GetProcessSlot
@@ -152,7 +151,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Get process information by its ID for a specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}
         /// Operation Id: WebApps_GetProcessSlot
@@ -190,7 +188,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}
         /// Operation Id: WebApps_DeleteProcessSlot
@@ -217,7 +214,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Description for Terminate a process by its ID for a web site, or a deployment slot, or specific scaled-out instance in a web site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/processes/{processId}
         /// Operation Id: WebApps_DeleteProcessSlot

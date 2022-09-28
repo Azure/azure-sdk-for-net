@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get the specified network security rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
         /// Operation Id: SecurityRules_Get
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get the specified network security rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}/securityRules/{securityRuleName}
         /// Operation Id: SecurityRules_Get

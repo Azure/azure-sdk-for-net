@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SiteInstanceResource" /> or <see cref="SiteSlotInstanceResource" />. </summary>
     public abstract partial class WebSiteInstanceStatusResource : ArmResource
     {
         internal static WebSiteInstanceStatusResource GetResource(ArmClient client, WebSiteInstanceStatusData data)

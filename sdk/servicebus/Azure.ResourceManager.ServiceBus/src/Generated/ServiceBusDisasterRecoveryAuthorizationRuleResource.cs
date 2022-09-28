@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an authorization rule for a namespace by rule name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
         /// Operation Id: DisasterRecoveryAuthorizationRules_Get
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an authorization rule for a namespace by rule name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}
         /// Operation Id: DisasterRecoveryAuthorizationRules_Get
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Gets the primary and secondary connection strings for the namespace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}/listKeys
         /// Operation Id: DisasterRecoveryAuthorizationRules_ListKeys
@@ -175,7 +172,6 @@ namespace Azure.ResourceManager.ServiceBus
         }
 
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Gets the primary and secondary connection strings for the namespace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}/listKeys
         /// Operation Id: DisasterRecoveryAuthorizationRules_ListKeys

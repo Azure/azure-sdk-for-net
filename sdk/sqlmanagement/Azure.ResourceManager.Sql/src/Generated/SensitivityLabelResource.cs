@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="ManagedDatabaseSensitivityLabelResource" /> or <see cref="SqlDatabaseSensitivityLabelResource" />. </summary>
     public abstract partial class SensitivityLabelResource : ArmResource
     {
         internal static SensitivityLabelResource GetResource(ArmClient client, SensitivityLabelData data)
@@ -166,6 +166,8 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public async Task<ArmOperation<SensitivityLabelResource>> UpdateAsync(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -184,6 +186,8 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public ArmOperation<SensitivityLabelResource> Update(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(waitUntil, data, cancellationToken);
         }
     }

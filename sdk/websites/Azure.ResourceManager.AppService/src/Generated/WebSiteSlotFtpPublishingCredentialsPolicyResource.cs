@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Returns whether FTP is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
         /// Operation Id: WebApps_GetFtpAllowedSlot
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Returns whether FTP is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
         /// Operation Id: WebApps_GetFtpAllowedSlot
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation CreateOrUpdate
         /// Description for Updates whether FTP is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
         /// Operation Id: WebApps_UpdateFtpAllowedSlot
@@ -193,12 +190,13 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new async Task<ArmOperation<WebSiteSlotFtpPublishingCredentialsPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             return new AppServiceArmOperation<WebSiteSlotFtpPublishingCredentialsPolicyResource>(Response.FromValue((WebSiteSlotFtpPublishingCredentialsPolicyResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation CreateOrUpdate
         /// Description for Updates whether FTP is allowed on the site or not.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/basicPublishingCredentialsPolicies/ftp
         /// Operation Id: WebApps_UpdateFtpAllowedSlot
@@ -240,6 +238,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new ArmOperation<WebSiteSlotFtpPublishingCredentialsPolicyResource> CreateOrUpdate(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = CreateOrUpdateCore(waitUntil, data, cancellationToken);
             return new AppServiceArmOperation<WebSiteSlotFtpPublishingCredentialsPolicyResource>(Response.FromValue((WebSiteSlotFtpPublishingCredentialsPolicyResource)result.Value, result.GetRawResponse()));
         }

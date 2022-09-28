@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.GuestConfiguration
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     internal partial class SubscriptionResourceExtensionClient : ArmResource
     {
-        private ClientDiagnostics _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics;
-        private GuestConfigurationAssignmentsRestOperations _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient;
+        private ClientDiagnostics _guestConfigurationAssignmentClientDiagnostics;
+        private GuestConfigurationAssignmentsRestOperations _guestConfigurationAssignmentRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="SubscriptionResourceExtensionClient"/> class for mocking. </summary>
         protected SubscriptionResourceExtensionClient()
@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
         }
 
-        private ClientDiagnostics GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics => _guestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", GuestConfigurationVmAssignmentResource.ResourceType.Namespace, Diagnostics);
-        private GuestConfigurationAssignmentsRestOperations GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient => _guestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient ??= new GuestConfigurationAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(GuestConfigurationVmAssignmentResource.ResourceType));
+        private ClientDiagnostics GuestConfigurationAssignmentClientDiagnostics => _guestConfigurationAssignmentClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.GuestConfiguration", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private GuestConfigurationAssignmentsRestOperations GuestConfigurationAssignmentRestClient => _guestConfigurationAssignmentRestClient ??= new GuestConfigurationAssignmentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             async Task<Page<GuestConfigurationAssignmentResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGuestConfigurationAssignments");
+                using var scope = GuestConfigurationAssignmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGuestConfigurationAssignments");
                 scope.Start();
                 try
                 {
-                    var response = await GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.SubscriptionListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await GuestConfigurationAssignmentRestClient.SubscriptionListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => GuestConfigurationAssignmentResource.GetResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.GuestConfiguration
         {
             Page<GuestConfigurationAssignmentResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGuestConfigurationAssignments");
+                using var scope = GuestConfigurationAssignmentClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetGuestConfigurationAssignments");
                 scope.Start();
                 try
                 {
-                    var response = GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.SubscriptionList(Id.SubscriptionId, cancellationToken: cancellationToken);
+                    var response = GuestConfigurationAssignmentRestClient.SubscriptionList(Id.SubscriptionId, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => GuestConfigurationAssignmentResource.GetResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)

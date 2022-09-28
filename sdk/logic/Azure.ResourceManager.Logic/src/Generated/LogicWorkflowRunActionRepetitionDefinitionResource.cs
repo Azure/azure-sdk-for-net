@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Logic
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="LogicWorkflowRunActionRepetitionResource" /> or <see cref="LogicWorkflowRunActionScopeRepetitionResource" />. </summary>
     public abstract partial class LogicWorkflowRunActionRepetitionDefinitionResource : ArmResource
     {
         internal static LogicWorkflowRunActionRepetitionDefinitionResource GetResource(ArmClient client, LogicWorkflowRunActionRepetitionDefinitionData data)

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="AscLocationLocationAlertResource" /> or <see cref="ResourceGroupLocationAlertResource" />. </summary>
     public abstract partial class AlertResource : ArmResource
     {
         internal static AlertResource GetResource(ArmClient client, AlertData data)

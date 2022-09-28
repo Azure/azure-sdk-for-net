@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="ApiIssueResource" /> or <see cref="ApiManagementIssueResource" />. </summary>
     public abstract partial class IssueContractResource : ArmResource
     {
         internal static IssueContractResource GetResource(ArmClient client, IssueContractData data)

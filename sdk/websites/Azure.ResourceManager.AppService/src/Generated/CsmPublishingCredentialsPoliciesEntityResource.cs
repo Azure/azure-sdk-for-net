@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="WebSiteFtpPublishingCredentialsPolicyResource" />, <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" />, <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource" /> or <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" />. </summary>
     public abstract partial class CsmPublishingCredentialsPoliciesEntityResource : ArmResource
     {
         internal static CsmPublishingCredentialsPoliciesEntityResource GetResource(ArmClient client, CsmPublishingCredentialsPoliciesEntityData data)
@@ -196,6 +196,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public async Task<ArmOperation<CsmPublishingCredentialsPoliciesEntityResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -214,6 +216,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public ArmOperation<CsmPublishingCredentialsPoliciesEntityResource> CreateOrUpdate(WaitUntil waitUntil, CsmPublishingCredentialsPoliciesEntityData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return CreateOrUpdateCore(waitUntil, data, cancellationToken);
         }
     }

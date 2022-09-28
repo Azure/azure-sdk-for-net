@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SiteExtensionResource" />, <see cref="SiteInstanceExtensionResource" />, <see cref="SiteSlotExtensionResource" /> or <see cref="SiteSlotInstanceExtensionResource" />. </summary>
     public abstract partial class MSDeployStatusResource : ArmResource
     {
         internal static MSDeployStatusResource GetResource(ArmClient client, MSDeployStatusData data)
@@ -197,6 +197,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public async Task<ArmOperation<MSDeployStatusResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(msDeploy, nameof(msDeploy));
+
             return await CreateOrUpdateCoreAsync(waitUntil, msDeploy, cancellationToken).ConfigureAwait(false);
         }
 
@@ -215,6 +217,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public ArmOperation<MSDeployStatusResource> CreateOrUpdate(WaitUntil waitUntil, MSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(msDeploy, nameof(msDeploy));
+
             return CreateOrUpdateCore(waitUntil, msDeploy, cancellationToken);
         }
     }

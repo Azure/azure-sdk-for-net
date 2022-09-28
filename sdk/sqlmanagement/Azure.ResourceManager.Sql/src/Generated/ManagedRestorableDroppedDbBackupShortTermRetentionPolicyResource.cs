@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a dropped database&apos;s short term retention policy.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}/backupShortTermRetentionPolicies/{policyName}
         /// Operation Id: ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Get
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a dropped database&apos;s short term retention policy.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}/backupShortTermRetentionPolicies/{policyName}
         /// Operation Id: ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Get
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Sets a database&apos;s short term retention policy.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}/backupShortTermRetentionPolicies/{policyName}
         /// Operation Id: ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Update
@@ -194,6 +191,8 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public new async Task<ArmOperation<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource>> UpdateAsync(WaitUntil waitUntil, ManagedBackupShortTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
@@ -204,7 +203,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Sets a database&apos;s short term retention policy.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}/backupShortTermRetentionPolicies/{policyName}
         /// Operation Id: ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies_Update
@@ -246,6 +244,8 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public new ArmOperation<ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource> Update(WaitUntil waitUntil, ManagedBackupShortTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(waitUntil, data, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {

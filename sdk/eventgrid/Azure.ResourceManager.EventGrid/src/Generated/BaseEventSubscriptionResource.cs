@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="TopicEventSubscriptionResource" />, <see cref="DomainEventSubscriptionResource" />, <see cref="EventSubscriptionResource" />, <see cref="DomainTopicEventSubscriptionResource" />, <see cref="SystemTopicEventSubscriptionResource" /> or <see cref="PartnerTopicEventSubscriptionResource" />. </summary>
     public abstract partial class BaseEventSubscriptionResource : ArmResource
     {
         internal static BaseEventSubscriptionResource GetResource(ArmClient client, EventSubscriptionData data)
@@ -238,6 +238,8 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public async Task<ArmOperation<BaseEventSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             return await UpdateCoreAsync(waitUntil, patch, cancellationToken).ConfigureAwait(false);
         }
 
@@ -256,6 +258,8 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public ArmOperation<BaseEventSubscriptionResource> Update(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             return UpdateCore(waitUntil, patch, cancellationToken);
         }
 
@@ -265,6 +269,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> The default implementation for operation GetDeliveryAttributes. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
         public AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesAsync(CancellationToken cancellationToken = default)
         {
@@ -277,6 +282,7 @@ namespace Azure.ResourceManager.EventGrid
 
         /// <summary> The default implementation for operation GetDeliveryAttributes. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
         public Pageable<DeliveryAttributeMapping> GetDeliveryAttributes(CancellationToken cancellationToken = default)
         {

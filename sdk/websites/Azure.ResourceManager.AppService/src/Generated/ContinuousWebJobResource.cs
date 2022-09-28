@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="WebSiteContinuousWebJobResource" /> or <see cref="WebSiteSlotContinuousWebJobResource" />. </summary>
     public abstract partial class ContinuousWebJobResource : ArmResource
     {
         internal static ContinuousWebJobResource GetResource(ArmClient client, ContinuousWebJobData data)

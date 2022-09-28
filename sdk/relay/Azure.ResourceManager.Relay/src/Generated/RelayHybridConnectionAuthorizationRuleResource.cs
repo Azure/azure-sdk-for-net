@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Hybrid connection authorization rule for a hybrid connection by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}
         /// Operation Id: HybridConnections_GetAuthorizationRule
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Hybrid connection authorization rule for a hybrid connection by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}
         /// Operation Id: HybridConnections_GetAuthorizationRule
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a hybrid connection authorization rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}
         /// Operation Id: HybridConnections_DeleteAuthorizationRule
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a hybrid connection authorization rule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}
         /// Operation Id: HybridConnections_DeleteAuthorizationRule
@@ -206,7 +202,6 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates or updates an authorization rule for a hybrid connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}
         /// Operation Id: HybridConnections_CreateOrUpdateAuthorizationRule
@@ -248,12 +243,13 @@ namespace Azure.ResourceManager.Relay
         [ForwardsClientCalls]
         public new async Task<ArmOperation<RelayHybridConnectionAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             return new RelayArmOperation<RelayHybridConnectionAuthorizationRuleResource>(Response.FromValue((RelayHybridConnectionAuthorizationRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates or updates an authorization rule for a hybrid connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}
         /// Operation Id: HybridConnections_CreateOrUpdateAuthorizationRule
@@ -295,12 +291,13 @@ namespace Azure.ResourceManager.Relay
         [ForwardsClientCalls]
         public new ArmOperation<RelayHybridConnectionAuthorizationRuleResource> Update(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(waitUntil, data, cancellationToken);
             return new RelayArmOperation<RelayHybridConnectionAuthorizationRuleResource>(Response.FromValue((RelayHybridConnectionAuthorizationRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Primary and secondary connection strings to the hybrid connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}/listKeys
         /// Operation Id: HybridConnections_ListKeys
@@ -323,7 +320,6 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Primary and secondary connection strings to the hybrid connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}/listKeys
         /// Operation Id: HybridConnections_ListKeys
@@ -346,7 +342,6 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// The core implementation for operation RegenerateKeys
         /// Regenerates the primary or secondary connection strings to the hybrid connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}/regenerateKeys
         /// Operation Id: HybridConnections_RegenerateKeys
@@ -373,7 +368,6 @@ namespace Azure.ResourceManager.Relay
         }
 
         /// <summary>
-        /// The core implementation for operation RegenerateKeys
         /// Regenerates the primary or secondary connection strings to the hybrid connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/hybridConnections/{hybridConnectionName}/authorizationRules/{authorizationRuleName}/regenerateKeys
         /// Operation Id: HybridConnections_RegenerateKeys

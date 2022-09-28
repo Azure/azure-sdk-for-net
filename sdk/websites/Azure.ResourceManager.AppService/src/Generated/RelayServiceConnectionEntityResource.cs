@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="WebSiteHybridConnectionResource" /> or <see cref="WebSiteSlotHybridConnectionResource" />. </summary>
     public abstract partial class RelayServiceConnectionEntityResource : ArmResource
     {
         internal static RelayServiceConnectionEntityResource GetResource(ArmClient client, RelayServiceConnectionEntityData data)
@@ -164,6 +164,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public async Task<Response<RelayServiceConnectionEntityResource>> UpdateAsync(RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -180,6 +182,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public Response<RelayServiceConnectionEntityResource> Update(RelayServiceConnectionEntityData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(data, cancellationToken);
         }
     }

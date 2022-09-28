@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SiteDomainOwnershipIdentifierResource" /> or <see cref="SiteSlotDomainOwnershipIdentifierResource" />. </summary>
     public abstract partial class IdentifierResource : ArmResource
     {
         internal static IdentifierResource GetResource(ArmClient client, IdentifierData data)
@@ -164,6 +164,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public async Task<Response<IdentifierResource>> UpdateAsync(IdentifierData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -180,6 +182,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public Response<IdentifierResource> Update(IdentifierData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(data, cancellationToken);
         }
     }

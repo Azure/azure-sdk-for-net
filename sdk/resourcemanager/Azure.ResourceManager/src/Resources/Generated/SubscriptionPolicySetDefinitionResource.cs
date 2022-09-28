@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// This operation retrieves the policy set definition in the given subscription with the given name.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_Get
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// This operation retrieves the policy set definition in the given subscription with the given name.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_Get

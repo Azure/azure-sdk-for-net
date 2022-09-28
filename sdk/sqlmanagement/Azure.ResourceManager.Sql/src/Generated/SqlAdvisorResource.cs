@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SqlDatabaseAdvisorResource" /> or <see cref="SqlServerAdvisorResource" />. </summary>
     public abstract partial class SqlAdvisorResource : ArmResource
     {
         internal static SqlAdvisorResource GetResource(ArmClient client, SqlAdvisorData data)
@@ -136,6 +136,8 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public async Task<Response<SqlAdvisorResource>> UpdateAsync(SqlAdvisorData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -152,6 +154,8 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public Response<SqlAdvisorResource> Update(SqlAdvisorData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(data, cancellationToken);
         }
     }

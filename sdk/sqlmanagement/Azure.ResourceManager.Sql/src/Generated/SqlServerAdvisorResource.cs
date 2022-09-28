@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a server advisor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}
         /// Operation Id: ServerAdvisors_Get
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a server advisor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}
         /// Operation Id: ServerAdvisors_Get
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Updates a server advisor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}
         /// Operation Id: ServerAdvisors_Update
@@ -188,12 +185,13 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public new async Task<Response<SqlServerAdvisorResource>> UpdateAsync(SqlAdvisorData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((SqlServerAdvisorResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Updates a server advisor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}
         /// Operation Id: ServerAdvisors_Update
@@ -230,6 +228,8 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public new Response<SqlServerAdvisorResource> Update(SqlAdvisorData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(data, cancellationToken);
             return Response.FromValue((SqlServerAdvisorResource)result.Value, result.GetRawResponse());
         }

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource" />, <see cref="SiteSlotVirtualNetworkConnectionGatewayResource" /> or <see cref="SiteVirtualNetworkConnectionGatewayResource" />. </summary>
     public abstract partial class VnetGatewayResource : ArmResource
     {
         internal static VnetGatewayResource GetResource(ArmClient client, VnetGatewayData data)

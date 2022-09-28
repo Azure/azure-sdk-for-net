@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="AscLocationLocationTaskResource" /> or <see cref="ResourceGroupLocationTaskResource" />. </summary>
     public abstract partial class SecurityTaskResource : ArmResource
     {
         internal static SecurityTaskResource GetResource(ArmClient client, SecurityTaskData data)

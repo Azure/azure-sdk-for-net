@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get metadata information on an assessment type in a specific subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}
         /// Operation Id: AssessmentsMetadata_GetInSubscription
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get metadata information on an assessment type in a specific subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}
         /// Operation Id: AssessmentsMetadata_GetInSubscription

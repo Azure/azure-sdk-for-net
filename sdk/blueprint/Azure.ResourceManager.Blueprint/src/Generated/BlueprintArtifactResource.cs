@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get a blueprint artifact.
         /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts/{artifactName}
         /// Operation Id: Artifacts_Get
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.Blueprint
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get a blueprint artifact.
         /// Request Path: /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/artifacts/{artifactName}
         /// Operation Id: Artifacts_Get

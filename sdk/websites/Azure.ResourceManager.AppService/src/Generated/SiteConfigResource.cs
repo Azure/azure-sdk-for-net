@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="WebSiteConfigResource" />, <see cref="SiteConfigSnapshotResource" />, <see cref="WebSiteSlotConfigResource" /> or <see cref="SiteSlotConfigSnapshotResource" />. </summary>
     public abstract partial class SiteConfigResource : ArmResource
     {
         internal static SiteConfigResource GetResource(ArmClient client, SiteConfigData data)

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SiteDeploymentResource" /> or <see cref="SiteSlotDeploymentResource" />. </summary>
     public abstract partial class DeploymentResource : ArmResource
     {
         internal static DeploymentResource GetResource(ArmClient client, DeploymentData data)
@@ -166,6 +166,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public async Task<ArmOperation<DeploymentResource>> UpdateAsync(WaitUntil waitUntil, DeploymentData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -184,6 +186,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public ArmOperation<DeploymentResource> Update(WaitUntil waitUntil, DeploymentData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(waitUntil, data, cancellationToken);
         }
     }

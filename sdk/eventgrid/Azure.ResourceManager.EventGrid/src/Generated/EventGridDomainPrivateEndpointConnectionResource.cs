@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get a specific private endpoint connection under a topic, domain, or partner namespace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
@@ -115,7 +114,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get a specific private endpoint connection under a topic, domain, or partner namespace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Get
@@ -153,7 +151,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete a specific private endpoint connection under a topic, domain, or partner namespace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Delete
@@ -180,7 +177,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete a specific private endpoint connection under a topic, domain, or partner namespace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Delete
@@ -207,7 +203,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Update a specific private endpoint connection under a topic, domain or partner namespace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Update
@@ -249,6 +244,8 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public new async Task<ArmOperation<EventGridDomainPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
@@ -259,7 +256,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Update a specific private endpoint connection under a topic, domain or partner namespace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: PrivateEndpointConnections_Update
@@ -301,6 +297,8 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public new ArmOperation<EventGridDomainPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, EventGridPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(waitUntil, data, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {

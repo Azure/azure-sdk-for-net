@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Returns a Cognitive Services account specified by the parameters.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
         /// Operation Id: DeletedAccounts_Get
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Returns a Cognitive Services account specified by the parameters.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
         /// Operation Id: DeletedAccounts_Get
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a Cognitive Services account from the resource group. 
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
         /// Operation Id: DeletedAccounts_Purge
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a Cognitive Services account from the resource group. 
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
         /// Operation Id: DeletedAccounts_Purge

@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="HealthcareApisServicePrivateLinkResource" /> or <see cref="HealthcareApisWorkspacePrivateLinkResource" />. </summary>
     public abstract partial class HealthcareApisPrivateLinkResource : ArmResource
     {
         internal static HealthcareApisPrivateLinkResource GetResource(ArmClient client, HealthcareApisPrivateLinkResourceData data)

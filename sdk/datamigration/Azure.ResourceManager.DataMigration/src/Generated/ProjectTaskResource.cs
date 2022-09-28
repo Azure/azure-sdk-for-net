@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="ServiceProjectTaskResource" /> or <see cref="ServiceServiceTaskResource" />. </summary>
     public abstract partial class ProjectTaskResource : ArmResource
     {
         internal static ProjectTaskResource GetResource(ArmClient client, ProjectTaskData data)
@@ -172,6 +172,8 @@ namespace Azure.ResourceManager.DataMigration
         [ForwardsClientCalls]
         public async Task<Response<ProjectTaskResource>> UpdateAsync(ProjectTaskData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -188,6 +190,8 @@ namespace Azure.ResourceManager.DataMigration
         [ForwardsClientCalls]
         public Response<ProjectTaskResource> Update(ProjectTaskData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(data, cancellationToken);
         }
 

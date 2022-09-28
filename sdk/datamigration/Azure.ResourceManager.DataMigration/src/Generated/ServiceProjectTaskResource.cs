@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The GET method retrieves information about a task.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}
         /// Operation Id: Tasks_Get
@@ -116,7 +115,6 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The GET method retrieves information about a task.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}
         /// Operation Id: Tasks_Get
@@ -156,7 +154,6 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a task, canceling it first if it&apos;s running.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}
         /// Operation Id: Tasks_Delete
@@ -184,7 +181,6 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The DELETE method deletes a task, canceling it first if it&apos;s running.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}
         /// Operation Id: Tasks_Delete
@@ -212,7 +208,6 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The PATCH method updates an existing task, but since tasks have no mutable custom properties, there is little reason to do so.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}
         /// Operation Id: Tasks_Update
@@ -249,12 +244,13 @@ namespace Azure.ResourceManager.DataMigration
         [ForwardsClientCalls]
         public new async Task<Response<ServiceProjectTaskResource>> UpdateAsync(ProjectTaskData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((ServiceProjectTaskResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. The PATCH method updates an existing task, but since tasks have no mutable custom properties, there is little reason to do so.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}
         /// Operation Id: Tasks_Update
@@ -291,12 +287,13 @@ namespace Azure.ResourceManager.DataMigration
         [ForwardsClientCalls]
         public new Response<ServiceProjectTaskResource> Update(ProjectTaskData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(data, cancellationToken);
             return Response.FromValue((ServiceProjectTaskResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation Cancel
         /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a task if it&apos;s currently queued or running.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}/cancel
         /// Operation Id: Tasks_Cancel
@@ -332,7 +329,6 @@ namespace Azure.ResourceManager.DataMigration
         }
 
         /// <summary>
-        /// The core implementation for operation Cancel
         /// The tasks resource is a nested, proxy-only resource representing work performed by a DMS instance. This method cancels a task if it&apos;s currently queued or running.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}/tasks/{taskName}/cancel
         /// Operation Id: Tasks_Cancel

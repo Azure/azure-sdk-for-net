@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Dns
     /// from an instance of <see cref="ArmClient" /> using the GetCnameRecordResource method.
     /// Otherwise you can get one from its parent resource <see cref="DnsZoneResource" /> using the GetCnameRecord method.
     /// </summary>
-    public partial class CnameRecordResource : RecordSetResource
+    public partial class CnameRecordResource : RecordResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CnameRecordResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName)
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Dns
         /// <summary> Initializes a new instance of the <see cref = "CnameRecordResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CnameRecordResource(ArmClient client, RecordSetData data) : base(client, data)
+        internal CnameRecordResource(ArmClient client, RecordData data) : base(client, data)
         {
             _cnameRecordInfoRecordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string cnameRecordInfoRecordSetsApiVersion);
@@ -76,13 +76,12 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a record set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override async Task<Response<RecordSetResource>> GetCoreAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<RecordResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordResource.Get");
             scope.Start();
@@ -114,13 +113,12 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a record set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        protected override Response<RecordSetResource> GetCore(CancellationToken cancellationToken = default)
+        protected override Response<RecordResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _cnameRecordInfoRecordSetsClientDiagnostics.CreateScope("CnameRecordResource.Get");
             scope.Start();
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a record set from a DNS zone. This operation cannot be undone.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Delete
@@ -180,7 +177,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a record set from a DNS zone. This operation cannot be undone.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Delete
@@ -208,7 +204,6 @@ namespace Azure.ResourceManager.Dns
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Updates a record set within a DNS zone.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Update
@@ -217,7 +212,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected override async Task<Response<RecordSetResource>> UpdateCoreAsync(RecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        protected override async Task<Response<RecordResource>> UpdateCoreAsync(RecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -245,14 +240,15 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new async Task<Response<CnameRecordResource>> UpdateAsync(RecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public new async Task<Response<CnameRecordResource>> UpdateAsync(RecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(data, ifMatch, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((CnameRecordResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Updates a record set within a DNS zone.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/{recordType}/{relativeRecordSetName}
         /// Operation Id: RecordSets_Update
@@ -261,7 +257,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="ifMatch"> The etag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen etag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        protected override Response<RecordSetResource> UpdateCore(RecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        protected override Response<RecordResource> UpdateCore(RecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -289,8 +285,10 @@ namespace Azure.ResourceManager.Dns
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         [ForwardsClientCalls]
-        public new Response<CnameRecordResource> Update(RecordSetData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
+        public new Response<CnameRecordResource> Update(RecordData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(data, ifMatch, cancellationToken);
             return Response.FromValue((CnameRecordResource)result.Value, result.GetRawResponse());
         }

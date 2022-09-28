@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get schedule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
         /// Operation Id: VirtualMachineSchedules_Get
@@ -117,7 +116,6 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get schedule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
         /// Operation Id: VirtualMachineSchedules_Get
@@ -157,7 +155,6 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete schedule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
         /// Operation Id: VirtualMachineSchedules_Delete
@@ -184,7 +181,6 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete schedule.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
         /// Operation Id: VirtualMachineSchedules_Delete
@@ -211,7 +207,6 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Allows modifying tags of schedules. All other properties will be ignored.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
         /// Operation Id: VirtualMachineSchedules_Update
@@ -248,12 +243,13 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public new async Task<Response<LabVirtualmachineScheduleResource>> UpdateAsync(ScheduleFragment schedule, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(schedule, nameof(schedule));
+
             var result = await UpdateCoreAsync(schedule, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((LabVirtualmachineScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Allows modifying tags of schedules. All other properties will be ignored.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
         /// Operation Id: VirtualMachineSchedules_Update
@@ -290,12 +286,13 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public new Response<LabVirtualmachineScheduleResource> Update(ScheduleFragment schedule, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(schedule, nameof(schedule));
+
             var result = UpdateCore(schedule, cancellationToken);
             return Response.FromValue((LabVirtualmachineScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation Execute
         /// Execute a schedule. This operation can take a while to complete.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}/execute
         /// Operation Id: VirtualMachineSchedules_Execute
@@ -322,7 +319,6 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// The core implementation for operation Execute
         /// Execute a schedule. This operation can take a while to complete.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}/execute
         /// Operation Id: VirtualMachineSchedules_Execute
@@ -349,7 +345,6 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary>
-        /// The core implementation for operation AddTag
         /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
         /// Operation Id: VirtualMachineSchedules_Get
@@ -377,7 +372,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new ScheduleFragment();
                     foreach (var tag in current.Tags)
                     {
@@ -385,7 +380,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     patch.Tags[key] = value;
                     var result = await UpdateCoreAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return result;
                 }
             }
             catch (Exception e)
@@ -407,12 +402,14 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public new async Task<Response<LabVirtualmachineScheduleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             var result = await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((LabVirtualmachineScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation AddTag
         /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
         /// Operation Id: VirtualMachineSchedules_Get
@@ -440,7 +437,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new ScheduleFragment();
                     foreach (var tag in current.Tags)
                     {
@@ -448,7 +445,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     patch.Tags[key] = value;
                     var result = UpdateCore(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return result;
                 }
             }
             catch (Exception e)
@@ -470,12 +467,14 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public new Response<LabVirtualmachineScheduleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             var result = AddTagCore(key, value, cancellationToken);
             return Response.FromValue((LabVirtualmachineScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation SetTags
         /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
         /// Operation Id: VirtualMachineSchedules_Get
@@ -502,11 +501,11 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new ScheduleFragment();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateCoreAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return result;
                 }
             }
             catch (Exception e)
@@ -527,12 +526,13 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public new async Task<Response<LabVirtualmachineScheduleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             var result = await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((LabVirtualmachineScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation SetTags
         /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
         /// Operation Id: VirtualMachineSchedules_Get
@@ -559,11 +559,11 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new ScheduleFragment();
                     patch.Tags.ReplaceWith(tags);
                     var result = UpdateCore(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return result;
                 }
             }
             catch (Exception e)
@@ -584,12 +584,13 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public new Response<LabVirtualmachineScheduleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             var result = SetTagsCore(tags, cancellationToken);
             return Response.FromValue((LabVirtualmachineScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation RemoveTag
         /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
         /// Operation Id: VirtualMachineSchedules_Get
@@ -615,7 +616,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new ScheduleFragment();
                     foreach (var tag in current.Tags)
                     {
@@ -623,7 +624,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     patch.Tags.Remove(key);
                     var result = await UpdateCoreAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return result;
                 }
             }
             catch (Exception e)
@@ -644,12 +645,13 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public new async Task<Response<LabVirtualmachineScheduleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             var result = await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((LabVirtualmachineScheduleResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation RemoveTag
         /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{virtualMachineName}/schedules/{name}
         /// Operation Id: VirtualMachineSchedules_Get
@@ -675,7 +677,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new ScheduleFragment();
                     foreach (var tag in current.Tags)
                     {
@@ -683,7 +685,7 @@ namespace Azure.ResourceManager.DevTestLabs
                     }
                     patch.Tags.Remove(key);
                     var result = UpdateCore(patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return result;
                 }
             }
             catch (Exception e)
@@ -704,6 +706,8 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public new Response<LabVirtualmachineScheduleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             var result = RemoveTagCore(key, cancellationToken);
             return Response.FromValue((LabVirtualmachineScheduleResource)result.Value, result.GetRawResponse());
         }

@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// This operation retrieves the policy set definition in the given management group with the given name.
         /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_GetAtManagementGroup
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// This operation retrieves the policy set definition in the given management group with the given name.
         /// Request Path: /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}
         /// Operation Id: PolicySetDefinitions_GetAtManagementGroup

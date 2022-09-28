@@ -15,7 +15,7 @@ using Azure.ResourceManager.GuestConfiguration.Models;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="GuestConfigurationVmAssignmentResource" />, <see cref="GuestConfigurationHcrpAssignmentResource" /> or <see cref="GuestConfigurationVmssAssignmentResource" />. </summary>
     public abstract partial class GuestConfigurationAssignmentResource : ArmResource
     {
         internal static GuestConfigurationAssignmentResource GetResource(ArmClient client, GuestConfigurationAssignmentData data)
@@ -148,6 +148,7 @@ namespace Azure.ResourceManager.GuestConfiguration
 
         /// <summary> The default implementation for operation GetReports. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentReport" /> that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
         public AsyncPageable<GuestConfigurationAssignmentReport> GetReportsAsync(CancellationToken cancellationToken = default)
         {
@@ -160,6 +161,7 @@ namespace Azure.ResourceManager.GuestConfiguration
 
         /// <summary> The default implementation for operation GetReports. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport" /> that may take multiple service requests to iterate over. </returns>
         [ForwardsClientCalls]
         public Pageable<GuestConfigurationAssignmentReport> GetReports(CancellationToken cancellationToken = default)
         {
@@ -181,6 +183,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         [ForwardsClientCalls]
         public async Task<Response<GuestConfigurationAssignmentReport>> GetReportAsync(string reportId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
+
             return await GetReportCoreAsync(reportId, cancellationToken).ConfigureAwait(false);
         }
 
@@ -199,6 +203,8 @@ namespace Azure.ResourceManager.GuestConfiguration
         [ForwardsClientCalls]
         public Response<GuestConfigurationAssignmentReport> GetReport(string reportId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(reportId, nameof(reportId));
+
             return GetReportCore(reportId, cancellationToken);
         }
     }

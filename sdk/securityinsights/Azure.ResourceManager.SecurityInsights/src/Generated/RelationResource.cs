@@ -14,7 +14,7 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="BookmarkRelationResource" />, <see cref="EntityRelationResource" /> or <see cref="IncidentRelationResource" />. </summary>
     public abstract partial class RelationResource : ArmResource
     {
         internal static RelationResource GetResource(ArmClient client, RelationData data)

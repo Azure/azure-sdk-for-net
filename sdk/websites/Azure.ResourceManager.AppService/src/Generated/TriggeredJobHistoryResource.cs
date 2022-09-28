@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="WebSiteTriggeredWebJobHistoryResource" /> or <see cref="WebSiteSlotTriggeredWebJobHistoryResource" />. </summary>
     public abstract partial class TriggeredJobHistoryResource : ArmResource
     {
         internal static TriggeredJobHistoryResource GetResource(ArmClient client, TriggeredJobHistoryData data)

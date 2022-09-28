@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// The operation to get the run command.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}
         /// Operation Id: VirtualMachineRunCommands_GetByVirtualMachine
@@ -117,7 +116,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// The operation to get the run command.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}
         /// Operation Id: VirtualMachineRunCommands_GetByVirtualMachine
@@ -157,7 +155,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// The operation to delete the run command.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}
         /// Operation Id: VirtualMachineRunCommands_Delete
@@ -184,7 +181,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// The operation to delete the run command.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}
         /// Operation Id: VirtualMachineRunCommands_Delete
@@ -211,7 +207,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// The operation to update the run command.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}
         /// Operation Id: VirtualMachineRunCommands_Update
@@ -253,6 +248,8 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public new async Task<ArmOperation<VirtualMachineRunCommandResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(runCommand, nameof(runCommand));
+
             var result = await UpdateCoreAsync(waitUntil, runCommand, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
@@ -263,7 +260,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// The operation to update the run command.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}
         /// Operation Id: VirtualMachineRunCommands_Update
@@ -305,6 +301,8 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public new ArmOperation<VirtualMachineRunCommandResource> Update(WaitUntil waitUntil, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(runCommand, nameof(runCommand));
+
             var result = UpdateCore(waitUntil, runCommand, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {
@@ -315,7 +313,6 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The core implementation for operation AddTag
         /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}
         /// Operation Id: VirtualMachineRunCommands_GetByVirtualMachine
@@ -343,7 +340,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new VirtualMachineRunCommandUpdate();
                     foreach (var tag in current.Tags)
                     {
@@ -373,12 +370,14 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public new async Task<Response<VirtualMachineRunCommandResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             var result = await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((VirtualMachineRunCommandResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation AddTag
         /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}
         /// Operation Id: VirtualMachineRunCommands_GetByVirtualMachine
@@ -406,7 +405,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new VirtualMachineRunCommandUpdate();
                     foreach (var tag in current.Tags)
                     {
@@ -436,12 +435,14 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public new Response<VirtualMachineRunCommandResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             var result = AddTagCore(key, value, cancellationToken);
             return Response.FromValue((VirtualMachineRunCommandResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation SetTags
         /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}
         /// Operation Id: VirtualMachineRunCommands_GetByVirtualMachine
@@ -468,7 +469,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new VirtualMachineRunCommandUpdate();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateCoreAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -493,12 +494,13 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public new async Task<Response<VirtualMachineRunCommandResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             var result = await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((VirtualMachineRunCommandResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation SetTags
         /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}
         /// Operation Id: VirtualMachineRunCommands_GetByVirtualMachine
@@ -525,7 +527,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new VirtualMachineRunCommandUpdate();
                     patch.Tags.ReplaceWith(tags);
                     var result = UpdateCore(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
@@ -550,12 +552,13 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public new Response<VirtualMachineRunCommandResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             var result = SetTagsCore(tags, cancellationToken);
             return Response.FromValue((VirtualMachineRunCommandResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation RemoveTag
         /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}
         /// Operation Id: VirtualMachineRunCommands_GetByVirtualMachine
@@ -581,7 +584,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new VirtualMachineRunCommandUpdate();
                     foreach (var tag in current.Tags)
                     {
@@ -610,12 +613,13 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public new async Task<Response<VirtualMachineRunCommandResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             var result = await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((VirtualMachineRunCommandResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation RemoveTag
         /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/runCommands/{runCommandName}
         /// Operation Id: VirtualMachineRunCommands_GetByVirtualMachine
@@ -641,7 +645,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new VirtualMachineRunCommandUpdate();
                     foreach (var tag in current.Tags)
                     {
@@ -670,6 +674,8 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public new Response<VirtualMachineRunCommandResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             var result = RemoveTagCore(key, cancellationToken);
             return Response.FromValue((VirtualMachineRunCommandResource)result.Value, result.GetRawResponse());
         }

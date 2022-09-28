@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks
         /// Operation Id: WebApps_GetPrivateAccess
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets data around private site access enablement and authorized Virtual Networks that can access the site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks
         /// Operation Id: WebApps_GetPrivateAccess
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation CreateOrUpdate
         /// Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks
         /// Operation Id: WebApps_PutPrivateAccessVnet
@@ -193,12 +190,13 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new async Task<ArmOperation<WebSitePrivateAccessResource>> CreateOrUpdateAsync(WaitUntil waitUntil, PrivateAccessData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             return new AppServiceArmOperation<WebSitePrivateAccessResource>(Response.FromValue((WebSitePrivateAccessResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation CreateOrUpdate
         /// Description for Sets data around private site access enablement and authorized Virtual Networks that can access the site.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/privateAccess/virtualNetworks
         /// Operation Id: WebApps_PutPrivateAccessVnet
@@ -240,6 +238,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public new ArmOperation<WebSitePrivateAccessResource> CreateOrUpdate(WaitUntil waitUntil, PrivateAccessData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = CreateOrUpdateCore(waitUntil, data, cancellationToken);
             return new AppServiceArmOperation<WebSitePrivateAccessResource>(Response.FromValue((WebSitePrivateAccessResource)result.Value, result.GetRawResponse()));
         }

@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an authorization rule for a namespace by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
         /// Operation Id: Namespaces_GetAuthorizationRule
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an authorization rule for a namespace by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
         /// Operation Id: Namespaces_GetAuthorizationRule
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a namespace authorization rule
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
         /// Operation Id: Namespaces_DeleteAuthorizationRule
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a namespace authorization rule
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
         /// Operation Id: Namespaces_DeleteAuthorizationRule
@@ -206,7 +202,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates an authorization rule for a namespace
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
         /// Operation Id: Namespaces_CreateOrUpdateAuthorizationRule
@@ -248,12 +243,13 @@ namespace Azure.ResourceManager.NotificationHubs
         [ForwardsClientCalls]
         public new async Task<ArmOperation<NotificationHubNamespaceAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             var result = await UpdateCoreAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
             return new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue((NotificationHubNamespaceAuthorizationRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates an authorization rule for a namespace
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}
         /// Operation Id: Namespaces_CreateOrUpdateAuthorizationRule
@@ -295,12 +291,13 @@ namespace Azure.ResourceManager.NotificationHubs
         [ForwardsClientCalls]
         public new ArmOperation<NotificationHubNamespaceAuthorizationRuleResource> Update(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             var result = UpdateCore(waitUntil, content, cancellationToken);
             return new NotificationHubsArmOperation<NotificationHubNamespaceAuthorizationRuleResource>(Response.FromValue((NotificationHubNamespaceAuthorizationRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Gets the Primary and Secondary ConnectionStrings to the namespace 
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}/listKeys
         /// Operation Id: Namespaces_ListKeys
@@ -323,7 +320,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Gets the Primary and Secondary ConnectionStrings to the namespace 
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}/listKeys
         /// Operation Id: Namespaces_ListKeys
@@ -346,7 +342,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation RegenerateKeys
         /// Regenerates the Primary/Secondary Keys to the Namespace Authorization Rule
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}/regenerateKeys
         /// Operation Id: Namespaces_RegenerateKeys
@@ -373,7 +368,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation RegenerateKeys
         /// Regenerates the Primary/Secondary Keys to the Namespace Authorization Rule
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/AuthorizationRules/{authorizationRuleName}/regenerateKeys
         /// Operation Id: Namespaces_RegenerateKeys

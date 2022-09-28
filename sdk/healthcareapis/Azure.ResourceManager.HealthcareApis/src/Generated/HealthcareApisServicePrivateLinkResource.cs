@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a private link resource that need to be created for a service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateLinkResources/{groupName}
         /// Operation Id: PrivateLinkResources_Get
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a private link resource that need to be created for a service.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/services/{resourceName}/privateLinkResources/{groupName}
         /// Operation Id: PrivateLinkResources_Get

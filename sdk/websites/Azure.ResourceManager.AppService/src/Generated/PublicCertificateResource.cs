@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SitePublicCertificateResource" /> or <see cref="WebSiteSlotPublicCertificateResource" />. </summary>
     public abstract partial class PublicCertificateResource : ArmResource
     {
         internal static PublicCertificateResource GetResource(ArmClient client, PublicCertificateData data)
@@ -166,6 +166,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public async Task<ArmOperation<PublicCertificateResource>> UpdateAsync(WaitUntil waitUntil, PublicCertificateData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -184,6 +186,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public ArmOperation<PublicCertificateResource> Update(WaitUntil waitUntil, PublicCertificateData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(waitUntil, data, cancellationToken);
         }
     }

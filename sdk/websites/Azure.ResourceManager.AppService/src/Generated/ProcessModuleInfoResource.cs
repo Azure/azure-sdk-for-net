@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SiteInstanceProcessModuleResource" />, <see cref="SiteProcessModuleResource" />, <see cref="SiteSlotInstanceProcessModuleResource" /> or <see cref="SiteSlotProcessModuleResource" />. </summary>
     public abstract partial class ProcessModuleInfoResource : ArmResource
     {
         internal static ProcessModuleInfoResource GetResource(ArmClient client, ProcessModuleInfoData data)

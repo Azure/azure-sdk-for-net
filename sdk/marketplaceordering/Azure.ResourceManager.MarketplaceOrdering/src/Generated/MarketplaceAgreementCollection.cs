@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
     /// Each <see cref="MarketplaceAgreementResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
     /// To get a <see cref="MarketplaceAgreementCollection" /> instance call the GetMarketplaceAgreements method from an instance of <see cref="SubscriptionResource" />.
     /// </summary>
-    public partial class MarketplaceAgreementCollection : ArmCollection, IEnumerable<MarketplaceAgreementResource>, IAsyncEnumerable<MarketplaceAgreementResource>
+    public partial class MarketplaceAgreementCollection : ArmCollection, IEnumerable<BaseMarketplaceAgreementTermResource>, IAsyncEnumerable<BaseMarketplaceAgreementTermResource>
     {
         private readonly ClientDiagnostics _marketplaceAgreementClientDiagnostics;
         private readonly MarketplaceAgreementsRestOperations _marketplaceAgreementRestClient;
@@ -130,17 +130,17 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// Operation Id: MarketplaceAgreements_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MarketplaceAgreementResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MarketplaceAgreementResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="BaseMarketplaceAgreementTermResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<BaseMarketplaceAgreementTermResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<MarketplaceAgreementResource>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<BaseMarketplaceAgreementTermResource>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _marketplaceAgreementsClientDiagnostics.CreateScope("MarketplaceAgreementCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = await _marketplaceAgreementsRestClient.ListAsync(Id.SubscriptionId, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Select(value => new MarketplaceAgreementResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Select(value => BaseMarketplaceAgreementTermResource.GetResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -157,17 +157,17 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// Operation Id: MarketplaceAgreements_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MarketplaceAgreementResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MarketplaceAgreementResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="BaseMarketplaceAgreementTermResource" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<BaseMarketplaceAgreementTermResource> GetAll(CancellationToken cancellationToken = default)
         {
-            Page<MarketplaceAgreementResource> FirstPageFunc(int? pageSizeHint)
+            Page<BaseMarketplaceAgreementTermResource> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _marketplaceAgreementsClientDiagnostics.CreateScope("MarketplaceAgreementCollection.GetAll");
                 scope.Start();
                 try
                 {
                     var response = _marketplaceAgreementsRestClient.List(Id.SubscriptionId, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Select(value => new MarketplaceAgreementResource(Client, value)), null, response.GetRawResponse());
+                    return Page.FromValues(response.Value.Select(value => BaseMarketplaceAgreementTermResource.GetResource(Client, value)), null, response.GetRawResponse());
                 }
                 catch (Exception e)
                 {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             }
         }
 
-        IEnumerator<MarketplaceAgreementResource> IEnumerable<MarketplaceAgreementResource>.GetEnumerator()
+        IEnumerator<BaseMarketplaceAgreementTermResource> IEnumerable<BaseMarketplaceAgreementTermResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<MarketplaceAgreementResource> IAsyncEnumerable<MarketplaceAgreementResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<BaseMarketplaceAgreementTermResource> IAsyncEnumerable<BaseMarketplaceAgreementTermResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

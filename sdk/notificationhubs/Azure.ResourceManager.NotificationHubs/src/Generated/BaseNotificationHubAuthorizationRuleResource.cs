@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NotificationHubs
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="NotificationHubNamespaceAuthorizationRuleResource" /> or <see cref="NotificationHubAuthorizationRuleResource" />. </summary>
     public abstract partial class BaseNotificationHubAuthorizationRuleResource : ArmResource
     {
         internal static BaseNotificationHubAuthorizationRuleResource GetResource(ArmClient client, NotificationHubAuthorizationRuleData data)
@@ -167,6 +167,8 @@ namespace Azure.ResourceManager.NotificationHubs
         [ForwardsClientCalls]
         public async Task<ArmOperation<BaseNotificationHubAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             return await UpdateCoreAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -185,6 +187,8 @@ namespace Azure.ResourceManager.NotificationHubs
         [ForwardsClientCalls]
         public ArmOperation<BaseNotificationHubAuthorizationRuleResource> Update(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             return UpdateCore(waitUntil, content, cancellationToken);
         }
 
@@ -225,6 +229,8 @@ namespace Azure.ResourceManager.NotificationHubs
         [ForwardsClientCalls]
         public async Task<Response<NotificationHubResourceKeys>> RegenerateKeysAsync(NotificationHubPolicyKey notificationHubPolicyKey, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(notificationHubPolicyKey, nameof(notificationHubPolicyKey));
+
             return await RegenerateKeysCoreAsync(notificationHubPolicyKey, cancellationToken).ConfigureAwait(false);
         }
 
@@ -241,6 +247,8 @@ namespace Azure.ResourceManager.NotificationHubs
         [ForwardsClientCalls]
         public Response<NotificationHubResourceKeys> RegenerateKeys(NotificationHubPolicyKey notificationHubPolicyKey, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(notificationHubPolicyKey, nameof(notificationHubPolicyKey));
+
             return RegenerateKeysCore(notificationHubPolicyKey, cancellationToken);
         }
     }

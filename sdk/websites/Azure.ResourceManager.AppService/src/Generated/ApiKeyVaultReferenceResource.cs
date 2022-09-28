@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SiteConfigAppsettingResource" />, <see cref="WebSiteConfigConnectionStringResource" />, <see cref="WebSiteSlotConfigAppSettingResource" /> or <see cref="WebSiteSlotConfigConnectionStringResource" />. </summary>
     public abstract partial class ApiKeyVaultReferenceResource : ArmResource
     {
         internal static ApiKeyVaultReferenceResource GetResource(ArmClient client, ApiKeyVaultReferenceData data)

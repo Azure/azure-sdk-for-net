@@ -48,8 +48,8 @@ namespace Azure.ResourceManager.Compute
         private CapacityReservationGroupsRestOperations _capacityReservationGroupRestClient;
         private ClientDiagnostics _logAnalyticsClientDiagnostics;
         private LogAnalyticsRestOperations _logAnalyticsRestClient;
-        private ClientDiagnostics _virtualMachineRunCommandClientDiagnostics;
-        private VirtualMachineRunCommandsRestOperations _virtualMachineRunCommandRestClient;
+        private ClientDiagnostics _virtualMachineRunCommandsClientDiagnostics;
+        private VirtualMachineRunCommandsRestOperations _virtualMachineRunCommandsRestClient;
         private ClientDiagnostics _managedDiskDisksClientDiagnostics;
         private DisksRestOperations _managedDiskDisksRestClient;
         private ClientDiagnostics _diskAccessClientDiagnostics;
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.Compute
         private CapacityReservationGroupsRestOperations CapacityReservationGroupRestClient => _capacityReservationGroupRestClient ??= new CapacityReservationGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CapacityReservationGroupResource.ResourceType));
         private ClientDiagnostics LogAnalyticsClientDiagnostics => _logAnalyticsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private LogAnalyticsRestOperations LogAnalyticsRestClient => _logAnalyticsRestClient ??= new LogAnalyticsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics VirtualMachineRunCommandClientDiagnostics => _virtualMachineRunCommandClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", VirtualMachineRunCommandResource.ResourceType.Namespace, Diagnostics);
-        private VirtualMachineRunCommandsRestOperations VirtualMachineRunCommandRestClient => _virtualMachineRunCommandRestClient ??= new VirtualMachineRunCommandsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(VirtualMachineRunCommandResource.ResourceType));
+        private ClientDiagnostics VirtualMachineRunCommandsClientDiagnostics => _virtualMachineRunCommandsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private VirtualMachineRunCommandsRestOperations VirtualMachineRunCommandsRestClient => _virtualMachineRunCommandsRestClient ??= new VirtualMachineRunCommandsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics ManagedDiskDisksClientDiagnostics => _managedDiskDisksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", ManagedDiskResource.ResourceType.Namespace, Diagnostics);
         private DisksRestOperations ManagedDiskDisksRestClient => _managedDiskDisksRestClient ??= new DisksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ManagedDiskResource.ResourceType));
         private ClientDiagnostics DiskAccessClientDiagnostics => _diskAccessClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute", DiskAccessResource.ResourceType.Namespace, Diagnostics);
@@ -2030,11 +2030,11 @@ namespace Azure.ResourceManager.Compute
         {
             async Task<Page<RunCommandDocumentBase>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
+                using var scope = VirtualMachineRunCommandsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
                 scope.Start();
                 try
                 {
-                    var response = await VirtualMachineRunCommandRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await VirtualMachineRunCommandsRestClient.ListAsync(Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2045,11 +2045,11 @@ namespace Azure.ResourceManager.Compute
             }
             async Task<Page<RunCommandDocumentBase>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
+                using var scope = VirtualMachineRunCommandsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
                 scope.Start();
                 try
                 {
-                    var response = await VirtualMachineRunCommandRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await VirtualMachineRunCommandsRestClient.ListNextPageAsync(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2073,11 +2073,11 @@ namespace Azure.ResourceManager.Compute
         {
             Page<RunCommandDocumentBase> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
+                using var scope = VirtualMachineRunCommandsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
                 scope.Start();
                 try
                 {
-                    var response = VirtualMachineRunCommandRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
+                    var response = VirtualMachineRunCommandsRestClient.List(Id.SubscriptionId, location, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2088,11 +2088,11 @@ namespace Azure.ResourceManager.Compute
             }
             Page<RunCommandDocumentBase> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
+                using var scope = VirtualMachineRunCommandsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommands");
                 scope.Start();
                 try
                 {
-                    var response = VirtualMachineRunCommandRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
+                    var response = VirtualMachineRunCommandsRestClient.ListNextPage(nextLink, Id.SubscriptionId, location, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2114,11 +2114,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RunCommandDocument>> GetVirtualMachineRunCommandAsync(AzureLocation location, string commandId, CancellationToken cancellationToken = default)
         {
-            using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommand");
+            using var scope = VirtualMachineRunCommandsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommand");
             scope.Start();
             try
             {
-                var response = await VirtualMachineRunCommandRestClient.GetAsync(Id.SubscriptionId, location, commandId, cancellationToken).ConfigureAwait(false);
+                var response = await VirtualMachineRunCommandsRestClient.GetAsync(Id.SubscriptionId, location, commandId, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -2138,11 +2138,11 @@ namespace Azure.ResourceManager.Compute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RunCommandDocument> GetVirtualMachineRunCommand(AzureLocation location, string commandId, CancellationToken cancellationToken = default)
         {
-            using var scope = VirtualMachineRunCommandClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommand");
+            using var scope = VirtualMachineRunCommandsClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetVirtualMachineRunCommand");
             scope.Start();
             try
             {
-                var response = VirtualMachineRunCommandRestClient.Get(Id.SubscriptionId, location, commandId, cancellationToken);
+                var response = VirtualMachineRunCommandsRestClient.Get(Id.SubscriptionId, location, commandId, cancellationToken);
                 return response;
             }
             catch (Exception e)

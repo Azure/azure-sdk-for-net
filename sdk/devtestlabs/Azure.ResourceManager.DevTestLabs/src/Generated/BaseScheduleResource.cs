@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="ScheduleResource" />, <see cref="LabScheduleResource" />, <see cref="LabUserServicefabricScheduleResource" /> or <see cref="LabVirtualmachineScheduleResource" />. </summary>
     public abstract partial class BaseScheduleResource : ArmResource
     {
         internal static BaseScheduleResource GetResource(ArmClient client, ScheduleData data)
@@ -208,6 +208,8 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public async Task<Response<BaseScheduleResource>> UpdateAsync(ScheduleFragment schedule, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(schedule, nameof(schedule));
+
             return await UpdateCoreAsync(schedule, cancellationToken).ConfigureAwait(false);
         }
 
@@ -224,6 +226,8 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public Response<BaseScheduleResource> Update(ScheduleFragment schedule, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(schedule, nameof(schedule));
+
             return UpdateCore(schedule, cancellationToken);
         }
 
@@ -270,6 +274,9 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public async Task<Response<BaseScheduleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             return await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
         }
 
@@ -288,6 +295,9 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public Response<BaseScheduleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             return AddTagCore(key, value, cancellationToken);
         }
 
@@ -304,6 +314,8 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public async Task<Response<BaseScheduleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             return await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
         }
 
@@ -320,6 +332,8 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public Response<BaseScheduleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             return SetTagsCore(tags, cancellationToken);
         }
 
@@ -336,6 +350,8 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public async Task<Response<BaseScheduleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             return await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
         }
 
@@ -352,6 +368,8 @@ namespace Azure.ResourceManager.DevTestLabs
         [ForwardsClientCalls]
         public Response<BaseScheduleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             return RemoveTagCore(key, cancellationToken);
         }
     }

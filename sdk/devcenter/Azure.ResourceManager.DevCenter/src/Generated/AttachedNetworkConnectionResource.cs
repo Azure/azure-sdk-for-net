@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevCenter
     /// from an instance of <see cref="ArmClient" /> using the GetAttachedNetworkConnectionResource method.
     /// Otherwise you can get one from its parent resource <see cref="DevCenterResource" /> using the GetAttachedNetworkConnection method.
     /// </summary>
-    public partial class AttachedNetworkConnectionResource : ArmResource
+    public partial class AttachedNetworkConnectionResource : BaseAttachedNetworkConnectionResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AttachedNetworkConnectionResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string devCenterName, string attachedNetworkConnectionName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.DevCenter
 
         private readonly ClientDiagnostics _attachedNetworkConnectionAttachedNetworksClientDiagnostics;
         private readonly AttachedNetworksRestOperations _attachedNetworkConnectionAttachedNetworksRestClient;
-        private readonly AttachedNetworkConnectionData _data;
 
         /// <summary> Initializes a new instance of the <see cref="AttachedNetworkConnectionResource"/> class for mocking. </summary>
         protected AttachedNetworkConnectionResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Initializes a new instance of the <see cref = "AttachedNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AttachedNetworkConnectionResource(ArmClient client, AttachedNetworkConnectionData data) : this(client, data.Id)
+        internal AttachedNetworkConnectionResource(ArmClient client, AttachedNetworkConnectionData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _attachedNetworkConnectionAttachedNetworksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevCenter", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string attachedNetworkConnectionAttachedNetworksApiVersion);
+            _attachedNetworkConnectionAttachedNetworksRestClient = new AttachedNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, attachedNetworkConnectionAttachedNetworksApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="AttachedNetworkConnectionResource"/> class. </summary>
@@ -65,21 +68,6 @@ namespace Azure.ResourceManager.DevCenter
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/attachednetworks";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual AttachedNetworkConnectionData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -92,7 +80,7 @@ namespace Azure.ResourceManager.DevCenter
         /// Operation Id: AttachedNetworks_GetByDevCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AttachedNetworkConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<BaseAttachedNetworkConnectionResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionResource.Get");
             scope.Start();
@@ -101,7 +89,7 @@ namespace Azure.ResourceManager.DevCenter
                 var response = await _attachedNetworkConnectionAttachedNetworksRestClient.GetByDevCenterAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AttachedNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +104,20 @@ namespace Azure.ResourceManager.DevCenter
         /// Operation Id: AttachedNetworks_GetByDevCenter
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AttachedNetworkConnectionResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<AttachedNetworkConnectionResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((AttachedNetworkConnectionResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Gets an attached NetworkConnection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}
+        /// Operation Id: AttachedNetworks_GetByDevCenter
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<BaseAttachedNetworkConnectionResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _attachedNetworkConnectionAttachedNetworksClientDiagnostics.CreateScope("AttachedNetworkConnectionResource.Get");
             scope.Start();
@@ -125,13 +126,26 @@ namespace Azure.ResourceManager.DevCenter
                 var response = _attachedNetworkConnectionAttachedNetworksRestClient.GetByDevCenter(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new AttachedNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Gets an attached NetworkConnection.
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/attachednetworks/{attachedNetworkConnectionName}
+        /// Operation Id: AttachedNetworks_GetByDevCenter
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<AttachedNetworkConnectionResource> Get(CancellationToken cancellationToken = default)
+        {
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((AttachedNetworkConnectionResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>

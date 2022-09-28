@@ -35,8 +35,8 @@ namespace Azure.ResourceManager.NetApp
 
         private readonly ClientDiagnostics _netAppVolumeVolumesClientDiagnostics;
         private readonly VolumesRestOperations _netAppVolumeVolumesRestClient;
-        private readonly ClientDiagnostics _netAppVolumeBackupBackupsClientDiagnostics;
-        private readonly BackupsRestOperations _netAppVolumeBackupBackupsRestClient;
+        private readonly ClientDiagnostics _backupsClientDiagnostics;
+        private readonly BackupsRestOperations _backupsRestClient;
         private readonly NetAppVolumeData _data;
 
         /// <summary> Initializes a new instance of the <see cref="NetAppVolumeResource"/> class for mocking. </summary>
@@ -61,9 +61,8 @@ namespace Azure.ResourceManager.NetApp
             _netAppVolumeVolumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string netAppVolumeVolumesApiVersion);
             _netAppVolumeVolumesRestClient = new VolumesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppVolumeVolumesApiVersion);
-            _netAppVolumeBackupBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppVolumeBackupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(NetAppVolumeBackupResource.ResourceType, out string netAppVolumeBackupBackupsApiVersion);
-            _netAppVolumeBackupBackupsRestClient = new BackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppVolumeBackupBackupsApiVersion);
+            _backupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _backupsRestClient = new BackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -1169,11 +1168,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppVolumeBackupStatus>> GetBackupStatusAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetBackupStatus");
+            using var scope = _backupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetBackupStatus");
             scope.Start();
             try
             {
-                var response = await _netAppVolumeBackupBackupsRestClient.GetStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _backupsRestClient.GetStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1191,11 +1190,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppVolumeBackupStatus> GetBackupStatus(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetBackupStatus");
+            using var scope = _backupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetBackupStatus");
             scope.Start();
             try
             {
-                var response = _netAppVolumeBackupBackupsRestClient.GetStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _backupsRestClient.GetStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1213,11 +1212,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppRestoreStatus>> GetRestoreStatusAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetRestoreStatus");
+            using var scope = _backupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetRestoreStatus");
             scope.Start();
             try
             {
-                var response = await _netAppVolumeBackupBackupsRestClient.GetVolumeRestoreStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _backupsRestClient.GetVolumeRestoreStatusAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1235,11 +1234,11 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppRestoreStatus> GetRestoreStatus(CancellationToken cancellationToken = default)
         {
-            using var scope = _netAppVolumeBackupBackupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetRestoreStatus");
+            using var scope = _backupsClientDiagnostics.CreateScope("NetAppVolumeResource.GetRestoreStatus");
             scope.Start();
             try
             {
-                var response = _netAppVolumeBackupBackupsRestClient.GetVolumeRestoreStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _backupsRestClient.GetVolumeRestoreStatus(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Compute
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="VirtualMachineRunCommandResource" /> or <see cref="VirtualMachineScaleSetVmRunCommandResource" />. </summary>
     public abstract partial class BaseVirtualMachineRunCommandResource : ArmResource
     {
         internal static BaseVirtualMachineRunCommandResource GetResource(ArmClient client, VirtualMachineRunCommandData data)
@@ -172,6 +172,8 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public async Task<ArmOperation<BaseVirtualMachineRunCommandResource>> UpdateAsync(WaitUntil waitUntil, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(runCommand, nameof(runCommand));
+
             return await UpdateCoreAsync(waitUntil, runCommand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -190,6 +192,8 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public ArmOperation<BaseVirtualMachineRunCommandResource> Update(WaitUntil waitUntil, VirtualMachineRunCommandUpdate runCommand, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(runCommand, nameof(runCommand));
+
             return UpdateCore(waitUntil, runCommand, cancellationToken);
         }
 
@@ -208,6 +212,9 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public async Task<Response<BaseVirtualMachineRunCommandResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             return await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
         }
 
@@ -226,6 +233,9 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public Response<BaseVirtualMachineRunCommandResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             return AddTagCore(key, value, cancellationToken);
         }
 
@@ -242,6 +252,8 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public async Task<Response<BaseVirtualMachineRunCommandResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             return await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
         }
 
@@ -258,6 +270,8 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public Response<BaseVirtualMachineRunCommandResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             return SetTagsCore(tags, cancellationToken);
         }
 
@@ -274,6 +288,8 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public async Task<Response<BaseVirtualMachineRunCommandResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             return await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
         }
 
@@ -290,6 +306,8 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public Response<BaseVirtualMachineRunCommandResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             return RemoveTagCore(key, cancellationToken);
         }
     }

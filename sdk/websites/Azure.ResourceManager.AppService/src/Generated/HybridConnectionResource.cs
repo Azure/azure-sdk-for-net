@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="AppServicePlanHybridConnectionNamespaceRelayResource" />, <see cref="SiteHybridConnectionNamespaceRelayResource" /> or <see cref="SiteSlotHybridConnectionNamespaceRelayResource" />. </summary>
     public abstract partial class HybridConnectionResource : ArmResource
     {
         internal static HybridConnectionResource GetResource(ArmClient client, HybridConnectionData data)

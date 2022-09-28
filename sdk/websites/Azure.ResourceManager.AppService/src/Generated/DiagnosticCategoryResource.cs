@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SiteDiagnosticResource" /> or <see cref="SiteSlotDiagnosticResource" />. </summary>
     public abstract partial class DiagnosticCategoryResource : ArmResource
     {
         internal static DiagnosticCategoryResource GetResource(ArmClient client, DiagnosticCategoryData data)

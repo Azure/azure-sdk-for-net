@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MarketplaceOrdering
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="MarketplaceAgreementTermResource" /> or <see cref="MarketplaceAgreementResource" />. </summary>
     public abstract partial class BaseMarketplaceAgreementTermResource : ArmResource
     {
         internal static BaseMarketplaceAgreementTermResource GetResource(ArmClient client, MarketplaceAgreementTermData data)

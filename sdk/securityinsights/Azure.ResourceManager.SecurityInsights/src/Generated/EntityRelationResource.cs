@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an entity relation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}/relations/{relationName}
         /// Operation Id: EntityRelations_GetRelation
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an entity relation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/entities/{entityId}/relations/{relationName}
         /// Operation Id: EntityRelations_GetRelation

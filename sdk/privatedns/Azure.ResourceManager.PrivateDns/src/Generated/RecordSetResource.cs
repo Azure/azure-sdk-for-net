@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PrivateDns
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="PrivateDnsZoneAResource" />, <see cref="PrivateDnsZoneAAAAResource" />, <see cref="PrivateDnsZoneCNAMEResource" />, <see cref="PrivateDnsZoneMXResource" />, <see cref="PrivateDnsZonePTRResource" />, <see cref="PrivateDnsZoneSOAResource" />, <see cref="PrivateDnsZoneSRVResource" /> or <see cref="PrivateDnsZoneTXTResource" />. </summary>
     public abstract partial class RecordSetResource : ArmResource
     {
         internal static RecordSetResource GetResource(ArmClient client, RecordSetData data)
@@ -284,6 +284,8 @@ namespace Azure.ResourceManager.PrivateDns
         [ForwardsClientCalls]
         public async Task<Response<RecordSetResource>> UpdateAsync(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(data, ifMatch, cancellationToken).ConfigureAwait(false);
         }
 
@@ -302,6 +304,8 @@ namespace Azure.ResourceManager.PrivateDns
         [ForwardsClientCalls]
         public Response<RecordSetResource> Update(RecordSetData data, string ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(data, ifMatch, cancellationToken);
         }
     }

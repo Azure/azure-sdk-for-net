@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get metadata information on an assessment type
         /// Request Path: /providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}
         /// Operation Id: AssessmentsMetadata_Get
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get metadata information on an assessment type
         /// Request Path: /providers/Microsoft.Security/assessmentMetadata/{assessmentMetadataName}
         /// Operation Id: AssessmentsMetadata_Get

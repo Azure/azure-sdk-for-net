@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an AuthorizationRule for an Event Hub by rule name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}
         /// Operation Id: EventHubs_GetAuthorizationRule
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an AuthorizationRule for an Event Hub by rule name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}
         /// Operation Id: EventHubs_GetAuthorizationRule
@@ -262,8 +260,8 @@ namespace Azure.ResourceManager.EventHubs
                 throw;
             }
         }
+
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Gets the ACS and SAS connection strings for the Event Hub.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}/listKeys
         /// Operation Id: EventHubs_ListKeys
@@ -286,7 +284,6 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Gets the ACS and SAS connection strings for the Event Hub.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/eventhubs/{eventHubName}/authorizationRules/{authorizationRuleName}/listKeys
         /// Operation Id: EventHubs_ListKeys

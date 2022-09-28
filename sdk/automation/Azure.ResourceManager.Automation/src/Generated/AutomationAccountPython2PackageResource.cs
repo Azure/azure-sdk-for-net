@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Retrieve the python 2 package identified by package name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
         /// Operation Id: Python2Package_Get
@@ -115,7 +114,6 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Retrieve the python 2 package identified by package name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
         /// Operation Id: Python2Package_Get
@@ -153,7 +151,6 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete the python 2 package by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
         /// Operation Id: Python2Package_Delete
@@ -180,7 +177,6 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete the python 2 package by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
         /// Operation Id: Python2Package_Delete
@@ -257,8 +253,8 @@ namespace Azure.ResourceManager.Automation
                 throw;
             }
         }
+
         /// <summary>
-        /// The core implementation for operation AddTag
         /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
         /// Operation Id: Python2Package_Get
@@ -286,7 +282,7 @@ namespace Azure.ResourceManager.Automation
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new AutomationAccountPython2PackagePatch();
                     foreach (var tag in current.Tags)
                     {
@@ -316,12 +312,14 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public new async Task<Response<AutomationAccountPython2PackageResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             var result = await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((AutomationAccountPython2PackageResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation AddTag
         /// Add a tag to the current resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
         /// Operation Id: Python2Package_Get
@@ -349,7 +347,7 @@ namespace Azure.ResourceManager.Automation
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new AutomationAccountPython2PackagePatch();
                     foreach (var tag in current.Tags)
                     {
@@ -379,12 +377,14 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public new Response<AutomationAccountPython2PackageResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             var result = AddTagCore(key, value, cancellationToken);
             return Response.FromValue((AutomationAccountPython2PackageResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation SetTags
         /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
         /// Operation Id: Python2Package_Get
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Automation
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new AutomationAccountPython2PackagePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -436,12 +436,13 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public new async Task<Response<AutomationAccountPython2PackageResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             var result = await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((AutomationAccountPython2PackageResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation SetTags
         /// Replace the tags on the resource with the given set.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
         /// Operation Id: Python2Package_Get
@@ -468,7 +469,7 @@ namespace Azure.ResourceManager.Automation
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new AutomationAccountPython2PackagePatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
@@ -493,12 +494,13 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public new Response<AutomationAccountPython2PackageResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             var result = SetTagsCore(tags, cancellationToken);
             return Response.FromValue((AutomationAccountPython2PackageResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation RemoveTag
         /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
         /// Operation Id: Python2Package_Get
@@ -524,7 +526,7 @@ namespace Azure.ResourceManager.Automation
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new AutomationAccountPython2PackagePatch();
                     foreach (var tag in current.Tags)
                     {
@@ -553,12 +555,13 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public new async Task<Response<AutomationAccountPython2PackageResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             var result = await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((AutomationAccountPython2PackageResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation RemoveTag
         /// Removes a tag by key from the resource.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/python2Packages/{packageName}
         /// Operation Id: Python2Package_Get
@@ -584,7 +587,7 @@ namespace Azure.ResourceManager.Automation
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new AutomationAccountPython2PackagePatch();
                     foreach (var tag in current.Tags)
                     {
@@ -613,6 +616,8 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public new Response<AutomationAccountPython2PackageResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             var result = RemoveTagCore(key, cancellationToken);
             return Response.FromValue((AutomationAccountPython2PackageResource)result.Value, result.GetRawResponse());
         }

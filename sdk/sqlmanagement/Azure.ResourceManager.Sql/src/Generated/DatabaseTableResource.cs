@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SqlDatabaseTableResource" /> or <see cref="ManagedDatabaseTableResource" />. </summary>
     public abstract partial class DatabaseTableResource : ArmResource
     {
         internal static DatabaseTableResource GetResource(ArmClient client, DatabaseTableData data)

@@ -15,7 +15,7 @@ using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SubscriptionPolicySetDefinitionResource" />, <see cref="TenantPolicySetDefinitionResource" /> or <see cref="ManagementGroupPolicySetDefinitionResource" />. </summary>
     public abstract partial class PolicySetDefinitionResource : ArmResource
     {
         internal static PolicySetDefinitionResource GetResource(ArmClient client, PolicySetDefinitionData data)

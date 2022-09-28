@@ -24,6 +24,8 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlDatabaseSensitivityLabelCollection : ArmCollection
     {
+        private readonly ClientDiagnostics _sensitivityLabelsClientDiagnostics;
+        private readonly SensitivityLabelsRestOperations _sensitivityLabelsRestClient;
         private readonly ClientDiagnostics _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics;
         private readonly SensitivityLabelsRestOperations _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient;
 
@@ -37,6 +39,8 @@ namespace Azure.ResourceManager.Sql
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         internal SqlDatabaseSensitivityLabelCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _sensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _sensitivityLabelsRestClient = new SensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlDatabaseSensitivityLabelResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SqlDatabaseSensitivityLabelResource.ResourceType, out string sqlDatabaseSensitivityLabelSensitivityLabelsApiVersion);
             _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient = new SensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlDatabaseSensitivityLabelSensitivityLabelsApiVersion);
@@ -60,16 +64,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The column sensitivity label resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlDatabaseSensitivityLabelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SensitivityLabelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseSensitivityLabelCollection.CreateOrUpdate");
+            using var scope = _sensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseSensitivityLabelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlDatabaseSensitivityLabelResource>(Response.FromValue(new SqlDatabaseSensitivityLabelResource(Client, response), response.GetRawResponse()));
+                var response = await _sensitivityLabelsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new SqlArmOperation<SensitivityLabelResource>(Response.FromValue(SensitivityLabelResource.GetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -90,16 +94,16 @@ namespace Azure.ResourceManager.Sql
         /// <param name="data"> The column sensitivity label resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SqlDatabaseSensitivityLabelResource> CreateOrUpdate(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SensitivityLabelResource> CreateOrUpdate(WaitUntil waitUntil, SensitivityLabelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _sqlDatabaseSensitivityLabelSensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseSensitivityLabelCollection.CreateOrUpdate");
+            using var scope = _sensitivityLabelsClientDiagnostics.CreateScope("SqlDatabaseSensitivityLabelCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _sqlDatabaseSensitivityLabelSensitivityLabelsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlDatabaseSensitivityLabelResource>(Response.FromValue(new SqlDatabaseSensitivityLabelResource(Client, response), response.GetRawResponse()));
+                var response = _sensitivityLabelsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new SqlArmOperation<SensitivityLabelResource>(Response.FromValue(SensitivityLabelResource.GetResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

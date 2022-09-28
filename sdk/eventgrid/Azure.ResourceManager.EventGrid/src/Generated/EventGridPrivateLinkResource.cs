@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="EventGridTopicPrivateLinkResource" />, <see cref="EventGridDomainPrivateLinkResource" /> or <see cref="PartnerNamespacePrivateLinkResource" />. </summary>
     public abstract partial class EventGridPrivateLinkResource : ArmResource
     {
         internal static EventGridPrivateLinkResource GetResource(ArmClient client, EventGridPrivateLinkResourceData data)

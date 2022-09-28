@@ -943,15 +943,15 @@ namespace Azure.ResourceManager.Synapse
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Synapse.Models.PrivateEndpointConnectionForPrivateLinkHubBasic> PrivateEndpointConnections { get { throw null; } }
         public string ProvisioningState { get { throw null; } set { } }
     }
-    public partial class PrivateLinkHubPrivateLinkResource : Azure.ResourceManager.ArmResource
+    public partial class PrivateLinkHubPrivateLinkResource : Azure.ResourceManager.Synapse.SynapsePrivateLinkResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected PrivateLinkHubPrivateLinkResource() { }
-        public virtual Azure.ResourceManager.Synapse.SynapsePrivateLinkResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateLinkHubName, string privateLinkResourceName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Synapse.PrivateLinkHubPrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.PrivateLinkHubPrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new Azure.Response<Azure.ResourceManager.Synapse.PrivateLinkHubPrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.PrivateLinkHubPrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.Synapse.SynapsePrivateLinkResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapsePrivateLinkResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class PrivateLinkHubPrivateLinkResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Synapse.PrivateLinkHubPrivateLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.PrivateLinkHubPrivateLinkResource>, System.Collections.IEnumerable
     {
@@ -1802,6 +1802,16 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.SynapsePrivateEndpointConnectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public abstract partial class SynapsePrivateLinkResource : Azure.ResourceManager.ArmResource
+    {
+        protected SynapsePrivateLinkResource() { }
+        public virtual Azure.ResourceManager.Synapse.SynapsePrivateLinkResourceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public Azure.Response<Azure.ResourceManager.Synapse.SynapsePrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapsePrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected abstract Azure.Response<Azure.ResourceManager.Synapse.SynapsePrivateLinkResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected abstract System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapsePrivateLinkResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
     public partial class SynapsePrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public SynapsePrivateLinkResourceData() { }
@@ -1968,19 +1978,39 @@ namespace Azure.ResourceManager.Synapse
         public string Sid { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
     }
-    public partial class WorkspaceAdministratorResource : Azure.ResourceManager.ArmResource
+    public abstract partial class WorkspaceAadAdminInfoResource : Azure.ResourceManager.ArmResource
+    {
+        protected WorkspaceAadAdminInfoResource() { }
+        public virtual Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected abstract Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource> CreateOrUpdateCore(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected abstract System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource>> CreateOrUpdateCoreAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected abstract Azure.ResourceManager.ArmOperation DeleteCore(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected abstract System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteCoreAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        public Azure.Response<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected abstract Azure.Response<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        protected abstract System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    }
+    public partial class WorkspaceAdministratorResource : Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected WorkspaceAdministratorResource() { }
-        public virtual Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceAdministratorResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceAdministratorResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceAdministratorResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceAdministratorResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource> CreateOrUpdateCore(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource>> CreateOrUpdateCoreAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Synapse.WorkspaceAdministratorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.WorkspaceAdministratorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.ResourceManager.ArmOperation DeleteCore(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteCoreAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new Azure.Response<Azure.ResourceManager.Synapse.WorkspaceAdministratorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.WorkspaceAdministratorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class WorkspaceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Synapse.WorkspaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.WorkspaceResource>, System.Collections.IEnumerable
     {
@@ -2023,15 +2053,15 @@ namespace Azure.ResourceManager.Synapse
         public Azure.ResourceManager.Synapse.Models.WorkspaceRepositoryConfiguration WorkspaceRepositoryConfiguration { get { throw null; } set { } }
         public System.Guid? WorkspaceUID { get { throw null; } }
     }
-    public partial class WorkspacePrivateLinkResource : Azure.ResourceManager.ArmResource
+    public partial class WorkspacePrivateLinkResource : Azure.ResourceManager.Synapse.SynapsePrivateLinkResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected WorkspacePrivateLinkResource() { }
-        public virtual Azure.ResourceManager.Synapse.SynapsePrivateLinkResourceData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string privateLinkResourceName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Synapse.WorkspacePrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.WorkspacePrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new Azure.Response<Azure.ResourceManager.Synapse.WorkspacePrivateLinkResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.WorkspacePrivateLinkResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.Synapse.SynapsePrivateLinkResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapsePrivateLinkResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class WorkspacePrivateLinkResourceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Synapse.WorkspacePrivateLinkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Synapse.WorkspacePrivateLinkResource>, System.Collections.IEnumerable
     {
@@ -2130,19 +2160,21 @@ namespace Azure.ResourceManager.Synapse
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.Models.WorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.Models.WorkspacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WorkspaceSqlAdministratorResource : Azure.ResourceManager.ArmResource
+    public partial class WorkspaceSqlAdministratorResource : Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected WorkspaceSqlAdministratorResource() { }
-        public virtual Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceSqlAdministratorResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceSqlAdministratorResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceSqlAdministratorResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceSqlAdministratorResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource> CreateOrUpdateCore(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource>> CreateOrUpdateCoreAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoData info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Synapse.WorkspaceSqlAdministratorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.WorkspaceSqlAdministratorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.ResourceManager.ArmOperation DeleteCore(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteCoreAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new Azure.Response<Azure.ResourceManager.Synapse.WorkspaceSqlAdministratorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public new System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.WorkspaceSqlAdministratorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override Azure.Response<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource> GetCore(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected override System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.WorkspaceAadAdminInfoResource>> GetCoreAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Synapse.Models

@@ -83,7 +83,6 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get information about a guest configuration assignment for VMSS
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}
         /// Operation Id: GuestConfigurationAssignmentsVMSS_Get
@@ -121,7 +120,6 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get information about a guest configuration assignment for VMSS
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}
         /// Operation Id: GuestConfigurationAssignmentsVMSS_Get
@@ -209,13 +207,14 @@ namespace Azure.ResourceManager.GuestConfiguration
                 throw;
             }
         }
+
         /// <summary>
-        /// The core implementation for operation GetReports
         /// List all reports for the VMSS guest configuration assignment, latest report first.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}/reports
         /// Operation Id: GuestConfigurationAssignmentReportsVMSS_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="GuestConfigurationAssignmentReport" /> that may take multiple service requests to iterate over. </returns>
         protected override AsyncPageable<GuestConfigurationAssignmentReport> GetReportsCoreAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<GuestConfigurationAssignmentReport>> FirstPageFunc(int? pageSizeHint)
@@ -237,12 +236,12 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary>
-        /// The core implementation for operation GetReports
         /// List all reports for the VMSS guest configuration assignment, latest report first.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}/reports
         /// Operation Id: GuestConfigurationAssignmentReportsVMSS_List
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="GuestConfigurationAssignmentReport" /> that may take multiple service requests to iterate over. </returns>
         protected override Pageable<GuestConfigurationAssignmentReport> GetReportsCore(CancellationToken cancellationToken = default)
         {
             Page<GuestConfigurationAssignmentReport> FirstPageFunc(int? pageSizeHint)
@@ -264,7 +263,6 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary>
-        /// The core implementation for operation GetReport
         /// Get a report for the VMSS guest configuration assignment, by reportId.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}/reports/{id}
         /// Operation Id: GuestConfigurationAssignmentReportsVMSS_Get
@@ -292,7 +290,6 @@ namespace Azure.ResourceManager.GuestConfiguration
         }
 
         /// <summary>
-        /// The core implementation for operation GetReport
         /// Get a report for the VMSS guest configuration assignment, by reportId.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments/{name}/reports/{id}
         /// Operation Id: GuestConfigurationAssignmentReportsVMSS_Get

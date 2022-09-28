@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets the specified private endpoint connection associated with the workspace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: WorkspacePrivateEndpointConnections_Get
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets the specified private endpoint connection associated with the workspace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: WorkspacePrivateEndpointConnections_Get
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: WorkspacePrivateEndpointConnections_Delete
@@ -178,7 +175,6 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a private endpoint connection.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: WorkspacePrivateEndpointConnections_Delete
@@ -205,7 +201,6 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Update the state of the specified private endpoint connection associated with the workspace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: WorkspacePrivateEndpointConnections_CreateOrUpdate
@@ -247,6 +242,8 @@ namespace Azure.ResourceManager.HealthcareApis
         [ForwardsClientCalls]
         public new async Task<ArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
@@ -257,7 +254,6 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Update the state of the specified private endpoint connection associated with the workspace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateEndpointConnections/{privateEndpointConnectionName}
         /// Operation Id: WorkspacePrivateEndpointConnections_CreateOrUpdate
@@ -299,6 +295,8 @@ namespace Azure.ResourceManager.HealthcareApis
         [ForwardsClientCalls]
         public new ArmOperation<HealthcareApisWorkspacePrivateEndpointConnectionResource> Update(WaitUntil waitUntil, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(waitUntil, data, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {

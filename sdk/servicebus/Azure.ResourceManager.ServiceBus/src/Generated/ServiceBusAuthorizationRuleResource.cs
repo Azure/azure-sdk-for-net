@@ -16,7 +16,7 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="ServiceBusNamespaceAuthorizationRuleResource" />, <see cref="ServiceBusQueueAuthorizationRuleResource" />, <see cref="ServiceBusTopicAuthorizationRuleResource" /> or <see cref="ServiceBusDisasterRecoveryAuthorizationRuleResource" />. </summary>
     public abstract partial class ServiceBusAuthorizationRuleResource : ArmResource
     {
         internal static ServiceBusAuthorizationRuleResource GetResource(ArmClient client, ServiceBusAuthorizationRuleData data)

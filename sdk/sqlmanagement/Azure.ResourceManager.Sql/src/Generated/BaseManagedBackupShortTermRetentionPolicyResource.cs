@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="ManagedBackupShortTermRetentionPolicyResource" /> or <see cref="ManagedRestorableDroppedDbBackupShortTermRetentionPolicyResource" />. </summary>
     public abstract partial class BaseManagedBackupShortTermRetentionPolicyResource : ArmResource
     {
         internal static BaseManagedBackupShortTermRetentionPolicyResource GetResource(ArmClient client, ManagedBackupShortTermRetentionPolicyData data)
@@ -138,6 +138,8 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public async Task<ArmOperation<BaseManagedBackupShortTermRetentionPolicyResource>> UpdateAsync(WaitUntil waitUntil, ManagedBackupShortTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -156,6 +158,8 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public ArmOperation<BaseManagedBackupShortTermRetentionPolicyResource> Update(WaitUntil waitUntil, ManagedBackupShortTermRetentionPolicyData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(waitUntil, data, cancellationToken);
         }
     }

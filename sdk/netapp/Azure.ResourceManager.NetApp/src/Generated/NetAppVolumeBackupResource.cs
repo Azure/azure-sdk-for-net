@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets the specified backup of the volume
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backups/{backupName}
         /// Operation Id: Backups_Get
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets the specified backup of the volume
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backups/{backupName}
         /// Operation Id: Backups_Get
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete a backup of the volume
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backups/{backupName}
         /// Operation Id: Backups_Delete
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete a backup of the volume
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backups/{backupName}
         /// Operation Id: Backups_Delete

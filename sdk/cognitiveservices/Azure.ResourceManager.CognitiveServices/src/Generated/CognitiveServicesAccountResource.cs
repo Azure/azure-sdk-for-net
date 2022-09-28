@@ -195,7 +195,6 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Returns a Cognitive Services account specified by the parameters.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}
         /// Operation Id: Accounts_Get
@@ -233,7 +232,6 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Returns a Cognitive Services account specified by the parameters.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}
         /// Operation Id: Accounts_Get
@@ -271,7 +269,6 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a Cognitive Services account from the resource group. 
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}
         /// Operation Id: Accounts_Delete
@@ -298,7 +295,6 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a Cognitive Services account from the resource group. 
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{accountName}
         /// Operation Id: Accounts_Delete
@@ -756,7 +752,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new CognitiveServicesAccountData(current.Location);
                     foreach (var tag in current.Tags)
                     {
@@ -802,7 +798,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new CognitiveServicesAccountData(current.Location);
                     foreach (var tag in current.Tags)
                     {
@@ -847,7 +843,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new CognitiveServicesAccountData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -888,7 +884,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new CognitiveServicesAccountData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
@@ -928,7 +924,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new CognitiveServicesAccountData(current.Location);
                     foreach (var tag in current.Tags)
                     {
@@ -972,7 +968,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new CognitiveServicesAccountData(current.Location);
                     foreach (var tag in current.Tags)
                     {

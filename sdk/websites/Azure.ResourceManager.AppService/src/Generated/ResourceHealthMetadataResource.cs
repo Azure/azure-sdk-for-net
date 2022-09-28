@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="WebSiteResourceHealthMetadataResource" /> or <see cref="WebSiteSlotResourceHealthMetadataResource" />. </summary>
     public abstract partial class ResourceHealthMetadataResource : ArmResource
     {
         internal static ResourceHealthMetadataResource GetResource(ArmClient client, ResourceHealthMetadataData data)

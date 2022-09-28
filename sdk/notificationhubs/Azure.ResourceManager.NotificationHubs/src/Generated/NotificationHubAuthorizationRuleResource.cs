@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an authorization rule for a NotificationHub by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}
         /// Operation Id: NotificationHubs_GetAuthorizationRule
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an authorization rule for a NotificationHub by name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}
         /// Operation Id: NotificationHubs_GetAuthorizationRule
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a notificationHub authorization rule
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}
         /// Operation Id: NotificationHubs_DeleteAuthorizationRule
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Deletes a notificationHub authorization rule
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}
         /// Operation Id: NotificationHubs_DeleteAuthorizationRule
@@ -206,7 +202,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates/Updates an authorization rule for a NotificationHub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}
         /// Operation Id: NotificationHubs_CreateOrUpdateAuthorizationRule
@@ -248,12 +243,13 @@ namespace Azure.ResourceManager.NotificationHubs
         [ForwardsClientCalls]
         public new async Task<ArmOperation<NotificationHubAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             var result = await UpdateCoreAsync(waitUntil, content, cancellationToken).ConfigureAwait(false);
             return new NotificationHubsArmOperation<NotificationHubAuthorizationRuleResource>(Response.FromValue((NotificationHubAuthorizationRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates/Updates an authorization rule for a NotificationHub
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}
         /// Operation Id: NotificationHubs_CreateOrUpdateAuthorizationRule
@@ -295,12 +291,13 @@ namespace Azure.ResourceManager.NotificationHubs
         [ForwardsClientCalls]
         public new ArmOperation<NotificationHubAuthorizationRuleResource> Update(WaitUntil waitUntil, SharedAccessAuthorizationRuleCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             var result = UpdateCore(waitUntil, content, cancellationToken);
             return new NotificationHubsArmOperation<NotificationHubAuthorizationRuleResource>(Response.FromValue((NotificationHubAuthorizationRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Gets the Primary and Secondary ConnectionStrings to the NotificationHub 
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}/listKeys
         /// Operation Id: NotificationHubs_ListKeys
@@ -323,7 +320,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Gets the Primary and Secondary ConnectionStrings to the NotificationHub 
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}/listKeys
         /// Operation Id: NotificationHubs_ListKeys
@@ -346,7 +342,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation RegenerateKeys
         /// Regenerates the Primary/Secondary Keys to the NotificationHub Authorization Rule
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}/regenerateKeys
         /// Operation Id: NotificationHubs_RegenerateKeys
@@ -373,7 +368,6 @@ namespace Azure.ResourceManager.NotificationHubs
         }
 
         /// <summary>
-        /// The core implementation for operation RegenerateKeys
         /// Regenerates the Primary/Secondary Keys to the NotificationHub Authorization Rule
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NotificationHubs/namespaces/{namespaceName}/notificationHubs/{notificationHubName}/AuthorizationRules/{authorizationRuleName}/regenerateKeys
         /// Operation Id: NotificationHubs_RegenerateKeys

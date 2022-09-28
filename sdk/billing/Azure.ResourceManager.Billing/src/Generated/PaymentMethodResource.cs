@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a payment method owned by the caller.
         /// Request Path: /providers/Microsoft.Billing/paymentMethods/{paymentMethodName}
         /// Operation Id: PaymentMethods_GetByUser
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.Billing
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a payment method owned by the caller.
         /// Request Path: /providers/Microsoft.Billing/paymentMethods/{paymentMethodName}
         /// Operation Id: PaymentMethods_GetByUser

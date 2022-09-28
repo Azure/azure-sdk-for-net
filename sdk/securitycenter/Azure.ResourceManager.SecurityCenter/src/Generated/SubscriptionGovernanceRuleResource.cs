@@ -83,7 +83,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get a specific governanceRule for the requested scope by ruleId
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
         /// Operation Id: GovernanceRules_Get
@@ -121,7 +120,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get a specific governanceRule for the requested scope by ruleId
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
         /// Operation Id: GovernanceRules_Get
@@ -159,7 +157,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete a GovernanceRule over a given scope
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
         /// Operation Id: GovernanceRules_Delete
@@ -186,7 +183,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete a GovernanceRule over a given scope
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
         /// Operation Id: GovernanceRules_Delete
@@ -213,7 +209,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates or update a security GovernanceRule on the given subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
         /// Operation Id: GovernanceRules_CreateOrUpdate
@@ -255,12 +250,13 @@ namespace Azure.ResourceManager.SecurityCenter
         [ForwardsClientCalls]
         public new async Task<ArmOperation<SubscriptionGovernanceRuleResource>> UpdateAsync(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
             return new SecurityCenterArmOperation<SubscriptionGovernanceRuleResource>(Response.FromValue((SubscriptionGovernanceRuleResource)result.Value, result.GetRawResponse()));
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Creates or update a security GovernanceRule on the given subscription.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/governanceRules/{ruleId}
         /// Operation Id: GovernanceRules_CreateOrUpdate
@@ -302,6 +298,8 @@ namespace Azure.ResourceManager.SecurityCenter
         [ForwardsClientCalls]
         public new ArmOperation<SubscriptionGovernanceRuleResource> Update(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(waitUntil, data, cancellationToken);
             return new SecurityCenterArmOperation<SubscriptionGovernanceRuleResource>(Response.FromValue((SubscriptionGovernanceRuleResource)result.Value, result.GetRawResponse()));
         }

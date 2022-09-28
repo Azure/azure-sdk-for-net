@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an AuthorizationRule for a Namespace by rule name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}
         /// Operation Id: Namespaces_GetAuthorizationRule
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an AuthorizationRule for a Namespace by rule name.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}
         /// Operation Id: Namespaces_GetAuthorizationRule
@@ -262,8 +260,8 @@ namespace Azure.ResourceManager.EventHubs
                 throw;
             }
         }
+
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Gets the primary and secondary connection strings for the Namespace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/listKeys
         /// Operation Id: Namespaces_ListKeys
@@ -286,7 +284,6 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// The core implementation for operation GetKeys
         /// Gets the primary and secondary connection strings for the Namespace.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}/listKeys
         /// Operation Id: Namespaces_ListKeys

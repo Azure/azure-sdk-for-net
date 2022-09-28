@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="ApiDiagnosticResource" /> or <see cref="ApiManagementDiagnosticResource" />. </summary>
     public abstract partial class DiagnosticContractResource : ArmResource
     {
         internal static DiagnosticContractResource GetResource(ArmClient client, DiagnosticContractData data)
@@ -170,6 +170,8 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public async Task<Response<DiagnosticContractResource>> UpdateAsync(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(ifMatch, data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -188,6 +190,8 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public Response<DiagnosticContractResource> Update(ETag ifMatch, DiagnosticContractData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(ifMatch, data, cancellationToken);
         }
 

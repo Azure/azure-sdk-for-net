@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SqlServerJobExecutionResource" />, <see cref="SqlServerJobExecutionStepResource" /> or <see cref="SqlServerJobExecutionStepTargetResource" />. </summary>
     public abstract partial class BaseSqlServerJobExecutionResource : ArmResource
     {
         internal static BaseSqlServerJobExecutionResource GetResource(ArmClient client, SqlServerJobExecutionData data)

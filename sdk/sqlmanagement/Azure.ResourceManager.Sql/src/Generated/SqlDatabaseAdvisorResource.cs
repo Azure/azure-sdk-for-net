@@ -112,7 +112,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a database advisor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
         /// Operation Id: DatabaseAdvisors_Get
@@ -150,7 +149,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a database advisor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
         /// Operation Id: DatabaseAdvisors_Get
@@ -188,7 +186,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Updates a database advisor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
         /// Operation Id: DatabaseAdvisors_Update
@@ -225,12 +222,13 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public new async Task<Response<SqlDatabaseAdvisorResource>> UpdateAsync(SqlAdvisorData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = await UpdateCoreAsync(data, cancellationToken).ConfigureAwait(false);
             return Response.FromValue((SqlDatabaseAdvisorResource)result.Value, result.GetRawResponse());
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Updates a database advisor.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/advisors/{advisorName}
         /// Operation Id: DatabaseAdvisors_Update
@@ -267,6 +265,8 @@ namespace Azure.ResourceManager.Sql
         [ForwardsClientCalls]
         public new Response<SqlDatabaseAdvisorResource> Update(SqlAdvisorData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             var result = UpdateCore(data, cancellationToken);
             return Response.FromValue((SqlDatabaseAdvisorResource)result.Value, result.GetRawResponse());
         }

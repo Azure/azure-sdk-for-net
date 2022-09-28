@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="WebSiteResource" /> or <see cref="WebSiteSlotResource" />. </summary>
     public abstract partial class BaseWebSiteResource : ArmResource
     {
         internal static BaseWebSiteResource GetResource(ArmClient client, WebSiteData data)
@@ -173,6 +173,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public async Task<Response<BaseWebSiteResource>> UpdateAsync(SitePatchInfo info, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(info, nameof(info));
+
             return await UpdateCoreAsync(info, cancellationToken).ConfigureAwait(false);
         }
 
@@ -189,6 +191,8 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public Response<BaseWebSiteResource> Update(SitePatchInfo info, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(info, nameof(info));
+
             return UpdateCore(info, cancellationToken);
         }
     }

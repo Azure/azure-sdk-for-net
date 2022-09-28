@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get properties of a nested event subscription for a domain topic.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: DomainTopicEventSubscriptions_Get
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get properties of a nested event subscription for a domain topic.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: DomainTopicEventSubscriptions_Get
@@ -152,7 +150,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete a nested existing event subscription for a domain topic.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: DomainTopicEventSubscriptions_Delete
@@ -179,7 +176,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete a nested existing event subscription for a domain topic.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: DomainTopicEventSubscriptions_Delete
@@ -206,7 +202,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Update an existing event subscription for a domain topic.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: DomainTopicEventSubscriptions_Update
@@ -248,6 +243,8 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public new async Task<ArmOperation<DomainTopicEventSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             var result = await UpdateCoreAsync(waitUntil, patch, cancellationToken).ConfigureAwait(false);
             if (waitUntil == WaitUntil.Completed)
             {
@@ -258,7 +255,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation Update
         /// Update an existing event subscription for a domain topic.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}
         /// Operation Id: DomainTopicEventSubscriptions_Update
@@ -300,6 +296,8 @@ namespace Azure.ResourceManager.EventGrid
         [ForwardsClientCalls]
         public new ArmOperation<DomainTopicEventSubscriptionResource> Update(WaitUntil waitUntil, EventSubscriptionPatch patch, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(patch, nameof(patch));
+
             var result = UpdateCore(waitUntil, patch, cancellationToken);
             if (waitUntil == WaitUntil.Completed)
             {
@@ -310,7 +308,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation GetFullUri
         /// Get the full endpoint URL for a nested event subscription for domain topic.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}/getFullUrl
         /// Operation Id: DomainTopicEventSubscriptions_GetFullUrl
@@ -333,7 +330,6 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation GetFullUri
         /// Get the full endpoint URL for a nested event subscription for domain topic.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}/getFullUrl
         /// Operation Id: DomainTopicEventSubscriptions_GetFullUrl
@@ -356,12 +352,12 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation GetDeliveryAttributes
         /// Get all delivery attributes for an event subscription for domain topic.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes
         /// Operation Id: DomainTopicEventSubscriptions_GetDeliveryAttributes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
         protected override AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesCoreAsync(CancellationToken cancellationToken = default)
         {
             async Task<Page<DeliveryAttributeMapping>> FirstPageFunc(int? pageSizeHint)
@@ -383,12 +379,12 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary>
-        /// The core implementation for operation GetDeliveryAttributes
         /// Get all delivery attributes for an event subscription for domain topic.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}/getDeliveryAttributes
         /// Operation Id: DomainTopicEventSubscriptions_GetDeliveryAttributes
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DeliveryAttributeMapping" /> that may take multiple service requests to iterate over. </returns>
         protected override Pageable<DeliveryAttributeMapping> GetDeliveryAttributesCore(CancellationToken cancellationToken = default)
         {
             Page<DeliveryAttributeMapping> FirstPageFunc(int? pageSizeHint)

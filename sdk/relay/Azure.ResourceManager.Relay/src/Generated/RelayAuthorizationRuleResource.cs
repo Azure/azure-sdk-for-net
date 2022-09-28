@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Relay
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="RelayNamespaceAuthorizationRuleResource" />, <see cref="RelayHybridConnectionAuthorizationRuleResource" /> or <see cref="WcfRelayAuthorizationRuleResource" />. </summary>
     public abstract partial class RelayAuthorizationRuleResource : ArmResource
     {
         internal static RelayAuthorizationRuleResource GetResource(ArmClient client, RelayAuthorizationRuleData data)
@@ -186,6 +186,8 @@ namespace Azure.ResourceManager.Relay
         [ForwardsClientCalls]
         public async Task<ArmOperation<RelayAuthorizationRuleResource>> UpdateAsync(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -204,6 +206,8 @@ namespace Azure.ResourceManager.Relay
         [ForwardsClientCalls]
         public ArmOperation<RelayAuthorizationRuleResource> Update(WaitUntil waitUntil, RelayAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(waitUntil, data, cancellationToken);
         }
 
@@ -244,6 +248,8 @@ namespace Azure.ResourceManager.Relay
         [ForwardsClientCalls]
         public async Task<Response<RelayAccessKeys>> RegenerateKeysAsync(RelayRegenerateAccessKeyContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             return await RegenerateKeysCoreAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
@@ -260,6 +266,8 @@ namespace Azure.ResourceManager.Relay
         [ForwardsClientCalls]
         public Response<RelayAccessKeys> RegenerateKeys(RelayRegenerateAccessKeyContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             return RegenerateKeysCore(content, cancellationToken);
         }
     }

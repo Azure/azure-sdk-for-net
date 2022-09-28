@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="HealthcareApisServicePrivateEndpointConnectionResource" /> or <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" />. </summary>
     public abstract partial class HealthcareApisPrivateEndpointConnectionResource : ArmResource
     {
         internal static HealthcareApisPrivateEndpointConnectionResource GetResource(ArmClient client, HealthcareApisPrivateEndpointConnectionData data)
@@ -166,6 +166,8 @@ namespace Azure.ResourceManager.HealthcareApis
         [ForwardsClientCalls]
         public async Task<ArmOperation<HealthcareApisPrivateEndpointConnectionResource>> UpdateAsync(WaitUntil waitUntil, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -184,6 +186,8 @@ namespace Azure.ResourceManager.HealthcareApis
         [ForwardsClientCalls]
         public ArmOperation<HealthcareApisPrivateEndpointConnectionResource> Update(WaitUntil waitUntil, HealthcareApisPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(waitUntil, data, cancellationToken);
         }
     }

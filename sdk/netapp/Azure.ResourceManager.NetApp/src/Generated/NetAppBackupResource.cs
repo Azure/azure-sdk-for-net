@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetApp
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="NetAppVolumeBackupResource" /> or <see cref="NetAppAccountBackupResource" />. </summary>
     public abstract partial class NetAppBackupResource : ArmResource
     {
         internal static NetAppBackupResource GetResource(ArmClient client, NetAppBackupData data)

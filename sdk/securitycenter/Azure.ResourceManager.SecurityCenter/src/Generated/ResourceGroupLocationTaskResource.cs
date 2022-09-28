@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Recommended tasks that will help improve the security of the subscription proactively
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}
         /// Operation Id: Tasks_GetResourceGroupLevelTask
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Recommended tasks that will help improve the security of the subscription proactively
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}
         /// Operation Id: Tasks_GetResourceGroupLevelTask

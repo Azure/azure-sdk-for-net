@@ -149,7 +149,6 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a workflow run.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}
         /// Operation Id: WorkflowRuns_Get
@@ -187,7 +186,6 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets a workflow run.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}
         /// Operation Id: WorkflowRuns_Get

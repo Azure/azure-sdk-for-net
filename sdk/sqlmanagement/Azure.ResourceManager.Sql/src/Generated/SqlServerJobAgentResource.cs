@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _sqlServerJobAgentJobAgentsClientDiagnostics;
         private readonly JobAgentsRestOperations _sqlServerJobAgentJobAgentsRestClient;
-        private readonly ClientDiagnostics _sqlServerJobExecutionJobExecutionsClientDiagnostics;
-        private readonly JobExecutionsRestOperations _sqlServerJobExecutionJobExecutionsRestClient;
+        private readonly ClientDiagnostics _jobExecutionsClientDiagnostics;
+        private readonly JobExecutionsRestOperations _jobExecutionsRestClient;
         private readonly SqlServerJobAgentData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SqlServerJobAgentResource"/> class for mocking. </summary>
@@ -62,9 +62,8 @@ namespace Azure.ResourceManager.Sql
             _sqlServerJobAgentJobAgentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string sqlServerJobAgentJobAgentsApiVersion);
             _sqlServerJobAgentJobAgentsRestClient = new JobAgentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerJobAgentJobAgentsApiVersion);
-            _sqlServerJobExecutionJobExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SqlServerJobExecutionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SqlServerJobExecutionResource.ResourceType, out string sqlServerJobExecutionJobExecutionsApiVersion);
-            _sqlServerJobExecutionJobExecutionsRestClient = new JobExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerJobExecutionJobExecutionsApiVersion);
+            _jobExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _jobExecutionsRestClient = new JobExecutionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -383,11 +382,11 @@ namespace Azure.ResourceManager.Sql
         {
             async Task<Page<BaseSqlServerJobExecutionResource>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _sqlServerJobExecutionJobExecutionsClientDiagnostics.CreateScope("SqlServerJobAgentResource.GetJobExecutionsByAgent");
+                using var scope = _jobExecutionsClientDiagnostics.CreateScope("SqlServerJobAgentResource.GetJobExecutionsByAgent");
                 scope.Start();
                 try
                 {
-                    var response = await _sqlServerJobExecutionJobExecutionsRestClient.ListByAgentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _jobExecutionsRestClient.ListByAgentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => BaseSqlServerJobExecutionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -398,11 +397,11 @@ namespace Azure.ResourceManager.Sql
             }
             async Task<Page<BaseSqlServerJobExecutionResource>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _sqlServerJobExecutionJobExecutionsClientDiagnostics.CreateScope("SqlServerJobAgentResource.GetJobExecutionsByAgent");
+                using var scope = _jobExecutionsClientDiagnostics.CreateScope("SqlServerJobAgentResource.GetJobExecutionsByAgent");
                 scope.Start();
                 try
                 {
-                    var response = await _sqlServerJobExecutionJobExecutionsRestClient.ListByAgentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _jobExecutionsRestClient.ListByAgentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value.Select(value => BaseSqlServerJobExecutionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -432,11 +431,11 @@ namespace Azure.ResourceManager.Sql
         {
             Page<BaseSqlServerJobExecutionResource> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _sqlServerJobExecutionJobExecutionsClientDiagnostics.CreateScope("SqlServerJobAgentResource.GetJobExecutionsByAgent");
+                using var scope = _jobExecutionsClientDiagnostics.CreateScope("SqlServerJobAgentResource.GetJobExecutionsByAgent");
                 scope.Start();
                 try
                 {
-                    var response = _sqlServerJobExecutionJobExecutionsRestClient.ListByAgent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
+                    var response = _jobExecutionsRestClient.ListByAgent(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => BaseSqlServerJobExecutionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -447,11 +446,11 @@ namespace Azure.ResourceManager.Sql
             }
             Page<BaseSqlServerJobExecutionResource> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _sqlServerJobExecutionJobExecutionsClientDiagnostics.CreateScope("SqlServerJobAgentResource.GetJobExecutionsByAgent");
+                using var scope = _jobExecutionsClientDiagnostics.CreateScope("SqlServerJobAgentResource.GetJobExecutionsByAgent");
                 scope.Start();
                 try
                 {
-                    var response = _sqlServerJobExecutionJobExecutionsRestClient.ListByAgentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
+                    var response = _jobExecutionsRestClient.ListByAgentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, createTimeMin, createTimeMax, endTimeMin, endTimeMax, isActive, skip, top, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value.Select(value => BaseSqlServerJobExecutionResource.GetResource(Client, value)), response.Value.NextLink, response.GetRawResponse());
                 }
                 catch (Exception e)

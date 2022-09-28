@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Synapse
     /// from an instance of <see cref="ArmClient" /> using the GetWorkspaceAdministratorResource method.
     /// Otherwise you can get one from its parent resource <see cref="WorkspaceResource" /> using the GetWorkspaceAdministrator method.
     /// </summary>
-    public partial class WorkspaceAdministratorResource : ArmResource
+    public partial class WorkspaceAdministratorResource : WorkspaceAadAdminInfoResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WorkspaceAdministratorResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName)
@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.Synapse
 
         private readonly ClientDiagnostics _workspaceAdministratorWorkspaceAadAdminsClientDiagnostics;
         private readonly WorkspaceAadAdminsRestOperations _workspaceAdministratorWorkspaceAadAdminsRestClient;
-        private readonly WorkspaceAadAdminInfoData _data;
 
         /// <summary> Initializes a new instance of the <see cref="WorkspaceAdministratorResource"/> class for mocking. </summary>
         protected WorkspaceAdministratorResource()
@@ -43,10 +42,14 @@ namespace Azure.ResourceManager.Synapse
         /// <summary> Initializes a new instance of the <see cref = "WorkspaceAdministratorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal WorkspaceAdministratorResource(ArmClient client, WorkspaceAadAdminInfoData data) : this(client, data.Id)
+        internal WorkspaceAdministratorResource(ArmClient client, WorkspaceAadAdminInfoData data) : base(client, data)
         {
-            HasData = true;
-            _data = data;
+            _workspaceAdministratorWorkspaceAadAdminsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Synapse", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string workspaceAdministratorWorkspaceAadAdminsApiVersion);
+            _workspaceAdministratorWorkspaceAadAdminsRestClient = new WorkspaceAadAdminsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, workspaceAdministratorWorkspaceAadAdminsApiVersion);
+#if DEBUG
+			ValidateResourceId(Id);
+#endif
         }
 
         /// <summary> Initializes a new instance of the <see cref="WorkspaceAdministratorResource"/> class. </summary>
@@ -65,21 +68,6 @@ namespace Azure.ResourceManager.Synapse
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/administrators";
 
-        /// <summary> Gets whether or not the current instance has data. </summary>
-        public virtual bool HasData { get; }
-
-        /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual WorkspaceAadAdminInfoData Data
-        {
-            get
-            {
-                if (!HasData)
-                    throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
-                return _data;
-            }
-        }
-
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
@@ -92,7 +80,7 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: WorkspaceAadAdmins_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<WorkspaceAdministratorResource>> GetAsync(CancellationToken cancellationToken = default)
+        protected override async Task<Response<WorkspaceAadAdminInfoResource>> GetCoreAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _workspaceAdministratorWorkspaceAadAdminsClientDiagnostics.CreateScope("WorkspaceAdministratorResource.Get");
             scope.Start();
@@ -101,7 +89,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = await _workspaceAdministratorWorkspaceAadAdminsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspaceAdministratorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -116,7 +104,20 @@ namespace Azure.ResourceManager.Synapse
         /// Operation Id: WorkspaceAadAdmins_Get
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<WorkspaceAdministratorResource> Get(CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<Response<WorkspaceAdministratorResource>> GetAsync(CancellationToken cancellationToken = default)
+        {
+            var result = await GetCoreAsync(cancellationToken).ConfigureAwait(false);
+            return Response.FromValue((WorkspaceAdministratorResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Gets a workspace active directory admin
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/administrators/activeDirectory
+        /// Operation Id: WorkspaceAadAdmins_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        protected override Response<WorkspaceAadAdminInfoResource> GetCore(CancellationToken cancellationToken = default)
         {
             using var scope = _workspaceAdministratorWorkspaceAadAdminsClientDiagnostics.CreateScope("WorkspaceAdministratorResource.Get");
             scope.Start();
@@ -125,7 +126,7 @@ namespace Azure.ResourceManager.Synapse
                 var response = _workspaceAdministratorWorkspaceAadAdminsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new WorkspaceAdministratorResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(GetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -135,13 +136,26 @@ namespace Azure.ResourceManager.Synapse
         }
 
         /// <summary>
+        /// Gets a workspace active directory admin
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/administrators/activeDirectory
+        /// Operation Id: WorkspaceAadAdmins_Get
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public new Response<WorkspaceAdministratorResource> Get(CancellationToken cancellationToken = default)
+        {
+            var result = GetCore(cancellationToken);
+            return Response.FromValue((WorkspaceAdministratorResource)result.Value, result.GetRawResponse());
+        }
+
+        /// <summary>
         /// Deletes a workspace active directory admin
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/administrators/activeDirectory
         /// Operation Id: WorkspaceAadAdmins_Delete
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation> DeleteCoreAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _workspaceAdministratorWorkspaceAadAdminsClientDiagnostics.CreateScope("WorkspaceAdministratorResource.Delete");
             scope.Start();
@@ -167,7 +181,7 @@ namespace Azure.ResourceManager.Synapse
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        protected override ArmOperation DeleteCore(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
             using var scope = _workspaceAdministratorWorkspaceAadAdminsClientDiagnostics.CreateScope("WorkspaceAdministratorResource.Delete");
             scope.Start();
@@ -195,7 +209,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="info"> Workspace active directory administrator properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
-        public virtual async Task<ArmOperation<WorkspaceAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, WorkspaceAadAdminInfoData info, CancellationToken cancellationToken = default)
+        protected override async Task<ArmOperation<WorkspaceAadAdminInfoResource>> CreateOrUpdateCoreAsync(WaitUntil waitUntil, WorkspaceAadAdminInfoData info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(info, nameof(info));
 
@@ -204,7 +218,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = await _workspaceAdministratorWorkspaceAadAdminsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken).ConfigureAwait(false);
-                var operation = new SynapseArmOperation<WorkspaceAdministratorResource>(new WorkspaceAdministratorOperationSource(Client), _workspaceAdministratorWorkspaceAadAdminsClientDiagnostics, Pipeline, _workspaceAdministratorWorkspaceAadAdminsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<WorkspaceAadAdminInfoResource>(new WorkspaceAadAdminInfoOperationSource(Client), _workspaceAdministratorWorkspaceAadAdminsClientDiagnostics, Pipeline, _workspaceAdministratorWorkspaceAadAdminsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -225,7 +239,30 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="info"> Workspace active directory administrator properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
-        public virtual ArmOperation<WorkspaceAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, WorkspaceAadAdminInfoData info, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public new async Task<ArmOperation<WorkspaceAdministratorResource>> CreateOrUpdateAsync(WaitUntil waitUntil, WorkspaceAadAdminInfoData info, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(info, nameof(info));
+
+            var result = await CreateOrUpdateCoreAsync(waitUntil, info, cancellationToken).ConfigureAwait(false);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new SynapseArmOperation<WorkspaceAdministratorResource>(Response.FromValue((WorkspaceAdministratorResource)result.Value, result.GetRawResponse()));
+            }
+            var operation = new SynapseArmOperation<WorkspaceAdministratorResource>(new WorkspaceAdministratorOperationSource(Client), _workspaceAdministratorWorkspaceAadAdminsClientDiagnostics, Pipeline, _workspaceAdministratorWorkspaceAadAdminsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
+        }
+
+        /// <summary>
+        /// Creates or updates a workspace active directory admin
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/administrators/activeDirectory
+        /// Operation Id: WorkspaceAadAdmins_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="info"> Workspace active directory administrator properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        protected override ArmOperation<WorkspaceAadAdminInfoResource> CreateOrUpdateCore(WaitUntil waitUntil, WorkspaceAadAdminInfoData info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(info, nameof(info));
 
@@ -234,7 +271,7 @@ namespace Azure.ResourceManager.Synapse
             try
             {
                 var response = _workspaceAdministratorWorkspaceAadAdminsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info, cancellationToken);
-                var operation = new SynapseArmOperation<WorkspaceAdministratorResource>(new WorkspaceAdministratorOperationSource(Client), _workspaceAdministratorWorkspaceAadAdminsClientDiagnostics, Pipeline, _workspaceAdministratorWorkspaceAadAdminsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info).Request, response, OperationFinalStateVia.Location);
+                var operation = new SynapseArmOperation<WorkspaceAadAdminInfoResource>(new WorkspaceAadAdminInfoOperationSource(Client), _workspaceAdministratorWorkspaceAadAdminsClientDiagnostics, Pipeline, _workspaceAdministratorWorkspaceAadAdminsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -244,6 +281,29 @@ namespace Azure.ResourceManager.Synapse
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Creates or updates a workspace active directory admin
+        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/administrators/activeDirectory
+        /// Operation Id: WorkspaceAadAdmins_CreateOrUpdate
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="info"> Workspace active directory administrator properties. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        [ForwardsClientCalls]
+        public new ArmOperation<WorkspaceAdministratorResource> CreateOrUpdate(WaitUntil waitUntil, WorkspaceAadAdminInfoData info, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(info, nameof(info));
+
+            var result = CreateOrUpdateCore(waitUntil, info, cancellationToken);
+            if (waitUntil == WaitUntil.Completed)
+            {
+                return new SynapseArmOperation<WorkspaceAdministratorResource>(Response.FromValue((WorkspaceAdministratorResource)result.Value, result.GetRawResponse()));
+            }
+            var operation = new SynapseArmOperation<WorkspaceAdministratorResource>(new WorkspaceAdministratorOperationSource(Client), _workspaceAdministratorWorkspaceAadAdminsClientDiagnostics, Pipeline, _workspaceAdministratorWorkspaceAadAdminsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, info).Request, result.GetRawResponse(), OperationFinalStateVia.Location);
+            return operation;
         }
     }
 }

@@ -121,7 +121,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web
         /// Operation Id: WebApps_GetConfiguration
@@ -159,7 +158,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Description for Gets the configuration of an app, such as platform version and bitness, default documents, virtual applications, Always On, etc.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/web
         /// Operation Id: WebApps_GetConfiguration

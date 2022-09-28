@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly OutboundNetworkDependenciesEndpointsRestOperations _outboundNetworkDependenciesEndpointsRestClient;
         private readonly ClientDiagnostics _policyDescriptionClientDiagnostics;
         private readonly PolicyDescriptionRestOperations _policyDescriptionRestClient;
-        private readonly ClientDiagnostics _portalSettingsClientDiagnostics;
-        private readonly PortalSettingsRestOperations _portalSettingsRestClient;
+        private readonly ClientDiagnostics _apiManagementServicePortalSettingsClientDiagnostics;
+        private readonly PortalSettingsRestOperations _apiManagementServicePortalSettingsRestClient;
         private readonly ClientDiagnostics _apiManagementProductProductClientDiagnostics;
         private readonly ProductRestOperations _apiManagementProductProductRestClient;
         private readonly ClientDiagnostics _quotaByCounterKeysClientDiagnostics;
@@ -109,8 +109,9 @@ namespace Azure.ResourceManager.ApiManagement
             _outboundNetworkDependenciesEndpointsRestClient = new OutboundNetworkDependenciesEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _policyDescriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _policyDescriptionRestClient = new PolicyDescriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _portalSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _portalSettingsRestClient = new PortalSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _apiManagementServicePortalSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string apiManagementServicePortalSettingsApiVersion);
+            _apiManagementServicePortalSettingsRestClient = new PortalSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServicePortalSettingsApiVersion);
             _apiManagementProductProductClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiManagementProductResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ApiManagementProductResource.ResourceType, out string apiManagementProductProductApiVersion);
             _apiManagementProductProductRestClient = new ProductRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementProductProductApiVersion);
@@ -2568,11 +2569,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             async Task<Page<PortalSettingsContractData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _portalSettingsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPortalSettings");
+                using var scope = _apiManagementServicePortalSettingsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPortalSettings");
                 scope.Start();
                 try
                 {
-                    var response = await _portalSettingsRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _apiManagementServicePortalSettingsRestClient.ListByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -2595,11 +2596,11 @@ namespace Azure.ResourceManager.ApiManagement
         {
             Page<PortalSettingsContractData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _portalSettingsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPortalSettings");
+                using var scope = _apiManagementServicePortalSettingsClientDiagnostics.CreateScope("ApiManagementServiceResource.GetPortalSettings");
                 scope.Start();
                 try
                 {
-                    var response = _portalSettingsRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
+                    var response = _apiManagementServicePortalSettingsRestClient.ListByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)

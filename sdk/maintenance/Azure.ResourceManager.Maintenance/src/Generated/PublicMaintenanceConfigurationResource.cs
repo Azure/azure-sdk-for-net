@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get Public Maintenance Configuration record
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}
         /// Operation Id: PublicMaintenanceConfigurations_Get
@@ -114,7 +113,6 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get Public Maintenance Configuration record
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}
         /// Operation Id: PublicMaintenanceConfigurations_Get

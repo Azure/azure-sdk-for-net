@@ -17,7 +17,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="CosmosDBSqlDatabaseThroughputSettingResource" />, <see cref="CosmosDBSqlContainerThroughputSettingResource" />, <see cref="MongoDBDatabaseThroughputSettingResource" />, <see cref="MongoDBCollectionThroughputSettingResource" />, <see cref="CosmosTableThroughputSettingResource" />, <see cref="CassandraKeyspaceThroughputSettingResource" />, <see cref="CassandraTableThroughputSettingResource" />, <see cref="GremlinDatabaseThroughputSettingResource" /> or <see cref="GremlinGraphThroughputSettingResource" />. </summary>
     public abstract partial class ThroughputSettingResource : ArmResource
     {
         internal static ThroughputSettingResource GetResource(ArmClient client, ThroughputSettingData data)
@@ -318,6 +318,8 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public async Task<ArmOperation<ThroughputSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await CreateOrUpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -336,6 +338,8 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public ArmOperation<ThroughputSettingResource> CreateOrUpdate(WaitUntil waitUntil, ThroughputSettingsUpdateData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return CreateOrUpdateCore(waitUntil, data, cancellationToken);
         }
 
@@ -354,6 +358,9 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public async Task<Response<ThroughputSettingResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             return await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
         }
 
@@ -372,6 +379,9 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public Response<ThroughputSettingResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             return AddTagCore(key, value, cancellationToken);
         }
 
@@ -388,6 +398,8 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public async Task<Response<ThroughputSettingResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             return await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
         }
 
@@ -404,6 +416,8 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public Response<ThroughputSettingResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             return SetTagsCore(tags, cancellationToken);
         }
 
@@ -420,6 +434,8 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public async Task<Response<ThroughputSettingResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             return await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
         }
 
@@ -436,6 +452,8 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public Response<ThroughputSettingResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             return RemoveTagCore(key, cancellationToken);
         }
     }

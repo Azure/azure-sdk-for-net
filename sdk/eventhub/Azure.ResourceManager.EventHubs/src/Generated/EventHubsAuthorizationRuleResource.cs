@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="EventHubsNamespaceAuthorizationRuleResource" />, <see cref="EventHubAuthorizationRuleResource" /> or <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" />. </summary>
     public abstract partial class EventHubsAuthorizationRuleResource : ArmResource
     {
         internal static EventHubsAuthorizationRuleResource GetResource(ArmClient client, EventHubsAuthorizationRuleData data)

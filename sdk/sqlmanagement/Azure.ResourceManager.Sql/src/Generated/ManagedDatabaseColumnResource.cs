@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.Sql
 
         private readonly ClientDiagnostics _managedDatabaseColumnClientDiagnostics;
         private readonly ManagedDatabaseColumnsRestOperations _managedDatabaseColumnRestClient;
-        private readonly ClientDiagnostics _managedDatabaseSensitivityLabelClientDiagnostics;
-        private readonly ManagedDatabaseSensitivityLabelsRestOperations _managedDatabaseSensitivityLabelRestClient;
+        private readonly ClientDiagnostics _managedDatabaseSensitivityLabelsClientDiagnostics;
+        private readonly ManagedDatabaseSensitivityLabelsRestOperations _managedDatabaseSensitivityLabelsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ManagedDatabaseColumnResource"/> class for mocking. </summary>
         protected ManagedDatabaseColumnResource()
@@ -50,9 +50,8 @@ namespace Azure.ResourceManager.Sql
             _managedDatabaseColumnClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string managedDatabaseColumnApiVersion);
             _managedDatabaseColumnRestClient = new ManagedDatabaseColumnsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseColumnApiVersion);
-            _managedDatabaseSensitivityLabelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseSensitivityLabelResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagedDatabaseSensitivityLabelResource.ResourceType, out string managedDatabaseSensitivityLabelApiVersion);
-            _managedDatabaseSensitivityLabelRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseSensitivityLabelApiVersion);
+            _managedDatabaseSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -66,9 +65,8 @@ namespace Azure.ResourceManager.Sql
             _managedDatabaseColumnClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string managedDatabaseColumnApiVersion);
             _managedDatabaseColumnRestClient = new ManagedDatabaseColumnsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseColumnApiVersion);
-            _managedDatabaseSensitivityLabelClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ManagedDatabaseSensitivityLabelResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ManagedDatabaseSensitivityLabelResource.ResourceType, out string managedDatabaseSensitivityLabelApiVersion);
-            _managedDatabaseSensitivityLabelRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managedDatabaseSensitivityLabelApiVersion);
+            _managedDatabaseSensitivityLabelsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _managedDatabaseSensitivityLabelsRestClient = new ManagedDatabaseSensitivityLabelsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -117,7 +115,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get managed database column
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
         /// Operation Id: ManagedDatabaseColumns_Get
@@ -155,7 +152,6 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get managed database column
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/databases/{databaseName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}
         /// Operation Id: ManagedDatabaseColumns_Get
@@ -200,11 +196,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DisableRecommendationManagedDatabaseSensitivityLabelAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.DisableRecommendationManagedDatabaseSensitivityLabel");
+            using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.DisableRecommendationManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseSensitivityLabelRestClient.DisableRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedDatabaseSensitivityLabelsRestClient.DisableRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -222,11 +218,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response DisableRecommendationManagedDatabaseSensitivityLabel(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.DisableRecommendationManagedDatabaseSensitivityLabel");
+            using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.DisableRecommendationManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = _managedDatabaseSensitivityLabelRestClient.DisableRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managedDatabaseSensitivityLabelsRestClient.DisableRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -244,11 +240,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> EnableRecommendationManagedDatabaseSensitivityLabelAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.EnableRecommendationManagedDatabaseSensitivityLabel");
+            using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.EnableRecommendationManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = await _managedDatabaseSensitivityLabelRestClient.EnableRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _managedDatabaseSensitivityLabelsRestClient.EnableRecommendationAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -266,11 +262,11 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response EnableRecommendationManagedDatabaseSensitivityLabel(CancellationToken cancellationToken = default)
         {
-            using var scope = _managedDatabaseSensitivityLabelClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.EnableRecommendationManagedDatabaseSensitivityLabel");
+            using var scope = _managedDatabaseSensitivityLabelsClientDiagnostics.CreateScope("ManagedDatabaseColumnResource.EnableRecommendationManagedDatabaseSensitivityLabel");
             scope.Start();
             try
             {
-                var response = _managedDatabaseSensitivityLabelRestClient.EnableRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _managedDatabaseSensitivityLabelsRestClient.EnableRecommendation(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Parent.Name, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

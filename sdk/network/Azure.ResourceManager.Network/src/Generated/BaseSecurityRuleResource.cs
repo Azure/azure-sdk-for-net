@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Network
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SecurityRuleResource" /> or <see cref="DefaultSecurityRuleResource" />. </summary>
     public abstract partial class BaseSecurityRuleResource : ArmResource
     {
         internal static BaseSecurityRuleResource GetResource(ArmClient client, SecurityRuleData data)

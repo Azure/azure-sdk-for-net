@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get an alert that is associated with a subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}
         /// Operation Id: Alerts_GetSubscriptionLevel
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get an alert that is associated with a subscription
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}
         /// Operation Id: Alerts_GetSubscriptionLevel

@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an incident relation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/relations/{relationName}
         /// Operation Id: IncidentRelations_Get
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets an incident relation.
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/incidents/{incidentId}/relations/{relationName}
         /// Operation Id: IncidentRelations_Get

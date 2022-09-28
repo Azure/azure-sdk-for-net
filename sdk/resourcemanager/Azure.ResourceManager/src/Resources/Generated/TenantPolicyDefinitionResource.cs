@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// This operation retrieves the built-in policy definition with the given name.
         /// Request Path: /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
         /// Operation Id: PolicyDefinitions_GetBuiltIn
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// This operation retrieves the built-in policy definition with the given name.
         /// Request Path: /providers/Microsoft.Authorization/policyDefinitions/{policyDefinitionName}
         /// Operation Id: PolicyDefinitions_GetBuiltIn

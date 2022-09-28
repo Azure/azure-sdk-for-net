@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="ApiOperationTagResource" />, <see cref="ApiTagResource" />, <see cref="ApiManagementProductTagResource" /> or <see cref="ApiManagementTagResource" />. </summary>
     public abstract partial class TagContractResource : ArmResource
     {
         internal static TagContractResource GetResource(ArmClient client, TagContractData data)

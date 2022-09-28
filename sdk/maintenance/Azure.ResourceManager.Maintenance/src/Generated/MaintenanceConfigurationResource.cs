@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get Configuration record
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}
         /// Operation Id: MaintenanceConfigurations_Get
@@ -115,7 +114,6 @@ namespace Azure.ResourceManager.Maintenance
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Get Configuration record
         /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}
         /// Operation Id: MaintenanceConfigurations_Get
@@ -284,7 +282,7 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new MaintenanceConfigurationData(current.Location);
                     foreach (var tag in current.Tags)
                     {
@@ -330,7 +328,7 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new MaintenanceConfigurationData(current.Location);
                     foreach (var tag in current.Tags)
                     {
@@ -375,7 +373,7 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new MaintenanceConfigurationData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -416,7 +414,7 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new MaintenanceConfigurationData(current.Location);
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
@@ -456,7 +454,7 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    var current = (await GetCoreAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new MaintenanceConfigurationData(current.Location);
                     foreach (var tag in current.Tags)
                     {
@@ -500,7 +498,7 @@ namespace Azure.ResourceManager.Maintenance
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    var current = GetCore(cancellationToken: cancellationToken).Value.Data;
                     var patch = new MaintenanceConfigurationData(current.Location);
                     foreach (var tag in current.Tags)
                     {

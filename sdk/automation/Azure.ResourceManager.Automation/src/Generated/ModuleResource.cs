@@ -16,7 +16,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Automation
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="AutomationAccountPython2PackageResource" /> or <see cref="AutomationAccountModuleResource" />. </summary>
     public abstract partial class ModuleResource : ArmResource
     {
         internal static ModuleResource GetResource(ArmClient client, ModuleData data)
@@ -167,6 +167,9 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public async Task<Response<ModuleResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             return await AddTagCoreAsync(key, value, cancellationToken).ConfigureAwait(false);
         }
 
@@ -185,6 +188,9 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public Response<ModuleResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
             return AddTagCore(key, value, cancellationToken);
         }
 
@@ -201,6 +207,8 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public async Task<Response<ModuleResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             return await SetTagsCoreAsync(tags, cancellationToken).ConfigureAwait(false);
         }
 
@@ -217,6 +225,8 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public Response<ModuleResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(tags, nameof(tags));
+
             return SetTagsCore(tags, cancellationToken);
         }
 
@@ -233,6 +243,8 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public async Task<Response<ModuleResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             return await RemoveTagCoreAsync(key, cancellationToken).ConfigureAwait(false);
         }
 
@@ -249,6 +261,8 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public Response<ModuleResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(key, nameof(key));
+
             return RemoveTagCore(key, cancellationToken);
         }
     }

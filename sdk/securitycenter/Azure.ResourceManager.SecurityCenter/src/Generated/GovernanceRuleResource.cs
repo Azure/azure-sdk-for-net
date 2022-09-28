@@ -15,7 +15,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    /// <summary> TODO. </summary>
+    /// <summary> This is the base client representation of the following resources <see cref="SubscriptionGovernanceRuleResource" /> or <see cref="SecurityConnectorGovernanceRuleResource" />. </summary>
     public abstract partial class GovernanceRuleResource : ArmResource
     {
         internal static GovernanceRuleResource GetResource(ArmClient client, GovernanceRuleData data)
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 return false;
             }
             // checking the resource scope
-            if (id.Parent.ResourceType != "Microsoft.Security/securityConnectors")
+            if (id.Parent.ResourceType != SecurityConnectorResource.ResourceType)
             {
                 return false;
             }
@@ -166,6 +166,8 @@ namespace Azure.ResourceManager.SecurityCenter
         [ForwardsClientCalls]
         public async Task<ArmOperation<GovernanceRuleResource>> UpdateAsync(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return await UpdateCoreAsync(waitUntil, data, cancellationToken).ConfigureAwait(false);
         }
 
@@ -184,6 +186,8 @@ namespace Azure.ResourceManager.SecurityCenter
         [ForwardsClientCalls]
         public ArmOperation<GovernanceRuleResource> Update(WaitUntil waitUntil, GovernanceRuleData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
             return UpdateCore(waitUntil, data, cancellationToken);
         }
     }

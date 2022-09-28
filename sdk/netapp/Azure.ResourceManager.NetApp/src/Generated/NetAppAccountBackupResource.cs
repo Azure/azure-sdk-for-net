@@ -75,7 +75,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets the specified backup for a Netapp Account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}
         /// Operation Id: AccountBackups_Get
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// The core implementation for operation Get
         /// Gets the specified backup for a Netapp Account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}
         /// Operation Id: AccountBackups_Get
@@ -151,7 +149,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete the specified Backup for a Netapp Account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}
         /// Operation Id: AccountBackups_Delete
@@ -178,7 +175,6 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
-        /// The core implementation for operation Delete
         /// Delete the specified Backup for a Netapp Account
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}
         /// Operation Id: AccountBackups_Delete
