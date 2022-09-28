@@ -215,5 +215,17 @@ directive:
     where: $.definitions.Backend.properties.privateEndpointStatus
     transform: >
         $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RulesEngineAction.properties.routeConfigurationOverride
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RulesEngineRule.properties.matchConditions
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RulesEngineRule.properties.matchProcessingBehavior
+    transform: >
+        $["x-nullable"] = true;
 
 ```
