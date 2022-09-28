@@ -272,5 +272,88 @@ namespace Azure.Containers.ContainerRegistry.Tests
             await client.DeleteBlobAsync(digest);
             downloadResult.Value.Dispose();
         }
+
+        //[RecordedTest]
+        //public async Task CanPushArtifact()
+        //{
+        //    // Arrange
+        //    var client = CreateBlobClient("oci-artifact");
+
+        //    await UploadManifestPrerequisites(client);
+
+        //    // Act
+        //    var manifest = CreateManifest();
+        //    var uploadResult = await client.UploadManifestAsync(manifest);
+        //    string digest = uploadResult.Value.Digest;
+
+        //    // Assert
+        //    DownloadManifestOptions downloadOptions = new DownloadManifestOptions(null, digest);
+        //    using var downloadResultValue = (await client.DownloadManifestAsync(downloadOptions)).Value;
+        //    Assert.AreEqual(0, downloadResultValue.ManifestStream.Position);
+        //    Assert.AreEqual(digest, downloadResultValue.Digest);
+        //    ValidateManifest(downloadResultValue.Manifest);
+
+        //    // Clean up
+        //    await client.DeleteManifestAsync(digest);
+        //}
+
+        //[RecordedTest]
+        //public async Task CanPullArtifact()
+        //{
+        //    // Arrange
+        //    var client = CreateBlobClient("oci-artifact");
+
+        //    //// Arrange
+        //    //var repository = "library/hello-world";
+
+        //    //// This digest is pulling invalid blobs right now
+        //    ////var digest = "sha256:90e120baffe5afa60dd5a24abcd051db49bd6aee391174da5e825ee6ee5a12a0";
+        //    //var digest = "sha256:1b26826f602946860c279fce658f31050cff2c596583af237d971f4629b57792";
+        //    //var client = CreateClient();
+        //    //var artifact = client.GetArtifact(repository, digest);
+        //    string path = @"C:\temp\acr\test-pull";
+
+        //    // Act
+
+        //    // Get Manifest
+
+        //    // TODO: do we need digest in this method if artifact was instantiated with it?
+        //    // TODO: How should we handle/communicate the difference in semantics between download
+        //    // with digest and download with tag?
+        //    var manifestResult = await client.DownloadManifestAsync(digest);
+
+        //    // Write manifest to file
+        //    Directory.CreateDirectory(path);
+        //    string manifestFile = Path.Combine(path, "manifest.json");
+        //    using (FileStream fs = File.Create(manifestFile))
+        //    {
+        //        Stream stream = manifestResult.Value.Content;
+        //        await stream.CopyToAsync(fs).ConfigureAwait(false);
+        //    }
+
+        //    // Write Config and Layers
+        //    foreach (var artifactFile in manifestResult.Value.ArtifactFiles)
+        //    {
+        //        string fileName = Path.Combine(path, artifactFile.FileName ?? TrimSha(artifactFile.Digest));
+
+        //        using (FileStream fs = File.Create(fileName))
+        //        {
+        //            var layerResult = await downloadClient.DownloadBlobAsync(artifactFile.Digest);
+        //            Stream stream = layerResult.Value.Content;
+        //            await stream.CopyToAsync(fs).ConfigureAwait(false);
+        //        }
+        //    }
+        //}
+
+        private static string TrimSha(string digest)
+        {
+            int index = digest.IndexOf(':');
+            if (index > -1)
+            {
+                return digest.Substring(index + 1);
+            }
+
+            return digest;
+        }
     }
 }
