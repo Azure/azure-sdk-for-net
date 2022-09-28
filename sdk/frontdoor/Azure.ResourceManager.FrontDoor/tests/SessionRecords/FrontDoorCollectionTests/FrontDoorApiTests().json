@@ -7,9 +7,9 @@
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Connection": "keep-alive",
-        "traceparent": "00-a63ad59c694a974380bc748204102dda-1bb82506778b7b43-00",
+        "traceparent": "00-49b03665f971c946ba8e36219bfe9d45-7c46929f69d8154e-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "ac905c28430fa6f9f30408c02365094d",
+        "x-ms-client-request-id": "3b4fc0bf118db1c965b5c2bbee98e5b2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -18,15 +18,15 @@
         "Cache-Control": "no-cache",
         "Content-Length": "747",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:22:39 GMT",
+        "Date": "Wed, 28 Sep 2022 08:56:33 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "be73fe95-7221-4cd5-a62e-ff01b0425507",
+        "x-ms-correlation-request-id": "cc948139-1fee-4376-b96e-e9e8516520ae",
         "x-ms-ratelimit-remaining-subscription-reads": "11999",
-        "x-ms-request-id": "be73fe95-7221-4cd5-a62e-ff01b0425507",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082239Z:be73fe95-7221-4cd5-a62e-ff01b0425507"
+        "x-ms-request-id": "cc948139-1fee-4376-b96e-e9e8516520ae",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085634Z:cc948139-1fee-4376-b96e-e9e8516520ae"
       },
       "ResponseBody": {
         "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c",
@@ -57,16 +57,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572?api-version=2021-04-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798?api-version=2021-04-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "43",
         "Content-Type": "application/json",
-        "traceparent": "00-025b761fe29bb548a1ac52d38712f226-bb7cf62b8fb1c444-00",
+        "traceparent": "00-f9968af9f4ccdb4c99f923606c667995-3ebe51a56d08404d-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "92de83f52c067b518eb11b58e2983341",
+        "x-ms-client-request-id": "a12971fb1c7fad919f3ccd2a3510df86",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -80,19 +80,19 @@
         "Cache-Control": "no-cache",
         "Content-Length": "239",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:22:42 GMT",
+        "Date": "Wed, 28 Sep 2022 08:56:38 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "f6fb1194-27bf-4bcd-b8c8-a23032e773da",
+        "x-ms-correlation-request-id": "11e6ea31-6351-4237-b25e-dc7472530030",
         "x-ms-ratelimit-remaining-subscription-writes": "1199",
-        "x-ms-request-id": "f6fb1194-27bf-4bcd-b8c8-a23032e773da",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082242Z:f6fb1194-27bf-4bcd-b8c8-a23032e773da"
+        "x-ms-request-id": "11e6ea31-6351-4237-b25e-dc7472530030",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085639Z:11e6ea31-6351-4237-b25e-dc7472530030"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572",
-        "name": "testRG7572",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798",
+        "name": "testRG8798",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus",
         "tags": {
@@ -104,16 +104,16 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435?api-version=2021-06-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "1882",
         "Content-Type": "application/json",
-        "traceparent": "00-26bd43ce66af5444a4699aac2ed32bd9-0004b6dd2b22d945-00",
+        "traceparent": "00-e2ce3c5c71a1d843a93b080cc7431e0f-ee322e63fcf0bc4d-00",
         "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220928.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "96b02fb99aa234fb1c352a202a20d0bf",
+        "x-ms-client-request-id": "9696a5452c62d00cd14d7945567441a7",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -126,7 +126,7 @@
               "properties": {
                 "frontendEndpoints": [
                   {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/frontendEndpoints/frontendEndpoint1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/frontendEndpoints/frontendEndpoint1"
                   }
                 ],
                 "acceptedProtocols": [
@@ -139,7 +139,7 @@
                 "routeConfiguration": {
                   "forwardingProtocol": "MatchRequest",
                   "backendPool": {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1"
                   },
                   "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
                 }
@@ -183,10 +183,10 @@
                   }
                 ],
                 "loadBalancingSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/loadBalancingSettings/loadBalancingSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/loadBalancingSettings/loadBalancingSettings1"
                 },
                 "healthProbeSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/healthProbeSettings/healthProbeSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/healthProbeSettings/healthProbeSettings1"
                 }
               }
             }
@@ -195,7 +195,7 @@
             {
               "name": "frontendEndpoint1",
               "properties": {
-                "hostName": "TestFrontDoor4741.azurefd.net",
+                "hostName": "TestFrontDoor3435.azurefd.net",
                 "sessionAffinityEnabledState": "Disabled",
                 "sessionAffinityTtlSeconds": 0
               }
@@ -208,33 +208,33 @@
       },
       "StatusCode": 201,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/497dc080-296d-4233-a26e-0684d7085f66?api-version=2021-06-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/3c7a75b4-6ef0-418f-80b4-ad0936307e33?api-version=2021-06-01",
         "Cache-Control": "no-cache",
         "Content-Length": "4090",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:22:54 GMT",
+        "Date": "Wed, 28 Sep 2022 08:56:48 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Retry-After": "10",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "96b02fb99aa234fb1c352a202a20d0bf",
-        "x-ms-correlation-request-id": "b92c0a09-98a1-41d9-9ef6-63826a82edea",
+        "x-ms-client-request-id": "9696a5452c62d00cd14d7945567441a7",
+        "x-ms-correlation-request-id": "1309bc64-bf1f-477f-a98a-fd4914cc864c",
         "x-ms-ratelimit-remaining-subscription-writes": "1198",
-        "x-ms-request-id": "83888c91-bf6b-480e-ad69-0ed1a4bc161e",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082255Z:b92c0a09-98a1-41d9-9ef6-63826a82edea"
+        "x-ms-request-id": "c9f40b7f-dd04-41df-a090-ac9f3f5cc503",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085649Z:1309bc64-bf1f-477f-a98a-fd4914cc864c"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdoors/TestFrontDoor4741",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdoors/TestFrontDoor3435",
         "type": "Microsoft.Network/frontdoors",
-        "name": "TestFrontDoor4741",
+        "name": "TestFrontDoor3435",
         "location": "Global",
         "tags": {},
         "properties": {
           "routingRules": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/RoutingRules/routingrule1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/RoutingRules/routingrule1",
               "name": "routingrule1",
               "type": "Microsoft.Network/Frontdoors/RoutingRules",
               "properties": {
@@ -243,7 +243,7 @@
                   "forwardingProtocol": "MatchRequest",
                   "cacheConfiguration": null,
                   "backendPool": {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1"
                   },
                   "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
                 },
@@ -251,7 +251,7 @@
                 "resourceState": "Creating",
                 "frontendEndpoints": [
                   {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/frontendEndpoints/frontendEndpoint1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/frontendEndpoints/frontendEndpoint1"
                   }
                 ],
                 "acceptedProtocols": [
@@ -266,12 +266,12 @@
             }
           ],
           "rulesEngines": [],
-          "frontdoorId": "deace732-f0e3-41ab-b75a-23d83d9ddd79",
+          "frontdoorId": "2000710b-b0b7-446d-ae28-2d0092ef9223",
           "extendedProperties": {},
           "resourceState": "Creating",
           "loadBalancingSettings": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/LoadBalancingSettings/loadBalancingSettings1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/LoadBalancingSettings/loadBalancingSettings1",
               "name": "loadBalancingSettings1",
               "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
               "properties": {
@@ -284,7 +284,7 @@
           ],
           "healthProbeSettings": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/HealthProbeSettings/healthProbeSettings1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/HealthProbeSettings/healthProbeSettings1",
               "name": "healthProbeSettings1",
               "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
               "properties": {
@@ -299,7 +299,7 @@
           ],
           "backendPools": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1",
               "name": "backendPool1",
               "type": "Microsoft.Network/Frontdoors/BackendPools",
               "properties": {
@@ -321,22 +321,22 @@
                 ],
                 "resourceState": "Creating",
                 "loadBalancingSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/loadBalancingSettings/loadBalancingSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/loadBalancingSettings/loadBalancingSettings1"
                 },
                 "healthProbeSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/healthProbeSettings/healthProbeSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/healthProbeSettings/healthProbeSettings1"
                 }
               }
             }
           ],
           "frontendEndpoints": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/FrontendEndpoints/frontendEndpoint1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/FrontendEndpoints/frontendEndpoint1",
               "name": "frontendEndpoint1",
               "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
               "properties": {
                 "resourceState": "Creating",
-                "hostName": "TestFrontDoor4741.azurefd.net",
+                "hostName": "TestFrontDoor3435.azurefd.net",
                 "sessionAffinityEnabledState": "Disabled",
                 "sessionAffinityTtlSeconds": 0,
                 "webApplicationFirewallPolicyLink": null,
@@ -351,20 +351,20 @@
             "sendRecvTimeoutSeconds": 123
           },
           "enabledState": "Enabled",
-          "cName": "TestFrontDoor4741.azurefd.net",
+          "cName": "TestFrontDoor3435.azurefd.net",
           "friendlyName": null,
           "provisioningState": "Creating"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/497dc080-296d-4233-a26e-0684d7085f66?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/3c7a75b4-6ef0-418f-80b4-ad0936307e33?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-26bd43ce66af5444a4699aac2ed32bd9-18861f6e66426e48-00",
+        "traceparent": "00-e2ce3c5c71a1d843a93b080cc7431e0f-75101098744fc341-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "5193b4f5ec45f73b0bf734456491f038",
+        "x-ms-client-request-id": "246d5a6bdb6574c7734cbf6025f777b5",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -373,17 +373,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "62",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:22:55 GMT",
+        "Date": "Wed, 28 Sep 2022 08:56:49 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "5193b4f5ec45f73b0bf734456491f038",
-        "x-ms-correlation-request-id": "01520f41-063f-4a3f-bf90-fc22faf21fc0",
+        "x-ms-client-request-id": "246d5a6bdb6574c7734cbf6025f777b5",
+        "x-ms-correlation-request-id": "61a7a217-d727-40df-9340-e1b04e7938b2",
         "x-ms-ratelimit-remaining-subscription-reads": "11998",
-        "x-ms-request-id": "cbfd28cc-f720-41cc-8894-462d1d377746",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082255Z:01520f41-063f-4a3f-bf90-fc22faf21fc0"
+        "x-ms-request-id": "cea6779d-bedd-4e4a-bc23-38a344acbf22",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085650Z:61a7a217-d727-40df-9340-e1b04e7938b2"
       },
       "ResponseBody": {
         "status": "InProgress",
@@ -394,13 +394,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/497dc080-296d-4233-a26e-0684d7085f66?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/3c7a75b4-6ef0-418f-80b4-ad0936307e33?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-26bd43ce66af5444a4699aac2ed32bd9-f5f58c15b565bd43-00",
+        "traceparent": "00-e2ce3c5c71a1d843a93b080cc7431e0f-6f359a7224c1d842-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "776dd8124efa7a24fe2f05c44deac847",
+        "x-ms-client-request-id": "c90968f4ec7387e616a7c167a5dc2bee",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -409,17 +409,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "62",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:22:56 GMT",
+        "Date": "Wed, 28 Sep 2022 08:56:50 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "776dd8124efa7a24fe2f05c44deac847",
-        "x-ms-correlation-request-id": "5031e98a-60e8-4b69-83ab-ae4d79d5d387",
+        "x-ms-client-request-id": "c90968f4ec7387e616a7c167a5dc2bee",
+        "x-ms-correlation-request-id": "69fcfe22-7a71-414b-9cc0-65ba913244e0",
         "x-ms-ratelimit-remaining-subscription-reads": "11997",
-        "x-ms-request-id": "dc923cbb-95fb-4202-9bb5-03ac9a578f18",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082257Z:5031e98a-60e8-4b69-83ab-ae4d79d5d387"
+        "x-ms-request-id": "8d6e9b4d-ee17-4aa1-a08d-85136cd3b0ca",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085651Z:69fcfe22-7a71-414b-9cc0-65ba913244e0"
       },
       "ResponseBody": {
         "status": "InProgress",
@@ -430,13 +430,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/497dc080-296d-4233-a26e-0684d7085f66?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/3c7a75b4-6ef0-418f-80b4-ad0936307e33?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-26bd43ce66af5444a4699aac2ed32bd9-22b6b2b4bff9c84c-00",
+        "traceparent": "00-e2ce3c5c71a1d843a93b080cc7431e0f-091debb3ff15e241-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "752a65b77e8cd97a8e6c16380aeb1c00",
+        "x-ms-client-request-id": "fbd9ee171c07fb42f57acd58fe2ec8de",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -445,17 +445,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "62",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:22:57 GMT",
+        "Date": "Wed, 28 Sep 2022 08:56:52 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "752a65b77e8cd97a8e6c16380aeb1c00",
-        "x-ms-correlation-request-id": "bd67e7f1-2098-416c-9702-bff3bb8ff482",
+        "x-ms-client-request-id": "fbd9ee171c07fb42f57acd58fe2ec8de",
+        "x-ms-correlation-request-id": "1852627c-1c15-4e66-8d32-152cb5f54031",
         "x-ms-ratelimit-remaining-subscription-reads": "11996",
-        "x-ms-request-id": "efee7000-d1ef-4437-8ab9-15fc7b10d1b9",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082258Z:bd67e7f1-2098-416c-9702-bff3bb8ff482"
+        "x-ms-request-id": "334fbea9-dd21-44a9-ae4f-3d3fe1bb97f9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085653Z:1852627c-1c15-4e66-8d32-152cb5f54031"
       },
       "ResponseBody": {
         "status": "InProgress",
@@ -466,13 +466,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/497dc080-296d-4233-a26e-0684d7085f66?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/3c7a75b4-6ef0-418f-80b4-ad0936307e33?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-26bd43ce66af5444a4699aac2ed32bd9-bd06e53d2549db47-00",
+        "traceparent": "00-e2ce3c5c71a1d843a93b080cc7431e0f-c846123ac55f1046-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "93fe15ed0667a7ca8f195315e777aa20",
+        "x-ms-client-request-id": "3b3bd0836cd97e1774e60ebd1a60cf96",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -481,17 +481,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "62",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:22:59 GMT",
+        "Date": "Wed, 28 Sep 2022 08:56:53 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "93fe15ed0667a7ca8f195315e777aa20",
-        "x-ms-correlation-request-id": "40de0899-cd2b-41de-b4f2-0f086a43b6ea",
+        "x-ms-client-request-id": "3b3bd0836cd97e1774e60ebd1a60cf96",
+        "x-ms-correlation-request-id": "f1acc3e9-cdd3-4433-b0c5-9a006fee78a5",
         "x-ms-ratelimit-remaining-subscription-reads": "11995",
-        "x-ms-request-id": "58efd963-a51e-4f7c-9c07-9b675facb33f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082300Z:40de0899-cd2b-41de-b4f2-0f086a43b6ea"
+        "x-ms-request-id": "eb61a364-0273-4350-9582-5897aed04d61",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085654Z:f1acc3e9-cdd3-4433-b0c5-9a006fee78a5"
       },
       "ResponseBody": {
         "status": "InProgress",
@@ -502,13 +502,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/497dc080-296d-4233-a26e-0684d7085f66?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/3c7a75b4-6ef0-418f-80b4-ad0936307e33?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-26bd43ce66af5444a4699aac2ed32bd9-8f5ae0334057ed4b-00",
+        "traceparent": "00-e2ce3c5c71a1d843a93b080cc7431e0f-e3ac53d6d0578648-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "fe8eec2f7b6694ac5e93e98e38eb6f12",
+        "x-ms-client-request-id": "3748d0217c1dd7ae260dd3f91f8e88e8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -517,17 +517,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "62",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:01 GMT",
+        "Date": "Wed, 28 Sep 2022 08:56:56 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "fe8eec2f7b6694ac5e93e98e38eb6f12",
-        "x-ms-correlation-request-id": "583c5d5a-d5ab-459f-b4db-0f16e53562a2",
+        "x-ms-client-request-id": "3748d0217c1dd7ae260dd3f91f8e88e8",
+        "x-ms-correlation-request-id": "c9fe5e01-cf68-47b5-8950-9c39b3e4a057",
         "x-ms-ratelimit-remaining-subscription-reads": "11994",
-        "x-ms-request-id": "85e6af42-e500-4aad-9ab1-9b5a71dc27f5",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082302Z:583c5d5a-d5ab-459f-b4db-0f16e53562a2"
+        "x-ms-request-id": "322ff06f-8f89-4a00-868a-0c26587d096e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085657Z:c9fe5e01-cf68-47b5-8950-9c39b3e4a057"
       },
       "ResponseBody": {
         "status": "InProgress",
@@ -538,13 +538,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/497dc080-296d-4233-a26e-0684d7085f66?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/3c7a75b4-6ef0-418f-80b4-ad0936307e33?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-26bd43ce66af5444a4699aac2ed32bd9-0e18f510cce50748-00",
+        "traceparent": "00-e2ce3c5c71a1d843a93b080cc7431e0f-96248bb89c2b1c40-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "37d7051334ecb1e09b83e5722a65f216",
+        "x-ms-client-request-id": "d5e3e3dfefa1ab15d65b87210e84e095",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -553,17 +553,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "62",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:05 GMT",
+        "Date": "Wed, 28 Sep 2022 08:57:00 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "37d7051334ecb1e09b83e5722a65f216",
-        "x-ms-correlation-request-id": "8785ed6d-4140-4aca-acc8-83f1421c1aac",
+        "x-ms-client-request-id": "d5e3e3dfefa1ab15d65b87210e84e095",
+        "x-ms-correlation-request-id": "e6197f1d-fb4f-4444-a11d-bcc377ef759d",
         "x-ms-ratelimit-remaining-subscription-reads": "11993",
-        "x-ms-request-id": "fc050d5f-532b-48b7-9b2d-f2750c270196",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082306Z:8785ed6d-4140-4aca-acc8-83f1421c1aac"
+        "x-ms-request-id": "cad938d7-f716-4af4-9627-745a2ecbd6f3",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085701Z:e6197f1d-fb4f-4444-a11d-bcc377ef759d"
       },
       "ResponseBody": {
         "status": "InProgress",
@@ -574,13 +574,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/497dc080-296d-4233-a26e-0684d7085f66?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/3c7a75b4-6ef0-418f-80b4-ad0936307e33?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-26bd43ce66af5444a4699aac2ed32bd9-47fbf866d04c534b-00",
+        "traceparent": "00-e2ce3c5c71a1d843a93b080cc7431e0f-3d2587733610f248-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "1d09f5c11d5d7299696935d41c3c6fa4",
+        "x-ms-client-request-id": "2d3736ab91e507c0226315cb981e5ee6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -589,17 +589,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "61",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:14 GMT",
+        "Date": "Wed, 28 Sep 2022 08:57:09 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "1d09f5c11d5d7299696935d41c3c6fa4",
-        "x-ms-correlation-request-id": "6c4200df-b73c-4001-9caf-b6a742650fac",
+        "x-ms-client-request-id": "2d3736ab91e507c0226315cb981e5ee6",
+        "x-ms-correlation-request-id": "d9606497-e645-4a84-943b-70557b513332",
         "x-ms-ratelimit-remaining-subscription-reads": "11992",
-        "x-ms-request-id": "45a97d4b-34f8-4c5d-bffa-296b0d238398",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082315Z:6c4200df-b73c-4001-9caf-b6a742650fac"
+        "x-ms-request-id": "7abcbaf0-7dca-45fb-8f31-6b1feb5c8bb5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085709Z:d9606497-e645-4a84-943b-70557b513332"
       },
       "ResponseBody": {
         "status": "Succeeded",
@@ -610,13 +610,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-26bd43ce66af5444a4699aac2ed32bd9-de7238771d830847-00",
+        "traceparent": "00-e2ce3c5c71a1d843a93b080cc7431e0f-1dd1a9fbac474845-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "e20141a9729ffa340cdc63e395396af8",
+        "x-ms-client-request-id": "37de255dfa7c31f4bb9d60c2f58dc9a1",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -625,28 +625,28 @@
         "Cache-Control": "no-cache",
         "Content-Length": "4085",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:15 GMT",
+        "Date": "Wed, 28 Sep 2022 08:57:11 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "e20141a9729ffa340cdc63e395396af8",
-        "x-ms-correlation-request-id": "ab565dae-6ab5-419b-a397-6c64d8c78f1c",
+        "x-ms-client-request-id": "37de255dfa7c31f4bb9d60c2f58dc9a1",
+        "x-ms-correlation-request-id": "49385f6c-019a-4fb0-8bcd-25bca6ab2fd4",
         "x-ms-ratelimit-remaining-subscription-reads": "11991",
-        "x-ms-request-id": "e1dc635f-db30-4631-b3a2-f8a22b833766",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082316Z:ab565dae-6ab5-419b-a397-6c64d8c78f1c"
+        "x-ms-request-id": "4e10abb6-a752-4783-bcb2-102429ec7df1",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085711Z:49385f6c-019a-4fb0-8bcd-25bca6ab2fd4"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdoors/TestFrontDoor4741",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdoors/TestFrontDoor3435",
         "type": "Microsoft.Network/frontdoors",
-        "name": "TestFrontDoor4741",
+        "name": "TestFrontDoor3435",
         "location": "Global",
         "tags": {},
         "properties": {
           "routingRules": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/RoutingRules/routingrule1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/RoutingRules/routingrule1",
               "name": "routingrule1",
               "type": "Microsoft.Network/Frontdoors/RoutingRules",
               "properties": {
@@ -655,7 +655,7 @@
                   "forwardingProtocol": "MatchRequest",
                   "cacheConfiguration": null,
                   "backendPool": {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1"
                   },
                   "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
                 },
@@ -663,7 +663,7 @@
                 "resourceState": "Enabled",
                 "frontendEndpoints": [
                   {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/frontendEndpoints/frontendEndpoint1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/frontendEndpoints/frontendEndpoint1"
                   }
                 ],
                 "acceptedProtocols": [
@@ -678,12 +678,12 @@
             }
           ],
           "rulesEngines": [],
-          "frontdoorId": "deace732-f0e3-41ab-b75a-23d83d9ddd79",
+          "frontdoorId": "2000710b-b0b7-446d-ae28-2d0092ef9223",
           "extendedProperties": {},
           "resourceState": "Enabled",
           "loadBalancingSettings": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/LoadBalancingSettings/loadBalancingSettings1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/LoadBalancingSettings/loadBalancingSettings1",
               "name": "loadBalancingSettings1",
               "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
               "properties": {
@@ -696,7 +696,7 @@
           ],
           "healthProbeSettings": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/HealthProbeSettings/healthProbeSettings1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/HealthProbeSettings/healthProbeSettings1",
               "name": "healthProbeSettings1",
               "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
               "properties": {
@@ -711,7 +711,7 @@
           ],
           "backendPools": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1",
               "name": "backendPool1",
               "type": "Microsoft.Network/Frontdoors/BackendPools",
               "properties": {
@@ -733,22 +733,22 @@
                 ],
                 "resourceState": "Enabled",
                 "loadBalancingSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/loadBalancingSettings/loadBalancingSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/loadBalancingSettings/loadBalancingSettings1"
                 },
                 "healthProbeSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/healthProbeSettings/healthProbeSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/healthProbeSettings/healthProbeSettings1"
                 }
               }
             }
           ],
           "frontendEndpoints": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/FrontendEndpoints/frontendEndpoint1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/FrontendEndpoints/frontendEndpoint1",
               "name": "frontendEndpoint1",
               "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
               "properties": {
                 "resourceState": "Enabled",
-                "hostName": "TestFrontDoor4741.azurefd.net",
+                "hostName": "TestFrontDoor3435.azurefd.net",
                 "sessionAffinityEnabledState": "Disabled",
                 "sessionAffinityTtlSeconds": 0,
                 "webApplicationFirewallPolicyLink": null,
@@ -763,21 +763,21 @@
             "sendRecvTimeoutSeconds": 123
           },
           "enabledState": "Enabled",
-          "cName": "TestFrontDoor4741.azurefd.net",
+          "cName": "TestFrontDoor3435.azurefd.net",
           "friendlyName": null,
           "provisioningState": "Succeeded"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-ff089532bf127647a8b0e86a4b6148da-4cbd6ea331598142-00",
+        "traceparent": "00-5f5cc7981569134d828a3b610adb8eb3-e8971ffcb7176a45-00",
         "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220928.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "42ccd2a152e2f6b46b65ce82fe0b945e",
+        "x-ms-client-request-id": "e94d3e2d5b564d0222dbb23ed94912b8",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -786,28 +786,28 @@
         "Cache-Control": "no-cache",
         "Content-Length": "4085",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:17 GMT",
+        "Date": "Wed, 28 Sep 2022 08:57:12 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "42ccd2a152e2f6b46b65ce82fe0b945e",
-        "x-ms-correlation-request-id": "ff2e4262-0ed5-464b-a3e4-8a50aab97e73",
+        "x-ms-client-request-id": "e94d3e2d5b564d0222dbb23ed94912b8",
+        "x-ms-correlation-request-id": "2ac4b4ff-300f-4e64-b7b8-cef6463cc4d1",
         "x-ms-ratelimit-remaining-subscription-reads": "11990",
-        "x-ms-request-id": "2123adf8-ba20-4ca0-a40e-c12f1d1b7a95",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082318Z:ff2e4262-0ed5-464b-a3e4-8a50aab97e73"
+        "x-ms-request-id": "c4af8c44-0d44-418f-b109-5882a0fc943d",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085712Z:2ac4b4ff-300f-4e64-b7b8-cef6463cc4d1"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdoors/TestFrontDoor4741",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdoors/TestFrontDoor3435",
         "type": "Microsoft.Network/frontdoors",
-        "name": "TestFrontDoor4741",
+        "name": "TestFrontDoor3435",
         "location": "Global",
         "tags": {},
         "properties": {
           "routingRules": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/RoutingRules/routingrule1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/RoutingRules/routingrule1",
               "name": "routingrule1",
               "type": "Microsoft.Network/Frontdoors/RoutingRules",
               "properties": {
@@ -816,7 +816,7 @@
                   "forwardingProtocol": "MatchRequest",
                   "cacheConfiguration": null,
                   "backendPool": {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1"
                   },
                   "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
                 },
@@ -824,7 +824,7 @@
                 "resourceState": "Enabled",
                 "frontendEndpoints": [
                   {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/frontendEndpoints/frontendEndpoint1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/frontendEndpoints/frontendEndpoint1"
                   }
                 ],
                 "acceptedProtocols": [
@@ -839,12 +839,12 @@
             }
           ],
           "rulesEngines": [],
-          "frontdoorId": "deace732-f0e3-41ab-b75a-23d83d9ddd79",
+          "frontdoorId": "2000710b-b0b7-446d-ae28-2d0092ef9223",
           "extendedProperties": {},
           "resourceState": "Enabled",
           "loadBalancingSettings": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/LoadBalancingSettings/loadBalancingSettings1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/LoadBalancingSettings/loadBalancingSettings1",
               "name": "loadBalancingSettings1",
               "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
               "properties": {
@@ -857,7 +857,7 @@
           ],
           "healthProbeSettings": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/HealthProbeSettings/healthProbeSettings1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/HealthProbeSettings/healthProbeSettings1",
               "name": "healthProbeSettings1",
               "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
               "properties": {
@@ -872,7 +872,7 @@
           ],
           "backendPools": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1",
               "name": "backendPool1",
               "type": "Microsoft.Network/Frontdoors/BackendPools",
               "properties": {
@@ -894,22 +894,22 @@
                 ],
                 "resourceState": "Enabled",
                 "loadBalancingSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/loadBalancingSettings/loadBalancingSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/loadBalancingSettings/loadBalancingSettings1"
                 },
                 "healthProbeSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/healthProbeSettings/healthProbeSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/healthProbeSettings/healthProbeSettings1"
                 }
               }
             }
           ],
           "frontendEndpoints": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/FrontendEndpoints/frontendEndpoint1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/FrontendEndpoints/frontendEndpoint1",
               "name": "frontendEndpoint1",
               "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
               "properties": {
                 "resourceState": "Enabled",
-                "hostName": "TestFrontDoor4741.azurefd.net",
+                "hostName": "TestFrontDoor3435.azurefd.net",
                 "sessionAffinityEnabledState": "Disabled",
                 "sessionAffinityTtlSeconds": 0,
                 "webApplicationFirewallPolicyLink": null,
@@ -924,23 +924,23 @@
             "sendRecvTimeoutSeconds": 123
           },
           "enabledState": "Enabled",
-          "cName": "TestFrontDoor4741.azurefd.net",
+          "cName": "TestFrontDoor3435.azurefd.net",
           "friendlyName": null,
           "provisioningState": "Succeeded"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435?api-version=2021-06-01",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
         "Content-Length": "1882",
         "Content-Type": "application/json",
-        "traceparent": "00-7f2fe781e079e34b899a3c2d471e903a-d8c886c4b4cc9640-00",
+        "traceparent": "00-1f1150310e7c314f8f5484a0e1427ad1-1542fdd19608114f-00",
         "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220928.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "e9c841130f644f77c00e1081b9b5dc2f",
+        "x-ms-client-request-id": "e8c3a0fca9a6b1184105724830fe1294",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -953,7 +953,7 @@
               "properties": {
                 "frontendEndpoints": [
                   {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/frontendEndpoints/frontendEndpoint1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/frontendEndpoints/frontendEndpoint1"
                   }
                 ],
                 "acceptedProtocols": [
@@ -966,7 +966,7 @@
                 "routeConfiguration": {
                   "forwardingProtocol": "MatchRequest",
                   "backendPool": {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1"
                   },
                   "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
                 }
@@ -1010,10 +1010,10 @@
                   }
                 ],
                 "loadBalancingSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/loadBalancingSettings/loadBalancingSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/loadBalancingSettings/loadBalancingSettings1"
                 },
                 "healthProbeSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/healthProbeSettings/healthProbeSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/healthProbeSettings/healthProbeSettings1"
                 }
               }
             }
@@ -1022,7 +1022,7 @@
             {
               "name": "frontendEndpoint1",
               "properties": {
-                "hostName": "TestFrontDoor4741.azurefd.net",
+                "hostName": "TestFrontDoor3435.azurefd.net",
                 "sessionAffinityEnabledState": "Disabled",
                 "sessionAffinityTtlSeconds": 0
               }
@@ -1035,34 +1035,34 @@
       },
       "StatusCode": 202,
       "ResponseHeaders": {
-        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/7b671e5d-ddff-491b-b589-f8ca3c4af54d?api-version=2021-06-01",
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/ec04c531-a9f7-4138-b8fa-442a53d584a4?api-version=2021-06-01",
         "Cache-Control": "no-cache",
         "Content-Length": "4085",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:21 GMT",
+        "Date": "Wed, 28 Sep 2022 08:57:16 GMT",
         "Expires": "-1",
-        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/7b671e5d-ddff-491b-b589-f8ca3c4af54d/frontdoorresults/TestFrontDoor4741?api-version=2021-06-01",
+        "Location": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/ec04c531-a9f7-4138-b8fa-442a53d584a4/frontdoorresults/TestFrontDoor3435?api-version=2021-06-01",
         "Pragma": "no-cache",
         "Retry-After": "10",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "e9c841130f644f77c00e1081b9b5dc2f",
-        "x-ms-correlation-request-id": "60865cda-5da7-4d77-b6ca-f9203e35059a",
+        "x-ms-client-request-id": "e8c3a0fca9a6b1184105724830fe1294",
+        "x-ms-correlation-request-id": "16fc9e3a-4243-4217-a946-5350ba4b1a80",
         "x-ms-ratelimit-remaining-subscription-writes": "1197",
-        "x-ms-request-id": "7ba7b152-f52a-44a5-837e-e7a6c8a7fafb",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082322Z:60865cda-5da7-4d77-b6ca-f9203e35059a"
+        "x-ms-request-id": "5f389f57-333d-4a39-8aa9-4c4fea21c1df",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085717Z:16fc9e3a-4243-4217-a946-5350ba4b1a80"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdoors/TestFrontDoor4741",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdoors/TestFrontDoor3435",
         "type": "Microsoft.Network/frontdoors",
-        "name": "TestFrontDoor4741",
+        "name": "TestFrontDoor3435",
         "location": "Global",
         "tags": {},
         "properties": {
           "routingRules": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/RoutingRules/routingrule1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/RoutingRules/routingrule1",
               "name": "routingrule1",
               "type": "Microsoft.Network/Frontdoors/RoutingRules",
               "properties": {
@@ -1071,7 +1071,7 @@
                   "forwardingProtocol": "MatchRequest",
                   "cacheConfiguration": null,
                   "backendPool": {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1"
                   },
                   "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
                 },
@@ -1079,7 +1079,7 @@
                 "resourceState": "Enabled",
                 "frontendEndpoints": [
                   {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/frontendEndpoints/frontendEndpoint1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/frontendEndpoints/frontendEndpoint1"
                   }
                 ],
                 "acceptedProtocols": [
@@ -1094,12 +1094,12 @@
             }
           ],
           "rulesEngines": [],
-          "frontdoorId": "deace732-f0e3-41ab-b75a-23d83d9ddd79",
+          "frontdoorId": "2000710b-b0b7-446d-ae28-2d0092ef9223",
           "extendedProperties": {},
           "resourceState": "Enabled",
           "loadBalancingSettings": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/LoadBalancingSettings/loadBalancingSettings1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/LoadBalancingSettings/loadBalancingSettings1",
               "name": "loadBalancingSettings1",
               "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
               "properties": {
@@ -1112,7 +1112,7 @@
           ],
           "healthProbeSettings": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/HealthProbeSettings/healthProbeSettings1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/HealthProbeSettings/healthProbeSettings1",
               "name": "healthProbeSettings1",
               "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
               "properties": {
@@ -1127,7 +1127,7 @@
           ],
           "backendPools": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1",
               "name": "backendPool1",
               "type": "Microsoft.Network/Frontdoors/BackendPools",
               "properties": {
@@ -1149,22 +1149,22 @@
                 ],
                 "resourceState": "Enabled",
                 "loadBalancingSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/loadBalancingSettings/loadBalancingSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/loadBalancingSettings/loadBalancingSettings1"
                 },
                 "healthProbeSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/healthProbeSettings/healthProbeSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/healthProbeSettings/healthProbeSettings1"
                 }
               }
             }
           ],
           "frontendEndpoints": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/FrontendEndpoints/frontendEndpoint1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/FrontendEndpoints/frontendEndpoint1",
               "name": "frontendEndpoint1",
               "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
               "properties": {
                 "resourceState": "Enabled",
-                "hostName": "TestFrontDoor4741.azurefd.net",
+                "hostName": "TestFrontDoor3435.azurefd.net",
                 "sessionAffinityEnabledState": "Disabled",
                 "sessionAffinityTtlSeconds": 0,
                 "webApplicationFirewallPolicyLink": null,
@@ -1179,20 +1179,20 @@
             "sendRecvTimeoutSeconds": 123
           },
           "enabledState": "Enabled",
-          "cName": "TestFrontDoor4741.azurefd.net",
+          "cName": "TestFrontDoor3435.azurefd.net",
           "friendlyName": null,
           "provisioningState": "Succeeded"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/7b671e5d-ddff-491b-b589-f8ca3c4af54d?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/ec04c531-a9f7-4138-b8fa-442a53d584a4?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-7f2fe781e079e34b899a3c2d471e903a-15c61f6bb3f93745-00",
+        "traceparent": "00-1f1150310e7c314f8f5484a0e1427ad1-3d87de7837b06847-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "53d00448817191945b7d82d341333cb6",
+        "x-ms-client-request-id": "54c5a88ae0c984fb269ba751e9ba1d24",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1201,17 +1201,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "62",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:22 GMT",
+        "Date": "Wed, 28 Sep 2022 08:57:17 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "53d00448817191945b7d82d341333cb6",
-        "x-ms-correlation-request-id": "17abe700-ef98-453a-8a2d-e0947e56e99c",
+        "x-ms-client-request-id": "54c5a88ae0c984fb269ba751e9ba1d24",
+        "x-ms-correlation-request-id": "ed3561eb-5a9e-4aa3-9732-597cc77c6430",
         "x-ms-ratelimit-remaining-subscription-reads": "11989",
-        "x-ms-request-id": "e2f34ede-020e-4666-bd5d-05b4a7fb02c6",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082323Z:17abe700-ef98-453a-8a2d-e0947e56e99c"
+        "x-ms-request-id": "795ae49a-01e5-42e2-8b5e-3a36a725418e",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085717Z:ed3561eb-5a9e-4aa3-9732-597cc77c6430"
       },
       "ResponseBody": {
         "status": "InProgress",
@@ -1222,13 +1222,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/7b671e5d-ddff-491b-b589-f8ca3c4af54d?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/ec04c531-a9f7-4138-b8fa-442a53d584a4?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-7f2fe781e079e34b899a3c2d471e903a-eab943ebe4f0f347-00",
+        "traceparent": "00-1f1150310e7c314f8f5484a0e1427ad1-acda3aa592bc4b42-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "c1839f884bd8e7ef7f715c58993daa0e",
+        "x-ms-client-request-id": "66a41ec9b9ab86e711c1c51594766a8b",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1237,17 +1237,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "62",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:23 GMT",
+        "Date": "Wed, 28 Sep 2022 08:57:18 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "c1839f884bd8e7ef7f715c58993daa0e",
-        "x-ms-correlation-request-id": "539a1f80-8231-40db-aa14-061d92b14577",
+        "x-ms-client-request-id": "66a41ec9b9ab86e711c1c51594766a8b",
+        "x-ms-correlation-request-id": "fcd007e6-bff9-4cb8-bd48-9dda020decef",
         "x-ms-ratelimit-remaining-subscription-reads": "11988",
-        "x-ms-request-id": "52fafc0f-1915-4fd6-9da4-16bba42fa20f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082324Z:539a1f80-8231-40db-aa14-061d92b14577"
+        "x-ms-request-id": "6895aa87-13ff-4b34-b9af-8b54d704aaa2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085719Z:fcd007e6-bff9-4cb8-bd48-9dda020decef"
       },
       "ResponseBody": {
         "status": "InProgress",
@@ -1258,13 +1258,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/7b671e5d-ddff-491b-b589-f8ca3c4af54d?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/ec04c531-a9f7-4138-b8fa-442a53d584a4?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-7f2fe781e079e34b899a3c2d471e903a-58fb701203f54e41-00",
+        "traceparent": "00-1f1150310e7c314f8f5484a0e1427ad1-45f280cde8537a4a-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "b5380f1289e57ebea8a2edf2aaee1558",
+        "x-ms-client-request-id": "87bd00adbd38b9ca781a3335ce3d1969",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1273,17 +1273,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "62",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:26 GMT",
+        "Date": "Wed, 28 Sep 2022 08:57:20 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "b5380f1289e57ebea8a2edf2aaee1558",
-        "x-ms-correlation-request-id": "ca2b7f66-5b35-4656-a5fe-f7e4103b44d9",
+        "x-ms-client-request-id": "87bd00adbd38b9ca781a3335ce3d1969",
+        "x-ms-correlation-request-id": "481b19d5-05c9-4b36-98cd-843e52bc4cdf",
         "x-ms-ratelimit-remaining-subscription-reads": "11987",
-        "x-ms-request-id": "c0e5f873-e572-44f9-9898-2fd72bb14b0f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082326Z:ca2b7f66-5b35-4656-a5fe-f7e4103b44d9"
+        "x-ms-request-id": "dc9db4d9-db74-4311-b0ce-5ffc0aa96ea2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085720Z:481b19d5-05c9-4b36-98cd-843e52bc4cdf"
       },
       "ResponseBody": {
         "status": "InProgress",
@@ -1294,13 +1294,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/7b671e5d-ddff-491b-b589-f8ca3c4af54d?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/ec04c531-a9f7-4138-b8fa-442a53d584a4?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-7f2fe781e079e34b899a3c2d471e903a-af3d2ee24074f749-00",
+        "traceparent": "00-1f1150310e7c314f8f5484a0e1427ad1-1a31979ecbf74145-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "04b1bfcf3a2dfd2815e9d400243bf71e",
+        "x-ms-client-request-id": "28d8f073f112d1c6c13e43081be5efaf",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1309,17 +1309,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "62",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:27 GMT",
+        "Date": "Wed, 28 Sep 2022 08:57:21 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "04b1bfcf3a2dfd2815e9d400243bf71e",
-        "x-ms-correlation-request-id": "e293badd-8d39-49d5-8bbc-1bafcefcfd6d",
+        "x-ms-client-request-id": "28d8f073f112d1c6c13e43081be5efaf",
+        "x-ms-correlation-request-id": "761f2fd2-684b-4c35-9c40-9772272f8937",
         "x-ms-ratelimit-remaining-subscription-reads": "11986",
-        "x-ms-request-id": "ac113d03-dad9-425a-9ea1-aaa2d501fc2c",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082327Z:e293badd-8d39-49d5-8bbc-1bafcefcfd6d"
+        "x-ms-request-id": "026b34bd-62d0-4a8d-b680-9f067e16b395",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085721Z:761f2fd2-684b-4c35-9c40-9772272f8937"
       },
       "ResponseBody": {
         "status": "InProgress",
@@ -1330,13 +1330,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/7b671e5d-ddff-491b-b589-f8ca3c4af54d?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/ec04c531-a9f7-4138-b8fa-442a53d584a4?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-7f2fe781e079e34b899a3c2d471e903a-50059711f0c48047-00",
+        "traceparent": "00-1f1150310e7c314f8f5484a0e1427ad1-3ba669fd9cc3854e-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "32c073d287faffd1e10518365dfc3c90",
+        "x-ms-client-request-id": "e8a41b3195fc0beb53eaee9185b1b8d3",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1345,17 +1345,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "62",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:29 GMT",
+        "Date": "Wed, 28 Sep 2022 08:57:23 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "32c073d287faffd1e10518365dfc3c90",
-        "x-ms-correlation-request-id": "a34a865e-843b-40b6-844e-272727d2ffff",
+        "x-ms-client-request-id": "e8a41b3195fc0beb53eaee9185b1b8d3",
+        "x-ms-correlation-request-id": "8e4a17ae-eeeb-409b-be48-4815007329ba",
         "x-ms-ratelimit-remaining-subscription-reads": "11985",
-        "x-ms-request-id": "98577770-2dfa-495a-a4d3-88158fb06c4f",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082329Z:a34a865e-843b-40b6-844e-272727d2ffff"
+        "x-ms-request-id": "767343c1-9a11-4eb9-90c9-92ac77a2ea9b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085724Z:8e4a17ae-eeeb-409b-be48-4815007329ba"
       },
       "ResponseBody": {
         "status": "InProgress",
@@ -1366,13 +1366,85 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdooroperationresults/7b671e5d-ddff-491b-b589-f8ca3c4af54d?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/ec04c531-a9f7-4138-b8fa-442a53d584a4?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-7f2fe781e079e34b899a3c2d471e903a-2b55f2c79113d840-00",
+        "traceparent": "00-1f1150310e7c314f8f5484a0e1427ad1-1c02b35386115640-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "d989035ba68bd7e1e63b9ffbb5bd596c",
+        "x-ms-client-request-id": "a3a25ba8419ebb793aecc6fa7ac29d92",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:57:28 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a3a25ba8419ebb793aecc6fa7ac29d92",
+        "x-ms-correlation-request-id": "f6d1174a-7c12-4dc4-b708-154e851fa756",
+        "x-ms-ratelimit-remaining-subscription-reads": "11984",
+        "x-ms-request-id": "19e21fe8-d3d0-4cda-9be7-ab45aefb244b",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085728Z:f6d1174a-7c12-4dc4-b708-154e851fa756"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/ec04c531-a9f7-4138-b8fa-442a53d584a4?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1f1150310e7c314f8f5484a0e1427ad1-a831a9ac23143c44-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "b303842a3099dd6d05cdd52703344c0f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:57:36 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "b303842a3099dd6d05cdd52703344c0f",
+        "x-ms-correlation-request-id": "07ecf14a-3091-46c2-b0be-c8bede016a48",
+        "x-ms-ratelimit-remaining-subscription-reads": "11983",
+        "x-ms-request-id": "224439db-a253-4e6b-9a3f-b2d5f4dffd60",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085737Z:07ecf14a-3091-46c2-b0be-c8bede016a48"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/ec04c531-a9f7-4138-b8fa-442a53d584a4?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-1f1150310e7c314f8f5484a0e1427ad1-9a2fac6189093341-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "bf5f6f864c43ef10a1e8ae0fcff19090",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1381,17 +1453,17 @@
         "Cache-Control": "no-cache",
         "Content-Length": "61",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:34 GMT",
+        "Date": "Wed, 28 Sep 2022 08:57:52 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "d989035ba68bd7e1e63b9ffbb5bd596c",
-        "x-ms-correlation-request-id": "75cb228d-d3cf-431e-8f2f-40d101be2696",
-        "x-ms-ratelimit-remaining-subscription-reads": "11984",
-        "x-ms-request-id": "fbb944cf-d9d7-4f68-9014-d3be8f29e157",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082334Z:75cb228d-d3cf-431e-8f2f-40d101be2696"
+        "x-ms-client-request-id": "bf5f6f864c43ef10a1e8ae0fcff19090",
+        "x-ms-correlation-request-id": "bfb01931-acde-417c-adca-303068f8bf1c",
+        "x-ms-ratelimit-remaining-subscription-reads": "11982",
+        "x-ms-request-id": "897814d6-93a9-4588-b136-e73ee53a4cd9",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085753Z:bfb01931-acde-417c-adca-303068f8bf1c"
       },
       "ResponseBody": {
         "status": "Succeeded",
@@ -1402,13 +1474,13 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Authorization": "Sanitized",
-        "traceparent": "00-7f2fe781e079e34b899a3c2d471e903a-5792e2913a0fbb4d-00",
+        "traceparent": "00-1f1150310e7c314f8f5484a0e1427ad1-d9cf203bc2203b47-00",
         "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "3720cfaae32d485eeeb2232721f2a019",
+        "x-ms-client-request-id": "00675b4c05ae7839eec59dd16c52b705",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1417,28 +1489,28 @@
         "Cache-Control": "no-cache",
         "Content-Length": "4085",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:35 GMT",
+        "Date": "Wed, 28 Sep 2022 08:57:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "3720cfaae32d485eeeb2232721f2a019",
-        "x-ms-correlation-request-id": "655293a2-7259-4f40-8961-26dde8e0914a",
-        "x-ms-ratelimit-remaining-subscription-reads": "11983",
-        "x-ms-request-id": "e8d20a86-2cf6-4fa6-b58b-e8938401d891",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082335Z:655293a2-7259-4f40-8961-26dde8e0914a"
+        "x-ms-client-request-id": "00675b4c05ae7839eec59dd16c52b705",
+        "x-ms-correlation-request-id": "1c74f4ed-e2fc-4397-a911-8fd00162a691",
+        "x-ms-ratelimit-remaining-subscription-reads": "11981",
+        "x-ms-request-id": "c633d02a-4b3e-4c8b-ad66-bee136c2c4ec",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085754Z:1c74f4ed-e2fc-4397-a911-8fd00162a691"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdoors/TestFrontDoor4741",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdoors/TestFrontDoor3435",
         "type": "Microsoft.Network/frontdoors",
-        "name": "TestFrontDoor4741",
+        "name": "TestFrontDoor3435",
         "location": "Global",
         "tags": {},
         "properties": {
           "routingRules": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/RoutingRules/routingrule1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/RoutingRules/routingrule1",
               "name": "routingrule1",
               "type": "Microsoft.Network/Frontdoors/RoutingRules",
               "properties": {
@@ -1447,7 +1519,7 @@
                   "forwardingProtocol": "MatchRequest",
                   "cacheConfiguration": null,
                   "backendPool": {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1"
                   },
                   "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
                 },
@@ -1455,7 +1527,7 @@
                 "resourceState": "Enabled",
                 "frontendEndpoints": [
                   {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/frontendEndpoints/frontendEndpoint1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/frontendEndpoints/frontendEndpoint1"
                   }
                 ],
                 "acceptedProtocols": [
@@ -1470,12 +1542,12 @@
             }
           ],
           "rulesEngines": [],
-          "frontdoorId": "deace732-f0e3-41ab-b75a-23d83d9ddd79",
+          "frontdoorId": "2000710b-b0b7-446d-ae28-2d0092ef9223",
           "extendedProperties": {},
           "resourceState": "Enabled",
           "loadBalancingSettings": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/LoadBalancingSettings/loadBalancingSettings1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/LoadBalancingSettings/loadBalancingSettings1",
               "name": "loadBalancingSettings1",
               "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
               "properties": {
@@ -1488,7 +1560,7 @@
           ],
           "healthProbeSettings": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/HealthProbeSettings/healthProbeSettings1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/HealthProbeSettings/healthProbeSettings1",
               "name": "healthProbeSettings1",
               "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
               "properties": {
@@ -1503,7 +1575,7 @@
           ],
           "backendPools": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1",
               "name": "backendPool1",
               "type": "Microsoft.Network/Frontdoors/BackendPools",
               "properties": {
@@ -1525,22 +1597,22 @@
                 ],
                 "resourceState": "Enabled",
                 "loadBalancingSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/loadBalancingSettings/loadBalancingSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/loadBalancingSettings/loadBalancingSettings1"
                 },
                 "healthProbeSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/healthProbeSettings/healthProbeSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/healthProbeSettings/healthProbeSettings1"
                 }
               }
             }
           ],
           "frontendEndpoints": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/FrontendEndpoints/frontendEndpoint1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/FrontendEndpoints/frontendEndpoint1",
               "name": "frontendEndpoint1",
               "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
               "properties": {
                 "resourceState": "Enabled",
-                "hostName": "TestFrontDoor4741.azurefd.net",
+                "hostName": "TestFrontDoor3435.azurefd.net",
                 "sessionAffinityEnabledState": "Disabled",
                 "sessionAffinityTtlSeconds": 0,
                 "webApplicationFirewallPolicyLink": null,
@@ -1555,53 +1627,1385 @@
             "sendRecvTimeoutSeconds": 123
           },
           "enabledState": "Enabled",
-          "cName": "TestFrontDoor4741.azurefd.net",
+          "cName": "TestFrontDoor3435.azurefd.net",
           "friendlyName": null,
           "provisioningState": "Succeeded"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors?api-version=2021-06-01",
-      "RequestMethod": "GET",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor826?api-version=2021-06-01",
+      "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-4c914de950050343adb7258b470ebdf9-5de92d98a463734d-00",
+        "Content-Length": "1877",
+        "Content-Type": "application/json",
+        "traceparent": "00-2c427463bc6ca845a2bf9fd5eef42bbb-db870fd1e554e742-00",
         "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220928.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "20a443ac1db22c9291e84bbfe7d54a23",
+        "x-ms-client-request-id": "0a73b6a0de63dd4f741311b0825d0e14",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "global",
+        "properties": {
+          "routingRules": [
+            {
+              "name": "routingrule1",
+              "properties": {
+                "frontendEndpoints": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor826/frontendEndpoints/frontendEndpoint1"
+                  }
+                ],
+                "acceptedProtocols": [
+                  "Https"
+                ],
+                "patternsToMatch": [
+                  "/*"
+                ],
+                "enabledState": "Enabled",
+                "routeConfiguration": {
+                  "forwardingProtocol": "MatchRequest",
+                  "backendPool": {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/BackendPools/backendPool1"
+                  },
+                  "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
+                }
+              }
+            }
+          ],
+          "loadBalancingSettings": [
+            {
+              "name": "loadBalancingSettings1",
+              "properties": {
+                "sampleSize": 4,
+                "successfulSamplesRequired": 2,
+                "additionalLatencyMilliseconds": 0
+              }
+            }
+          ],
+          "healthProbeSettings": [
+            {
+              "name": "healthProbeSettings1",
+              "properties": {
+                "path": "/",
+                "protocol": "Http",
+                "intervalInSeconds": 120,
+                "healthProbeMethod": "GET",
+                "enabledState": "Enabled"
+              }
+            }
+          ],
+          "backendPools": [
+            {
+              "name": "backendPool1",
+              "properties": {
+                "backends": [
+                  {
+                    "address": "contoso1.azurewebsites.net",
+                    "httpPort": 80,
+                    "httpsPort": 443,
+                    "enabledState": "Enabled",
+                    "priority": 2,
+                    "weight": 1
+                  }
+                ],
+                "loadBalancingSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor826/loadBalancingSettings/loadBalancingSettings1"
+                },
+                "healthProbeSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor826/healthProbeSettings/healthProbeSettings1"
+                }
+              }
+            }
+          ],
+          "frontendEndpoints": [
+            {
+              "name": "frontendEndpoint1",
+              "properties": {
+                "hostName": "TestFrontDoor826.azurefd.net",
+                "sessionAffinityEnabledState": "Disabled",
+                "sessionAffinityTtlSeconds": 0
+              }
+            }
+          ],
+          "backendPoolsSettings": {
+            "sendRecvTimeoutSeconds": 123
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/a4de43e5-4520-4557-bf6b-78d63c1be712?api-version=2021-06-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4077",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:03 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0a73b6a0de63dd4f741311b0825d0e14",
+        "x-ms-correlation-request-id": "d29764a4-90eb-426f-bf67-47e351e68d8a",
+        "x-ms-ratelimit-remaining-subscription-writes": "1196",
+        "x-ms-request-id": "6c2cfb54-f8af-4640-91bd-17b28de417a8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085803Z:d29764a4-90eb-426f-bf67-47e351e68d8a"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdoors/TestFrontDoor826",
+        "type": "Microsoft.Network/frontdoors",
+        "name": "TestFrontDoor826",
+        "location": "Global",
+        "tags": {},
+        "properties": {
+          "routingRules": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/RoutingRules/routingrule1",
+              "name": "routingrule1",
+              "type": "Microsoft.Network/Frontdoors/RoutingRules",
+              "properties": {
+                "routeConfiguration": {
+                  "customForwardingPath": null,
+                  "forwardingProtocol": "MatchRequest",
+                  "cacheConfiguration": null,
+                  "backendPool": {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/BackendPools/backendPool1"
+                  },
+                  "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
+                },
+                "rulesEngine": null,
+                "resourceState": "Creating",
+                "frontendEndpoints": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor826/frontendEndpoints/frontendEndpoint1"
+                  }
+                ],
+                "acceptedProtocols": [
+                  "Https"
+                ],
+                "patternsToMatch": [
+                  "/*"
+                ],
+                "enabledState": "Enabled",
+                "webApplicationFirewallPolicyLink": null
+              }
+            }
+          ],
+          "rulesEngines": [],
+          "frontdoorId": "ffedd5a0-8781-426d-be72-49c5b26a255d",
+          "extendedProperties": {},
+          "resourceState": "Creating",
+          "loadBalancingSettings": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/LoadBalancingSettings/loadBalancingSettings1",
+              "name": "loadBalancingSettings1",
+              "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
+              "properties": {
+                "resourceState": "Creating",
+                "sampleSize": 4,
+                "successfulSamplesRequired": 2,
+                "additionalLatencyMilliseconds": 0
+              }
+            }
+          ],
+          "healthProbeSettings": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/HealthProbeSettings/healthProbeSettings1",
+              "name": "healthProbeSettings1",
+              "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
+              "properties": {
+                "resourceState": "Creating",
+                "path": "/",
+                "protocol": "Http",
+                "intervalInSeconds": 120,
+                "enabledState": "Enabled",
+                "healthProbeMethod": "Get"
+              }
+            }
+          ],
+          "backendPools": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/BackendPools/backendPool1",
+              "name": "backendPool1",
+              "type": "Microsoft.Network/Frontdoors/BackendPools",
+              "properties": {
+                "backends": [
+                  {
+                    "address": "contoso1.azurewebsites.net",
+                    "httpPort": 80,
+                    "httpsPort": 443,
+                    "priority": 2,
+                    "weight": 1,
+                    "backendHostHeader": null,
+                    "enabledState": "Enabled",
+                    "privateLinkAlias": null,
+                    "privateLinkResourceId": null,
+                    "privateLinkLocation": null,
+                    "privateEndpointStatus": null,
+                    "privateLinkApprovalMessage": null
+                  }
+                ],
+                "resourceState": "Creating",
+                "loadBalancingSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor826/loadBalancingSettings/loadBalancingSettings1"
+                },
+                "healthProbeSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor826/healthProbeSettings/healthProbeSettings1"
+                }
+              }
+            }
+          ],
+          "frontendEndpoints": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/FrontendEndpoints/frontendEndpoint1",
+              "name": "frontendEndpoint1",
+              "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
+              "properties": {
+                "resourceState": "Creating",
+                "hostName": "TestFrontDoor826.azurefd.net",
+                "sessionAffinityEnabledState": "Disabled",
+                "sessionAffinityTtlSeconds": 0,
+                "webApplicationFirewallPolicyLink": null,
+                "customHttpsProvisioningState": null,
+                "customHttpsProvisioningSubstate": null,
+                "customHttpsConfiguration": null
+              }
+            }
+          ],
+          "backendPoolsSettings": {
+            "enforceCertificateNameCheck": "Enabled",
+            "sendRecvTimeoutSeconds": 123
+          },
+          "enabledState": "Enabled",
+          "cName": "TestFrontDoor826.azurefd.net",
+          "friendlyName": null,
+          "provisioningState": "Creating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/a4de43e5-4520-4557-bf6b-78d63c1be712?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2c427463bc6ca845a2bf9fd5eef42bbb-56b06cdaad589046-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "186fa830857d6e2d0c898c9af388f591",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "4097",
+        "Content-Length": "62",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:36 GMT",
+        "Date": "Wed, 28 Sep 2022 08:58:03 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "20a443ac1db22c9291e84bbfe7d54a23",
-        "x-ms-correlation-request-id": "5e85ad36-d31f-4503-be39-5344aee69c27",
-        "x-ms-ratelimit-remaining-subscription-reads": "11982",
-        "x-ms-request-id": "f050be1b-088d-4b4a-94c4-c7642da72cb5",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082336Z:5e85ad36-d31f-4503-be39-5344aee69c27"
+        "x-ms-client-request-id": "186fa830857d6e2d0c898c9af388f591",
+        "x-ms-correlation-request-id": "586db4e1-66af-46c6-8961-825e4a1b7120",
+        "x-ms-ratelimit-remaining-subscription-reads": "11980",
+        "x-ms-request-id": "09e6b927-9d21-401d-9b2e-cc74d60f89c0",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085804Z:586db4e1-66af-46c6-8961-825e4a1b7120"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/a4de43e5-4520-4557-bf6b-78d63c1be712?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2c427463bc6ca845a2bf9fd5eef42bbb-d6199ffb7bf65f47-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "279489b60f77543855f2d57c0cd12e34",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:05 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "279489b60f77543855f2d57c0cd12e34",
+        "x-ms-correlation-request-id": "ced878bb-8db3-4e26-a04e-584d037289cc",
+        "x-ms-ratelimit-remaining-subscription-reads": "11979",
+        "x-ms-request-id": "c1442242-f4a3-47f4-80f4-6f1032619c4c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085805Z:ced878bb-8db3-4e26-a04e-584d037289cc"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/a4de43e5-4520-4557-bf6b-78d63c1be712?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2c427463bc6ca845a2bf9fd5eef42bbb-d2a900fd3eae7547-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "da80c190f5edb696176b9b43bec78dac",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:06 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "da80c190f5edb696176b9b43bec78dac",
+        "x-ms-correlation-request-id": "9ebbe202-3aed-44f8-b8f4-82299c79d916",
+        "x-ms-ratelimit-remaining-subscription-reads": "11978",
+        "x-ms-request-id": "2fc7bd56-7da6-444f-9c17-8790916e6e81",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085807Z:9ebbe202-3aed-44f8-b8f4-82299c79d916"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/a4de43e5-4520-4557-bf6b-78d63c1be712?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2c427463bc6ca845a2bf9fd5eef42bbb-6d809ea3a71c6f43-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "25c740f15caa20d76f1ac38ab0b0623b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:07 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "25c740f15caa20d76f1ac38ab0b0623b",
+        "x-ms-correlation-request-id": "84241e65-53e3-4665-a7a4-94a63473e814",
+        "x-ms-ratelimit-remaining-subscription-reads": "11977",
+        "x-ms-request-id": "79bd3b03-22ea-4f0a-b094-7355c8676625",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085808Z:84241e65-53e3-4665-a7a4-94a63473e814"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/a4de43e5-4520-4557-bf6b-78d63c1be712?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2c427463bc6ca845a2bf9fd5eef42bbb-71cc9ff027bea94b-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "3209575b1b08c1a3f2de0f0c74f5958d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:10 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "3209575b1b08c1a3f2de0f0c74f5958d",
+        "x-ms-correlation-request-id": "e92f0efa-d022-41f2-beb9-50e50d7cabd0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11976",
+        "x-ms-request-id": "b0cd4500-a4e4-4eab-a61e-5140bd4ab84f",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085810Z:e92f0efa-d022-41f2-beb9-50e50d7cabd0"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/a4de43e5-4520-4557-bf6b-78d63c1be712?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2c427463bc6ca845a2bf9fd5eef42bbb-44617477e7008841-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "cc8a28650909348aea5f6ad2310c0666",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:14 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "cc8a28650909348aea5f6ad2310c0666",
+        "x-ms-correlation-request-id": "55b4ebdc-b230-4400-baef-fc661ebc4f06",
+        "x-ms-ratelimit-remaining-subscription-reads": "11975",
+        "x-ms-request-id": "04f05419-03fa-45f0-8609-6847f72a9fa2",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085815Z:55b4ebdc-b230-4400-baef-fc661ebc4f06"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/a4de43e5-4520-4557-bf6b-78d63c1be712?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2c427463bc6ca845a2bf9fd5eef42bbb-e13486ae67b57d42-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "67e85f095abdd5a39d0532cc4ccbac7a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "61",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:23 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "67e85f095abdd5a39d0532cc4ccbac7a",
+        "x-ms-correlation-request-id": "7f30d3eb-796d-408d-9887-9a0d788d2459",
+        "x-ms-ratelimit-remaining-subscription-reads": "11974",
+        "x-ms-request-id": "da10291c-888e-490f-9c35-5e96302cc6d8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085823Z:7f30d3eb-796d-408d-9887-9a0d788d2459"
+      },
+      "ResponseBody": {
+        "status": "Succeeded",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor826?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-2c427463bc6ca845a2bf9fd5eef42bbb-d2aefb89284d6e49-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "8825358596265131ccd548a9b0d08fe6",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "4072",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:24 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8825358596265131ccd548a9b0d08fe6",
+        "x-ms-correlation-request-id": "3e829f09-64eb-44c5-841a-89f2b96908d4",
+        "x-ms-ratelimit-remaining-subscription-reads": "11973",
+        "x-ms-request-id": "c1e4e16f-f442-4198-84d1-19bdfd23252c",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085824Z:3e829f09-64eb-44c5-841a-89f2b96908d4"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdoors/TestFrontDoor826",
+        "type": "Microsoft.Network/frontdoors",
+        "name": "TestFrontDoor826",
+        "location": "Global",
+        "tags": {},
+        "properties": {
+          "routingRules": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/RoutingRules/routingrule1",
+              "name": "routingrule1",
+              "type": "Microsoft.Network/Frontdoors/RoutingRules",
+              "properties": {
+                "routeConfiguration": {
+                  "customForwardingPath": null,
+                  "forwardingProtocol": "MatchRequest",
+                  "cacheConfiguration": null,
+                  "backendPool": {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/BackendPools/backendPool1"
+                  },
+                  "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
+                },
+                "rulesEngine": null,
+                "resourceState": "Enabled",
+                "frontendEndpoints": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor826/frontendEndpoints/frontendEndpoint1"
+                  }
+                ],
+                "acceptedProtocols": [
+                  "Https"
+                ],
+                "patternsToMatch": [
+                  "/*"
+                ],
+                "enabledState": "Enabled",
+                "webApplicationFirewallPolicyLink": null
+              }
+            }
+          ],
+          "rulesEngines": [],
+          "frontdoorId": "ffedd5a0-8781-426d-be72-49c5b26a255d",
+          "extendedProperties": {},
+          "resourceState": "Enabled",
+          "loadBalancingSettings": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/LoadBalancingSettings/loadBalancingSettings1",
+              "name": "loadBalancingSettings1",
+              "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
+              "properties": {
+                "resourceState": "Enabled",
+                "sampleSize": 4,
+                "successfulSamplesRequired": 2,
+                "additionalLatencyMilliseconds": 0
+              }
+            }
+          ],
+          "healthProbeSettings": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/HealthProbeSettings/healthProbeSettings1",
+              "name": "healthProbeSettings1",
+              "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
+              "properties": {
+                "resourceState": "Enabled",
+                "path": "/",
+                "protocol": "Http",
+                "intervalInSeconds": 120,
+                "enabledState": "Enabled",
+                "healthProbeMethod": "Get"
+              }
+            }
+          ],
+          "backendPools": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/BackendPools/backendPool1",
+              "name": "backendPool1",
+              "type": "Microsoft.Network/Frontdoors/BackendPools",
+              "properties": {
+                "backends": [
+                  {
+                    "address": "contoso1.azurewebsites.net",
+                    "httpPort": 80,
+                    "httpsPort": 443,
+                    "priority": 2,
+                    "weight": 1,
+                    "backendHostHeader": null,
+                    "enabledState": "Enabled",
+                    "privateLinkAlias": null,
+                    "privateLinkResourceId": null,
+                    "privateLinkLocation": null,
+                    "privateEndpointStatus": null,
+                    "privateLinkApprovalMessage": null
+                  }
+                ],
+                "resourceState": "Enabled",
+                "loadBalancingSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor826/loadBalancingSettings/loadBalancingSettings1"
+                },
+                "healthProbeSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor826/healthProbeSettings/healthProbeSettings1"
+                }
+              }
+            }
+          ],
+          "frontendEndpoints": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/FrontendEndpoints/frontendEndpoint1",
+              "name": "frontendEndpoint1",
+              "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
+              "properties": {
+                "resourceState": "Enabled",
+                "hostName": "TestFrontDoor826.azurefd.net",
+                "sessionAffinityEnabledState": "Disabled",
+                "sessionAffinityTtlSeconds": 0,
+                "webApplicationFirewallPolicyLink": null,
+                "customHttpsProvisioningState": null,
+                "customHttpsProvisioningSubstate": null,
+                "customHttpsConfiguration": null
+              }
+            }
+          ],
+          "backendPoolsSettings": {
+            "enforceCertificateNameCheck": "Enabled",
+            "sendRecvTimeoutSeconds": 123
+          },
+          "enabledState": "Enabled",
+          "cName": "TestFrontDoor826.azurefd.net",
+          "friendlyName": null,
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor7181?api-version=2021-06-01",
+      "RequestMethod": "PUT",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "1882",
+        "Content-Type": "application/json",
+        "traceparent": "00-fc1c941ce4dc3f4d9cadedf044570aa6-b3b28c35b24dac4b-00",
+        "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220928.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "1403a9d72e0d0ad084b42f03d7bee71e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "tags": {},
+        "location": "global",
+        "properties": {
+          "routingRules": [
+            {
+              "name": "routingrule1",
+              "properties": {
+                "frontendEndpoints": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor7181/frontendEndpoints/frontendEndpoint1"
+                  }
+                ],
+                "acceptedProtocols": [
+                  "Https"
+                ],
+                "patternsToMatch": [
+                  "/*"
+                ],
+                "enabledState": "Enabled",
+                "routeConfiguration": {
+                  "forwardingProtocol": "MatchRequest",
+                  "backendPool": {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/BackendPools/backendPool1"
+                  },
+                  "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
+                }
+              }
+            }
+          ],
+          "loadBalancingSettings": [
+            {
+              "name": "loadBalancingSettings1",
+              "properties": {
+                "sampleSize": 4,
+                "successfulSamplesRequired": 2,
+                "additionalLatencyMilliseconds": 0
+              }
+            }
+          ],
+          "healthProbeSettings": [
+            {
+              "name": "healthProbeSettings1",
+              "properties": {
+                "path": "/",
+                "protocol": "Http",
+                "intervalInSeconds": 120,
+                "healthProbeMethod": "GET",
+                "enabledState": "Enabled"
+              }
+            }
+          ],
+          "backendPools": [
+            {
+              "name": "backendPool1",
+              "properties": {
+                "backends": [
+                  {
+                    "address": "contoso1.azurewebsites.net",
+                    "httpPort": 80,
+                    "httpsPort": 443,
+                    "enabledState": "Enabled",
+                    "priority": 2,
+                    "weight": 1
+                  }
+                ],
+                "loadBalancingSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor7181/loadBalancingSettings/loadBalancingSettings1"
+                },
+                "healthProbeSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor7181/healthProbeSettings/healthProbeSettings1"
+                }
+              }
+            }
+          ],
+          "frontendEndpoints": [
+            {
+              "name": "frontendEndpoint1",
+              "properties": {
+                "hostName": "TestFrontDoor7181.azurefd.net",
+                "sessionAffinityEnabledState": "Disabled",
+                "sessionAffinityTtlSeconds": 0
+              }
+            }
+          ],
+          "backendPoolsSettings": {
+            "sendRecvTimeoutSeconds": 123
+          }
+        }
+      },
+      "StatusCode": 201,
+      "ResponseHeaders": {
+        "Azure-AsyncOperation": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/e4e9bdbf-7525-4a31-97ca-2cfad5214c40?api-version=2021-06-01",
+        "Cache-Control": "no-cache",
+        "Content-Length": "4090",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Retry-After": "10",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "1403a9d72e0d0ad084b42f03d7bee71e",
+        "x-ms-correlation-request-id": "799d04dc-16ad-40c5-8740-3d9eb37c9414",
+        "x-ms-ratelimit-remaining-subscription-writes": "1195",
+        "x-ms-request-id": "739fddc5-2f08-423c-92f6-dd97519cb534",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085832Z:799d04dc-16ad-40c5-8740-3d9eb37c9414"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdoors/TestFrontDoor7181",
+        "type": "Microsoft.Network/frontdoors",
+        "name": "TestFrontDoor7181",
+        "location": "Global",
+        "tags": {},
+        "properties": {
+          "routingRules": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/RoutingRules/routingrule1",
+              "name": "routingrule1",
+              "type": "Microsoft.Network/Frontdoors/RoutingRules",
+              "properties": {
+                "routeConfiguration": {
+                  "customForwardingPath": null,
+                  "forwardingProtocol": "MatchRequest",
+                  "cacheConfiguration": null,
+                  "backendPool": {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/BackendPools/backendPool1"
+                  },
+                  "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
+                },
+                "rulesEngine": null,
+                "resourceState": "Creating",
+                "frontendEndpoints": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor7181/frontendEndpoints/frontendEndpoint1"
+                  }
+                ],
+                "acceptedProtocols": [
+                  "Https"
+                ],
+                "patternsToMatch": [
+                  "/*"
+                ],
+                "enabledState": "Enabled",
+                "webApplicationFirewallPolicyLink": null
+              }
+            }
+          ],
+          "rulesEngines": [],
+          "frontdoorId": "f26fa23f-642d-4c03-97b6-5b2f6b1036e3",
+          "extendedProperties": {},
+          "resourceState": "Creating",
+          "loadBalancingSettings": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/LoadBalancingSettings/loadBalancingSettings1",
+              "name": "loadBalancingSettings1",
+              "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
+              "properties": {
+                "resourceState": "Creating",
+                "sampleSize": 4,
+                "successfulSamplesRequired": 2,
+                "additionalLatencyMilliseconds": 0
+              }
+            }
+          ],
+          "healthProbeSettings": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/HealthProbeSettings/healthProbeSettings1",
+              "name": "healthProbeSettings1",
+              "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
+              "properties": {
+                "resourceState": "Creating",
+                "path": "/",
+                "protocol": "Http",
+                "intervalInSeconds": 120,
+                "enabledState": "Enabled",
+                "healthProbeMethod": "Get"
+              }
+            }
+          ],
+          "backendPools": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/BackendPools/backendPool1",
+              "name": "backendPool1",
+              "type": "Microsoft.Network/Frontdoors/BackendPools",
+              "properties": {
+                "backends": [
+                  {
+                    "address": "contoso1.azurewebsites.net",
+                    "httpPort": 80,
+                    "httpsPort": 443,
+                    "priority": 2,
+                    "weight": 1,
+                    "backendHostHeader": null,
+                    "enabledState": "Enabled",
+                    "privateLinkAlias": null,
+                    "privateLinkResourceId": null,
+                    "privateLinkLocation": null,
+                    "privateEndpointStatus": null,
+                    "privateLinkApprovalMessage": null
+                  }
+                ],
+                "resourceState": "Creating",
+                "loadBalancingSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor7181/loadBalancingSettings/loadBalancingSettings1"
+                },
+                "healthProbeSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor7181/healthProbeSettings/healthProbeSettings1"
+                }
+              }
+            }
+          ],
+          "frontendEndpoints": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/FrontendEndpoints/frontendEndpoint1",
+              "name": "frontendEndpoint1",
+              "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
+              "properties": {
+                "resourceState": "Creating",
+                "hostName": "TestFrontDoor7181.azurefd.net",
+                "sessionAffinityEnabledState": "Disabled",
+                "sessionAffinityTtlSeconds": 0,
+                "webApplicationFirewallPolicyLink": null,
+                "customHttpsProvisioningState": null,
+                "customHttpsProvisioningSubstate": null,
+                "customHttpsConfiguration": null
+              }
+            }
+          ],
+          "backendPoolsSettings": {
+            "enforceCertificateNameCheck": "Enabled",
+            "sendRecvTimeoutSeconds": 123
+          },
+          "enabledState": "Enabled",
+          "cName": "TestFrontDoor7181.azurefd.net",
+          "friendlyName": null,
+          "provisioningState": "Creating"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/e4e9bdbf-7525-4a31-97ca-2cfad5214c40?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-fc1c941ce4dc3f4d9cadedf044570aa6-a1bbe7a40abfd847-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "a3f44c7698c8566c651a0371672d7a0e",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:31 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "a3f44c7698c8566c651a0371672d7a0e",
+        "x-ms-correlation-request-id": "9849fc36-84f5-433f-8b54-44c5a2e6675e",
+        "x-ms-ratelimit-remaining-subscription-reads": "11972",
+        "x-ms-request-id": "946ec261-43e8-4888-ab97-42fbb832ff02",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085832Z:9849fc36-84f5-433f-8b54-44c5a2e6675e"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/e4e9bdbf-7525-4a31-97ca-2cfad5214c40?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-fc1c941ce4dc3f4d9cadedf044570aa6-73cd57d008827640-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "c0f729ee938359fe6890e67694e8f78a",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:33 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "c0f729ee938359fe6890e67694e8f78a",
+        "x-ms-correlation-request-id": "8d491097-5d12-4883-8fc9-420a0800db2d",
+        "x-ms-ratelimit-remaining-subscription-reads": "11971",
+        "x-ms-request-id": "5f960bde-c738-40a2-8a4f-1dbac7cd4e49",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085833Z:8d491097-5d12-4883-8fc9-420a0800db2d"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/e4e9bdbf-7525-4a31-97ca-2cfad5214c40?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-fc1c941ce4dc3f4d9cadedf044570aa6-ee5347d293694841-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "8a8d628f44c91a5683f796cc7acf0b00",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:34 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "8a8d628f44c91a5683f796cc7acf0b00",
+        "x-ms-correlation-request-id": "f297cfb7-0c91-4bdc-bc5a-8ef0a2395950",
+        "x-ms-ratelimit-remaining-subscription-reads": "11970",
+        "x-ms-request-id": "ae01f6ea-0402-4460-9792-c5c883c07094",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085835Z:f297cfb7-0c91-4bdc-bc5a-8ef0a2395950"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/e4e9bdbf-7525-4a31-97ca-2cfad5214c40?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-fc1c941ce4dc3f4d9cadedf044570aa6-8e52897112aea647-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e9f98b1c6502e3494d9b3b38b2f6c17c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:35 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e9f98b1c6502e3494d9b3b38b2f6c17c",
+        "x-ms-correlation-request-id": "504d8dd3-e823-4e2d-8a98-26c17f76031f",
+        "x-ms-ratelimit-remaining-subscription-reads": "11969",
+        "x-ms-request-id": "043f6217-eb25-4309-b191-a582623ae123",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085836Z:504d8dd3-e823-4e2d-8a98-26c17f76031f"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/e4e9bdbf-7525-4a31-97ca-2cfad5214c40?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-fc1c941ce4dc3f4d9cadedf044570aa6-1d08ff748d2b3f47-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "04e17922efa0a944d2dc3c8bfd32df98",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:38 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "04e17922efa0a944d2dc3c8bfd32df98",
+        "x-ms-correlation-request-id": "ac7726e2-72f0-4604-8200-47ad283cf76a",
+        "x-ms-ratelimit-remaining-subscription-reads": "11968",
+        "x-ms-request-id": "80ae089c-8da7-40d8-aea0-87d7adcf8097",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085838Z:ac7726e2-72f0-4604-8200-47ad283cf76a"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/e4e9bdbf-7525-4a31-97ca-2cfad5214c40?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-fc1c941ce4dc3f4d9cadedf044570aa6-dad08563f9c3d44a-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "0959e5840def2a8719aa3d2e091e688d",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "62",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:42 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "0959e5840def2a8719aa3d2e091e688d",
+        "x-ms-correlation-request-id": "3da70b41-1a29-46c2-ad18-9856080bb754",
+        "x-ms-ratelimit-remaining-subscription-reads": "11967",
+        "x-ms-request-id": "28f7e06b-b035-4d66-b446-9716cb165479",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085843Z:3da70b41-1a29-46c2-ad18-9856080bb754"
+      },
+      "ResponseBody": {
+        "status": "InProgress",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdooroperationresults/e4e9bdbf-7525-4a31-97ca-2cfad5214c40?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-fc1c941ce4dc3f4d9cadedf044570aa6-94c4851cd02d4744-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "00a9193507ee2c60474f172628bde51b",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "61",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:51 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "00a9193507ee2c60474f172628bde51b",
+        "x-ms-correlation-request-id": "18175fd1-e905-4a11-b604-34dc6c22440b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11966",
+        "x-ms-request-id": "970568eb-b540-4c30-8258-25a2c0742cb5",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085851Z:18175fd1-e905-4a11-b604-34dc6c22440b"
+      },
+      "ResponseBody": {
+        "status": "Succeeded",
+        "error": {
+          "code": "None",
+          "message": null
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor7181?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Authorization": "Sanitized",
+        "traceparent": "00-fc1c941ce4dc3f4d9cadedf044570aa6-337eded10e0f8c45-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.3.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "ccb3a2bbb89c158df2b6ebf5b215a0b3",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "4085",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "ccb3a2bbb89c158df2b6ebf5b215a0b3",
+        "x-ms-correlation-request-id": "44a3e150-8622-4ae5-9b9c-706f440aec00",
+        "x-ms-ratelimit-remaining-subscription-reads": "11965",
+        "x-ms-request-id": "6fdfcd53-47e1-4832-9f1f-c01978808cb8",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085852Z:44a3e150-8622-4ae5-9b9c-706f440aec00"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdoors/TestFrontDoor7181",
+        "type": "Microsoft.Network/frontdoors",
+        "name": "TestFrontDoor7181",
+        "location": "Global",
+        "tags": {},
+        "properties": {
+          "routingRules": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/RoutingRules/routingrule1",
+              "name": "routingrule1",
+              "type": "Microsoft.Network/Frontdoors/RoutingRules",
+              "properties": {
+                "routeConfiguration": {
+                  "customForwardingPath": null,
+                  "forwardingProtocol": "MatchRequest",
+                  "cacheConfiguration": null,
+                  "backendPool": {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/BackendPools/backendPool1"
+                  },
+                  "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
+                },
+                "rulesEngine": null,
+                "resourceState": "Enabled",
+                "frontendEndpoints": [
+                  {
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor7181/frontendEndpoints/frontendEndpoint1"
+                  }
+                ],
+                "acceptedProtocols": [
+                  "Https"
+                ],
+                "patternsToMatch": [
+                  "/*"
+                ],
+                "enabledState": "Enabled",
+                "webApplicationFirewallPolicyLink": null
+              }
+            }
+          ],
+          "rulesEngines": [],
+          "frontdoorId": "f26fa23f-642d-4c03-97b6-5b2f6b1036e3",
+          "extendedProperties": {},
+          "resourceState": "Enabled",
+          "loadBalancingSettings": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/LoadBalancingSettings/loadBalancingSettings1",
+              "name": "loadBalancingSettings1",
+              "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
+              "properties": {
+                "resourceState": "Enabled",
+                "sampleSize": 4,
+                "successfulSamplesRequired": 2,
+                "additionalLatencyMilliseconds": 0
+              }
+            }
+          ],
+          "healthProbeSettings": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/HealthProbeSettings/healthProbeSettings1",
+              "name": "healthProbeSettings1",
+              "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
+              "properties": {
+                "resourceState": "Enabled",
+                "path": "/",
+                "protocol": "Http",
+                "intervalInSeconds": 120,
+                "enabledState": "Enabled",
+                "healthProbeMethod": "Get"
+              }
+            }
+          ],
+          "backendPools": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/BackendPools/backendPool1",
+              "name": "backendPool1",
+              "type": "Microsoft.Network/Frontdoors/BackendPools",
+              "properties": {
+                "backends": [
+                  {
+                    "address": "contoso1.azurewebsites.net",
+                    "httpPort": 80,
+                    "httpsPort": 443,
+                    "priority": 2,
+                    "weight": 1,
+                    "backendHostHeader": null,
+                    "enabledState": "Enabled",
+                    "privateLinkAlias": null,
+                    "privateLinkResourceId": null,
+                    "privateLinkLocation": null,
+                    "privateEndpointStatus": null,
+                    "privateLinkApprovalMessage": null
+                  }
+                ],
+                "resourceState": "Enabled",
+                "loadBalancingSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor7181/loadBalancingSettings/loadBalancingSettings1"
+                },
+                "healthProbeSettings": {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor7181/healthProbeSettings/healthProbeSettings1"
+                }
+              }
+            }
+          ],
+          "frontendEndpoints": [
+            {
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/FrontendEndpoints/frontendEndpoint1",
+              "name": "frontendEndpoint1",
+              "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
+              "properties": {
+                "resourceState": "Enabled",
+                "hostName": "TestFrontDoor7181.azurefd.net",
+                "sessionAffinityEnabledState": "Disabled",
+                "sessionAffinityTtlSeconds": 0,
+                "webApplicationFirewallPolicyLink": null,
+                "customHttpsProvisioningState": null,
+                "customHttpsProvisioningSubstate": null,
+                "customHttpsConfiguration": null
+              }
+            }
+          ],
+          "backendPoolsSettings": {
+            "enforceCertificateNameCheck": "Enabled",
+            "sendRecvTimeoutSeconds": 123
+          },
+          "enabledState": "Enabled",
+          "cName": "TestFrontDoor7181.azurefd.net",
+          "friendlyName": null,
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors?api-version=2021-06-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-d990c8c614546347b29310853f89d40a-7548589bec065846-00",
+        "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220928.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
+        "x-ms-client-request-id": "e355ae74de887daa852cc19ff661015c",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "12256",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 28 Sep 2022 08:58:52 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Server": "Kestrel",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "e355ae74de887daa852cc19ff661015c",
+        "x-ms-correlation-request-id": "a86407fd-1f8e-4b02-bc39-365305565b4b",
+        "x-ms-ratelimit-remaining-subscription-reads": "11964",
+        "x-ms-request-id": "91edeeec-a859-45f1-ace8-35b794cd970a",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085853Z:a86407fd-1f8e-4b02-bc39-365305565b4b"
       },
       "ResponseBody": {
         "value": [
           {
-            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdoors/TestFrontDoor4741",
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdoors/TestFrontDoor3435",
             "type": "Microsoft.Network/frontdoors",
-            "name": "TestFrontDoor4741",
+            "name": "TestFrontDoor3435",
             "location": "Global",
             "tags": {},
             "properties": {
               "routingRules": [
                 {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/RoutingRules/routingrule1",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/RoutingRules/routingrule1",
                   "name": "routingrule1",
                   "type": "Microsoft.Network/Frontdoors/RoutingRules",
                   "properties": {
@@ -1610,7 +3014,7 @@
                       "forwardingProtocol": "MatchRequest",
                       "cacheConfiguration": null,
                       "backendPool": {
-                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1"
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1"
                       },
                       "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
                     },
@@ -1618,7 +3022,7 @@
                     "resourceState": "Enabled",
                     "frontendEndpoints": [
                       {
-                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/frontendEndpoints/frontendEndpoint1"
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/frontendEndpoints/frontendEndpoint1"
                       }
                     ],
                     "acceptedProtocols": [
@@ -1633,12 +3037,12 @@
                 }
               ],
               "rulesEngines": [],
-              "frontdoorId": "deace732-f0e3-41ab-b75a-23d83d9ddd79",
+              "frontdoorId": "2000710b-b0b7-446d-ae28-2d0092ef9223",
               "extendedProperties": {},
               "resourceState": "Enabled",
               "loadBalancingSettings": [
                 {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/LoadBalancingSettings/loadBalancingSettings1",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/LoadBalancingSettings/loadBalancingSettings1",
                   "name": "loadBalancingSettings1",
                   "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
                   "properties": {
@@ -1651,7 +3055,7 @@
               ],
               "healthProbeSettings": [
                 {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/HealthProbeSettings/healthProbeSettings1",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/HealthProbeSettings/healthProbeSettings1",
                   "name": "healthProbeSettings1",
                   "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
                   "properties": {
@@ -1666,7 +3070,7 @@
               ],
               "backendPools": [
                 {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1",
                   "name": "backendPool1",
                   "type": "Microsoft.Network/Frontdoors/BackendPools",
                   "properties": {
@@ -1688,22 +3092,22 @@
                     ],
                     "resourceState": "Enabled",
                     "loadBalancingSettings": {
-                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/loadBalancingSettings/loadBalancingSettings1"
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/loadBalancingSettings/loadBalancingSettings1"
                     },
                     "healthProbeSettings": {
-                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/healthProbeSettings/healthProbeSettings1"
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/healthProbeSettings/healthProbeSettings1"
                     }
                   }
                 }
               ],
               "frontendEndpoints": [
                 {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/FrontendEndpoints/frontendEndpoint1",
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/FrontendEndpoints/frontendEndpoint1",
                   "name": "frontendEndpoint1",
                   "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
                   "properties": {
                     "resourceState": "Enabled",
-                    "hostName": "TestFrontDoor4741.azurefd.net",
+                    "hostName": "TestFrontDoor3435.azurefd.net",
                     "sessionAffinityEnabledState": "Disabled",
                     "sessionAffinityTtlSeconds": 0,
                     "webApplicationFirewallPolicyLink": null,
@@ -1718,7 +3122,269 @@
                 "sendRecvTimeoutSeconds": 123
               },
               "enabledState": "Enabled",
-              "cName": "TestFrontDoor4741.azurefd.net",
+              "cName": "TestFrontDoor3435.azurefd.net",
+              "friendlyName": null,
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdoors/TestFrontDoor826",
+            "type": "Microsoft.Network/frontdoors",
+            "name": "TestFrontDoor826",
+            "location": "Global",
+            "tags": {},
+            "properties": {
+              "routingRules": [
+                {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/RoutingRules/routingrule1",
+                  "name": "routingrule1",
+                  "type": "Microsoft.Network/Frontdoors/RoutingRules",
+                  "properties": {
+                    "routeConfiguration": {
+                      "customForwardingPath": null,
+                      "forwardingProtocol": "MatchRequest",
+                      "cacheConfiguration": null,
+                      "backendPool": {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/BackendPools/backendPool1"
+                      },
+                      "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
+                    },
+                    "rulesEngine": null,
+                    "resourceState": "Enabled",
+                    "frontendEndpoints": [
+                      {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor826/frontendEndpoints/frontendEndpoint1"
+                      }
+                    ],
+                    "acceptedProtocols": [
+                      "Https"
+                    ],
+                    "patternsToMatch": [
+                      "/*"
+                    ],
+                    "enabledState": "Enabled",
+                    "webApplicationFirewallPolicyLink": null
+                  }
+                }
+              ],
+              "rulesEngines": [],
+              "frontdoorId": "ffedd5a0-8781-426d-be72-49c5b26a255d",
+              "extendedProperties": {},
+              "resourceState": "Enabled",
+              "loadBalancingSettings": [
+                {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/LoadBalancingSettings/loadBalancingSettings1",
+                  "name": "loadBalancingSettings1",
+                  "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
+                  "properties": {
+                    "resourceState": "Enabled",
+                    "sampleSize": 4,
+                    "successfulSamplesRequired": 2,
+                    "additionalLatencyMilliseconds": 0
+                  }
+                }
+              ],
+              "healthProbeSettings": [
+                {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/HealthProbeSettings/healthProbeSettings1",
+                  "name": "healthProbeSettings1",
+                  "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
+                  "properties": {
+                    "resourceState": "Enabled",
+                    "path": "/",
+                    "protocol": "Http",
+                    "intervalInSeconds": 120,
+                    "enabledState": "Enabled",
+                    "healthProbeMethod": "Get"
+                  }
+                }
+              ],
+              "backendPools": [
+                {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/BackendPools/backendPool1",
+                  "name": "backendPool1",
+                  "type": "Microsoft.Network/Frontdoors/BackendPools",
+                  "properties": {
+                    "backends": [
+                      {
+                        "address": "contoso1.azurewebsites.net",
+                        "httpPort": 80,
+                        "httpsPort": 443,
+                        "priority": 2,
+                        "weight": 1,
+                        "backendHostHeader": null,
+                        "enabledState": "Enabled",
+                        "privateLinkAlias": null,
+                        "privateLinkResourceId": null,
+                        "privateLinkLocation": null,
+                        "privateEndpointStatus": null,
+                        "privateLinkApprovalMessage": null
+                      }
+                    ],
+                    "resourceState": "Enabled",
+                    "loadBalancingSettings": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor826/loadBalancingSettings/loadBalancingSettings1"
+                    },
+                    "healthProbeSettings": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor826/healthProbeSettings/healthProbeSettings1"
+                    }
+                  }
+                }
+              ],
+              "frontendEndpoints": [
+                {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor826/FrontendEndpoints/frontendEndpoint1",
+                  "name": "frontendEndpoint1",
+                  "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
+                  "properties": {
+                    "resourceState": "Enabled",
+                    "hostName": "TestFrontDoor826.azurefd.net",
+                    "sessionAffinityEnabledState": "Disabled",
+                    "sessionAffinityTtlSeconds": 0,
+                    "webApplicationFirewallPolicyLink": null,
+                    "customHttpsProvisioningState": null,
+                    "customHttpsProvisioningSubstate": null,
+                    "customHttpsConfiguration": null
+                  }
+                }
+              ],
+              "backendPoolsSettings": {
+                "enforceCertificateNameCheck": "Enabled",
+                "sendRecvTimeoutSeconds": 123
+              },
+              "enabledState": "Enabled",
+              "cName": "TestFrontDoor826.azurefd.net",
+              "friendlyName": null,
+              "provisioningState": "Succeeded"
+            }
+          },
+          {
+            "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdoors/TestFrontDoor7181",
+            "type": "Microsoft.Network/frontdoors",
+            "name": "TestFrontDoor7181",
+            "location": "Global",
+            "tags": {},
+            "properties": {
+              "routingRules": [
+                {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/RoutingRules/routingrule1",
+                  "name": "routingrule1",
+                  "type": "Microsoft.Network/Frontdoors/RoutingRules",
+                  "properties": {
+                    "routeConfiguration": {
+                      "customForwardingPath": null,
+                      "forwardingProtocol": "MatchRequest",
+                      "cacheConfiguration": null,
+                      "backendPool": {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/BackendPools/backendPool1"
+                      },
+                      "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
+                    },
+                    "rulesEngine": null,
+                    "resourceState": "Enabled",
+                    "frontendEndpoints": [
+                      {
+                        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor7181/frontendEndpoints/frontendEndpoint1"
+                      }
+                    ],
+                    "acceptedProtocols": [
+                      "Https"
+                    ],
+                    "patternsToMatch": [
+                      "/*"
+                    ],
+                    "enabledState": "Enabled",
+                    "webApplicationFirewallPolicyLink": null
+                  }
+                }
+              ],
+              "rulesEngines": [],
+              "frontdoorId": "f26fa23f-642d-4c03-97b6-5b2f6b1036e3",
+              "extendedProperties": {},
+              "resourceState": "Enabled",
+              "loadBalancingSettings": [
+                {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/LoadBalancingSettings/loadBalancingSettings1",
+                  "name": "loadBalancingSettings1",
+                  "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
+                  "properties": {
+                    "resourceState": "Enabled",
+                    "sampleSize": 4,
+                    "successfulSamplesRequired": 2,
+                    "additionalLatencyMilliseconds": 0
+                  }
+                }
+              ],
+              "healthProbeSettings": [
+                {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/HealthProbeSettings/healthProbeSettings1",
+                  "name": "healthProbeSettings1",
+                  "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
+                  "properties": {
+                    "resourceState": "Enabled",
+                    "path": "/",
+                    "protocol": "Http",
+                    "intervalInSeconds": 120,
+                    "enabledState": "Enabled",
+                    "healthProbeMethod": "Get"
+                  }
+                }
+              ],
+              "backendPools": [
+                {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/BackendPools/backendPool1",
+                  "name": "backendPool1",
+                  "type": "Microsoft.Network/Frontdoors/BackendPools",
+                  "properties": {
+                    "backends": [
+                      {
+                        "address": "contoso1.azurewebsites.net",
+                        "httpPort": 80,
+                        "httpsPort": 443,
+                        "priority": 2,
+                        "weight": 1,
+                        "backendHostHeader": null,
+                        "enabledState": "Enabled",
+                        "privateLinkAlias": null,
+                        "privateLinkResourceId": null,
+                        "privateLinkLocation": null,
+                        "privateEndpointStatus": null,
+                        "privateLinkApprovalMessage": null
+                      }
+                    ],
+                    "resourceState": "Enabled",
+                    "loadBalancingSettings": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor7181/loadBalancingSettings/loadBalancingSettings1"
+                    },
+                    "healthProbeSettings": {
+                      "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor7181/healthProbeSettings/healthProbeSettings1"
+                    }
+                  }
+                }
+              ],
+              "frontendEndpoints": [
+                {
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor7181/FrontendEndpoints/frontendEndpoint1",
+                  "name": "frontendEndpoint1",
+                  "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
+                  "properties": {
+                    "resourceState": "Enabled",
+                    "hostName": "TestFrontDoor7181.azurefd.net",
+                    "sessionAffinityEnabledState": "Disabled",
+                    "sessionAffinityTtlSeconds": 0,
+                    "webApplicationFirewallPolicyLink": null,
+                    "customHttpsProvisioningState": null,
+                    "customHttpsProvisioningSubstate": null,
+                    "customHttpsConfiguration": null
+                  }
+                }
+              ],
+              "backendPoolsSettings": {
+                "enforceCertificateNameCheck": "Enabled",
+                "sendRecvTimeoutSeconds": 123
+              },
+              "enabledState": "Enabled",
+              "cName": "TestFrontDoor7181.azurefd.net",
               "friendlyName": null,
               "provisioningState": "Succeeded"
             }
@@ -1727,14 +3393,14 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-95bc6fb05be25a40a9540484014ed601-6e1e8535fec63d4a-00",
+        "traceparent": "00-133008ab690e4244bf0b38b1236ea33c-62983244d4ffb748-00",
         "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220928.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "8d8bacac05dc7762a541ebd982b9b6f3",
+        "x-ms-client-request-id": "667221c49b6b7df08b940d371c6a7a31",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1743,28 +3409,28 @@
         "Cache-Control": "no-cache",
         "Content-Length": "4085",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:37 GMT",
+        "Date": "Wed, 28 Sep 2022 08:58:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Server": "Kestrel",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-client-request-id": "8d8bacac05dc7762a541ebd982b9b6f3",
-        "x-ms-correlation-request-id": "07a81845-c9e0-4296-aa85-edca2e44307e",
-        "x-ms-ratelimit-remaining-subscription-reads": "11981",
-        "x-ms-request-id": "0942ed91-001d-4073-862e-7054bcd1f597",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082337Z:07a81845-c9e0-4296-aa85-edca2e44307e"
+        "x-ms-client-request-id": "667221c49b6b7df08b940d371c6a7a31",
+        "x-ms-correlation-request-id": "78c914bf-0d4a-4b43-95ce-0bb08e2b6fd0",
+        "x-ms-ratelimit-remaining-subscription-reads": "11963",
+        "x-ms-request-id": "02dc906a-b830-4f97-96db-89b64cbc6a41",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085854Z:78c914bf-0d4a-4b43-95ce-0bb08e2b6fd0"
       },
       "ResponseBody": {
-        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/frontdoors/TestFrontDoor4741",
+        "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/frontdoors/TestFrontDoor3435",
         "type": "Microsoft.Network/frontdoors",
-        "name": "TestFrontDoor4741",
+        "name": "TestFrontDoor3435",
         "location": "Global",
         "tags": {},
         "properties": {
           "routingRules": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/RoutingRules/routingrule1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/RoutingRules/routingrule1",
               "name": "routingrule1",
               "type": "Microsoft.Network/Frontdoors/RoutingRules",
               "properties": {
@@ -1773,7 +3439,7 @@
                   "forwardingProtocol": "MatchRequest",
                   "cacheConfiguration": null,
                   "backendPool": {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1"
                   },
                   "@odata.type": "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration"
                 },
@@ -1781,7 +3447,7 @@
                 "resourceState": "Enabled",
                 "frontendEndpoints": [
                   {
-                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/frontendEndpoints/frontendEndpoint1"
+                    "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/frontendEndpoints/frontendEndpoint1"
                   }
                 ],
                 "acceptedProtocols": [
@@ -1796,12 +3462,12 @@
             }
           ],
           "rulesEngines": [],
-          "frontdoorId": "deace732-f0e3-41ab-b75a-23d83d9ddd79",
+          "frontdoorId": "2000710b-b0b7-446d-ae28-2d0092ef9223",
           "extendedProperties": {},
           "resourceState": "Enabled",
           "loadBalancingSettings": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/LoadBalancingSettings/loadBalancingSettings1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/LoadBalancingSettings/loadBalancingSettings1",
               "name": "loadBalancingSettings1",
               "type": "Microsoft.Network/Frontdoors/LoadBalancingSettings",
               "properties": {
@@ -1814,7 +3480,7 @@
           ],
           "healthProbeSettings": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/HealthProbeSettings/healthProbeSettings1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/HealthProbeSettings/healthProbeSettings1",
               "name": "healthProbeSettings1",
               "type": "Microsoft.Network/Frontdoors/HealthProbeSettings",
               "properties": {
@@ -1829,7 +3495,7 @@
           ],
           "backendPools": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/BackendPools/backendPool1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/BackendPools/backendPool1",
               "name": "backendPool1",
               "type": "Microsoft.Network/Frontdoors/BackendPools",
               "properties": {
@@ -1851,22 +3517,22 @@
                 ],
                 "resourceState": "Enabled",
                 "loadBalancingSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/loadBalancingSettings/loadBalancingSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/loadBalancingSettings/loadBalancingSettings1"
                 },
                 "healthProbeSettings": {
-                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor4741/healthProbeSettings/healthProbeSettings1"
+                  "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor3435/healthProbeSettings/healthProbeSettings1"
                 }
               }
             }
           ],
           "frontendEndpoints": [
             {
-              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG7572/providers/Microsoft.Network/Frontdoors/TestFrontDoor4741/FrontendEndpoints/frontendEndpoint1",
+              "id": "/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourcegroups/testRG8798/providers/Microsoft.Network/Frontdoors/TestFrontDoor3435/FrontendEndpoints/frontendEndpoint1",
               "name": "frontendEndpoint1",
               "type": "Microsoft.Network/Frontdoors/FrontendEndpoints",
               "properties": {
                 "resourceState": "Enabled",
-                "hostName": "TestFrontDoor4741.azurefd.net",
+                "hostName": "TestFrontDoor3435.azurefd.net",
                 "sessionAffinityEnabledState": "Disabled",
                 "sessionAffinityTtlSeconds": 0,
                 "webApplicationFirewallPolicyLink": null,
@@ -1881,21 +3547,21 @@
             "sendRecvTimeoutSeconds": 123
           },
           "enabledState": "Enabled",
-          "cName": "TestFrontDoor4741.azurefd.net",
+          "cName": "TestFrontDoor3435.azurefd.net",
           "friendlyName": null,
           "provisioningState": "Succeeded"
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG7572/providers/Microsoft.Network/frontDoors/TestFrontDoor47411?api-version=2021-06-01",
+      "RequestUri": "https://management.azure.com/subscriptions/db1ab6f0-4769-4b27-930e-01e2ef9c123c/resourceGroups/testRG8798/providers/Microsoft.Network/frontDoors/TestFrontDoor34351?api-version=2021-06-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-f03eb32ccf52a3468061bd53164a0fac-6625832d455d384b-00",
+        "traceparent": "00-b922d71842fdbe408764f7650db2b310-5009100c39ed2549-00",
         "User-Agent": "azsdk-net-ResourceManager.FrontDoor/1.0.0-alpha.20220928.1 (.NET Framework 4.8.9075.0; Microsoft Windows 10.0.22621 )",
-        "x-ms-client-request-id": "714f869b39188cba3cf3a544979f6018",
+        "x-ms-client-request-id": "7ab163ae0267dd93f836466ff6ee1e91",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -1904,27 +3570,27 @@
         "Cache-Control": "no-cache",
         "Content-Length": "229",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 28 Sep 2022 08:23:38 GMT",
+        "Date": "Wed, 28 Sep 2022 08:58:54 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "36bfa069-b7af-4a20-ab83-efeda4340871",
+        "x-ms-correlation-request-id": "30812363-3d54-45b6-849f-ad6ae0ec1b98",
         "x-ms-failure-cause": "gateway",
-        "x-ms-request-id": "36bfa069-b7af-4a20-ab83-efeda4340871",
-        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T082338Z:36bfa069-b7af-4a20-ab83-efeda4340871"
+        "x-ms-request-id": "30812363-3d54-45b6-849f-ad6ae0ec1b98",
+        "x-ms-routing-request-id": "SOUTHEASTASIA:20220928T085855Z:30812363-3d54-45b6-849f-ad6ae0ec1b98"
       },
       "ResponseBody": {
         "error": {
           "code": "ResourceNotFound",
-          "message": "The Resource \u0027Microsoft.Network/frontdoors/TestFrontDoor47411\u0027 under resource group \u0027testRG7572\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
+          "message": "The Resource \u0027Microsoft.Network/frontdoors/TestFrontDoor34351\u0027 under resource group \u0027testRG8798\u0027 was not found. For more details please go to https://aka.ms/ARMResourceNotFoundFix"
         }
       }
     }
   ],
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
-    "RandomSeed": "259873612",
+    "RandomSeed": "1947741441",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "db1ab6f0-4769-4b27-930e-01e2ef9c123c"
   }

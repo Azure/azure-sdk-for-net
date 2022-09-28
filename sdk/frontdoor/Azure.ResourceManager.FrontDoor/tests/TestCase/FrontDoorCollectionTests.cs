@@ -42,6 +42,8 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
             var name2 = Recording.GenerateAssetName("TestFrontDoor");
             var name3 = Recording.GenerateAssetName("TestFrontDoor");
             var input = ResourceDataHelpers.GetFrontDoorData("global", name, groupName, DefaultSubscription.Data.Id);
+            var input2 = ResourceDataHelpers.GetFrontDoorData("global", name2, groupName, DefaultSubscription.Data.Id);
+            var input3 = ResourceDataHelpers.GetFrontDoorData("global", name3, groupName, DefaultSubscription.Data.Id);
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
             FrontDoorResource door1 = lro.Value;
             Assert.AreEqual(name, door1.Data.Name);
@@ -50,14 +52,14 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
             ResourceDataHelpers.AssertFrontDoor(door1.Data, door2.Data);
             //3.GetAll
             _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, input);
-            //_ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input);
-            //_ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, input);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name2, input2);
+            _ = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name3, input3);
             int count = 0;
             await foreach (var num in collection.GetAllAsync())
             {
                 count++;
             }
-            Assert.GreaterOrEqual(count, 1);
+            Assert.GreaterOrEqual(count, 3);
             //4Exists
             Assert.IsTrue(await collection.ExistsAsync(name));
             Assert.IsFalse(await collection.ExistsAsync(name + "1"));
