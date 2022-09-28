@@ -88,5 +88,62 @@ namespace Azure.Communication.CallAutomation.Tests.CallAutomationClients
                 }
             }
         }
+
+        [RecordedTest]
+        public async Task CreateCallAndReject()
+        {
+            /* Tests: CreateCall, Reject
+             * Test case: ACS to ACS call
+             * 1. create a CallAutomationClient.
+             * 2. Reject
+             * 3. See if call is not established
+            */
+
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
+            string? callConnectionId = null;
+
+            try
+            {
+                // create caller and receiver
+                var user = await CreateIdentityUserAsync().ConfigureAwait(false);
+                var target = await CreateIdentityUserAsync().ConfigureAwait(false);
+
+                // setup service bus
+                var uniqueId = await ServiceBusWithNewCall(user, target);
+
+                // create call and assert response
+                CreateCallResult response = await client.CreateCallAsync(new CreateCallOptions(new CallSource(user), new CommunicationIdentifier[] { target }, new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"))).ConfigureAwait(false);
+                callConnectionId = response.CallConnectionProperties.CallConnectionId;
+                Assert.IsNotEmpty(response.CallConnectionProperties.CallConnectionId);
+
+                // wait for incomingcall context
+                string? incomingCallContext = await WaitForIncomingCallContext(uniqueId, TimeSpan.FromSeconds(20));
+                Assert.IsNotNull(incomingCallContext);
+
+                // answer the call
+                Response rejectResponse = await client.RejectCallAsync(incomingCallContext, CallRejectReason.None);
+
+                // check reject response
+                Assert.IsFalse(rejectResponse.IsError);
+
+                try
+                {
+                    // test get properties
+                    Response<CallConnectionProperties> properties = await response.CallConnection.GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                }
+                catch (RequestFailedException ex)
+                {
+                    if (ex.Status == 404)
+                    {
+                        // doesn't exist, as expected
+                        Assert.Pass();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+        }
     }
 }
