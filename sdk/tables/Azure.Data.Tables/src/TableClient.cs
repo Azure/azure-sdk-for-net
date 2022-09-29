@@ -1288,32 +1288,7 @@ namespace Azure.Data.Tables
             string rowKey,
             ETag ifMatch = default,
             CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(partitionKey, nameof(partitionKey));
-            Argument.AssertNotNull(rowKey, nameof(rowKey));
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableClient)}.{nameof(DeleteEntity)}");
-            scope.Start();
-            try
-            {
-                var etag = ifMatch == default ? ETag.All.ToString() : ifMatch.ToString();
-                using var message = _tableOperations.CreateDeleteEntityRequest(Name, partitionKey, rowKey, etag, null, _defaultQueryOptions);
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-
-                switch (message.Response.Status)
-                {
-                    case 404:
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw _diagnostics.CreateRequestFailedException(message.Response);
-                }
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
-        }
+                => await DeleteEntityInternal(true, partitionKey, rowKey, ifMatch, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes the specified table entity.
@@ -1331,6 +1306,14 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>If the entity exists, the <see cref="Response"/> indicating the result of the operation. If the entity does not exist, <c>null</c></returns>
         public virtual Response DeleteEntity(string partitionKey, string rowKey, ETag ifMatch = default, CancellationToken cancellationToken = default)
+            => DeleteEntityInternal(false, partitionKey, rowKey, ifMatch, cancellationToken).EnsureCompleted();
+
+        internal async Task<Response> DeleteEntityInternal(
+            bool async,
+            string partitionKey,
+            string rowKey,
+            ETag ifMatch = default,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(partitionKey, nameof(partitionKey));
             Argument.AssertNotNull(rowKey, nameof(rowKey));
@@ -1338,18 +1321,34 @@ namespace Azure.Data.Tables
             scope.Start();
             try
             {
+                if (!TablesCompatSwitches.DisableEscapeSingleQuotesOnDeleteEntity)
+                {
+                    // Escape the values
+                    if (partitionKey.Contains("'"))
+                    {
+                        partitionKey = TableOdataFilter.EscapeStringValue(partitionKey);
+                    }
+                    if (rowKey.Contains("'"))
+                    {
+                        rowKey = TableOdataFilter.EscapeStringValue(rowKey);
+                    }
+                }
                 var etag = ifMatch == default ? ETag.All.ToString() : ifMatch.ToString();
                 using var message = _tableOperations.CreateDeleteEntityRequest(Name, partitionKey, rowKey, etag, null, _defaultQueryOptions);
-                _pipeline.Send(message, cancellationToken);
-
-                switch (message.Response.Status)
+                if (async)
                 {
-                    case 404:
-                    case 204:
-                        return message.Response;
-                    default:
-                        throw _diagnostics.CreateRequestFailedException(message.Response);
+                    await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 }
+                else
+                {
+                    _pipeline.Send(message, cancellationToken);
+                }
+
+                return message.Response.Status switch
+                {
+                    404 or 204 => message.Response,
+                    _ => throw _diagnostics.CreateRequestFailedException(message.Response),
+                };
             }
             catch (Exception ex)
             {
