@@ -43,7 +43,7 @@ jobs:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
-            Paths: $(SparseCheckoutDirectories)
+            Paths: $(SparseDirectories)
       - task: DownloadPipelineArtifact@2
         inputs:
           artifact: DependencyTestProjectReferences
