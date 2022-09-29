@@ -1288,7 +1288,7 @@ namespace Azure.Data.Tables
             string rowKey,
             ETag ifMatch = default,
             CancellationToken cancellationToken = default)
-                => await DeleteEntityinternal(true, partitionKey, rowKey, ifMatch, cancellationToken).ConfigureAwait(false);
+                => await DeleteEntityInternal(true, partitionKey, rowKey, ifMatch, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Deletes the specified table entity.
@@ -1306,7 +1306,7 @@ namespace Azure.Data.Tables
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>If the entity exists, the <see cref="Response"/> indicating the result of the operation. If the entity does not exist, <c>null</c></returns>
         public virtual Response DeleteEntity(string partitionKey, string rowKey, ETag ifMatch = default, CancellationToken cancellationToken = default)
-            => DeleteEntityinternal(false, partitionKey, rowKey, ifMatch, cancellationToken).EnsureCompleted();
+            => DeleteEntityInternal(false, partitionKey, rowKey, ifMatch, cancellationToken).EnsureCompleted();
 
         internal async Task<Response> DeleteEntityInternal(
             bool async,
