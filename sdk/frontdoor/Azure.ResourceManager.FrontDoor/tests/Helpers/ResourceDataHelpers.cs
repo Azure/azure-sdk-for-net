@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
                         },
                         FrontendEndpoints =
                         {
-                            new Models.SubResource()
+                            new WritableSubResource()
                             {
-                                Id = subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/frontendEndpoints/frontendEndpoint1"
+                                Id = new ResourceIdentifier(subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/frontendEndpoints/frontendEndpoint1")
                             }
                         },
                         AcceptedProtocols =
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
                         RouteConfiguration = new ForwardingConfiguration()
                         {
                             ForwardingProtocol = FrontDoorForwardingProtocol.MatchRequest,
-                            BackendPool = new Models.SubResource()
+                            BackendPool = new WritableSubResource()
                             {
-                                Id = subid + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.Network/Frontdoors/" + frontDoorName + "/BackendPools/backendPool1"
+                                Id = new ResourceIdentifier(subid + "/resourcegroups/" + resourceGroupName + "/providers/Microsoft.Network/Frontdoors/" + frontDoorName + "/BackendPools/backendPool1")
                             }
                         }
                     }
@@ -133,13 +133,13 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
                     new FrontDoorBackendPool()
                     {
                         Name = "backendPool1",
-                        LoadBalancingSettings = new Models.SubResource()
+                        LoadBalancingSettings = new WritableSubResource()
                         {
-                            Id = subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/loadBalancingSettings/loadBalancingSettings1"
+                            Id = new ResourceIdentifier(subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/loadBalancingSettings/loadBalancingSettings1")
                         },
-                        HealthProbeSettings = new Models.SubResource()
+                        HealthProbeSettings = new WritableSubResource()
                         {
-                            Id = subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/healthProbeSettings/healthProbeSettings1"
+                            Id = new ResourceIdentifier(subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/healthProbeSettings/healthProbeSettings1")
                         },
                         Backends =
                         {

@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -41,12 +42,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings");
-                writer.WriteObjectValue(LoadBalancingSettings);
+                JsonSerializer.Serialize(writer, LoadBalancingSettings);
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings");
-                writer.WriteObjectValue(HealthProbeSettings);
+                JsonSerializer.Serialize(writer, HealthProbeSettings);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -58,8 +59,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<string> name = default;
             Optional<ResourceType> type = default;
             Optional<IList<FrontDoorBackend>> backends = default;
-            Optional<SubResource> loadBalancingSettings = default;
-            Optional<SubResource> healthProbeSettings = default;
+            Optional<WritableSubResource> loadBalancingSettings = default;
+            Optional<WritableSubResource> healthProbeSettings = default;
             Optional<FrontDoorResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            loadBalancingSettings = SubResource.DeserializeSubResource(property0.Value);
+                            loadBalancingSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("healthProbeSettings"))
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            healthProbeSettings = SubResource.DeserializeSubResource(property0.Value);
+                            healthProbeSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("resourceState"))
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new FrontDoorBackendPool(id.Value, name.Value, Optional.ToNullable(type), Optional.ToList(backends), loadBalancingSettings.Value, healthProbeSettings.Value, Optional.ToNullable(resourceState));
+            return new FrontDoorBackendPool(id.Value, name.Value, Optional.ToNullable(type), Optional.ToList(backends), loadBalancingSettings, healthProbeSettings, Optional.ToNullable(resourceState));
         }
     }
 }
