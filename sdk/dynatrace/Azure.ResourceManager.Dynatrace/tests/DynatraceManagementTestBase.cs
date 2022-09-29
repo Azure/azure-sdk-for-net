@@ -69,18 +69,18 @@ namespace Azure.ResourceManager.Dynatrace.Tests
             {
                 UserInfo = new DynatraceMonitorUserInfo
                 {
-                    FirstName = "Divyansh",
-                    LastName = "Agarwal",
+                    FirstName = "Yao",
+                    LastName = "Kou",
                     PhoneNumber = "1234567890",
                     Country = "US",
-                    EmailAddress = "agarwald@microsoft.com"
+                    EmailAddress = "yaokou@microsoft.com"
                 },
                 PlanData = new DynatraceBillingPlanInfo
                 {
                     UsageType = "COMMITTED",
                     BillingCycle = "Monthly",
-                    PlanDetails = "dynatraceapitestplan",
-                    EffectiveOn = new System.DateTimeOffset(2022, 5, 26, 8, 12, 30, new System.TimeSpan(1, 0, 0))
+                    PlanDetails = "azureportalintegration_privatepreview@TIDhjdtn7tfnxcy",
+                    EffectiveOn = new System.DateTimeOffset(2022, 9, 28, 8, 12, 30, new System.TimeSpan(1, 0, 0))
                 },
                 DynatraceEnvironmentProperties = new DynatraceEnvironmentProperties
                 {

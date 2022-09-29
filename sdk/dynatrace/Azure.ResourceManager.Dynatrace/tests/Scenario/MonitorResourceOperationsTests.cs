@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Dynatrace.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Creation of dynatrace monitor will fail and need fix.")]
+        [Ignore("The test subscription cannot purchase the SaaS because the payment instrument is invalid")]
         public async Task Get()
         {
             string monitorName = Recording.GenerateAssetName("testDT-");
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Dynatrace.Tests
 
         [TestCase]
         [RecordedTest]
-        [Ignore("Creation of dynatrace monitor will fail and need fix.")]
+        [Ignore("The test subscription cannot purchase the SaaS because the payment instrument is invalid")]
         public async Task GetVMPayload()
         {
             string monitorName = Recording.GenerateAssetName("testDT-");
