@@ -750,10 +750,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_ListOperations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationInformation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OperationInformation> GetOperationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceOperation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceOperation> GetOperationsAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OperationInformation>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceOperation>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetOperations");
                 scope.Start();
@@ -777,10 +777,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_ListOperations
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationInformation" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OperationInformation> GetOperations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceOperation" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceOperation> GetOperations(CancellationToken cancellationToken = default)
         {
-            Page<OperationInformation> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceOperation> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetOperations");
                 scope.Start();

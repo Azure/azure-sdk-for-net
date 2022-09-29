@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of RestoreRequestInfo. </summary>
         public RestoreRequestInfo()
         {
-            Databases = new ChangeTrackingList<DatabaseBackupSetting>();
+            Databases = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
         }
 
         /// <summary> Initializes a new instance of RestoreRequestInfo. </summary>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="adjustConnectionStrings"> &lt;code&gt;true&lt;/code&gt; if SiteConfig.ConnectionStrings should be set in new app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="hostingEnvironment"> App Service Environment name, if needed (only when restoring an app to an App Service Environment). </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal RestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri storageAccountUri, string blobName, bool? canOverwrite, string siteName, IList<DatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, string kind) : base(id, name, resourceType, systemData)
+        internal RestoreRequestInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri storageAccountUri, string blobName, bool? canOverwrite, string siteName, IList<AppServiceDatabaseBackupSetting> databases, bool? ignoreConflictingHostNames, bool? ignoreDatabases, string appServicePlan, BackupRestoreOperationType? operationType, bool? adjustConnectionStrings, string hostingEnvironment, string kind) : base(id, name, resourceType, systemData)
         {
             StorageAccountUri = storageAccountUri;
             BlobName = blobName;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Name of an app. </summary>
         public string SiteName { get; set; }
         /// <summary> Collection of databases which should be restored. This list has to match the list of databases included in the backup. </summary>
-        public IList<DatabaseBackupSetting> Databases { get; }
+        public IList<AppServiceDatabaseBackupSetting> Databases { get; }
         /// <summary>
         /// Changes a logic when restoring an app with custom domains. &lt;code&gt;true&lt;/code&gt; to remove custom domains automatically. If &lt;code&gt;false&lt;/code&gt;, custom domains are added to 
         /// the app&apos;s object when it is being restored, but that might fail due to conflicts during the operation.

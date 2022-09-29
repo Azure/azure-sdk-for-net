@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -62,7 +63,11 @@ namespace Azure.ResourceManager.AppService
             if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint");
-                writer.WriteStringValue(Thumbprint);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Thumbprint);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
+#endif
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -80,9 +85,9 @@ namespace Azure.ResourceManager.AppService
             Optional<string> azureResourceName = default;
             Optional<AppServiceResourceType> azureResourceType = default;
             Optional<CustomHostNameDnsRecordType> customHostNameDnsRecordType = default;
-            Optional<HostNameType> hostNameType = default;
-            Optional<SslState> sslState = default;
-            Optional<string> thumbprint = default;
+            Optional<AppServiceHostNameType> hostNameType = default;
+            Optional<HostNameBindingSslState> sslState = default;
+            Optional<BinaryData> thumbprint = default;
             Optional<string> virtualIP = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -167,7 +172,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            hostNameType = property0.Value.GetString().ToHostNameType();
+                            hostNameType = property0.Value.GetString().ToAppServiceHostNameType();
                             continue;
                         }
                         if (property0.NameEquals("sslState"))
@@ -177,12 +182,17 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            sslState = property0.Value.GetString().ToSslState();
+                            sslState = property0.Value.GetString().ToHostNameBindingSslState();
                             continue;
                         }
                         if (property0.NameEquals("thumbprint"))
                         {
-                            thumbprint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            thumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("virtualIP"))

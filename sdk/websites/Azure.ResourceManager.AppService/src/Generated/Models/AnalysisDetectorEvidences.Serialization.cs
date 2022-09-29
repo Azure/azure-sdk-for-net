@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> source = default;
             Optional<DetectorDefinition> detectorDefinition = default;
             Optional<IList<DiagnosticMetricSet>> metrics = default;
-            Optional<IList<IList<NameValuePair>>> data = default;
-            Optional<ResponseMetaData> detectorMetaData = default;
+            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
+            Optional<DetectorMetadata> detectorMetaData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"))
@@ -105,13 +105,13 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<IList<NameValuePair>> array = new List<IList<NameValuePair>>();
+                    List<IList<AppServiceNameValuePair>> array = new List<IList<AppServiceNameValuePair>>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        List<NameValuePair> array0 = new List<NameValuePair>();
+                        List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                         foreach (var item0 in item.EnumerateArray())
                         {
-                            array0.Add(NameValuePair.DeserializeNameValuePair(item0));
+                            array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
                         }
                         array.Add(array0);
                     }
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    detectorMetaData = ResponseMetaData.DeserializeResponseMetaData(property.Value);
+                    detectorMetaData = DetectorMetadata.DeserializeDetectorMetadata(property.Value);
                     continue;
                 }
             }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -33,7 +34,11 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(ClientSecretCertificateThumbprint))
             {
                 writer.WritePropertyName("clientSecretCertificateThumbprint");
-                writer.WriteStringValue(ClientSecretCertificateThumbprint);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ClientSecretCertificateThumbprint);
+#else
+                JsonSerializer.Serialize(writer, JsonDocument.Parse(ClientSecretCertificateThumbprint.ToString()).RootElement);
+#endif
             }
             if (Optional.IsDefined(ClientSecretCertificateSubjectAlternativeName))
             {
@@ -53,7 +58,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> openIdIssuer = default;
             Optional<string> clientId = default;
             Optional<string> clientSecretSettingName = default;
-            Optional<string> clientSecretCertificateThumbprint = default;
+            Optional<BinaryData> clientSecretCertificateThumbprint = default;
             Optional<string> clientSecretCertificateSubjectAlternativeName = default;
             Optional<string> clientSecretCertificateIssuer = default;
             foreach (var property in element.EnumerateObject())
@@ -75,7 +80,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("clientSecretCertificateThumbprint"))
                 {
-                    clientSecretCertificateThumbprint = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    clientSecretCertificateThumbprint = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("clientSecretCertificateSubjectAlternativeName"))

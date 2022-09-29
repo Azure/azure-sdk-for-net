@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.AppService.Models
         public SiteConfigProperties()
         {
             DefaultDocuments = new ChangeTrackingList<string>();
-            AppSettings = new ChangeTrackingList<NameValuePair>();
+            AppSettings = new ChangeTrackingList<AppServiceNameValuePair>();
             ConnectionStrings = new ChangeTrackingList<ConnStringInfo>();
-            HandlerMappings = new ChangeTrackingList<HandlerMapping>();
+            HandlerMappings = new ChangeTrackingList<HttpRequestHandlerMapping>();
             VirtualApplications = new ChangeTrackingList<VirtualApplication>();
             IPSecurityRestrictions = new ChangeTrackingList<IPSecurityRestriction>();
             ScmIPSecurityRestrictions = new ChangeTrackingList<IPSecurityRestriction>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
-        internal SiteConfigProperties(int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? isHttpLoggingEnabled, bool? useManagedIdentityCreds, string acrUserManagedIdentityId, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IList<NameValuePair> appSettings, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, Experiments experiments, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, CorsSettings cors, PushSettings push, AppServiceApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<IPSecurityRestriction> ipSecurityRestrictions, IList<IPSecurityRestriction> scmIPSecurityRestrictions, bool? allowIPSecurityRestrictionsForScmToUseMain, bool? isHttp20Enabled, SupportedTlsVersion? minTlsVersion, SupportedTlsVersion? scmMinTlsVersion, FtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts, string publicNetworkAccess)
+        internal SiteConfigProperties(int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? isHttpLoggingEnabled, bool? useManagedIdentityCreds, string acrUserManagedIdentityId, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IList<AppServiceNameValuePair> appSettings, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HttpRequestHandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, RoutingRuleExperiments experiments, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, CorsSettings cors, WebAppPushSettings push, AppServiceApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<IPSecurityRestriction> ipSecurityRestrictions, IList<IPSecurityRestriction> scmIPSecurityRestrictions, bool? allowIPSecurityRestrictionsForScmToUseMain, bool? isHttp20Enabled, SupportedTlsVersion? minTlsVersion, SupportedTlsVersion? scmMinTlsVersion, AppServiceFtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts, string publicNetworkAccess)
         {
             NumberOfWorkers = numberOfWorkers;
             DefaultDocuments = defaultDocuments;
@@ -218,13 +218,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Publishing user name. </summary>
         public string PublishingUsername { get; set; }
         /// <summary> Application settings. </summary>
-        public IList<NameValuePair> AppSettings { get; set; }
+        public IList<AppServiceNameValuePair> AppSettings { get; set; }
         /// <summary> Connection strings. </summary>
         public IList<ConnStringInfo> ConnectionStrings { get; set; }
         /// <summary> Site MachineKey. </summary>
         public SiteMachineKey MachineKey { get; }
         /// <summary> Handler mappings. </summary>
-        public IList<HandlerMapping> HandlerMappings { get; set; }
+        public IList<HttpRequestHandlerMapping> HandlerMappings { get; set; }
         /// <summary> Document root. </summary>
         public string DocumentRoot { get; set; }
         /// <summary> SCM type. </summary>
@@ -250,14 +250,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Site load balancing. </summary>
         public SiteLoadBalancing? LoadBalancing { get; set; }
         /// <summary> This is work around for polymorphic types. </summary>
-        internal Experiments Experiments { get; set; }
+        internal RoutingRuleExperiments Experiments { get; set; }
         /// <summary> List of ramp-up rules. </summary>
         public IList<RampUpRule> ExperimentsRampUpRules
         {
             get
             {
                 if (Experiments is null)
-                    Experiments = new Experiments();
+                    Experiments = new RoutingRuleExperiments();
                 return Experiments.RampUpRules;
             }
         }
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Cross-Origin Resource Sharing (CORS) settings. </summary>
         public CorsSettings Cors { get; set; }
         /// <summary> Push endpoint settings. </summary>
-        public PushSettings Push { get; set; }
+        public WebAppPushSettings Push { get; set; }
         /// <summary> Information about the formal API definition for the app. </summary>
         internal AppServiceApiDefinitionInfo ApiDefinition { get; set; }
         /// <summary> The URL of the API definition. </summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> ScmMinTlsVersion: configures the minimum version of TLS required for SSL requests for SCM site. </summary>
         public SupportedTlsVersion? ScmMinTlsVersion { get; set; }
         /// <summary> State of FTP / FTPS service. </summary>
-        public FtpsState? FtpsState { get; set; }
+        public AppServiceFtpsState? FtpsState { get; set; }
         /// <summary>
         /// Number of preWarmed instances.
         /// This setting only applies to the Consumption and Elastic Plans

@@ -132,6 +132,8 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
   'serverFarmId': 'arm-id'
+  'thumbprint': 'any'
+  '*Thumbprint': 'any'
 
 keep-plural-enums:
 - StackPreferredOS
@@ -182,12 +184,8 @@ rename-mapping:
   AppServiceEnvironmentPatchResource: AppServiceEnvironmentPatchContent
   AppserviceGithubToken: AppServiceGithubToken
   AppServicePlanPatchResource: AppServicePlanPatchContent
-  Contact: ContactInformation
-  Login: LoginInformation
-  MSDeploy: MsDeploy
-  MSDeployLog: MsDeployLog
-  MSDeployLogEntry: MsDeployLogEntry
-  Operation: OperationInformation
+  Contact: RegistrationContactInfo
+  Login: WebAppLoginInfo
   Recommendation: AppServiceRecommendation
   Resource: AppServiceResource
   DetectorResponse: AppServiceDetector
@@ -197,6 +195,7 @@ rename-mapping:
   Apple.enabled: IsEnabled
   BackupRequest.properties.enabled: IsEnabled
   BackupSchedule.keepAtLeastOneBackup: ShouldKeepAtLeastOneBackup
+  BackupSchedule.lastExecutionTime: LastExecutedOn
   BillingMeter.properties.meterId: -|uuid
   SiteConfig.properties.httpLoggingEnabled: IsHttpLoggingEnabled
   SiteConfig.properties.scmIpSecurityRestrictionsUseMain: AllowIPSecurityRestrictionsForScmToUseMain
@@ -303,7 +302,7 @@ rename-mapping:
   AppServicePlanPatchResource.properties.zoneRedundant: IsZoneRedundant
   AuthPlatform.enabled: IsEnabled
   AzureActiveDirectory.enabled: IsEnabled
-  AzureActiveDirectoryLogin.disableWWWAuthenticate: IsDisableWWWAuthenticate
+  AzureActiveDirectoryLogin.disableWWWAuthenticate: IsWWWAuthenticateDisabled
   AzureBlobStorageHttpLogsConfig.enabled: IsEnabled
   AzureStaticWebApps.enabled: IsEnabled
   CertificatePatchResource.properties.valid: IsValid
@@ -377,7 +376,7 @@ rename-mapping:
   AzureStoragePropertyDictionaryResource: AzureStoragePropertyDictionary
   ContainerThrottlingData: ContainerThrottlingInfo
   DeletedAppRestoreRequest: DeletedAppRestoreContent
-  DiagnosticData: DiagnosticInfo
+  DiagnosticData: DiagnosticDataset
   DomainControlCenterSsoRequest: DomainControlCenterSsoRequestInfo
   PerfMonResponse: PerfMonResponseInfo
   PrivateLinkConnectionApprovalRequestResource: PrivateLinkConnectionApprovalRequestInfo
@@ -403,7 +402,7 @@ rename-mapping:
   SkuDescription: AppServiceSkuDescription
   Snapshot: AppSnapshot
   AnalysisDefinition: WebSiteAnalysisDefinition
-  Address: RegistrationAddress
+  Address: RegistrationAddressInfo
   AddressResponse: AppServiceEnvironmentAddressResult
   AllowedPrincipals: AppServiceAadAllowedPrincipals
   AnalysisData: AnalysisDetectorEvidences
@@ -425,15 +424,47 @@ rename-mapping:
   AzureStorageType: AppServiceStorageType
   AzureTableStorageApplicationLogsConfig: AppServiceTableStorageApplicationLogsConfig
   BackupItem: WebAppBackup
-  BackupItemCollection: WebAppBackupItemList
+  BackupItemCollection: WebAppBackupItemListResult
   BackupItemStatus: WebAppBackupStatus
-  BackupRequest: WebAppBackupRequestInfo
+  BackupRequest: WebAppBackupInfo
   BackupSchedule: WebAppBackupSchedule
-  BillingMeterCollection: AppServiceBillingMeterList
+  BillingMeterCollection: AppServiceBillingMeterListResult
   BuildStatus: StaticSiteBuildStatus
   Capability: AppServiceSkuCapability
   Channels: RecommendationChannel
-
+  ResponseMetaData: DetectorMetadata
+  DataSource: DetectorDataSource
+  DeletedWebAppCollection: DeletedWebAppListResult
+  DeploymentCollection: WebAppDeploymentListResult
+  Deployment: WebAppDeployment
+  Dimension: MetricDimension
+  DomainCollection: AppServiceDomainListResult
+  EnabledConfig: WebAppEnabledConfig
+  Experiments: RoutingRuleExperiments
+  Facebook: AppServiceFacebookProvider
+  FrequencyUnit: BackupFrequencyUnit
+  GitHub: AppServiceGitHubProvider
+  Google: AppServiceGoogleProvider
+  HandlerMapping: HttpRequestHandlerMapping
+  HostKeys: FunctionAppHostKeys
+  IdentifierCollection: AppServiceIdentifierListResult
+  Twitter: AppServiceTwitterProvider
+  InsightStatus: DetectorInsightStatus
+  MSDeploy: WebAppMSDeploy
+  MSDeployLog: WebAppMSDeployLog
+  MSDeployLogEntry: WebAppMSDeployLogEntry
+  MSDeployLogEntryType: WebAppMSDeployLogEntryType
+  NameIdentifierCollection: AppServiceDomainNameIdentifierListResult
+  NetworkTrace: WebAppNetworkTrace
+  Nonce: LoginFlowNonceSettings
+  PushSettings: WebAppPushSettings
+  Rendering: DiagnosticDataRendering
+  RenderingType: DiagnosticDataRenderingType
+  ResourceCollection: AppServicePlanResourceListResult
+  Solution: DiagnosticSolution
+  SslState: HostNameBindingSslState
+  StorageType: ArtifactStorageType
+  StringList: StaticSiteStringList
 
 prepend-rp-prefix:
   - ApiDefinitionInfo
@@ -444,6 +475,29 @@ prepend-rp-prefix:
   - TokenStore
   - CertificateDetails
   - CertificateEmail
+  - DatabaseBackupSetting
+  - DatabaseType
+  - DeploymentLocations
+  - GeoRegion
+  - DnsType
+  - DomainStatus
+  - DomainType
+  - EndpointDependency
+  - EndpointDetail
+  - FtpsState
+  - HostName
+  - HostNameType
+  - HostType
+  - HttpSettings
+  - HttpLogsConfig
+  - HttpSettingsRoutes
+  - Identifier
+  - IdentityProviders
+  - VnetRoute
+  - VnetInfo
+  - NameValuePair
+  - OperationStatus
+  - Operation
 
 directive:
 # operation removal - should be temporary

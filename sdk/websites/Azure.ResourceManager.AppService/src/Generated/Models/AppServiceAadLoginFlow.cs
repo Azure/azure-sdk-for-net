@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// Login parameters to send to the OpenID Connect authorization endpoint when
         /// a user logs in. Each parameter must be in the form &quot;key=value&quot;.
         /// </param>
-        /// <param name="isDisableWwwAuthenticate"> &lt;code&gt;true&lt;/code&gt; if the www-authenticate provider should be omitted from the request; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        internal AppServiceAadLoginFlow(IList<string> loginParameters, bool? isDisableWwwAuthenticate)
+        /// <param name="isWwwAuthenticateDisabled"> &lt;code&gt;true&lt;/code&gt; if the www-authenticate provider should be omitted from the request; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        internal AppServiceAadLoginFlow(IList<string> loginParameters, bool? isWwwAuthenticateDisabled)
         {
             LoginParameters = loginParameters;
-            IsDisableWwwAuthenticate = isDisableWwwAuthenticate;
+            IsWwwAuthenticateDisabled = isWwwAuthenticateDisabled;
         }
 
         /// <summary>
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public IList<string> LoginParameters { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the www-authenticate provider should be omitted from the request; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? IsDisableWwwAuthenticate { get; set; }
+        public bool? IsWwwAuthenticateDisabled { get; set; }
     }
 }

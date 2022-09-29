@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal static WebAppBackupSchedule DeserializeWebAppBackupSchedule(JsonElement element)
         {
             int frequencyInterval = default;
-            FrequencyUnit frequencyUnit = default;
+            BackupFrequencyUnit frequencyUnit = default;
             bool keepAtLeastOneBackup = default;
             int retentionPeriodInDays = default;
             Optional<DateTimeOffset> startTime = default;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("frequencyUnit"))
                 {
-                    frequencyUnit = property.Value.GetString().ToFrequencyUnit();
+                    frequencyUnit = property.Value.GetString().ToBackupFrequencyUnit();
                     continue;
                 }
                 if (property.NameEquals("keepAtLeastOneBackup"))

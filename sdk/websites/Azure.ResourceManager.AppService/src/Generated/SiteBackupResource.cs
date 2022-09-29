@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="info"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
-        public virtual async Task<Response<SiteBackupResource>> GetBackupStatusSecretsAsync(WebAppBackupRequestInfo info, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SiteBackupResource>> GetBackupStatusSecretsAsync(WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(info, nameof(info));
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="info"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
-        public virtual Response<SiteBackupResource> GetBackupStatusSecrets(WebAppBackupRequestInfo info, CancellationToken cancellationToken = default)
+        public virtual Response<SiteBackupResource> GetBackupStatusSecrets(WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(info, nameof(info));
 

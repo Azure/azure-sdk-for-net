@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppService
         public AppServiceDomainData(AzureLocation location) : base(location)
         {
             NameServers = new ChangeTrackingList<string>();
-            ManagedHostNames = new ChangeTrackingList<HostName>();
+            ManagedHostNames = new ChangeTrackingList<AppServiceHostName>();
             DomainNotRenewableReasons = new ChangeTrackingList<DomainNotRenewableReason>();
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="targetDnsType"> Target DNS type (would be used for migration). </param>
         /// <param name="authCode"></param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ContactInformation contactAdmin, ContactInformation contactBilling, ContactInformation contactRegistrant, ContactInformation contactTech, DomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? isDomainPrivacyEnabled, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isDnsRecordManagementReady, IReadOnlyList<HostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons, DnsType? dnsType, string dnsZoneId, DnsType? targetDnsType, string authCode, string kind) : base(id, name, resourceType, systemData, tags, location)
+        internal AppServiceDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, RegistrationContactInfo contactAdmin, RegistrationContactInfo contactBilling, RegistrationContactInfo contactRegistrant, RegistrationContactInfo contactTech, AppServiceDomainStatus? registrationStatus, ProvisioningState? provisioningState, IReadOnlyList<string> nameServers, bool? isDomainPrivacyEnabled, DateTimeOffset? createdOn, DateTimeOffset? expireOn, DateTimeOffset? lastRenewedOn, bool? isAutoRenew, bool? isDnsRecordManagementReady, IReadOnlyList<AppServiceHostName> managedHostNames, DomainPurchaseConsent consent, IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons, AppServiceDnsType? dnsType, string dnsZoneId, AppServiceDnsType? targetDnsType, string authCode, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             ContactAdmin = contactAdmin;
             ContactBilling = contactBilling;
@@ -82,15 +82,15 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Administrative contact. </summary>
-        public ContactInformation ContactAdmin { get; set; }
+        public RegistrationContactInfo ContactAdmin { get; set; }
         /// <summary> Billing contact. </summary>
-        public ContactInformation ContactBilling { get; set; }
+        public RegistrationContactInfo ContactBilling { get; set; }
         /// <summary> Registrant contact. </summary>
-        public ContactInformation ContactRegistrant { get; set; }
+        public RegistrationContactInfo ContactRegistrant { get; set; }
         /// <summary> Technical contact. </summary>
-        public ContactInformation ContactTech { get; set; }
+        public RegistrationContactInfo ContactTech { get; set; }
         /// <summary> Domain registration status. </summary>
-        public DomainStatus? RegistrationStatus { get; }
+        public AppServiceDomainStatus? RegistrationStatus { get; }
         /// <summary> Domain provisioning state. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Name servers. </summary>
@@ -111,17 +111,17 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         public bool? IsDnsRecordManagementReady { get; }
         /// <summary> All hostnames derived from the domain and assigned to Azure resources. </summary>
-        public IReadOnlyList<HostName> ManagedHostNames { get; }
+        public IReadOnlyList<AppServiceHostName> ManagedHostNames { get; }
         /// <summary> Legal agreement consent. </summary>
         public DomainPurchaseConsent Consent { get; set; }
         /// <summary> Reasons why domain is not renewable. </summary>
         public IReadOnlyList<DomainNotRenewableReason> DomainNotRenewableReasons { get; }
         /// <summary> Current DNS type. </summary>
-        public DnsType? DnsType { get; set; }
+        public AppServiceDnsType? DnsType { get; set; }
         /// <summary> Azure DNS Zone to use. </summary>
         public string DnsZoneId { get; set; }
         /// <summary> Target DNS type (would be used for migration). </summary>
-        public DnsType? TargetDnsType { get; set; }
+        public AppServiceDnsType? TargetDnsType { get; set; }
         /// <summary> Gets or sets the auth code. </summary>
         public string AuthCode { get; set; }
         /// <summary> Kind of resource. </summary>

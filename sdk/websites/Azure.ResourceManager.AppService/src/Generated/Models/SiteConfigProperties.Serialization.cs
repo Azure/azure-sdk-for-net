@@ -874,10 +874,10 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<int?> logsDirectorySizeLimit = default;
             Optional<bool?> detailedErrorLoggingEnabled = default;
             Optional<string> publishingUsername = default;
-            Optional<IList<NameValuePair>> appSettings = default;
+            Optional<IList<AppServiceNameValuePair>> appSettings = default;
             Optional<IList<ConnStringInfo>> connectionStrings = default;
             Optional<SiteMachineKey> machineKey = default;
-            Optional<IList<HandlerMapping>> handlerMappings = default;
+            Optional<IList<HttpRequestHandlerMapping>> handlerMappings = default;
             Optional<string> documentRoot = default;
             Optional<ScmType?> scmType = default;
             Optional<bool?> use32BitWorkerProcess = default;
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<ManagedPipelineMode?> managedPipelineMode = default;
             Optional<IList<VirtualApplication>> virtualApplications = default;
             Optional<SiteLoadBalancing?> loadBalancing = default;
-            Optional<Experiments> experiments = default;
+            Optional<RoutingRuleExperiments> experiments = default;
             Optional<SiteLimits> limits = default;
             Optional<bool?> autoHealEnabled = default;
             Optional<AutoHealRules> autoHealRules = default;
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool?> vnetRouteAllEnabled = default;
             Optional<int?> vnetPrivatePortsCount = default;
             Optional<CorsSettings> cors = default;
-            Optional<PushSettings> push = default;
+            Optional<WebAppPushSettings> push = default;
             Optional<AppServiceApiDefinitionInfo> apiDefinition = default;
             Optional<ApiManagementConfig> apiManagementConfig = default;
             Optional<string> autoSwapSlotName = default;
@@ -913,7 +913,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool?> http20Enabled = default;
             Optional<SupportedTlsVersion?> minTlsVersion = default;
             Optional<SupportedTlsVersion?> scmMinTlsVersion = default;
-            Optional<FtpsState?> ftpsState = default;
+            Optional<AppServiceFtpsState?> ftpsState = default;
             Optional<int?> preWarmedInstanceCount = default;
             Optional<int?> functionAppScaleLimit = default;
             Optional<string> healthCheckPath = default;
@@ -1126,10 +1126,10 @@ namespace Azure.ResourceManager.AppService.Models
                         appSettings = null;
                         continue;
                     }
-                    List<NameValuePair> array = new List<NameValuePair>();
+                    List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NameValuePair.DeserializeNameValuePair(item));
+                        array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item));
                     }
                     appSettings = array;
                     continue;
@@ -1166,10 +1166,10 @@ namespace Azure.ResourceManager.AppService.Models
                         handlerMappings = null;
                         continue;
                     }
-                    List<HandlerMapping> array = new List<HandlerMapping>();
+                    List<HttpRequestHandlerMapping> array = new List<HttpRequestHandlerMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HandlerMapping.DeserializeHandlerMapping(item));
+                        array.Add(HttpRequestHandlerMapping.DeserializeHttpRequestHandlerMapping(item));
                     }
                     handlerMappings = array;
                     continue;
@@ -1306,7 +1306,7 @@ namespace Azure.ResourceManager.AppService.Models
                         experiments = null;
                         continue;
                     }
-                    experiments = Experiments.DeserializeExperiments(property.Value);
+                    experiments = RoutingRuleExperiments.DeserializeRoutingRuleExperiments(property.Value);
                     continue;
                 }
                 if (property.NameEquals("limits"))
@@ -1396,7 +1396,7 @@ namespace Azure.ResourceManager.AppService.Models
                         push = null;
                         continue;
                     }
-                    push = PushSettings.DeserializePushSettings(property.Value);
+                    push = WebAppPushSettings.DeserializeWebAppPushSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("apiDefinition"))
@@ -1546,7 +1546,7 @@ namespace Azure.ResourceManager.AppService.Models
                         ftpsState = null;
                         continue;
                     }
-                    ftpsState = new FtpsState(property.Value.GetString());
+                    ftpsState = new AppServiceFtpsState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("preWarmedInstanceCount"))

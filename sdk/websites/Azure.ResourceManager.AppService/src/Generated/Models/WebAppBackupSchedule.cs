@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="frequencyUnit"> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </param>
         /// <param name="shouldKeepAtLeastOneBackup"> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </param>
         /// <param name="retentionPeriodInDays"> After how many days backups should be deleted. </param>
-        public WebAppBackupSchedule(int frequencyInterval, FrequencyUnit frequencyUnit, bool shouldKeepAtLeastOneBackup, int retentionPeriodInDays)
+        public WebAppBackupSchedule(int frequencyInterval, BackupFrequencyUnit frequencyUnit, bool shouldKeepAtLeastOneBackup, int retentionPeriodInDays)
         {
             FrequencyInterval = frequencyInterval;
             FrequencyUnit = frequencyUnit;
@@ -31,21 +31,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="shouldKeepAtLeastOneBackup"> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </param>
         /// <param name="retentionPeriodInDays"> After how many days backups should be deleted. </param>
         /// <param name="startOn"> When the schedule should start working. </param>
-        /// <param name="lastExecutionOn"> Last time when this schedule was triggered. </param>
-        internal WebAppBackupSchedule(int frequencyInterval, FrequencyUnit frequencyUnit, bool shouldKeepAtLeastOneBackup, int retentionPeriodInDays, DateTimeOffset? startOn, DateTimeOffset? lastExecutionOn)
+        /// <param name="lastExecutedOn"> Last time when this schedule was triggered. </param>
+        internal WebAppBackupSchedule(int frequencyInterval, BackupFrequencyUnit frequencyUnit, bool shouldKeepAtLeastOneBackup, int retentionPeriodInDays, DateTimeOffset? startOn, DateTimeOffset? lastExecutedOn)
         {
             FrequencyInterval = frequencyInterval;
             FrequencyUnit = frequencyUnit;
             ShouldKeepAtLeastOneBackup = shouldKeepAtLeastOneBackup;
             RetentionPeriodInDays = retentionPeriodInDays;
             StartOn = startOn;
-            LastExecutionOn = lastExecutionOn;
+            LastExecutedOn = lastExecutedOn;
         }
 
         /// <summary> How often the backup should be executed (e.g. for weekly backup, this should be set to 7 and FrequencyUnit should be set to Day). </summary>
         public int FrequencyInterval { get; set; }
         /// <summary> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </summary>
-        public FrequencyUnit FrequencyUnit { get; set; }
+        public BackupFrequencyUnit FrequencyUnit { get; set; }
         /// <summary> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </summary>
         public bool ShouldKeepAtLeastOneBackup { get; set; }
         /// <summary> After how many days backups should be deleted. </summary>
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> When the schedule should start working. </summary>
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Last time when this schedule was triggered. </summary>
-        public DateTimeOffset? LastExecutionOn { get; }
+        public DateTimeOffset? LastExecutedOn { get; }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         public AnalysisDetectorEvidences()
         {
             Metrics = new ChangeTrackingList<DiagnosticMetricSet>();
-            Data = new ChangeTrackingList<IList<NameValuePair>>();
+            Data = new ChangeTrackingList<IList<AppServiceNameValuePair>>();
         }
 
         /// <summary> Initializes a new instance of AnalysisDetectorEvidences. </summary>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="metrics"> Source Metrics. </param>
         /// <param name="data"> Additional Source Data. </param>
         /// <param name="detectorMetaData"> Detector Meta Data. </param>
-        internal AnalysisDetectorEvidences(string source, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<IList<NameValuePair>> data, ResponseMetaData detectorMetaData)
+        internal AnalysisDetectorEvidences(string source, DetectorDefinition detectorDefinition, IList<DiagnosticMetricSet> metrics, IList<IList<AppServiceNameValuePair>> data, DetectorMetadata detectorMetaData)
         {
             Source = source;
             DetectorDefinition = detectorDefinition;
@@ -42,17 +42,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Source Metrics. </summary>
         public IList<DiagnosticMetricSet> Metrics { get; }
         /// <summary> Additional Source Data. </summary>
-        public IList<IList<NameValuePair>> Data { get; }
+        public IList<IList<AppServiceNameValuePair>> Data { get; }
         /// <summary> Detector Meta Data. </summary>
-        internal ResponseMetaData DetectorMetaData { get; set; }
+        internal DetectorMetadata DetectorMetaData { get; set; }
         /// <summary> Source of the Data. </summary>
-        public DataSource DataSource
+        public DetectorDataSource DataSource
         {
             get => DetectorMetaData is null ? default : DetectorMetaData.DataSource;
             set
             {
                 if (DetectorMetaData is null)
-                    DetectorMetaData = new ResponseMetaData();
+                    DetectorMetaData = new DetectorMetadata();
                 DetectorMetaData.DataSource = value;
             }
         }

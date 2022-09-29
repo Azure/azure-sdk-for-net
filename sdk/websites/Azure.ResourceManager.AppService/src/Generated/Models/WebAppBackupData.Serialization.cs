@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
             Optional<long> sizeInBytes = default;
             Optional<DateTimeOffset> created = default;
             Optional<string> log = default;
-            Optional<IReadOnlyList<DatabaseBackupSetting>> databases = default;
+            Optional<IReadOnlyList<AppServiceDatabaseBackupSetting>> databases = default;
             Optional<bool> scheduled = default;
             Optional<DateTimeOffset> lastRestoreTimeStamp = default;
             Optional<DateTimeOffset> finishedTimeStamp = default;
@@ -164,10 +164,10 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DatabaseBackupSetting> array = new List<DatabaseBackupSetting>();
+                            List<AppServiceDatabaseBackupSetting> array = new List<AppServiceDatabaseBackupSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DatabaseBackupSetting.DeserializeDatabaseBackupSetting(item));
+                                array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item));
                             }
                             databases = array;
                             continue;

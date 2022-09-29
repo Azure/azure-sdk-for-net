@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> blobName = default;
             Optional<bool> overwrite = default;
             Optional<string> siteName = default;
-            Optional<IList<DatabaseBackupSetting>> databases = default;
+            Optional<IList<AppServiceDatabaseBackupSetting>> databases = default;
             Optional<bool> ignoreConflictingHostNames = default;
             Optional<bool> ignoreDatabases = default;
             Optional<string> appServicePlan = default;
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<DatabaseBackupSetting> array = new List<DatabaseBackupSetting>();
+                            List<AppServiceDatabaseBackupSetting> array = new List<AppServiceDatabaseBackupSetting>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DatabaseBackupSetting.DeserializeDatabaseBackupSetting(item));
+                                array.Add(AppServiceDatabaseBackupSetting.DeserializeAppServiceDatabaseBackupSetting(item));
                             }
                             databases = array;
                             continue;

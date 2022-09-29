@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isFailedRequestsTracing"> Failed requests tracing configuration. </param>
         /// <param name="isDetailedErrorMessages"> Detailed error messages configuration. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationLogsConfig applicationLogs, HttpLogsConfig httpLogs, EnabledConfig isFailedRequestsTracing, EnabledConfig isDetailedErrorMessages, string kind) : base(id, name, resourceType, systemData)
+        internal SiteLogsConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApplicationLogsConfig applicationLogs, AppServiceHttpLogsConfig httpLogs, WebAppEnabledConfig isFailedRequestsTracing, WebAppEnabledConfig isDetailedErrorMessages, string kind) : base(id, name, resourceType, systemData)
         {
             ApplicationLogs = applicationLogs;
             HttpLogs = httpLogs;
@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Application logs configuration. </summary>
         public ApplicationLogsConfig ApplicationLogs { get; set; }
         /// <summary> HTTP logs configuration. </summary>
-        public HttpLogsConfig HttpLogs { get; set; }
+        public AppServiceHttpLogsConfig HttpLogs { get; set; }
         /// <summary> Failed requests tracing configuration. </summary>
-        internal EnabledConfig IsFailedRequestsTracing { get; set; }
+        internal WebAppEnabledConfig IsFailedRequestsTracing { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
         public bool? IsFailedRequestsTracingEnabled
         {
@@ -51,13 +51,13 @@ namespace Azure.ResourceManager.AppService
             set
             {
                 if (IsFailedRequestsTracing is null)
-                    IsFailedRequestsTracing = new EnabledConfig();
+                    IsFailedRequestsTracing = new WebAppEnabledConfig();
                 IsFailedRequestsTracing.Enabled = value;
             }
         }
 
         /// <summary> Detailed error messages configuration. </summary>
-        internal EnabledConfig IsDetailedErrorMessages { get; set; }
+        internal WebAppEnabledConfig IsDetailedErrorMessages { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
         public bool? IsDetailedErrorMessagesEnabled
         {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService
             set
             {
                 if (IsDetailedErrorMessages is null)
-                    IsDetailedErrorMessages = new EnabledConfig();
+                    IsDetailedErrorMessages = new WebAppEnabledConfig();
                 IsDetailedErrorMessages.Enabled = value;
             }
         }

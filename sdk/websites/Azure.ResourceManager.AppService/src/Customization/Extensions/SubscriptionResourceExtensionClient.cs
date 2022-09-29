@@ -25,10 +25,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="IdentifierData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<IdentifierData> GetAllSiteIdentifierDataAsync(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceIdentifierData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceIdentifierData> GetAllSiteIdentifierDataAsync(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
-            async Task<Page<IdentifierData>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceIdentifierData>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllSiteIdentifierData");
                 scope.Start();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<IdentifierData>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServiceIdentifierData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllSiteIdentifierData");
                 scope.Start();
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         /// <param name="nameIdentifier"> Hostname information. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="IdentifierData" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<IdentifierData> GetAllSiteIdentifierData(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceIdentifierData" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceIdentifierData> GetAllSiteIdentifierData(AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
-            Page<IdentifierData> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceIdentifierData> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllSiteIdentifierData");
                 scope.Start();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<IdentifierData> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServiceIdentifierData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetAllSiteIdentifierData");
                 scope.Start();

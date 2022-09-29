@@ -889,10 +889,10 @@ namespace Azure.ResourceManager.AppService
             Optional<int?> logsDirectorySizeLimit = default;
             Optional<bool?> detailedErrorLoggingEnabled = default;
             Optional<string> publishingUsername = default;
-            Optional<IList<NameValuePair>> appSettings = default;
+            Optional<IList<AppServiceNameValuePair>> appSettings = default;
             Optional<IList<ConnStringInfo>> connectionStrings = default;
             Optional<SiteMachineKey> machineKey = default;
-            Optional<IList<HandlerMapping>> handlerMappings = default;
+            Optional<IList<HttpRequestHandlerMapping>> handlerMappings = default;
             Optional<string> documentRoot = default;
             Optional<ScmType?> scmType = default;
             Optional<bool?> use32BitWorkerProcess = default;
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.AppService
             Optional<ManagedPipelineMode?> managedPipelineMode = default;
             Optional<IList<VirtualApplication>> virtualApplications = default;
             Optional<SiteLoadBalancing?> loadBalancing = default;
-            Optional<Experiments> experiments = default;
+            Optional<RoutingRuleExperiments> experiments = default;
             Optional<SiteLimits> limits = default;
             Optional<bool?> autoHealEnabled = default;
             Optional<AutoHealRules> autoHealRules = default;
@@ -914,7 +914,7 @@ namespace Azure.ResourceManager.AppService
             Optional<bool?> vnetRouteAllEnabled = default;
             Optional<int?> vnetPrivatePortsCount = default;
             Optional<CorsSettings> cors = default;
-            Optional<PushSettings> push = default;
+            Optional<WebAppPushSettings> push = default;
             Optional<AppServiceApiDefinitionInfo> apiDefinition = default;
             Optional<ApiManagementConfig> apiManagementConfig = default;
             Optional<string> autoSwapSlotName = default;
@@ -928,7 +928,7 @@ namespace Azure.ResourceManager.AppService
             Optional<bool?> http20Enabled = default;
             Optional<SupportedTlsVersion?> minTlsVersion = default;
             Optional<SupportedTlsVersion?> scmMinTlsVersion = default;
-            Optional<FtpsState?> ftpsState = default;
+            Optional<AppServiceFtpsState?> ftpsState = default;
             Optional<int?> preWarmedInstanceCount = default;
             Optional<int?> functionAppScaleLimit = default;
             Optional<string> healthCheckPath = default;
@@ -1180,10 +1180,10 @@ namespace Azure.ResourceManager.AppService
                                 appSettings = null;
                                 continue;
                             }
-                            List<NameValuePair> array = new List<NameValuePair>();
+                            List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NameValuePair.DeserializeNameValuePair(item));
+                                array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item));
                             }
                             appSettings = array;
                             continue;
@@ -1220,10 +1220,10 @@ namespace Azure.ResourceManager.AppService
                                 handlerMappings = null;
                                 continue;
                             }
-                            List<HandlerMapping> array = new List<HandlerMapping>();
+                            List<HttpRequestHandlerMapping> array = new List<HttpRequestHandlerMapping>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(HandlerMapping.DeserializeHandlerMapping(item));
+                                array.Add(HttpRequestHandlerMapping.DeserializeHttpRequestHandlerMapping(item));
                             }
                             handlerMappings = array;
                             continue;
@@ -1360,7 +1360,7 @@ namespace Azure.ResourceManager.AppService
                                 experiments = null;
                                 continue;
                             }
-                            experiments = Experiments.DeserializeExperiments(property0.Value);
+                            experiments = RoutingRuleExperiments.DeserializeRoutingRuleExperiments(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("limits"))
@@ -1450,7 +1450,7 @@ namespace Azure.ResourceManager.AppService
                                 push = null;
                                 continue;
                             }
-                            push = PushSettings.DeserializePushSettings(property0.Value);
+                            push = WebAppPushSettings.DeserializeWebAppPushSettings(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("apiDefinition"))
@@ -1600,7 +1600,7 @@ namespace Azure.ResourceManager.AppService
                                 ftpsState = null;
                                 continue;
                             }
-                            ftpsState = new FtpsState(property0.Value.GetString());
+                            ftpsState = new AppServiceFtpsState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("preWarmedInstanceCount"))

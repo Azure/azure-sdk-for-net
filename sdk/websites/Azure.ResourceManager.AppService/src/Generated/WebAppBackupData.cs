@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of WebAppBackupData. </summary>
         public WebAppBackupData()
         {
-            Databases = new ChangeTrackingList<DatabaseBackupSetting>();
+            Databases = new ChangeTrackingList<AppServiceDatabaseBackupSetting>();
         }
 
         /// <summary> Initializes a new instance of WebAppBackupData. </summary>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="correlationId"> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </param>
         /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal WebAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? backupId, Uri storageAccountUri, string blobName, string namePropertiesName, WebAppBackupStatus? status, long? sizeInBytes, DateTimeOffset? createdOn, string log, IReadOnlyList<DatabaseBackupSetting> databases, bool? isScheduled, DateTimeOffset? lastRestoreOn, DateTimeOffset? finishedOn, string correlationId, long? websiteSizeInBytes, string kind) : base(id, name, resourceType, systemData)
+        internal WebAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? backupId, Uri storageAccountUri, string blobName, string namePropertiesName, WebAppBackupStatus? status, long? sizeInBytes, DateTimeOffset? createdOn, string log, IReadOnlyList<AppServiceDatabaseBackupSetting> databases, bool? isScheduled, DateTimeOffset? lastRestoreOn, DateTimeOffset? finishedOn, string correlationId, long? websiteSizeInBytes, string kind) : base(id, name, resourceType, systemData)
         {
             BackupId = backupId;
             StorageAccountUri = storageAccountUri;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Details regarding this backup. Might contain an error message. </summary>
         public string Log { get; }
         /// <summary> List of databases included in the backup. </summary>
-        public IReadOnlyList<DatabaseBackupSetting> Databases { get; }
+        public IReadOnlyList<AppServiceDatabaseBackupSetting> Databases { get; }
         /// <summary> True if this backup has been created due to a schedule being triggered. </summary>
         public bool? IsScheduled { get; }
         /// <summary> Timestamp of a last restore operation which used this backup. </summary>

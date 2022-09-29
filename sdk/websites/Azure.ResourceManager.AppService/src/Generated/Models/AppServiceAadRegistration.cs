@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings of the Azure Active Directory app registration. </summary>
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// An alternative to the client secret thumbprint, that is the issuer of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret Certificate Thumbprint. It is also optional.
         /// </param>
-        internal AppServiceAadRegistration(string openIdIssuer, string clientId, string clientSecretSettingName, string clientSecretCertificateThumbprint, string clientSecretCertificateSubjectAlternativeName, string clientSecretCertificateIssuer)
+        internal AppServiceAadRegistration(string openIdIssuer, string clientId, string clientSecretSettingName, BinaryData clientSecretCertificateThumbprint, string clientSecretCertificateSubjectAlternativeName, string clientSecretCertificateIssuer)
         {
             OpenIdIssuer = openIdIssuer;
             ClientId = clientId;
@@ -70,8 +72,35 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary>
         /// An alternative to the client secret, that is the thumbprint of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret. It is also optional.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
         /// </summary>
-        public string ClientSecretCertificateThumbprint { get; set; }
+        public BinaryData ClientSecretCertificateThumbprint { get; set; }
         /// <summary>
         /// An alternative to the client secret thumbprint, that is the subject alternative name of a certificate used for signing purposes. This property acts as
         /// a replacement for the Client Secret Certificate Thumbprint. It is also optional.
