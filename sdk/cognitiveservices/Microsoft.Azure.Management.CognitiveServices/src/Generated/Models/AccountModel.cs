@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// <param name="baseModel">Base Model Identifier.</param>
         /// <param name="maxCapacity">The max capacity.</param>
         /// <param name="capabilities">The capabilities.</param>
-        public AccountModel(string format = default(string), string name = default(string), string version = default(string), DeploymentModel baseModel = default(DeploymentModel), int? maxCapacity = default(int?), IDictionary<string, string> capabilities = default(IDictionary<string, string>), ModelDeprecationInfo deprecation = default(ModelDeprecationInfo), SystemData systemData = default(SystemData))
-            : base(format, name, version)
+        public AccountModel(string format = default(string), string name = default(string), string version = default(string), CallRateLimit callRateLimit = default(CallRateLimit), DeploymentModel baseModel = default(DeploymentModel), int? maxCapacity = default(int?), IDictionary<string, string> capabilities = default(IDictionary<string, string>), ModelDeprecationInfo deprecation = default(ModelDeprecationInfo), SystemData systemData = default(SystemData))
+            : base(format, name, version, callRateLimit)
         {
             BaseModel = baseModel;
             MaxCapacity = maxCapacity;
