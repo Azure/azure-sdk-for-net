@@ -78,7 +78,6 @@ steps:
 
         # Paths may be sourced as a yaml object literal OR a dynamically generated variable json string.
         # If the latter, convertToJson will wrap the 'string' in quotes, so remove them.
-        Write-Host "This is the path: ${{ convertToJson(parameters.Paths) }}"
         try {
           $paths = '${{ convertToJson(parameters.Paths) }}'.Trim('"') | ConvertFrom-Json -ErrorAction SilentlyContinue
           # Replace windows backslash paths, as Azure Pipelines default directories are sometimes formatted like 'D:\a\1\s'
