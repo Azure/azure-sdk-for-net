@@ -78,6 +78,7 @@ steps:
 
         # Paths may be sourced as a yaml object literal OR a dynamically generated variable json string.
         # If the latter, convertToJson will wrap the 'string' in quotes, so remove them.
+        Write-Host "This is the path: ${{ convertToJson(parameters.Paths) }}"
         try {
           $paths = '${{ convertToJson(parameters.Paths) }}'.Trim('"') | ConvertFrom-Json -ErrorAction SilentlyContinue
           # Replace windows backslash paths, as Azure Pipelines default directories are sometimes formatted like 'D:\a\1\s'
@@ -89,9 +90,9 @@ steps:
         catch {
           Write-Host $_
         }
-        $folders = Get-ChildItem "./sdk" -Attributes Directory
-        foreach ($folder in $folders) {
-          Write-Host "Here is the folder $folder"
-        }
+        # $folders = Get-ChildItem "./sdk" -Attributes Directory
+        # foreach ($folder in $folders) {
+        #   Write-Host "Here is the folder $folder"
+        # }
       pwsh: true
       workingDirectory: $(System.DefaultWorkingDirectory)
