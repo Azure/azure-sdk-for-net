@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
@@ -20,9 +19,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
     /// </summary>
     public class LogsTests
     {
-        private const string activitySourceName = "MyCompany.MyProduct.MyLibrary";
-        private static readonly ActivitySource activitySource = new(activitySourceName);
-
         [Theory]
         [InlineData(LogLevel.Information, "Information")]
         [InlineData(LogLevel.Warning, "Warning")]
@@ -33,7 +29,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         public void VerifyLog(LogLevel logLevel, string expectedSeverityLevel)
         {
             // SETUP
-            var logCategoryName = Guid.NewGuid().ToString();
+            var uniqueTestId = Guid.NewGuid();
+
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
 
             ConcurrentBag<TelemetryItem> telemetryItems = null;
 
@@ -82,7 +80,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         public void VerifyException(LogLevel logLevel, string expectedSeverityLevel)
         {
             // SETUP
-            var logCategoryName = Guid.NewGuid().ToString();
+            var uniqueTestId = Guid.NewGuid();
+
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
 
             ConcurrentBag<TelemetryItem> telemetryItems = null;
 
