@@ -16,56 +16,40 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    /// <summary>
-    /// A class extending from the ResourceGroupPolicyAssignmentResource in Azure.ResourceManager.PolicyInsights along with the instance operations that can be performed on it.
-    /// You can only construct a <see cref="ResourceGroupPolicyAssignmentPolicyInsightsResource" /> from a <see cref="ResourceIdentifier" /> with a resource type of Microsoft.Authorization/policyAssignments.
-    /// </summary>
-    public partial class ResourceGroupPolicyAssignmentPolicyInsightsResource : ArmResource
+    /// <summary> A class to add extension methods to SubscriptionPolicySetDefinition. </summary>
+    public partial class SubscriptionPolicySetDefinitionResourceExtensionClient : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ResourceGroupPolicyAssignmentPolicyInsightsResource"/> instance. </summary>
-        internal static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string policyAssignmentName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}";
-            return new ResourceIdentifier(resourceId);
-        }
+        private ClientDiagnostics _policyEventsClientDiagnostics;
+        private PolicyEventsRestOperations _policyEventsRestClient;
+        private ClientDiagnostics _policyStatesClientDiagnostics;
+        private PolicyStatesRestOperations _policyStatesRestClient;
 
-        private readonly ClientDiagnostics _policyEventsClientDiagnostics;
-        private readonly PolicyEventsRestOperations _policyEventsRestClient;
-        private readonly ClientDiagnostics _policyStatesClientDiagnostics;
-        private readonly PolicyStatesRestOperations _policyStatesRestClient;
-
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupPolicyAssignmentPolicyInsightsResource"/> class for mocking. </summary>
-        protected ResourceGroupPolicyAssignmentPolicyInsightsResource()
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicySetDefinitionResourceExtensionClient"/> class for mocking. </summary>
+        protected SubscriptionPolicySetDefinitionResourceExtensionClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ResourceGroupPolicyAssignmentPolicyInsightsResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionPolicySetDefinitionResourceExtensionClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ResourceGroupPolicyAssignmentPolicyInsightsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SubscriptionPolicySetDefinitionResourceExtensionClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _policyEventsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _policyEventsRestClient = new PolicyEventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _policyStatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _policyStatesRestClient = new PolicyStatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-#if DEBUG
-            ValidateResourceId(Id);
-#endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/policyAssignments";
-
-        internal static void ValidateResourceId(ResourceIdentifier id)
+        private ClientDiagnostics PolicyEventsClientDiagnostics => _policyEventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private PolicyEventsRestOperations PolicyEventsRestClient => _policyEventsRestClient ??= new PolicyEventsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics PolicyStatesClientDiagnostics => _policyStatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PolicyInsights", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private PolicyStatesRestOperations PolicyStatesRestClient => _policyStatesRestClient ??= new PolicyStatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private string GetApiVersionOrNull(ResourceType resourceType)
         {
-            if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
         }
 
         /// <summary>
-        /// Summarizes policy states for the resource group level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForResourceGroupLevelPolicyAssignment
+        /// Summarizes policy states for the subscription level policy set definition.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
+        /// Operation Id: PolicyStates_SummarizeForPolicySetDefinition
         /// </summary>
         /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="queryOptions"> Parameter group. </param>
@@ -75,11 +59,11 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             async Task<Page<PolicySummary>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _policyStatesClientDiagnostics.CreateScope("ResourceGroupPolicyAssignmentPolicyInsightsResource.SummarizePolicyStates");
+                using var scope = _policyStatesClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionPolicyInsightsResource.SummarizePolicyStates");
                 scope.Start();
                 try
                 {
-                    var response = await _policyStatesRestClient.SummarizeForResourceGroupLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _policyStatesRestClient.SummarizeForPolicySetDefinitionAsync(Id.SubscriptionId, Id.Name, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -92,9 +76,9 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Summarizes policy states for the resource group level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
-        /// Operation Id: PolicyStates_SummarizeForResourceGroupLevelPolicyAssignment
+        /// Summarizes policy states for the subscription level policy set definition.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesSummaryResource}/summarize
+        /// Operation Id: PolicyStates_SummarizeForPolicySetDefinition
         /// </summary>
         /// <param name="policyStatesSummaryResource"> The virtual resource under PolicyStates resource type for summarize action. In a given time range, &apos;latest&apos; represents the latest policy state(s) and is the only allowed value. </param>
         /// <param name="queryOptions"> Parameter group. </param>
@@ -104,11 +88,11 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Page<PolicySummary> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _policyStatesClientDiagnostics.CreateScope("ResourceGroupPolicyAssignmentPolicyInsightsResource.SummarizePolicyStates");
+                using var scope = _policyStatesClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionPolicyInsightsResource.SummarizePolicyStates");
                 scope.Start();
                 try
                 {
-                    var response = _policyStatesRestClient.SummarizeForResourceGroupLevelPolicyAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken);
+                    var response = _policyStatesRestClient.SummarizeForPolicySetDefinition(Id.SubscriptionId, Id.Name, policyStatesSummaryResource, queryOptions, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -121,9 +105,9 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy states for the resource group level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForResourceGroupLevelPolicyAssignment
+        /// Queries policy states for the subscription level policy set definition.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
+        /// Operation Id: PolicyStates_ListQueryResultsForPolicySetDefinition
         /// </summary>
         /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
         /// <param name="queryOptions"> Parameter group. </param>
@@ -133,11 +117,11 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             async Task<Page<PolicyState>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _policyStatesClientDiagnostics.CreateScope("ResourceGroupPolicyAssignmentPolicyInsightsResource.GetPolicyStateQueryResults");
+                using var scope = _policyStatesClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionPolicyInsightsResource.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = await _policyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _policyStatesRestClient.ListQueryResultsForPolicySetDefinitionAsync(Id.SubscriptionId, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -148,11 +132,11 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             async Task<Page<PolicyState>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _policyStatesClientDiagnostics.CreateScope("ResourceGroupPolicyAssignmentPolicyInsightsResource.GetPolicyStateQueryResults");
+                using var scope = _policyStatesClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionPolicyInsightsResource.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = await _policyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _policyStatesRestClient.ListQueryResultsForPolicySetDefinitionNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -165,9 +149,9 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy states for the resource group level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
-        /// Operation Id: PolicyStates_ListQueryResultsForResourceGroupLevelPolicyAssignment
+        /// Queries policy states for the subscription level policy set definition.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyStates/{policyStatesResource}/queryResults
+        /// Operation Id: PolicyStates_ListQueryResultsForPolicySetDefinition
         /// </summary>
         /// <param name="policyStatesResource"> The virtual resource under PolicyStates resource type. In a given time range, &apos;latest&apos; represents the latest policy state(s), whereas &apos;default&apos; represents all policy state(s). </param>
         /// <param name="queryOptions"> Parameter group. </param>
@@ -177,11 +161,11 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Page<PolicyState> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _policyStatesClientDiagnostics.CreateScope("ResourceGroupPolicyAssignmentPolicyInsightsResource.GetPolicyStateQueryResults");
+                using var scope = _policyStatesClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionPolicyInsightsResource.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = _policyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
+                    var response = _policyStatesRestClient.ListQueryResultsForPolicySetDefinition(Id.SubscriptionId, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -192,11 +176,11 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             Page<PolicyState> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _policyStatesClientDiagnostics.CreateScope("ResourceGroupPolicyAssignmentPolicyInsightsResource.GetPolicyStateQueryResults");
+                using var scope = _policyStatesClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionPolicyInsightsResource.GetPolicyStateQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = _policyStatesRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
+                    var response = _policyStatesRestClient.ListQueryResultsForPolicySetDefinitionNextPage(nextLink, Id.SubscriptionId, Id.Name, policyStatesResource, queryOptions, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -209,9 +193,9 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy events for the resource group level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForResourceGroupLevelPolicyAssignment
+        /// Queries policy events for the subscription level policy set definition.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
+        /// Operation Id: PolicyEvents_ListQueryResultsForPolicySetDefinition
         /// </summary>
         /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="queryOptions"> Parameter group. </param>
@@ -221,11 +205,11 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             async Task<Page<PolicyEvent>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _policyEventsClientDiagnostics.CreateScope("ResourceGroupPolicyAssignmentPolicyInsightsResource.GetPolicyEventQueryResults");
+                using var scope = _policyEventsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionPolicyInsightsResource.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = await _policyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _policyEventsRestClient.ListQueryResultsForPolicySetDefinitionAsync(Id.SubscriptionId, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -236,11 +220,11 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             async Task<Page<PolicyEvent>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _policyEventsClientDiagnostics.CreateScope("ResourceGroupPolicyAssignmentPolicyInsightsResource.GetPolicyEventQueryResults");
+                using var scope = _policyEventsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionPolicyInsightsResource.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = await _policyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _policyEventsRestClient.ListQueryResultsForPolicySetDefinitionNextPageAsync(nextLink, Id.SubscriptionId, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -253,9 +237,9 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary>
-        /// Queries policy events for the resource group level policy assignment.
-        /// Request Path: /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Authorization/policyAssignments/{policyAssignmentName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
-        /// Operation Id: PolicyEvents_ListQueryResultsForResourceGroupLevelPolicyAssignment
+        /// Queries policy events for the subscription level policy set definition.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policySetDefinitions/{policySetDefinitionName}/providers/Microsoft.PolicyInsights/policyEvents/{policyEventsResource}/queryResults
+        /// Operation Id: PolicyEvents_ListQueryResultsForPolicySetDefinition
         /// </summary>
         /// <param name="policyEventsResource"> The name of the virtual resource under PolicyEvents resource type; only &quot;default&quot; is allowed. </param>
         /// <param name="queryOptions"> Parameter group. </param>
@@ -265,11 +249,11 @@ namespace Azure.ResourceManager.PolicyInsights
         {
             Page<PolicyEvent> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _policyEventsClientDiagnostics.CreateScope("ResourceGroupPolicyAssignmentPolicyInsightsResource.GetPolicyEventQueryResults");
+                using var scope = _policyEventsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionPolicyInsightsResource.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = _policyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
+                    var response = _policyEventsRestClient.ListQueryResultsForPolicySetDefinition(Id.SubscriptionId, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -280,11 +264,11 @@ namespace Azure.ResourceManager.PolicyInsights
             }
             Page<PolicyEvent> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = _policyEventsClientDiagnostics.CreateScope("ResourceGroupPolicyAssignmentPolicyInsightsResource.GetPolicyEventQueryResults");
+                using var scope = _policyEventsClientDiagnostics.CreateScope("SubscriptionPolicySetDefinitionPolicyInsightsResource.GetPolicyEventQueryResults");
                 scope.Start();
                 try
                 {
-                    var response = _policyEventsRestClient.ListQueryResultsForResourceGroupLevelPolicyAssignmentNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
+                    var response = _policyEventsRestClient.ListQueryResultsForPolicySetDefinitionNextPage(nextLink, Id.SubscriptionId, Id.Name, policyEventsResource, queryOptions, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, response.Value.ODataNextLink, response.GetRawResponse());
                 }
                 catch (Exception e)
