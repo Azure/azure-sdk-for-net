@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> issuer = default;
             Optional<DateTimeOffset> issueDate = default;
             Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> thumbprint = default;
+            Optional<BinaryData> thumbprint = default;
             Optional<bool> valid = default;
             Optional<byte[]> cerBlob = default;
             Optional<string> publicKeyHash = default;
@@ -256,7 +256,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("thumbprint"))
                         {
-                            thumbprint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            thumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("valid"))

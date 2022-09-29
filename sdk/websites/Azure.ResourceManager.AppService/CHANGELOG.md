@@ -1,14 +1,13 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0 (2022-09-29)
 
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+This is the first stable release of the AppService Management library.
 
 ### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.4 (2022-08-29)
 

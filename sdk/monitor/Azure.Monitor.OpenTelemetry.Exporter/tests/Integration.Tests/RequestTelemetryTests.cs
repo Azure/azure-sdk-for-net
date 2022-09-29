@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.AspNetCoreWebApp;
 using Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.TestFramework;
-
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
+using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,16 +37,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
         {
             string testValue = Guid.NewGuid().ToString();
 
+            ConcurrentBag<TelemetryItem> telemetryItems = null;
+
             // Arrange
-            var transmitter = new MockTransmitter();
-            var activityProcessor = new SimpleActivityExportProcessor(new AzureMonitorTraceExporter(transmitter));
             var client = this.factory
                 .WithWebHostBuilder(builder =>
                     builder.ConfigureTestServices(services =>
                     {
                         services.AddOpenTelemetryTracing((builder) => builder
                             .AddAspNetCoreInstrumentation()
-                            .AddProcessor(activityProcessor));
+                            .AddAzureMonitorTraceExporterForTest(out telemetryItems));
                     }))
                 .CreateClient();
 
@@ -54,11 +56,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests
 
             // Shutdown
             response.EnsureSuccessStatusCode();
-            this.WaitForActivityExport(transmitter.TelemetryItems);
+            this.WaitForActivityExport(telemetryItems);
 
             // Assert
-            Assert.True(transmitter.TelemetryItems.Any(), "test project did not capture telemetry");
-            var telemetryItem = transmitter.TelemetryItems.Single();
+            Assert.True(telemetryItems.Any(), "test project did not capture telemetry");
+            var telemetryItem = telemetryItems.Single();
             this.telemetryOutput.Write(telemetryItem);
 
             AssertRequestTelemetry(

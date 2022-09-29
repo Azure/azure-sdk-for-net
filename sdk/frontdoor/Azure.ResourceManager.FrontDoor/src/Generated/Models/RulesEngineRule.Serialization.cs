@@ -24,18 +24,32 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WriteObjectValue(Action);
             if (Optional.IsCollectionDefined(MatchConditions))
             {
-                writer.WritePropertyName("matchConditions");
-                writer.WriteStartArray();
-                foreach (var item in MatchConditions)
+                if (MatchConditions != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("matchConditions");
+                    writer.WriteStartArray();
+                    foreach (var item in MatchConditions)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("matchConditions");
+                }
             }
             if (Optional.IsDefined(MatchProcessingBehavior))
             {
-                writer.WritePropertyName("matchProcessingBehavior");
-                writer.WriteStringValue(MatchProcessingBehavior.Value.ToString());
+                if (MatchProcessingBehavior != null)
+                {
+                    writer.WritePropertyName("matchProcessingBehavior");
+                    writer.WriteStringValue(MatchProcessingBehavior.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("matchProcessingBehavior");
+                }
             }
             writer.WriteEndObject();
         }
@@ -46,7 +60,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             int priority = default;
             RulesEngineAction action = default;
             Optional<IList<RulesEngineMatchCondition>> matchConditions = default;
-            Optional<MatchProcessingBehavior> matchProcessingBehavior = default;
+            Optional<MatchProcessingBehavior?> matchProcessingBehavior = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -68,7 +82,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        matchConditions = null;
                         continue;
                     }
                     List<RulesEngineMatchCondition> array = new List<RulesEngineMatchCondition>();
@@ -83,7 +97,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        matchProcessingBehavior = null;
                         continue;
                     }
                     matchProcessingBehavior = new MatchProcessingBehavior(property.Value.GetString());

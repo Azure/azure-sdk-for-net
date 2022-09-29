@@ -6,7 +6,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 {
     public class CallAutomationTestBase
     {

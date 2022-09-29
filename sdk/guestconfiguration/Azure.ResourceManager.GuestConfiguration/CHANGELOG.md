@@ -1,14 +1,15 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0 (2022-09-29)
 
-### Features Added
+This is the first stable release of the Guest Configuration Management library.
 
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Renamed the model `AssignmentReport` to `GuestConfigurationAssignmentReportInfo`.
+- Renamed the model `ConfigurationInfo` to `GuestConfigurationInfo`.
+- Renamed the model `ConfigurationParameter` to `GuestConfigurationParameter`.
+- Renamed the method `GetGuestConfigurationAssignments` to `GetAllGuestConfigurationAssignmentData`.
 
 ## 1.0.0-beta.2 (2022-09-09)
 
