@@ -56,11 +56,12 @@ function Write-Test-Dependency-Group-To-Files($ProjectFileConfigName, $ProjectGr
       $itemGroupNode.AppendChild($newElem) > $null
       $ServiceDirectories += $($pkg.ServiceDirectory)
     }
-    $ServiceDirectoriesString = ($ServiceDirectories | Get-Unique) -Join ","
-    $null = $templateXml.Save("azure-sdk-for-net/$MatrixOutputFolder/$projectFilePath")
+    $ServiceDirectoriesJson = ConvertTo-Json @($ServiceDirectories | Get-Unique) -Compress
+    $null = $templateXml.Save("$MatrixOutputFolder/$projectFilePath")
+    $Service
     $projectListInfo = New-Object -Typename PSCustomObject -Property @{
       ProjectListFile = "$MatrixOutputFolder/$projectFilePath"
-      ServiceDirectories = $ServiceDirectoriesString
+      ServiceDirectories = $ServiceDirectoriesJson
     }
     $projectListInfoArray += $projectListInfo
   }
