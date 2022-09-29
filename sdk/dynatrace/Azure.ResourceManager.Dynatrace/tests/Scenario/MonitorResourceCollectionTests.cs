@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Dynatrace.Tests
 
         [TestCase]
         [RecordedTest]
+        [Ignore("The test subscription cannot purchase the SaaS because the payment instrument is invalid")]
         public async Task CreateOrUpdate()
         {
             string monitorName = Recording.GenerateAssetName("testDT-");
