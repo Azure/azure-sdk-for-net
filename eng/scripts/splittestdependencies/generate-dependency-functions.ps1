@@ -61,7 +61,7 @@ function Write-Test-Dependency-Group-To-Files($ProjectFileConfigName, $ProjectGr
     $null = $templateXml.Save("$MatrixOutputFolder/$projectFilePath")
     $projectListInfo = [PSCustomObject] @{
       ProjectListFile = "$MatrixOutputFolder/$projectFilePath"
-      ServiceDirectories = $ServiceDirectoriesJson | ConvertFrom-Json
+      ServiceDirectories = $ServiceDirectoriesJson
     }
     $projectListInfoArray += $projectListInfo
   }
@@ -84,7 +84,7 @@ function Write-Project-Files-To-Matrix($ProjListInfos, $MatrixJsonPath, $MatrixO
       $($ProjectFileConfigName) = $projectListInfo.ProjectListFile
       ServiceDirectories = $projectListInfo.ServiceDirectories
     }
-    $overrideFiles | Add-Member -Name "DependencyGroup$n" -value $PropertyOverride -MemberType NoteProperty
+    $overrideFiles | Add-Member -NotePropertyName "DependencyGroup$n" -NotePropertyvalue $PropertyOverride
   }
   # Add one project files into the "include" session for short-term solution. Check whether "include" property exists.
   if ("include" -in $platformJson.PSobject.Properties.Name) {
@@ -98,13 +98,13 @@ function Write-Project-Files-To-Matrix($ProjListInfos, $MatrixJsonPath, $MatrixO
       $dependencyGroup = [PSCustomObject]@{
         "DependencyGroup$n" = $lastElem.Value
       }
-      $include | Add-Member -Name "OverrideFiles" -value $dependencyGroup -MemberType NoteProperty
+      $include | Add-Member -NotePropertyName "OverrideFiles" -NotePropertyvalue $dependencyGroup
     }
   }
   if (!$($overrideFiles.PSObject.properties)) {
     Throw "Need at least one project file for test matrix. Please adjust the NumberOfTestsPerJob for better split."
   }
   $platformJson.matrix | Add-Member -Name "OverrideFiles" -value $overrideFiles -MemberType NoteProperty
-  $platformJson | ConvertTo-Json -Depth 100 | Out-File $MatrixJsonPath 
+  $platformJson | ConvertTo-Json -Depth 100 | Foreach {[System.Text.RegularExpressions.Regex]::Unescape($_)} | Out-File $MatrixJsonPath 
   Copy-Item $MatrixJsonPath -Destination $MatrixOutputFolder
 }
