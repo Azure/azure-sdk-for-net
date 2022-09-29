@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(2, metricsData.Version);
             Assert.Equal("TestDoubleCounter", metricsData.Metrics.First().Name);
             Assert.Equal(123.45, metricsData.Metrics.First().Value);
-            Assert.Equal(DataPointType.Aggregation, metricsData.Metrics.First().DataPointType);
+            Assert.Null(metricsData.Metrics.First().DataPointType);
         }
     }
 }

@@ -58,10 +58,14 @@ rename-mapping:
   CertificateProperties.expiry: ExpireOn
   CertificateProperties.created: CreatedOn
   CertificateProperties.updated: UpdatedOn
+  CertificateProperties.certificate: -|any
+  CertificateProperties.thumbprint: -|any
   VerificationCodeResponse: CertificateVerificationCodeResult
-  VerificationCodeResponse.properties.expiry: ExpireOn
-  VerificationCodeResponse.properties.created: CreatedOn
-  VerificationCodeResponse.properties.updated: UpdatedOn
+  VerificationCodeResponseProperties.expiry: ExpireOn
+  VerificationCodeResponseProperties.created: CreatedOn
+  VerificationCodeResponseProperties.updated: UpdatedOn
+  VerificationCodeResponseProperties.certificate: -|any
+  VerificationCodeResponseProperties.thumbprint: -|any
   VerificationCodeResponseProperties: CertificateVerificationCodeProperties
   VerificationCodeRequest: CertificateVerificationCodeContent
   PrivateEndpointConnectionProperties: DeviceProvisioningServicesPrivateEndpointConnectionProperties
@@ -73,9 +77,10 @@ rename-mapping:
   IotDpsSkuInfo: DeviceProvisioningServicesSkuInfo
   IotDpsSku: DeviceProvisioningServicesSku
   IotDpsSkuDefinition: DeviceProvisioningServicesSkuDefinition
-  SharedAccessSignatureAuthorizationRule[AccessRightsDescription]: DeviceProvisioningServicesSharedAccessKey
+  SharedAccessSignatureAuthorizationRuleAccessRightsDescription: DeviceProvisioningServicesSharedAccessKey
   OperationInputs: DeviceProvisioningServicesNameAvailabilityContent
   NameAvailabilityInfo: DeviceProvisioningServicesNameAvailabilityResult
+  NameAvailabilityInfo.nameAvailable: IsNameAvailable
   NameUnavailabilityReason: DeviceProvisioningServicesNameUnavailableReason
   AccessRightsDescription: DeviceProvisioningServicesAccessKeyRight
   AllocationPolicy: DeviceProvisioningServicesAllocationPolicy
@@ -85,8 +90,17 @@ rename-mapping:
   IpFilterTargetType: DeviceProvisioningServicesIPFilterTargetType
   PublicNetworkAccess: DeviceProvisioningServicesPublicNetworkAccess
   State: DeviceProvisioningServicesState
+  CertificatePurpose: DeviceProvisioningServicesCertificatePurpose
 
 directive:
+  - from: iotdps.json
+    where: $.definitions
+    transform: >
+      $.VerificationCodeResponse.properties.properties.properties.expiry['format'] = 'date-time-rfc1123';
+      $.VerificationCodeResponse.properties.properties.properties.created['format'] = 'date-time-rfc1123';
+      $.VerificationCodeResponse.properties.properties.properties.updated['format'] = 'date-time-rfc1123';
+      delete $.VerificationCodeResponse.properties.properties.properties.certificate['format'];
+      delete $.CertificateProperties.properties.certificate['format'];
   - from: iotdps.json
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{provisioningServiceName}/certificates/{certificateName}'].delete.parameters
     transform: >

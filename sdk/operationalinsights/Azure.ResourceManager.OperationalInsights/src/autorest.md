@@ -1,0 +1,76 @@
+# Generated code configuration
+
+Run `dotnet build /t:GenerateCode` to generate code.
+
+``` yaml
+
+azure-arm: true
+csharp: true
+library-name: OperationalInsights
+namespace: Azure.ResourceManager.OperationalInsights
+require: https://github.com/Azure/azure-rest-api-specs/blob/7d5d1db0c45d6fe0934c97b6a6f9bb34112d42d1/specification/operationalinsights/resource-manager/readme.md
+tag: package-2022-10
+output-folder: $(this-folder)/Generated
+clear-output-folder: true
+skip-csproj: true
+modelerfour:
+  flatten-payloads: false
+
+format-by-name-rules:
+  'tenantId': 'uuid'
+  'ETag': 'etag'
+  'location': 'azure-location'
+  '*Uri': 'Uri'
+  '*Uris': 'Uri'
+
+rename-rules:
+  CPU: Cpu
+  CPUs: Cpus
+  Os: OS
+  Ip: IP
+  Ips: IPs|ips
+  ID: Id
+  IDs: Ids
+  VM: Vm
+  VMs: Vms
+  Vmos: VmOS
+  VMScaleSet: VmScaleSet
+  DNS: Dns
+  VPN: Vpn
+  NAT: Nat
+  WAN: Wan
+  Ipv4: IPv4|ipv4
+  Ipv6: IPv6|ipv6
+  Ipsec: IPsec|ipsec
+  SSO: Sso
+  URI: Uri
+  Etag: ETag|etag
+
+directive:
+  - remove-operation: OperationStatuses_Get
+  # Dup model `SystemData` in this RP, should use the common type
+  - from: QueryPackQueries.json
+    where: $.definitions
+    transform: >
+      delete $.SystemData;
+      delete $.IdentityType;
+      $.AzureResourceProperties.properties.systemData['$ref'] = '../../../../../common-types/resource-management/v2/types.json#/definitions/ErrorResponse';
+  # Codegen can't handle integter enum properly, should be fixed before GA
+  - from: Workspaces.json
+    where: $.definitions
+    transform: >
+      delete $.WorkspaceSku.properties.capacityReservationLevel['enum'];
+      delete $.WorkspaceSku.properties.capacityReservationLevel['x-ms-enum'];
+  # Codegen can't handle integter enum properly, should be fixed before GA
+  - from: Clusters.json
+    where: $.definitions
+    transform: >
+      delete $.ClusterSku.properties.capacity['enum'];
+      delete $.ClusterSku.properties.capacity['x-ms-enum'];
+  # The `type` is reserved name
+  - from: Tables.json
+    where: $.definitions
+    transform: >
+      $.Column.properties.type['x-ms-client-name'] = 'ColumnType';
+
+```

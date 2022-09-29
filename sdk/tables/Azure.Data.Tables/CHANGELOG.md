@@ -3,6 +3,7 @@
 ## 12.7.0-beta.2 (Unreleased)
 
 ### Features Added
+- Added a `Uri` property to `TableClient` and `TableServiceClient`
 
 ### Breaking Changes
 

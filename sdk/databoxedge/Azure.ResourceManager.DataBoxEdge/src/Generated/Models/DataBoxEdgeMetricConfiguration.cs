@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -18,7 +19,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="resourceId"> The Resource ID on which the metrics should be pushed. </param>
         /// <param name="counterSets"> Host name for the IoT hub associated to the device. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="counterSets"/> is null. </exception>
-        public DataBoxEdgeMetricConfiguration(string resourceId, IEnumerable<DataBoxEdgeMetricCounterSet> counterSets)
+        public DataBoxEdgeMetricConfiguration(ResourceIdentifier resourceId, IEnumerable<DataBoxEdgeMetricCounterSet> counterSets)
         {
             if (resourceId == null)
             {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="mdmAccount"> The MDM account to which the counters should be pushed. </param>
         /// <param name="metricNameSpace"> The MDM namespace to which the counters should be pushed. This is required if MDMAccount is specified. </param>
         /// <param name="counterSets"> Host name for the IoT hub associated to the device. </param>
-        internal DataBoxEdgeMetricConfiguration(string resourceId, string mdmAccount, string metricNameSpace, IList<DataBoxEdgeMetricCounterSet> counterSets)
+        internal DataBoxEdgeMetricConfiguration(ResourceIdentifier resourceId, string mdmAccount, string metricNameSpace, IList<DataBoxEdgeMetricCounterSet> counterSets)
         {
             ResourceId = resourceId;
             MdmAccount = mdmAccount;
@@ -47,7 +48,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         }
 
         /// <summary> The Resource ID on which the metrics should be pushed. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The MDM account to which the counters should be pushed. </summary>
         public string MdmAccount { get; set; }
         /// <summary> The MDM namespace to which the counters should be pushed. This is required if MDMAccount is specified. </summary>

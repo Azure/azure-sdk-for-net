@@ -197,6 +197,52 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary>
+        /// Provides storage to network proximity and logical zone mapping information.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/regionInfo
+        /// Operation Id: NetAppResource_QueryRegionInfo
+        /// </summary>
+        /// <param name="location"> The location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.QueryRegionInfoNetAppResource");
+            scope.Start();
+            try
+            {
+                var response = await NetAppResourceRestClient.QueryRegionInfoAsync(Id.SubscriptionId, location, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Provides storage to network proximity and logical zone mapping information.
+        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/regionInfo
+        /// Operation Id: NetAppResource_QueryRegionInfo
+        /// </summary>
+        /// <param name="location"> The location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<NetAppRegionInfo> QueryRegionInfoNetAppResource(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            using var scope = NetAppResourceClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.QueryRegionInfoNetAppResource");
+            scope.Start();
+            try
+            {
+                var response = NetAppResourceRestClient.QueryRegionInfo(Id.SubscriptionId, location, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Get the default and current limits for quotas
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.NetApp/locations/{location}/quotaLimits
         /// Operation Id: NetAppResourceQuotaLimits_List

@@ -36,11 +36,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="imageReference">The image reference.</param>
         /// <param name="osDisk">The OS disk.</param>
         /// <param name="dataDisks">The data disks.</param>
-        public VirtualMachineScaleSetUpdateStorageProfile(ImageReference imageReference = default(ImageReference), VirtualMachineScaleSetUpdateOSDisk osDisk = default(VirtualMachineScaleSetUpdateOSDisk), IList<VirtualMachineScaleSetDataDisk> dataDisks = default(IList<VirtualMachineScaleSetDataDisk>))
+        public VirtualMachineScaleSetUpdateStorageProfile(ImageReference imageReference = default(ImageReference), VirtualMachineScaleSetUpdateOSDisk osDisk = default(VirtualMachineScaleSetUpdateOSDisk), IList<VirtualMachineScaleSetDataDisk> dataDisks = default(IList<VirtualMachineScaleSetDataDisk>), string diskControllerType = default(string))
         {
             ImageReference = imageReference;
             OsDisk = osDisk;
             DataDisks = dataDisks;
+            DiskControllerType = diskControllerType;
             CustomInit();
         }
 
@@ -66,6 +67,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "dataDisks")]
         public IList<VirtualMachineScaleSetDataDisk> DataDisks { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "diskControllerType")]
+        public string DiskControllerType { get; set; }
 
     }
 }

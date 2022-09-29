@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             IPFilterRules = new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>();
             PrivateEndpointConnections = new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>();
             IotHubs = new ChangeTrackingList<IotHubDefinitionDescription>();
-            AuthorizationPolicies = new ChangeTrackingList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>();
+            AuthorizationPolicies = new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>();
         }
 
         /// <summary> Initializes a new instance of DeviceProvisioningServiceProperties. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// Optional.
         /// Indicates if the DPS instance has Data Residency enabled, removing the cross geo-pair disaster recovery.
         /// </param>
-        internal DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IList<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IList<IotHubDefinitionDescription> iotHubs, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> authorizationPolicies, bool? isDataResidencyEnabled)
+        internal DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess, IList<DeviceProvisioningServicesIPFilterRule> ipFilterRules, IList<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, IList<IotHubDefinitionDescription> iotHubs, DeviceProvisioningServicesAllocationPolicy? allocationPolicy, string serviceOperationsHostName, string deviceProvisioningHostName, string idScope, IList<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies, bool? isDataResidencyEnabled)
         {
             State = state;
             PublicNetworkAccess = publicNetworkAccess;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <summary> Unique identifier of this provisioning service. </summary>
         public string IdScope { get; }
         /// <summary> List of authorization keys for a provisioning service. </summary>
-        public IList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> AuthorizationPolicies { get; }
+        public IList<DeviceProvisioningServicesSharedAccessKey> AuthorizationPolicies { get; }
         /// <summary>
         /// Optional.
         /// Indicates if the DPS instance has Data Residency enabled, removing the cross geo-pair disaster recovery.

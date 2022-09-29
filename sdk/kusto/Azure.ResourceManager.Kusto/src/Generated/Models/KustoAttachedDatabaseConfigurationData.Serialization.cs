@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.Kusto
             Optional<string> databaseName = default;
             Optional<ResourceIdentifier> clusterResourceId = default;
             Optional<IReadOnlyList<string>> attachedDatabaseNames = default;
-            Optional<DefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
-            Optional<TableLevelSharingProperties> tableLevelSharingProperties = default;
+            Optional<KustoDatabaseDefaultPrincipalsModificationKind> defaultPrincipalsModificationKind = default;
+            Optional<KustoDatabaseTableLevelSharingProperties> tableLevelSharingProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Kusto
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            defaultPrincipalsModificationKind = new DefaultPrincipalsModificationKind(property0.Value.GetString());
+                            defaultPrincipalsModificationKind = new KustoDatabaseDefaultPrincipalsModificationKind(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("tableLevelSharingProperties"))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Kusto
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            tableLevelSharingProperties = TableLevelSharingProperties.DeserializeTableLevelSharingProperties(property0.Value);
+                            tableLevelSharingProperties = KustoDatabaseTableLevelSharingProperties.DeserializeKustoDatabaseTableLevelSharingProperties(property0.Value);
                             continue;
                         }
                     }

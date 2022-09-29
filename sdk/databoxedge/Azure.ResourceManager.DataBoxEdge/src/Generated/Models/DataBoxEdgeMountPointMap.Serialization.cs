@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             Optional<ResourceIdentifier> roleId = default;
             Optional<string> mountPoint = default;
             Optional<DataBoxEdgeMountType> mountType = default;
-            Optional<RoleType> roleType = default;
+            Optional<DataBoxEdgeRoleType> roleType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shareId"))
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    roleType = new RoleType(property.Value.GetString());
+                    roleType = new DataBoxEdgeRoleType(property.Value.GetString());
                     continue;
                 }
             }
