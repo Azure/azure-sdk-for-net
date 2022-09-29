@@ -278,13 +278,34 @@ namespace Azure.Containers.ContainerRegistry.Tests
         public async Task CanPushArtifact()
         {
             // Arrange
-            var client = CreateBlobClient("oci-artifact-test");
+            var client = CreateBlobClient("oci-artifact-big");
 
             // Act
             var path = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "oci-artifact-big");
-            var manifestFilePath = Path.Combine(path, "manifest.json");
 
-            // Upload config and layers
+            OciManifest manifest = new OciManifest();
+            manifest.SchemaVersion = 2;
+
+            // Upload config
+            var configFilePath = Path.Combine(path, "config.json");
+            if (File.Exists(configFilePath))
+            {
+                using (var fs = File.OpenRead(configFilePath))
+                {
+                    var uploadResult = await client.UploadBlobAsync(fs);
+
+                    // Update manifest
+                    OciBlobDescriptor descriptor = new OciBlobDescriptor();
+                    descriptor.Digest = uploadResult.Value.Digest;
+                    descriptor.Size = fs.Position;
+                    descriptor.MediaType = "application/vnd.acme.rocket.config";
+
+                    manifest.Config = descriptor;
+                }
+            }
+
+            // Upload layers
+            var manifestFilePath = Path.Combine(path, "manifest.json");
             foreach (var file in Directory.GetFiles(path))
             {
                 if (file != manifestFilePath)
@@ -292,16 +313,20 @@ namespace Azure.Containers.ContainerRegistry.Tests
                     using (var fs = File.OpenRead(file))
                     {
                         var uploadResult = await client.UploadBlobAsync(fs);
-                        Console.WriteLine(uploadResult.Value.Digest);
+
+                        // Update manifest
+                        OciBlobDescriptor descriptor = new OciBlobDescriptor();
+                        descriptor.Digest = uploadResult.Value.Digest;
+                        descriptor.Size = fs.Position;
+                        descriptor.MediaType = "application/vnd.oci.image.layer.v1.tar";
+
+                        manifest.Config = descriptor;
                     }
                 }
             }
 
             // Finally, upload manifest
-            using (var fs = File.OpenRead(manifestFilePath))
-            {
-                await client.UploadManifestAsync(fs, new UploadManifestOptions("v1"));
-            }
+            await client.UploadManifestAsync(manifest, new UploadManifestOptions("v1"));
 
             // Assert
 
