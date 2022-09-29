@@ -13,7 +13,7 @@ using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
 using Xunit;
 
-namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.TelemetryItemValidation
+namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 {
     /// <summary>
     /// The purpose of these tests is to validate the <see cref="TelemetryItem"/> that is created
