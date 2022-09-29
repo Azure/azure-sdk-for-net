@@ -278,14 +278,14 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
 
   # This logic eliminates a preceeding "azure." in the readme filename.
   # "azure.storage.blobs" -> "storage.blobs"
-  if ($readmeName.StartsWith('azure.')) {
+  if ($readmeName.StartsWith('Azure.')) {
     $readmeName = $readmeName.Substring(6)
   }
 
   New-Object PSObject -Property @{
     DocsMsReadMeName = $readmeName
-    LatestReadMeLocation = 'api/overview/azure'
-    PreviewReadMeLocation = 'api/overview/azure'
+    LatestReadMeLocation = 'api/overview/azure/latest'
+    PreviewReadMeLocation = 'api/overview/azure/preview'
     Suffix = $suffix
   }
 }
