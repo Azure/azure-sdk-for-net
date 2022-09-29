@@ -33,12 +33,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         public void VerifyLog(LogLevel logLevel, string expectedSeverityLevel)
         {
             // SETUP
+            var logCategoryName = Guid.NewGuid().ToString();
+
             ConcurrentBag<TelemetryItem> telemetryItems = null;
 
             var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder
-                    .AddFilter<OpenTelemetryLoggerProvider>("*", logLevel)
+                    .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
                         options.AddAzureMonitorLogExporterForTest(out telemetryItems);
@@ -46,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             });
 
             // ACT
-            var logger = loggerFactory.CreateLogger<LogsTests>();
+            var logger = loggerFactory.CreateLogger(logCategoryName);
             logger.Log(
                 logLevel: logLevel,
                 eventId: 0,
@@ -80,12 +82,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         public void VerifyException(LogLevel logLevel, string expectedSeverityLevel)
         {
             // SETUP
+            var logCategoryName = Guid.NewGuid().ToString();
+
             ConcurrentBag<TelemetryItem> telemetryItems = null;
 
             var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder
-                    .AddFilter<OpenTelemetryLoggerProvider>("*", logLevel)
+                    .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
                         options.AddAzureMonitorLogExporterForTest(out telemetryItems);
@@ -93,7 +97,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             });
 
             // ACT
-            var logger = loggerFactory.CreateLogger<LogsTests>();
+            var logger = loggerFactory.CreateLogger(logCategoryName);
 
             try
             {

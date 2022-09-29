@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -110,6 +111,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         public void VerifyLogWithinActivity(LogLevel logLevel, string expectedSeverityLevel)
         {
             // SETUP
+            var logCategoryName = Guid.NewGuid().ToString();
+
             ConcurrentBag<TelemetryItem> logTelemetryItems = null;
 
             var tracerProvider = Sdk.CreateTracerProviderBuilder()
@@ -120,7 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder
-                    .AddFilter<OpenTelemetryLoggerProvider>("*", logLevel)
+                    .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
                         options.AddAzureMonitorLogExporterForTest(out logTelemetryItems);
@@ -135,7 +138,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 spanId = activity.SpanId.ToHexString();
                 traceId = activity.TraceId.ToHexString();
 
-                var logger = loggerFactory.CreateLogger<LogsTests>();
+                var logger = loggerFactory.CreateLogger(logCategoryName);
 
                 logger.Log(
                     logLevel: logLevel,
