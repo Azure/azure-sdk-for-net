@@ -84,5 +84,10 @@ steps:
         foreach ($repo in $Repositories) {
           SparseCheckout $paths $repo
         }
+
+        $folders = Get-ChildItem "./sdk" -Attributes Directory
+        foreach ($folder in $folders) {
+          Write-Host "Here is the folder $folder"
+        }
       pwsh: true
       workingDirectory: $(System.DefaultWorkingDirectory)
