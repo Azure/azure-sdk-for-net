@@ -17,7 +17,7 @@ function Split-Project-File-To-Groups($ProjectFile, $NumberOfTestsPerJob, $Exclu
       if(!$projGroup[$groupNum]) {
         $projGroup[$groupNum] = [System.Collections.ArrayList]::new()
       }
-      $serviceDir = $projects[$i] -replace '^.*(sdk[/|\\].*Azure.ResourceManager[^/|\\]+)[/|\\].*$', '$1'
+      $serviceDir = $projects[$i] -replace '^.*(sdk[/|\\].*Azure.ResourceManager[^/|\\]+)[/|\\].*$', '/$1'
       $projectInfo = New-Object -Typename PSCustomObject -Property @{
         PkgPath = $projects[$i]
         ServiceDirectory = $serviceDir
@@ -54,7 +54,7 @@ function Write-Test-Dependency-Group-To-Files($ProjectFileConfigName, $ProjectGr
       $newElemAttr.InnerText = $pkg.PkgPath
       $newElem.Attributes.Append($newElemAttr) > $null
       $itemGroupNode.AppendChild($newElem) > $null
-      $ServiceDirectories += $($pkg.ServiceDirectory)
+      $ServiceDirectories += $pkg.ServiceDirectory
     }
     $ServiceDirectoriesJson = ConvertTo-Json @($ServiceDirectories | Get-Unique) -Compress
     $null = $templateXml.Save("$MatrixOutputFolder/$projectFilePath")
