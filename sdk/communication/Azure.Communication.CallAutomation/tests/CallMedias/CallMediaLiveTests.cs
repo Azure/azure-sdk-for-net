@@ -4,8 +4,9 @@
 using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Azure.Communication.CallAutomation.Tests.Infrastructure;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Tests.CallMedias
 {
     internal class CallMediaLiveTests : CallAutomationClientLiveTestsBase
     {
@@ -16,7 +17,7 @@ namespace Azure.Communication.CallAutomation
         public async Task PlayAudio()
         {
             if (SkipCallAutomationInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             string callConnectionId = "";
@@ -56,7 +57,7 @@ namespace Azure.Communication.CallAutomation
         public async Task RecognizeDtmf()
         {
             if (SkipCallAutomationInteractionLiveTests)
-                Assert.Ignore("Skip callingserver interaction live tests flag is on.");
+                Assert.Ignore("Skip CallAutomation interaction live tests flag is on.");
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString();
             string callConnectionId = "";

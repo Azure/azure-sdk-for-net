@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Azure.Communication.CallAutomation.Tests.Infrastructure;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Tests.CallMedias
 {
     public class CallMediaTests : CallAutomationTestBase
     {

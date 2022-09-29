@@ -23,6 +23,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SessionRecordedEvents\" />
+    <Folder Include="SessionRecordedEvents\CallConnectionAutomatedLiveTests\" />
+    <Folder Include="SessionRecords\CallConnectionAutomatedLiveTests\" />
     <Folder Include="SessionRecords\CallMediaLiveTests\" />
     <Folder Include="SessionRecords\CallConnectionLiveTests\" />
   </ItemGroup>

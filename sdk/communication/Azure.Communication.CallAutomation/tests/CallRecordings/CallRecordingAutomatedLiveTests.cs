@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Http;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 {
     internal class CallRecordingAutomatedLiveTests : CallAutomationClientAutomatedLiveTestsBase
     {

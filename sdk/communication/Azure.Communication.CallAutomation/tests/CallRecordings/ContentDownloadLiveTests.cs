@@ -6,8 +6,9 @@ using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Azure.Communication.CallAutomation.Tests.Infrastructure;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 {
     internal class ContentDownloadLiveTests : CallAutomationClientLiveTestsBase
     {

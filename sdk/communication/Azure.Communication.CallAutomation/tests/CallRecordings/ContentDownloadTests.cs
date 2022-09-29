@@ -10,8 +10,9 @@ using NUnit.Framework;
 using System.Linq;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Communication.CallAutomation.Tests.Infrastructure;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 {
     public class ContentDownloadTests : CallAutomationTestBase
     {

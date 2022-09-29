@@ -5,8 +5,9 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using Azure.Communication.CallAutomation.Tests.Infrastructure;
 
-namespace Azure.Communication.CallAutomation.Tests
+namespace Azure.Communication.CallAutomation.Tests.CallConnections
 {
     public class CallConnectionTests : CallAutomationTestBase
     {

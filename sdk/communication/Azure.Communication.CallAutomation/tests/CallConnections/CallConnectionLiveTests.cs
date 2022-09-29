@@ -5,8 +5,9 @@ using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
+using Azure.Communication.CallAutomation.Tests.Infrastructure;
 
-namespace Azure.Communication.CallAutomation
+namespace Azure.Communication.CallAutomation.Tests.CallConnections
 {
     internal class CallConnectionLiveTests : CallAutomationClientLiveTestsBase
     {
