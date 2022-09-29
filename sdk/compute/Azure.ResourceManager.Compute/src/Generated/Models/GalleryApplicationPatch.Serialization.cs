@@ -58,6 +58,16 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("supportedOSType");
                 writer.WriteStringValue(SupportedOSType.Value.ToSerialString());
             }
+            if (Optional.IsCollectionDefined(CustomActions))
+            {
+                writer.WritePropertyName("customActions");
+                writer.WriteStartArray();
+                foreach (var item in CustomActions)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }

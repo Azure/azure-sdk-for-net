@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="settings"> Json formatted public settings for the extension. </param>
         /// <param name="protectedSettings"> The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. </param>
         /// <param name="suppressFailures"> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </param>
-        /// <param name="protectedSettingsFromKeyVault"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
-        internal VirtualMachineScaleSetVmExtensionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, bool? suppressFailures, KeyVaultSecretReference protectedSettingsFromKeyVault) : base(id, name, resourceType, systemData)
+        /// <param name="keyVaultProtectedSettings"> The extensions protected settings that are passed by reference, and consumed from key vault. </param>
+        internal VirtualMachineScaleSetVmExtensionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string forceUpdateTag, string publisher, string extensionType, string typeHandlerVersion, bool? autoUpgradeMinorVersion, bool? enableAutomaticUpgrade, BinaryData settings, BinaryData protectedSettings, bool? suppressFailures, KeyVaultSecretReference keyVaultProtectedSettings) : base(id, name, resourceType, systemData)
         {
             ForceUpdateTag = forceUpdateTag;
             Publisher = publisher;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
             Settings = settings;
             ProtectedSettings = protectedSettings;
             SuppressFailures = suppressFailures;
-            ProtectedSettingsFromKeyVault = protectedSettingsFromKeyVault;
+            KeyVaultProtectedSettings = keyVaultProtectedSettings;
         }
 
         /// <summary> How the extension handler should be forced to update even if the extension configuration has not changed. </summary>
@@ -125,6 +125,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. </summary>
         public bool? SuppressFailures { get; set; }
         /// <summary> The extensions protected settings that are passed by reference, and consumed from key vault. </summary>
-        public KeyVaultSecretReference ProtectedSettingsFromKeyVault { get; set; }
+        public KeyVaultSecretReference KeyVaultProtectedSettings { get; set; }
     }
 }

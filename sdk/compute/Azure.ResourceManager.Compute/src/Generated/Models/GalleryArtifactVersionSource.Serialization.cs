@@ -16,35 +16,31 @@ namespace Azure.ResourceManager.Compute.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id");
-                writer.WriteStringValue(Id);
-            }
             if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri");
                 writer.WriteStringValue(Uri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(StorageAccountId))
+            {
+                writer.WritePropertyName("storageAccountId");
+                writer.WriteStringValue(StorageAccountId);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id");
+                writer.WriteStringValue(Id);
             }
             writer.WriteEndObject();
         }
 
         internal static GalleryArtifactVersionSource DeserializeGalleryArtifactVersionSource(JsonElement element)
         {
-            Optional<ResourceIdentifier> id = default;
             Optional<Uri> uri = default;
+            Optional<string> storageAccountId = default;
+            Optional<ResourceIdentifier> id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("id"))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("uri"))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -55,8 +51,23 @@ namespace Azure.ResourceManager.Compute.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("storageAccountId"))
+                {
+                    storageAccountId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
             }
-            return new GalleryArtifactVersionSource(id.Value, uri.Value);
+            return new GalleryArtifactVersionSource(id.Value, uri.Value, storageAccountId.Value);
         }
     }
 }

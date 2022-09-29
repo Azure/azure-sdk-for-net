@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The gallery artifact version source. </summary>
-    public partial class GalleryArtifactVersionSource
+    /// <summary> The source for the disk image. </summary>
+    public partial class GalleryArtifactVersionSource : GalleryArtifactVersionSourceBase
     {
         /// <summary> Initializes a new instance of GalleryArtifactVersionSource. </summary>
         public GalleryArtifactVersionSource()
@@ -21,15 +21,16 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of GalleryArtifactVersionSource. </summary>
         /// <param name="id"> The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, user image or storage account resource. </param>
         /// <param name="uri"> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </param>
-        internal GalleryArtifactVersionSource(ResourceIdentifier id, Uri uri)
+        /// <param name="storageAccountId"> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </param>
+        internal GalleryArtifactVersionSource(ResourceIdentifier id, Uri uri, string storageAccountId) : base(id)
         {
-            Id = id;
             Uri = uri;
+            StorageAccountId = storageAccountId;
         }
 
-        /// <summary> The id of the gallery artifact version source. Can specify a disk uri, snapshot uri, user image or storage account resource. </summary>
-        public ResourceIdentifier Id { get; set; }
         /// <summary> The uri of the gallery artifact version source. Currently used to specify vhd/blob source. </summary>
         public Uri Uri { get; set; }
+        /// <summary> The Storage Account Id that contains the vhd blob being used as a source for this artifact version. </summary>
+        public string StorageAccountId { get; set; }
     }
 }

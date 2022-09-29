@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateASimpleGalleryApplicationVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryApplicationVersion_Create.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Create.json
             // this example is just showing the usage of "GalleryApplicationVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -47,18 +47,37 @@ namespace Azure.ResourceManager.Compute
                 PublishingProfile = new GalleryApplicationVersionPublishingProfile(new UserArtifactSource("https://mystorageaccount.blob.core.windows.net/mycontainer/package.zip?{sasKey}"))
                 {
                     ManageActions = new UserArtifactManagement("powershell -command \"Expand-Archive -Path package.zip -DestinationPath C:\\package\"", "del C:\\package "),
+                    CustomActions =
+{
+new GalleryApplicationCustomAction("myCustomAction","myCustomActionScript")
+{
+Description = "This is the custom action description.",
+Parameters =
+{
+new GalleryApplicationCustomActionParameter("myCustomActionParameter")
+{
+Required = false,
+ParameterType = GalleryApplicationCustomActionParameterType.String,
+DefaultValue = "default value of parameter.",
+Description = "This is the description of the parameter",
+}
+},
+}
+},
                     TargetRegions =
 {
 new TargetRegion("West US")
 {
 RegionalReplicaCount = 1,
 StorageAccountType = ImageStorageAccountType.StandardLrs,
+ExcludeFromLatest = false,
 }
 },
                     ReplicaCount = 1,
                     EndOfLifeOn = DateTimeOffset.Parse("2019-07-01T07:00:00Z"),
                     StorageAccountType = ImageStorageAccountType.StandardLrs,
                 },
+                AllowDeletionOfReplicatedLocations = false,
             };
             ArmOperation<GalleryApplicationVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, galleryApplicationVersionName, data);
             GalleryApplicationVersionResource result = lro.Value;
@@ -75,7 +94,7 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryApplicationVersionWithReplicationStatus()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
             // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -110,7 +129,7 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAGalleryApplicationVersionWithReplicationStatus()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
             // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -141,7 +160,7 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryApplicationVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
             // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -175,7 +194,7 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAGalleryApplicationVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
             // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client
@@ -205,7 +224,7 @@ StorageAccountType = ImageStorageAccountType.StandardLrs,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListGalleryApplicationVersionsInAGalleryApplicationDefinition()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-01-03/examples/galleryExamples/GalleryApplicationVersion_ListByGalleryApplication.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_ListByGalleryApplication.json
             // this example is just showing the usage of "GalleryApplicationVersions_ListByGalleryApplication" operation, for the dependent resources, they will have to be created separately.
 
             // authenticate your client

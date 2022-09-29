@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("storageProfile");
                 writer.WriteObjectValue(StorageProfile);
             }
+            if (Optional.IsDefined(SafetyProfile))
+            {
+                writer.WritePropertyName("safetyProfile");
+                writer.WriteObjectValue(SafetyProfile);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -58,6 +63,7 @@ namespace Azure.ResourceManager.Compute
             Optional<GalleryImageVersionPublishingProfile> publishingProfile = default;
             Optional<GalleryProvisioningState> provisioningState = default;
             Optional<GalleryImageVersionStorageProfile> storageProfile = default;
+            Optional<GalleryImageVersionSafetyProfile> safetyProfile = default;
             Optional<ReplicationStatus> replicationStatus = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -145,6 +151,16 @@ namespace Azure.ResourceManager.Compute
                             storageProfile = GalleryImageVersionStorageProfile.DeserializeGalleryImageVersionStorageProfile(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("safetyProfile"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            safetyProfile = GalleryImageVersionSafetyProfile.DeserializeGalleryImageVersionSafetyProfile(property0.Value);
+                            continue;
+                        }
                         if (property0.NameEquals("replicationStatus"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -159,7 +175,7 @@ namespace Azure.ResourceManager.Compute
                     continue;
                 }
             }
-            return new GalleryImageVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, publishingProfile.Value, Optional.ToNullable(provisioningState), storageProfile.Value, replicationStatus.Value);
+            return new GalleryImageVersionData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, publishingProfile.Value, Optional.ToNullable(provisioningState), storageProfile.Value, safetyProfile.Value, replicationStatus.Value);
         }
     }
 }

@@ -31,12 +31,14 @@ namespace Azure.ResourceManager.Compute
         /// <param name="publishingProfile"> The publishing profile of a gallery image Version. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="storageProfile"> This is the storage profile of a Gallery Image Version. </param>
+        /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
-        internal GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, ReplicationStatus replicationStatus) : base(id, name, resourceType, systemData, tags, location)
+        internal GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus) : base(id, name, resourceType, systemData, tags, location)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;
             StorageProfile = storageProfile;
+            SafetyProfile = safetyProfile;
             ReplicationStatus = replicationStatus;
         }
 
@@ -46,6 +48,8 @@ namespace Azure.ResourceManager.Compute
         public GalleryProvisioningState? ProvisioningState { get; }
         /// <summary> This is the storage profile of a Gallery Image Version. </summary>
         public GalleryImageVersionStorageProfile StorageProfile { get; set; }
+        /// <summary> This is the safety profile of the Gallery Image Version. </summary>
+        public GalleryImageVersionSafetyProfile SafetyProfile { get; set; }
         /// <summary> This is the replication status of the gallery image version. </summary>
         public ReplicationStatus ReplicationStatus { get; }
     }

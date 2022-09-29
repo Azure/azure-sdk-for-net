@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/967fe62dd0051ef9fd0af3fdba52fbcabd33c46c/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/ddca448bd879175a928b990e0f25ca3a0e6c1c33/specification/compute/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
@@ -220,7 +220,16 @@ rename-mapping:
   DiskSecurityProfile.secureVMDiskEncryptionSetId: -|arm-id
   ImageDiskReference.id: -|arm-id
   DiskImageEncryption.diskEncryptionSetId: -|arm-id
+  GalleryDiskImageSource: GalleryArtifactVersionSource # rotate the names here to avoid breaking changes
+  GalleryArtifactVersionSource: GalleryArtifactVersionSourceBase
+  GalleryImageVersionStorageProfile.source: GallerySource
   GalleryArtifactVersionSource.id: -|arm-id
+  VirtualMachineExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetVMExtension.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
+  VirtualMachineScaleSetVMExtensionUpdate.properties.protectedSettingsFromKeyVault: KeyVaultProtectedSettings
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

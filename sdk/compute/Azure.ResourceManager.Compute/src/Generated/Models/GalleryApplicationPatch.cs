@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of GalleryApplicationPatch. </summary>
         public GalleryApplicationPatch()
         {
+            CustomActions = new ChangeTrackingList<GalleryApplicationCustomAction>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -33,6 +34,8 @@ namespace Azure.ResourceManager.Compute.Models
         public DateTimeOffset? EndOfLifeOn { get; set; }
         /// <summary> This property allows you to specify the supported type of the OS that application is built for. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Windows** &lt;br&gt;&lt;br&gt; **Linux**. </summary>
         public SupportedOperatingSystemType? SupportedOSType { get; set; }
+        /// <summary> A list of custom actions that can be performed with all of the Gallery Application Versions within this Gallery Application. </summary>
+        public IList<GalleryApplicationCustomAction> CustomActions { get; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

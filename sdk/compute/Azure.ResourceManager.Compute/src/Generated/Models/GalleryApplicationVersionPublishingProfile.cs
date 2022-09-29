@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
 
             Source = source;
             AdvancedSettings = new ChangeTrackingDictionary<string, string>();
+            CustomActions = new ChangeTrackingList<GalleryApplicationCustomAction>();
         }
 
         /// <summary> Initializes a new instance of GalleryApplicationVersionPublishingProfile. </summary>
@@ -42,13 +43,15 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="settings"> Additional settings for the VM app that contains the target package and config file name when it is deployed to target VM or VM scale set. </param>
         /// <param name="advancedSettings"> Optional. Additional settings to pass to the vm-application-manager extension. For advanced use only. </param>
         /// <param name="enableHealthCheck"> Optional. Whether or not this application reports health. </param>
-        internal GalleryApplicationVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, UserArtifactSource source, UserArtifactManagement manageActions, UserArtifactSettings settings, IDictionary<string, string> advancedSettings, bool? enableHealthCheck) : base(targetRegions, replicaCount, excludeFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations)
+        /// <param name="customActions"> A list of custom actions that can be performed with this Gallery Application Version. </param>
+        internal GalleryApplicationVersionPublishingProfile(IList<TargetRegion> targetRegions, int? replicaCount, bool? excludeFromLatest, DateTimeOffset? publishedOn, DateTimeOffset? endOfLifeOn, ImageStorageAccountType? storageAccountType, GalleryReplicationMode? replicationMode, IList<GalleryTargetExtendedLocation> targetExtendedLocations, UserArtifactSource source, UserArtifactManagement manageActions, UserArtifactSettings settings, IDictionary<string, string> advancedSettings, bool? enableHealthCheck, IList<GalleryApplicationCustomAction> customActions) : base(targetRegions, replicaCount, excludeFromLatest, publishedOn, endOfLifeOn, storageAccountType, replicationMode, targetExtendedLocations)
         {
             Source = source;
             ManageActions = manageActions;
             Settings = settings;
             AdvancedSettings = advancedSettings;
             EnableHealthCheck = enableHealthCheck;
+            CustomActions = customActions;
         }
 
         /// <summary> The source image from which the Image Version is going to be created. </summary>
@@ -61,5 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IDictionary<string, string> AdvancedSettings { get; }
         /// <summary> Optional. Whether or not this application reports health. </summary>
         public bool? EnableHealthCheck { get; set; }
+        /// <summary> A list of custom actions that can be performed with this Gallery Application Version. </summary>
+        public IList<GalleryApplicationCustomAction> CustomActions { get; }
     }
 }
