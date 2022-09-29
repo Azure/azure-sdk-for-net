@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Support.Models
         {
             Optional<string> quotaChangeRequestSubType = default;
             Optional<string> quotaChangeRequestVersion = default;
-            Optional<IList<QuotaChangeRequest>> quotaChangeRequests = default;
+            Optional<IList<SupportQuotaChangeContent>> quotaChangeRequests = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("quotaChangeRequestSubType"))
@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.Support.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<QuotaChangeRequest> array = new List<QuotaChangeRequest>();
+                    List<SupportQuotaChangeContent> array = new List<SupportQuotaChangeContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaChangeRequest.DeserializeQuotaChangeRequest(item));
+                        array.Add(SupportQuotaChangeContent.DeserializeSupportQuotaChangeContent(item));
                     }
                     quotaChangeRequests = array;
                     continue;

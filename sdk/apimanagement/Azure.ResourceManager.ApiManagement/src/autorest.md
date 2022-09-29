@@ -104,6 +104,7 @@ override-operation-name:
   ContentType_ListByService: GetContentTypes
   ContentItem_ListByService: GetContentItems
   ContentItem_GetEntityTag: GetContentItemEntityTag
+  ProductSubscriptions_List: GetAllProductSubscriptionData # temporary - to be removed once the polymorphic resource change is merged.
 
 prepend-rp-prefix:
 - ResourceSkuCapacity
@@ -544,6 +545,6 @@ directive:
     reason: Modify the original swagger since the id in the real response is slightly different from the ApiManagementGroupResource.
   - from: swagger-document
     where: $..[?(@.name=='$orderby')]
-    transform: $['x-ms-client-name'] = 'orderBy' 
+    transform: $['x-ms-client-name'] = 'orderBy'
 
 ```

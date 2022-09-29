@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Support.Models
     {
         internal static SupportTicketsListResult DeserializeSupportTicketsListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<SupportTicketDetailData>> value = default;
+            Optional<IReadOnlyList<SupportTicketData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Support.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SupportTicketDetailData> array = new List<SupportTicketDetailData>();
+                    List<SupportTicketData> array = new List<SupportTicketData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportTicketDetailData.DeserializeSupportTicketDetailData(item));
+                        array.Add(SupportTicketData.DeserializeSupportTicketData(item));
                     }
                     value = array;
                     continue;

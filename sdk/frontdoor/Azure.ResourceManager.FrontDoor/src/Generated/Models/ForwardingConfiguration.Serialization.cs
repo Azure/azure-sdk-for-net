@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -28,13 +27,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsDefined(CacheConfiguration))
             {
-                writer.WritePropertyName("cacheConfiguration");
-                writer.WriteObjectValue(CacheConfiguration);
+                if (CacheConfiguration != null)
+                {
+                    writer.WritePropertyName("cacheConfiguration");
+                    writer.WriteObjectValue(CacheConfiguration);
+                }
+                else
+                {
+                    writer.WriteNull("cacheConfiguration");
+                }
             }
             if (Optional.IsDefined(BackendPool))
             {
                 writer.WritePropertyName("backendPool");
-                JsonSerializer.Serialize(writer, BackendPool);
+                writer.WriteObjectValue(BackendPool);
             }
             writer.WritePropertyName("@odata.type");
             writer.WriteStringValue(OdataType);
@@ -46,7 +52,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<string> customForwardingPath = default;
             Optional<FrontDoorForwardingProtocol> forwardingProtocol = default;
             Optional<FrontDoorCacheConfiguration> cacheConfiguration = default;
-            Optional<WritableSubResource> backendPool = default;
+            Optional<SubResource> backendPool = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -69,7 +75,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        cacheConfiguration = null;
                         continue;
                     }
                     cacheConfiguration = FrontDoorCacheConfiguration.DeserializeFrontDoorCacheConfiguration(property.Value);
@@ -82,7 +88,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    backendPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.ToString());
+                    backendPool = SubResource.DeserializeSubResource(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"))
@@ -91,7 +97,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new ForwardingConfiguration(odataType, customForwardingPath.Value, Optional.ToNullable(forwardingProtocol), cacheConfiguration.Value, backendPool);
+            return new ForwardingConfiguration(odataType, customForwardingPath.Value, Optional.ToNullable(forwardingProtocol), cacheConfiguration.Value, backendPool.Value);
         }
     }
 }

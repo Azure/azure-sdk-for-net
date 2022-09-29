@@ -41,9 +41,9 @@ rename-mapping:
   SpacecraftLink: OrbitalSpacecraftLink
   SpacecraftListResult: OrbitalSpacecraftListResult
   TagsObject: OrbitalSpacecraftTags
-  AvailableContacts: OrbitalSpacecraftAvailableContact
-  ContactParameters: OrbitalSpacecraftAvailableContactsContent
-  AvailableContactsListResult: OrbitalSpacecraftAvailableContactListResult
+  AvailableContacts: OrbitalAvailableContact
+  ContactParameters: OrbitalAvailableContactsContent
+  AvailableContactsListResult: OrbitalAvailableContactsResult
 
 format-by-name-rules:
   'sourceIPs': 'ip-address'

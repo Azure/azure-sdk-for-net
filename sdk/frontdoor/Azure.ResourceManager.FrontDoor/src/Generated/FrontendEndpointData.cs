@@ -7,7 +7,6 @@
 
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.FrontDoor
         /// <param name="customHttpsProvisioningState"> Provisioning status of Custom Https of the frontendEndpoint. </param>
         /// <param name="customHttpsProvisioningSubstate"> Provisioning substate shows the progress of custom HTTPS enabling/disabling process step by step. </param>
         /// <param name="customHttpsConfiguration"> The configuration specifying how to enable HTTPS. </param>
-        internal FrontendEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, string hostName, SessionAffinityEnabledState? sessionAffinityEnabledState, int? sessionAffinityTtlInSeconds, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, CustomHttpsConfiguration customHttpsConfiguration) : base(id, name, resourceType)
+        internal FrontendEndpointData(ResourceIdentifier id, string name, ResourceType? resourceType, string hostName, SessionAffinityEnabledState? sessionAffinityEnabledState, int? sessionAffinityTtlInSeconds, FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState, FrontendEndpointCustomHttpsProvisioningState? customHttpsProvisioningState, FrontendEndpointCustomHttpsProvisioningSubstate? customHttpsProvisioningSubstate, CustomHttpsConfiguration customHttpsConfiguration) : base(id, name, resourceType)
         {
             HostName = hostName;
             SessionAffinityEnabledState = sessionAffinityEnabledState;
@@ -50,15 +49,15 @@ namespace Azure.ResourceManager.FrontDoor
         /// <summary> UNUSED. This field will be ignored. The TTL to use in seconds for session affinity, if applicable. </summary>
         public int? SessionAffinityTtlInSeconds { get; set; }
         /// <summary> Defines the Web Application Firewall policy for each host (if applicable). </summary>
-        internal WritableSubResource WebApplicationFirewallPolicyLink { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier WebApplicationFirewallPolicyLinkId
+        internal FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink WebApplicationFirewallPolicyLink { get; set; }
+        /// <summary> Resource ID. </summary>
+        public string WebApplicationFirewallPolicyLinkId
         {
             get => WebApplicationFirewallPolicyLink is null ? default : WebApplicationFirewallPolicyLink.Id;
             set
             {
                 if (WebApplicationFirewallPolicyLink is null)
-                    WebApplicationFirewallPolicyLink = new WritableSubResource();
+                    WebApplicationFirewallPolicyLink = new FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink();
                 WebApplicationFirewallPolicyLink.Id = value;
             }
         }
