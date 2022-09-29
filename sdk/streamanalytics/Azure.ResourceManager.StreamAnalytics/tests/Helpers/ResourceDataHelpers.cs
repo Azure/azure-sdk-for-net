@@ -154,34 +154,6 @@ namespace Azure.ResourceManager.StreamAnalytics.Tests.Helpers
         }
         #endregion
 
-        #region StreamingJobInput(Sql)
-        public static void AssertSqlInput(StreamingJobInputData input1, StreamingJobInputData input2)
-        {
-            Assert.AreEqual(input1.Name, input2.Name);
-            Assert.AreEqual(input1.Id, input2.Id);
-            Assert.AreEqual(input1.ResourceType, input2.ResourceType);
-        }
-        public static StreamingJobInputData GetStreamingJobSqlInputData()
-        {
-            var data = new StreamingJobInputData()
-            {
-                Properties = new ReferenceInputProperties()
-                {
-                    Datasource = new SqlReferenceInputDataSource()
-                    {
-                        
-                    },
-                    Serialization = new CsvFormatSerialization()
-                    {
-                        FieldDelimiter = ",",
-                        Encoding = StreamAnalyticsDataSerializationEncoding.Utf8
-                    }
-                }
-            };
-            return data;
-        }
-        #endregion
-
         #region JobOutput
         public static void AssertOutput(StreamingJobOutputData output1, StreamingJobOutputData output2)
         {
