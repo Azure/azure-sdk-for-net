@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -224,8 +223,8 @@ namespace Azure.ResourceManager.AppService
             Optional<string> clientCertExclusionPaths = default;
             Optional<bool> hostNamesDisabled = default;
             Optional<string> customDomainVerificationId = default;
-            Optional<IPAddress> outboundIPAddresses = default;
-            Optional<IPAddress> possibleOutboundIPAddresses = default;
+            Optional<string> outboundIPAddresses = default;
+            Optional<string> possibleOutboundIPAddresses = default;
             Optional<int> containerSize = default;
             Optional<int> dailyMemoryTimeQuota = default;
             Optional<DateTimeOffset?> suspendedTill = default;
@@ -559,22 +558,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("outboundIpAddresses"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            outboundIPAddresses = IPAddress.Parse(property0.Value.GetString());
+                            outboundIPAddresses = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("possibleOutboundIpAddresses"))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                property0.ThrowNonNullablePropertyIsNull();
-                                continue;
-                            }
-                            possibleOutboundIPAddresses = IPAddress.Parse(property0.Value.GetString());
+                            possibleOutboundIPAddresses = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("containerSize"))

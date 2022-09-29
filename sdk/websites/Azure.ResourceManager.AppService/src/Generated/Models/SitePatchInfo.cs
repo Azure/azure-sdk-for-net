@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, ResourceIdentifier serverFarmId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedOn, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, IPAddress outboundIPAddresses, IPAddress possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData)
+        internal SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, ResourceIdentifier serverFarmId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedOn, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             State = state;
@@ -202,9 +201,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </summary>
         public string CustomDomainVerificationId { get; set; }
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </summary>
-        public IPAddress OutboundIPAddresses { get; }
+        public string OutboundIPAddresses { get; }
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </summary>
-        public IPAddress PossibleOutboundIPAddresses { get; }
+        public string PossibleOutboundIPAddresses { get; }
         /// <summary> Size of the function container. </summary>
         public int? ContainerSize { get; set; }
         /// <summary> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </summary>

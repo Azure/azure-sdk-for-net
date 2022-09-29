@@ -1002,40 +1002,6 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary>
-        /// Description for List all apps that are assigned to a hostname.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
-        /// Operation Id: ListSiteIdentifiersAssignedToHostName
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="nameIdentifier"> Hostname information. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
-        /// <returns> An async collection of <see cref="IdentifierData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<IdentifierData> GetSiteIdentifiersAssignedToHostNameAsync(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
-
-            return GetExtensionClient(subscriptionResource).GetSiteIdentifiersAssignedToHostNameAsync(nameIdentifier, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for List all apps that are assigned to a hostname.
-        /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/listSitesAssignedToHostName
-        /// Operation Id: ListSiteIdentifiersAssignedToHostName
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="nameIdentifier"> Hostname information. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nameIdentifier"/> is null. </exception>
-        /// <returns> A collection of <see cref="IdentifierData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<IdentifierData> GetSiteIdentifiersAssignedToHostName(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
-
-            return GetExtensionClient(subscriptionResource).GetSiteIdentifiersAssignedToHostName(nameIdentifier, cancellationToken);
-        }
-
-        /// <summary>
         /// Description for List all premier add-on offers.
         /// Request Path: /subscriptions/{subscriptionId}/providers/Microsoft.Web/premieraddonoffers
         /// Operation Id: ListPremierAddOnOffers
@@ -1530,32 +1496,6 @@ namespace Azure.ResourceManager.AppService
         public static Response<WebSiteResource> GetWebSite(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
             return resourceGroupResource.GetWebSites().Get(name, cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
-        /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.
-        /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/resourceHealthMetadata
-        /// Operation Id: ResourceHealthMetadata_ListByResourceGroup
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
-        {
-            return GetExtensionClient(resourceGroupResource).GetAllResourceHealthMetadata(cancellationToken);
         }
 
         /// <summary>

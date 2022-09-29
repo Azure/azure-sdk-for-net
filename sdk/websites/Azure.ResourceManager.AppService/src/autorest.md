@@ -113,14 +113,14 @@ override-operation-name:
   ListSiteIdentifiersAssignedToHostName: GetAllSiteIdentifierData
   WebApps_ListConfigurations: GetAllConfigurationData
   WebApps_ListHybridConnections: GetAllHybridConnectionData
-  WebApps_ListPremierAddOns: GetAllPremierAddOnsData
+  WebApps_ListPremierAddOns: GetAllPremierAddOnData
   WebApps_ListRelayServiceConnections: GetAllRelayServiceConnectionData
   WebApps_ListSiteBackups: GetAllSiteBackupData
-  WebApps_ListConfigurationsSlot: GetAllConfigurationsSlotData
-  WebApps_ListHybridConnectionsSlot: GetAllHybridConnectionsSlotData
-  WebApps_ListPremierAddOnsSlot: GetAllPremierAddOnsSlotData
-  WebApps_ListRelayServiceConnectionsSlot: GetAllRelayServiceConnectionsSlotData
-  WebApps_ListSiteBackupsSlot: GetAllSiteBackupsSlotData
+  WebApps_ListConfigurationsSlot: GetAllConfigurationSlotData
+  WebApps_ListHybridConnectionsSlot: GetAllHybridConnectionSlotData
+  WebApps_ListPremierAddOnsSlot: GetAllPremierAddOnSlotData
+  WebApps_ListRelayServiceConnectionsSlot: GetAllRelayServiceConnectionSlotData
+  WebApps_ListSiteBackupsSlot: GetAllSiteBackupSlotData
 
 no-property-type-replacement:
 - ApiManagementConfig
@@ -228,11 +228,7 @@ rename-mapping:
   AseV3NetworkingConfiguration.properties.externalInboundIpAddresses: -|ip-address
   AseV3NetworkingConfiguration.properties.internalInboundIpAddresses: -|ip-address
   RemotePrivateEndpointConnectionARMResource.properties.ipAddresses: -|ip-address
-  Site.properties.outboundIpAddresses: -|ip-address
-  Site.properties.possibleOutboundIpAddresses: -|ip-address
   RemotePrivateEndpointConnection.properties.ipAddresses: -|ip-address
-  SitePatchResource.properties.outboundIpAddresses: -|ip-address
-  SitePatchResource.properties.possibleOutboundIpAddresses: -|ip-address
   Site.properties.scmSiteAlsoStopped: IsScmSiteAlsoStopped
   AppServiceEnvironment.suspended: IsSuspended
   SitePatchResource.properties.reserved: IsReserved
