@@ -8,6 +8,7 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
@@ -45,15 +46,8 @@ namespace Azure.ResourceManager.FrontDoor
             }
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
-                if (WebApplicationFirewallPolicyLink != null)
-                {
-                    writer.WritePropertyName("webApplicationFirewallPolicyLink");
-                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
-                }
-                else
-                {
-                    writer.WriteNull("webApplicationFirewallPolicyLink");
-                }
+                writer.WritePropertyName("webApplicationFirewallPolicyLink");
+                JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -67,7 +61,7 @@ namespace Azure.ResourceManager.FrontDoor
             Optional<string> hostName = default;
             Optional<SessionAffinityEnabledState> sessionAffinityEnabledState = default;
             Optional<int> sessionAffinityTtlSeconds = default;
-            Optional<FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
+            Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
             Optional<FrontDoorResourceState> resourceState = default;
             Optional<FrontendEndpointCustomHttpsProvisioningState?> customHttpsProvisioningState = default;
             Optional<FrontendEndpointCustomHttpsProvisioningSubstate?> customHttpsProvisioningSubstate = default;
@@ -137,10 +131,10 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                webApplicationFirewallPolicyLink = null;
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            webApplicationFirewallPolicyLink = FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink.DeserializeFrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink(property0.Value);
+                            webApplicationFirewallPolicyLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("resourceState"))
@@ -187,7 +181,7 @@ namespace Azure.ResourceManager.FrontDoor
                     continue;
                 }
             }
-            return new FrontendEndpointData(id.Value, name.Value, Optional.ToNullable(type), hostName.Value, Optional.ToNullable(sessionAffinityEnabledState), Optional.ToNullable(sessionAffinityTtlSeconds), webApplicationFirewallPolicyLink.Value, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsConfiguration.Value);
+            return new FrontendEndpointData(id.Value, name.Value, Optional.ToNullable(type), hostName.Value, Optional.ToNullable(sessionAffinityEnabledState), Optional.ToNullable(sessionAffinityTtlSeconds), webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsConfiguration.Value);
         }
     }
 }
