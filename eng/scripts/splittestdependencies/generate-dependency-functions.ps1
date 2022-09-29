@@ -17,7 +17,7 @@ function Split-Project-File-To-Groups($ProjectFile, $NumberOfTestsPerJob, $Exclu
       if(!$projGroup[$groupNum]) {
         $projGroup[$groupNum] = [System.Collections.ArrayList]::new()
       }
-      $serviceDir = $projects[$i] -replace '^.*(sdk[/|\\].*[^/|\\]+)[/|\\].*$', '/$1'
+      $serviceDir = $projects[$i] -replace '^.*(sdk[/|\\][^/|\\]+[/|\\][^(/|\\)]+)[/|\\].*$', '/$1'
       $projectInfo = New-Object -Typename PSCustomObject -Property @{
         PkgPath = $projects[$i]
         ServiceDirectory = $serviceDir
