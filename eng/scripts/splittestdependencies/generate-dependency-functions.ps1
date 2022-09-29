@@ -57,7 +57,7 @@ function Write-Test-Dependency-Group-To-Files($ProjectFileConfigName, $ProjectGr
       $ServiceDirectories += $($pkg.ServiceDirectory)
     }
     $ServiceDirectoriesString = ($ServiceDirectories | Get-Unique) -Join ","
-    $null = $templateXml.Save("$MatrixOutputFolder/$projectFilePath")
+    $null = $templateXml.Save("azure-sdk-for-net/$MatrixOutputFolder/$projectFilePath")
     $projectListInfo = New-Object -Typename PSCustomObject -Property @{
       ProjectListFile = "$MatrixOutputFolder/$projectFilePath"
       ServiceDirectories = $ServiceDirectoriesString
@@ -75,7 +75,7 @@ function Write-Project-Files-To-Matrix($ProjListInfos, $MatrixJsonPath, $MatrixO
   $platformJson = Get-Content $MatrixJsonPath | ConvertFrom-Json
   $overrideFiles = New-Object PSObject
   foreach ($projectListInfo in $ProjListInfos) {
-    $n = $projectListInfo.ProjectListFile -replace "$([regex]::escape($ProjectFileConfigName))_Project_(\d+).props", '$1'
+    $n = $projectListInfo.ProjectListFile -replace ".*$([regex]::escape($ProjectFileConfigName))_Project_(\d+).props", '$1'
     # Write $ServiceDirectories into the job matrix
     $PropertyOverride = New-Object -Typename PSCustomObject -Property @{
       $($ProjectFileConfigName) = $projectListInfo.ProjectListFile
