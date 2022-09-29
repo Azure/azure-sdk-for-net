@@ -38,7 +38,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder
-                    .AddFilter<OpenTelemetryLoggerProvider>("*", LogLevel.None)
                     .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
@@ -90,7 +89,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder
-                    .AddFilter<OpenTelemetryLoggerProvider>("*", LogLevel.None)
                     .AddFilter<OpenTelemetryLoggerProvider>(logCategoryName, logLevel)
                     .AddOpenTelemetry(options =>
                     {
