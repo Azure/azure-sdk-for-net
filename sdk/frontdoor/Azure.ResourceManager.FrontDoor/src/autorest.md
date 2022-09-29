@@ -19,6 +19,10 @@ override-operation-name:
   Endpoints_PurgeContent: PurgeContent
   FrontDoorNameAvailabilityWithSubscription_Check: CheckFrontDoorNameAvailability
 
+no-property-type-replacement:
+- SubResource
+- RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink
+- FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink
 rename-mapping:
   Experiment: FrontDoorExperiment
   State: FrontDoorExperimentState
@@ -184,5 +188,57 @@ directive:
     where: $.definitions
     transform: >
       $.FrontendEndpointUpdateParameters.properties.sessionAffinityTtlSeconds['x-ms-client-name'] = 'SessionAffinityTtlInSeconds';
+  - from: swagger-document
+    where: $.definitions.ForwardingConfiguration.properties.cacheConfiguration
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RoutingRuleUpdateParameters.properties.rulesEngine
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.FrontendEndpointUpdateParameters.properties.webApplicationFirewallPolicyLink
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RoutingRuleUpdateParameters.properties.webApplicationFirewallPolicyLink
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.Backend.properties.privateLinkResourceId
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.Backend.properties.privateLinkLocation
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.Backend.properties.privateEndpointStatus
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RulesEngineAction.properties.routeConfigurationOverride
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RulesEngineRule.properties.matchConditions
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.RulesEngineRule.properties.matchProcessingBehavior
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.FrontendEndpointProperties.properties.customHttpsProvisioningState
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.FrontendEndpointProperties.properties.customHttpsProvisioningSubstate
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.FrontendEndpointProperties.properties.customHttpsConfiguration
+    transform: >
+        $["x-nullable"] = true;
 
 ```
