@@ -56,7 +56,11 @@ function Write-Test-Dependency-Group-To-Files($ProjectFileConfigName, $ProjectGr
       $itemGroupNode.AppendChild($newElem) > $null
       $ServiceDirectories += $pkg.ServiceDirectory
     }
-    $ServiceDirectoriesJson = @($ServiceDirectories | Get-Unique) | ConvertTo-Json 
+    Write-Host "Here is the service directory array:"
+    Write-Host $ServiceDirectories
+    $ServiceDirectoriesJson = @($ServiceDirectories | Sort-Object | Get-Unique) | ConvertTo-Json -Compress
+    Write-Host "Here is the service directory json:"
+    Write-Host $ServiceDirectoriesJson
     $null = $templateXml.Save("$MatrixOutputFolder/$projectFilePath")
     $projectListInfo = New-Object -Typename PSCustomObject -Property @{
       ProjectListFile = "$MatrixOutputFolder/$projectFilePath"
