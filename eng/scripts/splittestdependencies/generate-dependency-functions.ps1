@@ -56,15 +56,12 @@ function Write-Test-Dependency-Group-To-Files($ProjectFileConfigName, $ProjectGr
       $itemGroupNode.AppendChild($newElem) > $null
       $ServiceDirectories += $pkg.ServiceDirectory
     }
-    Write-Host "Here is the service directory array:"
-    Write-Host $ServiceDirectories
     $ServiceDirectoriesJson = @($ServiceDirectories | Sort-Object | Get-Unique) | ConvertTo-Json -Compress
-    Write-Host "Here is the service directory json:"
     Write-Host $ServiceDirectoriesJson
     $null = $templateXml.Save("$MatrixOutputFolder/$projectFilePath")
-    $projectListInfo = New-Object -Typename PSCustomObject -Property @{
+    $projectListInfo = [PSCustomObject] @{
       ProjectListFile = "$MatrixOutputFolder/$projectFilePath"
-      ServiceDirectories = $ServiceDirectoriesJson
+      ServiceDirectories = $ServiceDirectoriesJson | ConvertFrom-Json
     }
     $projectListInfoArray += $projectListInfo
   }
@@ -81,7 +78,9 @@ function Write-Project-Files-To-Matrix($ProjListInfos, $MatrixJsonPath, $MatrixO
   foreach ($projectListInfo in $ProjListInfos) {
     $n = $projectListInfo.ProjectListFile -replace ".*$([regex]::escape($ProjectFileConfigName))_Project_(\d+).props", '$1'
     # Write $ServiceDirectories into the job matrix
-    $PropertyOverride = New-Object -Typename PSCustomObject -Property @{
+    Write-Host "Here is the service direcotories in platform one."
+    Write-Host "$($projectListInfo.ServiceDirectories)"
+    $PropertyOverride = [PSCustomObject]@{
       $($ProjectFileConfigName) = $projectListInfo.ProjectListFile
       ServiceDirectories = $projectListInfo.ServiceDirectories
     }
