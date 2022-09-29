@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </param>
         /// <param name="cookieExpiration"> The configuration settings of the session cookie&apos;s expiration. </param>
         /// <param name="nonce"> The configuration settings of the nonce used in the login flow. </param>
-        internal LoginInformation(LoginRoutes routes, TokenStore tokenStore, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, CookieExpiration cookieExpiration, Nonce nonce)
+        internal LoginInformation(LoginRoutes routes, AppServiceTokenStore tokenStore, bool? preserveUrlFragmentsForLogins, IList<string> allowedExternalRedirectUrls, CookieExpiration cookieExpiration, Nonce nonce)
         {
             Routes = routes;
             TokenStore = tokenStore;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The configuration settings of the token store. </summary>
-        public TokenStore TokenStore { get; set; }
+        public AppServiceTokenStore TokenStore { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the fragments from the request are preserved after the login request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? PreserveUrlFragmentsForLogins { get; set; }
         /// <summary>

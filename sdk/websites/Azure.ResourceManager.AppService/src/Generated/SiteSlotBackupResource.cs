@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteSlotBackupWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteSlotBackupWebAppsRestClient;
-        private readonly BackupItemData _data;
+        private readonly WebAppBackupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteSlotBackupResource"/> class for mocking. </summary>
         protected SiteSlotBackupResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteSlotBackupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteSlotBackupResource(ArmClient client, BackupItemData data) : this(client, data.Id)
+        internal SiteSlotBackupResource(ArmClient client, WebAppBackupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual BackupItemData Data
+        public virtual WebAppBackupData Data
         {
             get
             {
@@ -192,18 +192,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId}/list
         /// Operation Id: WebApps_ListBackupStatusSecretsSlot
         /// </summary>
-        /// <param name="request"> Information on backup request. </param>
+        /// <param name="info"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual async Task<Response<SiteSlotBackupResource>> GetBackupStatusSecretsSlotAsync(BackupRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual async Task<Response<SiteSlotBackupResource>> GetBackupStatusSecretsSlotAsync(WebAppBackupRequestInfo info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupResource.GetBackupStatusSecretsSlot");
             scope.Start();
             try
             {
-                var response = await _siteSlotBackupWebAppsRestClient.ListBackupStatusSecretsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, request, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotBackupWebAppsRestClient.ListBackupStatusSecretsSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, info, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SiteSlotBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,18 +218,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId}/list
         /// Operation Id: WebApps_ListBackupStatusSecretsSlot
         /// </summary>
-        /// <param name="request"> Information on backup request. </param>
+        /// <param name="info"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual Response<SiteSlotBackupResource> GetBackupStatusSecretsSlot(BackupRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual Response<SiteSlotBackupResource> GetBackupStatusSecretsSlot(WebAppBackupRequestInfo info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _siteSlotBackupWebAppsClientDiagnostics.CreateScope("SiteSlotBackupResource.GetBackupStatusSecretsSlot");
             scope.Start();
             try
             {
-                var response = _siteSlotBackupWebAppsRestClient.ListBackupStatusSecretsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, request, cancellationToken);
+                var response = _siteSlotBackupWebAppsRestClient.ListBackupStatusSecretsSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, info, cancellationToken);
                 return Response.FromValue(new SiteSlotBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

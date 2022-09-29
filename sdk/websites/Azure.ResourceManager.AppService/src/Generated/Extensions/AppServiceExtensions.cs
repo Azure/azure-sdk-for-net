@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.AppService
             );
         }
 
-        /// <summary> Gets an object representing a UserResource along with the instance operations that can be performed on it in the TenantResource. </summary>
+        /// <summary> Gets an object representing a PublishingUserResource along with the instance operations that can be performed on it in the TenantResource. </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="UserResource" /> object. </returns>
-        public static UserResource GetUser(this TenantResource tenantResource)
+        /// <returns> Returns a <see cref="PublishingUserResource" /> object. </returns>
+        public static PublishingUserResource GetPublishingUser(this TenantResource tenantResource)
         {
-            return GetExtensionClient(tenantResource).GetUser();
+            return GetExtensionClient(tenantResource).GetPublishingUser();
         }
 
         /// <summary> Gets a collection of SourceControlResources in the TenantResource. </summary>
@@ -890,8 +890,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingMeter" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<BillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceBillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<AppServiceBillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetBillingMetersAsync(billingLocation, osType, cancellationToken);
         }
@@ -905,8 +905,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingMeter" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<BillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceBillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<AppServiceBillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
             return GetExtensionClient(subscriptionResource).GetBillingMeters(billingLocation, osType, cancellationToken);
         }
@@ -2369,20 +2369,20 @@ namespace Azure.ResourceManager.AppService
         }
         #endregion
 
-        #region UserResource
+        #region PublishingUserResource
         /// <summary>
-        /// Gets an object representing an <see cref="UserResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UserResource.CreateResourceIdentifier" /> to create an <see cref="UserResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PublishingUserResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublishingUserResource.CreateResourceIdentifier" /> to create a <see cref="PublishingUserResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UserResource" /> object. </returns>
-        public static UserResource GetUserResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PublishingUserResource" /> object. </returns>
+        public static PublishingUserResource GetPublishingUserResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                UserResource.ValidateResourceId(id);
-                return new UserResource(client, id);
+                PublishingUserResource.ValidateResourceId(id);
+                return new PublishingUserResource(client, id);
             }
             );
         }

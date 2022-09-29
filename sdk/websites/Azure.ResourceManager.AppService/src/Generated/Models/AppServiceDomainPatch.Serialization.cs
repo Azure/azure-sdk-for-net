@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("contactTech");
                 writer.WriteObjectValue(ContactTech);
             }
-            if (Optional.IsDefined(HasPrivacy))
+            if (Optional.IsDefined(IsDomainPrivacyEnabled))
             {
                 writer.WritePropertyName("privacy");
-                writer.WriteBooleanValue(HasPrivacy.Value);
+                writer.WriteBooleanValue(IsDomainPrivacyEnabled.Value);
             }
             if (Optional.IsDefined(IsAutoRenew))
             {

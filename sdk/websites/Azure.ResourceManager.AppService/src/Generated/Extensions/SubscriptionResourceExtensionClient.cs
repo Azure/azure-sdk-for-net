@@ -1344,10 +1344,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="BillingMeter" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BillingMeter> GetBillingMetersAsync(string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceBillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceBillingMeter> GetBillingMetersAsync(string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<BillingMeter>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceBillingMeter>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBillingMeters");
                 scope.Start();
@@ -1362,7 +1362,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            async Task<Page<BillingMeter>> NextPageFunc(string nextLink, int? pageSizeHint)
+            async Task<Page<AppServiceBillingMeter>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBillingMeters");
                 scope.Start();
@@ -1388,10 +1388,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
         /// <param name="osType"> App Service OS type meters used for. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BillingMeter" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BillingMeter> GetBillingMeters(string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceBillingMeter" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceBillingMeter> GetBillingMeters(string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
-            Page<BillingMeter> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceBillingMeter> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBillingMeters");
                 scope.Start();
@@ -1406,7 +1406,7 @@ namespace Azure.ResourceManager.AppService
                     throw;
                 }
             }
-            Page<BillingMeter> NextPageFunc(string nextLink, int? pageSizeHint)
+            Page<AppServiceBillingMeter> NextPageFunc(string nextLink, int? pageSizeHint)
             {
                 using var scope = DefaultClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.GetBillingMeters");
                 scope.Start();

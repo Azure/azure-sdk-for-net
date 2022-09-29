@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService
 
         private readonly ClientDiagnostics _siteBackupWebAppsClientDiagnostics;
         private readonly WebAppsRestOperations _siteBackupWebAppsRestClient;
-        private readonly BackupItemData _data;
+        private readonly WebAppBackupData _data;
 
         /// <summary> Initializes a new instance of the <see cref="SiteBackupResource"/> class for mocking. </summary>
         protected SiteBackupResource()
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Initializes a new instance of the <see cref = "SiteBackupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SiteBackupResource(ArmClient client, BackupItemData data) : this(client, data.Id)
+        internal SiteBackupResource(ArmClient client, WebAppBackupData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual BackupItemData Data
+        public virtual WebAppBackupData Data
         {
             get
             {
@@ -192,18 +192,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}/list
         /// Operation Id: WebApps_ListBackupStatusSecrets
         /// </summary>
-        /// <param name="request"> Information on backup request. </param>
+        /// <param name="info"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual async Task<Response<SiteBackupResource>> GetBackupStatusSecretsAsync(BackupRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual async Task<Response<SiteBackupResource>> GetBackupStatusSecretsAsync(WebAppBackupRequestInfo info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupResource.GetBackupStatusSecrets");
             scope.Start();
             try
             {
-                var response = await _siteBackupWebAppsRestClient.ListBackupStatusSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request, cancellationToken).ConfigureAwait(false);
+                var response = await _siteBackupWebAppsRestClient.ListBackupStatusSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SiteBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -218,18 +218,18 @@ namespace Azure.ResourceManager.AppService
         /// Request Path: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}/list
         /// Operation Id: WebApps_ListBackupStatusSecrets
         /// </summary>
-        /// <param name="request"> Information on backup request. </param>
+        /// <param name="info"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="request"/> is null. </exception>
-        public virtual Response<SiteBackupResource> GetBackupStatusSecrets(BackupRequest request, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
+        public virtual Response<SiteBackupResource> GetBackupStatusSecrets(WebAppBackupRequestInfo info, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _siteBackupWebAppsClientDiagnostics.CreateScope("SiteBackupResource.GetBackupStatusSecrets");
             scope.Start();
             try
             {
-                var response = _siteBackupWebAppsRestClient.ListBackupStatusSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, request, cancellationToken);
+                var response = _siteBackupWebAppsRestClient.ListBackupStatusSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, info, cancellationToken);
                 return Response.FromValue(new SiteBackupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

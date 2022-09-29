@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("thumbprint");
                 writer.WriteStringValue(Thumbprint);
             }
-            if (Optional.IsDefined(IsToUpdate))
+            if (Optional.IsDefined(ToUpdate))
             {
-                if (IsToUpdate != null)
+                if (ToUpdate != null)
                 {
                     writer.WritePropertyName("toUpdate");
-                    writer.WriteBooleanValue(IsToUpdate.Value);
+                    writer.WriteBooleanValue(ToUpdate.Value);
                 }
                 else
                 {

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal static LoginInformation DeserializeLoginInformation(JsonElement element)
         {
             Optional<LoginRoutes> routes = default;
-            Optional<TokenStore> tokenStore = default;
+            Optional<AppServiceTokenStore> tokenStore = default;
             Optional<bool> preserveUrlFragmentsForLogins = default;
             Optional<IList<string>> allowedExternalRedirectUrls = default;
             Optional<CookieExpiration> cookieExpiration = default;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    tokenStore = TokenStore.DeserializeTokenStore(property.Value);
+                    tokenStore = AppServiceTokenStore.DeserializeAppServiceTokenStore(property.Value);
                     continue;
                 }
                 if (property.NameEquals("preserveUrlFragmentsForLogins"))

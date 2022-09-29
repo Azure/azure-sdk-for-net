@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="lastModifiedTimeUtc"> Last time the app was modified, in UTC. Read-only. </param>
         /// <param name="siteConfig"> Configuration of the app. </param>
         /// <param name="trafficManagerHostNames"> Azure Traffic Manager hostnames associated with the app. Read-only. </param>
-        /// <param name="scmSiteAlsoStopped"> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isScmSiteAlsoStopped"> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="targetSwapSlot"> Specifies which deployment slot this app will swap into. Read-only. </param>
         /// <param name="hostingEnvironmentProfile"> App Service Environment to use for the app. </param>
         /// <param name="isClientAffinityEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;. </param>
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.AppService
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, string appServicePlanId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedTimeUtc, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? scmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData, tags, location)
+        internal WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, ResourceIdentifier appServicePlanId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedTimeUtc, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, IPAddress outboundIPAddresses, IPAddress possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ExtendedLocation = extendedLocation;
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.AppService
             LastModifiedTimeUtc = lastModifiedTimeUtc;
             SiteConfig = siteConfig;
             TrafficManagerHostNames = trafficManagerHostNames;
-            ScmSiteAlsoStopped = scmSiteAlsoStopped;
+            IsScmSiteAlsoStopped = isScmSiteAlsoStopped;
             TargetSwapSlot = targetSwapSlot;
             HostingEnvironmentProfile = hostingEnvironmentProfile;
             IsClientAffinityEnabled = isClientAffinityEnabled;
@@ -170,7 +171,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Hostname SSL states are used to manage the SSL bindings for app&apos;s hostnames. </summary>
         public IList<HostNameSslState> HostNameSslStates { get; }
         /// <summary> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </summary>
-        public string AppServicePlanId { get; set; }
+        public ResourceIdentifier AppServicePlanId { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
         public bool? IsReserved { get; set; }
         /// <summary> Obsolete: Hyper-V sandbox. </summary>
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Azure Traffic Manager hostnames associated with the app. Read-only. </summary>
         public IReadOnlyList<string> TrafficManagerHostNames { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? ScmSiteAlsoStopped { get; set; }
+        public bool? IsScmSiteAlsoStopped { get; set; }
         /// <summary> Specifies which deployment slot this app will swap into. Read-only. </summary>
         public string TargetSwapSlot { get; }
         /// <summary> App Service Environment to use for the app. </summary>
@@ -210,9 +211,9 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </summary>
         public string CustomDomainVerificationId { get; set; }
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </summary>
-        public string OutboundIPAddresses { get; }
+        public IPAddress OutboundIPAddresses { get; }
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </summary>
-        public string PossibleOutboundIPAddresses { get; }
+        public IPAddress PossibleOutboundIPAddresses { get; }
         /// <summary> Size of the function container. </summary>
         public int? ContainerSize { get; set; }
         /// <summary> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </summary>
@@ -251,7 +252,7 @@ namespace Azure.ResourceManager.AppService
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </summary>
-        public string VirtualNetworkSubnetId { get; set; }
+        public ResourceIdentifier VirtualNetworkSubnetId { get; set; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

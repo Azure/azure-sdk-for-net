@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of HttpLogsConfig. </summary>
         /// <param name="fileSystem"> Http logs to file system configuration. </param>
         /// <param name="azureBlobStorage"> Http logs to azure blob storage configuration. </param>
-        internal HttpLogsConfig(FileSystemHttpLogsConfig fileSystem, AzureBlobStorageHttpLogsConfig azureBlobStorage)
+        internal HttpLogsConfig(FileSystemHttpLogsConfig fileSystem, AppServiceBlobStorageHttpLogsConfig azureBlobStorage)
         {
             FileSystem = fileSystem;
             AzureBlobStorage = azureBlobStorage;
@@ -27,6 +27,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Http logs to file system configuration. </summary>
         public FileSystemHttpLogsConfig FileSystem { get; set; }
         /// <summary> Http logs to azure blob storage configuration. </summary>
-        public AzureBlobStorageHttpLogsConfig AzureBlobStorage { get; set; }
+        public AppServiceBlobStorageHttpLogsConfig AzureBlobStorage { get; set; }
     }
 }

@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_GetVipInfo
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AddressResponse>> GetVipInfoAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppServiceEnvironmentAddressResult>> GetVipInfoAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetVipInfo");
             scope.Start();
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceEnvironments_GetVipInfo
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AddressResponse> GetVipInfo(CancellationToken cancellationToken = default)
+        public virtual Response<AppServiceEnvironmentAddressResult> GetVipInfo(CancellationToken cancellationToken = default)
         {
             using var scope = _appServiceEnvironmentClientDiagnostics.CreateScope("AppServiceEnvironmentResource.GetVipInfo");
             scope.Start();

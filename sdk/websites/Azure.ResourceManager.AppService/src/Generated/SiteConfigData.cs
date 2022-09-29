@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService
             VirtualApplications = new ChangeTrackingList<VirtualApplication>();
             IPSecurityRestrictions = new ChangeTrackingList<IPSecurityRestriction>();
             ScmIPSecurityRestrictions = new ChangeTrackingList<IPSecurityRestriction>();
-            AzureStorageAccounts = new ChangeTrackingDictionary<string, AzureStorageInfoValue>();
+            AzureStorageAccounts = new ChangeTrackingDictionary<string, AppServiceStorageAccessInfo>();
         }
 
         /// <summary> Initializes a new instance of SiteConfigData. </summary>
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="requestTracingExpirationOn"> Request tracing expiration time. </param>
         /// <param name="isRemoteDebuggingEnabled"> &lt;code&gt;true&lt;/code&gt; if remote debugging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="remoteDebuggingVersion"> Remote debugging version. </param>
-        /// <param name="httpLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="hasAcrUseManagedIdentityCreds"> Flag to use Managed Identity Creds for ACR pull. </param>
+        /// <param name="isHttpLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="useManagedIdentityCreds"> Flag to use Managed Identity Creds for ACR pull. </param>
         /// <param name="acrUserManagedIdentityId"> If using user managed identity, the user managed identity ClientId. </param>
         /// <param name="logsDirectorySizeLimit"> HTTP logs directory size limit. </param>
         /// <param name="isDetailedErrorLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="ipSecurityRestrictions"> IP security restrictions for main. </param>
         /// <param name="scmIPSecurityRestrictions"> IP security restrictions for scm. </param>
-        /// <param name="scmIPSecurityRestrictionsUseMain"> IP security restrictions for scm to use main. </param>
+        /// <param name="allowIPSecurityRestrictionsForScmToUseMain"> IP security restrictions for scm to use main. </param>
         /// <param name="isHttp20Enabled"> Http20Enabled: configures a web site to allow clients to connect over http2.0. </param>
         /// <param name="minTlsVersion"> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </param>
         /// <param name="scmMinTlsVersion"> ScmMinTlsVersion: configures the minimum version of TLS required for SSL requests for SCM site. </param>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SiteConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? httpLoggingEnabled, bool? hasAcrUseManagedIdentityCreds, string acrUserManagedIdentityId, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IList<NameValuePair> appSettings, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, Experiments experiments, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, CorsSettings cors, PushSettings push, ApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<IPSecurityRestriction> ipSecurityRestrictions, IList<IPSecurityRestriction> scmIPSecurityRestrictions, bool? scmIPSecurityRestrictionsUseMain, bool? isHttp20Enabled, SupportedTlsVersion? minTlsVersion, SupportedTlsVersion? scmMinTlsVersion, FtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AzureStorageInfoValue> azureStorageAccounts, string publicNetworkAccess, string kind) : base(id, name, resourceType, systemData)
+        internal SiteConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? isHttpLoggingEnabled, bool? useManagedIdentityCreds, string acrUserManagedIdentityId, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IList<NameValuePair> appSettings, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, Experiments experiments, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, CorsSettings cors, PushSettings push, AppServiceApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<IPSecurityRestriction> ipSecurityRestrictions, IList<IPSecurityRestriction> scmIPSecurityRestrictions, bool? allowIPSecurityRestrictionsForScmToUseMain, bool? isHttp20Enabled, SupportedTlsVersion? minTlsVersion, SupportedTlsVersion? scmMinTlsVersion, FtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts, string publicNetworkAccess, string kind) : base(id, name, resourceType, systemData)
         {
             NumberOfWorkers = numberOfWorkers;
             DefaultDocuments = defaultDocuments;
@@ -130,8 +130,8 @@ namespace Azure.ResourceManager.AppService
             RequestTracingExpirationOn = requestTracingExpirationOn;
             IsRemoteDebuggingEnabled = isRemoteDebuggingEnabled;
             RemoteDebuggingVersion = remoteDebuggingVersion;
-            HttpLoggingEnabled = httpLoggingEnabled;
-            HasAcrUseManagedIdentityCreds = hasAcrUseManagedIdentityCreds;
+            IsHttpLoggingEnabled = isHttpLoggingEnabled;
+            UseManagedIdentityCreds = useManagedIdentityCreds;
             AcrUserManagedIdentityId = acrUserManagedIdentityId;
             LogsDirectorySizeLimit = logsDirectorySizeLimit;
             IsDetailedErrorLoggingEnabled = isDetailedErrorLoggingEnabled;
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
             IPSecurityRestrictions = ipSecurityRestrictions;
             ScmIPSecurityRestrictions = scmIPSecurityRestrictions;
-            ScmIPSecurityRestrictionsUseMain = scmIPSecurityRestrictionsUseMain;
+            AllowIPSecurityRestrictionsForScmToUseMain = allowIPSecurityRestrictionsForScmToUseMain;
             IsHttp20Enabled = isHttp20Enabled;
             MinTlsVersion = minTlsVersion;
             ScmMinTlsVersion = scmMinTlsVersion;
@@ -214,9 +214,9 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Remote debugging version. </summary>
         public string RemoteDebuggingVersion { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? HttpLoggingEnabled { get; set; }
+        public bool? IsHttpLoggingEnabled { get; set; }
         /// <summary> Flag to use Managed Identity Creds for ACR pull. </summary>
-        public bool? HasAcrUseManagedIdentityCreds { get; set; }
+        public bool? UseManagedIdentityCreds { get; set; }
         /// <summary> If using user managed identity, the user managed identity ClientId. </summary>
         public string AcrUserManagedIdentityId { get; set; }
         /// <summary> HTTP logs directory size limit. </summary>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Push endpoint settings. </summary>
         public PushSettings Push { get; set; }
         /// <summary> Information about the formal API definition for the app. </summary>
-        internal ApiDefinitionInfo ApiDefinition { get; set; }
+        internal AppServiceApiDefinitionInfo ApiDefinition { get; set; }
         /// <summary> The URL of the API definition. </summary>
         public Uri ApiDefinitionUri
         {
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppService
             set
             {
                 if (ApiDefinition is null)
-                    ApiDefinition = new ApiDefinitionInfo();
+                    ApiDefinition = new AppServiceApiDefinitionInfo();
                 ApiDefinition.Uri = value;
             }
         }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> IP security restrictions for scm. </summary>
         public IList<IPSecurityRestriction> ScmIPSecurityRestrictions { get; set; }
         /// <summary> IP security restrictions for scm to use main. </summary>
-        public bool? ScmIPSecurityRestrictionsUseMain { get; set; }
+        public bool? AllowIPSecurityRestrictionsForScmToUseMain { get; set; }
         /// <summary> Http20Enabled: configures a web site to allow clients to connect over http2.0. </summary>
         public bool? IsHttp20Enabled { get; set; }
         /// <summary> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </summary>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         public int? MinimumElasticInstanceCount { get; set; }
         /// <summary> List of Azure Storage Accounts. </summary>
-        public IDictionary<string, AzureStorageInfoValue> AzureStorageAccounts { get; set; }
+        public IDictionary<string, AppServiceStorageAccessInfo> AzureStorageAccounts { get; set; }
         /// <summary> Property to allow or block all public traffic. </summary>
         public string PublicNetworkAccess { get; set; }
         /// <summary> Kind of resource. </summary>

@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppService
     public partial class AppServiceCertificateData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public AppServiceCertificateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string KeyVaultId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier KeyVaultId { get { throw null; } set { } }
         public string KeyVaultSecretName { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.KeyVaultSecretStatus? ProvisioningState { get { throw null; } }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
         public string DistinguishedName { get { throw null; } set { } }
         public string DomainVerificationToken { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.CertificateDetails Intermediate { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails Intermediate { get { throw null; } }
         public bool? IsAutoRenew { get { throw null; } set { } }
         public bool? IsPrivateKeyExternal { get { throw null; } }
         public int? KeySize { get { throw null; } set { } }
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.AppService
         public System.DateTimeOffset? NextAutoRenewTimeStamp { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.CertificateProductType? ProductType { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.CertificateDetails Root { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails Root { get { throw null; } }
         public string SerialNumber { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.CertificateDetails SignedCertificate { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails SignedCertificate { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.CertificateOrderStatus? Status { get { throw null; } }
         public int? ValidityInYears { get { throw null; } set { } }
     }
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response> ResendRequestEmailsAsync(Azure.ResourceManager.AppService.Models.AppServiceDomainNameIdentifier nameIdentifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.CertificateOrderAction> RetrieveCertificateActions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.CertificateOrderAction> RetrieveCertificateActionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.CertificateEmail> RetrieveCertificateEmailHistory(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.CertificateEmail> RetrieveCertificateEmailHistoryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceCertificateEmail> RetrieveCertificateEmailHistory(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceCertificateEmail> RetrieveCertificateEmailHistoryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.SiteSeal> RetrieveSiteSeal(Azure.ResourceManager.AppService.Models.SiteSealContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteSeal>> RetrieveSiteSealAsync(Azure.ResourceManager.AppService.Models.SiteSealContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.AppServiceCertificateOrderResource> Update(Azure.ResourceManager.AppService.Models.AppServiceCertificateOrderPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -210,7 +210,6 @@ namespace Azure.ResourceManager.AppService
     public partial class AppServiceDomainData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public AppServiceDomainData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public bool? AppServiceHasPrivacy { get { throw null; } set { } }
         public string AuthCode { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.DomainPurchaseConsent Consent { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ContactInformation ContactAdmin { get { throw null; } set { } }
@@ -223,12 +222,13 @@ namespace Azure.ResourceManager.AppService
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.DomainNotRenewableReason> DomainNotRenewableReasons { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public bool? IsAutoRenew { get { throw null; } set { } }
+        public bool? IsDnsRecordManagementReady { get { throw null; } }
+        public bool? IsDomainPrivacyEnabled { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LastRenewedOn { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.HostName> ManagedHostNames { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> NameServers { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public bool? ReadyForDnsRecordManagement { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.DomainStatus? RegistrationStatus { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.DnsType? TargetDnsType { get { throw null; } set { } }
     }
@@ -336,8 +336,8 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceRecommendation> GetRecommendedRulesForHostingEnvironmentRecommendationsAsync(bool? featured = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.CsmUsageQuota> GetUsages(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.CsmUsageQuota> GetUsagesAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AddressResponse> GetVipInfo(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AddressResponse>> GetVipInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceEnvironmentAddressResult> GetVipInfo(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceEnvironmentAddressResult>> GetVipInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.WebSiteData> GetWebApps(string propertiesToInclude = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.WebSiteData> GetWebAppsAsync(string propertiesToInclude = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Reboot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -402,8 +402,8 @@ namespace Azure.ResourceManager.AppService
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksProviders(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.ApplicationStackResource> GetAvailableStacksProvidersAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected? osTypeSelected = default(Azure.ResourceManager.AppService.Models.ProviderOSTypeSelected?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.BillingMeter> GetBillingMeters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.BillingMeter> GetBillingMetersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceBillingMeter> GetBillingMeters(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceBillingMeter> GetBillingMetersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.CertificateOrderDetectorResource GetCertificateOrderDetectorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.AppService.Models.DomainControlCenterSsoRequestInfo> GetControlCenterSsoRequestDomain(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.DomainControlCenterSsoRequestInfo>> GetControlCenterSsoRequestDomainAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -446,6 +446,8 @@ namespace Azure.ResourceManager.AppService
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.CsmOperationDescription> GetOperationsProvidersAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.PremierAddOnOffer> GetPremierAddOnOffers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.PremierAddOnOffer> GetPremierAddOnOffersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.AppService.PublishingUserResource GetPublishingUser(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
+        public static Azure.ResourceManager.AppService.PublishingUserResource GetPublishingUserResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceRecommendation> GetRecommendations(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, bool? featured = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceRecommendation> GetRecommendationsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, bool? featured = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -521,8 +523,6 @@ namespace Azure.ResourceManager.AppService
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.TopLevelDomainResource>> GetTopLevelDomainAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.AppService.TopLevelDomainResource GetTopLevelDomainResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.AppService.TopLevelDomainCollection GetTopLevelDomains(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource) { throw null; }
-        public static Azure.ResourceManager.AppService.UserResource GetUser(this Azure.ResourceManager.Resources.TenantResource tenantResource) { throw null; }
-        public static Azure.ResourceManager.AppService.UserResource GetUserResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksByLocation(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.Core.AzureLocation location, Azure.ResourceManager.AppService.Models.ProviderStackOSType? stackOSType = default(Azure.ResourceManager.AppService.Models.ProviderStackOSType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksByLocationAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.Core.AzureLocation location, Azure.ResourceManager.AppService.Models.ProviderStackOSType? stackOSType = default(Azure.ResourceManager.AppService.Models.ProviderStackOSType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.AppService.Models.WebAppStack> GetWebAppStacksProviders(this Azure.ResourceManager.Resources.TenantResource tenantResource, Azure.ResourceManager.AppService.Models.ProviderStackOSType? stackOSType = default(Azure.ResourceManager.AppService.Models.ProviderStackOSType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -658,8 +658,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AppServicePlanVirtualNetworkConnectionResource>> GetAppServicePlanVirtualNetworkConnectionAsync(string vnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.AppServicePlanVirtualNetworkConnectionCollection GetAppServicePlanVirtualNetworkConnections() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AppServicePlanResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.Capability> GetCapabilities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.Capability> GetCapabilitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceSkuCapability> GetCapabilities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServiceSkuCapability> GetCapabilitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.HybridConnectionLimitResource GetHybridConnectionLimit() { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.HybridConnectionData> GetHybridConnectionRelays(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.HybridConnectionData> GetHybridConnectionRelaysAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -736,11 +736,11 @@ namespace Azure.ResourceManager.AppService
     {
         public AseV3NetworkingConfigurationData() { }
         public bool? AllowNewPrivateEndpointConnections { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<string> ExternalInboundIPAddresses { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> InternalInboundIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> ExternalInboundIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> InternalInboundIPAddresses { get { throw null; } }
         public string Kind { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<string> LinuxOutboundIPAddresses { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> WindowsOutboundIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> LinuxOutboundIPAddresses { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<System.Net.IPAddress> WindowsOutboundIPAddresses { get { throw null; } }
     }
     public partial class AseV3NetworkingConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -753,25 +753,6 @@ namespace Azure.ResourceManager.AppService
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.AseV3NetworkingConfigurationResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.AseV3NetworkingConfigurationResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public partial class BackupItemData : Azure.ResourceManager.Models.ResourceData
-    {
-        public BackupItemData() { }
-        public int? BackupId { get { throw null; } }
-        public string BlobName { get { throw null; } }
-        public string CorrelationId { get { throw null; } }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.DatabaseBackupSetting> Databases { get { throw null; } }
-        public System.DateTimeOffset? FinishedOn { get { throw null; } }
-        public bool? IsScheduled { get { throw null; } }
-        public string Kind { get { throw null; } set { } }
-        public System.DateTimeOffset? LastRestoreOn { get { throw null; } }
-        public string Log { get { throw null; } }
-        public string NamePropertiesName { get { throw null; } }
-        public long? SizeInBytes { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.BackupItemStatus? Status { get { throw null; } }
-        public System.Uri StorageAccountUri { get { throw null; } }
-        public long? WebsiteSizeInBytes { get { throw null; } }
     }
     public partial class CertificateOrderDetectorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.CertificateOrderDetectorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.CertificateOrderDetectorResource>, System.Collections.IEnumerable
     {
@@ -1070,7 +1051,7 @@ namespace Azure.ResourceManager.AppService
     {
         public HostNameBindingData() { }
         public string AzureResourceName { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AzureResourceType? AzureResourceType { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceResourceType? AzureResourceType { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get { throw null; } set { } }
         public string DomainId { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.HostNameType? HostNameType { get { throw null; } set { } }
@@ -1320,13 +1301,35 @@ namespace Azure.ResourceManager.AppService
         public Azure.ResourceManager.AppService.Models.PublicCertificateLocation? PublicCertificateLocation { get { throw null; } set { } }
         public string Thumbprint { get { throw null; } }
     }
+    public partial class PublishingUserData : Azure.ResourceManager.Models.ResourceData
+    {
+        public PublishingUserData() { }
+        public string Kind { get { throw null; } set { } }
+        public string PublishingPassword { get { throw null; } set { } }
+        public string PublishingPasswordHash { get { throw null; } set { } }
+        public string PublishingPasswordHashSalt { get { throw null; } set { } }
+        public string PublishingUserName { get { throw null; } set { } }
+        public System.Uri ScmUri { get { throw null; } set { } }
+    }
+    public partial class PublishingUserResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected PublishingUserResource() { }
+        public virtual Azure.ResourceManager.AppService.PublishingUserData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.PublishingUserResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.PublishingUserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.PublishingUserResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.PublishingUserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.PublishingUserResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.PublishingUserResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class RecommendationRuleData : Azure.ResourceManager.Models.ResourceData
     {
         public RecommendationRuleData() { }
         public string ActionName { get { throw null; } set { } }
         public string BladeName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> CategoryTags { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.Channel? Channels { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.RecommendationChannel? Channels { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string ExtensionName { get { throw null; } set { } }
@@ -1352,7 +1355,7 @@ namespace Azure.ResourceManager.AppService
     public partial class RemotePrivateEndpointConnectionARMResourceData : Azure.ResourceManager.Models.ResourceData
     {
         public RemotePrivateEndpointConnectionARMResourceData() { }
-        public System.Collections.Generic.IList<string> IPAddresses { get { throw null; } }
+        public System.Collections.Generic.IList<System.Net.IPAddress> IPAddresses { get { throw null; } }
         public string Kind { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
@@ -1406,15 +1409,15 @@ namespace Azure.ResourceManager.AppService
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SiteBackupResource() { }
-        public virtual Azure.ResourceManager.AppService.BackupItemData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.AppService.WebAppBackupData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string backupId) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.SiteBackupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteBackupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteBackupResource> GetBackupStatusSecrets(Azure.ResourceManager.AppService.Models.BackupRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteBackupResource>> GetBackupStatusSecretsAsync(Azure.ResourceManager.AppService.Models.BackupRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteBackupResource> GetBackupStatusSecrets(Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteBackupResource>> GetBackupStatusSecretsAsync(Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Restore(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.RestoreRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestoreAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.RestoreRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1445,13 +1448,14 @@ namespace Azure.ResourceManager.AppService
     {
         public SiteConfigData() { }
         public string AcrUserManagedIdentityId { get { throw null; } set { } }
+        public bool? AllowIPSecurityRestrictionsForScmToUseMain { get { throw null; } set { } }
         public System.Uri ApiDefinitionUri { get { throw null; } set { } }
         public string ApiManagementConfigId { get { throw null; } set { } }
         public string AppCommandLine { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NameValuePair> AppSettings { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AutoHealRules AutoHealRules { get { throw null; } set { } }
         public string AutoSwapSlotName { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AzureStorageInfoValue> AzureStorageAccounts { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AppServiceStorageAccessInfo> AzureStorageAccounts { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ConnStringInfo> ConnectionStrings { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.CorsSettings Cors { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DefaultDocuments { get { throw null; } set { } }
@@ -1460,15 +1464,14 @@ namespace Azure.ResourceManager.AppService
         public Azure.ResourceManager.AppService.Models.FtpsState? FtpsState { get { throw null; } set { } }
         public int? FunctionAppScaleLimit { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.HandlerMapping> HandlerMappings { get { throw null; } set { } }
-        public bool? HasAcrUseManagedIdentityCreds { get { throw null; } set { } }
         public string HealthCheckPath { get { throw null; } set { } }
-        public bool? HttpLoggingEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> IPSecurityRestrictions { get { throw null; } set { } }
         public bool? IsAlwaysOn { get { throw null; } set { } }
         public bool? IsAutoHealEnabled { get { throw null; } set { } }
         public bool? IsDetailedErrorLoggingEnabled { get { throw null; } set { } }
         public bool? IsFunctionsRuntimeScaleMonitoringEnabled { get { throw null; } set { } }
         public bool? IsHttp20Enabled { get { throw null; } set { } }
+        public bool? IsHttpLoggingEnabled { get { throw null; } set { } }
         public bool? IsLocalMySqlEnabled { get { throw null; } set { } }
         public bool? IsRemoteDebuggingEnabled { get { throw null; } set { } }
         public bool? IsRequestTracingEnabled { get { throw null; } set { } }
@@ -1501,11 +1504,11 @@ namespace Azure.ResourceManager.AppService
         public string RemoteDebuggingVersion { get { throw null; } set { } }
         public System.DateTimeOffset? RequestTracingExpirationOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
-        public bool? ScmIPSecurityRestrictionsUseMain { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SupportedTlsVersion? ScmMinTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ScmType? ScmType { get { throw null; } set { } }
         public string TracingOptions { get { throw null; } set { } }
         public bool? Use32BitWorkerProcess { get { throw null; } set { } }
+        public bool? UseManagedIdentityCreds { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.VirtualApplication> VirtualApplications { get { throw null; } set { } }
         public string VnetName { get { throw null; } set { } }
         public int? VnetPrivatePortsCount { get { throw null; } set { } }
@@ -1924,9 +1927,9 @@ namespace Azure.ResourceManager.AppService
     {
         public SiteLogsConfigData() { }
         public Azure.ResourceManager.AppService.Models.ApplicationLogsConfig ApplicationLogs { get { throw null; } set { } }
-        public bool? DetailedErrorMessagesEnabled { get { throw null; } set { } }
-        public bool? FailedRequestsTracingEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.HttpLogsConfig HttpLogs { get { throw null; } set { } }
+        public bool? IsDetailedErrorMessagesEnabled { get { throw null; } set { } }
+        public bool? IsFailedRequestsTracingEnabled { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
     }
     public partial class SiteNetworkConfigResource : Azure.ResourceManager.ArmResource
@@ -2095,15 +2098,15 @@ namespace Azure.ResourceManager.AppService
     {
         public static readonly Azure.Core.ResourceType ResourceType;
         protected SiteSlotBackupResource() { }
-        public virtual Azure.ResourceManager.AppService.BackupItemData Data { get { throw null; } }
+        public virtual Azure.ResourceManager.AppService.WebAppBackupData Data { get { throw null; } }
         public virtual bool HasData { get { throw null; } }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot, string backupId) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSlotBackupResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSlotBackupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSlotBackupResource> GetBackupStatusSecretsSlot(Azure.ResourceManager.AppService.Models.BackupRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSlotBackupResource>> GetBackupStatusSecretsSlotAsync(Azure.ResourceManager.AppService.Models.BackupRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.SiteSlotBackupResource> GetBackupStatusSecretsSlot(Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteSlotBackupResource>> GetBackupStatusSecretsSlotAsync(Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation RestoreSlot(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.RestoreRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> RestoreSlotAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.Models.RestoreRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -2788,7 +2791,7 @@ namespace Azure.ResourceManager.AppService
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public string PullRequestTitle { get { throw null; } }
         public string SourceBranch { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.BuildStatus? Status { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus? Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps { get { throw null; } }
     }
     public partial class StaticSiteBuildResource : Azure.ResourceManager.ArmResource
@@ -3069,7 +3072,7 @@ namespace Azure.ResourceManager.AppService
     public partial class TopLevelDomainData : Azure.ResourceManager.Models.ResourceData
     {
         public TopLevelDomainData() { }
-        public bool? HasPrivacy { get { throw null; } set { } }
+        public bool? IsDomainPrivacySupported { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
     }
     public partial class TopLevelDomainResource : Azure.ResourceManager.ArmResource
@@ -3105,28 +3108,6 @@ namespace Azure.ResourceManager.AppService
         public System.Uri Uri { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.WebJobType? WebJobType { get { throw null; } set { } }
     }
-    public partial class UserData : Azure.ResourceManager.Models.ResourceData
-    {
-        public UserData() { }
-        public string Kind { get { throw null; } set { } }
-        public string PublishingPassword { get { throw null; } set { } }
-        public string PublishingPasswordHash { get { throw null; } set { } }
-        public string PublishingPasswordHashSalt { get { throw null; } set { } }
-        public string PublishingUserName { get { throw null; } set { } }
-        public System.Uri ScmUri { get { throw null; } set { } }
-    }
-    public partial class UserResource : Azure.ResourceManager.ArmResource
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected UserResource() { }
-        public virtual Azure.ResourceManager.AppService.UserData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.UserResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.UserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.UserResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.AppService.UserData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier() { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.UserResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.UserResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
     public partial class VnetGatewayData : Azure.ResourceManager.Models.ResourceData
     {
         public VnetGatewayData() { }
@@ -3145,6 +3126,25 @@ namespace Azure.ResourceManager.AppService
         public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.VnetRoute> Routes { get { throw null; } }
         public Azure.Core.ResourceIdentifier VnetResourceId { get { throw null; } set { } }
+    }
+    public partial class WebAppBackupData : Azure.ResourceManager.Models.ResourceData
+    {
+        public WebAppBackupData() { }
+        public int? BackupId { get { throw null; } }
+        public string BlobName { get { throw null; } }
+        public string CorrelationId { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.DatabaseBackupSetting> Databases { get { throw null; } }
+        public System.DateTimeOffset? FinishedOn { get { throw null; } }
+        public bool? IsScheduled { get { throw null; } }
+        public string Kind { get { throw null; } set { } }
+        public System.DateTimeOffset? LastRestoreOn { get { throw null; } }
+        public string Log { get { throw null; } }
+        public string NamePropertiesName { get { throw null; } }
+        public long? SizeInBytes { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.WebAppBackupStatus? Status { get { throw null; } }
+        public System.Uri StorageAccountUri { get { throw null; } }
+        public long? WebsiteSizeInBytes { get { throw null; } }
     }
     public partial class WebJobData : Azure.ResourceManager.Models.ResourceData
     {
@@ -3253,7 +3253,7 @@ namespace Azure.ResourceManager.AppService
     public partial class WebSiteData : Azure.ResourceManager.Models.TrackedResourceData
     {
         public WebSiteData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
-        public string AppServicePlanId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AppServicePlanId { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.WebSiteAvailabilityState? AvailabilityState { get { throw null; } }
         public string ClientCertExclusionPaths { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ClientCertMode? ClientCertMode { get { throw null; } set { } }
@@ -3277,18 +3277,18 @@ namespace Azure.ResourceManager.AppService
         public bool? IsHttpsOnly { get { throw null; } set { } }
         public bool? IsHyperV { get { throw null; } set { } }
         public bool? IsReserved { get { throw null; } set { } }
+        public bool? IsScmSiteAlsoStopped { get { throw null; } set { } }
         public bool? IsStorageAccountRequired { get { throw null; } set { } }
         public bool? IsXenon { get { throw null; } set { } }
         public string KeyVaultReferenceIdentity { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedTimeUtc { get { throw null; } }
         public int? MaxNumberOfWorkers { get { throw null; } }
-        public string OutboundIPAddresses { get { throw null; } }
-        public string PossibleOutboundIPAddresses { get { throw null; } }
+        public System.Net.IPAddress OutboundIPAddresses { get { throw null; } }
+        public System.Net.IPAddress PossibleOutboundIPAddresses { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.RedundancyMode? RedundancyMode { get { throw null; } set { } }
         public string RepositorySiteName { get { throw null; } }
         public string ResourceGroup { get { throw null; } }
-        public bool? ScmSiteAlsoStopped { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SiteConfigProperties SiteConfig { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SlotSwapStatus SlotSwapStatus { get { throw null; } }
         public string State { get { throw null; } }
@@ -3296,7 +3296,7 @@ namespace Azure.ResourceManager.AppService
         public string TargetSwapSlot { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> TrafficManagerHostNames { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.UsageState? UsageState { get { throw null; } }
-        public string VirtualNetworkSubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualNetworkSubnetId { get { throw null; } set { } }
     }
     public partial class WebSiteExtensionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.WebSiteExtensionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.WebSiteExtensionResource>, System.Collections.IEnumerable
     {
@@ -3420,8 +3420,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.CustomHostnameAnalysisResult>> AnalyzeCustomHostnameAsync(string hostName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ApplySlotConfigToProduction(Azure.ResourceManager.AppService.Models.CsmSlotEntity slotSwapEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ApplySlotConfigToProductionAsync(Azure.ResourceManager.AppService.Models.CsmSlotEntity slotSwapEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.BackupItemData> Backup(Azure.ResourceManager.AppService.Models.BackupRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.BackupItemData>> BackupAsync(Azure.ResourceManager.AppService.Models.BackupRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WebAppBackupData> Backup(Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebAppBackupData>> BackupAsync(Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.KeyInfo> CreateOrUpdateHostSecret(string keyType, string keyName, Azure.ResourceManager.AppService.Models.KeyInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.KeyInfo>> CreateOrUpdateHostSecretAsync(string keyType, string keyName, Azure.ResourceManager.AppService.Models.KeyInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name) { throw null; }
@@ -3447,8 +3447,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>> GetAuthSettingsV2Async(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary> GetAzureStorageAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>> GetAzureStorageAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.BackupRequest> GetBackupConfiguration(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.BackupRequest>> GetBackupConfigurationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo> GetBackupConfiguration(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo>> GetBackupConfigurationAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.SiteConfigData> GetConfigurations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.SiteConfigData> GetConfigurationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.ConnectionStringDictionary> GetConnectionStrings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3484,8 +3484,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.PremierAddOnData>> GetPremierAddOnsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServicePrivateLinkResourceData> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServicePrivateLinkResourceData> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.UserResource> GetPublishingCredentials(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.UserResource>> GetPublishingCredentialsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.PublishingUserResource> GetPublishingCredentials(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.PublishingUserResource>> GetPublishingCredentialsAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.IO.Stream> GetPublishingProfileXmlWithSecrets(Azure.ResourceManager.AppService.Models.CsmPublishingProfile publishingProfileOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.IO.Stream>> GetPublishingProfileXmlWithSecretsAsync(Azure.ResourceManager.AppService.Models.CsmPublishingProfile publishingProfileOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServiceRecommendation> GetRecommendedRulesForWebAppRecommendations(bool? featured = default(bool?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3496,8 +3496,8 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.Response<Azure.ResourceManager.AppService.SiteBackupResource> GetSiteBackup(string backupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteBackupResource>> GetSiteBackupAsync(string backupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteBackupCollection GetSiteBackups() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AppService.BackupItemData> GetSiteBackups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.BackupItemData> GetSiteBackupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.WebAppBackupData> GetSiteBackups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.WebAppBackupData> GetSiteBackupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.SiteConfigAppsettingResource> GetSiteConfigAppsetting(string appSettingKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteConfigAppsettingResource>> GetSiteConfigAppsettingAsync(string appSettingKey, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteConfigAppsettingCollection GetSiteConfigAppsettings() { throw null; }
@@ -3640,8 +3640,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>> UpdateAuthSettingsV2Async(Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2 siteAuthSettingsV2, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary> UpdateAzureStorageAccounts(Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary azureStorageAccounts, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>> UpdateAzureStorageAccountsAsync(Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary azureStorageAccounts, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.BackupRequest> UpdateBackupConfiguration(Azure.ResourceManager.AppService.Models.BackupRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.BackupRequest>> UpdateBackupConfigurationAsync(Azure.ResourceManager.AppService.Models.BackupRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo> UpdateBackupConfiguration(Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo>> UpdateBackupConfigurationAsync(Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.ConnectionStringDictionary> UpdateConnectionStrings(Azure.ResourceManager.AppService.Models.ConnectionStringDictionary connectionStrings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.ConnectionStringDictionary>> UpdateConnectionStringsAsync(Azure.ResourceManager.AppService.Models.ConnectionStringDictionary connectionStrings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary> UpdateMetadata(Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary metadata, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3908,8 +3908,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.CustomHostnameAnalysisResult>> AnalyzeCustomHostnameSlotAsync(string hostName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response ApplySlotConfigurationSlot(Azure.ResourceManager.AppService.Models.CsmSlotEntity slotSwapEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ApplySlotConfigurationSlotAsync(Azure.ResourceManager.AppService.Models.CsmSlotEntity slotSwapEntity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.BackupItemData> BackupSlot(Azure.ResourceManager.AppService.Models.BackupRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.BackupItemData>> BackupSlotAsync(Azure.ResourceManager.AppService.Models.BackupRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.WebAppBackupData> BackupSlot(Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.WebAppBackupData>> BackupSlotAsync(Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.KeyInfo> CreateOrUpdateHostSecretSlot(string keyType, string keyName, Azure.ResourceManager.AppService.Models.KeyInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.KeyInfo>> CreateOrUpdateHostSecretSlotAsync(string keyType, string keyName, Azure.ResourceManager.AppService.Models.KeyInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string slot) { throw null; }
@@ -3933,8 +3933,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>> GetAuthSettingsV2SlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary> GetAzureStorageAccountsSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>> GetAzureStorageAccountsSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.BackupRequest> GetBackupConfigurationSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.BackupRequest>> GetBackupConfigurationSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo> GetBackupConfigurationSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo>> GetBackupConfigurationSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.SiteConfigData> GetConfigurationsSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.SiteConfigData> GetConfigurationsSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.ConnectionStringDictionary> GetConnectionStringsSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -3968,15 +3968,15 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.PremierAddOnData>> GetPremierAddOnsSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppService.Models.AppServicePrivateLinkResourceData> GetPrivateLinkResourcesSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.Models.AppServicePrivateLinkResourceData> GetPrivateLinkResourcesSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.UserResource> GetPublishingCredentialsSlot(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.UserResource>> GetPublishingCredentialsSlotAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.PublishingUserResource> GetPublishingCredentialsSlot(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.AppService.PublishingUserResource>> GetPublishingCredentialsSlotAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.IO.Stream> GetPublishingProfileXmlWithSecretsSlot(Azure.ResourceManager.AppService.Models.CsmPublishingProfile publishingProfileOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.IO.Stream>> GetPublishingProfileXmlWithSecretsSlotAsync(Azure.ResourceManager.AppService.Models.CsmPublishingProfile publishingProfileOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.RelayServiceConnectionEntityData> GetRelayServiceConnectionsSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.RelayServiceConnectionEntityData>> GetRelayServiceConnectionsSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicy() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.AppService.BackupItemData> GetSiteBackupsSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.BackupItemData> GetSiteBackupsSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.AppService.WebAppBackupData> GetSiteBackupsSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.AppService.WebAppBackupData> GetSiteBackupsSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.SitePhpErrorLogFlag> GetSitePhpErrorLogFlagSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SitePhpErrorLogFlag>> GetSitePhpErrorLogFlagSlotAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.PushSettings> GetSitePushSettingsSlot(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4109,8 +4109,8 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2>> UpdateAuthSettingsV2SlotAsync(Azure.ResourceManager.AppService.Models.SiteAuthSettingsV2 siteAuthSettingsV2, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary> UpdateAzureStorageAccountsSlot(Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary azureStorageAccounts, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary>> UpdateAzureStorageAccountsSlotAsync(Azure.ResourceManager.AppService.Models.AzureStoragePropertyDictionary azureStorageAccounts, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.BackupRequest> UpdateBackupConfigurationSlot(Azure.ResourceManager.AppService.Models.BackupRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.BackupRequest>> UpdateBackupConfigurationSlotAsync(Azure.ResourceManager.AppService.Models.BackupRequest request, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo> UpdateBackupConfigurationSlot(Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo>> UpdateBackupConfigurationSlotAsync(Azure.ResourceManager.AppService.Models.WebAppBackupRequestInfo info, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.ConnectionStringDictionary> UpdateConnectionStringsSlot(Azure.ResourceManager.AppService.Models.ConnectionStringDictionary connectionStrings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.Models.ConnectionStringDictionary>> UpdateConnectionStringsSlotAsync(Azure.ResourceManager.AppService.Models.ConnectionStringDictionary connectionStrings, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary> UpdateMetadataSlot(Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary metadata, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -4334,34 +4334,9 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.Solution> Solutions { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
     }
-    public partial class Address
+    public partial class AnalysisDetectorEvidences
     {
-        public Address(string address1, string city, string country, string postalCode, string state) { }
-        public string Address1 { get { throw null; } set { } }
-        public string Address2 { get { throw null; } set { } }
-        public string City { get { throw null; } set { } }
-        public string Country { get { throw null; } set { } }
-        public string PostalCode { get { throw null; } set { } }
-        public string State { get { throw null; } set { } }
-    }
-    public partial class AddressResponse : Azure.ResourceManager.Models.ResourceData
-    {
-        public AddressResponse() { }
-        public string InternalIPAddress { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> OutboundIPAddresses { get { throw null; } }
-        public string ServiceIPAddress { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.VirtualIPMapping> VipMappings { get { throw null; } }
-    }
-    public partial class AllowedPrincipals
-    {
-        public AllowedPrincipals() { }
-        public System.Collections.Generic.IList<string> Groups { get { throw null; } }
-        public System.Collections.Generic.IList<string> Identities { get { throw null; } }
-    }
-    public partial class AnalysisData
-    {
-        public AnalysisData() { }
+        public AnalysisDetectorEvidences() { }
         public System.Collections.Generic.IList<System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NameValuePair>> Data { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.DataSource DataSource { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.DetectorDefinition DetectorDefinition { get { throw null; } set { } }
@@ -4400,24 +4375,11 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsDefaultOff { get { throw null; } }
         public bool? IsSupported { get { throw null; } }
     }
-    public partial class Apple
-    {
-        public Apple() { }
-        public bool? Enabled { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> LoginScopes { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.AppleRegistration Registration { get { throw null; } set { } }
-    }
-    public partial class AppleRegistration
-    {
-        public AppleRegistration() { }
-        public string ClientId { get { throw null; } set { } }
-        public string ClientSecretSettingName { get { throw null; } set { } }
-    }
     public partial class ApplicationLogsConfig
     {
         public ApplicationLogsConfig() { }
-        public Azure.ResourceManager.AppService.Models.AzureBlobStorageApplicationLogsConfig AzureBlobStorage { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AzureTableStorageApplicationLogsConfig AzureTableStorage { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceBlobStorageApplicationLogsConfig AzureBlobStorage { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceTableStorageApplicationLogsConfig AzureTableStorage { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.LogLevel? FileSystemLevel { get { throw null; } set { } }
     }
     public partial class ApplicationStack
@@ -4453,6 +4415,111 @@ namespace Azure.ResourceManager.AppService.Models
         public string AppId { get { throw null; } set { } }
         public string AppSecretSettingName { get { throw null; } set { } }
     }
+    public partial class AppServiceAadAllowedPrincipals
+    {
+        public AppServiceAadAllowedPrincipals() { }
+        public System.Collections.Generic.IList<string> Groups { get { throw null; } }
+        public System.Collections.Generic.IList<string> Identities { get { throw null; } }
+    }
+    public partial class AppServiceAadLoginFlow
+    {
+        public AppServiceAadLoginFlow() { }
+        public bool? IsDisableWwwAuthenticate { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> LoginParameters { get { throw null; } }
+    }
+    public partial class AppServiceAadProvider
+    {
+        public AppServiceAadProvider() { }
+        public bool? IsAutoProvisioned { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceAadLoginFlow Login { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceAadRegistration Registration { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceAadValidation Validation { get { throw null; } set { } }
+    }
+    public partial class AppServiceAadRegistration
+    {
+        public AppServiceAadRegistration() { }
+        public string ClientId { get { throw null; } set { } }
+        public string ClientSecretCertificateIssuer { get { throw null; } set { } }
+        public string ClientSecretCertificateSubjectAlternativeName { get { throw null; } set { } }
+        public string ClientSecretCertificateThumbprint { get { throw null; } set { } }
+        public string ClientSecretSettingName { get { throw null; } set { } }
+        public string OpenIdIssuer { get { throw null; } set { } }
+    }
+    public partial class AppServiceAadValidation
+    {
+        public AppServiceAadValidation() { }
+        public System.Collections.Generic.IList<string> AllowedAudiences { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.DefaultAuthorizationPolicy DefaultAuthorizationPolicy { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.JwtClaimChecks JwtClaimChecks { get { throw null; } set { } }
+    }
+    public partial class AppServiceAppleProvider
+    {
+        public AppServiceAppleProvider() { }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> LoginScopes { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AppServiceAppleRegistration Registration { get { throw null; } set { } }
+    }
+    public partial class AppServiceAppleRegistration
+    {
+        public AppServiceAppleRegistration() { }
+        public string ClientId { get { throw null; } set { } }
+        public string ClientSecretSettingName { get { throw null; } set { } }
+    }
+    public partial class AppServiceArmPlan
+    {
+        internal AppServiceArmPlan() { }
+        public string Name { get { throw null; } }
+        public string Product { get { throw null; } }
+        public string PromotionCode { get { throw null; } }
+        public string Publisher { get { throw null; } }
+        public string Version { get { throw null; } }
+    }
+    public partial class AppServiceBillingMeter : Azure.ResourceManager.Models.ResourceData
+    {
+        public AppServiceBillingMeter() { }
+        public string BillingLocation { get { throw null; } set { } }
+        public string FriendlyName { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public System.Guid? MeterId { get { throw null; } set { } }
+        public double? Multiplier { get { throw null; } set { } }
+        public string OSType { get { throw null; } set { } }
+        public string ShortName { get { throw null; } set { } }
+    }
+    public partial class AppServiceBlobStorageApplicationLogsConfig
+    {
+        public AppServiceBlobStorageApplicationLogsConfig() { }
+        public Azure.ResourceManager.AppService.Models.LogLevel? Level { get { throw null; } set { } }
+        public int? RetentionInDays { get { throw null; } set { } }
+        public System.Uri SasUri { get { throw null; } set { } }
+    }
+    public partial class AppServiceBlobStorageHttpLogsConfig
+    {
+        public AppServiceBlobStorageHttpLogsConfig() { }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public int? RetentionInDays { get { throw null; } set { } }
+        public System.Uri SasUri { get { throw null; } set { } }
+    }
+    public partial class AppServiceCertificateDetails
+    {
+        internal AppServiceCertificateDetails() { }
+        public string Issuer { get { throw null; } }
+        public System.DateTimeOffset? NotAfter { get { throw null; } }
+        public System.DateTimeOffset? NotBefore { get { throw null; } }
+        public string RawData { get { throw null; } }
+        public string SerialNumber { get { throw null; } }
+        public string SignatureAlgorithm { get { throw null; } }
+        public string Subject { get { throw null; } }
+        public string Thumbprint { get { throw null; } }
+        public int? Version { get { throw null; } }
+    }
+    public partial class AppServiceCertificateEmail : Azure.ResourceManager.Models.ResourceData
+    {
+        public AppServiceCertificateEmail() { }
+        public string EmailId { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public System.DateTimeOffset? TimeStamp { get { throw null; } set { } }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AppServiceCertificateNotRenewableReason : System.IEquatable<Azure.ResourceManager.AppService.Models.AppServiceCertificateNotRenewableReason>
     {
@@ -4482,7 +4549,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string DistinguishedName { get { throw null; } set { } }
         public string DomainVerificationToken { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.CertificateDetails Intermediate { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails Intermediate { get { throw null; } }
         public bool? IsAutoRenew { get { throw null; } set { } }
         public bool? IsPrivateKeyExternal { get { throw null; } }
         public int? KeySize { get { throw null; } set { } }
@@ -4491,16 +4558,16 @@ namespace Azure.ResourceManager.AppService.Models
         public System.DateTimeOffset? NextAutoRenewalTimeStamp { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.CertificateProductType? ProductType { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.CertificateDetails Root { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails Root { get { throw null; } }
         public string SerialNumber { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.CertificateDetails SignedCertificate { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AppServiceCertificateDetails SignedCertificate { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.CertificateOrderStatus? Status { get { throw null; } }
         public int? ValidityInYears { get { throw null; } set { } }
     }
     public partial class AppServiceCertificatePatch : Azure.ResourceManager.Models.ResourceData
     {
         public AppServiceCertificatePatch() { }
-        public string KeyVaultId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier KeyVaultId { get { throw null; } set { } }
         public string KeyVaultSecretName { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.KeyVaultSecretStatus? ProvisioningState { get { throw null; } }
@@ -4508,7 +4575,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class AppServiceCertificateProperties
     {
         public AppServiceCertificateProperties() { }
-        public string KeyVaultId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier KeyVaultId { get { throw null; } set { } }
         public string KeyVaultSecretName { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.KeyVaultSecretStatus? ProvisioningState { get { throw null; } }
     }
@@ -4537,8 +4604,8 @@ namespace Azure.ResourceManager.AppService.Models
         public string DnsZoneId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.DomainNotRenewableReason> DomainNotRenewableReasons { get { throw null; } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
-        public bool? HasPrivacy { get { throw null; } set { } }
         public bool? IsAutoRenew { get { throw null; } set { } }
+        public bool? IsDomainPrivacyEnabled { get { throw null; } set { } }
         public bool? IsReadyForDnsRecordManagement { get { throw null; } }
         public string Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LastRenewedOn { get { throw null; } }
@@ -4547,6 +4614,15 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.DomainStatus? RegistrationStatus { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.DnsType? TargetDnsType { get { throw null; } set { } }
+    }
+    public partial class AppServiceEnvironmentAddressResult : Azure.ResourceManager.Models.ResourceData
+    {
+        public AppServiceEnvironmentAddressResult() { }
+        public System.Net.IPAddress InternalIPAddress { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public System.Collections.Generic.IList<System.Net.IPAddress> OutboundIPAddresses { get { throw null; } }
+        public System.Net.IPAddress ServiceIPAddress { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.VirtualIPMapping> VipMappings { get { throw null; } }
     }
     public partial class AppServiceEnvironmentPatch : Azure.ResourceManager.Models.ResourceData
     {
@@ -4579,15 +4655,15 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? HasLinuxWorkers { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.LoadBalancingMode? InternalLoadBalancingMode { get { throw null; } set { } }
         public int? IPSslAddressCount { get { throw null; } set { } }
+        public bool? IsSuspended { get { throw null; } }
+        public bool? IsZoneRedundant { get { throw null; } set { } }
         public int? MaximumNumberOfMachines { get { throw null; } }
         public int? MultiRoleCount { get { throw null; } }
         public string MultiSize { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentStatus? Status { get { throw null; } }
-        public bool? Suspended { get { throw null; } }
         public System.Collections.Generic.IList<string> UserWhitelistedIPRanges { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.VirtualNetworkProfile VirtualNetwork { get { throw null; } set { } }
-        public bool? ZoneRedundant { get { throw null; } set { } }
     }
     public partial class AppServicePlanPatch : Azure.ResourceManager.Models.ResourceData
     {
@@ -4650,7 +4726,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string ActionName { get { throw null; } set { } }
         public string BladeName { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> CategoryTags { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.Channel? Channels { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.RecommendationChannel? Channels { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public int? Enabled { get { throw null; } set { } }
@@ -4672,6 +4748,18 @@ namespace Azure.ResourceManager.AppService.Models
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> States { get { throw null; } }
     }
+    public enum AppServiceResourceType
+    {
+        Website = 0,
+        TrafficManager = 1,
+    }
+    public partial class AppServiceSkuCapability
+    {
+        public AppServiceSkuCapability() { }
+        public string Name { get { throw null; } set { } }
+        public string Reason { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+    }
     public partial class AppServiceSkuCapacity
     {
         public AppServiceSkuCapacity() { }
@@ -4684,10 +4772,10 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class AppServiceSkuDescription
     {
         public AppServiceSkuDescription() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.Capability> Capabilities { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceSkuCapability> Capabilities { get { throw null; } }
         public int? Capacity { get { throw null; } set { } }
         public string Family { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> Locations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceSkuCapacity SkuCapacity { get { throw null; } set { } }
@@ -4728,11 +4816,53 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.GlobalCsmSkuDescription> Skus { get { throw null; } }
     }
+    public partial class AppServiceStaticWebAppsProvider
+    {
+        public AppServiceStaticWebAppsProvider() { }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public string RegistrationClientId { get { throw null; } set { } }
+    }
     public partial class AppServiceStatusInfo
     {
         public AppServiceStatusInfo() { }
         public string Message { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.InsightStatus? StatusId { get { throw null; } set { } }
+    }
+    public partial class AppServiceStorageAccessInfo
+    {
+        public AppServiceStorageAccessInfo() { }
+        public string AccessKey { get { throw null; } set { } }
+        public string AccountName { get { throw null; } set { } }
+        public string MountPath { get { throw null; } set { } }
+        public string ShareName { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceStorageAccountState? State { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AppServiceStorageType? StorageType { get { throw null; } set { } }
+    }
+    public enum AppServiceStorageAccountState
+    {
+        Ok = 0,
+        InvalidCredentials = 1,
+        InvalidShare = 2,
+        NotValidated = 3,
+    }
+    public enum AppServiceStorageType
+    {
+        AzureFiles = 0,
+        AzureBlob = 1,
+    }
+    public partial class AppServiceTableStorageApplicationLogsConfig
+    {
+        public AppServiceTableStorageApplicationLogsConfig(System.Uri sasUri) { }
+        public Azure.ResourceManager.AppService.Models.LogLevel? Level { get { throw null; } set { } }
+        public System.Uri SasUri { get { throw null; } set { } }
+    }
+    public partial class AppServiceTokenStore
+    {
+        public AppServiceTokenStore() { }
+        public string AzureBlobStorageSasUrlSettingName { get { throw null; } set { } }
+        public string FileSystemDirectory { get { throw null; } set { } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public double? TokenRefreshExtensionHours { get { throw null; } set { } }
     }
     public partial class AppServiceUsage : Azure.ResourceManager.Models.ResourceData
     {
@@ -4791,15 +4921,6 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.FrontEndServiceType? FrontEndServiceKind { get { throw null; } set { } }
         public string KubeConfig { get { throw null; } set { } }
     }
-    public partial class ArmPlan
-    {
-        internal ArmPlan() { }
-        public string Name { get { throw null; } }
-        public string Product { get { throw null; } }
-        public string PromotionCode { get { throw null; } }
-        public string Publisher { get { throw null; } }
-        public string Version { get { throw null; } }
-    }
     public partial class AuthPlatform
     {
         public AuthPlatform() { }
@@ -4842,119 +4963,11 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.StatusCodesBasedTrigger> StatusCodes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.StatusCodesRangeBasedTrigger> StatusCodesRange { get { throw null; } }
     }
-    public partial class AzureActiveDirectory
-    {
-        public AzureActiveDirectory() { }
-        public bool? IsAutoProvisioned { get { throw null; } set { } }
-        public bool? IsEnabled { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AzureActiveDirectoryLogin Login { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AzureActiveDirectoryRegistration Registration { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AzureActiveDirectoryValidation Validation { get { throw null; } set { } }
-    }
-    public partial class AzureActiveDirectoryLogin
-    {
-        public AzureActiveDirectoryLogin() { }
-        public bool? IsDisableWwwAuthenticate { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> LoginParameters { get { throw null; } }
-    }
-    public partial class AzureActiveDirectoryRegistration
-    {
-        public AzureActiveDirectoryRegistration() { }
-        public string ClientId { get { throw null; } set { } }
-        public string ClientSecretCertificateIssuer { get { throw null; } set { } }
-        public string ClientSecretCertificateSubjectAlternativeName { get { throw null; } set { } }
-        public string ClientSecretCertificateThumbprint { get { throw null; } set { } }
-        public string ClientSecretSettingName { get { throw null; } set { } }
-        public string OpenIdIssuer { get { throw null; } set { } }
-    }
-    public partial class AzureActiveDirectoryValidation
-    {
-        public AzureActiveDirectoryValidation() { }
-        public System.Collections.Generic.IList<string> AllowedAudiences { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.DefaultAuthorizationPolicy DefaultAuthorizationPolicy { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.JwtClaimChecks JwtClaimChecks { get { throw null; } set { } }
-    }
-    public partial class AzureBlobStorageApplicationLogsConfig
-    {
-        public AzureBlobStorageApplicationLogsConfig() { }
-        public Azure.ResourceManager.AppService.Models.LogLevel? Level { get { throw null; } set { } }
-        public int? RetentionInDays { get { throw null; } set { } }
-        public System.Uri SasUri { get { throw null; } set { } }
-    }
-    public partial class AzureBlobStorageHttpLogsConfig
-    {
-        public AzureBlobStorageHttpLogsConfig() { }
-        public bool? IsEnabled { get { throw null; } set { } }
-        public int? RetentionInDays { get { throw null; } set { } }
-        public System.Uri SasUri { get { throw null; } set { } }
-    }
-    public enum AzureResourceType
-    {
-        Website = 0,
-        TrafficManager = 1,
-    }
-    public partial class AzureStaticWebApps
-    {
-        public AzureStaticWebApps() { }
-        public bool? IsEnabled { get { throw null; } set { } }
-        public string RegistrationClientId { get { throw null; } set { } }
-    }
-    public partial class AzureStorageInfoValue
-    {
-        public AzureStorageInfoValue() { }
-        public string AccessKey { get { throw null; } set { } }
-        public string AccountName { get { throw null; } set { } }
-        public string MountPath { get { throw null; } set { } }
-        public string ShareName { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AzureStorageState? State { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.AzureStorageType? StorageType { get { throw null; } set { } }
-    }
     public partial class AzureStoragePropertyDictionary : Azure.ResourceManager.Models.ResourceData
     {
         public AzureStoragePropertyDictionary() { }
         public string Kind { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AzureStorageInfoValue> Properties { get { throw null; } }
-    }
-    public enum AzureStorageState
-    {
-        Ok = 0,
-        InvalidCredentials = 1,
-        InvalidShare = 2,
-        NotValidated = 3,
-    }
-    public enum AzureStorageType
-    {
-        AzureFiles = 0,
-        AzureBlob = 1,
-    }
-    public partial class AzureTableStorageApplicationLogsConfig
-    {
-        public AzureTableStorageApplicationLogsConfig(System.Uri sasUri) { }
-        public Azure.ResourceManager.AppService.Models.LogLevel? Level { get { throw null; } set { } }
-        public System.Uri SasUri { get { throw null; } set { } }
-    }
-    public enum BackupItemStatus
-    {
-        InProgress = 0,
-        Failed = 1,
-        Succeeded = 2,
-        TimedOut = 3,
-        Created = 4,
-        Skipped = 5,
-        PartiallySucceeded = 6,
-        DeleteInProgress = 7,
-        DeleteFailed = 8,
-        Deleted = 9,
-    }
-    public partial class BackupRequest : Azure.ResourceManager.Models.ResourceData
-    {
-        public BackupRequest() { }
-        public string BackupName { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.BackupSchedule BackupSchedule { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DatabaseBackupSetting> Databases { get { throw null; } }
-        public bool? Enabled { get { throw null; } set { } }
-        public string IsEnabled { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AppServiceStorageAccessInfo> Properties { get { throw null; } }
     }
     public enum BackupRestoreOperationType
     {
@@ -4964,50 +4977,6 @@ namespace Azure.ResourceManager.AppService.Models
         Snapshot = 3,
         CloudFS = 4,
     }
-    public partial class BackupSchedule
-    {
-        public BackupSchedule(int frequencyInterval, Azure.ResourceManager.AppService.Models.FrequencyUnit frequencyUnit, bool keepAtLeastOneBackup, int retentionPeriodInDays) { }
-        public int FrequencyInterval { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.FrequencyUnit FrequencyUnit { get { throw null; } set { } }
-        public bool KeepAtLeastOneBackup { get { throw null; } set { } }
-        public System.DateTimeOffset? LastExecutionOn { get { throw null; } }
-        public int RetentionPeriodInDays { get { throw null; } set { } }
-        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
-    }
-    public partial class BillingMeter : Azure.ResourceManager.Models.ResourceData
-    {
-        public BillingMeter() { }
-        public string BillingLocation { get { throw null; } set { } }
-        public string FriendlyName { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
-        public string MeterId { get { throw null; } set { } }
-        public double? Multiplier { get { throw null; } set { } }
-        public string OSType { get { throw null; } set { } }
-        public string ShortName { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct BuildStatus : System.IEquatable<Azure.ResourceManager.AppService.Models.BuildStatus>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public BuildStatus(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.BuildStatus Deleting { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.BuildStatus Deploying { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.BuildStatus Detached { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.BuildStatus Failed { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.BuildStatus Ready { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.BuildStatus Uploading { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.BuildStatus WaitingForDeployment { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.BuildStatus other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.BuildStatus left, Azure.ResourceManager.AppService.Models.BuildStatus right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.BuildStatus (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.BuildStatus left, Azure.ResourceManager.AppService.Models.BuildStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public enum BuiltInAuthenticationProvider
     {
         AzureActiveDirectory = 0,
@@ -5016,33 +4985,6 @@ namespace Azure.ResourceManager.AppService.Models
         MicrosoftAccount = 3,
         Twitter = 4,
         Github = 5,
-    }
-    public partial class Capability
-    {
-        public Capability() { }
-        public string Name { get { throw null; } set { } }
-        public string Reason { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
-    }
-    public partial class CertificateDetails
-    {
-        internal CertificateDetails() { }
-        public string Issuer { get { throw null; } }
-        public System.DateTimeOffset? NotAfter { get { throw null; } }
-        public System.DateTimeOffset? NotBefore { get { throw null; } }
-        public string RawData { get { throw null; } }
-        public string SerialNumber { get { throw null; } }
-        public string SignatureAlgorithm { get { throw null; } }
-        public string Subject { get { throw null; } }
-        public string Thumbprint { get { throw null; } }
-        public int? Version { get { throw null; } }
-    }
-    public partial class CertificateEmail : Azure.ResourceManager.Models.ResourceData
-    {
-        public CertificateEmail() { }
-        public string EmailId { get { throw null; } set { } }
-        public string Kind { get { throw null; } set { } }
-        public System.DateTimeOffset? TimeStamp { get { throw null; } set { } }
     }
     public partial class CertificateOrderAction : Azure.ResourceManager.Models.ResourceData
     {
@@ -5093,14 +5035,6 @@ namespace Azure.ResourceManager.AppService.Models
     {
         StandardDomainValidatedSsl = 0,
         StandardDomainValidatedWildCardSsl = 1,
-    }
-    public enum Channel
-    {
-        Notification = 0,
-        Api = 1,
-        Email = 2,
-        Webhook = 3,
-        All = 4,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CheckNameResourceType : System.IEquatable<Azure.ResourceManager.AppService.Models.CheckNameResourceType>
@@ -5165,12 +5099,12 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public CloningInfo(Azure.Core.ResourceIdentifier sourceWebAppId) { }
         public System.Collections.Generic.IDictionary<string, string> AppSettingsOverrides { get { throw null; } }
+        public bool? CanOverwrite { get { throw null; } set { } }
         public bool? CloneCustomHostNames { get { throw null; } set { } }
         public bool? CloneSourceControl { get { throw null; } set { } }
         public bool? ConfigureLoadBalancing { get { throw null; } set { } }
         public System.Guid? CorrelationId { get { throw null; } set { } }
         public string HostingEnvironment { get { throw null; } set { } }
-        public bool? Overwrite { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceWebAppId { get { throw null; } set { } }
         public string SourceWebAppLocation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TrafficManagerProfileId { get { throw null; } set { } }
@@ -5235,7 +5169,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class ContactInformation
     {
         public ContactInformation(string email, string nameFirst, string nameLast, string phone) { }
-        public Azure.ResourceManager.AppService.Models.Address AddressMailing { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.RegistrationAddress AddressMailing { get { throw null; } set { } }
         public string Email { get { throw null; } set { } }
         public string Fax { get { throw null; } set { } }
         public string JobTitle { get { throw null; } set { } }
@@ -5470,7 +5404,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public DefaultAuthorizationPolicy() { }
         public System.Collections.Generic.IList<string> AllowedApplications { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.AllowedPrincipals AllowedPrincipals { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceAadAllowedPrincipals AllowedPrincipals { get { throw null; } set { } }
     }
     public partial class DeletedAppRestoreContent : Azure.ResourceManager.Models.ResourceData
     {
@@ -5534,7 +5468,7 @@ namespace Azure.ResourceManager.AppService.Models
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DetectorDefinition> NonCorrelatedDetectors { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AnalysisData> Payload { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AnalysisDetectorEvidences> Payload { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
     }
     public partial class DiagnosticDetectorResponse : Azure.ResourceManager.Models.ResourceData
@@ -5679,7 +5613,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class EndpointDetail
     {
         internal EndpointDetail() { }
-        public string IPAddress { get { throw null; } }
+        public System.Net.IPAddress IPAddress { get { throw null; } }
         public bool? IsAccessible { get { throw null; } }
         public double? Latency { get { throw null; } }
         public int? Port { get { throw null; } }
@@ -5841,10 +5775,10 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class GlobalCsmSkuDescription
     {
         internal GlobalCsmSkuDescription() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.Capability> Capabilities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.AppService.Models.AppServiceSkuCapability> Capabilities { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppServiceSkuCapacity Capacity { get { throw null; } }
         public string Family { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> Locations { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public string Name { get { throw null; } }
         public string Size { get { throw null; } }
         public string Tier { get { throw null; } }
@@ -5909,7 +5843,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         internal HostName() { }
         public string AzureResourceName { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.AzureResourceType? AzureResourceType { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AppServiceResourceType? AzureResourceType { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostNameType? HostNameType { get { throw null; } }
         public string Name { get { throw null; } }
@@ -5919,10 +5853,10 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public HostNameSslState() { }
         public Azure.ResourceManager.AppService.Models.HostType? HostType { get { throw null; } set { } }
-        public bool? IsToUpdate { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SslState? SslState { get { throw null; } set { } }
         public string Thumbprint { get { throw null; } set { } }
+        public bool? ToUpdate { get { throw null; } set { } }
         public string VirtualIP { get { throw null; } set { } }
     }
     public enum HostNameType
@@ -5938,7 +5872,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class HttpLogsConfig
     {
         public HttpLogsConfig() { }
-        public Azure.ResourceManager.AppService.Models.AzureBlobStorageHttpLogsConfig AzureBlobStorage { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceBlobStorageHttpLogsConfig AzureBlobStorage { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig FileSystem { get { throw null; } set { } }
     }
     public partial class HttpSettings
@@ -5958,9 +5892,9 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class IdentityProviders
     {
         public IdentityProviders() { }
-        public Azure.ResourceManager.AppService.Models.Apple Apple { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AzureActiveDirectory AzureActiveDirectory { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.AzureStaticWebApps AzureStaticWebApps { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceAppleProvider Apple { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceAadProvider AzureActiveDirectory { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceStaticWebAppsProvider AzureStaticWebApps { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.CustomOpenIdConnectProvider> CustomOpenIdConnectProviders { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.Facebook Facebook { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.GitHub GitHub { get { throw null; } set { } }
@@ -6026,13 +5960,13 @@ namespace Azure.ResourceManager.AppService.Models
         public string Action { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>> Headers { get { throw null; } }
-        public string IPAddress { get { throw null; } set { } }
+        public string IPAddressOrCidr { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public int? Priority { get { throw null; } set { } }
         public string SubnetMask { get { throw null; } set { } }
         public int? SubnetTrafficTag { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.IPFilterTag? Tag { get { throw null; } set { } }
-        public string VnetSubnetResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VnetSubnetResourceId { get { throw null; } set { } }
         public int? VnetTrafficTag { get { throw null; } set { } }
     }
     public enum IssueType
@@ -6081,7 +6015,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class KubeEnvironmentPatch : Azure.ResourceManager.Models.ResourceData
     {
         public KubeEnvironmentPatch() { }
-        public string AksResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier AksResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppLogsConfiguration AppLogsConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ArcConfiguration ArcConfiguration { get { throw null; } set { } }
         public string DefaultDomain { get { throw null; } }
@@ -6171,7 +6105,7 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.Nonce Nonce { get { throw null; } set { } }
         public bool? PreserveUrlFragmentsForLogins { get { throw null; } set { } }
         public string RoutesLogoutEndpoint { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.TokenStore TokenStore { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceTokenStore TokenStore { get { throw null; } set { } }
     }
     public enum LogLevel
     {
@@ -6411,7 +6345,7 @@ namespace Azure.ResourceManager.AppService.Models
         public PrivateAccessVirtualNetwork() { }
         public int? Key { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.PrivateAccessSubnet> Subnets { get { throw null; } }
     }
     public partial class PrivateLinkConnectionApprovalRequestInfo : Azure.ResourceManager.Models.ResourceData
@@ -6550,6 +6484,14 @@ namespace Azure.ResourceManager.AppService.Models
         public string Name { get { throw null; } set { } }
         public double? ReroutePercentage { get { throw null; } set { } }
     }
+    public enum RecommendationChannel
+    {
+        Notification = 0,
+        Api = 1,
+        Email = 2,
+        Webhook = 3,
+        All = 4,
+    }
     public enum RedundancyMode
     {
         None = 0,
@@ -6557,6 +6499,16 @@ namespace Azure.ResourceManager.AppService.Models
         Failover = 2,
         ActiveActive = 3,
         GeoRedundant = 4,
+    }
+    public partial class RegistrationAddress
+    {
+        public RegistrationAddress(string address1, string city, string country, string postalCode, string state) { }
+        public string Address1 { get { throw null; } set { } }
+        public string Address2 { get { throw null; } set { } }
+        public string City { get { throw null; } set { } }
+        public string Country { get { throw null; } set { } }
+        public string PostalCode { get { throw null; } set { } }
+        public string State { get { throw null; } set { } }
     }
     public partial class ReissueCertificateOrderContent : Azure.ResourceManager.Models.ResourceData
     {
@@ -6570,7 +6522,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class RemotePrivateEndpointConnection : Azure.ResourceManager.Models.ResourceData
     {
         public RemotePrivateEndpointConnection() { }
-        public System.Collections.Generic.IList<string> IPAddresses { get { throw null; } }
+        public System.Collections.Generic.IList<System.Net.IPAddress> IPAddresses { get { throw null; } }
         public string Kind { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.PrivateLinkConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
@@ -6694,7 +6646,7 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResponseError Error { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public Azure.ResourceManager.AppService.Models.ArmPlan Plan { get { throw null; } }
+        public Azure.ResourceManager.AppService.Models.AppServiceArmPlan Plan { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.RemotePrivateEndpointConnection Properties { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppServiceSkuDescription Sku { get { throw null; } }
         public string Status { get { throw null; } }
@@ -6707,13 +6659,13 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? AdjustConnectionStrings { get { throw null; } set { } }
         public string AppServicePlan { get { throw null; } set { } }
         public string BlobName { get { throw null; } set { } }
+        public bool? CanOverwrite { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DatabaseBackupSetting> Databases { get { throw null; } }
         public string HostingEnvironment { get { throw null; } set { } }
         public bool? IgnoreConflictingHostNames { get { throw null; } set { } }
         public bool? IgnoreDatabases { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.BackupRestoreOperationType? OperationType { get { throw null; } set { } }
-        public bool? Overwrite { get { throw null; } set { } }
         public string SiteName { get { throw null; } set { } }
         public System.Uri StorageAccountUri { get { throw null; } set { } }
     }
@@ -6849,15 +6801,15 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class SiteConfigProperties
     {
         public SiteConfigProperties() { }
-        public bool? AcrUseManagedIdentityCreds { get { throw null; } set { } }
         public string AcrUserManagedIdentityId { get { throw null; } set { } }
+        public bool? AllowIPSecurityRestrictionsForScmToUseMain { get { throw null; } set { } }
         public System.Uri ApiDefinitionUri { get { throw null; } set { } }
         public string ApiManagementConfigId { get { throw null; } set { } }
         public string AppCommandLine { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.NameValuePair> AppSettings { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AutoHealRules AutoHealRules { get { throw null; } set { } }
         public string AutoSwapSlotName { get { throw null; } set { } }
-        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AzureStorageInfoValue> AzureStorageAccounts { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.AppService.Models.AppServiceStorageAccessInfo> AzureStorageAccounts { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ConnStringInfo> ConnectionStrings { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.CorsSettings Cors { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DefaultDocuments { get { throw null; } set { } }
@@ -6905,11 +6857,11 @@ namespace Azure.ResourceManager.AppService.Models
         public string RemoteDebuggingVersion { get { throw null; } set { } }
         public System.DateTimeOffset? RequestTracingExpirationOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.IPSecurityRestriction> ScmIPSecurityRestrictions { get { throw null; } set { } }
-        public bool? ScmIPSecurityRestrictionsUseMain { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SupportedTlsVersion? ScmMinTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.ScmType? ScmType { get { throw null; } set { } }
         public string TracingOptions { get { throw null; } set { } }
         public bool? Use32BitWorkerProcess { get { throw null; } set { } }
+        public bool? UseManagedIdentityCreds { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.VirtualApplication> VirtualApplications { get { throw null; } set { } }
         public string VnetName { get { throw null; } set { } }
         public int? VnetPrivatePortsCount { get { throw null; } set { } }
@@ -6985,6 +6937,7 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsHostNameDisabled { get { throw null; } set { } }
         public bool? IsHttpsOnly { get { throw null; } set { } }
         public bool? IsHyperV { get { throw null; } set { } }
+        public bool? IsReserved { get { throw null; } set { } }
         public bool? IsScmSiteAlsoStopped { get { throw null; } set { } }
         public bool? IsStorageAccountRequired { get { throw null; } set { } }
         public bool? IsXenon { get { throw null; } set { } }
@@ -6992,11 +6945,10 @@ namespace Azure.ResourceManager.AppService.Models
         public string Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public int? MaxNumberOfWorkers { get { throw null; } }
-        public string OutboundIPAddresses { get { throw null; } }
-        public string PossibleOutboundIPAddresses { get { throw null; } }
+        public System.Net.IPAddress OutboundIPAddresses { get { throw null; } }
+        public System.Net.IPAddress PossibleOutboundIPAddresses { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.RedundancyMode? RedundancyMode { get { throw null; } set { } }
         public string RepositorySiteName { get { throw null; } }
-        public bool? Reserved { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } }
         public Azure.Core.ResourceIdentifier ServerFarmId { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SiteConfigProperties SiteConfig { get { throw null; } set { } }
@@ -7006,7 +6958,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string TargetSwapSlot { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> TrafficManagerHostNames { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.UsageState? UsageState { get { throw null; } }
-        public string VirtualNetworkSubnetId { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier VirtualNetworkSubnetId { get { throw null; } set { } }
     }
     public partial class SitePhpErrorLogFlag : Azure.ResourceManager.Models.ResourceData
     {
@@ -7070,9 +7022,9 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class SnapshotRestoreRequest : Azure.ResourceManager.Models.ResourceData
     {
         public SnapshotRestoreRequest() { }
+        public bool? CanOverwrite { get { throw null; } set { } }
         public bool? IgnoreConflictingHostNames { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
-        public bool? Overwrite { get { throw null; } set { } }
         public bool? RecoverConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.SnapshotRecoverySource RecoverySource { get { throw null; } set { } }
         public string SnapshotTime { get { throw null; } set { } }
@@ -7159,6 +7111,29 @@ namespace Azure.ResourceManager.AppService.Models
         public string GithubActionSecretNameOverride { get { throw null; } set { } }
         public string OutputLocation { get { throw null; } set { } }
         public bool? SkipGithubActionWorkflowGeneration { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StaticSiteBuildStatus : System.IEquatable<Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StaticSiteBuildStatus(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus Deleting { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus Deploying { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus Detached { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus Failed { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus Ready { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus Uploading { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus WaitingForDeployment { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus left, Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus left, Azure.ResourceManager.AppService.Models.StaticSiteBuildStatus right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class StaticSiteCustomDomainContent : Azure.ResourceManager.Models.ResourceData
     {
@@ -7342,14 +7317,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string Title { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
     }
-    public partial class TokenStore
-    {
-        public TokenStore() { }
-        public string AzureBlobStorageSasUrlSettingName { get { throw null; } set { } }
-        public string FileSystemDirectory { get { throw null; } set { } }
-        public bool? IsEnabled { get { throw null; } set { } }
-        public double? TokenRefreshExtensionHours { get { throw null; } set { } }
-    }
     public partial class TopLevelDomainAgreementOption
     {
         public TopLevelDomainAgreementOption() { }
@@ -7523,6 +7490,39 @@ namespace Azure.ResourceManager.AppService.Models
         public string Details { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public string TestName { get { throw null; } set { } }
+    }
+    public partial class WebAppBackupRequestInfo : Azure.ResourceManager.Models.ResourceData
+    {
+        public WebAppBackupRequestInfo() { }
+        public string BackupName { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WebAppBackupSchedule BackupSchedule { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.DatabaseBackupSetting> Databases { get { throw null; } }
+        public bool? IsEnabled { get { throw null; } set { } }
+        public string Kind { get { throw null; } set { } }
+        public System.Uri StorageAccountUri { get { throw null; } set { } }
+    }
+    public partial class WebAppBackupSchedule
+    {
+        public WebAppBackupSchedule(int frequencyInterval, Azure.ResourceManager.AppService.Models.FrequencyUnit frequencyUnit, bool shouldKeepAtLeastOneBackup, int retentionPeriodInDays) { }
+        public int FrequencyInterval { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.FrequencyUnit FrequencyUnit { get { throw null; } set { } }
+        public System.DateTimeOffset? LastExecutionOn { get { throw null; } }
+        public int RetentionPeriodInDays { get { throw null; } set { } }
+        public bool ShouldKeepAtLeastOneBackup { get { throw null; } set { } }
+        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+    }
+    public enum WebAppBackupStatus
+    {
+        InProgress = 0,
+        Failed = 1,
+        Succeeded = 2,
+        TimedOut = 3,
+        Created = 4,
+        Skipped = 5,
+        PartiallySucceeded = 6,
+        DeleteInProgress = 7,
+        DeleteFailed = 8,
+        Deleted = 9,
     }
     public partial class WebAppMajorVersion
     {

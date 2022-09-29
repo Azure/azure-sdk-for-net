@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="azureResourceType"> Type of the Azure resource the hostname is assigned to. </param>
         /// <param name="customHostNameDnsRecordType"> Type of the DNS record. </param>
         /// <param name="hostNameType"> Type of the hostname. </param>
-        internal HostName(string name, IReadOnlyList<string> siteNames, string azureResourceName, AzureResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, HostNameType? hostNameType)
+        internal HostName(string name, IReadOnlyList<string> siteNames, string azureResourceName, AppServiceResourceType? azureResourceType, CustomHostNameDnsRecordType? customHostNameDnsRecordType, HostNameType? hostNameType)
         {
             Name = name;
             SiteNames = siteNames;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Name of the Azure resource the hostname is assigned to. If it is assigned to a Traffic Manager then it will be the Traffic Manager name otherwise it will be the app name. </summary>
         public string AzureResourceName { get; }
         /// <summary> Type of the Azure resource the hostname is assigned to. </summary>
-        public AzureResourceType? AzureResourceType { get; }
+        public AppServiceResourceType? AzureResourceType { get; }
         /// <summary> Type of the DNS record. </summary>
         public CustomHostNameDnsRecordType? CustomHostNameDnsRecordType { get; }
         /// <summary> Type of the hostname. </summary>

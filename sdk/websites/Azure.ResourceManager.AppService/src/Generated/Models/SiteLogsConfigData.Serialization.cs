@@ -34,15 +34,15 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("httpLogs");
                 writer.WriteObjectValue(HttpLogs);
             }
-            if (Optional.IsDefined(FailedRequestsTracing))
+            if (Optional.IsDefined(IsFailedRequestsTracing))
             {
                 writer.WritePropertyName("failedRequestsTracing");
-                writer.WriteObjectValue(FailedRequestsTracing);
+                writer.WriteObjectValue(IsFailedRequestsTracing);
             }
-            if (Optional.IsDefined(DetailedErrorMessages))
+            if (Optional.IsDefined(IsDetailedErrorMessages))
             {
                 writer.WritePropertyName("detailedErrorMessages");
-                writer.WriteObjectValue(DetailedErrorMessages);
+                writer.WriteObjectValue(IsDetailedErrorMessages);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> name = default;
             Optional<IReadOnlyList<string>> siteNames = default;
             Optional<string> azureResourceName = default;
-            Optional<AzureResourceType> azureResourceType = default;
+            Optional<AppServiceResourceType> azureResourceType = default;
             Optional<CustomHostNameDnsRecordType> customHostNameDnsRecordType = default;
             Optional<HostNameType> hostNameType = default;
             foreach (var property in element.EnumerateObject())
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureResourceType = property.Value.GetString().ToAzureResourceType();
+                    azureResourceType = property.Value.GetString().ToAppServiceResourceType();
                     continue;
                 }
                 if (property.NameEquals("customHostNameDnsRecordType"))

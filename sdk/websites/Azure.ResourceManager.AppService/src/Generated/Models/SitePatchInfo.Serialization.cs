@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -50,10 +51,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("serverFarmId");
                 writer.WriteStringValue(ServerFarmId);
             }
-            if (Optional.IsDefined(Reserved))
+            if (Optional.IsDefined(IsReserved))
             {
                 writer.WritePropertyName("reserved");
-                writer.WriteBooleanValue(Reserved.Value);
+                writer.WriteBooleanValue(IsReserved.Value);
             }
             if (Optional.IsDefined(IsXenon))
             {
@@ -186,8 +187,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> clientCertExclusionPaths = default;
             Optional<bool> hostNamesDisabled = default;
             Optional<string> customDomainVerificationId = default;
-            Optional<string> outboundIPAddresses = default;
-            Optional<string> possibleOutboundIPAddresses = default;
+            Optional<IPAddress> outboundIPAddresses = default;
+            Optional<IPAddress> possibleOutboundIPAddresses = default;
             Optional<int> containerSize = default;
             Optional<int> dailyMemoryTimeQuota = default;
             Optional<DateTimeOffset> suspendedTill = default;
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<Guid> inProgressOperationId = default;
             Optional<bool> storageAccountRequired = default;
             Optional<string> keyVaultReferenceIdentity = default;
-            Optional<string> virtualNetworkSubnetId = default;
+            Optional<ResourceIdentifier> virtualNetworkSubnetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"))
@@ -491,12 +492,22 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("outboundIpAddresses"))
                         {
-                            outboundIPAddresses = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            outboundIPAddresses = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("possibleOutboundIpAddresses"))
                         {
-                            possibleOutboundIPAddresses = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            possibleOutboundIPAddresses = IPAddress.Parse(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("containerSize"))
@@ -626,7 +637,12 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("virtualNetworkSubnetId"))
                         {
-                            virtualNetworkSubnetId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            virtualNetworkSubnetId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static IdentityProviders DeserializeIdentityProviders(JsonElement element)
         {
-            Optional<AzureActiveDirectory> azureActiveDirectory = default;
+            Optional<AppServiceAadProvider> azureActiveDirectory = default;
             Optional<Facebook> facebook = default;
             Optional<GitHub> gitHub = default;
             Optional<Google> google = default;
             Optional<LegacyMicrosoftAccount> legacyMicrosoftAccount = default;
             Optional<Twitter> twitter = default;
-            Optional<Apple> apple = default;
-            Optional<AzureStaticWebApps> azureStaticWebApps = default;
+            Optional<AppServiceAppleProvider> apple = default;
+            Optional<AppServiceStaticWebAppsProvider> azureStaticWebApps = default;
             Optional<IDictionary<string, CustomOpenIdConnectProvider>> customOpenIdConnectProviders = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureActiveDirectory = AzureActiveDirectory.DeserializeAzureActiveDirectory(property.Value);
+                    azureActiveDirectory = AppServiceAadProvider.DeserializeAppServiceAadProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("facebook"))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    apple = Apple.DeserializeApple(property.Value);
+                    apple = AppServiceAppleProvider.DeserializeAppServiceAppleProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("azureStaticWebApps"))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    azureStaticWebApps = AzureStaticWebApps.DeserializeAzureStaticWebApps(property.Value);
+                    azureStaticWebApps = AppServiceStaticWebAppsProvider.DeserializeAppServiceStaticWebAppsProvider(property.Value);
                     continue;
                 }
                 if (property.NameEquals("customOpenIdConnectProviders"))

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="availabilityState"> Management information availability state for the app. </param>
         /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app&apos;s hostnames. </param>
         /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </param>
-        /// <param name="reserved"> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isReserved"> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isXenon"> Obsolete: Hyper-V sandbox. </param>
         /// <param name="isHyperV"> Hyper-V sandbox. </param>
         /// <param name="lastModifiedOn"> Last time the app was modified, in UTC. Read-only. </param>
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, ResourceIdentifier serverFarmId, bool? reserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedOn, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, string virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData)
+        internal SitePatchInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagedServiceIdentity identity, string state, IReadOnlyList<string> hostNames, string repositorySiteName, UsageState? usageState, bool? isEnabled, IReadOnlyList<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IList<HostNameSslState> hostNameSslStates, ResourceIdentifier serverFarmId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedOn, SiteConfigProperties siteConfig, IReadOnlyList<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, IPAddress outboundIPAddresses, IPAddress possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string kind) : base(id, name, resourceType, systemData)
         {
             Identity = identity;
             State = state;
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
             AvailabilityState = availabilityState;
             HostNameSslStates = hostNameSslStates;
             ServerFarmId = serverFarmId;
-            Reserved = reserved;
+            IsReserved = isReserved;
             IsXenon = isXenon;
             IsHyperV = isHyperV;
             LastModifiedOn = lastModifiedOn;
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Resource ID of the associated App Service plan, formatted as: &quot;/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}&quot;. </summary>
         public ResourceIdentifier ServerFarmId { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
-        public bool? Reserved { get; set; }
+        public bool? IsReserved { get; set; }
         /// <summary> Obsolete: Hyper-V sandbox. </summary>
         public bool? IsXenon { get; set; }
         /// <summary> Hyper-V sandbox. </summary>
@@ -201,9 +202,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </summary>
         public string CustomDomainVerificationId { get; set; }
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </summary>
-        public string OutboundIPAddresses { get; }
+        public IPAddress OutboundIPAddresses { get; }
         /// <summary> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </summary>
-        public string PossibleOutboundIPAddresses { get; }
+        public IPAddress PossibleOutboundIPAddresses { get; }
         /// <summary> Size of the function container. </summary>
         public int? ContainerSize { get; set; }
         /// <summary> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </summary>
@@ -242,7 +243,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
         /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </summary>
-        public string VirtualNetworkSubnetId { get; set; }
+        public ResourceIdentifier VirtualNetworkSubnetId { get; set; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

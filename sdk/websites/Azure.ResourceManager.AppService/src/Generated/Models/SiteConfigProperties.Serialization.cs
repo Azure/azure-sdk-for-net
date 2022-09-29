@@ -190,12 +190,12 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("httpLoggingEnabled");
                 }
             }
-            if (Optional.IsDefined(AcrUseManagedIdentityCreds))
+            if (Optional.IsDefined(UseManagedIdentityCreds))
             {
-                if (AcrUseManagedIdentityCreds != null)
+                if (UseManagedIdentityCreds != null)
                 {
                     writer.WritePropertyName("acrUseManagedIdentityCreds");
-                    writer.WriteBooleanValue(AcrUseManagedIdentityCreds.Value);
+                    writer.WriteBooleanValue(UseManagedIdentityCreds.Value);
                 }
                 else
                 {
@@ -688,12 +688,12 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("scmIpSecurityRestrictions");
                 }
             }
-            if (Optional.IsDefined(ScmIPSecurityRestrictionsUseMain))
+            if (Optional.IsDefined(AllowIPSecurityRestrictionsForScmToUseMain))
             {
-                if (ScmIPSecurityRestrictionsUseMain != null)
+                if (AllowIPSecurityRestrictionsForScmToUseMain != null)
                 {
                     writer.WritePropertyName("scmIpSecurityRestrictionsUseMain");
-                    writer.WriteBooleanValue(ScmIPSecurityRestrictionsUseMain.Value);
+                    writer.WriteBooleanValue(AllowIPSecurityRestrictionsForScmToUseMain.Value);
                 }
                 else
                 {
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<int?> vnetPrivatePortsCount = default;
             Optional<CorsSettings> cors = default;
             Optional<PushSettings> push = default;
-            Optional<ApiDefinitionInfo> apiDefinition = default;
+            Optional<AppServiceApiDefinitionInfo> apiDefinition = default;
             Optional<ApiManagementConfig> apiManagementConfig = default;
             Optional<string> autoSwapSlotName = default;
             Optional<bool?> localMySqlEnabled = default;
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<bool?> functionsRuntimeScaleMonitoringEnabled = default;
             Optional<string> websiteTimeZone = default;
             Optional<int?> minimumElasticInstanceCount = default;
-            Optional<IDictionary<string, AzureStorageInfoValue>> azureStorageAccounts = default;
+            Optional<IDictionary<string, AppServiceStorageAccessInfo>> azureStorageAccounts = default;
             Optional<string> publicNetworkAccess = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -1406,7 +1406,7 @@ namespace Azure.ResourceManager.AppService.Models
                         apiDefinition = null;
                         continue;
                     }
-                    apiDefinition = ApiDefinitionInfo.DeserializeApiDefinitionInfo(property.Value);
+                    apiDefinition = AppServiceApiDefinitionInfo.DeserializeAppServiceApiDefinitionInfo(property.Value);
                     continue;
                 }
                 if (property.NameEquals("apiManagementConfig"))
@@ -1616,10 +1616,10 @@ namespace Azure.ResourceManager.AppService.Models
                         azureStorageAccounts = null;
                         continue;
                     }
-                    Dictionary<string, AzureStorageInfoValue> dictionary = new Dictionary<string, AzureStorageInfoValue>();
+                    Dictionary<string, AppServiceStorageAccessInfo> dictionary = new Dictionary<string, AppServiceStorageAccessInfo>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, AzureStorageInfoValue.DeserializeAzureStorageInfoValue(property0.Value));
+                        dictionary.Add(property0.Name, AppServiceStorageAccessInfo.DeserializeAppServiceStorageAccessInfo(property0.Value));
                     }
                     azureStorageAccounts = dictionary;
                     continue;

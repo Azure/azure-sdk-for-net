@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.AppService
             Optional<string> siteName = default;
             Optional<string> domainId = default;
             Optional<string> azureResourceName = default;
-            Optional<AzureResourceType> azureResourceType = default;
+            Optional<AppServiceResourceType> azureResourceType = default;
             Optional<CustomHostNameDnsRecordType> customHostNameDnsRecordType = default;
             Optional<HostNameType> hostNameType = default;
             Optional<SslState> sslState = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            azureResourceType = property0.Value.GetString().ToAzureResourceType();
+                            azureResourceType = property0.Value.GetString().ToAppServiceResourceType();
                             continue;
                         }
                         if (property0.NameEquals("customHostNameDnsRecordType"))

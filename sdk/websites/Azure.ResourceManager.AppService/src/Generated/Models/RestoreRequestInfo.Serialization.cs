@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("blobName");
                 writer.WriteStringValue(BlobName);
             }
-            if (Optional.IsDefined(Overwrite))
+            if (Optional.IsDefined(CanOverwrite))
             {
                 writer.WritePropertyName("overwrite");
-                writer.WriteBooleanValue(Overwrite.Value);
+                writer.WriteBooleanValue(CanOverwrite.Value);
             }
             if (Optional.IsDefined(SiteName))
             {
