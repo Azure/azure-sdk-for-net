@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(BillingLocation))
             {
                 writer.WritePropertyName("billingLocation");
-                writer.WriteStringValue(BillingLocation);
+                writer.WriteStringValue(BillingLocation.Value);
             }
             if (Optional.IsDefined(ShortName))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Models
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<Guid> meterId = default;
-            Optional<string> billingLocation = default;
+            Optional<AzureLocation> billingLocation = default;
             Optional<string> shortName = default;
             Optional<string> friendlyName = default;
             Optional<string> osType = default;
@@ -124,7 +124,12 @@ namespace Azure.ResourceManager.AppService.Models
                         }
                         if (property0.NameEquals("billingLocation"))
                         {
-                            billingLocation = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            billingLocation = new AzureLocation(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("shortName"))
@@ -156,7 +161,7 @@ namespace Azure.ResourceManager.AppService.Models
                     continue;
                 }
             }
-            return new AppServiceBillingMeter(id, name, type, systemData.Value, Optional.ToNullable(meterId), billingLocation.Value, shortName.Value, friendlyName.Value, osType.Value, Optional.ToNullable(multiplier), kind.Value);
+            return new AppServiceBillingMeter(id, name, type, systemData.Value, Optional.ToNullable(meterId), Optional.ToNullable(billingLocation), shortName.Value, friendlyName.Value, osType.Value, Optional.ToNullable(multiplier), kind.Value);
         }
     }
 }

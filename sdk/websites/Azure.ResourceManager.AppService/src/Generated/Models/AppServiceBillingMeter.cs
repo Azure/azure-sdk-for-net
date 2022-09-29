@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="osType"> App Service OS type meter used for. </param>
         /// <param name="multiplier"> Meter Multiplier. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceBillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? meterId, string billingLocation, string shortName, string friendlyName, string osType, double? multiplier, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceBillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? meterId, AzureLocation? billingLocation, string shortName, string friendlyName, string osType, double? multiplier, string kind) : base(id, name, resourceType, systemData)
         {
             MeterId = meterId;
             BillingLocation = billingLocation;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Meter GUID onboarded in Commerce. </summary>
         public Guid? MeterId { get; set; }
         /// <summary> Azure Location of billable resource. </summary>
-        public string BillingLocation { get; set; }
+        public AzureLocation? BillingLocation { get; set; }
         /// <summary> Short Name from App Service Azure pricing Page. </summary>
         public string ShortName { get; set; }
         /// <summary> Friendly name of the meter. </summary>

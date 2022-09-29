@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService.Models
         internal static AppServiceAadLoginFlow DeserializeAppServiceAadLoginFlow(JsonElement element)
         {
             Optional<IList<string>> loginParameters = default;
-            Optional<bool> disableWwwAuthenticate = default;
+            Optional<bool> disableWWWAuthenticate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loginParameters"))
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    disableWwwAuthenticate = property.Value.GetBoolean();
+                    disableWWWAuthenticate = property.Value.GetBoolean();
                     continue;
                 }
             }
-            return new AppServiceAadLoginFlow(Optional.ToList(loginParameters), Optional.ToNullable(disableWwwAuthenticate));
+            return new AppServiceAadLoginFlow(Optional.ToList(loginParameters), Optional.ToNullable(disableWWWAuthenticate));
         }
     }
 }

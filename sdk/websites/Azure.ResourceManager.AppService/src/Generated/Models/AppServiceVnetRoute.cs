@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// These values will be used for syncing an app&apos;s routes with those from a Virtual Network.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceVnetRoute(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startAddress, string endAddress, RouteType? routeType, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceVnetRoute(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string startAddress, string endAddress, AppServiceVnetRouteType? routeType, string kind) : base(id, name, resourceType, systemData)
         {
             StartAddress = startAddress;
             EndAddress = endAddress;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// 
         /// These values will be used for syncing an app&apos;s routes with those from a Virtual Network.
         /// </summary>
-        public RouteType? RouteType { get; set; }
+        public AppServiceVnetRouteType? RouteType { get; set; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

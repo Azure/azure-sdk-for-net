@@ -28,14 +28,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceTableStorageApplicationLogsConfig. </summary>
         /// <param name="level"> Log level. </param>
         /// <param name="sasUri"> SAS URL to an Azure table with add/query/delete permissions. </param>
-        internal AppServiceTableStorageApplicationLogsConfig(LogLevel? level, Uri sasUri)
+        internal AppServiceTableStorageApplicationLogsConfig(WebAppLogLevel? level, Uri sasUri)
         {
             Level = level;
             SasUri = sasUri;
         }
 
         /// <summary> Log level. </summary>
-        public LogLevel? Level { get; set; }
+        public WebAppLogLevel? Level { get; set; }
         /// <summary> SAS URL to an Azure table with add/query/delete permissions. </summary>
         public Uri SasUri { get; set; }
     }

@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<SystemData> systemData = default;
             Optional<string> startAddress = default;
             Optional<string> endAddress = default;
-            Optional<RouteType> routeType = default;
+            Optional<AppServiceVnetRouteType> routeType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            routeType = new RouteType(property0.Value.GetString());
+                            routeType = new AppServiceVnetRouteType(property0.Value.GetString());
                             continue;
                         }
                     }

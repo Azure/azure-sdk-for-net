@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
         public AppServiceEnvironmentAddressResult()
         {
             OutboundIPAddresses = new ChangeTrackingList<IPAddress>();
-            VipMappings = new ChangeTrackingList<VirtualIPMapping>();
+            VirtualIPMappings = new ChangeTrackingList<VirtualIPMapping>();
         }
 
         /// <summary> Initializes a new instance of AppServiceEnvironmentAddressResult. </summary>
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="serviceIPAddress"> Main public virtual IP. </param>
         /// <param name="internalIPAddress"> Virtual Network internal IP address of the App Service Environment if it is in internal load-balancing mode. </param>
         /// <param name="outboundIPAddresses"> IP addresses appearing on outbound connections. </param>
-        /// <param name="vipMappings"> Additional virtual IPs. </param>
+        /// <param name="virtualIPMappings"> Additional virtual IPs. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceEnvironmentAddressResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress serviceIPAddress, IPAddress internalIPAddress, IList<IPAddress> outboundIPAddresses, IList<VirtualIPMapping> vipMappings, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceEnvironmentAddressResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress serviceIPAddress, IPAddress internalIPAddress, IList<IPAddress> outboundIPAddresses, IList<VirtualIPMapping> virtualIPMappings, string kind) : base(id, name, resourceType, systemData)
         {
             ServiceIPAddress = serviceIPAddress;
             InternalIPAddress = internalIPAddress;
             OutboundIPAddresses = outboundIPAddresses;
-            VipMappings = vipMappings;
+            VirtualIPMappings = virtualIPMappings;
             Kind = kind;
         }
 
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> IP addresses appearing on outbound connections. </summary>
         public IList<IPAddress> OutboundIPAddresses { get; }
         /// <summary> Additional virtual IPs. </summary>
-        public IList<VirtualIPMapping> VipMappings { get; }
+        public IList<VirtualIPMapping> VirtualIPMappings { get; }
         /// <summary> Kind of resource. </summary>
         public string Kind { get; set; }
     }

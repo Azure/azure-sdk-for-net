@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Log level. </summary>
-    public enum LogLevel
+    public enum WebAppLogLevel
     {
         /// <summary> Off. </summary>
         Off,

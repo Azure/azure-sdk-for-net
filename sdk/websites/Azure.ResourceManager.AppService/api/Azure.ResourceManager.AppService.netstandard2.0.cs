@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.AppService
     {
         public AppServicePlanData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
-        public System.DateTimeOffset? FreeOfferExpiredOn { get { throw null; } set { } }
+        public System.DateTimeOffset? FreeOfferExpireOn { get { throw null; } set { } }
         public string GeoRegion { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.HostingEnvironmentProfile HostingEnvironmentProfile { get { throw null; } set { } }
         public bool? IsElasticScaleEnabled { get { throw null; } set { } }
@@ -3117,6 +3117,7 @@ namespace Azure.ResourceManager.AppService
     {
         public WebAppBackupData() { }
         public int? BackupId { get { throw null; } }
+        public string BackupName { get { throw null; } }
         public string BlobName { get { throw null; } }
         public string CorrelationId { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -3126,7 +3127,6 @@ namespace Azure.ResourceManager.AppService
         public string Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LastRestoreOn { get { throw null; } }
         public string Log { get { throw null; } }
-        public string NamePropertiesName { get { throw null; } }
         public long? SizeInBytes { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.WebAppBackupStatus? Status { get { throw null; } }
         public System.Uri StorageAccountUri { get { throw null; } }
@@ -4380,7 +4380,7 @@ namespace Azure.ResourceManager.AppService.Models
         public ApplicationLogsConfig() { }
         public Azure.ResourceManager.AppService.Models.AppServiceBlobStorageApplicationLogsConfig AzureBlobStorage { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceTableStorageApplicationLogsConfig AzureTableStorage { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.LogLevel? FileSystemLevel { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WebAppLogLevel? FileSystemLevel { get { throw null; } set { } }
     }
     public partial class ApplicationStack
     {
@@ -4401,7 +4401,7 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.ApplicationStack> IsDeprecated { get { throw null; } }
         public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.StackMajorVersion> MajorVersions { get { throw null; } }
-        public string NamePropertiesName { get { throw null; } set { } }
+        public string StackName { get { throw null; } set { } }
     }
     public partial class AppLogsConfiguration
     {
@@ -4478,7 +4478,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class AppServiceBillingMeter : Azure.ResourceManager.Models.ResourceData
     {
         public AppServiceBillingMeter() { }
-        public string BillingLocation { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? BillingLocation { get { throw null; } set { } }
         public string FriendlyName { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public System.Guid? MeterId { get { throw null; } set { } }
@@ -4489,7 +4489,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class AppServiceBlobStorageApplicationLogsConfig
     {
         public AppServiceBlobStorageApplicationLogsConfig() { }
-        public Azure.ResourceManager.AppService.Models.LogLevel? Level { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WebAppLogLevel? Level { get { throw null; } set { } }
         public int? RetentionInDays { get { throw null; } set { } }
         public System.Uri SasUri { get { throw null; } set { } }
     }
@@ -4705,7 +4705,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Net.IPAddress> OutboundIPAddresses { get { throw null; } }
         public System.Net.IPAddress ServiceIPAddress { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.VirtualIPMapping> VipMappings { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.VirtualIPMapping> VirtualIPMappings { get { throw null; } }
     }
     public partial class AppServiceEnvironmentPatch : Azure.ResourceManager.Models.ResourceData
     {
@@ -5058,7 +5058,7 @@ namespace Azure.ResourceManager.AppService.Models
     public partial class AppServiceTableStorageApplicationLogsConfig
     {
         public AppServiceTableStorageApplicationLogsConfig(System.Uri sasUri) { }
-        public Azure.ResourceManager.AppService.Models.LogLevel? Level { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.WebAppLogLevel? Level { get { throw null; } set { } }
         public System.Uri SasUri { get { throw null; } set { } }
     }
     public partial class AppServiceTokenStore
@@ -5131,8 +5131,27 @@ namespace Azure.ResourceManager.AppService.Models
         public AppServiceVnetRoute() { }
         public string EndAddress { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
-        public Azure.ResourceManager.AppService.Models.RouteType? RouteType { get { throw null; } set { } }
+        public Azure.ResourceManager.AppService.Models.AppServiceVnetRouteType? RouteType { get { throw null; } set { } }
         public string StartAddress { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppServiceVnetRouteType : System.IEquatable<Azure.ResourceManager.AppService.Models.AppServiceVnetRouteType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppServiceVnetRouteType(string value) { throw null; }
+        public static Azure.ResourceManager.AppService.Models.AppServiceVnetRouteType Default { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceVnetRouteType Inherited { get { throw null; } }
+        public static Azure.ResourceManager.AppService.Models.AppServiceVnetRouteType Static { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppService.Models.AppServiceVnetRouteType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppService.Models.AppServiceVnetRouteType left, Azure.ResourceManager.AppService.Models.AppServiceVnetRouteType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppService.Models.AppServiceVnetRouteType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppService.Models.AppServiceVnetRouteType left, Azure.ResourceManager.AppService.Models.AppServiceVnetRouteType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AppSnapshot : Azure.ResourceManager.Models.ResourceData
     {
@@ -5346,7 +5365,7 @@ namespace Azure.ResourceManager.AppService.Models
         public System.Guid? CorrelationId { get { throw null; } set { } }
         public string HostingEnvironment { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SourceWebAppId { get { throw null; } set { } }
-        public string SourceWebAppLocation { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? SourceWebAppLocation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier TrafficManagerProfileId { get { throw null; } set { } }
         public string TrafficManagerProfileName { get { throw null; } set { } }
     }
@@ -5382,16 +5401,16 @@ namespace Azure.ResourceManager.AppService.Models
     public enum ConnectionStringType
     {
         MySql = 0,
-        SQLServer = 1,
-        SQLAzure = 2,
+        SqlServer = 1,
+        SqlAzure = 2,
         Custom = 3,
         NotificationHub = 4,
         ServiceBus = 5,
         EventHub = 6,
         ApiHub = 7,
-        DocDb = 8,
+        DocDB = 8,
         RedisCache = 9,
-        PostgreSQL = 10,
+        PostgreSql = 10,
     }
     public partial class ConnStringInfo
     {
@@ -6190,14 +6209,6 @@ namespace Azure.ResourceManager.AppService.Models
         public string NonceExpirationInterval { get { throw null; } set { } }
         public bool? ValidateNonce { get { throw null; } set { } }
     }
-    public enum LogLevel
-    {
-        Off = 0,
-        Verbose = 1,
-        Information = 2,
-        Warning = 3,
-        Error = 4,
-    }
     public partial class LogSpecification
     {
         internal LogSpecification() { }
@@ -6658,25 +6669,6 @@ namespace Azure.ResourceManager.AppService.Models
         public Azure.ResourceManager.AppService.Models.BackupRestoreOperationType? OperationType { get { throw null; } set { } }
         public string SiteName { get { throw null; } set { } }
         public System.Uri StorageAccountUri { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct RouteType : System.IEquatable<Azure.ResourceManager.AppService.Models.RouteType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public RouteType(string value) { throw null; }
-        public static Azure.ResourceManager.AppService.Models.RouteType Default { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.RouteType Inherited { get { throw null; } }
-        public static Azure.ResourceManager.AppService.Models.RouteType Static { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppService.Models.RouteType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppService.Models.RouteType left, Azure.ResourceManager.AppService.Models.RouteType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppService.Models.RouteType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppService.Models.RouteType left, Azure.ResourceManager.AppService.Models.RouteType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class SampleUtterance
     {
@@ -7477,6 +7469,14 @@ namespace Azure.ResourceManager.AppService.Models
         public string RoutesLogoutEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceTokenStore TokenStore { get { throw null; } set { } }
     }
+    public enum WebAppLogLevel
+    {
+        Off = 0,
+        Verbose = 1,
+        Information = 2,
+        Warning = 3,
+        Error = 4,
+    }
     public partial class WebAppMajorVersion
     {
         internal WebAppMajorVersion() { }
@@ -7495,7 +7495,7 @@ namespace Azure.ResourceManager.AppService.Models
     {
         public WebAppMSDeploy() { }
         public string ConnectionString { get { throw null; } set { } }
-        public string DbType { get { throw null; } set { } }
+        public string DBType { get { throw null; } set { } }
         public bool? IsAppOffline { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
         public System.Uri PackageUri { get { throw null; } set { } }

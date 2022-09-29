@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("connectionString");
                 writer.WriteStringValue(ConnectionString);
             }
-            if (Optional.IsDefined(DbType))
+            if (Optional.IsDefined(DBType))
             {
                 writer.WritePropertyName("dbType");
-                writer.WriteStringValue(DbType);
+                writer.WriteStringValue(DBType);
             }
             if (Optional.IsDefined(SetParametersXmlFileUri))
             {

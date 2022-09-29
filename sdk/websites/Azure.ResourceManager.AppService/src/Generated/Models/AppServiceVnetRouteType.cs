@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.AppService.Models
     /// 
     /// These values will be used for syncing an app&apos;s routes with those from a Virtual Network.
     /// </summary>
-    public readonly partial struct RouteType : IEquatable<RouteType>
+    public readonly partial struct AppServiceVnetRouteType : IEquatable<AppServiceVnetRouteType>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="RouteType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVnetRouteType"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RouteType(string value)
+        public AppServiceVnetRouteType(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -34,23 +34,23 @@ namespace Azure.ResourceManager.AppService.Models
         private const string StaticValue = "STATIC";
 
         /// <summary> DEFAULT. </summary>
-        public static RouteType Default { get; } = new RouteType(DefaultValue);
+        public static AppServiceVnetRouteType Default { get; } = new AppServiceVnetRouteType(DefaultValue);
         /// <summary> INHERITED. </summary>
-        public static RouteType Inherited { get; } = new RouteType(InheritedValue);
+        public static AppServiceVnetRouteType Inherited { get; } = new AppServiceVnetRouteType(InheritedValue);
         /// <summary> STATIC. </summary>
-        public static RouteType Static { get; } = new RouteType(StaticValue);
-        /// <summary> Determines if two <see cref="RouteType"/> values are the same. </summary>
-        public static bool operator ==(RouteType left, RouteType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="RouteType"/> values are not the same. </summary>
-        public static bool operator !=(RouteType left, RouteType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RouteType"/>. </summary>
-        public static implicit operator RouteType(string value) => new RouteType(value);
+        public static AppServiceVnetRouteType Static { get; } = new AppServiceVnetRouteType(StaticValue);
+        /// <summary> Determines if two <see cref="AppServiceVnetRouteType"/> values are the same. </summary>
+        public static bool operator ==(AppServiceVnetRouteType left, AppServiceVnetRouteType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="AppServiceVnetRouteType"/> values are not the same. </summary>
+        public static bool operator !=(AppServiceVnetRouteType left, AppServiceVnetRouteType right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="AppServiceVnetRouteType"/>. </summary>
+        public static implicit operator AppServiceVnetRouteType(string value) => new AppServiceVnetRouteType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RouteType other && Equals(other);
+        public override bool Equals(object obj) => obj is AppServiceVnetRouteType other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(RouteType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AppServiceVnetRouteType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

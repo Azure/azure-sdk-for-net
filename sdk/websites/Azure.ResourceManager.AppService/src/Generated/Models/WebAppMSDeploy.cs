@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;
-            DbType = dbType;
+            DBType = dbType;
             SetParametersXmlFileUri = setParametersXmlFileUri;
             SetParameters = setParameters;
             SkipAppData = skipAppData;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> SQL Connection String. </summary>
         public string ConnectionString { get; set; }
         /// <summary> Database Type. </summary>
-        public string DbType { get; set; }
+        public string DBType { get; set; }
         /// <summary> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </summary>
         public Uri SetParametersXmlFileUri { get; set; }
         /// <summary> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </summary>

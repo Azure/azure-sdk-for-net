@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// /subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/trafficManagerProfiles/{profileName}.
         /// </param>
         /// <param name="trafficManagerProfileName"> Name of Traffic Manager profile to create. This is only needed if Traffic Manager profile does not already exist. </param>
-        internal CloningInfo(Guid? correlationId, bool? canOverwrite, bool? cloneCustomHostNames, bool? cloneSourceControl, ResourceIdentifier sourceWebAppId, string sourceWebAppLocation, string hostingEnvironment, IDictionary<string, string> appSettingsOverrides, bool? configureLoadBalancing, ResourceIdentifier trafficManagerProfileId, string trafficManagerProfileName)
+        internal CloningInfo(Guid? correlationId, bool? canOverwrite, bool? cloneCustomHostNames, bool? cloneSourceControl, ResourceIdentifier sourceWebAppId, AzureLocation? sourceWebAppLocation, string hostingEnvironment, IDictionary<string, string> appSettingsOverrides, bool? configureLoadBalancing, ResourceIdentifier trafficManagerProfileId, string trafficManagerProfileName)
         {
             CorrelationId = correlationId;
             CanOverwrite = canOverwrite;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public ResourceIdentifier SourceWebAppId { get; set; }
         /// <summary> Location of source app ex: West US or North Europe. </summary>
-        public string SourceWebAppLocation { get; set; }
+        public AzureLocation? SourceWebAppLocation { get; set; }
         /// <summary> App Service Environment. </summary>
         public string HostingEnvironment { get; set; }
         /// <summary>

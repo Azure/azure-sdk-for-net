@@ -8569,7 +8569,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetInstanceMSDeployStatusRequest(string subscriptionId, string resourceGroupName, string name, string instanceId)
+        internal HttpMessage CreateGetInstanceMsDeployStatusRequest(string subscriptionId, string resourceGroupName, string name, string instanceId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -8600,14 +8600,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MSDeployStatusData>> GetInstanceMSDeployStatusAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<MSDeployStatusData>> GetInstanceMsDeployStatusAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
-            using var message = CreateGetInstanceMSDeployStatusRequest(subscriptionId, resourceGroupName, name, instanceId);
+            using var message = CreateGetInstanceMsDeployStatusRequest(subscriptionId, resourceGroupName, name, instanceId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -8633,14 +8633,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MSDeployStatusData> GetInstanceMSDeployStatus(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
+        public Response<MSDeployStatusData> GetInstanceMsDeployStatus(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
-            using var message = CreateGetInstanceMSDeployStatusRequest(subscriptionId, resourceGroupName, name, instanceId);
+            using var message = CreateGetInstanceMsDeployStatusRequest(subscriptionId, resourceGroupName, name, instanceId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -22821,7 +22821,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetInstanceMSDeployStatusSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId)
+        internal HttpMessage CreateGetInstanceMsDeployStatusSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -22855,7 +22855,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MSDeployStatusData>> GetInstanceMSDeployStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<MSDeployStatusData>> GetInstanceMsDeployStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -22863,7 +22863,7 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
-            using var message = CreateGetInstanceMSDeployStatusSlotRequest(subscriptionId, resourceGroupName, name, slot, instanceId);
+            using var message = CreateGetInstanceMsDeployStatusSlotRequest(subscriptionId, resourceGroupName, name, slot, instanceId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -22890,7 +22890,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MSDeployStatusData> GetInstanceMSDeployStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
+        public Response<MSDeployStatusData> GetInstanceMsDeployStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -22898,7 +22898,7 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
-            using var message = CreateGetInstanceMSDeployStatusSlotRequest(subscriptionId, resourceGroupName, name, slot, instanceId);
+            using var message = CreateGetInstanceMsDeployStatusSlotRequest(subscriptionId, resourceGroupName, name, slot, instanceId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

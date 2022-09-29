@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Application logs to file system configuration. </summary>
         internal FileSystemApplicationLogsConfig FileSystem { get; set; }
         /// <summary> Log level. </summary>
-        public LogLevel? FileSystemLevel
+        public WebAppLogLevel? FileSystemLevel
         {
             get => FileSystem is null ? default : FileSystem.Level;
             set

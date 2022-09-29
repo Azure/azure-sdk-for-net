@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="backupId"> Id of the backup. </param>
         /// <param name="storageAccountUri"> SAS URL for the storage account container which contains this backup. </param>
         /// <param name="blobName"> Name of the blob which contains data for this backup. </param>
-        /// <param name="namePropertiesName"> Name of this backup. </param>
+        /// <param name="backupName"> Name of this backup. </param>
         /// <param name="status"> Backup status. </param>
         /// <param name="sizeInBytes"> Size of the backup in bytes. </param>
         /// <param name="createdOn"> Timestamp of the backup creation. </param>
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="correlationId"> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </param>
         /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal WebAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? backupId, Uri storageAccountUri, string blobName, string namePropertiesName, WebAppBackupStatus? status, long? sizeInBytes, DateTimeOffset? createdOn, string log, IReadOnlyList<AppServiceDatabaseBackupSetting> databases, bool? isScheduled, DateTimeOffset? lastRestoreOn, DateTimeOffset? finishedOn, string correlationId, long? websiteSizeInBytes, string kind) : base(id, name, resourceType, systemData)
+        internal WebAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? backupId, Uri storageAccountUri, string blobName, string backupName, WebAppBackupStatus? status, long? sizeInBytes, DateTimeOffset? createdOn, string log, IReadOnlyList<AppServiceDatabaseBackupSetting> databases, bool? isScheduled, DateTimeOffset? lastRestoreOn, DateTimeOffset? finishedOn, string correlationId, long? websiteSizeInBytes, string kind) : base(id, name, resourceType, systemData)
         {
             BackupId = backupId;
             StorageAccountUri = storageAccountUri;
             BlobName = blobName;
-            NamePropertiesName = namePropertiesName;
+            BackupName = backupName;
             Status = status;
             SizeInBytes = sizeInBytes;
             CreatedOn = createdOn;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Name of the blob which contains data for this backup. </summary>
         public string BlobName { get; }
         /// <summary> Name of this backup. </summary>
-        public string NamePropertiesName { get; }
+        public string BackupName { get; }
         /// <summary> Backup status. </summary>
         public WebAppBackupStatus? Status { get; }
         /// <summary> Size of the backup in bytes. </summary>

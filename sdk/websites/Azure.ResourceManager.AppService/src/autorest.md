@@ -161,8 +161,8 @@ rename-rules:
   URI: Uri
   Etag: ETag|etag
   Ipssl: IPSsl|ipSsl
-  WWW: Www
-  Ms: MS
+  Db: DB
+  SQL: Sql
 
 rename-mapping:
 # site and site related
@@ -249,7 +249,7 @@ rename-mapping:
   Domain.properties.expirationTime: ExpireOn
   Domain.properties.autoRenew: IsAutoRenew
   AppServicePlan.properties.elasticScaleEnabled: IsElasticScaleEnabled
-  AppServicePlan.properties.freeOfferExpirationTime: FreeOfferExpiredOn
+  AppServicePlan.properties.freeOfferExpirationTime: FreeOfferExpireOn
   AppServicePlan.properties.hyperV: IsHyperV
   AppServicePlan.properties.perSiteScaling: IsPerSiteScaling
   AppServicePlan.properties.reserved: IsReserved
@@ -302,7 +302,7 @@ rename-mapping:
   AppServicePlanPatchResource.properties.zoneRedundant: IsZoneRedundant
   AuthPlatform.enabled: IsEnabled
   AzureActiveDirectory.enabled: IsEnabled
-  AzureActiveDirectoryLogin.disableWWWAuthenticate: IsWWWAuthenticateDisabled
+  AzureActiveDirectoryLogin.disableWWWAuthenticate: IsWwwAuthenticateDisabled
   AzureBlobStorageHttpLogsConfig.enabled: IsEnabled
   AzureStaticWebApps.enabled: IsEnabled
   CertificatePatchResource.properties.valid: IsValid
@@ -358,6 +358,11 @@ rename-mapping:
   VnetInfo.resyncRequired: IsResyncRequired
   VnetValidationFailureDetails.properties.failed: IsFailed
   WebAppRuntimeSettings.remoteDebuggingSupported: IsRemoteDebuggingSupported
+  BackupItem.properties.name: BackupName
+  ApplicationStackResource.properties.name: StackName
+  BillingMeter.properties.billingLocation: -|azure-location
+  AddressResponse.properties.vipMappings: VirtualIPMappings
+  CloningInfo.sourceWebAppLocation: -|azure-location
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties
   AppServiceCertificateResource: AppServiceCertificate
@@ -450,6 +455,7 @@ rename-mapping:
   IdentifierCollection: AppServiceIdentifierListResult
   Twitter: AppServiceTwitterProvider
   InsightStatus: DetectorInsightStatus
+  LogLevel: WebAppLogLevel
   MSDeploy: WebAppMSDeploy
   MSDeployLog: WebAppMSDeployLog
   MSDeployLogEntry: WebAppMSDeployLogEntry
@@ -461,6 +467,7 @@ rename-mapping:
   Rendering: DiagnosticDataRendering
   RenderingType: DiagnosticDataRenderingType
   ResourceCollection: AppServicePlanResourceListResult
+  RouteType: AppServiceVnetRouteType
   Solution: DiagnosticSolution
   SslState: HostNameBindingSslState
   StorageType: ArtifactStorageType

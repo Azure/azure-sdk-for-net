@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(VipMappings))
+            if (Optional.IsCollectionDefined(VirtualIPMappings))
             {
                 writer.WritePropertyName("vipMappings");
                 writer.WriteStartArray();
-                foreach (var item in VipMappings)
+                foreach (var item in VirtualIPMappings)
                 {
                     writer.WriteObjectValue(item);
                 }
