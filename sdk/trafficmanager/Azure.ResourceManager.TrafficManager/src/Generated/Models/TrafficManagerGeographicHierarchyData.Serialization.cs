@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.TrafficManager
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type");
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
@@ -44,15 +44,20 @@ namespace Azure.ResourceManager.TrafficManager
 
         internal static TrafficManagerGeographicHierarchyData DeserializeTrafficManagerGeographicHierarchyData(JsonElement element)
         {
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<Region> geographicHierarchy = default;
+            Optional<ResourceType> type = default;
+            Optional<TrafficManagerRegion> geographicHierarchy = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"))
@@ -62,7 +67,12 @@ namespace Azure.ResourceManager.TrafficManager
                 }
                 if (property.NameEquals("type"))
                 {
-                    type = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    type = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
@@ -81,14 +91,14 @@ namespace Azure.ResourceManager.TrafficManager
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            geographicHierarchy = Region.DeserializeRegion(property0.Value);
+                            geographicHierarchy = TrafficManagerRegion.DeserializeTrafficManagerRegion(property0.Value);
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new TrafficManagerGeographicHierarchyData(id.Value, name.Value, type.Value, geographicHierarchy.Value);
+            return new TrafficManagerGeographicHierarchyData(id.Value, name.Value, Optional.ToNullable(type), geographicHierarchy.Value);
         }
     }
 }

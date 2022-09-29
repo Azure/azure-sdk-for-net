@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Marketplace.Models
     {
         internal static SubscriptionsResponse DeserializeSubscriptionsResponse(JsonElement element)
         {
-            Optional<IReadOnlyList<Subscription>> value = default;
+            Optional<IReadOnlyList<MarketplaceSubscription>> value = default;
             Optional<string> skipToken = default;
             Optional<long> count = default;
             foreach (var property in element.EnumerateObject())
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.Marketplace.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<Subscription> array = new List<Subscription>();
+                    List<MarketplaceSubscription> array = new List<MarketplaceSubscription>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Subscription.DeserializeSubscription(item));
+                        array.Add(MarketplaceSubscription.DeserializeMarketplaceSubscription(item));
                     }
                     value = array;
                     continue;

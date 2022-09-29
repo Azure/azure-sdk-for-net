@@ -1,14 +1,20 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2022-09-29)
 
-### Features Added
+This is the first stable release of the Marketplace Ordering Management library.
 
 ### Breaking Changes
 
-### Bugs Fixed
+Polishing since last public beta release:
+- Corrected the format of all `Uri` type properties / parameters.
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Optimized the name of some models and functions.
+- Renamed the method `GetAll` under `MarketplaceAgreementCollection` to `GetAllData`.
 
 ### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
 
 ## 1.0.0-beta.1 (2022-08-29)
 

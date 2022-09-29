@@ -1,14 +1,24 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0 (2022-09-29)
 
-### Features Added
+This is the first stable release of the Api Management Management library.
 
 ### Breaking Changes
 
-### Bugs Fixed
+- Changed the type of parameter `ifMatch` from `string` to `ETag`.
+- Marked `ApiManagementContentItem` and `ApiManagementContentType` from resource to non-resource.
+- Changed the return type of methods `CreateGroupUser` and `GetGroupUsers` from `ApiManagementUserResource` to `ApiManagementGroupUserData`.
+- Changed the return type of methods `CreateOrUpdateGatewayApi` and `GetGatewayApisByService` from `ApiResource` to `GatewayApiData`.
+- Changed the return type of methods `CreateOrUpdateProductApi` and `GetProductApis` from `ApiResource` to `ProductApiData`.
+- Changed the return type of methods `CreateOrUpdateProductGroup` and `GetProductGroups` from `ApiManagementGroupResource` to `ProductGroupData`.
+- Renamed `ExpiresOn` to `ExpireOn`.
+- Renamed method `GetProductSubscriptions` to `GetAllProductSubscriptionData`.
 
 ### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
 
 ## 1.0.0-beta.2 (2022-08-29)
 

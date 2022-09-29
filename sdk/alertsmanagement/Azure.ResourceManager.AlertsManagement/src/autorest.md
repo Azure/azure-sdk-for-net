@@ -17,21 +17,21 @@ modelerfour:
   flatten-payloads: false
 
 rename-mapping:
-  AlertModification.modifiedAt: modifiedOn|datetime
+  AlertModification.modifiedAt: modifiedOn|date-time
   AlertProcessingRuleProperties.enabled: IsEnabled
   AlertsSortByFields.startDateTime: StartOn
   AlertsSortByFields.lastModifiedDateTime: LastModifiedOn
   AlertsSummaryGroup.groupedby: GroupedBy
   AlertsSummaryGroupItem.groupedby: GroupedBy
-  Essentials.startDateTime: StartOn|datetime
+  Essentials.startDateTime: StartOn|date-time
   Essentials.lastModifiedUserName: lastModifiedBy
   PatchObject.properties.enabled: IsEnabled
   SmartGroup.properties.lastModifiedUserName: lastModifiedBy
-  SmartGroupModificationItem.modifiedAt: modifiedOn|datetime
+  SmartGroupModificationItem.modifiedAt: modifiedOn|date-time
   Recurrence.startTime: startOn
   Recurrence.endTime: endOn
-  Schedule.effectiveFrom: -|datetime
-  Schedule.effectiveUntil: -|datetime
+  Schedule.effectiveFrom: -|date-time
+  Schedule.effectiveUntil: -|date-time
   TimeRange.1h: OneHour
   TimeRange.1d: OneDay
   TimeRange.7d: SevenDays

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of AppServiceEnvironmentPatch. </summary>
         public AppServiceEnvironmentPatch()
         {
-            ClusterSettings = new ChangeTrackingList<NameValuePair>();
+            ClusterSettings = new ChangeTrackingList<AppServiceNameValuePair>();
             UserWhitelistedIPRanges = new ChangeTrackingList<string>();
         }
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
         /// <param name="isZoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<NameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? isZoneRedundant, string kind) : base(id, name, resourceType, systemData)
+        internal AppServiceEnvironmentPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ProvisioningState? provisioningState, HostingEnvironmentStatus? status, VirtualNetworkProfile virtualNetwork, LoadBalancingMode? internalLoadBalancingMode, string multiSize, int? multiRoleCount, int? ipSslAddressCount, string dnsSuffix, int? maximumNumberOfMachines, int? frontEndScaleFactor, bool? isSuspended, IList<AppServiceNameValuePair> clusterSettings, IList<string> userWhitelistedIPRanges, bool? hasLinuxWorkers, int? dedicatedHostCount, bool? isZoneRedundant, string kind) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Status = status;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// </summary>
         public bool? IsSuspended { get; }
         /// <summary> Custom settings for changing the behavior of the App Service Environment. </summary>
-        public IList<NameValuePair> ClusterSettings { get; }
+        public IList<AppServiceNameValuePair> ClusterSettings { get; }
         /// <summary> User added ip ranges to whitelist on ASE db. </summary>
         public IList<string> UserWhitelistedIPRanges { get; }
         /// <summary> Flag that displays whether an ASE has linux workers or not. </summary>

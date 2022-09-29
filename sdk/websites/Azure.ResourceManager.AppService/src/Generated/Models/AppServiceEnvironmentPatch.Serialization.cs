@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<int> maximumNumberOfMachines = default;
             Optional<int> frontEndScaleFactor = default;
             Optional<bool> suspended = default;
-            Optional<IList<NameValuePair>> clusterSettings = default;
+            Optional<IList<AppServiceNameValuePair>> clusterSettings = default;
             Optional<IList<string>> userWhitelistedIPRanges = default;
             Optional<bool> hasLinuxWorkers = default;
             Optional<int> dedicatedHostCount = default;
@@ -259,10 +259,10 @@ namespace Azure.ResourceManager.AppService.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<NameValuePair> array = new List<NameValuePair>();
+                            List<AppServiceNameValuePair> array = new List<AppServiceNameValuePair>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(NameValuePair.DeserializeNameValuePair(item));
+                                array.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item));
                             }
                             clusterSettings = array;
                             continue;

@@ -676,10 +676,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceCertificateOrders_RetrieveCertificateEmailHistory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CertificateEmail" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CertificateEmail> RetrieveCertificateEmailHistoryAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppServiceCertificateEmail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppServiceCertificateEmail> RetrieveCertificateEmailHistoryAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<CertificateEmail>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<AppServiceCertificateEmail>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory");
                 scope.Start();
@@ -703,10 +703,10 @@ namespace Azure.ResourceManager.AppService
         /// Operation Id: AppServiceCertificateOrders_RetrieveCertificateEmailHistory
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CertificateEmail" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CertificateEmail> RetrieveCertificateEmailHistory(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppServiceCertificateEmail" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppServiceCertificateEmail> RetrieveCertificateEmailHistory(CancellationToken cancellationToken = default)
         {
-            Page<CertificateEmail> FirstPageFunc(int? pageSizeHint)
+            Page<AppServiceCertificateEmail> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderResource.RetrieveCertificateEmailHistory");
                 scope.Start();

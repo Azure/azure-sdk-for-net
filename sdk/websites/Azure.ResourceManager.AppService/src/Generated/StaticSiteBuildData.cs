@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="status"> The status of the static site build. </param>
         /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site build. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal StaticSiteBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, BuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, string kind) : base(id, name, resourceType, systemData)
+        internal StaticSiteBuildData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string buildId, string sourceBranch, string pullRequestTitle, string hostname, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, StaticSiteBuildStatus? status, IReadOnlyList<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps, string kind) : base(id, name, resourceType, systemData)
         {
             BuildId = buildId;
             SourceBranch = sourceBranch;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> When this build was updated. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
         /// <summary> The status of the static site build. </summary>
-        public BuildStatus? Status { get; }
+        public StaticSiteBuildStatus? Status { get; }
         /// <summary> User provided function apps registered with the static site build. </summary>
         public IReadOnlyList<StaticSiteUserProvidedFunctionAppData> UserProvidedFunctionApps { get; }
         /// <summary> Kind of resource. </summary>
