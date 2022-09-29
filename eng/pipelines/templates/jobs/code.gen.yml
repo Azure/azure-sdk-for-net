@@ -47,7 +47,7 @@ jobs:
             - "/*"
             - "!SessionRecords"
             - "!/sdk/*/**/SessionRecords"
-            - "${{ convertToJson(variables['ServiceDirectories']) }}"
+            - "$(ServiceDirectories)"
       - task: DownloadPipelineArtifact@2
         inputs:
           artifact: DependencyTestProjectReferences
