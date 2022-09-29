@@ -155,7 +155,7 @@ namespace Azure.Identity.Tests
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile
-                    ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, default, default, mockMsalClient)
+                    ? new ClientCertificateCredential(expectedTenantId, expectedClientId, certificatePathPem, default, default, default, mockMsalClient)
                     : new ClientCertificateCredential(expectedTenantId, expectedClientId, mockCert, default, default, mockMsalClient)
             );
 
@@ -184,7 +184,7 @@ namespace Azure.Identity.Tests
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile
-                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, options, default, mockConfidentialMsalClient)
+                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, default, options, default, mockConfidentialMsalClient)
                     : new ClientCertificateCredential(TenantId, ClientId, mockCert, options, default, mockConfidentialMsalClient)
             );
 
@@ -234,7 +234,7 @@ namespace Azure.Identity.Tests
 
             ClientCertificateCredential credential = InstrumentClient(
                 usePemFile
-                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, options,
+                    ? new ClientCertificateCredential(TenantId, ClientId, certificatePathPem, default, options,
                         new CredentialPipeline(new Uri("https://localhost"), _pipeline, new ClientDiagnostics(options)), null)
                     : new ClientCertificateCredential(TenantId, ClientId, mockCert, options,
                         new CredentialPipeline(new Uri("https://localhost"), _pipeline, new ClientDiagnostics(options)), null)

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Marketplace
     public partial class PrivateStoreResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateStoreResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string privateStoreId)
+        public static ResourceIdentifier CreateResourceIdentifier(Guid privateStoreId)
         {
             var resourceId = $"/providers/Microsoft.Marketplace/privateStores/{privateStoreId}";
             return new ResourceIdentifier(resourceId);
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.Marketplace
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of RequestApprovalResources in the PrivateStore. </summary>
-        /// <returns> An object representing collection of RequestApprovalResources and their operations over a RequestApprovalResource. </returns>
-        public virtual RequestApprovalResourceCollection GetRequestApprovalResources()
+        /// <summary> Gets a collection of MarketplaceApprovalRequestResources in the PrivateStore. </summary>
+        /// <returns> An object representing collection of MarketplaceApprovalRequestResources and their operations over a MarketplaceApprovalRequestResource. </returns>
+        public virtual MarketplaceApprovalRequestCollection GetMarketplaceApprovalRequests()
         {
-            return GetCachedClient(Client => new RequestApprovalResourceCollection(Client, Id));
+            return GetCachedClient(Client => new MarketplaceApprovalRequestCollection(Client, Id));
         }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<RequestApprovalResource>> GetRequestApprovalResourceAsync(string requestApprovalId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MarketplaceApprovalRequestResource>> GetMarketplaceApprovalRequestAsync(string requestApprovalId, CancellationToken cancellationToken = default)
         {
-            return await GetRequestApprovalResources().GetAsync(requestApprovalId, cancellationToken).ConfigureAwait(false);
+            return await GetMarketplaceApprovalRequests().GetAsync(requestApprovalId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -120,16 +120,16 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<RequestApprovalResource> GetRequestApprovalResource(string requestApprovalId, CancellationToken cancellationToken = default)
+        public virtual Response<MarketplaceApprovalRequestResource> GetMarketplaceApprovalRequest(string requestApprovalId, CancellationToken cancellationToken = default)
         {
-            return GetRequestApprovalResources().Get(requestApprovalId, cancellationToken);
+            return GetMarketplaceApprovalRequests().Get(requestApprovalId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AdminRequestApprovalsResources in the PrivateStore. </summary>
-        /// <returns> An object representing collection of AdminRequestApprovalsResources and their operations over a AdminRequestApprovalsResource. </returns>
-        public virtual AdminRequestApprovalsResourceCollection GetAdminRequestApprovalsResources()
+        /// <summary> Gets a collection of MarketplaceAdminApprovalRequestResources in the PrivateStore. </summary>
+        /// <returns> An object representing collection of MarketplaceAdminApprovalRequestResources and their operations over a MarketplaceAdminApprovalRequestResource. </returns>
+        public virtual MarketplaceAdminApprovalRequestCollection GetMarketplaceAdminApprovalRequests()
         {
-            return GetCachedClient(Client => new AdminRequestApprovalsResourceCollection(Client, Id));
+            return GetCachedClient(Client => new MarketplaceAdminApprovalRequestCollection(Client, Id));
         }
 
         /// <summary>
@@ -143,9 +143,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AdminRequestApprovalsResource>> GetAdminRequestApprovalsResourceAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MarketplaceAdminApprovalRequestResource>> GetMarketplaceAdminApprovalRequestAsync(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
-            return await GetAdminRequestApprovalsResources().GetAsync(adminRequestApprovalId, publisherId, cancellationToken).ConfigureAwait(false);
+            return await GetMarketplaceAdminApprovalRequests().GetAsync(adminRequestApprovalId, publisherId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -159,31 +159,16 @@ namespace Azure.ResourceManager.Marketplace
         /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AdminRequestApprovalsResource> GetAdminRequestApprovalsResource(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
+        public virtual Response<MarketplaceAdminApprovalRequestResource> GetMarketplaceAdminApprovalRequest(string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
-            return GetAdminRequestApprovalsResources().Get(adminRequestApprovalId, publisherId, cancellationToken);
+            return GetMarketplaceAdminApprovalRequests().Get(adminRequestApprovalId, publisherId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CollectionResources in the PrivateStore. </summary>
-        /// <returns> An object representing collection of CollectionResources and their operations over a CollectionResource. </returns>
-        public virtual CollectionCollection GetCollections()
+        /// <summary> Gets a collection of PrivateStoreCollectionInfoResources in the PrivateStore. </summary>
+        /// <returns> An object representing collection of PrivateStoreCollectionInfoResources and their operations over a PrivateStoreCollectionInfoResource. </returns>
+        public virtual PrivateStoreCollectionInfoCollection GetPrivateStoreCollectionInfos()
         {
-            return GetCachedClient(Client => new CollectionCollection(Client, Id));
-        }
-
-        /// <summary>
-        /// Gets private store collection
-        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}
-        /// Operation Id: PrivateStoreCollection_Get
-        /// </summary>
-        /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<CollectionResource>> GetCollectionAsync(string collectionId, CancellationToken cancellationToken = default)
-        {
-            return await GetCollections().GetAsync(collectionId, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(Client => new PrivateStoreCollectionInfoCollection(Client, Id));
         }
 
         /// <summary>
@@ -193,12 +178,23 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="collectionId"> The collection ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CollectionResource> GetCollection(string collectionId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreCollectionInfoResource>> GetPrivateStoreCollectionInfoAsync(Guid collectionId, CancellationToken cancellationToken = default)
         {
-            return GetCollections().Get(collectionId, cancellationToken);
+            return await GetPrivateStoreCollectionInfos().GetAsync(collectionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets private store collection
+        /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}
+        /// Operation Id: PrivateStoreCollection_Get
+        /// </summary>
+        /// <param name="collectionId"> The collection ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<PrivateStoreCollectionInfoResource> GetPrivateStoreCollectionInfo(Guid collectionId, CancellationToken cancellationToken = default)
+        {
+            return GetPrivateStoreCollectionInfos().Get(collectionId, cancellationToken);
         }
 
         /// <summary>
@@ -213,7 +209,7 @@ namespace Azure.ResourceManager.Marketplace
             scope.Start();
             try
             {
-                var response = await _privateStoreRestClient.GetAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreRestClient.GetAsync(Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PrivateStoreResource(Client, response.Value), response.GetRawResponse());
@@ -237,7 +233,7 @@ namespace Azure.ResourceManager.Marketplace
             scope.Start();
             try
             {
-                var response = _privateStoreRestClient.Get(Id.Name, cancellationToken);
+                var response = _privateStoreRestClient.Get(Guid.Parse(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PrivateStoreResource(Client, response.Value), response.GetRawResponse());
@@ -262,7 +258,7 @@ namespace Azure.ResourceManager.Marketplace
             scope.Start();
             try
             {
-                var response = await _privateStoreRestClient.DeleteAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreRestClient.DeleteAsync(Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 var operation = new MarketplaceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -288,7 +284,7 @@ namespace Azure.ResourceManager.Marketplace
             scope.Start();
             try
             {
-                var response = _privateStoreRestClient.Delete(Id.Name, cancellationToken);
+                var response = _privateStoreRestClient.Delete(Guid.Parse(Id.Name), cancellationToken);
                 var operation = new MarketplaceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -318,7 +314,7 @@ namespace Azure.ResourceManager.Marketplace
             scope.Start();
             try
             {
-                var response = await _privateStoreRestClient.CreateOrUpdateAsync(Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreRestClient.CreateOrUpdateAsync(Guid.Parse(Id.Name), data, cancellationToken).ConfigureAwait(false);
                 var operation = new MarketplaceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -348,7 +344,7 @@ namespace Azure.ResourceManager.Marketplace
             scope.Start();
             try
             {
-                var response = _privateStoreRestClient.CreateOrUpdate(Id.Name, data, cancellationToken);
+                var response = _privateStoreRestClient.CreateOrUpdate(Guid.Parse(Id.Name), data, cancellationToken);
                 var operation = new MarketplaceArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -367,13 +363,13 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStore_AnyExistingOffersInTheCollections
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AnyExistingOffersInTheCollectionsResponse>> AnyExistingOffersInTheCollectionsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AnyExistingOffersInTheCollectionsResult>> AnyExistingOffersInTheCollectionsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.AnyExistingOffersInTheCollections");
             scope.Start();
             try
             {
-                var response = await _privateStoreRestClient.AnyExistingOffersInTheCollectionsAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreRestClient.AnyExistingOffersInTheCollectionsAsync(Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -389,13 +385,13 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStore_AnyExistingOffersInTheCollections
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AnyExistingOffersInTheCollectionsResponse> AnyExistingOffersInTheCollections(CancellationToken cancellationToken = default)
+        public virtual Response<AnyExistingOffersInTheCollectionsResult> AnyExistingOffersInTheCollections(CancellationToken cancellationToken = default)
         {
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.AnyExistingOffersInTheCollections");
             scope.Start();
             try
             {
-                var response = _privateStoreRestClient.AnyExistingOffersInTheCollections(Id.Name, cancellationToken);
+                var response = _privateStoreRestClient.AnyExistingOffersInTheCollections(Guid.Parse(Id.Name), cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -411,16 +407,16 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStore_QueryOffers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OfferProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OfferProperties> QueryOffersAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateStoreOfferResult> QueryOffersAsync(CancellationToken cancellationToken = default)
         {
-            async Task<Page<OfferProperties>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PrivateStoreOfferResult>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryOffers");
                 scope.Start();
                 try
                 {
-                    var response = await _privateStoreRestClient.QueryOffersAsync(Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _privateStoreRestClient.QueryOffersAsync(Guid.Parse(Id.Name), cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -438,16 +434,16 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStore_QueryOffers
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OfferProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OfferProperties> QueryOffers(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateStoreOfferResult> QueryOffers(CancellationToken cancellationToken = default)
         {
-            Page<OfferProperties> FirstPageFunc(int? pageSizeHint)
+            Page<PrivateStoreOfferResult> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryOffers");
                 scope.Start();
                 try
                 {
-                    var response = _privateStoreRestClient.QueryOffers(Id.Name, cancellationToken: cancellationToken);
+                    var response = _privateStoreRestClient.QueryOffers(Guid.Parse(Id.Name), cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -464,18 +460,18 @@ namespace Azure.ResourceManager.Marketplace
         /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryUserOffers
         /// Operation Id: PrivateStore_QueryUserOffers
         /// </summary>
-        /// <param name="payload"> The QueryUserOffersProperties to use. </param>
+        /// <param name="content"> The QueryUserOffersContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OfferProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<OfferProperties> QueryUserOffersAsync(QueryUserOffersProperties payload = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PrivateStoreOfferResult> QueryUserOffersAsync(QueryUserOffersContent content = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<OfferProperties>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<PrivateStoreOfferResult>> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryUserOffers");
                 scope.Start();
                 try
                 {
-                    var response = await _privateStoreRestClient.QueryUserOffersAsync(Id.Name, payload, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _privateStoreRestClient.QueryUserOffersAsync(Guid.Parse(Id.Name), content, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -492,18 +488,18 @@ namespace Azure.ResourceManager.Marketplace
         /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryUserOffers
         /// Operation Id: PrivateStore_QueryUserOffers
         /// </summary>
-        /// <param name="payload"> The QueryUserOffersProperties to use. </param>
+        /// <param name="content"> The QueryUserOffersContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OfferProperties" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<OfferProperties> QueryUserOffers(QueryUserOffersProperties payload = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PrivateStoreOfferResult" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PrivateStoreOfferResult> QueryUserOffers(QueryUserOffersContent content = null, CancellationToken cancellationToken = default)
         {
-            Page<OfferProperties> FirstPageFunc(int? pageSizeHint)
+            Page<PrivateStoreOfferResult> FirstPageFunc(int? pageSizeHint)
             {
                 using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryUserOffers");
                 scope.Start();
                 try
                 {
-                    var response = _privateStoreRestClient.QueryUserOffers(Id.Name, payload, cancellationToken: cancellationToken);
+                    var response = _privateStoreRestClient.QueryUserOffers(Guid.Parse(Id.Name), content, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -521,13 +517,13 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStore_BillingAccounts
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BillingAccountsResponse>> BillingAccountsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateStoreBillingAccountsResult>> FetchBillingAccountsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.BillingAccounts");
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchBillingAccounts");
             scope.Start();
             try
             {
-                var response = await _privateStoreRestClient.BillingAccountsAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreRestClient.BillingAccountsAsync(Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -543,13 +539,13 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStore_BillingAccounts
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BillingAccountsResponse> BillingAccounts(CancellationToken cancellationToken = default)
+        public virtual Response<PrivateStoreBillingAccountsResult> FetchBillingAccounts(CancellationToken cancellationToken = default)
         {
-            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.BillingAccounts");
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchBillingAccounts");
             scope.Start();
             try
             {
-                var response = _privateStoreRestClient.BillingAccounts(Id.Name, cancellationToken);
+                var response = _privateStoreRestClient.BillingAccounts(Guid.Parse(Id.Name), cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -564,15 +560,15 @@ namespace Azure.ResourceManager.Marketplace
         /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collectionsToSubscriptionsMapping
         /// Operation Id: PrivateStore_CollectionsToSubscriptionsMapping
         /// </summary>
-        /// <param name="payload"> The CollectionsToSubscriptionsMappingPayload to use. </param>
+        /// <param name="content"> The CollectionsToSubscriptionsMappingContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CollectionsToSubscriptionsMappingResponse>> CollectionsToSubscriptionsMappingAsync(CollectionsToSubscriptionsMappingPayload payload = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CollectionsToSubscriptionsMappingResult>> FetchCollectionsToSubscriptionsMappingAsync(CollectionsToSubscriptionsMappingContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.CollectionsToSubscriptionsMapping");
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchCollectionsToSubscriptionsMapping");
             scope.Start();
             try
             {
-                var response = await _privateStoreRestClient.CollectionsToSubscriptionsMappingAsync(Id.Name, payload, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreRestClient.CollectionsToSubscriptionsMappingAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -587,15 +583,15 @@ namespace Azure.ResourceManager.Marketplace
         /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collectionsToSubscriptionsMapping
         /// Operation Id: PrivateStore_CollectionsToSubscriptionsMapping
         /// </summary>
-        /// <param name="payload"> The CollectionsToSubscriptionsMappingPayload to use. </param>
+        /// <param name="content"> The CollectionsToSubscriptionsMappingContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CollectionsToSubscriptionsMappingResponse> CollectionsToSubscriptionsMapping(CollectionsToSubscriptionsMappingPayload payload = null, CancellationToken cancellationToken = default)
+        public virtual Response<CollectionsToSubscriptionsMappingResult> FetchCollectionsToSubscriptionsMapping(CollectionsToSubscriptionsMappingContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.CollectionsToSubscriptionsMapping");
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchCollectionsToSubscriptionsMapping");
             scope.Start();
             try
             {
-                var response = _privateStoreRestClient.CollectionsToSubscriptionsMapping(Id.Name, payload, cancellationToken);
+                var response = _privateStoreRestClient.CollectionsToSubscriptionsMapping(Guid.Parse(Id.Name), content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -610,15 +606,15 @@ namespace Azure.ResourceManager.Marketplace
         /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryApprovedPlans
         /// Operation Id: PrivateStore_QueryApprovedPlans
         /// </summary>
-        /// <param name="payload"> The QueryApprovedPlansPayload to use. </param>
+        /// <param name="content"> The QueryApprovedPlansContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<QueryApprovedPlansResponse>> QueryApprovedPlansAsync(QueryApprovedPlansPayload payload = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QueryApprovedPlansResult>> QueryApprovedPlansAsync(QueryApprovedPlansContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryApprovedPlans");
             scope.Start();
             try
             {
-                var response = await _privateStoreRestClient.QueryApprovedPlansAsync(Id.Name, payload, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreRestClient.QueryApprovedPlansAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -633,15 +629,15 @@ namespace Azure.ResourceManager.Marketplace
         /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/queryApprovedPlans
         /// Operation Id: PrivateStore_QueryApprovedPlans
         /// </summary>
-        /// <param name="payload"> The QueryApprovedPlansPayload to use. </param>
+        /// <param name="content"> The QueryApprovedPlansContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<QueryApprovedPlansResponse> QueryApprovedPlans(QueryApprovedPlansPayload payload = null, CancellationToken cancellationToken = default)
+        public virtual Response<QueryApprovedPlansResult> QueryApprovedPlans(QueryApprovedPlansContent content = null, CancellationToken cancellationToken = default)
         {
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.QueryApprovedPlans");
             scope.Start();
             try
             {
-                var response = _privateStoreRestClient.QueryApprovedPlans(Id.Name, payload, cancellationToken);
+                var response = _privateStoreRestClient.QueryApprovedPlans(Guid.Parse(Id.Name), content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -656,15 +652,15 @@ namespace Azure.ResourceManager.Marketplace
         /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/bulkCollectionsAction
         /// Operation Id: PrivateStore_BulkCollectionsAction
         /// </summary>
-        /// <param name="payload"> The BulkCollectionsPayload to use. </param>
+        /// <param name="content"> The BulkCollectionsActionContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BulkCollectionsResponse>> BulkCollectionsActionAsync(BulkCollectionsPayload payload = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BulkCollectionsActionResult>> PerformActionOnBulkCollectionsAsync(BulkCollectionsActionContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.BulkCollectionsAction");
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.PerformActionOnBulkCollections");
             scope.Start();
             try
             {
-                var response = await _privateStoreRestClient.BulkCollectionsActionAsync(Id.Name, payload, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreRestClient.BulkCollectionsActionAsync(Guid.Parse(Id.Name), content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -679,15 +675,15 @@ namespace Azure.ResourceManager.Marketplace
         /// Request Path: /providers/Microsoft.Marketplace/privateStores/{privateStoreId}/bulkCollectionsAction
         /// Operation Id: PrivateStore_BulkCollectionsAction
         /// </summary>
-        /// <param name="payload"> The BulkCollectionsPayload to use. </param>
+        /// <param name="content"> The BulkCollectionsActionContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BulkCollectionsResponse> BulkCollectionsAction(BulkCollectionsPayload payload = null, CancellationToken cancellationToken = default)
+        public virtual Response<BulkCollectionsActionResult> PerformActionOnBulkCollections(BulkCollectionsActionContent content = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.BulkCollectionsAction");
+            using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.PerformActionOnBulkCollections");
             scope.Start();
             try
             {
-                var response = _privateStoreRestClient.BulkCollectionsAction(Id.Name, payload, cancellationToken);
+                var response = _privateStoreRestClient.BulkCollectionsAction(Guid.Parse(Id.Name), content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -709,7 +705,7 @@ namespace Azure.ResourceManager.Marketplace
             scope.Start();
             try
             {
-                var response = await _privateStoreRestClient.QueryNotificationsStateAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreRestClient.QueryNotificationsStateAsync(Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -731,7 +727,7 @@ namespace Azure.ResourceManager.Marketplace
             scope.Start();
             try
             {
-                var response = _privateStoreRestClient.QueryNotificationsState(Id.Name, cancellationToken);
+                var response = _privateStoreRestClient.QueryNotificationsState(Guid.Parse(Id.Name), cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -747,11 +743,11 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStore_AcknowledgeOfferNotification
         /// </summary>
         /// <param name="offerId"> The offer ID to update or delete. </param>
-        /// <param name="payload"> The AcknowledgeOfferNotificationProperties to use. </param>
+        /// <param name="content"> The AcknowledgeOfferNotificationContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
-        public virtual async Task<Response> AcknowledgeOfferNotificationAsync(string offerId, AcknowledgeOfferNotificationProperties payload = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> AcknowledgeOfferNotificationAsync(string offerId, AcknowledgeOfferNotificationContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
@@ -759,7 +755,7 @@ namespace Azure.ResourceManager.Marketplace
             scope.Start();
             try
             {
-                var response = await _privateStoreRestClient.AcknowledgeOfferNotificationAsync(Id.Name, offerId, payload, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreRestClient.AcknowledgeOfferNotificationAsync(Guid.Parse(Id.Name), offerId, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -775,11 +771,11 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStore_AcknowledgeOfferNotification
         /// </summary>
         /// <param name="offerId"> The offer ID to update or delete. </param>
-        /// <param name="payload"> The AcknowledgeOfferNotificationProperties to use. </param>
+        /// <param name="content"> The AcknowledgeOfferNotificationContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
-        public virtual Response AcknowledgeOfferNotification(string offerId, AcknowledgeOfferNotificationProperties payload = null, CancellationToken cancellationToken = default)
+        public virtual Response AcknowledgeOfferNotification(string offerId, AcknowledgeOfferNotificationContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
@@ -787,7 +783,7 @@ namespace Azure.ResourceManager.Marketplace
             scope.Start();
             try
             {
-                var response = _privateStoreRestClient.AcknowledgeOfferNotification(Id.Name, offerId, payload, cancellationToken);
+                var response = _privateStoreRestClient.AcknowledgeOfferNotification(Guid.Parse(Id.Name), offerId, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -804,16 +800,16 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="nextPageToken"> The skip token to get the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Subscription" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Subscription> FetchAllSubscriptionsInTenantAsync(string nextPageToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MarketplaceSubscription" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MarketplaceSubscription> FetchAllMarketplaceSubscriptionsAsync(string nextPageToken = null, CancellationToken cancellationToken = default)
         {
-            async Task<Page<Subscription>> FirstPageFunc(int? pageSizeHint)
+            async Task<Page<MarketplaceSubscription>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchAllSubscriptionsInTenant");
+                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchAllMarketplaceSubscriptions");
                 scope.Start();
                 try
                 {
-                    var response = await _privateStoreRestClient.FetchAllSubscriptionsInTenantAsync(Id.Name, nextPageToken, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    var response = await _privateStoreRestClient.FetchAllSubscriptionsInTenantAsync(Guid.Parse(Id.Name), nextPageToken, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -832,16 +828,16 @@ namespace Azure.ResourceManager.Marketplace
         /// </summary>
         /// <param name="nextPageToken"> The skip token to get the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Subscription" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Subscription> FetchAllSubscriptionsInTenant(string nextPageToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MarketplaceSubscription" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MarketplaceSubscription> FetchAllMarketplaceSubscriptions(string nextPageToken = null, CancellationToken cancellationToken = default)
         {
-            Page<Subscription> FirstPageFunc(int? pageSizeHint)
+            Page<MarketplaceSubscription> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchAllSubscriptionsInTenant");
+                using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.FetchAllMarketplaceSubscriptions");
                 scope.Start();
                 try
                 {
-                    var response = _privateStoreRestClient.FetchAllSubscriptionsInTenant(Id.Name, nextPageToken, cancellationToken: cancellationToken);
+                    var response = _privateStoreRestClient.FetchAllSubscriptionsInTenant(Guid.Parse(Id.Name), nextPageToken, cancellationToken: cancellationToken);
                     return Page.FromValues(response.Value.Value, null, response.GetRawResponse());
                 }
                 catch (Exception e)
@@ -859,13 +855,13 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStore_ListNewPlansNotifications
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NewPlansNotificationsList>> GetNewPlansNotificationsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NewPlanNotificationListResult>> GetNewPlansNotificationsAsync(CancellationToken cancellationToken = default)
         {
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.GetNewPlansNotifications");
             scope.Start();
             try
             {
-                var response = await _privateStoreRestClient.ListNewPlansNotificationsAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreRestClient.ListNewPlansNotificationsAsync(Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -881,13 +877,13 @@ namespace Azure.ResourceManager.Marketplace
         /// Operation Id: PrivateStore_ListNewPlansNotifications
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NewPlansNotificationsList> GetNewPlansNotifications(CancellationToken cancellationToken = default)
+        public virtual Response<NewPlanNotificationListResult> GetNewPlansNotifications(CancellationToken cancellationToken = default)
         {
             using var scope = _privateStoreClientDiagnostics.CreateScope("PrivateStoreResource.GetNewPlansNotifications");
             scope.Start();
             try
             {
-                var response = _privateStoreRestClient.ListNewPlansNotifications(Id.Name, cancellationToken);
+                var response = _privateStoreRestClient.ListNewPlansNotifications(Guid.Parse(Id.Name), cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -910,7 +906,7 @@ namespace Azure.ResourceManager.Marketplace
             scope.Start();
             try
             {
-                var response = await _privateStoreRestClient.ListStopSellOffersPlansNotificationsAsync(Id.Name, stopSellSubscriptions, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreRestClient.ListStopSellOffersPlansNotificationsAsync(Guid.Parse(Id.Name), stopSellSubscriptions, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -933,7 +929,7 @@ namespace Azure.ResourceManager.Marketplace
             scope.Start();
             try
             {
-                var response = _privateStoreRestClient.ListStopSellOffersPlansNotifications(Id.Name, stopSellSubscriptions, cancellationToken);
+                var response = _privateStoreRestClient.ListStopSellOffersPlansNotifications(Guid.Parse(Id.Name), stopSellSubscriptions, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -955,7 +951,7 @@ namespace Azure.ResourceManager.Marketplace
             scope.Start();
             try
             {
-                var response = await _privateStoreRestClient.ListSubscriptionsContextAsync(Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _privateStoreRestClient.ListSubscriptionsContextAsync(Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -977,7 +973,7 @@ namespace Azure.ResourceManager.Marketplace
             scope.Start();
             try
             {
-                var response = _privateStoreRestClient.ListSubscriptionsContext(Id.Name, cancellationToken);
+                var response = _privateStoreRestClient.ListSubscriptionsContext(Guid.Parse(Id.Name), cancellationToken);
                 return response;
             }
             catch (Exception e)

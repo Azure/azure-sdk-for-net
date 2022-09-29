@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateGetRequest(string privateStoreId)
+        internal HttpMessage CreateGetRequest(Guid privateStoreId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -117,12 +117,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Get information about the private store. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateStoreData>> GetAsync(string privateStoreId, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateStoreData>> GetAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateGetRequest(privateStoreId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -144,12 +140,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Get information about the private store. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateStoreData> Get(string privateStoreId, CancellationToken cancellationToken = default)
+        public Response<PrivateStoreData> Get(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateGetRequest(privateStoreId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
@@ -168,7 +160,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string privateStoreId, PrivateStoreData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid privateStoreId, PrivateStoreData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -192,11 +184,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="data"> The PrivateStore to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string privateStoreId, PrivateStoreData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public async Task<Response> CreateOrUpdateAsync(Guid privateStoreId, PrivateStoreData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(privateStoreId, data);
@@ -214,11 +204,9 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="data"> The PrivateStore to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string privateStoreId, PrivateStoreData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public Response CreateOrUpdate(Guid privateStoreId, PrivateStoreData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(privateStoreId, data);
@@ -232,7 +220,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string privateStoreId)
+        internal HttpMessage CreateDeleteRequest(Guid privateStoreId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -251,12 +239,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Deletes the private store. All that is not saved will be lost. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string privateStoreId, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateDeleteRequest(privateStoreId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -272,12 +256,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Deletes the private store. All that is not saved will be lost. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string privateStoreId, CancellationToken cancellationToken = default)
+        public Response Delete(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateDeleteRequest(privateStoreId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
@@ -290,7 +270,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateAnyExistingOffersInTheCollectionsRequest(string privateStoreId)
+        internal HttpMessage CreateAnyExistingOffersInTheCollectionsRequest(Guid privateStoreId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -310,21 +290,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Query whether exists any offer in the collections. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AnyExistingOffersInTheCollectionsResponse>> AnyExistingOffersInTheCollectionsAsync(string privateStoreId, CancellationToken cancellationToken = default)
+        public async Task<Response<AnyExistingOffersInTheCollectionsResult>> AnyExistingOffersInTheCollectionsAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateAnyExistingOffersInTheCollectionsRequest(privateStoreId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AnyExistingOffersInTheCollectionsResponse value = default;
+                        AnyExistingOffersInTheCollectionsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AnyExistingOffersInTheCollectionsResponse.DeserializeAnyExistingOffersInTheCollectionsResponse(document.RootElement);
+                        value = AnyExistingOffersInTheCollectionsResult.DeserializeAnyExistingOffersInTheCollectionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -335,21 +311,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Query whether exists any offer in the collections. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AnyExistingOffersInTheCollectionsResponse> AnyExistingOffersInTheCollections(string privateStoreId, CancellationToken cancellationToken = default)
+        public Response<AnyExistingOffersInTheCollectionsResult> AnyExistingOffersInTheCollections(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateAnyExistingOffersInTheCollectionsRequest(privateStoreId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AnyExistingOffersInTheCollectionsResponse value = default;
+                        AnyExistingOffersInTheCollectionsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AnyExistingOffersInTheCollectionsResponse.DeserializeAnyExistingOffersInTheCollectionsResponse(document.RootElement);
+                        value = AnyExistingOffersInTheCollectionsResult.DeserializeAnyExistingOffersInTheCollectionsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -357,7 +329,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateQueryOffersRequest(string privateStoreId)
+        internal HttpMessage CreateQueryOffersRequest(Guid privateStoreId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -377,12 +349,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> List of offers, regardless the collections. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<QueryOffers>> QueryOffersAsync(string privateStoreId, CancellationToken cancellationToken = default)
+        public async Task<Response<QueryOffers>> QueryOffersAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateQueryOffersRequest(privateStoreId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -402,12 +370,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> List of offers, regardless the collections. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<QueryOffers> QueryOffers(string privateStoreId, CancellationToken cancellationToken = default)
+        public Response<QueryOffers> QueryOffers(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateQueryOffersRequest(privateStoreId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
@@ -424,7 +388,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateQueryUserOffersRequest(string privateStoreId, QueryUserOffersProperties payload)
+        internal HttpMessage CreateQueryUserOffersRequest(Guid privateStoreId, QueryUserOffersContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -437,12 +401,12 @@ namespace Azure.ResourceManager.Marketplace
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (payload != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(payload);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -450,15 +414,11 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> List of user&apos;s approved offers for the provided offers and subscriptions. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="payload"> The QueryUserOffersProperties to use. </param>
+        /// <param name="content"> The QueryUserOffersContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<QueryOffers>> QueryUserOffersAsync(string privateStoreId, QueryUserOffersProperties payload = null, CancellationToken cancellationToken = default)
+        public async Task<Response<QueryOffers>> QueryUserOffersAsync(Guid privateStoreId, QueryUserOffersContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
-            using var message = CreateQueryUserOffersRequest(privateStoreId, payload);
+            using var message = CreateQueryUserOffersRequest(privateStoreId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -476,15 +436,11 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> List of user&apos;s approved offers for the provided offers and subscriptions. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="payload"> The QueryUserOffersProperties to use. </param>
+        /// <param name="content"> The QueryUserOffersContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<QueryOffers> QueryUserOffers(string privateStoreId, QueryUserOffersProperties payload = null, CancellationToken cancellationToken = default)
+        public Response<QueryOffers> QueryUserOffers(Guid privateStoreId, QueryUserOffersContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
-            using var message = CreateQueryUserOffersRequest(privateStoreId, payload);
+            using var message = CreateQueryUserOffersRequest(privateStoreId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -500,7 +456,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateBillingAccountsRequest(string privateStoreId)
+        internal HttpMessage CreateBillingAccountsRequest(Guid privateStoreId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -520,21 +476,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Tenant billing accounts names. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BillingAccountsResponse>> BillingAccountsAsync(string privateStoreId, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateStoreBillingAccountsResult>> BillingAccountsAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateBillingAccountsRequest(privateStoreId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BillingAccountsResponse value = default;
+                        PrivateStoreBillingAccountsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BillingAccountsResponse.DeserializeBillingAccountsResponse(document.RootElement);
+                        value = PrivateStoreBillingAccountsResult.DeserializePrivateStoreBillingAccountsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -545,21 +497,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Tenant billing accounts names. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BillingAccountsResponse> BillingAccounts(string privateStoreId, CancellationToken cancellationToken = default)
+        public Response<PrivateStoreBillingAccountsResult> BillingAccounts(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateBillingAccountsRequest(privateStoreId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BillingAccountsResponse value = default;
+                        PrivateStoreBillingAccountsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BillingAccountsResponse.DeserializeBillingAccountsResponse(document.RootElement);
+                        value = PrivateStoreBillingAccountsResult.DeserializePrivateStoreBillingAccountsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -567,7 +515,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateCollectionsToSubscriptionsMappingRequest(string privateStoreId, CollectionsToSubscriptionsMappingPayload payload)
+        internal HttpMessage CreateCollectionsToSubscriptionsMappingRequest(Guid privateStoreId, CollectionsToSubscriptionsMappingContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -580,12 +528,12 @@ namespace Azure.ResourceManager.Marketplace
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (payload != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(payload);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -593,23 +541,19 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> For a given subscriptions list, the API will return a map of collections and the related subscriptions from the supplied list. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="payload"> The CollectionsToSubscriptionsMappingPayload to use. </param>
+        /// <param name="content"> The CollectionsToSubscriptionsMappingContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<CollectionsToSubscriptionsMappingResponse>> CollectionsToSubscriptionsMappingAsync(string privateStoreId, CollectionsToSubscriptionsMappingPayload payload = null, CancellationToken cancellationToken = default)
+        public async Task<Response<CollectionsToSubscriptionsMappingResult>> CollectionsToSubscriptionsMappingAsync(Guid privateStoreId, CollectionsToSubscriptionsMappingContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
-            using var message = CreateCollectionsToSubscriptionsMappingRequest(privateStoreId, payload);
+            using var message = CreateCollectionsToSubscriptionsMappingRequest(privateStoreId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CollectionsToSubscriptionsMappingResponse value = default;
+                        CollectionsToSubscriptionsMappingResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CollectionsToSubscriptionsMappingResponse.DeserializeCollectionsToSubscriptionsMappingResponse(document.RootElement);
+                        value = CollectionsToSubscriptionsMappingResult.DeserializeCollectionsToSubscriptionsMappingResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -619,23 +563,19 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> For a given subscriptions list, the API will return a map of collections and the related subscriptions from the supplied list. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="payload"> The CollectionsToSubscriptionsMappingPayload to use. </param>
+        /// <param name="content"> The CollectionsToSubscriptionsMappingContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<CollectionsToSubscriptionsMappingResponse> CollectionsToSubscriptionsMapping(string privateStoreId, CollectionsToSubscriptionsMappingPayload payload = null, CancellationToken cancellationToken = default)
+        public Response<CollectionsToSubscriptionsMappingResult> CollectionsToSubscriptionsMapping(Guid privateStoreId, CollectionsToSubscriptionsMappingContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
-            using var message = CreateCollectionsToSubscriptionsMappingRequest(privateStoreId, payload);
+            using var message = CreateCollectionsToSubscriptionsMappingRequest(privateStoreId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        CollectionsToSubscriptionsMappingResponse value = default;
+                        CollectionsToSubscriptionsMappingResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CollectionsToSubscriptionsMappingResponse.DeserializeCollectionsToSubscriptionsMappingResponse(document.RootElement);
+                        value = CollectionsToSubscriptionsMappingResult.DeserializeCollectionsToSubscriptionsMappingResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -643,7 +583,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateQueryApprovedPlansRequest(string privateStoreId, QueryApprovedPlansPayload payload)
+        internal HttpMessage CreateQueryApprovedPlansRequest(Guid privateStoreId, QueryApprovedPlansContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -656,12 +596,12 @@ namespace Azure.ResourceManager.Marketplace
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (payload != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(payload);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -669,23 +609,19 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> Get map of plans and related approved subscriptions. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="payload"> The QueryApprovedPlansPayload to use. </param>
+        /// <param name="content"> The QueryApprovedPlansContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<QueryApprovedPlansResponse>> QueryApprovedPlansAsync(string privateStoreId, QueryApprovedPlansPayload payload = null, CancellationToken cancellationToken = default)
+        public async Task<Response<QueryApprovedPlansResult>> QueryApprovedPlansAsync(Guid privateStoreId, QueryApprovedPlansContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
-            using var message = CreateQueryApprovedPlansRequest(privateStoreId, payload);
+            using var message = CreateQueryApprovedPlansRequest(privateStoreId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        QueryApprovedPlansResponse value = default;
+                        QueryApprovedPlansResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = QueryApprovedPlansResponse.DeserializeQueryApprovedPlansResponse(document.RootElement);
+                        value = QueryApprovedPlansResult.DeserializeQueryApprovedPlansResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -695,23 +631,19 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> Get map of plans and related approved subscriptions. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="payload"> The QueryApprovedPlansPayload to use. </param>
+        /// <param name="content"> The QueryApprovedPlansContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<QueryApprovedPlansResponse> QueryApprovedPlans(string privateStoreId, QueryApprovedPlansPayload payload = null, CancellationToken cancellationToken = default)
+        public Response<QueryApprovedPlansResult> QueryApprovedPlans(Guid privateStoreId, QueryApprovedPlansContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
-            using var message = CreateQueryApprovedPlansRequest(privateStoreId, payload);
+            using var message = CreateQueryApprovedPlansRequest(privateStoreId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        QueryApprovedPlansResponse value = default;
+                        QueryApprovedPlansResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = QueryApprovedPlansResponse.DeserializeQueryApprovedPlansResponse(document.RootElement);
+                        value = QueryApprovedPlansResult.DeserializeQueryApprovedPlansResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -719,7 +651,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateBulkCollectionsActionRequest(string privateStoreId, BulkCollectionsPayload payload)
+        internal HttpMessage CreateBulkCollectionsActionRequest(Guid privateStoreId, BulkCollectionsActionContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -732,12 +664,12 @@ namespace Azure.ResourceManager.Marketplace
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (payload != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(payload);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -745,23 +677,19 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> Perform an action on bulk collections. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="payload"> The BulkCollectionsPayload to use. </param>
+        /// <param name="content"> The BulkCollectionsActionContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BulkCollectionsResponse>> BulkCollectionsActionAsync(string privateStoreId, BulkCollectionsPayload payload = null, CancellationToken cancellationToken = default)
+        public async Task<Response<BulkCollectionsActionResult>> BulkCollectionsActionAsync(Guid privateStoreId, BulkCollectionsActionContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
-            using var message = CreateBulkCollectionsActionRequest(privateStoreId, payload);
+            using var message = CreateBulkCollectionsActionRequest(privateStoreId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BulkCollectionsResponse value = default;
+                        BulkCollectionsActionResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BulkCollectionsResponse.DeserializeBulkCollectionsResponse(document.RootElement);
+                        value = BulkCollectionsActionResult.DeserializeBulkCollectionsActionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -771,23 +699,19 @@ namespace Azure.ResourceManager.Marketplace
 
         /// <summary> Perform an action on bulk collections. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
-        /// <param name="payload"> The BulkCollectionsPayload to use. </param>
+        /// <param name="content"> The BulkCollectionsActionContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BulkCollectionsResponse> BulkCollectionsAction(string privateStoreId, BulkCollectionsPayload payload = null, CancellationToken cancellationToken = default)
+        public Response<BulkCollectionsActionResult> BulkCollectionsAction(Guid privateStoreId, BulkCollectionsActionContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
-            using var message = CreateBulkCollectionsActionRequest(privateStoreId, payload);
+            using var message = CreateBulkCollectionsActionRequest(privateStoreId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BulkCollectionsResponse value = default;
+                        BulkCollectionsActionResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BulkCollectionsResponse.DeserializeBulkCollectionsResponse(document.RootElement);
+                        value = BulkCollectionsActionResult.DeserializeBulkCollectionsActionResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -795,7 +719,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateGetApprovalRequestsListRequest(string privateStoreId)
+        internal HttpMessage CreateGetApprovalRequestsListRequest(Guid privateStoreId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -815,12 +739,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Get all open approval requests of current user. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RequestApprovalsList>> GetApprovalRequestsListAsync(string privateStoreId, CancellationToken cancellationToken = default)
+        public async Task<Response<RequestApprovalsList>> GetApprovalRequestsListAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateGetApprovalRequestsListRequest(privateStoreId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -840,12 +760,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Get all open approval requests of current user. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RequestApprovalsList> GetApprovalRequestsList(string privateStoreId, CancellationToken cancellationToken = default)
+        public Response<RequestApprovalsList> GetApprovalRequestsList(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateGetApprovalRequestsListRequest(privateStoreId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
@@ -862,7 +778,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateGetRequestApprovalRequest(string privateStoreId, string requestApprovalId)
+        internal HttpMessage CreateGetRequestApprovalRequest(Guid privateStoreId, string requestApprovalId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -884,11 +800,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> or <paramref name="requestApprovalId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RequestApprovalResourceData>> GetRequestApprovalAsync(string privateStoreId, string requestApprovalId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MarketplaceApprovalRequestData>> GetRequestApprovalAsync(Guid privateStoreId, string requestApprovalId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
             using var message = CreateGetRequestApprovalRequest(privateStoreId, requestApprovalId);
@@ -897,13 +812,13 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case 200:
                     {
-                        RequestApprovalResourceData value = default;
+                        MarketplaceApprovalRequestData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RequestApprovalResourceData.DeserializeRequestApprovalResourceData(document.RootElement);
+                        value = MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RequestApprovalResourceData)null, message.Response);
+                    return Response.FromValue((MarketplaceApprovalRequestData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -913,11 +828,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> or <paramref name="requestApprovalId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RequestApprovalResourceData> GetRequestApproval(string privateStoreId, string requestApprovalId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MarketplaceApprovalRequestData> GetRequestApproval(Guid privateStoreId, string requestApprovalId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
             using var message = CreateGetRequestApprovalRequest(privateStoreId, requestApprovalId);
@@ -926,19 +840,19 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case 200:
                     {
-                        RequestApprovalResourceData value = default;
+                        MarketplaceApprovalRequestData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RequestApprovalResourceData.DeserializeRequestApprovalResourceData(document.RootElement);
+                        value = MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RequestApprovalResourceData)null, message.Response);
+                    return Response.FromValue((MarketplaceApprovalRequestData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateApprovalRequestRequest(string privateStoreId, string requestApprovalId, RequestApprovalResourceData data)
+        internal HttpMessage CreateCreateApprovalRequestRequest(Guid privateStoreId, string requestApprovalId, MarketplaceApprovalRequestData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -963,13 +877,12 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Create approval request. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="data"> The RequestApprovalResource to use. </param>
+        /// <param name="data"> The MarketplaceApprovalRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/>, <paramref name="requestApprovalId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RequestApprovalResourceData>> CreateApprovalRequestAsync(string privateStoreId, string requestApprovalId, RequestApprovalResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MarketplaceApprovalRequestData>> CreateApprovalRequestAsync(Guid privateStoreId, string requestApprovalId, MarketplaceApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -979,9 +892,9 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case 200:
                     {
-                        RequestApprovalResourceData value = default;
+                        MarketplaceApprovalRequestData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RequestApprovalResourceData.DeserializeRequestApprovalResourceData(document.RootElement);
+                        value = MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -992,13 +905,12 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Create approval request. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="data"> The RequestApprovalResource to use. </param>
+        /// <param name="data"> The MarketplaceApprovalRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/>, <paramref name="requestApprovalId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RequestApprovalResourceData> CreateApprovalRequest(string privateStoreId, string requestApprovalId, RequestApprovalResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MarketplaceApprovalRequestData> CreateApprovalRequest(Guid privateStoreId, string requestApprovalId, MarketplaceApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -1008,9 +920,9 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case 200:
                     {
-                        RequestApprovalResourceData value = default;
+                        MarketplaceApprovalRequestData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RequestApprovalResourceData.DeserializeRequestApprovalResourceData(document.RootElement);
+                        value = MarketplaceApprovalRequestData.DeserializeMarketplaceApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1018,7 +930,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateQueryRequestApprovalRequest(string privateStoreId, string requestApprovalId, QueryRequestApprovalProperties payload)
+        internal HttpMessage CreateQueryRequestApprovalRequest(Guid privateStoreId, string requestApprovalId, QueryApprovalRequestContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1033,12 +945,12 @@ namespace Azure.ResourceManager.Marketplace
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (payload != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(payload);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -1047,24 +959,23 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Get request statuses foreach plan, this api is used as a complex GET action. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="payload"> The QueryRequestApprovalProperties to use. </param>
+        /// <param name="content"> The QueryApprovalRequestContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> or <paramref name="requestApprovalId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<QueryRequestApproval>> QueryRequestApprovalAsync(string privateStoreId, string requestApprovalId, QueryRequestApprovalProperties payload = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<QueryApprovalRequestResult>> QueryRequestApprovalAsync(Guid privateStoreId, string requestApprovalId, QueryApprovalRequestContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
-            using var message = CreateQueryRequestApprovalRequest(privateStoreId, requestApprovalId, payload);
+            using var message = CreateQueryRequestApprovalRequest(privateStoreId, requestApprovalId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        QueryRequestApproval value = default;
+                        QueryApprovalRequestResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.QueryRequestApproval.DeserializeQueryRequestApproval(document.RootElement);
+                        value = QueryApprovalRequestResult.DeserializeQueryApprovalRequestResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1075,24 +986,23 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Get request statuses foreach plan, this api is used as a complex GET action. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="payload"> The QueryRequestApprovalProperties to use. </param>
+        /// <param name="content"> The QueryApprovalRequestContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> or <paramref name="requestApprovalId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<QueryRequestApproval> QueryRequestApproval(string privateStoreId, string requestApprovalId, QueryRequestApprovalProperties payload = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<QueryApprovalRequestResult> QueryRequestApproval(Guid privateStoreId, string requestApprovalId, QueryApprovalRequestContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
-            using var message = CreateQueryRequestApprovalRequest(privateStoreId, requestApprovalId, payload);
+            using var message = CreateQueryRequestApprovalRequest(privateStoreId, requestApprovalId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        QueryRequestApproval value = default;
+                        QueryApprovalRequestResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.QueryRequestApproval.DeserializeQueryRequestApproval(document.RootElement);
+                        value = QueryApprovalRequestResult.DeserializeQueryApprovalRequestResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1100,7 +1010,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateAdminRequestApprovalsListRequest(string privateStoreId)
+        internal HttpMessage CreateAdminRequestApprovalsListRequest(Guid privateStoreId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1120,21 +1030,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Get list of admin request approvals. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdminRequestApprovalsList>> AdminRequestApprovalsListAsync(string privateStoreId, CancellationToken cancellationToken = default)
+        public async Task<Response<MarketplaceAdminApprovalRequestList>> AdminRequestApprovalsListAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateAdminRequestApprovalsListRequest(privateStoreId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AdminRequestApprovalsList value = default;
+                        MarketplaceAdminApprovalRequestList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = Models.AdminRequestApprovalsList.DeserializeAdminRequestApprovalsList(document.RootElement);
+                        value = MarketplaceAdminApprovalRequestList.DeserializeMarketplaceAdminApprovalRequestList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1145,21 +1051,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Get list of admin request approvals. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdminRequestApprovalsList> AdminRequestApprovalsList(string privateStoreId, CancellationToken cancellationToken = default)
+        public Response<MarketplaceAdminApprovalRequestList> AdminRequestApprovalsList(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateAdminRequestApprovalsListRequest(privateStoreId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AdminRequestApprovalsList value = default;
+                        MarketplaceAdminApprovalRequestList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = Models.AdminRequestApprovalsList.DeserializeAdminRequestApprovalsList(document.RootElement);
+                        value = MarketplaceAdminApprovalRequestList.DeserializeMarketplaceAdminApprovalRequestList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1167,7 +1069,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateGetAdminRequestApprovalRequest(string privateStoreId, string adminRequestApprovalId, string publisherId)
+        internal HttpMessage CreateGetAdminRequestApprovalRequest(Guid privateStoreId, string adminRequestApprovalId, string publisherId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1191,11 +1093,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
         /// <param name="publisherId"> The publisher id of this offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/>, <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdminRequestApprovalsResourceData>> GetAdminRequestApprovalAsync(string privateStoreId, string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MarketplaceAdminApprovalRequestData>> GetAdminRequestApprovalAsync(Guid privateStoreId, string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
             Argument.AssertNotNull(publisherId, nameof(publisherId));
 
@@ -1205,13 +1106,13 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case 200:
                     {
-                        AdminRequestApprovalsResourceData value = default;
+                        MarketplaceAdminApprovalRequestData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AdminRequestApprovalsResourceData.DeserializeAdminRequestApprovalsResourceData(document.RootElement);
+                        value = MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AdminRequestApprovalsResourceData)null, message.Response);
+                    return Response.FromValue((MarketplaceAdminApprovalRequestData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1222,11 +1123,10 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
         /// <param name="publisherId"> The publisher id of this offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/>, <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdminRequestApprovalsResourceData> GetAdminRequestApproval(string privateStoreId, string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="publisherId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MarketplaceAdminApprovalRequestData> GetAdminRequestApproval(Guid privateStoreId, string adminRequestApprovalId, string publisherId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
             Argument.AssertNotNull(publisherId, nameof(publisherId));
 
@@ -1236,19 +1136,19 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case 200:
                     {
-                        AdminRequestApprovalsResourceData value = default;
+                        MarketplaceAdminApprovalRequestData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AdminRequestApprovalsResourceData.DeserializeAdminRequestApprovalsResourceData(document.RootElement);
+                        value = MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((AdminRequestApprovalsResourceData)null, message.Response);
+                    return Response.FromValue((MarketplaceAdminApprovalRequestData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateAdminRequestApprovalRequest(string privateStoreId, string adminRequestApprovalId, AdminRequestApprovalsResourceData data)
+        internal HttpMessage CreateUpdateAdminRequestApprovalRequest(Guid privateStoreId, string adminRequestApprovalId, MarketplaceAdminApprovalRequestData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1273,13 +1173,12 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Update the admin action, weather the request is approved or rejected and the approved plans. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
-        /// <param name="data"> The AdminRequestApprovalsResource to use. </param>
+        /// <param name="data"> The MarketplaceAdminApprovalRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/>, <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AdminRequestApprovalsResourceData>> UpdateAdminRequestApprovalAsync(string privateStoreId, string adminRequestApprovalId, AdminRequestApprovalsResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<MarketplaceAdminApprovalRequestData>> UpdateAdminRequestApprovalAsync(Guid privateStoreId, string adminRequestApprovalId, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -1289,9 +1188,9 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case 200:
                     {
-                        AdminRequestApprovalsResourceData value = default;
+                        MarketplaceAdminApprovalRequestData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AdminRequestApprovalsResourceData.DeserializeAdminRequestApprovalsResourceData(document.RootElement);
+                        value = MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1302,13 +1201,12 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Update the admin action, weather the request is approved or rejected and the approved plans. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="adminRequestApprovalId"> The admin request approval ID to get create or update. </param>
-        /// <param name="data"> The AdminRequestApprovalsResource to use. </param>
+        /// <param name="data"> The MarketplaceAdminApprovalRequest to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/>, <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AdminRequestApprovalsResourceData> UpdateAdminRequestApproval(string privateStoreId, string adminRequestApprovalId, AdminRequestApprovalsResourceData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="adminRequestApprovalId"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="adminRequestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<MarketplaceAdminApprovalRequestData> UpdateAdminRequestApproval(Guid privateStoreId, string adminRequestApprovalId, MarketplaceAdminApprovalRequestData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(adminRequestApprovalId, nameof(adminRequestApprovalId));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -1318,9 +1216,9 @@ namespace Azure.ResourceManager.Marketplace
             {
                 case 200:
                     {
-                        AdminRequestApprovalsResourceData value = default;
+                        MarketplaceAdminApprovalRequestData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AdminRequestApprovalsResourceData.DeserializeAdminRequestApprovalsResourceData(document.RootElement);
+                        value = MarketplaceAdminApprovalRequestData.DeserializeMarketplaceAdminApprovalRequestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1328,7 +1226,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateQueryNotificationsStateRequest(string privateStoreId)
+        internal HttpMessage CreateQueryNotificationsStateRequest(Guid privateStoreId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1348,12 +1246,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Get private store notifications state. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PrivateStoreNotificationsState>> QueryNotificationsStateAsync(string privateStoreId, CancellationToken cancellationToken = default)
+        public async Task<Response<PrivateStoreNotificationsState>> QueryNotificationsStateAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateQueryNotificationsStateRequest(privateStoreId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -1373,12 +1267,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Get private store notifications state. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PrivateStoreNotificationsState> QueryNotificationsState(string privateStoreId, CancellationToken cancellationToken = default)
+        public Response<PrivateStoreNotificationsState> QueryNotificationsState(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateQueryNotificationsStateRequest(privateStoreId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
@@ -1395,7 +1285,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateAcknowledgeOfferNotificationRequest(string privateStoreId, string offerId, AcknowledgeOfferNotificationProperties payload)
+        internal HttpMessage CreateAcknowledgeOfferNotificationRequest(Guid privateStoreId, string offerId, AcknowledgeOfferNotificationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1410,12 +1300,12 @@ namespace Azure.ResourceManager.Marketplace
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (payload != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(payload);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -1424,16 +1314,15 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Acknowledge notification for offer. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="offerId"> The offer ID to update or delete. </param>
-        /// <param name="payload"> The AcknowledgeOfferNotificationProperties to use. </param>
+        /// <param name="content"> The AcknowledgeOfferNotificationContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> or <paramref name="offerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> AcknowledgeOfferNotificationAsync(string privateStoreId, string offerId, AcknowledgeOfferNotificationProperties payload = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> AcknowledgeOfferNotificationAsync(Guid privateStoreId, string offerId, AcknowledgeOfferNotificationContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
-            using var message = CreateAcknowledgeOfferNotificationRequest(privateStoreId, offerId, payload);
+            using var message = CreateAcknowledgeOfferNotificationRequest(privateStoreId, offerId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1447,16 +1336,15 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Acknowledge notification for offer. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="offerId"> The offer ID to update or delete. </param>
-        /// <param name="payload"> The AcknowledgeOfferNotificationProperties to use. </param>
+        /// <param name="content"> The AcknowledgeOfferNotificationContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> or <paramref name="offerId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response AcknowledgeOfferNotification(string privateStoreId, string offerId, AcknowledgeOfferNotificationProperties payload = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="offerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="offerId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response AcknowledgeOfferNotification(Guid privateStoreId, string offerId, AcknowledgeOfferNotificationContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(offerId, nameof(offerId));
 
-            using var message = CreateAcknowledgeOfferNotificationRequest(privateStoreId, offerId, payload);
+            using var message = CreateAcknowledgeOfferNotificationRequest(privateStoreId, offerId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1467,7 +1355,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateWithdrawPlanRequest(string privateStoreId, string requestApprovalId, WithdrawProperties payload)
+        internal HttpMessage CreateWithdrawPlanRequest(Guid privateStoreId, string requestApprovalId, WithdrawPlanContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1482,12 +1370,12 @@ namespace Azure.ResourceManager.Marketplace
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
-            if (payload != null)
+            if (content != null)
             {
                 request.Headers.Add("Content-Type", "application/json");
-                var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(payload);
-                request.Content = content;
+                var content0 = new Utf8JsonRequestContent();
+                content0.JsonWriter.WriteObjectValue(content);
+                request.Content = content0;
             }
             _userAgent.Apply(message);
             return message;
@@ -1496,16 +1384,15 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Withdraw a user request approval on specific plan. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="payload"> The WithdrawProperties to use. </param>
+        /// <param name="content"> The WithdrawPlanContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> or <paramref name="requestApprovalId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> WithdrawPlanAsync(string privateStoreId, string requestApprovalId, WithdrawProperties payload = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> WithdrawPlanAsync(Guid privateStoreId, string requestApprovalId, WithdrawPlanContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
-            using var message = CreateWithdrawPlanRequest(privateStoreId, requestApprovalId, payload);
+            using var message = CreateWithdrawPlanRequest(privateStoreId, requestApprovalId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1519,16 +1406,15 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> Withdraw a user request approval on specific plan. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="requestApprovalId"> The request approval ID to get create or update. </param>
-        /// <param name="payload"> The WithdrawProperties to use. </param>
+        /// <param name="content"> The WithdrawPlanContent to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> or <paramref name="requestApprovalId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> or <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response WithdrawPlan(string privateStoreId, string requestApprovalId, WithdrawProperties payload = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="requestApprovalId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="requestApprovalId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response WithdrawPlan(Guid privateStoreId, string requestApprovalId, WithdrawPlanContent content = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
             Argument.AssertNotNullOrEmpty(requestApprovalId, nameof(requestApprovalId));
 
-            using var message = CreateWithdrawPlanRequest(privateStoreId, requestApprovalId, payload);
+            using var message = CreateWithdrawPlanRequest(privateStoreId, requestApprovalId, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1539,7 +1425,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateFetchAllSubscriptionsInTenantRequest(string privateStoreId, string nextPageToken)
+        internal HttpMessage CreateFetchAllSubscriptionsInTenantRequest(Guid privateStoreId, string nextPageToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1564,12 +1450,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="nextPageToken"> The skip token to get the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionsResponse>> FetchAllSubscriptionsInTenantAsync(string privateStoreId, string nextPageToken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SubscriptionsResponse>> FetchAllSubscriptionsInTenantAsync(Guid privateStoreId, string nextPageToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateFetchAllSubscriptionsInTenantRequest(privateStoreId, nextPageToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -1590,12 +1472,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="nextPageToken"> The skip token to get the next page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionsResponse> FetchAllSubscriptionsInTenant(string privateStoreId, string nextPageToken = null, CancellationToken cancellationToken = default)
+        public Response<SubscriptionsResponse> FetchAllSubscriptionsInTenant(Guid privateStoreId, string nextPageToken = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateFetchAllSubscriptionsInTenantRequest(privateStoreId, nextPageToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
@@ -1612,7 +1490,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateListNewPlansNotificationsRequest(string privateStoreId)
+        internal HttpMessage CreateListNewPlansNotificationsRequest(Guid privateStoreId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1632,21 +1510,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> List new plans notifications. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NewPlansNotificationsList>> ListNewPlansNotificationsAsync(string privateStoreId, CancellationToken cancellationToken = default)
+        public async Task<Response<NewPlanNotificationListResult>> ListNewPlansNotificationsAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateListNewPlansNotificationsRequest(privateStoreId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NewPlansNotificationsList value = default;
+                        NewPlanNotificationListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = NewPlansNotificationsList.DeserializeNewPlansNotificationsList(document.RootElement);
+                        value = NewPlanNotificationListResult.DeserializeNewPlanNotificationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1657,21 +1531,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> List new plans notifications. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NewPlansNotificationsList> ListNewPlansNotifications(string privateStoreId, CancellationToken cancellationToken = default)
+        public Response<NewPlanNotificationListResult> ListNewPlansNotifications(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateListNewPlansNotificationsRequest(privateStoreId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        NewPlansNotificationsList value = default;
+                        NewPlanNotificationListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = NewPlansNotificationsList.DeserializeNewPlansNotificationsList(document.RootElement);
+                        value = NewPlanNotificationListResult.DeserializeNewPlanNotificationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1679,7 +1549,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateListStopSellOffersPlansNotificationsRequest(string privateStoreId, StopSellSubscriptions stopSellSubscriptions)
+        internal HttpMessage CreateListStopSellOffersPlansNotificationsRequest(Guid privateStoreId, StopSellSubscriptions stopSellSubscriptions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1707,12 +1577,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="stopSellSubscriptions"> The StopSellSubscriptions to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<StopSellOffersPlansNotificationsList>> ListStopSellOffersPlansNotificationsAsync(string privateStoreId, StopSellSubscriptions stopSellSubscriptions = null, CancellationToken cancellationToken = default)
+        public async Task<Response<StopSellOffersPlansNotificationsList>> ListStopSellOffersPlansNotificationsAsync(Guid privateStoreId, StopSellSubscriptions stopSellSubscriptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateListStopSellOffersPlansNotificationsRequest(privateStoreId, stopSellSubscriptions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -1733,12 +1599,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="stopSellSubscriptions"> The StopSellSubscriptions to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<StopSellOffersPlansNotificationsList> ListStopSellOffersPlansNotifications(string privateStoreId, StopSellSubscriptions stopSellSubscriptions = null, CancellationToken cancellationToken = default)
+        public Response<StopSellOffersPlansNotificationsList> ListStopSellOffersPlansNotifications(Guid privateStoreId, StopSellSubscriptions stopSellSubscriptions = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateListStopSellOffersPlansNotificationsRequest(privateStoreId, stopSellSubscriptions);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
@@ -1755,7 +1617,7 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
-        internal HttpMessage CreateListSubscriptionsContextRequest(string privateStoreId)
+        internal HttpMessage CreateListSubscriptionsContextRequest(Guid privateStoreId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1775,12 +1637,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> List all the subscriptions in the private store context. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionsContextList>> ListSubscriptionsContextAsync(string privateStoreId, CancellationToken cancellationToken = default)
+        public async Task<Response<SubscriptionsContextList>> ListSubscriptionsContextAsync(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateListSubscriptionsContextRequest(privateStoreId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
@@ -1800,12 +1658,8 @@ namespace Azure.ResourceManager.Marketplace
         /// <summary> List all the subscriptions in the private store context. </summary>
         /// <param name="privateStoreId"> The store ID - must use the tenant ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateStoreId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionsContextList> ListSubscriptionsContext(string privateStoreId, CancellationToken cancellationToken = default)
+        public Response<SubscriptionsContextList> ListSubscriptionsContext(Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(privateStoreId, nameof(privateStoreId));
-
             using var message = CreateListSubscriptionsContextRequest(privateStoreId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)

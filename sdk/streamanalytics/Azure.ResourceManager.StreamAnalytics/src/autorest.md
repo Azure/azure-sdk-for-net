@@ -31,14 +31,12 @@ rename-mapping:
   ClusterProperties.clusterId: -|uuid
   LastOutputEventTimestamp.lastOutputEventTime: lastOutputEventOn|date-time
   LastOutputEventTimestamp.lastUpdateTime: lastUpdatedOn|date-time
-  Output.properties.timeWindow: -|date-time
   PowerBIOutputDataSource.properties.groupId: -|uuid
   PrivateEndpointProperties.createdDate: createdOn|date-time
   PrivateLinkServiceConnection.properties.privateLinkServiceId: -|arm-id
   SampleInputResult.lastArrivalTime: lastArrivedOn|date-time
   SubResource.id: -|arm-id
   SubResource.type: -|resource-type
-  AzureSqlReferenceInputDataSource.properties.refreshRate: -|date
   DiagnosticCondition.since: -|date-time
   RawReferenceInputDataSource.properties.payload: -|any
   RawStreamInputDataSource.properties.payload: -|any
@@ -230,5 +228,26 @@ directive:
   where: $.definitions.FunctionInput.properties.isConfigurationParameter
   transform: >
         $["x-nullable"] = true;
-
+# Fix format for RefreshRate
+- from: swagger-document
+  where: $.definitions.AzureSqlReferenceInputDataSourceProperties
+  transform: >
+    $.properties.refreshRate['format'] = 'time';
+    $.properties.refreshRate['x-ms-client-name'] = 'refreshInterval';
+- from: swagger-document
+  where: $.definitions.BlobReferenceInputDataSourceProperties
+  transform: >
+    $.properties.fullSnapshotRefreshRate['format'] = 'time';
+    $.properties.fullSnapshotRefreshRate['x-ms-client-name'] = 'fullSnapshotRefreshInterval';
+- from: swagger-document
+  where: $.definitions.BlobReferenceInputDataSourceProperties
+  transform: >
+    $.properties.deltaSnapshotRefreshRate['format'] = 'time';
+    $.properties.deltaSnapshotRefreshRate['x-ms-client-name'] = 'deltaSnapshotRefreshInterval';
+# Fix format for timeWindow
+- from: swagger-document
+  where: $.definitions.OutputProperties
+  transform: >
+    $.properties.timeWindow['format'] = 'time';
+    $.properties.timeWindow['x-ms-client-name'] = 'timeFrame';
 ```
