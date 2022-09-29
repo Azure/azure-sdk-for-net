@@ -12,9 +12,9 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    public partial class OrbitalSpacecraftAvailableContact
+    public partial class OrbitalAvailableContact
     {
-        internal static OrbitalSpacecraftAvailableContact DeserializeOrbitalSpacecraftAvailableContact(JsonElement element)
+        internal static OrbitalAvailableContact DeserializeOrbitalAvailableContact(JsonElement element)
         {
             Optional<WritableSubResource> spacecraft = default;
             Optional<string> groundStationName = default;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     continue;
                 }
             }
-            return new OrbitalSpacecraftAvailableContact(spacecraft, groundStationName.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees));
+            return new OrbitalAvailableContact(spacecraft, groundStationName.Value, Optional.ToNullable(maximumElevationDegrees), Optional.ToNullable(txStartTime), Optional.ToNullable(txEndTime), Optional.ToNullable(rxStartTime), Optional.ToNullable(rxEndTime), Optional.ToNullable(startAzimuthDegrees), Optional.ToNullable(endAzimuthDegrees), Optional.ToNullable(startElevationDegrees), Optional.ToNullable(endElevationDegrees));
         }
     }
 }
