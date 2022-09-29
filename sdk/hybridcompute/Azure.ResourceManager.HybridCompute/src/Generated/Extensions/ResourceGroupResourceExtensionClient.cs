@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.HybridCompute
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of MachineResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of MachineResources and their operations over a MachineResource. </returns>
-        public virtual MachineCollection GetMachines()
+        /// <summary> Gets a collection of HybridComputeMachineResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of HybridComputeMachineResources and their operations over a HybridComputeMachineResource. </returns>
+        public virtual HybridComputeMachineCollection GetHybridComputeMachines()
         {
-            return GetCachedClient(Client => new MachineCollection(Client, Id));
+            return GetCachedClient(Client => new HybridComputeMachineCollection(Client, Id));
         }
 
         /// <summary> Gets a collection of HybridComputePrivateLinkScopeResources in the ResourceGroupResource. </summary>

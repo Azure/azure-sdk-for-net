@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
-
 namespace Azure.ResourceManager.FrontDoor.Models
 {
     /// <summary> Describes Forwarding Route. </summary>
@@ -25,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>
         /// <param name="cacheConfiguration"> The caching configuration associated with this rule. </param>
         /// <param name="backendPool"> A reference to the BackendPool which this rule routes to. </param>
-        internal ForwardingConfiguration(string odataType, string customForwardingPath, FrontDoorForwardingProtocol? forwardingProtocol, FrontDoorCacheConfiguration cacheConfiguration, WritableSubResource backendPool) : base(odataType)
+        internal ForwardingConfiguration(string odataType, string customForwardingPath, FrontDoorForwardingProtocol? forwardingProtocol, FrontDoorCacheConfiguration cacheConfiguration, SubResource backendPool) : base(odataType)
         {
             CustomForwardingPath = customForwardingPath;
             ForwardingProtocol = forwardingProtocol;
@@ -41,15 +38,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> The caching configuration associated with this rule. </summary>
         public FrontDoorCacheConfiguration CacheConfiguration { get; set; }
         /// <summary> A reference to the BackendPool which this rule routes to. </summary>
-        internal WritableSubResource BackendPool { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier BackendPoolId
+        internal SubResource BackendPool { get; set; }
+        /// <summary> Resource ID. </summary>
+        public string BackendPoolId
         {
             get => BackendPool is null ? default : BackendPool.Id;
             set
             {
                 if (BackendPool is null)
-                    BackendPool = new WritableSubResource();
+                    BackendPool = new SubResource();
                 BackendPool.Id = value;
             }
         }

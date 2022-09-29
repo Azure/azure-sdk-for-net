@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<MachineResource> GetMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="HybridComputeMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<HybridComputeMachineResource> GetHybridComputeMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetMachinesAsync(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHybridComputeMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.HybridCompute
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<MachineResource> GetMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="HybridComputeMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<HybridComputeMachineResource> GetHybridComputeMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtensionClient(subscriptionResource).GetMachines(cancellationToken);
+            return GetExtensionClient(subscriptionResource).GetHybridComputeMachines(cancellationToken);
         }
 
         /// <summary>
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.HybridCompute
             );
         }
 
-        /// <summary> Gets a collection of MachineResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of HybridComputeMachineResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of MachineResources and their operations over a MachineResource. </returns>
-        public static MachineCollection GetMachines(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of HybridComputeMachineResources and their operations over a HybridComputeMachineResource. </returns>
+        public static HybridComputeMachineCollection GetHybridComputeMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtensionClient(resourceGroupResource).GetMachines();
+            return GetExtensionClient(resourceGroupResource).GetHybridComputeMachines();
         }
 
         /// <summary>
@@ -145,9 +145,9 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<MachineResource>> GetMachineAsync(this ResourceGroupResource resourceGroupResource, string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(this ResourceGroupResource resourceGroupResource, string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMachines().GetAsync(machineName, expand, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetHybridComputeMachines().GetAsync(machineName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -162,9 +162,9 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentException"> <paramref name="machineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="machineName"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<MachineResource> GetMachine(this ResourceGroupResource resourceGroupResource, string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        public static Response<HybridComputeMachineResource> GetHybridComputeMachine(this ResourceGroupResource resourceGroupResource, string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMachines().Get(machineName, expand, cancellationToken);
+            return resourceGroupResource.GetHybridComputeMachines().Get(machineName, expand, cancellationToken);
         }
 
         /// <summary> Gets a collection of HybridComputePrivateLinkScopeResources in the ResourceGroupResource. </summary>
@@ -207,39 +207,39 @@ namespace Azure.ResourceManager.HybridCompute
             return resourceGroupResource.GetHybridComputePrivateLinkScopes().Get(scopeName, cancellationToken);
         }
 
-        #region MachineResource
+        #region HybridComputeMachineResource
         /// <summary>
-        /// Gets an object representing a <see cref="MachineResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineResource.CreateResourceIdentifier" /> to create a <see cref="MachineResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridComputeMachineResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridComputeMachineResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineResource" /> object. </returns>
-        public static MachineResource GetMachineResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridComputeMachineResource" /> object. </returns>
+        public static HybridComputeMachineResource GetHybridComputeMachineResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MachineResource.ValidateResourceId(id);
-                return new MachineResource(client, id);
+                HybridComputeMachineResource.ValidateResourceId(id);
+                return new HybridComputeMachineResource(client, id);
             }
             );
         }
         #endregion
 
-        #region MachineExtensionResource
+        #region HybridComputeMachineExtensionResource
         /// <summary>
-        /// Gets an object representing a <see cref="MachineExtensionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MachineExtensionResource.CreateResourceIdentifier" /> to create a <see cref="MachineExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="HybridComputeMachineExtensionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridComputeMachineExtensionResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeMachineExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineExtensionResource" /> object. </returns>
-        public static MachineExtensionResource GetMachineExtensionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HybridComputeMachineExtensionResource" /> object. </returns>
+        public static HybridComputeMachineExtensionResource GetHybridComputeMachineExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
             return client.GetResourceClient(() =>
             {
-                MachineExtensionResource.ValidateResourceId(id);
-                return new MachineExtensionResource(client, id);
+                HybridComputeMachineExtensionResource.ValidateResourceId(id);
+                return new HybridComputeMachineExtensionResource(client, id);
             }
             );
         }

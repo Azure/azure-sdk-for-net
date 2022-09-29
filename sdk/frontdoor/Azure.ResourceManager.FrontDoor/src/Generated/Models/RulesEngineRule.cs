@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <summary> Actions to perform on the request and response if all of the match conditions are met. </summary>
         public RulesEngineAction Action { get; set; }
         /// <summary> A list of match conditions that must meet in order for the actions of this rule to run. Having no match conditions means the actions will always run. </summary>
-        public IList<RulesEngineMatchCondition> MatchConditions { get; }
+        public IList<RulesEngineMatchCondition> MatchConditions { get; set; }
         /// <summary> If this rule is a match should the rules engine continue running the remaining rules or stop. If not present, defaults to Continue. </summary>
         public MatchProcessingBehavior? MatchProcessingBehavior { get; set; }
     }

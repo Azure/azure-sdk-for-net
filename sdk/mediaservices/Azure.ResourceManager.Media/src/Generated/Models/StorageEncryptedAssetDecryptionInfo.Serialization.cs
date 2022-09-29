@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Media.Models
         internal static StorageEncryptedAssetDecryptionInfo DeserializeStorageEncryptedAssetDecryptionInfo(JsonElement element)
         {
             Optional<byte[]> key = default;
-            Optional<IReadOnlyList<AssetFileEncryptionMetadata>> assetFileEncryptionMetadata = default;
+            Optional<IReadOnlyList<MediaAssetFileEncryptionMetadata>> assetFileEncryptionMetadata = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"))
@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<AssetFileEncryptionMetadata> array = new List<AssetFileEncryptionMetadata>();
+                    List<MediaAssetFileEncryptionMetadata> array = new List<MediaAssetFileEncryptionMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.AssetFileEncryptionMetadata.DeserializeAssetFileEncryptionMetadata(item));
+                        array.Add(MediaAssetFileEncryptionMetadata.DeserializeMediaAssetFileEncryptionMetadata(item));
                     }
                     assetFileEncryptionMetadata = array;
                     continue;

@@ -17,17 +17,17 @@ namespace Azure.ResourceManager.Support.Models
         /// <summary> Initializes a new instance of ServicesListResult. </summary>
         internal ServicesListResult()
         {
-            Value = new ChangeTrackingList<ServiceData>();
+            Value = new ChangeTrackingList<SupportAzureServiceData>();
         }
 
         /// <summary> Initializes a new instance of ServicesListResult. </summary>
         /// <param name="value"> List of Service resources. </param>
-        internal ServicesListResult(IReadOnlyList<ServiceData> value)
+        internal ServicesListResult(IReadOnlyList<SupportAzureServiceData> value)
         {
             Value = value;
         }
 
         /// <summary> List of Service resources. </summary>
-        public IReadOnlyList<ServiceData> Value { get; }
+        public IReadOnlyList<SupportAzureServiceData> Value { get; }
     }
 }

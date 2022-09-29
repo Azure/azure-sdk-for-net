@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.DataBoxEdge
     }
     public partial class BandwidthScheduleData : Azure.ResourceManager.Models.ResourceData
     {
-        public BandwidthScheduleData(string start, string stop, int rateInMbps, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek> days) { }
+        public BandwidthScheduleData(System.TimeSpan startOn, System.TimeSpan stopOn, int rateInMbps, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek> days) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBoxEdge.Models.DataBoxEdgeDayOfWeek> Days { get { throw null; } }
         public int RateInMbps { get { throw null; } set { } }
-        public string Start { get { throw null; } set { } }
-        public string Stop { get { throw null; } set { } }
+        public System.TimeSpan StartOn { get { throw null; } set { } }
+        public System.TimeSpan StopOn { get { throw null; } set { } }
     }
     public partial class BandwidthScheduleResource : Azure.ResourceManager.ArmResource
     {
