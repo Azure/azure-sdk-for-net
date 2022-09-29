@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -22,6 +23,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Config;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
@@ -228,8 +230,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
             var bindingData = new ParameterBindingData
             {
                 Version = "1.0.0",
-                ContentType = "blob",
-                Content = attribute
+                ContentType = "application/json",
+                Source = AssemblyName.GetAssemblyName(Assembly.GetExecutingAssembly().Location).Name,
+                Content = JsonConvert.SerializeObject(attribute)
             };
 
             return bindingData;
