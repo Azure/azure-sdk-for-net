@@ -20,8 +20,8 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string RecognizeInitialSilenceTimeoutValue = "8510";
-        private const string RecognizeInterDigitTimeoutValue = "8532";
+        private const string RecognizeInitialSilenceTimedOutValue = "8510";
+        private const string RecognizeInterDigitTimedOutValue = "8532";
         private const string RecognizePlayPromptFailedValue = "8511";
 
         private const string RecognizeMaxDigitsReceivedValue = "8531";
@@ -31,13 +31,13 @@ namespace Azure.Communication.CallAutomation
         private const string PlayInvalidFileFormatValue = "8535";
 
         private const string CompletedSuccessfullyValue = "0";
-        private const string OperationCanceledValue = "8508";
-        private const string UspecifiedErrorValue = "9999";
+        private const string OperationCancelledValue = "8508";
+        private const string UnspecifiedErrorValue = "9999";
 
         /// <summary> Action failed, initial silence timeout reached. </summary>
-        public static ReasonCodeName RecognizeInitialSilenceTimeout { get; } = new ReasonCodeName(RecognizeInitialSilenceTimeoutValue);
+        public static ReasonCodeName RecognizeInitialSilenceTimedOut { get; } = new ReasonCodeName(RecognizeInitialSilenceTimedOutValue);
         /// <summary> Action failed, inter-digit silence timeout reached. </summary>
-        public static ReasonCodeName RecognizeInterDigitTimeout { get; } = new ReasonCodeName(RecognizeInterDigitTimeoutValue);
+        public static ReasonCodeName RecognizeInterDigitTimedOut { get; } = new ReasonCodeName(RecognizeInterDigitTimedOutValue);
         /// <summary> Action failed, encountered failure while trying to play the prompt. </summary>
         public static ReasonCodeName RecognizePlayPromptFailed { get; } = new ReasonCodeName(RecognizePlayPromptFailedValue);
 
@@ -54,9 +54,9 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Action completed successfully. </summary>
         public static ReasonCodeName CompletedSuccessfully { get; } = new ReasonCodeName (CompletedSuccessfullyValue);
         /// <summary> Unknown internal server error. </summary>
-        public static ReasonCodeName UspecifiedError { get; } = new ReasonCodeName(UspecifiedErrorValue);
+        public static ReasonCodeName UnspecifiedError { get; } = new ReasonCodeName(UnspecifiedErrorValue);
         /// <summary> Action falied, the operation was cancelled. </summary>
-        public static ReasonCodeName OperationCanceled { get; } = new ReasonCodeName(OperationCanceledValue);
+        public static ReasonCodeName OperationCancelled { get; } = new ReasonCodeName(OperationCancelledValue);
 
         /// <summary> Determines if two <see cref="ReasonCodeName"/> values are the same. </summary>
         public static bool operator ==(ReasonCodeName left, ReasonCodeName right) => left.Equals(right);

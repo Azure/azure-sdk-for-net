@@ -569,15 +569,15 @@ namespace Azure.Communication.CallAutomation
         private readonly int _dummyPrimitive;
         public ReasonCodeName(string value) { throw null; }
         public static Azure.Communication.CallAutomation.ReasonCodeName CompletedSuccessfully { get { throw null; } }
-        public static Azure.Communication.CallAutomation.ReasonCodeName OperationCanceled { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCodeName OperationCancelled { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCodeName PlayDownloadFailed { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCodeName PlayInvalidFileFormat { get { throw null; } }
-        public static Azure.Communication.CallAutomation.ReasonCodeName RecognizeInitialSilenceTimeout { get { throw null; } }
-        public static Azure.Communication.CallAutomation.ReasonCodeName RecognizeInterDigitTimeout { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCodeName RecognizeInitialSilenceTimedOut { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCodeName RecognizeInterDigitTimedOut { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCodeName RecognizeMaxDigitsReceived { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCodeName RecognizePlayPromptFailed { get { throw null; } }
         public static Azure.Communication.CallAutomation.ReasonCodeName RecognizeStopToneDetected { get { throw null; } }
-        public static Azure.Communication.CallAutomation.ReasonCodeName UspecifiedError { get { throw null; } }
+        public static Azure.Communication.CallAutomation.ReasonCodeName UnspecifiedError { get { throw null; } }
         public bool Equals(Azure.Communication.CallAutomation.ReasonCodeName other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

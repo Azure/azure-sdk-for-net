@@ -301,7 +301,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("correlationId", recognizeFailed.CorrelationId);
                 Assert.AreEqual("serverCallId", recognizeFailed.ServerCallId);
                 Assert.AreEqual(400, recognizeFailed.ResultInformation.Code);
-                Assert.AreEqual(ReasonCodeName.RecognizeInitialSilenceTimeout, recognizeFailed.ReasonCodeName);
+                Assert.AreEqual(ReasonCodeName.RecognizeInitialSilenceTimedOut, recognizeFailed.ReasonCodeName);
             }
             else
             {
