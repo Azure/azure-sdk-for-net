@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WritePropertyName("refreshType");
                 writer.WriteStringValue(RefreshType.Value.ToString());
             }
-            if (Optional.IsDefined(RefreshRate))
+            if (Optional.IsDefined(RefreshInterval))
             {
                 writer.WritePropertyName("refreshRate");
-                writer.WriteStringValue(RefreshRate.Value);
+                writer.WriteStringValue(RefreshInterval.Value, "T");
             }
             if (Optional.IsDefined(FullSnapshotQuery))
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> user = default;
             Optional<string> password = default;
             Optional<DataRefreshType> refreshType = default;
-            Optional<DateTimeOffset> refreshRate = default;
+            Optional<TimeSpan> refreshRate = default;
             Optional<string> fullSnapshotQuery = default;
             Optional<string> deltaSnapshotQuery = default;
             Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            refreshRate = property0.Value.GetDateTimeOffset();
+                            refreshRate = property0.Value.GetTimeSpan("T");
                             continue;
                         }
                         if (property0.NameEquals("fullSnapshotQuery"))

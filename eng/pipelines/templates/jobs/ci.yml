@@ -14,9 +14,6 @@ parameters:
 - name: ServiceDirectory
   type: string
   default: not-specified
-- name: ServiceToTest
-  type: string
-  default: ''
 - name: BuildSnippets
   type: boolean
   default: false
@@ -198,7 +195,7 @@ jobs:
         inputs:
           filePath: "eng/scripts/CodeChecks.ps1"
           arguments: >
-           -ServiceDirectory ${{ parameters.ServiceToTest }}
+           -ServiceDirectory ${{ parameters.ServiceDirectory }}
            -SDKType ${{ parameters.SDKType }}
            -SpellCheckPublicApiSurface
           pwsh: true
@@ -241,21 +238,21 @@ jobs:
         SDKType: ${{ parameters.SDKType }}
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
         TestSetupSteps: ${{ parameters.TestSetupSteps }}
-        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }} 
+        TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
   - ${{ if ne(parameters.TestDependsOnDependency, 'not-specified') }}:
     - template: /eng/common/pipelines/templates/jobs/archetype-sdk-tests-generate.yml
       parameters:
-        GenerateJobName: generate_target_dependencies_test_matrix 
+        GenerateJobName: generate_target_dependencies_test_matrix
         JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
         MatrixConfigs: ${{ parameters.MatrixConfigs }}
         MatrixFilters: ${{ parameters.MatrixFilters }}
         MatrixReplace: ${{ parameters.MatrixReplace }}
         CloudConfig:
           Cloud: public
-        SparseCheckoutPaths: 
+        SparseCheckoutPaths:
           - "/*"
-          - "!/sdk/*/**/SessionRecords"
-        PreGenerationSteps: 
+          - "!/sdk/*/**/SessionRecords/*"
+        PreGenerationSteps:
         - ${{ each config in parameters.MatrixConfigs }}:
           - template: /eng/pipelines/templates/steps/dependency.tests.yml
             parameters:
@@ -272,4 +269,4 @@ jobs:
           TestSetupSteps: ${{ parameters.TestSetupSteps }}
           TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
           # The value for ProjectListOverrideFilePropertyName should be the same as dependency.tests.yml parameter ProjectListOverrideFilePropertyName
-          ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'                                     
+          ProjectListOverrideFilePropertyName: 'ProjectListOverrideFile'

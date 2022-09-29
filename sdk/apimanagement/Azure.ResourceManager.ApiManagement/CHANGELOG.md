@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Renamed `ExpiresOn` to `ExpireOn`.
+
 ### Other Changes
 
 ## 1.0.0-beta.2 (2022-08-29)

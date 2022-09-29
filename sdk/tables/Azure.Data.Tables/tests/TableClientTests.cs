@@ -500,6 +500,29 @@ namespace Azure.Data.Tables.Tests
             CollectionAssert.Contains(actualSas.Segments, TableName);
         }
 
+        private static IEnumerable<object[]> TableClientsAllCtors()
+        {
+            var sharedKeyCred = new TableSharedKeyCredential(AccountName, Secret);
+            var tokenCred = new MockCredential();
+            var connString = $"DefaultEndpointsProtocol=https;AccountName={AccountName};AccountKey={Secret};TableEndpoint=https://{AccountName}.table.core.windows.net/;";
+            var sasCred = new AzureSasCredential(signature);
+            var fromTableServiceClient = new TableServiceClient(_url, sharedKeyCred).GetTableClient(TableName);
+
+            yield return new object[] { new TableClient(connString, TableName)};
+            yield return new object[] { new TableClient(_url, TableName, sharedKeyCred)};
+            yield return new object[] { new TableClient(_url, TableName, tokenCred)};
+            yield return new object[] { new TableClient(_url, sasCred)};
+            yield return new object[] { new TableClient(new Uri($"{_url}?{signature}"))};
+            yield return new object[] { fromTableServiceClient};
+        }
+
+        [TestCaseSource(nameof(TableClientsAllCtors))]
+        public void UriPropertyIsPopulated(TableClient client)
+        {
+            Assert.AreEqual($"{_url}{TableName}", client.Uri.AbsoluteUri);
+            Assert.That(client.Uri.AbsoluteUri, Does.Not.Contain(signature));
+        }
+
         [Test]
         [NonParallelizable]
         public async Task CreateClientRespectsSingleQuoteEscapeCompatSwithc(

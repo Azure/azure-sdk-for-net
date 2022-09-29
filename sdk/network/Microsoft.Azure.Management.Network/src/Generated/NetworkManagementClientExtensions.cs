@@ -291,23 +291,37 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Lists active connectivity configurations in a network manager.
+            /// Retrieves detail of a provider port.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='parameters'>
-            /// Active Configuration Parameter.
+            /// <param name='providerport'>
+            /// The name of the provider port.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='networkManagerName'>
-            /// The name of the network manager.
-            /// </param>
-            public static ActiveConnectivityConfigurationsListResult ListActiveConnectivityConfigurations(this INetworkManagementClient operations, ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName)
+            public static ExpressRouteProviderPort ExpressRouteProviderPortMethod(this INetworkManagementClient operations, string providerport)
             {
-                return operations.ListActiveConnectivityConfigurationsAsync(parameters, resourceGroupName, networkManagerName).GetAwaiter().GetResult();
+                return operations.ExpressRouteProviderPortMethodAsync(providerport).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves detail of a provider port.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='providerport'>
+            /// The name of the provider port.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ExpressRouteProviderPort> ExpressRouteProviderPortMethodAsync(this INetworkManagementClient operations, string providerport, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ExpressRouteProviderPortMethodWithHttpMessagesAsync(providerport, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -325,12 +339,40 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='networkManagerName'>
             /// The name of the network manager.
             /// </param>
+            /// <param name='top'>
+            /// An optional query parameter which specifies the maximum number of records
+            /// to be returned by the server.
+            /// </param>
+            public static ActiveConnectivityConfigurationsListResult ListActiveConnectivityConfigurations(this INetworkManagementClient operations, ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, int? top = default(int?))
+            {
+                return operations.ListActiveConnectivityConfigurationsAsync(parameters, resourceGroupName, networkManagerName, top).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists active connectivity configurations in a network manager.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='parameters'>
+            /// Active Configuration Parameter.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='networkManagerName'>
+            /// The name of the network manager.
+            /// </param>
+            /// <param name='top'>
+            /// An optional query parameter which specifies the maximum number of records
+            /// to be returned by the server.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ActiveConnectivityConfigurationsListResult> ListActiveConnectivityConfigurationsAsync(this INetworkManagementClient operations, ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ActiveConnectivityConfigurationsListResult> ListActiveConnectivityConfigurationsAsync(this INetworkManagementClient operations, ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListActiveConnectivityConfigurationsWithHttpMessagesAsync(parameters, resourceGroupName, networkManagerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListActiveConnectivityConfigurationsWithHttpMessagesAsync(parameters, resourceGroupName, networkManagerName, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -351,9 +393,13 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='networkManagerName'>
             /// The name of the network manager.
             /// </param>
-            public static ActiveSecurityAdminRulesListResult ListActiveSecurityAdminRules(this INetworkManagementClient operations, ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName)
+            /// <param name='top'>
+            /// An optional query parameter which specifies the maximum number of records
+            /// to be returned by the server.
+            /// </param>
+            public static ActiveSecurityAdminRulesListResult ListActiveSecurityAdminRules(this INetworkManagementClient operations, ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, int? top = default(int?))
             {
-                return operations.ListActiveSecurityAdminRulesAsync(parameters, resourceGroupName, networkManagerName).GetAwaiter().GetResult();
+                return operations.ListActiveSecurityAdminRulesAsync(parameters, resourceGroupName, networkManagerName, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -371,12 +417,16 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='networkManagerName'>
             /// The name of the network manager.
             /// </param>
+            /// <param name='top'>
+            /// An optional query parameter which specifies the maximum number of records
+            /// to be returned by the server.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ActiveSecurityAdminRulesListResult> ListActiveSecurityAdminRulesAsync(this INetworkManagementClient operations, ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ActiveSecurityAdminRulesListResult> ListActiveSecurityAdminRulesAsync(this INetworkManagementClient operations, ActiveConfigurationParameter parameters, string resourceGroupName, string networkManagerName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListActiveSecurityAdminRulesWithHttpMessagesAsync(parameters, resourceGroupName, networkManagerName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListActiveSecurityAdminRulesWithHttpMessagesAsync(parameters, resourceGroupName, networkManagerName, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -398,9 +448,13 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='virtualNetworkName'>
             /// The name of the virtual network.
             /// </param>
-            public static NetworkManagerEffectiveConnectivityConfigurationListResult ListNetworkManagerEffectiveConnectivityConfigurations(this INetworkManagementClient operations, QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName)
+            /// <param name='top'>
+            /// An optional query parameter which specifies the maximum number of records
+            /// to be returned by the server.
+            /// </param>
+            public static NetworkManagerEffectiveConnectivityConfigurationListResult ListNetworkManagerEffectiveConnectivityConfigurations(this INetworkManagementClient operations, QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, int? top = default(int?))
             {
-                return operations.ListNetworkManagerEffectiveConnectivityConfigurationsAsync(parameters, resourceGroupName, virtualNetworkName).GetAwaiter().GetResult();
+                return operations.ListNetworkManagerEffectiveConnectivityConfigurationsAsync(parameters, resourceGroupName, virtualNetworkName, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -419,12 +473,16 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='virtualNetworkName'>
             /// The name of the virtual network.
             /// </param>
+            /// <param name='top'>
+            /// An optional query parameter which specifies the maximum number of records
+            /// to be returned by the server.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NetworkManagerEffectiveConnectivityConfigurationListResult> ListNetworkManagerEffectiveConnectivityConfigurationsAsync(this INetworkManagementClient operations, QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkManagerEffectiveConnectivityConfigurationListResult> ListNetworkManagerEffectiveConnectivityConfigurationsAsync(this INetworkManagementClient operations, QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNetworkManagerEffectiveConnectivityConfigurationsWithHttpMessagesAsync(parameters, resourceGroupName, virtualNetworkName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListNetworkManagerEffectiveConnectivityConfigurationsWithHttpMessagesAsync(parameters, resourceGroupName, virtualNetworkName, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -445,9 +503,13 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='virtualNetworkName'>
             /// The name of the virtual network.
             /// </param>
-            public static NetworkManagerEffectiveSecurityAdminRulesListResult ListNetworkManagerEffectiveSecurityAdminRules(this INetworkManagementClient operations, QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName)
+            /// <param name='top'>
+            /// An optional query parameter which specifies the maximum number of records
+            /// to be returned by the server.
+            /// </param>
+            public static NetworkManagerEffectiveSecurityAdminRulesListResult ListNetworkManagerEffectiveSecurityAdminRules(this INetworkManagementClient operations, QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, int? top = default(int?))
             {
-                return operations.ListNetworkManagerEffectiveSecurityAdminRulesAsync(parameters, resourceGroupName, virtualNetworkName).GetAwaiter().GetResult();
+                return operations.ListNetworkManagerEffectiveSecurityAdminRulesAsync(parameters, resourceGroupName, virtualNetworkName, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -465,12 +527,16 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='virtualNetworkName'>
             /// The name of the virtual network.
             /// </param>
+            /// <param name='top'>
+            /// An optional query parameter which specifies the maximum number of records
+            /// to be returned by the server.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NetworkManagerEffectiveSecurityAdminRulesListResult> ListNetworkManagerEffectiveSecurityAdminRulesAsync(this INetworkManagementClient operations, QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NetworkManagerEffectiveSecurityAdminRulesListResult> ListNetworkManagerEffectiveSecurityAdminRulesAsync(this INetworkManagementClient operations, QueryRequestOptions parameters, string resourceGroupName, string virtualNetworkName, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNetworkManagerEffectiveSecurityAdminRulesWithHttpMessagesAsync(parameters, resourceGroupName, virtualNetworkName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListNetworkManagerEffectiveSecurityAdminRulesWithHttpMessagesAsync(parameters, resourceGroupName, virtualNetworkName, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -567,40 +633,6 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<VpnProfileResponse> GeneratevirtualwanvpnserverconfigurationvpnprofileAsync(this INetworkManagementClient operations, string resourceGroupName, string virtualWANName, VirtualWanVpnProfileParameters vpnClientParams, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GeneratevirtualwanvpnserverconfigurationvpnprofileWithHttpMessagesAsync(resourceGroupName, virtualWANName, vpnClientParams, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Retrieves detail of a provider port.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='providerport'>
-            /// The name of the provider port.
-            /// </param>
-            public static ExpressRouteProviderPort ExpressRouteProviderPortMethod(this INetworkManagementClient operations, string providerport)
-            {
-                return operations.ExpressRouteProviderPortMethodAsync(providerport).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Retrieves detail of a provider port.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='providerport'>
-            /// The name of the provider port.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ExpressRouteProviderPort> ExpressRouteProviderPortMethodAsync(this INetworkManagementClient operations, string providerport, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ExpressRouteProviderPortMethodWithHttpMessagesAsync(providerport, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

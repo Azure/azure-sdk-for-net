@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Optional<DatabaseStatistics> statistics = default;
             Optional<string> leaderClusterResourceId = default;
             Optional<string> attachedDatabaseConfigurationName = default;
-            Optional<PrincipalsModificationKind> principalsModificationKind = default;
+            Optional<KustoDatabasePrincipalsModificationKind> principalsModificationKind = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Kusto.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            principalsModificationKind = new PrincipalsModificationKind(property0.Value.GetString());
+                            principalsModificationKind = new KustoDatabasePrincipalsModificationKind(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -759,6 +759,7 @@ Samples showing how to use the Cognitive Services Form Recognizer library are av
 - [Get and List document model operations][get_and_list]
 - [Compose a model][compose_model]
 - [Copy a custom model between Form Recognizer resources][copy_custom_models]
+- [Mock a client for testing using the Moq library][mock_client]
 
 > Note that these samples use SDK version `4.0.0`. For lower versions of the SDK, please see [Form Recognizer Samples for V3.1.X][formrecov3_samples].
 
@@ -817,6 +818,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [copy_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_CopyCustomModel.md
 [compose_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_ModelCompose.md
 [get_and_list]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_GetAndListOperations.md
+[mock_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_MockClient.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/

@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.Core.Amqp;
-using Azure.Messaging.EventHubs;
 using Microsoft.Azure.Amqp.Framing;
 
 namespace Azure.Messaging.EventHubs.Amqp
@@ -150,11 +149,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     if (_lazySegments != null)
                     {
-                        foreach (var segment in _lazySegments)
-                        {
-                            AppendSegment(segment);
-                        }
-
+                        AppendSegments(_lazySegments);
                         _lazySegments = null;
                     }
 
@@ -183,21 +178,43 @@ namespace Azure.Messaging.EventHubs.Amqp
                 _segments?.GetEnumerator() ?? _lazySegments.GetEnumerator();
 
             /// <summary>
-            ///   Appends a memory segment to the continuous buffer.
+            ///   Appends memory segments to the continuous buffer.
             /// </summary>
             ///
-            /// <param name="segment">The memory segment to append.</param>
+            /// <param name="dataSegments">The memory segments to append.</param>
             ///
-            private void AppendSegment(ReadOnlyMemory<byte> segment)
+            private void AppendSegments(IEnumerable<ReadOnlyMemory<byte>> dataSegments)
             {
-                _writer ??= new ArrayBufferWriter<byte>();
-                _segments ??= new List<ReadOnlyMemory<byte>>();
+                int length = 0;
+                int numberOfSegments = 0;
+                List<ReadOnlyMemory<byte>> segments = null;
+                foreach (var segment in dataSegments)
+                {
+                    segments ??= dataSegments is IReadOnlyCollection<ReadOnlyMemory<byte>> readOnlyList
+                        ? new List<ReadOnlyMemory<byte>>(readOnlyList.Count)
+                        : new List<ReadOnlyMemory<byte>>();
+                    length += segment.Length;
+                    numberOfSegments++;
+                    segments.Add(segment);
+                }
 
-                var memory = _writer.GetMemory(segment.Length);
-                segment.CopyTo(memory);
+                if (segments == null)
+                {
+                    return;
+                }
 
-                _writer.Advance(segment.Length);
-                _segments.Add(memory.Slice(0, segment.Length));
+                // fields are lazy initialized to not occupy unnecessary memory when there are no data segments
+                _writer = length > 0 ? new ArrayBufferWriter<byte>(length) : new ArrayBufferWriter<byte>();
+                _segments = segments;
+
+                for (var segmentIndex = 0; segmentIndex < numberOfSegments; segmentIndex++)
+                {
+                    var dataToAppend = segments[segmentIndex];
+                    var memory = _writer.GetMemory(dataToAppend.Length);
+                    dataToAppend.CopyTo(memory);
+                    _writer.Advance(dataToAppend.Length);
+                    segments[segmentIndex] = memory.Slice(0, dataToAppend.Length);
+                }
             }
         }
 
@@ -230,10 +247,7 @@ namespace Azure.Messaging.EventHubs.Amqp
             ///
             public EagerCopyingMessageBody(IEnumerable<Data> dataSegments)
             {
-                foreach (var segment in dataSegments)
-                {
-                    AppendSegment(segment);
-                }
+                AppendSegments(dataSegments);
             }
 
             /// <summary>
@@ -245,28 +259,49 @@ namespace Azure.Messaging.EventHubs.Amqp
             public override IEnumerator<ReadOnlyMemory<byte>> GetEnumerator() => _segments.GetEnumerator();
 
             /// <summary>
-            ///   Appends a memory segment to the continuous buffer.
+            ///   Appends memory segments to the continuous buffer.
             /// </summary>
             ///
-            /// <param name="segment">The memory segment to append.</param>
+            /// <param name="dataSegments">The memory segments to append.</param>
             ///
-            private void AppendSegment(Data segment)
+            private void AppendSegments(IEnumerable<Data> dataSegments)
             {
-                _writer ??= new ArrayBufferWriter<byte>();
-                _segments ??= new List<ReadOnlyMemory<byte>>();
-
-                ReadOnlyMemory<byte> dataToAppend = segment.Value switch
+                int length = 0;
+                int numberOfSegments = 0;
+                List<ReadOnlyMemory<byte>> segments = null;
+                foreach (var segment in dataSegments)
                 {
-                    byte[] byteArray => byteArray,
-                    ArraySegment<byte> arraySegment => arraySegment,
-                    _ => ReadOnlyMemory<byte>.Empty
-                };
+                    segments ??= dataSegments is IReadOnlyCollection<Data> readOnlyList
+                        ? new List<ReadOnlyMemory<byte>>(readOnlyList.Count)
+                        : new List<ReadOnlyMemory<byte>>();
+                    ReadOnlyMemory<byte> dataToAppend = segment.Value switch
+                    {
+                        byte[] byteArray => byteArray,
+                        ArraySegment<byte> arraySegment => arraySegment,
+                        _ => ReadOnlyMemory<byte>.Empty
+                    };
+                    length += dataToAppend.Length;
+                    numberOfSegments++;
+                    segments.Add(dataToAppend);
+                }
 
-                var memory = _writer.GetMemory(dataToAppend.Length);
-                dataToAppend.CopyTo(memory);
+                if (segments == null)
+                {
+                    return;
+                }
 
-                _writer.Advance(dataToAppend.Length);
-                _segments.Add(memory.Slice(0, dataToAppend.Length));
+                // fields are lazy initialized to not occupy unnecessary memory when there are no data segments
+                _writer = length > 0 ? new ArrayBufferWriter<byte>(length) : new ArrayBufferWriter<byte>();
+                _segments = segments;
+
+                for (var segmentIndex = 0; segmentIndex < numberOfSegments; segmentIndex++)
+                {
+                    var dataToAppend = segments[segmentIndex];
+                    var memory = _writer.GetMemory(dataToAppend.Length);
+                    dataToAppend.CopyTo(memory);
+                    _writer.Advance(dataToAppend.Length);
+                    segments[segmentIndex] = memory.Slice(0, dataToAppend.Length);
+                }
             }
         }
     }

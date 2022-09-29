@@ -26,7 +26,7 @@ override-operation-name:
 rename-mapping:
   AcceptOwnershipStatusResponse.subscriptionTenantId: -|uuid
   PutAliasRequestAdditionalProperties.subscriptionTenantId: -|uuid
-  SubscriptionAliasResponseProperties.createdTime: CreatedOn|datetime
+  SubscriptionAliasResponseProperties.createdTime: CreatedOn|date-time
   AcceptOwnership: AcceptOwnershipState
   AcceptOwnershipStatusResponse: AcceptOwnershipStatus
   BillingAccountPoliciesResponse: BillingAccountPolicy

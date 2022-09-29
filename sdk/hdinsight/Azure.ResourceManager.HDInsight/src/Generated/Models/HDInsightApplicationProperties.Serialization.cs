@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    createdDate = property.Value.GetDateTimeOffset();
+                    createdDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("marketplaceIdentifier"))

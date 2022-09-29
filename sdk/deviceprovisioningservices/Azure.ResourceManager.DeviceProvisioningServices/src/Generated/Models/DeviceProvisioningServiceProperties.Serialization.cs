@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             Optional<string> serviceOperationsHostName = default;
             Optional<string> deviceProvisioningHostName = default;
             Optional<string> idScope = default;
-            Optional<IList<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>> authorizationPolicies = default;
+            Optional<IList<DeviceProvisioningServicesSharedAccessKey>> authorizationPolicies = default;
             Optional<bool> enableDataResidency = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -203,10 +203,10 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<SharedAccessSignatureAuthorizationRuleAccessRightsDescription> array = new List<SharedAccessSignatureAuthorizationRuleAccessRightsDescription>();
+                    List<DeviceProvisioningServicesSharedAccessKey> array = new List<DeviceProvisioningServicesSharedAccessKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharedAccessSignatureAuthorizationRuleAccessRightsDescription.DeserializeSharedAccessSignatureAuthorizationRuleAccessRightsDescription(item));
+                        array.Add(DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey(item));
                     }
                     authorizationPolicies = array;
                     continue;

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="leaderClusterResourceId"> The name of the leader cluster. </param>
         /// <param name="attachedDatabaseConfigurationName"> The name of the attached database configuration cluster. </param>
         /// <param name="principalsModificationKind"> The principals modification kind of the database. </param>
-        internal KustoReadOnlyFollowingDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, string leaderClusterResourceId, string attachedDatabaseConfigurationName, PrincipalsModificationKind? principalsModificationKind) : base(id, name, resourceType, systemData, location, kind)
+        internal KustoReadOnlyFollowingDatabase(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, KustoKind kind, KustoProvisioningState? provisioningState, TimeSpan? softDeletePeriod, TimeSpan? hotCachePeriod, DatabaseStatistics statistics, string leaderClusterResourceId, string attachedDatabaseConfigurationName, KustoDatabasePrincipalsModificationKind? principalsModificationKind) : base(id, name, resourceType, systemData, location, kind)
         {
             ProvisioningState = provisioningState;
             SoftDeletePeriod = softDeletePeriod;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <summary> The name of the attached database configuration cluster. </summary>
         public string AttachedDatabaseConfigurationName { get; }
         /// <summary> The principals modification kind of the database. </summary>
-        public PrincipalsModificationKind? PrincipalsModificationKind { get; }
+        public KustoDatabasePrincipalsModificationKind? PrincipalsModificationKind { get; }
     }
 }

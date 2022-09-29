@@ -96,6 +96,11 @@ rename-mapping:
   GuestConfigurationAssignmentReport.id: -|arm-id
   GuestConfigurationAssignmentReportProperties.reportId: -|uuid
   AssignmentType: GuestConfigurationAssignmentType
+  AssignmentReport: GuestConfigurationAssignmentReportInfo
+  ConfigurationInfo: GuestConfigurationInfo
+  ConfigurationParameter: GuestConfigurationParameter
+  GuestConfigurationNavigation.configurationParameter: ConfigurationParameters
+  GuestConfigurationNavigation.configurationProtectedParameter: ConfigurationProtectedParameters
 
 directive:
   - from: guestconfiguration.json

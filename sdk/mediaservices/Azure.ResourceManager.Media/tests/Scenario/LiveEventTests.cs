@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Media.Tests
     {
         private MediaServicesAccountResource _mediaService;
 
-        private LiveEventCollection liveEventCollection => _mediaService.GetLiveEvents();
+        private MediaLiveEventCollection liveEventCollection => _mediaService.GetMediaLiveEvents();
 
         public LiveEventTests(bool isAsync) : base(isAsync)
         {
