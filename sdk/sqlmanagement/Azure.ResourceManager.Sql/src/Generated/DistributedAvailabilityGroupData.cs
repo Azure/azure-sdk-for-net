@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="targetReplicaId"> The target replica id. </param>
         /// <param name="linkState"> The link state. </param>
         /// <param name="lastHardenedLsn"> The last hardened lsn. </param>
-        internal DistributedAvailabilityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string targetDatabase, string sourceEndpoint, string primaryAvailabilityGroupName, string secondaryAvailabilityGroupName, ReplicationMode? replicationMode, Guid? distributedAvailabilityGroupId, Guid? sourceReplicaId, Guid? targetReplicaId, string linkState, string lastHardenedLsn) : base(id, name, resourceType, systemData)
+        internal DistributedAvailabilityGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string targetDatabase, string sourceEndpoint, string primaryAvailabilityGroupName, string secondaryAvailabilityGroupName, DistributedAvailabilityGroupReplicationMode? replicationMode, Guid? distributedAvailabilityGroupId, Guid? sourceReplicaId, Guid? targetReplicaId, string linkState, string lastHardenedLsn) : base(id, name, resourceType, systemData)
         {
             TargetDatabase = targetDatabase;
             SourceEndpoint = sourceEndpoint;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> The secondary availability group name. </summary>
         public string SecondaryAvailabilityGroupName { get; set; }
         /// <summary> The replication mode of a distributed availability group. Parameter will be ignored during link creation. </summary>
-        public ReplicationMode? ReplicationMode { get; set; }
+        public DistributedAvailabilityGroupReplicationMode? ReplicationMode { get; set; }
         /// <summary> The distributed availability group id. </summary>
         public Guid? DistributedAvailabilityGroupId { get; }
         /// <summary> The source replica id. </summary>

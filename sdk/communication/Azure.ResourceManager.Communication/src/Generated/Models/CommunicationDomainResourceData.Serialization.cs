@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Communication
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<DomainsProvisioningState> provisioningState = default;
+            Optional<DomainProvisioningState> provisioningState = default;
             Optional<string> dataLocation = default;
             Optional<string> fromSenderDomain = default;
             Optional<string> mailFromSenderDomain = default;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Communication
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new DomainsProvisioningState(property0.Value.GetString());
+                            provisioningState = new DomainProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("dataLocation"))

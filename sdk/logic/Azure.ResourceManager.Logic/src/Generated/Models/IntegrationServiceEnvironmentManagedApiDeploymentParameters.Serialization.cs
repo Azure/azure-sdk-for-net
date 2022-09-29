@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Logic.Models
 
         internal static IntegrationServiceEnvironmentManagedApiDeploymentParameters DeserializeIntegrationServiceEnvironmentManagedApiDeploymentParameters(JsonElement element)
         {
-            Optional<ContentLink> contentLinkDefinition = default;
+            Optional<LogicContentLink> contentLinkDefinition = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentLinkDefinition"))
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Logic.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    contentLinkDefinition = ContentLink.DeserializeContentLink(property.Value);
+                    contentLinkDefinition = LogicContentLink.DeserializeLogicContentLink(property.Value);
                     continue;
                 }
             }

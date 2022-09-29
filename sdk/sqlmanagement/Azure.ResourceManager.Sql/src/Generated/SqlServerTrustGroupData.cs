@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Initializes a new instance of SqlServerTrustGroupData. </summary>
         public SqlServerTrustGroupData()
         {
-            GroupMembers = new ChangeTrackingList<ServerInfo>();
+            GroupMembers = new ChangeTrackingList<ServerTrustGroupServerInfo>();
             TrustScopes = new ChangeTrackingList<ServerTrustGroupPropertiesTrustScopesItem>();
         }
 
@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="systemData"> The systemData. </param>
         /// <param name="groupMembers"> Group members information for the server trust group. </param>
         /// <param name="trustScopes"> Trust scope of the server trust group. </param>
-        internal SqlServerTrustGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ServerInfo> groupMembers, IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes) : base(id, name, resourceType, systemData)
+        internal SqlServerTrustGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<ServerTrustGroupServerInfo> groupMembers, IList<ServerTrustGroupPropertiesTrustScopesItem> trustScopes) : base(id, name, resourceType, systemData)
         {
             GroupMembers = groupMembers;
             TrustScopes = trustScopes;
         }
 
         /// <summary> Group members information for the server trust group. </summary>
-        public IList<ServerInfo> GroupMembers { get; }
+        public IList<ServerTrustGroupServerInfo> GroupMembers { get; }
         /// <summary> Trust scope of the server trust group. </summary>
         public IList<ServerTrustGroupPropertiesTrustScopesItem> TrustScopes { get; }
     }

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Monitor
 
         internal static DataCollectionEndpointData DeserializeDataCollectionEndpointData(JsonElement element)
         {
-            Optional<KnownDataCollectionEndpointResourceKind> kind = default;
+            Optional<DataCollectionEndpointResourceKind> kind = default;
             Optional<ETag> etag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Monitor
             Optional<DataCollectionEndpointConfigurationAccess> configurationAccess = default;
             Optional<DataCollectionEndpointLogsIngestion> logsIngestion = default;
             Optional<DataCollectionEndpointNetworkAcls> networkAcls = default;
-            Optional<KnownDataCollectionEndpointProvisioningState> provisioningState = default;
+            Optional<DataCollectionEndpointProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"))
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Monitor
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    kind = new KnownDataCollectionEndpointResourceKind(property.Value.GetString());
+                    kind = new DataCollectionEndpointResourceKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("etag"))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Monitor
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new KnownDataCollectionEndpointProvisioningState(property0.Value.GetString());
+                            provisioningState = new DataCollectionEndpointProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

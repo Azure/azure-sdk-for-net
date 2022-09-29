@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?$top=1&api-version=2022-03-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTM3NTEwZDctMzNiNi00Njc2LTg4NmYtZWU3NWJjYzAxODcxL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zPyR0b3A9MSZhcGktdmVyc2lvbj0yMDIyLTAzLTAx",
+      "RequestUri": "/subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/providers/Microsoft.Compute/locations/eastus2/publishers/MicrosoftWindowsServer/artifacttypes/vmimage/offers/WindowsServer/skus/2012-R2-Datacenter/versions?$top=1&api-version=2022-03-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTdmNzgyMzItMzgyYi00NmE3LThhNzItOTY0ZDY5MmM0ZjNmL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvZWFzdHVzMi9wdWJsaXNoZXJzL01pY3Jvc29mdFdpbmRvd3NTZXJ2ZXIvYXJ0aWZhY3R0eXBlcy92bWltYWdlL29mZmVycy9XaW5kb3dzU2VydmVyL3NrdXMvMjAxMi1SMi1EYXRhY2VudGVyL3ZlcnNpb25zPyR0b3A9MSZhcGktdmVyc2lvbj0yMDIyLTAzLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -15,7 +15,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -27,7 +27,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/ListVMImagesVersionsFromLocation3Min;15999,Microsoft.Compute/ListVMImagesVersionsFromLocation30Min;43999"
+          "Microsoft.Compute/ListVMImagesVersionsFromLocation3Min;15999,Microsoft.Compute/ListVMImagesVersionsFromLocation30Min;43998"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -67,7 +67,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"4.127.20180315\",\r\n    \"id\": \"/Subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.127.20180315\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"location\": \"eastus2\",\r\n    \"name\": \"4.127.20180315\",\r\n    \"id\": \"/Subscriptions/97f78232-382b-46a7-8a72-964d692c4f3f/Providers/Microsoft.Compute/Locations/eastus2/Publishers/MicrosoftWindowsServer/ArtifactTypes/VMImage/Offers/WindowsServer/Skus/2012-R2-Datacenter/Versions/4.127.20180315\"\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
@@ -85,7 +85,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ],
         "Content-Type": [
@@ -151,7 +151,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ],
         "Content-Type": [
@@ -217,7 +217,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Storage.StorageManagementClient/4.0.0.0"
         ],
         "Content-Type": [
@@ -286,7 +286,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Storage.StorageManagementClient/4.0.0.0"
         ]
       },
@@ -307,7 +307,7 @@
           "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11999"
+          "11994"
         ],
         "x-ms-correlation-request-id": [
           "c0a11485-acdd-44f2-aab6-acb9e7edcc94"
@@ -349,7 +349,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Storage.StorageManagementClient/4.0.0.0"
         ]
       },
@@ -370,7 +370,7 @@
           "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11998"
+          "11993"
         ],
         "x-ms-correlation-request-id": [
           "b3816899-addf-4dfe-acdc-bb472f2b24a6"
@@ -412,7 +412,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Storage.StorageManagementClient/4.0.0.0"
         ]
       },
@@ -433,7 +433,7 @@
           "Microsoft-Azure-Storage-Resource-Provider/1.0,Microsoft-HTTPAPI/2.0 Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11997"
+          "11992"
         ],
         "x-ms-correlation-request-id": [
           "949edccf-32a8-475a-a473-8d519bd30720"
@@ -475,7 +475,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Network.NetworkManagementClient/19.17.1.0"
         ],
         "Content-Type": [
@@ -504,7 +504,7 @@
         "x-ms-correlation-request-id": [
           "7222995f-af50-40fd-b730-867a1672415b"
         ],
-        "azure-asyncnotification": [
+        "Azure-AsyncNotification": [
           "Enabled"
         ],
         "x-ms-arm-service-request-id": [
@@ -551,7 +551,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Network.NetworkManagementClient/19.17.1.0"
         ]
       },
@@ -612,7 +612,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Network.NetworkManagementClient/19.17.1.0"
         ]
       },
@@ -682,7 +682,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Network.NetworkManagementClient/19.17.1.0"
         ]
       },
@@ -752,7 +752,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Network.NetworkManagementClient/19.17.1.0"
         ],
         "Content-Type": [
@@ -781,7 +781,7 @@
         "x-ms-correlation-request-id": [
           "3f002d24-f4d0-4103-b7d5-ed4636d52e8c"
         ],
-        "azure-asyncnotification": [
+        "Azure-AsyncNotification": [
           "Enabled"
         ],
         "x-ms-arm-service-request-id": [
@@ -828,7 +828,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Network.NetworkManagementClient/19.17.1.0"
         ]
       },
@@ -889,7 +889,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Network.NetworkManagementClient/19.17.1.0"
         ]
       },
@@ -959,7 +959,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Network.NetworkManagementClient/19.17.1.0"
         ]
       },
@@ -1029,7 +1029,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Network.NetworkManagementClient/19.17.1.0"
         ],
         "Content-Type": [
@@ -1055,7 +1055,7 @@
         "x-ms-correlation-request-id": [
           "19d8fbc6-1ec7-4d34-bd3c-7f33b4ffe7b3"
         ],
-        "azure-asyncnotification": [
+        "Azure-AsyncNotification": [
           "Enabled"
         ],
         "x-ms-arm-service-request-id": [
@@ -1102,7 +1102,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Network.NetworkManagementClient/19.17.1.0"
         ]
       },
@@ -1172,7 +1172,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Network.NetworkManagementClient/19.17.1.0"
         ]
       },
@@ -1242,7 +1242,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ],
         "Content-Type": [
@@ -1260,7 +1260,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/PutVM3Min;239,Microsoft.Compute/PutVM30Min;1199"
+          "Microsoft.Compute/PutVM3Min;239,Microsoft.Compute/PutVM30Min;1197"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1273,7 +1273,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
           "6875672b-d11c-4097-af02-4f3913155d64"
@@ -1315,7 +1315,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ],
         "Content-Type": [
@@ -1342,7 +1342,7 @@
           "Enabled"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/PutVM3Min;238,Microsoft.Compute/PutVM30Min;1198"
+          "Microsoft.Compute/PutVM3Min;238,Microsoft.Compute/PutVM30Min;1196"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1355,7 +1355,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1197"
         ],
         "x-ms-correlation-request-id": [
           "d2f11b23-436c-4486-86cf-12e795b2b38d"
@@ -1391,7 +1391,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -1406,7 +1406,7 @@
           "50"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperation3Min;14999,Microsoft.Compute/GetOperation30Min;29999"
+          "Microsoft.Compute/GetOperation3Min;14999,Microsoft.Compute/GetOperation30Min;29969"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1455,7 +1455,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -1467,7 +1467,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperation3Min;14998,Microsoft.Compute/GetOperation30Min;29998"
+          "Microsoft.Compute/GetOperation3Min;14998,Microsoft.Compute/GetOperation30Min;29968"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1516,7 +1516,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -1528,7 +1528,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperation3Min;14996,Microsoft.Compute/GetOperation30Min;29996"
+          "Microsoft.Compute/GetOperation3Min;14996,Microsoft.Compute/GetOperation30Min;29966"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1556,7 +1556,7 @@
           "Wed, 28 Sep 2022 15:00:48 GMT"
         ],
         "Content-Length": [
-          "134"
+          "184"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -1577,7 +1577,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -1589,7 +1589,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetOperation3Min;14994,Microsoft.Compute/GetOperation30Min;29994"
+          "Microsoft.Compute/LowCostGet3Min;3986,Microsoft.Compute/LowCostGet30Min;31910"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1766,7 +1766,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -1833,7 +1833,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ],
         "Content-Type": [
@@ -1857,7 +1857,7 @@
           "Enabled"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/CreateImages3Min;39,Microsoft.Compute/CreateImages30Min;199"
+          "Microsoft.Compute/CreateImages3Min;39,Microsoft.Compute/CreateImages30Min;198"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1870,7 +1870,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
           "158bd6bf-489a-4bb0-9680-bf8750e91fd9"
@@ -1906,7 +1906,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -1967,7 +1967,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -1979,7 +1979,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetImages3Min;358,Microsoft.Compute/GetImages30Min;1798"
+          "Microsoft.Compute/GetImages3Min;357,Microsoft.Compute/GetImages30Min;1793"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2034,7 +2034,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -2046,7 +2046,7 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/GetImages3Min;357,Microsoft.Compute/GetImages30Min;1797"
+          "Microsoft.Compute/GetImages3Min;356,Microsoft.Compute/GetImages30Min;1792"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2101,7 +2101,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ],
         "Content-Type": [
@@ -2128,7 +2128,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "3055bf34-9900-49af-bf25-31381b266294"
@@ -2138,7 +2138,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
           "12052d46-9a34-4463-a983-28a52155b261"
@@ -2174,7 +2174,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -2192,7 +2192,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "49e47484-82fd-48db-baca-6c888de7523d"
@@ -2238,7 +2238,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -2256,7 +2256,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "c682272e-2fc7-442e-8220-0aabb8772421"
@@ -2308,7 +2308,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ],
         "Content-Type": [
@@ -2335,7 +2335,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "a568d614-4b83-4e25-b5b3-a9f8ca140a82"
@@ -2345,7 +2345,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1195"
+          "1194"
         ],
         "x-ms-correlation-request-id": [
           "930355e0-3285-4083-b0cc-44b7ff79a199"
@@ -2381,7 +2381,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -2399,7 +2399,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "874b59dc-e0ca-4b05-acfb-40c35f8247b0"
@@ -2445,7 +2445,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -2463,7 +2463,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "0267cbb7-296b-4929-8b87-9d124ba9d531"
@@ -2515,14 +2515,14 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "603"
+          "685"
         ]
       },
       "ResponseHeaders": {
@@ -2539,13 +2539,13 @@
           "https://management.azure.com/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2/capsOperations/a547fa43-9a2e-4f7b-8b98-8d87b1765aac?api-version=2022-03-03"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/CreateUpdateGalleryImageVersion3Min;374,Microsoft.Compute/CreateUpdateGalleryImageVersion30Min;1199"
+          "Microsoft.Compute/CreateUpdateGalleryImageVersion3Min;374,Microsoft.Compute/CreateUpdateGalleryImageVersion30Min;1198"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "a547fa43-9a2e-4f7b-8b98-8d87b1765aac"
@@ -2555,7 +2555,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1194"
+          "1193"
         ],
         "x-ms-correlation-request-id": [
           "93e55cbd-ab0f-4c90-913e-6b2c4a674f3d"
@@ -2597,14 +2597,14 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "603"
+          "685"
         ]
       },
       "ResponseHeaders": {
@@ -2627,7 +2627,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "d7b82ae5-677b-458d-b6ec-1e20890eeb92"
@@ -2637,7 +2637,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1193"
+          "1192"
         ],
         "x-ms-correlation-request-id": [
           "0b4c74b3-a56e-4367-9fd0-fc5437c39d51"
@@ -2673,7 +2673,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -2694,7 +2694,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "583c7226-396a-445c-a544-d09537135ff9"
@@ -2740,7 +2740,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -2761,7 +2761,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "e1695a9a-9523-4bcc-bae8-ee03f77d320f"
@@ -2807,7 +2807,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -2828,7 +2828,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "823e79c9-e124-4657-8fe8-5317ca124a80"
@@ -2874,7 +2874,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -2895,7 +2895,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "803176a6-3728-45da-8ac2-79d0bbbeac57"
@@ -2941,7 +2941,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -2962,7 +2962,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "87df0b43-57f8-4b90-98eb-acfaf1f85cc2"
@@ -3008,7 +3008,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3029,7 +3029,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "4d588178-1640-45ab-b2c0-b3162b72782a"
@@ -3075,7 +3075,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3096,7 +3096,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "00ab3f74-f630-4f9a-9118-95c89ec990c5"
@@ -3142,7 +3142,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3163,7 +3163,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "47aefb20-7209-4302-a9a4-80d2b75d3a50"
@@ -3209,7 +3209,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3227,7 +3227,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "23d25fd3-31bb-42ac-b560-b7b2abd24879"
@@ -3273,7 +3273,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3291,7 +3291,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "3173df0d-c5c0-48a5-8241-caae915a27bf"
@@ -3343,7 +3343,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3361,7 +3361,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "b4302e63-daed-4280-8f14-abf3c2b098ab"
@@ -3407,7 +3407,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3425,7 +3425,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "dbc86cf5-5712-4457-8e35-783d483cf262"
@@ -3477,7 +3477,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3495,7 +3495,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "250beb67-1f8b-4ab0-b2ed-b39e246df495"
@@ -3547,7 +3547,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3565,7 +3565,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "8ac0ff87-95fb-4ed1-8daa-ad11aba4fc8f"
@@ -3611,7 +3611,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3632,7 +3632,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "92608a91-a214-4bd6-aea6-c44ed47b8a06"
@@ -3678,7 +3678,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3699,7 +3699,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "2fdc3c6e-7583-4540-a418-5b14b8a24fe5"
@@ -3745,7 +3745,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3763,7 +3763,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "aaacd2df-f250-4add-8005-60abf5080a07"
@@ -3815,7 +3815,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3833,7 +3833,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "b2c31991-5c72-45b5-a863-1578b2c7f012"
@@ -3885,7 +3885,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3903,7 +3903,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "982d2abc-a20e-4746-9bff-940dbfda5179"
@@ -3955,7 +3955,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -3976,13 +3976,13 @@
           "https://management.azure.com/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2/capsOperations/1c868874-a18c-4485-819e-33d2fdeb817e?api-version=2022-03-03"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/DeleteGalleryImageVersion3Min;149,Microsoft.Compute/DeleteGalleryImageVersion30Min;999"
+          "Microsoft.Compute/DeleteGalleryImageVersion3Min;149,Microsoft.Compute/DeleteGalleryImageVersion30Min;998"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "1c868874-a18c-4485-819e-33d2fdeb817e"
@@ -4025,7 +4025,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4046,7 +4046,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "b0b79e33-efa2-4389-b0f6-98bdb5211196"
@@ -4092,7 +4092,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4110,7 +4110,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "f5e34e94-825b-442d-8720-9e74d716fff1"
@@ -4156,7 +4156,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4174,7 +4174,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "ad12b54f-9170-4312-b549-0f4edba35015"
@@ -4223,7 +4223,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4296,7 +4296,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4344,7 +4344,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4405,7 +4405,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4469,7 +4469,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4545,7 +4545,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4593,7 +4593,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4657,7 +4657,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4718,7 +4718,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4743,7 +4743,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11995"
+          "11994"
         ],
         "x-ms-correlation-request-id": [
           "f227e2f0-9fee-495e-8697-adc166b02fb3"
@@ -4782,7 +4782,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4806,7 +4806,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "2c450952-62ab-4ac9-86d0-f141241127b2"
@@ -4849,7 +4849,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4867,7 +4867,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "c3853a88-be21-4a11-90ec-c5fca0bd31dd"
@@ -4877,7 +4877,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11994"
+          "11993"
         ],
         "x-ms-correlation-request-id": [
           "19d68e72-dd94-4eb6-b236-bad88cc095f7"
@@ -4913,7 +4913,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4931,7 +4931,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "2f165a9b-7fcc-401c-9f78-14bd336bb36f"
@@ -4941,7 +4941,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11993"
+          "11992"
         ],
         "x-ms-correlation-request-id": [
           "bee3b6ed-6dcc-4fa7-8746-6faae823d065"
@@ -4980,7 +4980,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -4998,13 +4998,13 @@
           "https://management.azure.com/subscriptions/e37510d7-33b6-4676-886f-ee75bcc01871/providers/Microsoft.Compute/locations/eastus2/capsOperations/4734295f-dea2-41df-9517-49742ae8d9ff?api-version=2022-03-03"
         ],
         "x-ms-ratelimit-remaining-resource": [
-          "Microsoft.Compute/DeleteGallery3Min;49,Microsoft.Compute/DeleteGallery30Min;299"
+          "Microsoft.Compute/DeleteGallery3Min;49,Microsoft.Compute/DeleteGallery30Min;898"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "4734295f-dea2-41df-9517-49742ae8d9ff"
@@ -5047,7 +5047,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -5065,7 +5065,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "0de1b103-6dde-4a05-af58-58878905a587"
@@ -5075,7 +5075,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11992"
+          "11991"
         ],
         "x-ms-correlation-request-id": [
           "a8d7e05f-1830-492d-8739-77208a544c09"
@@ -5111,7 +5111,7 @@
         "User-Agent": [
           "FxVersion/4.700.22.41602",
           "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.22000",
+          "OSVersion/Microsoft.Windows.10.0.19044",
           "Microsoft.Azure.Management.Compute.ComputeManagementClient/57.0.0"
         ]
       },
@@ -5129,7 +5129,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-served-by": [
-          "a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044,a129388d-91d6-4310-81e1-d02ce40a61ca_132955611512477044"
+          "1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721,1dd04696-ef54-4aec-bada-944b3b397491_133022767171121721"
         ],
         "x-ms-request-id": [
           "d67380ca-10cf-4a7a-8dba-a5532df31443"
@@ -5139,7 +5139,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11991"
+          "11990"
         ],
         "x-ms-correlation-request-id": [
           "21c4f805-0275-4026-866f-778d4b894013"
@@ -5196,6 +5196,6 @@
     ]
   },
   "Variables": {
-    "SubscriptionId": "e37510d7-33b6-4676-886f-ee75bcc01871"
+    "SubscriptionId": "97f78232-382b-46a7-8a72-964d692c4f3f"
   }
 }

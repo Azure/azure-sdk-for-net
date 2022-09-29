@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             if (Optional.IsDefined(DataCenterLocation))
             {
                 writer.WritePropertyName("dataCenterLocation");
-                writer.WriteStringValue(DataCenterLocation);
+                writer.WriteStringValue(DataCenterLocation.Value);
             }
             if (Optional.IsDefined(DelegatedSubnetId))
             {
@@ -67,18 +67,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("diskCapacity");
                 writer.WriteNumberValue(DiskCapacity.Value);
             }
-            if (Optional.IsDefined(AvailabilityZone))
+            if (Optional.IsDefined(DoesSupportAvailabilityZone))
             {
                 writer.WritePropertyName("availabilityZone");
-                writer.WriteBooleanValue(AvailabilityZone.Value);
+                writer.WriteBooleanValue(DoesSupportAvailabilityZone.Value);
             }
             writer.WriteEndObject();
         }
 
         internal static CassandraDataCenterProperties DeserializeCassandraDataCenterProperties(JsonElement element)
         {
-            Optional<ManagedCassandraProvisioningState> provisioningState = default;
-            Optional<string> dataCenterLocation = default;
+            Optional<CassandraProvisioningState> provisioningState = default;
+            Optional<AzureLocation> dataCenterLocation = default;
             Optional<ResourceIdentifier> delegatedSubnetId = default;
             Optional<int> nodeCount = default;
             Optional<IReadOnlyList<CassandraDataCenterSeedNode>> seedNodes = default;
@@ -98,12 +98,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    provisioningState = new ManagedCassandraProvisioningState(property.Value.GetString());
+                    provisioningState = new CassandraProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dataCenterLocation"))
                 {
-                    dataCenterLocation = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    dataCenterLocation = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("delegatedSubnetId"))
@@ -197,7 +202,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CassandraDataCenterProperties(Optional.ToNullable(provisioningState), dataCenterLocation.Value, delegatedSubnetId.Value, Optional.ToNullable(nodeCount), Optional.ToList(seedNodes), base64EncodedCassandraYamlFragment.Value, managedDiskCustomerKeyUri.Value, backupStorageCustomerKeyUri.Value, sku.Value, diskSku.Value, Optional.ToNullable(diskCapacity), Optional.ToNullable(availabilityZone));
+            return new CassandraDataCenterProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(dataCenterLocation), delegatedSubnetId.Value, Optional.ToNullable(nodeCount), Optional.ToList(seedNodes), base64EncodedCassandraYamlFragment.Value, managedDiskCustomerKeyUri.Value, backupStorageCustomerKeyUri.Value, sku.Value, diskSku.Value, Optional.ToNullable(diskCapacity), Optional.ToNullable(availabilityZone));
         }
     }
 }

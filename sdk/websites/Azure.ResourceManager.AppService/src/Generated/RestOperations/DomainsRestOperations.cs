@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCheckAvailabilityRequest(string subscriptionId, NameIdentifier identifier)
+        internal HttpMessage CreateCheckAvailabilityRequest(string subscriptionId, AppServiceDomainNameIdentifier identifier)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="identifier"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DomainAvailabilityCheckResult>> CheckAvailabilityAsync(string subscriptionId, NameIdentifier identifier, CancellationToken cancellationToken = default)
+        public async Task<Response<DomainAvailabilityCheckResult>> CheckAvailabilityAsync(string subscriptionId, AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(identifier, nameof(identifier));
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="identifier"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DomainAvailabilityCheckResult> CheckAvailability(string subscriptionId, NameIdentifier identifier, CancellationToken cancellationToken = default)
+        public Response<DomainAvailabilityCheckResult> CheckAvailability(string subscriptionId, AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(identifier, nameof(identifier));
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DomainControlCenterSsoRequest>> GetControlCenterSsoRequestAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        public async Task<Response<DomainControlCenterSsoRequestInfo>> GetControlCenterSsoRequestAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -211,9 +211,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DomainControlCenterSsoRequest value = default;
+                        DomainControlCenterSsoRequestInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DomainControlCenterSsoRequest.DeserializeDomainControlCenterSsoRequest(document.RootElement);
+                        value = DomainControlCenterSsoRequestInfo.DeserializeDomainControlCenterSsoRequestInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DomainControlCenterSsoRequest> GetControlCenterSsoRequest(string subscriptionId, CancellationToken cancellationToken = default)
+        public Response<DomainControlCenterSsoRequestInfo> GetControlCenterSsoRequest(string subscriptionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DomainControlCenterSsoRequest value = default;
+                        DomainControlCenterSsoRequestInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DomainControlCenterSsoRequest.DeserializeDomainControlCenterSsoRequest(document.RootElement);
+                        value = DomainControlCenterSsoRequestInfo.DeserializeDomainControlCenterSsoRequestInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -493,9 +493,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -647,9 +647,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(patch);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(patch);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -904,9 +904,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1072,9 +1072,9 @@ namespace Azure.ResourceManager.AppService
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }

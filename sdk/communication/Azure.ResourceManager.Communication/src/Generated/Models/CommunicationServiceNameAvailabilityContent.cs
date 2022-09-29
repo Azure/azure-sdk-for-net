@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Communication.Models
 {
     /// <summary> Data POST-ed to the nameAvailability action. </summary>
-    public partial class CommunicationServiceNameAvailabilityContent : CheckNameAvailabilityRequestBody
+    public partial class CommunicationServiceNameAvailabilityContent : CommunicationNameAvailabilityContent
     {
         /// <summary> Initializes a new instance of CommunicationServiceNameAvailabilityContent. </summary>
         public CommunicationServiceNameAvailabilityContent()

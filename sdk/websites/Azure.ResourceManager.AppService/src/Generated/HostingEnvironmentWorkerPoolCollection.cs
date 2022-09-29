@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<HostingEnvironmentWorkerPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workerPoolName, WorkerPoolResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HostingEnvironmentWorkerPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string workerPoolName, WorkerPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
             Argument.AssertNotNull(data, nameof(data));
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<HostingEnvironmentWorkerPoolResource> CreateOrUpdate(WaitUntil waitUntil, string workerPoolName, WorkerPoolResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HostingEnvironmentWorkerPoolResource> CreateOrUpdate(WaitUntil waitUntil, string workerPoolName, WorkerPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
             Argument.AssertNotNull(data, nameof(data));

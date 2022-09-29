@@ -56,9 +56,12 @@ namespace Azure.ResourceManager.Communication.Tests
             }
         }
 
-        [Test]
-        public async Task AddTag()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task AddTag(bool? useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var collection = _emailService.GetCommunicationDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
@@ -69,9 +72,12 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.AreEqual(tagValue.Value, "testvalue");
         }
 
-        [Test]
-        public async Task RemoveTag()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task RemoveTag(bool? useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var collection = _emailService.GetCommunicationDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
@@ -86,9 +92,12 @@ namespace Azure.ResourceManager.Communication.Tests
             Assert.IsTrue(tag.Count == 0);
         }
 
-        [Test]
-        public async Task SetTags()
+        [TestCase(null)]
+        [TestCase(true)]
+        [TestCase(false)]
+        public async Task SetTags(bool? useTagResource)
         {
+            SetTagResourceUsage(ArmClient, useTagResource);
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var collection = _emailService.GetCommunicationDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
@@ -183,7 +192,7 @@ namespace Azure.ResourceManager.Communication.Tests
             string domainName = Recording.GenerateAssetName("domain-") + ".com";
             var collection = _emailService.GetCommunicationDomainResources();
             var domain = await CreateDefaultDomain(domainName, _emailService);
-            var data = new VerificationContent(VerificationType.Spf);
+            var data = new DomainsRecordVerificationContent(DomainRecordVerificationType.Spf);
             await domain.InitiateVerificationAsync(WaitUntil.Completed, data);
             await domain.CancelVerificationAsync(WaitUntil.Completed, data);
         }

@@ -28,6 +28,23 @@ namespace Azure.Communication
             => obj is CommunicationIdentifier other && Equals(other);
 
         /// <summary>
+        /// Overrides the equality operator.
+        /// </summary>
+        /// <param name="left">The first identifier to compare.</param>
+        /// <param name="right">The second identifier to compare.</param>
+        /// <returns>True if the types and <see cref="RawId"/> match.</returns>
+        public static bool operator ==(CommunicationIdentifier left, CommunicationIdentifier right)
+            => ReferenceEquals(left, right) || left is not null && right is not null && Equals(left, right);
+
+        /// <summary>
+        /// Overrides the non-equality operator.
+        /// </summary>
+        /// <param name="left">The first identifier to compare.</param>
+        /// <param name="right">The second identifier to compare.</param>
+        /// <returns>True if the types or <see cref="RawId"/> values are different.</returns>
+        public static bool operator !=(CommunicationIdentifier left, CommunicationIdentifier right) => !(left == right);
+
+        /// <summary>
         /// Creates a <see cref="CommunicationIdentifier"/> from a given rawId.
         /// When storing rawIds, use this function to restore the identifier that was encoded in the rawId.
         /// </summary>

@@ -1274,9 +1274,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.CookiesOperator left, Azure.ResourceManager.Cdn.Models.CookiesOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CustomDomainHttpsContent
+    public abstract partial class CustomDomainHttpsContent
     {
-        public CustomDomainHttpsContent(Azure.ResourceManager.Cdn.Models.SecureDeliveryProtocolType protocolType) { }
+        protected CustomDomainHttpsContent(Azure.ResourceManager.Cdn.Models.SecureDeliveryProtocolType protocolType) { }
         public Azure.ResourceManager.Cdn.Models.CdnMinimumTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.SecureDeliveryProtocolType ProtocolType { get { throw null; } set { } }
     }
@@ -1429,9 +1429,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public string Name { get { throw null; } set { } }
         public int Order { get { throw null; } set { } }
     }
-    public partial class DeliveryRuleAction
+    public abstract partial class DeliveryRuleAction
     {
-        public DeliveryRuleAction() { }
+        protected DeliveryRuleAction() { }
     }
     public partial class DeliveryRuleCacheExpirationAction : Azure.ResourceManager.Cdn.Models.DeliveryRuleAction
     {
@@ -1448,9 +1448,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public DeliveryRuleClientPortCondition(Azure.ResourceManager.Cdn.Models.ClientPortMatchCondition properties) { }
         public Azure.ResourceManager.Cdn.Models.ClientPortMatchCondition Properties { get { throw null; } set { } }
     }
-    public partial class DeliveryRuleCondition
+    public abstract partial class DeliveryRuleCondition
     {
-        public DeliveryRuleCondition() { }
+        protected DeliveryRuleCondition() { }
     }
     public partial class DeliveryRuleCookiesCondition : Azure.ResourceManager.Cdn.Models.DeliveryRuleCondition
     {
@@ -1933,9 +1933,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public int? Order { get { throw null; } set { } }
         public string RuleSetName { get { throw null; } }
     }
-    public partial class FrontDoorSecretProperties
+    public abstract partial class FrontDoorSecretProperties
     {
-        public FrontDoorSecretProperties() { }
+        protected FrontDoorSecretProperties() { }
     }
     public partial class FrontDoorSecurityPolicyPatch
     {
@@ -3607,9 +3607,9 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.SecureDeliveryProtocolType left, Azure.ResourceManager.Cdn.Models.SecureDeliveryProtocolType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SecurityPolicyProperties
+    public abstract partial class SecurityPolicyProperties
     {
-        public SecurityPolicyProperties() { }
+        protected SecurityPolicyProperties() { }
     }
     public partial class SecurityPolicyWebApplicationFirewall : Azure.ResourceManager.Cdn.Models.SecurityPolicyProperties
     {

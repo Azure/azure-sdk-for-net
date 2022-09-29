@@ -37,8 +37,9 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of ContentKeyPolicyPlayReadyLicense. </summary>
         /// <param name="allowTestDevices"> A flag indicating whether test devices can use the license. </param>
+        /// <param name="securityLevel"> The security level. </param>
         /// <param name="beginOn"> The begin date of license. </param>
-        /// <param name="expirationOn"> The expiration date of license. </param>
+        /// <param name="expiresOn"> The expiration date of license. </param>
         /// <param name="relativeBeginDate"> The relative begin date of license. </param>
         /// <param name="relativeExpirationDate"> The relative expiration date of license. </param>
         /// <param name="gracePeriod"> The grace period of license. </param>
@@ -50,11 +51,12 @@ namespace Azure.ResourceManager.Media.Models
         /// The available derived classes include <see cref="ContentKeyPolicyPlayReadyContentEncryptionKeyFromHeader"/> and <see cref="ContentKeyPolicyPlayReadyContentEncryptionKeyFromKeyIdentifier"/>.
         /// </param>
         /// <param name="contentType"> The PlayReady content type. </param>
-        internal ContentKeyPolicyPlayReadyLicense(bool allowTestDevices, DateTimeOffset? beginOn, DateTimeOffset? expirationOn, TimeSpan? relativeBeginDate, TimeSpan? relativeExpirationDate, TimeSpan? gracePeriod, ContentKeyPolicyPlayReadyPlayRight playRight, ContentKeyPolicyPlayReadyLicenseType licenseType, ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation, ContentKeyPolicyPlayReadyContentType contentType)
+        internal ContentKeyPolicyPlayReadyLicense(bool allowTestDevices, ContentKeyPolicyPlayReadySecurityLevel? securityLevel, DateTimeOffset? beginOn, DateTimeOffset? expiresOn, TimeSpan? relativeBeginDate, TimeSpan? relativeExpirationDate, TimeSpan? gracePeriod, ContentKeyPolicyPlayReadyPlayRight playRight, ContentKeyPolicyPlayReadyLicenseType licenseType, ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation, ContentKeyPolicyPlayReadyContentType contentType)
         {
             AllowTestDevices = allowTestDevices;
+            SecurityLevel = securityLevel;
             BeginOn = beginOn;
-            ExpirationOn = expirationOn;
+            ExpiresOn = expiresOn;
             RelativeBeginDate = relativeBeginDate;
             RelativeExpirationDate = relativeExpirationDate;
             GracePeriod = gracePeriod;
@@ -66,10 +68,12 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> A flag indicating whether test devices can use the license. </summary>
         public bool AllowTestDevices { get; set; }
+        /// <summary> The security level. </summary>
+        public ContentKeyPolicyPlayReadySecurityLevel? SecurityLevel { get; set; }
         /// <summary> The begin date of license. </summary>
         public DateTimeOffset? BeginOn { get; set; }
         /// <summary> The expiration date of license. </summary>
-        public DateTimeOffset? ExpirationOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
         /// <summary> The relative begin date of license. </summary>
         public TimeSpan? RelativeBeginDate { get; set; }
         /// <summary> The relative expiration date of license. </summary>

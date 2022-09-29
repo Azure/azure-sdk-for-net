@@ -7,14 +7,15 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>3.1.0-preview</Version>
+		<Version>3.3.1-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Add ManagedServerDnsAlias API (2021-11-01-preview version)
-- Add ServerAdvancedThreatProtectionSettings API (2021-11-01-preview version)
-- Add DatabaseAdvancedThreatProtectionSettings API (2021-11-01-preview version)
+- Add Databases API (2022-02-01-preview version)
+- Add ReplicationLinks API (2022-02-01-preview version)
+- Add ManagedDatabases API (2022-02-01-preview version)
+- Add ManagedDatabaseRestoreDetails API (2022-02-01-preview version)
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

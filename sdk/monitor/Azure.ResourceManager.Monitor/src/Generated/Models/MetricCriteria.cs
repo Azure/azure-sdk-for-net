@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="operator"> the criteria operator. </param>
         /// <param name="threshold"> the criteria threshold value that activates the alert. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="metricName"/> is null. </exception>
-        public MetricCriteria(string name, string metricName, AggregationTypeEnum timeAggregation, MonitorOperator @operator, double threshold) : base(name, metricName, timeAggregation)
+        public MetricCriteria(string name, string metricName, MetricCriteriaTimeAggregationType timeAggregation, MetricCriteriaOperator @operator, double threshold) : base(name, metricName, timeAggregation)
         {
             if (name == null)
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="operator"> the criteria operator. </param>
         /// <param name="threshold"> the criteria threshold value that activates the alert. </param>
-        internal MetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, AggregationTypeEnum timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties, MonitorOperator @operator, double threshold) : base(criterionType, name, metricName, metricNamespace, timeAggregation, dimensions, skipMetricValidation, additionalProperties)
+        internal MetricCriteria(CriterionType criterionType, string name, string metricName, string metricNamespace, MetricCriteriaTimeAggregationType timeAggregation, IList<MetricDimension> dimensions, bool? skipMetricValidation, IDictionary<string, BinaryData> additionalProperties, MetricCriteriaOperator @operator, double threshold) : base(criterionType, name, metricName, metricNamespace, timeAggregation, dimensions, skipMetricValidation, additionalProperties)
         {
             Operator = @operator;
             Threshold = threshold;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <summary> the criteria operator. </summary>
-        public MonitorOperator Operator { get; set; }
+        public MetricCriteriaOperator Operator { get; set; }
         /// <summary> the criteria threshold value that activates the alert. </summary>
         public double Threshold { get; set; }
     }

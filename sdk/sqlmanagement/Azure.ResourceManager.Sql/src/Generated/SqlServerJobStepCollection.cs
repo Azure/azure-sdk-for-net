@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SqlServerJobStepResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string stepName, JobStepData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SqlServerJobStepResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string stepName, SqlServerJobStepData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
             Argument.AssertNotNull(data, nameof(data));
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sql
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="stepName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="stepName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SqlServerJobStepResource> CreateOrUpdate(WaitUntil waitUntil, string stepName, JobStepData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SqlServerJobStepResource> CreateOrUpdate(WaitUntil waitUntil, string stepName, SqlServerJobStepData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(stepName, nameof(stepName));
             Argument.AssertNotNull(data, nameof(data));

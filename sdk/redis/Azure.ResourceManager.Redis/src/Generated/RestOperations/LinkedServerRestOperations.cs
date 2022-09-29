@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Redis
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string name, string linkedServerName, RedisLinkedServerWithPropertiesCreateOrUpdateContent content)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string name, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="linkedServerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string name, string linkedServerName, RedisLinkedServerWithPropertiesCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string name, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="linkedServerName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string name, string linkedServerName, RedisLinkedServerWithPropertiesCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string name, string linkedServerName, RedisLinkedServerWithPropertyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RedisLinkedServerWithPropertiesData>> GetAsync(string subscriptionId, string resourceGroupName, string name, string linkedServerName, CancellationToken cancellationToken = default)
+        public async Task<Response<RedisLinkedServerWithPropertyData>> GetAsync(string subscriptionId, string resourceGroupName, string name, string linkedServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -240,13 +240,13 @@ namespace Azure.ResourceManager.Redis
             {
                 case 200:
                     {
-                        RedisLinkedServerWithPropertiesData value = default;
+                        RedisLinkedServerWithPropertyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RedisLinkedServerWithPropertiesData.DeserializeRedisLinkedServerWithPropertiesData(document.RootElement);
+                        value = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RedisLinkedServerWithPropertiesData)null, message.Response);
+                    return Response.FromValue((RedisLinkedServerWithPropertyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Redis
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RedisLinkedServerWithPropertiesData> Get(string subscriptionId, string resourceGroupName, string name, string linkedServerName, CancellationToken cancellationToken = default)
+        public Response<RedisLinkedServerWithPropertyData> Get(string subscriptionId, string resourceGroupName, string name, string linkedServerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -273,13 +273,13 @@ namespace Azure.ResourceManager.Redis
             {
                 case 200:
                     {
-                        RedisLinkedServerWithPropertiesData value = default;
+                        RedisLinkedServerWithPropertyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RedisLinkedServerWithPropertiesData.DeserializeRedisLinkedServerWithPropertiesData(document.RootElement);
+                        value = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RedisLinkedServerWithPropertiesData)null, message.Response);
+                    return Response.FromValue((RedisLinkedServerWithPropertyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

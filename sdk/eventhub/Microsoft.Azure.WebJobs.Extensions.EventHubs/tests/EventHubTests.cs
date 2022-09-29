@@ -289,6 +289,19 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
                 eventProcessorOptions.DefaultStartingPosition);
         }
 
+        [Test]
+        public void HostPartitionPopulatesPartitionContext()
+        {
+            var partition = GetPartitionContext();
+            var processor = partition.ProcessorHost;
+            var context = partition.PartitionContext;
+
+            Assert.AreEqual(processor.FullyQualifiedNamespace, context.FullyQualifiedNamespace);
+            Assert.AreEqual(processor.EventHubName, context.EventHubName);
+            Assert.AreEqual(processor.ConsumerGroup, context.ConsumerGroup);
+            Assert.AreEqual(partition.PartitionId, context.PartitionId);
+        }
+
         internal static EventProcessorHostPartition GetPartitionContext(string partitionId = "0", string eventHubPath = "path",
             string consumerGroupName = "group", string owner = null)
         {

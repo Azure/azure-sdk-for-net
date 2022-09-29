@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<string> vnetResourceId = default;
+            Optional<ResourceIdentifier> vnetResourceId = default;
             Optional<string> certThumbprint = default;
             Optional<string> certBlob = default;
             Optional<IReadOnlyList<VnetRoute>> routes = default;
@@ -106,7 +106,12 @@ namespace Azure.ResourceManager.AppService
                     {
                         if (property0.NameEquals("vnetResourceId"))
                         {
-                            vnetResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            vnetResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("certThumbprint"))

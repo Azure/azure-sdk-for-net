@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ConnectAsKubernetesCsiDriver))
+            if (Optional.IsDefined(DoesConnectAsKubernetesCsiDriver))
             {
-                if (ConnectAsKubernetesCsiDriver != null)
+                if (DoesConnectAsKubernetesCsiDriver != null)
                 {
                     writer.WritePropertyName("connectAsKubernetesCsiDriver");
-                    writer.WriteBooleanValue(ConnectAsKubernetesCsiDriver.Value);
+                    writer.WriteBooleanValue(DoesConnectAsKubernetesCsiDriver.Value);
                 }
                 else
                 {

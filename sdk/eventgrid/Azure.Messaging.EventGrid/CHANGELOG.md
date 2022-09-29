@@ -1,5 +1,16 @@
 # Release History
 
+## 4.12.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+- Stopped populating CloudEvents Distributed Tracing extension when distributed tracing is disabled.
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 4.11.0 (2022-07-07)
 
 ### Features Added

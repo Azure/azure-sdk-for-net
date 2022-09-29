@@ -23,7 +23,8 @@ namespace Azure.ResourceManager.DataFactory
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity");
-                writer.WriteObjectValue(Identity);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.DataFactory
 
         internal static DataFactoryData DeserializeDataFactoryData(JsonElement element)
         {
-            Optional<FactoryIdentity> identity = default;
+            Optional<ManagedServiceIdentity> identity = default;
             Optional<ETag> eTag = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
@@ -97,11 +98,11 @@ namespace Azure.ResourceManager.DataFactory
             Optional<string> provisioningState = default;
             Optional<DateTimeOffset> createTime = default;
             Optional<string> version = default;
-            Optional<PurviewConfiguration> purviewConfiguration = default;
+            Optional<FactoryPurviewConfiguration> purviewConfiguration = default;
             Optional<FactoryRepoConfiguration> repoConfiguration = default;
-            Optional<IDictionary<string, GlobalParameterSpecification>> globalParameters = default;
-            Optional<EncryptionConfiguration> encryption = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<IDictionary<string, FactoryGlobalParameterSpecification>> globalParameters = default;
+            Optional<FactoryEncryptionConfiguration> encryption = default;
+            Optional<FactoryPublicNetworkAccess> publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +114,8 @@ namespace Azure.ResourceManager.DataFactory
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    identity = FactoryIdentity.DeserializeFactoryIdentity(property.Value);
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.ToString(), serializeOptions);
                     continue;
                 }
                 if (property.NameEquals("eTag"))
@@ -207,7 +209,7 @@ namespace Azure.ResourceManager.DataFactory
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            purviewConfiguration = PurviewConfiguration.DeserializePurviewConfiguration(property0.Value);
+                            purviewConfiguration = FactoryPurviewConfiguration.DeserializeFactoryPurviewConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("repoConfiguration"))
@@ -227,10 +229,10 @@ namespace Azure.ResourceManager.DataFactory
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            Dictionary<string, GlobalParameterSpecification> dictionary = new Dictionary<string, GlobalParameterSpecification>();
+                            Dictionary<string, FactoryGlobalParameterSpecification> dictionary = new Dictionary<string, FactoryGlobalParameterSpecification>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, GlobalParameterSpecification.DeserializeGlobalParameterSpecification(property1.Value));
+                                dictionary.Add(property1.Name, FactoryGlobalParameterSpecification.DeserializeFactoryGlobalParameterSpecification(property1.Value));
                             }
                             globalParameters = dictionary;
                             continue;
@@ -242,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            encryption = EncryptionConfiguration.DeserializeEncryptionConfiguration(property0.Value);
+                            encryption = FactoryEncryptionConfiguration.DeserializeFactoryEncryptionConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"))
@@ -252,7 +254,7 @@ namespace Azure.ResourceManager.DataFactory
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new FactoryPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -261,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity.Value, provisioningState.Value, Optional.ToNullable(createTime), version.Value, purviewConfiguration.Value, repoConfiguration.Value, Optional.ToDictionary(globalParameters), encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eTag), additionalProperties);
+            return new DataFactoryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, identity, provisioningState.Value, Optional.ToNullable(createTime), version.Value, purviewConfiguration.Value, repoConfiguration.Value, Optional.ToDictionary(globalParameters), encryption.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eTag), additionalProperties);
         }
     }
 }

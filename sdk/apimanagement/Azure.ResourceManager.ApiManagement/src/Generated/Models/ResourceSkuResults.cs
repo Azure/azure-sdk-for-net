@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ResourceSkuResults. </summary>
         /// <param name="value"> The list of skus available for the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ResourceSkuResults(IEnumerable<ResourceSkuResult> value)
+        internal ResourceSkuResults(IEnumerable<AvailableApiManagementServiceSkuResult> value)
         {
             if (value == null)
             {
@@ -30,14 +30,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> Initializes a new instance of ResourceSkuResults. </summary>
         /// <param name="value"> The list of skus available for the service. </param>
         /// <param name="nextLink"> The uri to fetch the next page of API Management service Skus. </param>
-        internal ResourceSkuResults(IReadOnlyList<ResourceSkuResult> value, string nextLink)
+        internal ResourceSkuResults(IReadOnlyList<AvailableApiManagementServiceSkuResult> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary> The list of skus available for the service. </summary>
-        public IReadOnlyList<ResourceSkuResult> Value { get; }
+        public IReadOnlyList<AvailableApiManagementServiceSkuResult> Value { get; }
         /// <summary> The uri to fetch the next page of API Management service Skus. </summary>
         public string NextLink { get; }
     }

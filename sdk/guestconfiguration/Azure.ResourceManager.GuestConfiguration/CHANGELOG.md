@@ -1,6 +1,43 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.2 (2022-09-09)
+
+### Features Added
+
+- Added operations about the resources `GuestConfigurationHcrpAssignment` and `GuestConfigurationVmssAssignment`.
+
+### Breaking Changes
+
+- Renamed the resource `GuestConfigurationAssignment` to `GuestConfigurationVmAssignment`.
+- Prepended `GuestConfiguration` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.3.1.
+
+## 1.0.0-beta.1 (2022-07-12)
+
+### Breaking Changes
+
+New design of track 2 initial commit.
+
+### Package Name
+
+The package name has been changed from `Microsoft.Azure.Management.GuestConfiguration` to `Azure.ResourceManager.GuestConfiguration`.
 
 ### General New Features
 

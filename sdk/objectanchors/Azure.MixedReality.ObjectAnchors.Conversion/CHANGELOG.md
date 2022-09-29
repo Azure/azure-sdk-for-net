@@ -1,6 +1,6 @@
 # Release History
 
-## 0.3.0-beta.4 (Unreleased)
+## 0.3.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 0.3.0-beta.5 (2022-09-12)
+
+### Other Changes
+
+- Updated `Azure.MixedReality.Authentication` to `1.2.0`.
+
+## 0.3.0-beta.4 (2022-07-29)
+
+### Breaking Changes
+
+- `ServiceVersion` enum values are now pascal case.
 
 ## 0.3.0-beta.3 (2022-05-11)
 

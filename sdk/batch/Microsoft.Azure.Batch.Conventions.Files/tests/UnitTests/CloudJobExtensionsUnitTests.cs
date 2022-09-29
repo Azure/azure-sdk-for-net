@@ -16,14 +16,14 @@
 using Microsoft.Azure.Batch.Conventions.Files.UnitTests.Generators;
 using Microsoft.Azure.Batch.Conventions.Files.UnitTests.Utilities;
 using Microsoft.Azure.Batch.Conventions.Files.Utilities;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
+using Azure.Storage.Blobs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Azure.Storage;
 
 namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
 {
@@ -34,21 +34,21 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         public void CannotCreateOutputStorageForNullJob()
         {
             CloudJob job = null;
-            CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", "ZmFrZQ=="), true);
-            var ex = Assert.Throws<ArgumentNullException>(() => job.OutputStorage(storageAccount));
+            BlobServiceClient blobClient = new BlobServiceClient(new Uri("http://fakestorageaccount.blob.core.windows.net"), new StorageSharedKeyCredential("fake", "ZmFrZQ=="));
+            var ex = Assert.Throws<ArgumentNullException>(() => job.OutputStorage(blobClient));
             Assert.Equal("job", ex.ParamName);
         }
 
         [Fact]
-        public void CannotCreateOutputStorageForNullStorageAccount()
+        public void CannotCreateOutputStorageForNullBlobServiceClient()
         {
             using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
             {
                 CloudJob job = batchClient.JobOperations.CreateJob();
                 job.Id = "fakejob";
-                CloudStorageAccount storageAccount = null;
-                var ex = Assert.Throws<ArgumentNullException>(() => job.OutputStorage(storageAccount));
-                Assert.Equal("storageAccount", ex.ParamName);
+                BlobServiceClient blobClient = null;
+                var ex = Assert.Throws<ArgumentNullException>(() => job.OutputStorage(blobClient));
+                Assert.Equal("blobClient", ex.ParamName);
             }
         }
 
@@ -56,8 +56,8 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         public async Task CannotPrepareOutputStorageForNullJob()
         {
             CloudJob job = null;
-            CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", "ZmFrZQ=="), true);
-            var ex = await Assert.ThrowsAsync<ArgumentNullException>(() => job.PrepareOutputStorageAsync(storageAccount));
+            BlobServiceClient blobClient = new BlobServiceClient(new Uri("http://fakestorageaccount.blob.core.windows.net"), new StorageSharedKeyCredential("fake", "ZmFrZQ=="));
+            var ex = await Assert.ThrowsAsync<ArgumentNullException>(() => job.PrepareOutputStorageAsync(blobClient));
             Assert.Equal("job", ex.ParamName);
         }
 
@@ -86,21 +86,21 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
         public void CannotGetOutputStorageUrlForNullJob()
         {
             CloudJob job = null;
-            CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", "ZmFrZQ=="), true);
-            var ex = Assert.Throws<ArgumentNullException>(() => job.GetOutputStorageContainerUrl(storageAccount, TimeSpan.FromMinutes(5)));
+            BlobServiceClient blobClient = new BlobServiceClient(new Uri("http://fakestorageaccount.blob.core.windows.net"), new StorageSharedKeyCredential("fake", "ZmFrZQ=="));
+            var ex = Assert.Throws<ArgumentNullException>(() => job.GetOutputStorageContainerUrl(blobClient, TimeSpan.FromMinutes(5)));
             Assert.Equal("job", ex.ParamName);
         }
 
         [Fact]
-        public void CannotGetOutputStorageUrlForNullStorageAccount()
+        public void CannotGetOutputStorageUrlForNullBlobServiceClient()
         {
             using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
             {
                 CloudJob job = batchClient.JobOperations.CreateJob();
                 job.Id = "fakejob";
-                CloudStorageAccount storageAccount = null;
-                var ex = Assert.Throws<ArgumentNullException>(() => job.GetOutputStorageContainerUrl(storageAccount, TimeSpan.FromMinutes(5)));
-                Assert.Equal("storageAccount", ex.ParamName);
+                BlobServiceClient blobClient = null;
+                var ex = Assert.Throws<ArgumentNullException>(() => job.GetOutputStorageContainerUrl(blobClient, TimeSpan.FromMinutes(5)));
+                Assert.Equal("blobClient", ex.ParamName);
             }
         }
 
@@ -111,8 +111,8 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
             {
                 CloudJob job = batchClient.JobOperations.CreateJob();
                 job.Id = "fakejob";
-                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", "ZmFrZQ=="), true);
-                var ex = Assert.Throws<ArgumentException>(() => job.GetOutputStorageContainerUrl(storageAccount, TimeSpan.FromMinutes(0)));
+                BlobServiceClient blobClient = new BlobServiceClient(new Uri("http://fakestorageaccount.blob.core.windows.net"), new StorageSharedKeyCredential("fake", "ZmFrZQ=="));
+                var ex = Assert.Throws<ArgumentException>(() => job.GetOutputStorageContainerUrl(blobClient, TimeSpan.FromMinutes(0)));
                 Assert.Equal("expiryTime", ex.ParamName);
             }
         }
@@ -124,9 +124,22 @@ namespace Microsoft.Azure.Batch.Conventions.Files.UnitTests
             {
                 CloudJob job = batchClient.JobOperations.CreateJob();
                 job.Id = "fakejob";
-                CloudStorageAccount storageAccount = new CloudStorageAccount(new StorageCredentials("fake", "ZmFrZQ=="), true);
-                var ex = Assert.Throws<ArgumentException>(() => job.GetOutputStorageContainerUrl(storageAccount, TimeSpan.FromMinutes(-5)));
+                BlobServiceClient blobClient = new BlobServiceClient(new Uri("http://fakestorageaccount.blob.core.windows.net"), new StorageSharedKeyCredential("fake", "ZmFrZQ=="));
+                var ex = Assert.Throws<ArgumentException>(() => job.GetOutputStorageContainerUrl(blobClient, TimeSpan.FromMinutes(-5)));
                 Assert.Equal("expiryTime", ex.ParamName);
+            }
+        }
+
+        [Fact]
+        public void CannotGetOutputStorageUrlWithoutBlobClientAuthenticated()
+        {
+            using (var batchClient = BatchClient.Open(new FakeBatchServiceClient()))
+            {
+                CloudJob job = batchClient.JobOperations.CreateJob();
+                job.Id = "fakejob";
+                BlobServiceClient blobClient = new BlobServiceClient(new Uri("http://fakestorageaccount.blob.core.windows.net"));
+                var ex = Assert.Throws<Exception>(() => job.GetOutputStorageContainerUrl(blobClient, TimeSpan.FromMinutes(5)));
+                Assert.Equal("Blob service client must be authorized with shared key credentials to create a service SAS URL", ex.Message);
             }
         }
 

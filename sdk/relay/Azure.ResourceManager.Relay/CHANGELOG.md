@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,32 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-09-13)
+
+This is the first stable release of the Relay management library.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `Relay` prefix to all single / simple model names.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
+
+## 1.0.0-beta.2 (2022-07-12)
+
+### Features Added
+
+- Added Update methods in resource classes.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.2.0
+- Upgraded dependent `Azure.Core` to 1.25.0
 
 ## 1.0.0-beta.1 (2022-06-24)
 

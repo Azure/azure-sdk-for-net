@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static StandardEncoderPreset DeserializeStandardEncoderPreset(JsonElement element)
         {
-            Optional<Filters> filters = default;
-            IList<Codec> codecs = default;
-            IList<Format> formats = default;
+            Optional<FilteringOperations> filters = default;
+            IList<CodecBasicProperties> codecs = default;
+            IList<FormatBasicProperties> formats = default;
             string odataType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -55,25 +55,25 @@ namespace Azure.ResourceManager.Media.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    filters = Filters.DeserializeFilters(property.Value);
+                    filters = FilteringOperations.DeserializeFilteringOperations(property.Value);
                     continue;
                 }
                 if (property.NameEquals("codecs"))
                 {
-                    List<Codec> array = new List<Codec>();
+                    List<CodecBasicProperties> array = new List<CodecBasicProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Codec.DeserializeCodec(item));
+                        array.Add(CodecBasicProperties.DeserializeCodecBasicProperties(item));
                     }
                     codecs = array;
                     continue;
                 }
                 if (property.NameEquals("formats"))
                 {
-                    List<Format> array = new List<Format>();
+                    List<FormatBasicProperties> array = new List<FormatBasicProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Format.DeserializeFormat(item));
+                        array.Add(FormatBasicProperties.DeserializeFormatBasicProperties(item));
                     }
                     formats = array;
                     continue;

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static ExtensionDataSource DeserializeExtensionDataSource(JsonElement element)
         {
-            Optional<IList<KnownExtensionDataSourceStream>> streams = default;
+            Optional<IList<ExtensionDataSourceStream>> streams = default;
             string extensionName = default;
             Optional<BinaryData> extensionSettings = default;
             Optional<IList<string>> inputDataSources = default;
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.Monitor.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<KnownExtensionDataSourceStream> array = new List<KnownExtensionDataSourceStream>();
+                    List<ExtensionDataSourceStream> array = new List<ExtensionDataSourceStream>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new KnownExtensionDataSourceStream(item.GetString()));
+                        array.Add(new ExtensionDataSourceStream(item.GetString()));
                     }
                     streams = array;
                     continue;

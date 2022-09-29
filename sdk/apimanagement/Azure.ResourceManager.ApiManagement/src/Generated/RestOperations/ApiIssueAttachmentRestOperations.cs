@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="issueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="issueId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IssueAttachmentCollection>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IssueAttachmentListResult>> ListByServiceAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -100,9 +100,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        IssueAttachmentCollection value = default;
+                        IssueAttachmentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IssueAttachmentCollection.DeserializeIssueAttachmentCollection(document.RootElement);
+                        value = IssueAttachmentListResult.DeserializeIssueAttachmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="issueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="issueId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IssueAttachmentCollection> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<IssueAttachmentListResult> ListByService(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        IssueAttachmentCollection value = default;
+                        IssueAttachmentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IssueAttachmentCollection.DeserializeIssueAttachmentCollection(document.RootElement);
+                        value = IssueAttachmentListResult.DeserializeIssueAttachmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IssueAttachmentContractData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiIssueAttachmentData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -299,13 +299,13 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        IssueAttachmentContractData value = default;
+                        ApiIssueAttachmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IssueAttachmentContractData.DeserializeIssueAttachmentContractData(document.RootElement);
+                        value = ApiIssueAttachmentData.DeserializeApiIssueAttachmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IssueAttachmentContractData)null, message.Response);
+                    return Response.FromValue((ApiIssueAttachmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IssueAttachmentContractData> Get(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, CancellationToken cancellationToken = default)
+        public Response<ApiIssueAttachmentData> Get(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -336,19 +336,19 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        IssueAttachmentContractData value = default;
+                        ApiIssueAttachmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IssueAttachmentContractData.DeserializeIssueAttachmentContractData(document.RootElement);
+                        value = ApiIssueAttachmentData.DeserializeApiIssueAttachmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IssueAttachmentContractData)null, message.Response);
+                    return Response.FromValue((ApiIssueAttachmentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, IssueAttachmentContractData data, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, ApiIssueAttachmentData data, ETag? ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ApiManagement
             request.Uri = uri;
             if (ifMatch != null)
             {
-                request.Headers.Add("If-Match", ifMatch);
+                request.Headers.Add("If-Match", ifMatch.Value);
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/>, <paramref name="attachmentId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IssueAttachmentContractData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, IssueAttachmentContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiIssueAttachmentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, ApiIssueAttachmentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -411,9 +411,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        IssueAttachmentContractData value = default;
+                        ApiIssueAttachmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IssueAttachmentContractData.DeserializeIssueAttachmentContractData(document.RootElement);
+                        value = ApiIssueAttachmentData.DeserializeApiIssueAttachmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/>, <paramref name="attachmentId"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IssueAttachmentContractData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, IssueAttachmentContractData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<ApiIssueAttachmentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, ApiIssueAttachmentData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -450,9 +450,9 @@ namespace Azure.ResourceManager.ApiManagement
                 case 200:
                 case 201:
                     {
-                        IssueAttachmentContractData value = default;
+                        ApiIssueAttachmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IssueAttachmentContractData.DeserializeIssueAttachmentContractData(document.RootElement);
+                        value = ApiIssueAttachmentData.DeserializeApiIssueAttachmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.ApiManagement
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, string ifMatch)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, ETag ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -496,9 +496,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="attachmentId"> Attachment identifier within an Issue. Must be unique in the current Issue. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/>, <paramref name="attachmentId"/> or <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, string ifMatch, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -506,7 +506,6 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
             Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
             Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, apiId, issueId, attachmentId, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -529,9 +528,9 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="attachmentId"> Attachment identifier within an Issue. Must be unique in the current Issue. </param>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/>, <paramref name="attachmentId"/> or <paramref name="ifMatch"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="attachmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/>, <paramref name="issueId"/> or <paramref name="attachmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, string ifMatch, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string attachmentId, ETag ifMatch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -539,7 +538,6 @@ namespace Azure.ResourceManager.ApiManagement
             Argument.AssertNotNullOrEmpty(apiId, nameof(apiId));
             Argument.AssertNotNullOrEmpty(issueId, nameof(issueId));
             Argument.AssertNotNullOrEmpty(attachmentId, nameof(attachmentId));
-            Argument.AssertNotNull(ifMatch, nameof(ifMatch));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, serviceName, apiId, issueId, attachmentId, ifMatch);
             _pipeline.Send(message, cancellationToken);
@@ -580,7 +578,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="issueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="issueId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IssueAttachmentCollection>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public async Task<Response<IssueAttachmentListResult>> ListByServiceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -595,9 +593,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        IssueAttachmentCollection value = default;
+                        IssueAttachmentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IssueAttachmentCollection.DeserializeIssueAttachmentCollection(document.RootElement);
+                        value = IssueAttachmentListResult.DeserializeIssueAttachmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -618,7 +616,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="issueId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="apiId"/> or <paramref name="issueId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IssueAttachmentCollection> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
+        public Response<IssueAttachmentListResult> ListByServiceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string serviceName, string apiId, string issueId, string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -633,9 +631,9 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 case 200:
                     {
-                        IssueAttachmentCollection value = default;
+                        IssueAttachmentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IssueAttachmentCollection.DeserializeIssueAttachmentCollection(document.RootElement);
+                        value = IssueAttachmentListResult.DeserializeIssueAttachmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

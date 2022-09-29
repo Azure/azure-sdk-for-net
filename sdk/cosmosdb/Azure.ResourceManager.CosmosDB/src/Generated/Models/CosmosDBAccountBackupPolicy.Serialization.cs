@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     continue;
                 }
             }
-            return new CosmosDBAccountBackupPolicy(type, migrationState.Value);
+            return new UnknownCosmosDBAccountBackupPolicy(type, migrationState.Value);
         }
     }
 }

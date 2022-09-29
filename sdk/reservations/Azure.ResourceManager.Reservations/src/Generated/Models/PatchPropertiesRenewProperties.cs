@@ -16,6 +16,6 @@ namespace Azure.ResourceManager.Reservations.Models
         }
 
         /// <summary> Gets or sets the purchase properties. </summary>
-        public PurchaseRequestContent PurchaseProperties { get; set; }
+        public ReservationPurchaseContent PurchaseProperties { get; set; }
     }
 }

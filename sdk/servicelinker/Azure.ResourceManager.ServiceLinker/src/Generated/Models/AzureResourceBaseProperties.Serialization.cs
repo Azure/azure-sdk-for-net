@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     continue;
                 }
             }
-            return new AzureResourceBaseProperties(type);
+            return new UnknownAzureResourceBaseProperties(type);
         }
     }
 }

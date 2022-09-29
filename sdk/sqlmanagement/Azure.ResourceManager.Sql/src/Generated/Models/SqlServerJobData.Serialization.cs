@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Sql
             Optional<SystemData> systemData = default;
             Optional<string> description = default;
             Optional<int> version = default;
-            Optional<JobSchedule> schedule = default;
+            Optional<SqlServerJobSchedule> schedule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            schedule = JobSchedule.DeserializeJobSchedule(property0.Value);
+                            schedule = SqlServerJobSchedule.DeserializeSqlServerJobSchedule(property0.Value);
                             continue;
                         }
                     }

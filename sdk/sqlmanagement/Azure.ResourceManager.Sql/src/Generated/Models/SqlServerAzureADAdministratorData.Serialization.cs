@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<AdministratorType> administratorType = default;
+            Optional<SqlAdministratorType> administratorType = default;
             Optional<string> login = default;
             Optional<Guid> sid = default;
             Optional<Guid> tenantId = default;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Sql
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            administratorType = new AdministratorType(property0.Value.GetString());
+                            administratorType = new SqlAdministratorType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("login"))

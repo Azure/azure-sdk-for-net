@@ -103,13 +103,13 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<string> msixPackageFamilyName = default;
             Optional<string> msixPackageApplicationId = default;
             Optional<RemoteApplicationType> applicationType = default;
-            CommandLineSetting commandLineSetting = default;
+            VirtualApplicationCommandLineSetting commandLineSetting = default;
             Optional<string> commandLineArguments = default;
             Optional<bool> showInPortal = default;
             Optional<string> iconPath = default;
             Optional<int> iconIndex = default;
             Optional<string> iconHash = default;
-            Optional<byte[]> iconContent = default;
+            Optional<BinaryData> iconContent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         }
                         if (property0.NameEquals("commandLineSetting"))
                         {
-                            commandLineSetting = new CommandLineSetting(property0.Value.GetString());
+                            commandLineSetting = new VirtualApplicationCommandLineSetting(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("commandLineArguments"))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            iconContent = property0.Value.GetBytesFromBase64("D");
+                            iconContent = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                     }

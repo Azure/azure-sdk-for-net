@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("keyType");
                 writer.WriteStringValue(KeyType.Value.ToSerialString());
             }
-            if (Optional.IsDefined(Expiry))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiry");
-                writer.WriteStringValue(Expiry.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

@@ -23,10 +23,10 @@ namespace Azure.ResourceManager.AppService
             }
             writer.WritePropertyName("properties");
             writer.WriteStartObject();
-            if (Optional.IsDefined(Privacy))
+            if (Optional.IsDefined(HasPrivacy))
             {
                 writer.WritePropertyName("privacy");
-                writer.WriteBooleanValue(Privacy.Value);
+                writer.WriteBooleanValue(HasPrivacy.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

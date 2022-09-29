@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> Defines a unique Support Topic. </summary>
@@ -18,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of SupportTopic. </summary>
         /// <param name="id"> Support Topic Id. </param>
         /// <param name="pesId"> Unique resource Id. </param>
-        internal SupportTopic(string id, string pesId)
+        internal SupportTopic(string id, ResourceIdentifier pesId)
         {
             Id = id;
             PesId = pesId;
@@ -27,6 +29,6 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Support Topic Id. </summary>
         public string Id { get; }
         /// <summary> Unique resource Id. </summary>
-        public string PesId { get; }
+        public ResourceIdentifier PesId { get; }
     }
 }

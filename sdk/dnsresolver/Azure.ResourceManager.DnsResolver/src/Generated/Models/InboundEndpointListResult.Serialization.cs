@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
     {
         internal static InboundEndpointListResult DeserializeInboundEndpointListResult(JsonElement element)
         {
-            Optional<IReadOnlyList<InboundEndpointData>> value = default;
+            Optional<IReadOnlyList<DnsResolverInboundEndpointData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<InboundEndpointData> array = new List<InboundEndpointData>();
+                    List<DnsResolverInboundEndpointData> array = new List<DnsResolverInboundEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InboundEndpointData.DeserializeInboundEndpointData(item));
+                        array.Add(DnsResolverInboundEndpointData.DeserializeDnsResolverInboundEndpointData(item));
                     }
                     value = array;
                     continue;

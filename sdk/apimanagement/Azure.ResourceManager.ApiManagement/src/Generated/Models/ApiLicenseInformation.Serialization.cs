@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         internal static ApiLicenseInformation DeserializeApiLicenseInformation(JsonElement element)
         {
             Optional<string> name = default;
-            Optional<Uri> url = default;
+            Optional<Uri> uri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        url = null;
+                        uri = null;
                         continue;
                     }
-                    url = new Uri(property.Value.GetString());
+                    uri = new Uri(property.Value.GetString());
                     continue;
                 }
             }
-            return new ApiLicenseInformation(name.Value, url.Value);
+            return new ApiLicenseInformation(name.Value, uri.Value);
         }
     }
 }

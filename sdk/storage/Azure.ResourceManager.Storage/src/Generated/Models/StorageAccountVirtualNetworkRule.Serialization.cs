@@ -32,14 +32,14 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static StorageAccountVirtualNetworkRule DeserializeStorageAccountVirtualNetworkRule(JsonElement element)
         {
-            string id = default;
+            ResourceIdentifier id = default;
             Optional<StorageAccountNetworkRuleAction> action = default;
             Optional<StorageAccountNetworkRuleState> state = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("action"))

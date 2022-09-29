@@ -65,11 +65,11 @@ namespace Azure.ResourceManager.Authorization
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<bool> isOrganizationDefault = default;
-            Optional<AzurePrincipal> lastModifiedBy = default;
+            Optional<RoleManagementPrincipal> lastModifiedBy = default;
             Optional<DateTimeOffset> lastModifiedDateTime = default;
             Optional<IList<RoleManagementPolicyRule>> rules = default;
             Optional<IReadOnlyList<RoleManagementPolicyRule>> effectiveRules = default;
-            Optional<PolicyProperties> policyProperties = default;
+            Optional<RoleManagementPolicyProperties> policyProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            lastModifiedBy = AzurePrincipal.DeserializeAzurePrincipal(property0.Value);
+                            lastModifiedBy = RoleManagementPrincipal.DeserializeRoleManagementPrincipal(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("lastModifiedDateTime"))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Authorization
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            policyProperties = PolicyProperties.DeserializePolicyProperties(property0.Value);
+                            policyProperties = RoleManagementPolicyProperties.DeserializeRoleManagementPolicyProperties(property0.Value);
                             continue;
                         }
                     }

@@ -35,15 +35,27 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("archiveWindowLength");
                 writer.WriteStringValue(ArchiveWindowLength.Value, "P");
             }
+            if (Optional.IsDefined(RewindWindowLength))
+            {
+                if (RewindWindowLength != null)
+                {
+                    writer.WritePropertyName("rewindWindowLength");
+                    writer.WriteStringValue(RewindWindowLength.Value, "P");
+                }
+                else
+                {
+                    writer.WriteNull("rewindWindowLength");
+                }
+            }
             if (Optional.IsDefined(ManifestName))
             {
                 writer.WritePropertyName("manifestName");
                 writer.WriteStringValue(ManifestName);
             }
-            if (Optional.IsDefined(Hls))
+            if (Optional.IsDefined(HttpLiveStreaming))
             {
                 writer.WritePropertyName("hls");
-                writer.WriteObjectValue(Hls);
+                writer.WriteObjectValue(HttpLiveStreaming);
             }
             if (Optional.IsDefined(OutputSnapTime))
             {
@@ -63,6 +75,7 @@ namespace Azure.ResourceManager.Media
             Optional<string> description = default;
             Optional<string> assetName = default;
             Optional<TimeSpan> archiveWindowLength = default;
+            Optional<TimeSpan?> rewindWindowLength = default;
             Optional<string> manifestName = default;
             Optional<Hls> hls = default;
             Optional<long> outputSnapTime = default;
@@ -124,6 +137,16 @@ namespace Azure.ResourceManager.Media
                                 continue;
                             }
                             archiveWindowLength = property0.Value.GetTimeSpan("P");
+                            continue;
+                        }
+                        if (property0.NameEquals("rewindWindowLength"))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                rewindWindowLength = null;
+                                continue;
+                            }
+                            rewindWindowLength = property0.Value.GetTimeSpan("P");
                             continue;
                         }
                         if (property0.NameEquals("manifestName"))
@@ -190,7 +213,7 @@ namespace Azure.ResourceManager.Media
                     continue;
                 }
             }
-            return new LiveOutputData(id, name, type, systemData.Value, description.Value, assetName.Value, Optional.ToNullable(archiveWindowLength), manifestName.Value, hls.Value, Optional.ToNullable(outputSnapTime), Optional.ToNullable(created), Optional.ToNullable(lastModified), provisioningState.Value, Optional.ToNullable(resourceState));
+            return new LiveOutputData(id, name, type, systemData.Value, description.Value, assetName.Value, Optional.ToNullable(archiveWindowLength), Optional.ToNullable(rewindWindowLength), manifestName.Value, hls.Value, Optional.ToNullable(outputSnapTime), Optional.ToNullable(created), Optional.ToNullable(lastModified), provisioningState.Value, Optional.ToNullable(resourceState));
         }
     }
 }

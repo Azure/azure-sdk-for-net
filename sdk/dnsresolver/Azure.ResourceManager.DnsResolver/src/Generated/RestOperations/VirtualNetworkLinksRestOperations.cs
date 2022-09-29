@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.DnsResolver
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-04-01-preview";
+            _apiVersion = apiVersion ?? "2022-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string virtualNetworkLinkName, VirtualNetworkLinkData data, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string rulesetName, string subscriptionId, string resourceGroupName, string virtualNetworkLinkName, DnsForwardingRulesetVirtualNetworkLinkData data, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DnsResolver
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
-            uri.AppendPath(dnsForwardingRulesetName, true);
+            uri.AppendPath(rulesetName, true);
             uri.AppendPath("/virtualNetworkLinks/", false);
             uri.AppendPath(virtualNetworkLinkName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -72,25 +72,25 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Creates or updates a virtual network link to a DNS forwarding ruleset. </summary>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, <paramref name="virtualNetworkLinkName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string virtualNetworkLinkName, VirtualNetworkLinkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkLinkName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string rulesetName, string subscriptionId, string resourceGroupName, string virtualNetworkLinkName, DnsForwardingRulesetVirtualNetworkLinkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
             Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, virtualNetworkLinkName, data, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(rulesetName, subscriptionId, resourceGroupName, virtualNetworkLinkName, data, ifMatch, ifNoneMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -104,25 +104,25 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Creates or updates a virtual network link to a DNS forwarding ruleset. </summary>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="data"> Parameters supplied to the CreateOrUpdate operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="ifNoneMatch"> Set to &apos;*&apos; to allow a new resource to be created, but to prevent updating an existing resource. Other values will be ignored. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, <paramref name="virtualNetworkLinkName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string virtualNetworkLinkName, VirtualNetworkLinkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkLinkName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string rulesetName, string subscriptionId, string resourceGroupName, string virtualNetworkLinkName, DnsForwardingRulesetVirtualNetworkLinkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
             Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, virtualNetworkLinkName, data, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(rulesetName, subscriptionId, resourceGroupName, virtualNetworkLinkName, data, ifMatch, ifNoneMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string virtualNetworkLinkName, VirtualNetworkLinkPatch patch, string ifMatch)
+        internal HttpMessage CreateUpdateRequest(string rulesetName, string subscriptionId, string resourceGroupName, string virtualNetworkLinkName, DnsForwardingRulesetVirtualNetworkLinkPatch patch, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DnsResolver
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
-            uri.AppendPath(dnsForwardingRulesetName, true);
+            uri.AppendPath(rulesetName, true);
             uri.AppendPath("/virtualNetworkLinks/", false);
             uri.AppendPath(virtualNetworkLinkName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -166,24 +166,24 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Updates a virtual network link to a DNS forwarding ruleset. </summary>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="patch"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, <paramref name="virtualNetworkLinkName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string virtualNetworkLinkName, VirtualNetworkLinkPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkLinkName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> UpdateAsync(string rulesetName, string subscriptionId, string resourceGroupName, string virtualNetworkLinkName, DnsForwardingRulesetVirtualNetworkLinkPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
             Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, virtualNetworkLinkName, patch, ifMatch);
+            using var message = CreateUpdateRequest(rulesetName, subscriptionId, resourceGroupName, virtualNetworkLinkName, patch, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -196,24 +196,24 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Updates a virtual network link to a DNS forwarding ruleset. </summary>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="patch"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/>, <paramref name="virtualNetworkLinkName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string virtualNetworkLinkName, VirtualNetworkLinkPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkLinkName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Update(string rulesetName, string subscriptionId, string resourceGroupName, string virtualNetworkLinkName, DnsForwardingRulesetVirtualNetworkLinkPatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
             Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, virtualNetworkLinkName, patch, ifMatch);
+            using var message = CreateUpdateRequest(rulesetName, subscriptionId, resourceGroupName, virtualNetworkLinkName, patch, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string virtualNetworkLinkName, string ifMatch)
+        internal HttpMessage CreateDeleteRequest(string rulesetName, string subscriptionId, string resourceGroupName, string virtualNetworkLinkName, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.DnsResolver
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
-            uri.AppendPath(dnsForwardingRulesetName, true);
+            uri.AppendPath(rulesetName, true);
             uri.AppendPath("/virtualNetworkLinks/", false);
             uri.AppendPath(virtualNetworkLinkName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -252,22 +252,22 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Deletes a virtual network link to a DNS forwarding ruleset. WARNING: This operation cannot be undone. </summary>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="virtualNetworkLinkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string virtualNetworkLinkName, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkLinkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string rulesetName, string subscriptionId, string resourceGroupName, string virtualNetworkLinkName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
             Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, virtualNetworkLinkName, ifMatch);
+            using var message = CreateDeleteRequest(rulesetName, subscriptionId, resourceGroupName, virtualNetworkLinkName, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -281,22 +281,22 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Deletes a virtual network link to a DNS forwarding ruleset. WARNING: This operation cannot be undone. </summary>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="ifMatch"> ETag of the resource. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting any concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="virtualNetworkLinkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string virtualNetworkLinkName, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkLinkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string rulesetName, string subscriptionId, string resourceGroupName, string virtualNetworkLinkName, string ifMatch = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
             Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, virtualNetworkLinkName, ifMatch);
+            using var message = CreateDeleteRequest(rulesetName, subscriptionId, resourceGroupName, virtualNetworkLinkName, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string virtualNetworkLinkName)
+        internal HttpMessage CreateGetRequest(string rulesetName, string subscriptionId, string resourceGroupName, string virtualNetworkLinkName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DnsResolver
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
-            uri.AppendPath(dnsForwardingRulesetName, true);
+            uri.AppendPath(rulesetName, true);
             uri.AppendPath("/virtualNetworkLinks/", false);
             uri.AppendPath(virtualNetworkLinkName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -332,72 +332,72 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Gets properties of a virtual network link to a DNS forwarding ruleset. </summary>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="virtualNetworkLinkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkLinkData>> GetAsync(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string virtualNetworkLinkName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkLinkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<DnsForwardingRulesetVirtualNetworkLinkData>> GetAsync(string rulesetName, string subscriptionId, string resourceGroupName, string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
             Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, virtualNetworkLinkName);
+            using var message = CreateGetRequest(rulesetName, subscriptionId, resourceGroupName, virtualNetworkLinkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VirtualNetworkLinkData value = default;
+                        DnsForwardingRulesetVirtualNetworkLinkData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(document.RootElement);
+                        value = DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualNetworkLinkData)null, message.Response);
+                    return Response.FromValue((DnsForwardingRulesetVirtualNetworkLinkData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
         /// <summary> Gets properties of a virtual network link to a DNS forwarding ruleset. </summary>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="virtualNetworkLinkName"> The name of the virtual network link. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="virtualNetworkLinkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="dnsForwardingRulesetName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkLinkData> Get(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, string virtualNetworkLinkName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkLinkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkLinkName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<DnsForwardingRulesetVirtualNetworkLinkData> Get(string rulesetName, string subscriptionId, string resourceGroupName, string virtualNetworkLinkName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
             Argument.AssertNotNullOrEmpty(virtualNetworkLinkName, nameof(virtualNetworkLinkName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, virtualNetworkLinkName);
+            using var message = CreateGetRequest(rulesetName, subscriptionId, resourceGroupName, virtualNetworkLinkName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VirtualNetworkLinkData value = default;
+                        DnsForwardingRulesetVirtualNetworkLinkData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VirtualNetworkLinkData.DeserializeVirtualNetworkLinkData(document.RootElement);
+                        value = DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((VirtualNetworkLinkData)null, message.Response);
+                    return Response.FromValue((DnsForwardingRulesetVirtualNetworkLinkData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, int? top)
+        internal HttpMessage CreateListRequest(string rulesetName, string subscriptionId, string resourceGroupName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.DnsResolver
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
-            uri.AppendPath(dnsForwardingRulesetName, true);
+            uri.AppendPath(rulesetName, true);
             uri.AppendPath("/virtualNetworkLinks", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
@@ -423,20 +423,20 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists virtual network links to a DNS forwarding ruleset. </summary>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkLinkListResult>> ListAsync(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualNetworkLinkListResult>> ListAsync(string rulesetName, string subscriptionId, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, top);
+            using var message = CreateListRequest(rulesetName, subscriptionId, resourceGroupName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -453,20 +453,20 @@ namespace Azure.ResourceManager.DnsResolver
         }
 
         /// <summary> Lists virtual network links to a DNS forwarding ruleset. </summary>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkLinkListResult> List(string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualNetworkLinkListResult> List(string rulesetName, string subscriptionId, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, dnsForwardingRulesetName, top);
+            using var message = CreateListRequest(rulesetName, subscriptionId, resourceGroupName, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, int? top)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string rulesetName, string subscriptionId, string resourceGroupName, int? top)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -498,21 +498,21 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists virtual network links to a DNS forwarding ruleset. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkLinkListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="rulesetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<VirtualNetworkLinkListResult>> ListNextPageAsync(string nextLink, string rulesetName, string subscriptionId, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, dnsForwardingRulesetName, top);
+            using var message = CreateListNextPageRequest(nextLink, rulesetName, subscriptionId, resourceGroupName, top);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -530,21 +530,21 @@ namespace Azure.ResourceManager.DnsResolver
 
         /// <summary> Lists virtual network links to a DNS forwarding ruleset. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="rulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="dnsForwardingRulesetName"> The name of the DNS forwarding ruleset. </param>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="dnsForwardingRulesetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkLinkListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string dnsForwardingRulesetName, int? top = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="rulesetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="rulesetName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<VirtualNetworkLinkListResult> ListNextPage(string nextLink, string rulesetName, string subscriptionId, string resourceGroupName, int? top = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(rulesetName, nameof(rulesetName));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(dnsForwardingRulesetName, nameof(dnsForwardingRulesetName));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, dnsForwardingRulesetName, top);
+            using var message = CreateListNextPageRequest(nextLink, rulesetName, subscriptionId, resourceGroupName, top);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

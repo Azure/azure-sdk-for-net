@@ -25,12 +25,17 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         internal static IntegrationRuntimeCustomerVirtualNetwork DeserializeIntegrationRuntimeCustomerVirtualNetwork(JsonElement element)
         {
-            Optional<string> subnetId = default;
+            Optional<ResourceIdentifier> subnetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"))
                 {
-                    subnetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

@@ -36,6 +36,10 @@ namespace Azure.AI.TextAnalytics.Models
         private const string AzureCognitiveSearchIndexLimitReachedValue = "AzureCognitiveSearchIndexLimitReached";
         private const string InternalServerErrorValue = "InternalServerError";
         private const string ServiceUnavailableValue = "ServiceUnavailable";
+        private const string TimeoutValue = "Timeout";
+        private const string QuotaExceededValue = "QuotaExceeded";
+        private const string ConflictValue = "Conflict";
+        private const string WarningValue = "Warning";
 
         /// <summary> InvalidRequest. </summary>
         public static ErrorCode InvalidRequest { get; } = new ErrorCode(InvalidRequestValue);
@@ -65,6 +69,14 @@ namespace Azure.AI.TextAnalytics.Models
         public static ErrorCode InternalServerError { get; } = new ErrorCode(InternalServerErrorValue);
         /// <summary> ServiceUnavailable. </summary>
         public static ErrorCode ServiceUnavailable { get; } = new ErrorCode(ServiceUnavailableValue);
+        /// <summary> Timeout. </summary>
+        public static ErrorCode Timeout { get; } = new ErrorCode(TimeoutValue);
+        /// <summary> QuotaExceeded. </summary>
+        public static ErrorCode QuotaExceeded { get; } = new ErrorCode(QuotaExceededValue);
+        /// <summary> Conflict. </summary>
+        public static ErrorCode Conflict { get; } = new ErrorCode(ConflictValue);
+        /// <summary> Warning. </summary>
+        public static ErrorCode Warning { get; } = new ErrorCode(WarningValue);
         /// <summary> Determines if two <see cref="ErrorCode"/> values are the same. </summary>
         public static bool operator ==(ErrorCode left, ErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ErrorCode"/> values are not the same. </summary>

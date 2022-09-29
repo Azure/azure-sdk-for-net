@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Logic
         /// <summary> Initializes a new instance of IntegrationAccountSchemaData. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="schemaType"> The schema type. </param>
-        public IntegrationAccountSchemaData(AzureLocation location, SchemaType schemaType) : base(location)
+        public IntegrationAccountSchemaData(AzureLocation location, IntegrationAccountSchemaType schemaType) : base(location)
         {
             SchemaType = schemaType;
         }
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Logic
         /// <param name="content"> The content. </param>
         /// <param name="contentType"> The content type. </param>
         /// <param name="contentLink"> The content link. </param>
-        internal IntegrationAccountSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SchemaType schemaType, string targetNamespace, string documentName, string fileName, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, string content, string contentType, ContentLink contentLink) : base(id, name, resourceType, systemData, tags, location)
+        internal IntegrationAccountSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IntegrationAccountSchemaType schemaType, string targetNamespace, string documentName, string fileName, DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, ContentType? contentType, LogicContentLink contentLink) : base(id, name, resourceType, systemData, tags, location)
         {
             SchemaType = schemaType;
             TargetNamespace = targetNamespace;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic
         }
 
         /// <summary> The schema type. </summary>
-        public SchemaType SchemaType { get; set; }
+        public IntegrationAccountSchemaType SchemaType { get; set; }
         /// <summary> The target namespace of the schema. </summary>
         public string TargetNamespace { get; set; }
         /// <summary> The document name. </summary>
@@ -67,13 +67,71 @@ namespace Azure.ResourceManager.Logic
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The changed time. </summary>
         public DateTimeOffset? ChangedOn { get; }
-        /// <summary> The metadata. </summary>
+        /// <summary>
+        /// The metadata.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Metadata { get; set; }
-        /// <summary> The content. </summary>
-        public string Content { get; set; }
+        /// <summary>
+        /// The content.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Content { get; set; }
         /// <summary> The content type. </summary>
-        public string ContentType { get; set; }
+        public ContentType? ContentType { get; set; }
         /// <summary> The content link. </summary>
-        public ContentLink ContentLink { get; }
+        public LogicContentLink ContentLink { get; }
     }
 }

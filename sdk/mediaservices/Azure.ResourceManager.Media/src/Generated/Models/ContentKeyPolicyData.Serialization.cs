@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.Media
                 writer.WritePropertyName("description");
                 writer.WriteStringValue(Description);
             }
-            if (Optional.IsCollectionDefined(Options))
+            if (Optional.IsCollectionDefined(Preferences))
             {
                 writer.WritePropertyName("options");
                 writer.WriteStartArray();
-                foreach (var item in Options)
+                foreach (var item in Preferences)
                 {
                     writer.WriteObjectValue(item);
                 }

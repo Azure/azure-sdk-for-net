@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         internal static CosmosDBMetricDefinition DeserializeCosmosDBMetricDefinition(JsonElement element)
         {
             Optional<IReadOnlyList<CosmosDBMetricAvailability>> metricAvailabilities = default;
-            Optional<PrimaryAggregationType> primaryAggregationType = default;
+            Optional<CosmosDBMetricPrimaryAggregationType> primaryAggregationType = default;
             Optional<CosmosDBMetricUnitType> unit = default;
             Optional<ResourceIdentifier> resourceUri = default;
             Optional<CosmosDBMetricName> name = default;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    primaryAggregationType = new PrimaryAggregationType(property.Value.GetString());
+                    primaryAggregationType = new CosmosDBMetricPrimaryAggregationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("unit"))

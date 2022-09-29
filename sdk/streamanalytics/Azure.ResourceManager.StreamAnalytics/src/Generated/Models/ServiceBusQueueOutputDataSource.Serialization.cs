@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -56,14 +55,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(SystemPropertyColumns))
+            if (Optional.IsCollectionDefined(SystemPropertyColumns))
             {
                 writer.WritePropertyName("systemPropertyColumns");
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(SystemPropertyColumns);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(SystemPropertyColumns.ToString()).RootElement);
-#endif
+                writer.WriteStartObject();
+                foreach (var item in SystemPropertyColumns)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -75,10 +76,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<string> serviceBusNamespace = default;
             Optional<string> sharedAccessPolicyName = default;
             Optional<string> sharedAccessPolicyKey = default;
-            Optional<AuthenticationMode> authenticationMode = default;
+            Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
             Optional<string> queueName = default;
             Optional<IList<string>> propertyColumns = default;
-            Optional<BinaryData> systemPropertyColumns = default;
+            Optional<IDictionary<string, string>> systemPropertyColumns = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"))
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            authenticationMode = new AuthenticationMode(property0.Value.GetString());
+                            authenticationMode = new StreamAnalyticsAuthenticationMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("queueName"))
@@ -147,14 +148,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            systemPropertyColumns = BinaryData.FromString(property0.Value.GetRawText());
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            systemPropertyColumns = dictionary;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ServiceBusQueueOutputDataSource(type, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), queueName.Value, Optional.ToList(propertyColumns), systemPropertyColumns.Value);
+            return new ServiceBusQueueOutputDataSource(type, serviceBusNamespace.Value, sharedAccessPolicyName.Value, sharedAccessPolicyKey.Value, Optional.ToNullable(authenticationMode), queueName.Value, Optional.ToList(propertyColumns), Optional.ToDictionary(systemPropertyColumns));
         }
     }
 }

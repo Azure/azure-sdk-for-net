@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> tier = default;
             Optional<string> size = default;
             Optional<string> family = default;
-            Optional<SkuCapacity> capacity = default;
+            Optional<AppServiceSkuCapacity> capacity = default;
             Optional<IReadOnlyList<string>> locations = default;
             Optional<IReadOnlyList<Capability>> capabilities = default;
             foreach (var property in element.EnumerateObject())
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    capacity = SkuCapacity.DeserializeSkuCapacity(property.Value);
+                    capacity = AppServiceSkuCapacity.DeserializeAppServiceSkuCapacity(property.Value);
                     continue;
                 }
                 if (property.NameEquals("locations"))

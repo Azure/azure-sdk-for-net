@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> If true, stops cassandra before executing the command and then start it again. </summary>
         public bool? CassandraStopStart { get; set; }
         /// <summary> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </summary>
-        public bool? Readwrite { get; set; }
+        public bool? AllowWrite { get; set; }
     }
 }

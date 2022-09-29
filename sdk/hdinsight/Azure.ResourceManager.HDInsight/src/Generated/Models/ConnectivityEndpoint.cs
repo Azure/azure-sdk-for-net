@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using Azure.Core;
+using System.Net;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -13,34 +13,34 @@ namespace Azure.ResourceManager.HDInsight.Models
     public partial class ConnectivityEndpoint
     {
         /// <summary> Initializes a new instance of ConnectivityEndpoint. </summary>
-        internal ConnectivityEndpoint()
+        public ConnectivityEndpoint()
         {
         }
 
         /// <summary> Initializes a new instance of ConnectivityEndpoint. </summary>
         /// <param name="name"> The name of the endpoint. </param>
         /// <param name="protocol"> The protocol of the endpoint. </param>
-        /// <param name="location"> The location of the endpoint. </param>
+        /// <param name="endpointLocation"> The location of the endpoint. </param>
         /// <param name="port"> The port to connect to. </param>
         /// <param name="privateIPAddress"> The private ip address of the endpoint. </param>
-        internal ConnectivityEndpoint(string name, string protocol, AzureLocation? location, int? port, string privateIPAddress)
+        internal ConnectivityEndpoint(string name, string protocol, string endpointLocation, int? port, IPAddress privateIPAddress)
         {
             Name = name;
             Protocol = protocol;
-            Location = location;
+            EndpointLocation = endpointLocation;
             Port = port;
             PrivateIPAddress = privateIPAddress;
         }
 
         /// <summary> The name of the endpoint. </summary>
-        public string Name { get; }
+        public string Name { get; set; }
         /// <summary> The protocol of the endpoint. </summary>
-        public string Protocol { get; }
+        public string Protocol { get; set; }
         /// <summary> The location of the endpoint. </summary>
-        public AzureLocation? Location { get; }
+        public string EndpointLocation { get; set; }
         /// <summary> The port to connect to. </summary>
-        public int? Port { get; }
+        public int? Port { get; set; }
         /// <summary> The private ip address of the endpoint. </summary>
-        public string PrivateIPAddress { get; }
+        public IPAddress PrivateIPAddress { get; set; }
     }
 }

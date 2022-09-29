@@ -34,14 +34,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the PacketCaptureResult class.
         /// </summary>
-        /// <param name="target">The ID of the targeted resource, only VM is
-        /// currently supported.</param>
+        /// <param name="target">The ID of the targeted resource, only AzureVM
+        /// and AzureVMSS as target type are currently supported.</param>
         /// <param name="storageLocation">The storage location for a packet
         /// capture session.</param>
         /// <param name="name">Name of the packet capture session.</param>
         /// <param name="id">ID of the packet capture operation.</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated.</param>
+        /// <param name="scope">A list of AzureVMSS instances which can be
+        /// included or excluded to run packet capture. If both included and
+        /// excluded are empty, then the packet capture will run on all
+        /// instances of AzureVMSS.</param>
+        /// <param name="targetType">Target type of the resource provided.
+        /// Possible values include: 'AzureVM', 'AzureVMSS'</param>
         /// <param name="bytesToCapturePerPacket">Number of bytes captured per
         /// packet, the remaining bytes are truncated.</param>
         /// <param name="totalBytesPerSession">Maximum size of the capture
@@ -52,12 +58,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// packet capture session. Possible values include: 'Succeeded',
         /// 'Updating', 'Deleting', 'Failed'</param>
-        public PacketCaptureResult(string target, PacketCaptureStorageLocation storageLocation, string name = default(string), string id = default(string), string etag = default(string), long? bytesToCapturePerPacket = default(long?), long? totalBytesPerSession = default(long?), int? timeLimitInSeconds = default(int?), IList<PacketCaptureFilter> filters = default(IList<PacketCaptureFilter>), string provisioningState = default(string))
+        public PacketCaptureResult(string target, PacketCaptureStorageLocation storageLocation, string name = default(string), string id = default(string), string etag = default(string), PacketCaptureMachineScope scope = default(PacketCaptureMachineScope), PacketCaptureTargetType? targetType = default(PacketCaptureTargetType?), long? bytesToCapturePerPacket = default(long?), long? totalBytesPerSession = default(long?), int? timeLimitInSeconds = default(int?), IList<PacketCaptureFilter> filters = default(IList<PacketCaptureFilter>), string provisioningState = default(string))
         {
             Name = name;
             Id = id;
             Etag = etag;
             Target = target;
+            Scope = scope;
+            TargetType = targetType;
             BytesToCapturePerPacket = bytesToCapturePerPacket;
             TotalBytesPerSession = totalBytesPerSession;
             TimeLimitInSeconds = timeLimitInSeconds;
@@ -92,11 +100,27 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; private set; }
 
         /// <summary>
-        /// Gets or sets the ID of the targeted resource, only VM is currently
-        /// supported.
+        /// Gets or sets the ID of the targeted resource, only AzureVM and
+        /// AzureVMSS as target type are currently supported.
         /// </summary>
         [JsonProperty(PropertyName = "properties.target")]
         public string Target { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of AzureVMSS instances which can be included or
+        /// excluded to run packet capture. If both included and excluded are
+        /// empty, then the packet capture will run on all instances of
+        /// AzureVMSS.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scope")]
+        public PacketCaptureMachineScope Scope { get; set; }
+
+        /// <summary>
+        /// Gets or sets target type of the resource provided. Possible values
+        /// include: 'AzureVM', 'AzureVMSS'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.targetType")]
+        public PacketCaptureTargetType? TargetType { get; set; }
 
         /// <summary>
         /// Gets or sets number of bytes captured per packet, the remaining

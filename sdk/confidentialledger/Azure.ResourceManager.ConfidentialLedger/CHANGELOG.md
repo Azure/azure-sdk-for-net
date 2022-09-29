@@ -1,6 +1,37 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0 (2022-09-13)
+
+This is the first stable release of the Confidential Ledger management library.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `ConfidentialLedger` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent Azure.ResourceManager to 1.3.1.
+- Optimized the implementation of methods related to tag operations.
+
+## 1.0.0-beta.1 (2022-07-12)
+
+### Breaking Changes
+
+New design of track 2 initial commit.
 
 ### General New Features
 

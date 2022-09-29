@@ -1,16 +1,64 @@
 # Release History
 
-## 1.0.0-beta.11 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
-- Refined quite a few names of types and properties according to internal review comments.
-
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-09-08)
+
+This is the first stable release of the Azure Storage management library.
+
+### Other Changes
+
+- Optimized the implementation of methods related to tag operations.
+
+## 1.0.0-beta.12 (2022-08-18)
+
+This is the RC release of the Azure Storage management library.
+
+### Breaking Changes
+
+- Various naming changes according to review comments.
+- Changed the return type of the method `RestoreBlobRanges` to `StorageAccountRestoreBlobRangesOperation`.
+
+### Other Changes
+
+- Upgraded API version to 2022-05-01
+
+## 1.0.0-beta.11 (2022-07-21)
+
+This is the RC release of the Azure Storage management library.
+
+### Features Added
+
+- Added Update methods in resource classes.
+
+### Breaking Changes
+
+Polishing since last public beta release:
+- Prepended `Storage` prefix to all single / simple model names.
+- Corrected the format of all `Guid` type properties / parameters.
+- Corrected the format of all `ResourceIdentifier` type properties / parameters.
+- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ETag` type properties / parameters.
+- Corrected the format of all `AzureLocation` type properties / parameters.
+- Corrected the format of all binary type properties / parameters.
+- Corrected all acronyms which not follow [.Net Naming Guidelines](https://docs.microsoft.com/dotnet/standard/design-guidelines/naming-guidelines).
+- Corrected enumeration name by following [Naming Enumerations Rule](https://docs.microsoft.com/dotnet/standard/design-guidelines/names-of-classes-structs-and-interfaces#naming-enumerations).
+- Corrected the suffix of `DateTimeOffset` properties / parameters.
+- Corrected the name of interval / duration properties / parameters which end with units.
+- Optimized the name of some models and functions.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.2.0
+- Upgraded dependent `Azure.Core` to 1.25.0
 
 ## 1.0.0-beta.10 (2022-06-24)
 
@@ -162,7 +210,7 @@ string resourceGroupName = "myResourceGroup";
 ArmClient client = new ArmClient(new DefaultAzureCredential());
 ResourceGroupResource resourceGroup = client.GetDefaultSubscription().GetResourceGroups().Get(resourceGroupName);
 StorageAccountCollection storageAccountCollection = resourceGroup.GetStorageAccounts();
-StorageSku sku = new StorageSku(StorageSkuName.PremiumLRS);
+StorageSku sku = new StorageSku(StorageSkuName.PremiumLrs);
 StorageAccountCreateOrUpdateContent parameters = new StorageAccountCreateOrUpdateContent(sku, StorageKind.Storage, AzureLocation.WestUS)
 {
     Tags =

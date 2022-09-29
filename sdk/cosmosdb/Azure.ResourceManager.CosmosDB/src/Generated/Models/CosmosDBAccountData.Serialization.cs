@@ -125,20 +125,20 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("publicNetworkAccess");
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (Optional.IsDefined(EnableFreeTier))
+            if (Optional.IsDefined(IsFreeTierEnabled))
             {
                 writer.WritePropertyName("enableFreeTier");
-                writer.WriteBooleanValue(EnableFreeTier.Value);
+                writer.WriteBooleanValue(IsFreeTierEnabled.Value);
             }
             if (Optional.IsDefined(ApiProperties))
             {
                 writer.WritePropertyName("apiProperties");
                 writer.WriteObjectValue(ApiProperties);
             }
-            if (Optional.IsDefined(EnableAnalyticalStorage))
+            if (Optional.IsDefined(IsAnalyticalStorageEnabled))
             {
                 writer.WritePropertyName("enableAnalyticalStorage");
-                writer.WriteBooleanValue(EnableAnalyticalStorage.Value);
+                writer.WriteBooleanValue(IsAnalyticalStorageEnabled.Value);
             }
             if (Optional.IsDefined(AnalyticalStorageConfiguration))
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<IReadOnlyList<CosmosDBAccountLocation>> writeLocations = default;
             Optional<IReadOnlyList<CosmosDBAccountLocation>> readLocations = default;
             Optional<IReadOnlyList<CosmosDBAccountLocation>> locations = default;
-            Optional<IReadOnlyList<FailoverPolicy>> failoverPolicies = default;
+            Optional<IReadOnlyList<CosmosDBFailoverPolicy>> failoverPolicies = default;
             Optional<IList<CosmosDBVirtualNetworkRule>> virtualNetworkRules = default;
             Optional<IReadOnlyList<CosmosDBPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<bool> enableMultipleWriteLocations = default;
@@ -229,12 +229,12 @@ namespace Azure.ResourceManager.CosmosDB
             Optional<bool> disableKeyBasedMetadataWriteAccess = default;
             Optional<Uri> keyVaultKeyUri = default;
             Optional<string> defaultIdentity = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            Optional<CosmosDBPublicNetworkAccess> publicNetworkAccess = default;
             Optional<bool> enableFreeTier = default;
             Optional<ApiProperties> apiProperties = default;
             Optional<bool> enableAnalyticalStorage = default;
             Optional<AnalyticalStorageConfiguration> analyticalStorageConfiguration = default;
-            Optional<string> instanceId = default;
+            Optional<Guid> instanceId = default;
             Optional<CosmosDBAccountCreateMode> createMode = default;
             Optional<CosmosDBAccountRestoreParameters> restoreParameters = default;
             Optional<CosmosDBAccountBackupPolicy> backupPolicy = default;
@@ -452,10 +452,10 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<FailoverPolicy> array = new List<FailoverPolicy>();
+                            List<CosmosDBFailoverPolicy> array = new List<CosmosDBFailoverPolicy>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FailoverPolicy.DeserializeFailoverPolicy(item));
+                                array.Add(CosmosDBFailoverPolicy.DeserializeCosmosDBFailoverPolicy(item));
                             }
                             failoverPolicies = array;
                             continue;
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.CosmosDB
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccess(property0.Value.GetString());
+                            publicNetworkAccess = new CosmosDBPublicNetworkAccess(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("enableFreeTier"))
@@ -597,7 +597,12 @@ namespace Azure.ResourceManager.CosmosDB
                         }
                         if (property0.NameEquals("instanceId"))
                         {
-                            instanceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            instanceId = property0.Value.GetGuid();
                             continue;
                         }
                         if (property0.NameEquals("createMode"))
@@ -694,7 +699,7 @@ namespace Azure.ResourceManager.CosmosDB
                     continue;
                 }
             }
-            return new CosmosDBAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, provisioningState.Value, documentEndpoint.Value, Optional.ToNullable(databaseAccountOfferType), Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), consistencyPolicy.Value, Optional.ToList(capabilities), Optional.ToList(writeLocations), Optional.ToList(readLocations), Optional.ToList(locations), Optional.ToList(failoverPolicies), Optional.ToList(virtualNetworkRules), Optional.ToList(privateEndpointConnections), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, instanceId.Value, Optional.ToNullable(createMode), restoreParameters.Value, backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), Optional.ToNullable(disableLocalAuth), capacity.Value);
+            return new CosmosDBAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), identity, provisioningState.Value, documentEndpoint.Value, Optional.ToNullable(databaseAccountOfferType), Optional.ToList(ipRules), Optional.ToNullable(isVirtualNetworkFilterEnabled), Optional.ToNullable(enableAutomaticFailover), consistencyPolicy.Value, Optional.ToList(capabilities), Optional.ToList(writeLocations), Optional.ToList(readLocations), Optional.ToList(locations), Optional.ToList(failoverPolicies), Optional.ToList(virtualNetworkRules), Optional.ToList(privateEndpointConnections), Optional.ToNullable(enableMultipleWriteLocations), Optional.ToNullable(enableCassandraConnector), Optional.ToNullable(connectorOffer), Optional.ToNullable(disableKeyBasedMetadataWriteAccess), keyVaultKeyUri.Value, defaultIdentity.Value, Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(enableFreeTier), apiProperties.Value, Optional.ToNullable(enableAnalyticalStorage), analyticalStorageConfiguration.Value, Optional.ToNullable(instanceId), Optional.ToNullable(createMode), restoreParameters.Value, backupPolicy.Value, Optional.ToList(cors), Optional.ToNullable(networkAclBypass), Optional.ToList(networkAclBypassResourceIds), Optional.ToNullable(disableLocalAuth), capacity.Value);
         }
     }
 }

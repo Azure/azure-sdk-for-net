@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         internal static ApplicationUserAssignedIdentity DeserializeApplicationUserAssignedIdentity(JsonElement element)
         {
             string name = default;
-            string principalId = default;
+            Guid principalId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 }
                 if (property.NameEquals("principalId"))
                 {
-                    principalId = property.Value.GetString();
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
             }

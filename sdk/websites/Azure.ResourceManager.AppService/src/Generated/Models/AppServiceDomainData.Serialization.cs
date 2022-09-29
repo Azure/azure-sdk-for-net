@@ -59,15 +59,15 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("contactTech");
                 writer.WriteObjectValue(ContactTech);
             }
-            if (Optional.IsDefined(Privacy))
+            if (Optional.IsDefined(AppServiceHasPrivacy))
             {
                 writer.WritePropertyName("privacy");
-                writer.WriteBooleanValue(Privacy.Value);
+                writer.WriteBooleanValue(AppServiceHasPrivacy.Value);
             }
-            if (Optional.IsDefined(AutoRenew))
+            if (Optional.IsDefined(IsAutoRenew))
             {
                 writer.WritePropertyName("autoRenew");
-                writer.WriteBooleanValue(AutoRenew.Value);
+                writer.WriteBooleanValue(IsAutoRenew.Value);
             }
             if (Optional.IsDefined(Consent))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.AppService
             Optional<bool> readyForDnsRecordManagement = default;
             Optional<IReadOnlyList<HostName>> managedHostNames = default;
             Optional<DomainPurchaseConsent> consent = default;
-            Optional<IReadOnlyList<AppServiceDomainPropertiesDomainNotRenewableReasonsItem>> domainNotRenewableReasons = default;
+            Optional<IReadOnlyList<DomainNotRenewableReason>> domainNotRenewableReasons = default;
             Optional<DnsType> dnsType = default;
             Optional<string> dnsZoneId = default;
             Optional<DnsType> targetDnsType = default;
@@ -355,10 +355,10 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<AppServiceDomainPropertiesDomainNotRenewableReasonsItem> array = new List<AppServiceDomainPropertiesDomainNotRenewableReasonsItem>();
+                            List<DomainNotRenewableReason> array = new List<DomainNotRenewableReason>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(new AppServiceDomainPropertiesDomainNotRenewableReasonsItem(item.GetString()));
+                                array.Add(new DomainNotRenewableReason(item.GetString()));
                             }
                             domainNotRenewableReasons = array;
                             continue;

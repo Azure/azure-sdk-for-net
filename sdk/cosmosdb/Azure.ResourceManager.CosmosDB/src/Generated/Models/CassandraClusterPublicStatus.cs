@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="reaperStatus"></param>
         /// <param name="connectionErrors"> List relevant information about any connection errors to the Datacenters. </param>
         /// <param name="dataCenters"> List of the status of each datacenter in this cluster. </param>
-        internal CassandraClusterPublicStatus(ETag? etag, ManagedCassandraReaperStatus reaperStatus, IReadOnlyList<CassandraConnectionError> connectionErrors, IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters)
+        internal CassandraClusterPublicStatus(ETag? etag, CassandraReaperStatus reaperStatus, IReadOnlyList<CassandraConnectionError> connectionErrors, IReadOnlyList<CassandraClusterPublicStatusDataCentersItem> dataCenters)
         {
             ETag = etag;
             ReaperStatus = reaperStatus;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Gets the e tag. </summary>
         public ETag? ETag { get; }
         /// <summary> Gets the reaper status. </summary>
-        public ManagedCassandraReaperStatus ReaperStatus { get; }
+        public CassandraReaperStatus ReaperStatus { get; }
         /// <summary> List relevant information about any connection errors to the Datacenters. </summary>
         public IReadOnlyList<CassandraConnectionError> ConnectionErrors { get; }
         /// <summary> List of the status of each datacenter in this cluster. </summary>

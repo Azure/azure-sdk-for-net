@@ -3,16 +3,15 @@
 
 using System;
 
-namespace Azure.Communication.CallingServer.Models
+namespace Azure.Communication.CallingServer
 {
     /// <summary> The CallSource. </summary>
     public class CallSource
     {
         /// <summary> Initializes a new instance of CallSourceDto. </summary>
         /// <param name="identifier">Caller's identifier.</param>
-        /// <param name="alternateCallerId">Caller's caller Id.</param>
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
-        public CallSource(CommunicationIdentifier identifier, PhoneNumberIdentifier alternateCallerId = null)
+        public CallSource(CommunicationIdentifier identifier)
         {
             if (identifier == null)
             {
@@ -20,11 +19,10 @@ namespace Azure.Communication.CallingServer.Models
             }
 
             Identifier = identifier;
-            AlternateCallerId = alternateCallerId;
         }
 
         /// <summary> The alternate identity of the source of the call if dialing out to a pstn number. </summary>
-        public PhoneNumberIdentifier AlternateCallerId { get; set; }
+        public PhoneNumberIdentifier CallerId { get; set; }
         /// <summary> Gets the identifier. </summary>
         public CommunicationIdentifier Identifier { get; }
     }

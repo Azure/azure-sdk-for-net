@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Initializes a new instance of TableData. </summary>
         public TableData()
         {
-            SignedIdentifiers = new ChangeTrackingList<TableSignedIdentifier>();
+            SignedIdentifiers = new ChangeTrackingList<StorageTableSignedIdentifier>();
         }
 
         /// <summary> Initializes a new instance of TableData. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Storage
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tableName"> Table name under the specified account. </param>
         /// <param name="signedIdentifiers"> List of stored access policies specified on the table. </param>
-        internal TableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string tableName, IList<TableSignedIdentifier> signedIdentifiers) : base(id, name, resourceType, systemData)
+        internal TableData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string tableName, IList<StorageTableSignedIdentifier> signedIdentifiers) : base(id, name, resourceType, systemData)
         {
             TableName = tableName;
             SignedIdentifiers = signedIdentifiers;
@@ -37,6 +37,6 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Table name under the specified account. </summary>
         public string TableName { get; }
         /// <summary> List of stored access policies specified on the table. </summary>
-        public IList<TableSignedIdentifier> SignedIdentifiers { get; }
+        public IList<StorageTableSignedIdentifier> SignedIdentifiers { get; }
     }
 }

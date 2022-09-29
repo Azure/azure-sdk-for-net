@@ -15,16 +15,16 @@ namespace Azure.ResourceManager.Batch.Models
     {
         internal static SupportedSkusResult DeserializeSupportedSkusResult(JsonElement element)
         {
-            IReadOnlyList<SupportedSku> value = default;
+            IReadOnlyList<BatchSupportedSku> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
                 {
-                    List<SupportedSku> array = new List<SupportedSku>();
+                    List<BatchSupportedSku> array = new List<BatchSupportedSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportedSku.DeserializeSupportedSku(item));
+                        array.Add(BatchSupportedSku.DeserializeBatchSupportedSku(item));
                     }
                     value = array;
                     continue;

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Reference to an asset via its path in a job output. </summary>
-    internal partial class PartialOutputPathAssetReference : PartialAssetReferenceBase
+    public partial class PartialOutputPathAssetReference : PartialAssetReferenceBase
     {
         /// <summary> Initializes a new instance of PartialOutputPathAssetReference. </summary>
         public PartialOutputPathAssetReference()

@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> Initializes a new instance of GuestConfigurationAssignmentProperties. </summary>
         public GuestConfigurationAssignmentProperties()
         {
-            VmssVmList = new ChangeTrackingList<VmssVmInfo>();
+            VmssVmList = new ChangeTrackingList<GuestConfigurationVmssVmInfo>();
         }
 
         /// <summary> Initializes a new instance of GuestConfigurationAssignmentProperties. </summary>
         /// <param name="targetResourceId"> VM resource Id. </param>
         /// <param name="guestConfiguration"> The guest configuration to assign. </param>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
-        /// <param name="lastComplianceStatusChecked"> Date and time when last compliance status was checked. </param>
+        /// <param name="lastComplianceStatusCheckedOn"> Date and time when last compliance status was checked. </param>
         /// <param name="latestReportId"> Id of the latest report for the guest configuration assignment. </param>
         /// <param name="parameterHash"> parameter hash for the guest configuration assignment. </param>
         /// <param name="latestAssignmentReport"> Last reported guest configuration assignment report. </param>
@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="resourceType"> Type of the resource - VMSS / VM. </param>
         /// <param name="vmssVmList"> The list of VM Compliance data for VMSS. </param>
-        internal GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, ComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusChecked, string latestReportId, string parameterHash, AssignmentReport latestAssignmentReport, string context, string assignmentHash, ProvisioningState? provisioningState, string resourceType, IList<VmssVmInfo> vmssVmList)
+        internal GuestConfigurationAssignmentProperties(string targetResourceId, GuestConfigurationNavigation guestConfiguration, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? lastComplianceStatusCheckedOn, ResourceIdentifier latestReportId, string parameterHash, GuestConfigurationAssignmentReportInfo latestAssignmentReport, string context, string assignmentHash, GuestConfigurationProvisioningState? provisioningState, string resourceType, IList<GuestConfigurationVmssVmInfo> vmssVmList)
         {
             TargetResourceId = targetResourceId;
             GuestConfiguration = guestConfiguration;
             ComplianceStatus = complianceStatus;
-            LastComplianceStatusChecked = lastComplianceStatusChecked;
+            LastComplianceStatusCheckedOn = lastComplianceStatusCheckedOn;
             LatestReportId = latestReportId;
             ParameterHash = parameterHash;
             LatestAssignmentReport = latestAssignmentReport;
@@ -54,24 +54,24 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <summary> The guest configuration to assign. </summary>
         public GuestConfigurationNavigation GuestConfiguration { get; set; }
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
-        public ComplianceStatus? ComplianceStatus { get; }
+        public AssignedGuestConfigurationMachineComplianceStatus? ComplianceStatus { get; }
         /// <summary> Date and time when last compliance status was checked. </summary>
-        public DateTimeOffset? LastComplianceStatusChecked { get; }
+        public DateTimeOffset? LastComplianceStatusCheckedOn { get; }
         /// <summary> Id of the latest report for the guest configuration assignment. </summary>
-        public string LatestReportId { get; }
+        public ResourceIdentifier LatestReportId { get; }
         /// <summary> parameter hash for the guest configuration assignment. </summary>
         public string ParameterHash { get; }
         /// <summary> Last reported guest configuration assignment report. </summary>
-        public AssignmentReport LatestAssignmentReport { get; set; }
+        public GuestConfigurationAssignmentReportInfo LatestAssignmentReport { get; set; }
         /// <summary> The source which initiated the guest configuration assignment. Ex: Azure Policy. </summary>
         public string Context { get; set; }
         /// <summary> Combined hash of the configuration package and parameters. </summary>
         public string AssignmentHash { get; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public GuestConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> Type of the resource - VMSS / VM. </summary>
         public string ResourceType { get; }
         /// <summary> The list of VM Compliance data for VMSS. </summary>
-        public IList<VmssVmInfo> VmssVmList { get; }
+        public IList<GuestConfigurationVmssVmInfo> VmssVmList { get; set; }
     }
 }

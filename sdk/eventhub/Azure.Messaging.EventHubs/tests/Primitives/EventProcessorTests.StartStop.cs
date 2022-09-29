@@ -637,7 +637,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockConsumer
                 .Setup(consumer => consumer.ReceiveAsync(It.IsAny<int>(), It.IsAny<TimeSpan?>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) });
+                .Returns<int, object, CancellationToken>((_, _, cancelToken) =>
+                {
+                    cancelToken.ThrowIfCancellationRequested<TaskCanceledException>();
+                    return Task.FromResult((IReadOnlyList<EventData>)new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>())) });
+                });
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -645,7 +649,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockProcessor
                 .Setup(processor => processor.ProcessEventBatchAsync(It.IsAny<EventProcessorPartition>(), It.IsAny<IReadOnlyList<EventData>>(), It.IsAny<bool>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask)
                 .Callback(() =>
                 {
                     if ((stopInvoked) && (!cancellationSource.Token.IsCancellationRequested))
@@ -654,7 +657,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     }
 
                     completionSource.TrySetResult(true);
-                });
+                })
+                .Returns(Task.CompletedTask);
 
             mockConnection
                 .Setup(connection => connection.CreateTransportConsumer(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<EventPosition>(), It.IsAny<EventHubsRetryPolicy>(), It.IsAny<bool>(), It.IsAny<bool>(), It.IsAny<long>(), It.IsAny<uint?>(), It.IsAny<long?>()))

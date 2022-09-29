@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Media
     /// A Class representing a StreamingLocator along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StreamingLocatorResource" />
     /// from an instance of <see cref="ArmClient" /> using the GetStreamingLocatorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="MediaserviceResource" /> using the GetStreamingLocator method.
+    /// Otherwise you can get one from its parent resource <see cref="MediaServicesAccountResource" /> using the GetStreamingLocator method.
     /// </summary>
     public partial class StreamingLocatorResource : ArmResource
     {
@@ -253,20 +253,25 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: StreamingLocators_ListContentKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ListContentKeysResponse>> GetContentKeysAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="StreamingLocatorContentKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StreamingLocatorContentKey> GetContentKeysAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetContentKeys");
-            scope.Start();
-            try
+            async Task<Page<StreamingLocatorContentKey>> FirstPageFunc(int? pageSizeHint)
             {
-                var response = await _streamingLocatorRestClient.ListContentKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                return response;
+                using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetContentKeys");
+                scope.Start();
+                try
+                {
+                    var response = await _streamingLocatorRestClient.ListContentKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Page.FromValues(response.Value.ContentKeys, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateAsyncEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -275,20 +280,25 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: StreamingLocators_ListContentKeys
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ListContentKeysResponse> GetContentKeys(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="StreamingLocatorContentKey" /> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StreamingLocatorContentKey> GetContentKeys(CancellationToken cancellationToken = default)
         {
-            using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetContentKeys");
-            scope.Start();
-            try
+            Page<StreamingLocatorContentKey> FirstPageFunc(int? pageSizeHint)
             {
-                var response = _streamingLocatorRestClient.ListContentKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                return response;
+                using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetContentKeys");
+                scope.Start();
+                try
+                {
+                    var response = _streamingLocatorRestClient.ListContentKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken: cancellationToken);
+                    return Page.FromValues(response.Value.ContentKeys, null, response.GetRawResponse());
+                }
+                catch (Exception e)
+                {
+                    scope.Failed(e);
+                    throw;
+                }
             }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return PageableHelpers.CreateEnumerable(FirstPageFunc, null);
         }
 
         /// <summary>
@@ -297,9 +307,9 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: StreamingLocators_ListPaths
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ListPathsResponse>> GetPathsAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GetPathsResult>> GetSupportedPathsAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetPaths");
+            using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetSupportedPaths");
             scope.Start();
             try
             {
@@ -319,9 +329,9 @@ namespace Azure.ResourceManager.Media
         /// Operation Id: StreamingLocators_ListPaths
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ListPathsResponse> GetPaths(CancellationToken cancellationToken = default)
+        public virtual Response<GetPathsResult> GetSupportedPaths(CancellationToken cancellationToken = default)
         {
-            using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetPaths");
+            using var scope = _streamingLocatorClientDiagnostics.CreateScope("StreamingLocatorResource.GetSupportedPaths");
             scope.Start();
             try
             {
