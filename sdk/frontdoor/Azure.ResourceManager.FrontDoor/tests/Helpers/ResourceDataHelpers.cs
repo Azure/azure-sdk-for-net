@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.Helpers
         {
             var data = new FrontDoorNetworkExperimentProfileData(location)
             {
-                EnabledState = FrontDoorExperimentState.Enabled,
+                EnabledState = FrontDoorExperimentState.Disabled,
             };
             return data;
         }

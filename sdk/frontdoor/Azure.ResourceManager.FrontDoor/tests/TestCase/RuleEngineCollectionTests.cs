@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
     public class RuleEngineCollectionTests : FrontDoorManagementTestBase
     {
         public RuleEngineCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

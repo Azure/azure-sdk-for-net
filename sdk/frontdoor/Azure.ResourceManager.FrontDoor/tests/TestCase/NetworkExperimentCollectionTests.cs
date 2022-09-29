@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
     public class NetworkExperimentCollectionTests : FrontDoorManagementTestBase
     {
         public NetworkExperimentCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
 
         [TestCase]
         [RecordedTest]
+        [Ignore("no authorization")]
         public async Task AFDExperimentApiTests()
         {
             //1.CreateorUpdate

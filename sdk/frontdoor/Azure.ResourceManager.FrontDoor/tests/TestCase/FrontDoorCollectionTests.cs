@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
     public class FrontDoorCollectionTests : FrontDoorManagementTestBase
     {
         public FrontDoorCollectionTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
         private async Task<ResourceGroupResource> GetResourceGroupAsync()

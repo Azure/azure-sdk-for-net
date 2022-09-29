@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
     public class NetworkExperimentResourceTests : FrontDoorManagementTestBase
     {
         public NetworkExperimentResourceTests(bool isAsync)
-            : base(isAsync, RecordedTestMode.Record)
+            : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 
@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
         }
 
         [TestCase]
+        [Ignore("no authorization")]
         public async Task AFDNetworkResourceApiTests()
         {
             //1.Get
