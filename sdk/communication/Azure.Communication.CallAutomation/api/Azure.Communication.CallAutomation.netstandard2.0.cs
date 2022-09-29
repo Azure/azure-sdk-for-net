@@ -317,6 +317,7 @@ namespace Azure.Communication.CallAutomation
     {
         public CallSource(Azure.Communication.CommunicationIdentifier identifier) { }
         public Azure.Communication.PhoneNumberIdentifier CallerId { get { throw null; } set { } }
+        public string DisplayName { get { throw null; } set { } }
         public Azure.Communication.CommunicationIdentifier Identifier { get { throw null; } }
     }
     public partial class CallTransferAccepted : Azure.Communication.CallAutomation.CallAutomationEventBase
