@@ -9,7 +9,7 @@
 
 ### Bugs Fixed
 - Fixed a OData filter issue with implicit boolean comparisons (for example expressions such as `ent => ent.BooleanProperty`) when calling `TableClient.QueryAsync(Expression<Func<T, bool>> filter, ...)`. ([#30185](https://github.com/Azure/azure-sdk-for-net/issues/30185))
-- Fixed an issue where `PartitionKey` and `RoKey` parameter values containing single quote characters are not automatically escaped on `DeleteEntity` calls. The new behavior can be overridden by either setting an AppContext switch named "Azure.Data.Tables.DisableEscapeSingleQuotesOnDeleteEntity" to `true` or by setting the environment variable "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONDELETEENTITY" to "true". Note: AppContext switches can also be configured via configuration like below:
+- Fixed an issue where `PartitionKey` and `RowKey` parameter values containing single quote characters are not automatically escaped on `DeleteEntity` calls. The new behavior can be overridden by either setting an AppContext switch named "Azure.Data.Tables.DisableEscapeSingleQuotesOnDeleteEntity" to `true` or by setting the environment variable "AZURE_DATA_TABLES_DISABLE_ESCAPESINGLEQUOTESONDELETEENTITY" to "true". Note: AppContext switches can also be configured via configuration like below:
 
 ```xml
 <ItemGroup>

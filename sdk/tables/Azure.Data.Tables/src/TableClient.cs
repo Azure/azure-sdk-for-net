@@ -1308,7 +1308,7 @@ namespace Azure.Data.Tables
         public virtual Response DeleteEntity(string partitionKey, string rowKey, ETag ifMatch = default, CancellationToken cancellationToken = default)
             => DeleteEntityinternal(false, partitionKey, rowKey, ifMatch, cancellationToken).EnsureCompleted();
 
-        internal async Task<Response> DeleteEntityinternal(
+        internal async Task<Response> DeleteEntityInternal(
             bool async,
             string partitionKey,
             string rowKey,
