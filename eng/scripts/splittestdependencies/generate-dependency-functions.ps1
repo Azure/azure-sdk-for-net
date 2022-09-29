@@ -58,7 +58,6 @@ function Write-Test-Dependency-Group-To-Files($ProjectFileConfigName, $ProjectGr
     }
     $ServiceDirectoriesJson = ConvertTo-Json @($ServiceDirectories | Get-Unique) -Compress
     $null = $templateXml.Save("$MatrixOutputFolder/$projectFilePath")
-    $Service
     $projectListInfo = New-Object -Typename PSCustomObject -Property @{
       ProjectListFile = "$MatrixOutputFolder/$projectFilePath"
       ServiceDirectories = $ServiceDirectoriesJson
