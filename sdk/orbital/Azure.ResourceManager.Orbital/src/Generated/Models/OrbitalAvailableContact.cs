@@ -12,14 +12,14 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Orbital.Models
 {
     /// <summary> Customer retrieves list of Available Contacts for a spacecraft resource. Later, one of the available contact can be selected to create a contact. </summary>
-    public partial class OrbitalSpacecraftAvailableContact
+    public partial class OrbitalAvailableContact
     {
-        /// <summary> Initializes a new instance of OrbitalSpacecraftAvailableContact. </summary>
-        internal OrbitalSpacecraftAvailableContact()
+        /// <summary> Initializes a new instance of OrbitalAvailableContact. </summary>
+        internal OrbitalAvailableContact()
         {
         }
 
-        /// <summary> Initializes a new instance of OrbitalSpacecraftAvailableContact. </summary>
+        /// <summary> Initializes a new instance of OrbitalAvailableContact. </summary>
         /// <param name="spacecraft"> The reference to the spacecraft resource. </param>
         /// <param name="groundStationName"> Name of Azure Ground Station. </param>
         /// <param name="maximumElevationDegrees"> Maximum elevation of the antenna during the contact in decimal degrees. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Orbital.Models
         /// <param name="endAzimuthDegrees"> Azimuth of the antenna at the end of the contact in decimal degrees. </param>
         /// <param name="startElevationDegrees"> Spacecraft elevation above the horizon at contact start. </param>
         /// <param name="endElevationDegrees"> Spacecraft elevation above the horizon at contact end. </param>
-        internal OrbitalSpacecraftAvailableContact(WritableSubResource spacecraft, string groundStationName, float? maximumElevationDegrees, DateTimeOffset? txStartOn, DateTimeOffset? txEndOn, DateTimeOffset? rxStartOn, DateTimeOffset? rxEndOn, float? startAzimuthDegrees, float? endAzimuthDegrees, float? startElevationDegrees, float? endElevationDegrees)
+        internal OrbitalAvailableContact(WritableSubResource spacecraft, string groundStationName, float? maximumElevationDegrees, DateTimeOffset? txStartOn, DateTimeOffset? txEndOn, DateTimeOffset? rxStartOn, DateTimeOffset? rxEndOn, float? startAzimuthDegrees, float? endAzimuthDegrees, float? startElevationDegrees, float? endElevationDegrees)
         {
             Spacecraft = spacecraft;
             GroundStationName = groundStationName;

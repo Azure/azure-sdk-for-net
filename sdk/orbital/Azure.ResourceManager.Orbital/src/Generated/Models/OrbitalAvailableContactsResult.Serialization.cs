@@ -11,11 +11,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    public partial class OrbitalSpacecraftAvailableContactListResult
+    public partial class OrbitalAvailableContactsResult
     {
-        internal static OrbitalSpacecraftAvailableContactListResult DeserializeOrbitalSpacecraftAvailableContactListResult(JsonElement element)
+        internal static OrbitalAvailableContactsResult DeserializeOrbitalAvailableContactsResult(JsonElement element)
         {
-            Optional<IReadOnlyList<OrbitalSpacecraftAvailableContact>> value = default;
+            Optional<IReadOnlyList<OrbitalAvailableContact>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"))
@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.Orbital.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    List<OrbitalSpacecraftAvailableContact> array = new List<OrbitalSpacecraftAvailableContact>();
+                    List<OrbitalAvailableContact> array = new List<OrbitalAvailableContact>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OrbitalSpacecraftAvailableContact.DeserializeOrbitalSpacecraftAvailableContact(item));
+                        array.Add(OrbitalAvailableContact.DeserializeOrbitalAvailableContact(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new OrbitalSpacecraftAvailableContactListResult(Optional.ToList(value));
+            return new OrbitalAvailableContactsResult(Optional.ToList(value));
         }
     }
 }

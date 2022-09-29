@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Orbital.Models
 {
-    public partial class OrbitalSpacecraftAvailableContactsContent : IUtf8JsonSerializable
+    public partial class OrbitalAvailableContactsContent : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
