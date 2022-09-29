@@ -35,6 +35,12 @@ namespace Azure.Core.Tests
 
             Activity activity = Activity.Current;
 
+#if NET5_0_OR_GREATER
+            // ActivityKind is only present in .NET 5.0+
+            // Validate that the default activity kind is used
+            Assert.AreEqual(ActivityKind.Internal, activity.Kind);
+#endif
+
             scope.Dispose();
 
             (string Key, object Value, DiagnosticListener) stopEvent = testListener.Events.Dequeue();
