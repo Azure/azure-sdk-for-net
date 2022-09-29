@@ -21,17 +21,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
     /// </summary>
     public class MetricsTests
     {
-        private const string MeterName = "CompanyA.ProductA.Library1";
-        private static readonly Meter MyMeter = new(MeterName, "1.0");
-
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
         public void VerifyCounter(bool asView)
         {
             // SETUP
+            var uniqueTestId = Guid.NewGuid();
+
+            var meterName = $"meterName{uniqueTestId}";
+            using var meter = new Meter(meterName, "1.0");
+
             var meterProviderBulider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(MeterName)
+                .AddMeter(meterName)
                 .AddAzureMonitorMetricExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems);
 
             if (asView)
@@ -44,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var meterProvider = meterProviderBulider.Build();
 
             // ACT
-            var counter = MyMeter.CreateCounter<long>("MyCounter");
+            var counter = meter.CreateCounter<long>("MyCounter");
             for (int i = 0; i < 20000; i++)
             {
                 counter.Add(1, new("tag1", "value1"), new("tag2", "value2"));
@@ -60,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertCounter_As_MetricTelemetry(
                 telemetryItem: telemetryItem,
                 expectedMetricsName: asView ? "MyCounterRenamed" : "MyCounter",
-                expectedMetricsNamespace: MeterName,
+                expectedMetricsNamespace: meterName,
                 expectedMetricsValue: 20000,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } });
         }
@@ -71,8 +73,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
         public void VerifyHistogram(bool asView)
         {
             // SETUP
+            var uniqueTestId = Guid.NewGuid();
+
+            var meterName = $"meterName{uniqueTestId}";
+            using var meter = new Meter(meterName, "1.0");
+
             var meterProviderBulider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(MeterName)
+                .AddMeter(meterName)
                 .AddAzureMonitorMetricExporterForTest(out ConcurrentBag<TelemetryItem> telemetryItems);
 
             if (asView)
@@ -85,7 +92,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             var meterProvider = meterProviderBulider.Build();
 
             // ACT
-            var histogram = MyMeter.CreateHistogram<long>("MyHistogram");
+            var histogram = meter.CreateHistogram<long>("MyHistogram");
             var random = new Random();
             int loop = 20000, sum = 0;
             for (int i = 0; i < loop; i++)
@@ -105,7 +112,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             TelemetryItemValidationHelper.AssertHistogram_As_MetricTelemetry(
                 telemetryItem: telemetryItem,
                 expectedMetricsName: "MyHistogram",
-                expectedMetricsNamespace: MeterName,
+                expectedMetricsNamespace: meterName,
                 expectedMetricsCount: loop,
                 expectedMetricsValue: sum,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } });
