@@ -31,34 +31,34 @@ namespace Azure.Compute.Batch
             return await HandleGetAsync(poolId, options, poolRest.GetPoolAsync, Pool.DeserializePool).ConfigureAwait(false);
         }
 
-        public virtual Response<PoolHeaders> Add(Pool pool)
+        public virtual Response Add(Pool pool)
         {
-            return HandleAdd<PoolHeaders>(pool, poolRest.Add);
+            return HandleAdd(pool, poolRest.Add);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response<PoolHeaders>> AddAsync(Pool pool)
+        public virtual async System.Threading.Tasks.Task<Response> AddAsync(Pool pool)
         {
-            return await HandleAddAsync<PoolHeaders>(pool, poolRest.AddAsync).ConfigureAwait(false);
+            return await HandleAddAsync(pool, poolRest.AddAsync).ConfigureAwait(false);
         }
 
-        public virtual Response<PoolHeaders> Patch(string poolId, PoolUpdate updateContents)
+        public virtual Response Patch(string poolId, PoolUpdate updateContents)
         {
-            return HandlePatch<PoolHeaders>(poolId, updateContents, poolRest.Patch);
+            return HandlePatch(poolId, updateContents, poolRest.Patch);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response<PoolHeaders>> PatchAsync(string poolId, PoolUpdate updateContents)
+        public virtual async System.Threading.Tasks.Task<Response> PatchAsync(string poolId, PoolUpdate updateContents)
         {
-            return await HandlePatchAsync<PoolHeaders>(poolId, updateContents, poolRest.PatchAsync).ConfigureAwait(false);
+            return await HandlePatchAsync(poolId, updateContents, poolRest.PatchAsync).ConfigureAwait(false);
         }
 
-        public virtual Response<PoolHeaders> Delete(string poolId)
+        public virtual Response Delete(string poolId)
         {
-            return HandleDelete<PoolHeaders>(poolId, poolRest.Delete);
+            return HandleDelete(poolId, poolRest.Delete);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response<PoolHeaders>> DeleteAsync(string poolId)
+        public virtual async System.Threading.Tasks.Task<Response> DeleteAsync(string poolId)
         {
-            return await HandleDeleteAsync<PoolHeaders>(poolId, poolRest.DeleteAsync).ConfigureAwait(false);
+            return await HandleDeleteAsync(poolId, poolRest.DeleteAsync).ConfigureAwait(false);
         }
     }
 }

@@ -8,9 +8,9 @@
         "Authorization": "Sanitized",
         "Content-Length": "68",
         "Content-Type": "application/json; odata=minimalmetadata",
-        "traceparent": "00-b5af7fdf4e19e44182e579c72619f739-783ecf2c5ede454b-00",
-        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20220926.1 (.NET Core 3.1.29; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "844792311ed7884aa126fe875bffd846",
+        "traceparent": "00-cb44b07d5d943d584793b5b612307f34-b0f94cda12729ddb-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20220928.1 (.NET 6.0.9; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "14e54c9d457c9f55dfd5e85108762ab4",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -23,11 +23,11 @@
       "ResponseHeaders": {
         "DataServiceId": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/jobs/job-1",
         "DataServiceVersion": "3.0",
-        "Date": "Mon, 26 Sep 2022 16:12:10 GMT",
-        "ETag": "0x8DA9FD9DE574C00",
-        "Last-Modified": "Mon, 26 Sep 2022 16:12:11 GMT",
+        "Date": "Wed, 28 Sep 2022 16:10:37 GMT",
+        "ETag": "0x8DAA16BFB6748E2",
+        "Last-Modified": "Wed, 28 Sep 2022 16:10:37 GMT",
         "Location": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/jobs/job-1",
-        "request-id": "b4d8e838-2404-4f60-95f3-b6625aef28b1",
+        "request-id": "027d5a6e-3506-4dff-a1a2-31aedc8b83ec",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
@@ -41,9 +41,9 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-32c9ac3e450688439b62928b98cfd1b1-5cc89d123d69d942-00",
-        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20220926.1 (.NET Core 3.1.29; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "62e743be7cef823467ff9dbbc04d1ec8",
+        "traceparent": "00-abd04d3462382bfedf550f4aea42250b-194cde6dffd43139-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20220928.1 (.NET 6.0.9; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "c03ff7d31689aad37e9074e0060eb7c6",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
@@ -51,10 +51,10 @@
       "ResponseHeaders": {
         "Content-Type": "application/json; odata=minimalmetadata",
         "DataServiceVersion": "3.0",
-        "Date": "Mon, 26 Sep 2022 16:12:10 GMT",
-        "ETag": "0x8DA9FD9DE574C00",
-        "Last-Modified": "Mon, 26 Sep 2022 16:12:11 GMT",
-        "request-id": "30f3ec9c-de7a-418c-9956-416a81557e68",
+        "Date": "Wed, 28 Sep 2022 16:10:37 GMT",
+        "ETag": "0x8DAA16BFB6748E2",
+        "Last-Modified": "Wed, 28 Sep 2022 16:10:37 GMT",
+        "request-id": "5a96db2b-6d6f-4415-9c9b-af84049a0c11",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
@@ -64,11 +64,11 @@
         "odata.metadata": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/$metadata#jobs/@Element",
         "id": "BatchClientTest_TestJob",
         "url": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com/jobs/BatchClientTest_TestJob",
-        "eTag": "0x8DA9FD9DE574C00",
-        "lastModified": "2022-09-26T16:12:11.3329152Z",
-        "creationTime": "2022-09-26T16:12:11.2779213Z",
+        "eTag": "0x8DAA16BFB6748E2",
+        "lastModified": "2022-09-28T16:10:37.7769186Z",
+        "creationTime": "2022-09-28T16:10:37.7509126Z",
         "state": "active",
-        "stateTransitionTime": "2022-09-26T16:12:11.3329152Z",
+        "stateTransitionTime": "2022-09-28T16:10:37.7769186Z",
         "priority": 0,
         "maxParallelTasks": -1,
         "usesTaskDependencies": false,
@@ -81,7 +81,7 @@
           "poolId": "managerPool"
         },
         "executionInfo": {
-          "startTime": "2022-09-26T16:12:11.3329152Z",
+          "startTime": "2022-09-28T16:10:37.7769186Z",
           "poolId": "managerPool"
         },
         "onAllTasksComplete": "noaction",
@@ -94,17 +94,17 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-8cdd2a6829a51548baef6965f832d622-b57e292244320e42-00",
-        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20220926.1 (.NET Core 3.1.29; Microsoft Windows 10.0.19044)",
-        "x-ms-client-request-id": "b893e8ed47b641eb97a1bd63e3fd9934",
+        "traceparent": "00-823d993bc820040e328a48583e92bc00-c07fca05a38bbe0c-00",
+        "User-Agent": "azsdk-net-Compute.Batch/1.0.0-alpha.20220928.1 (.NET 6.0.9; Microsoft Windows 10.0.19044)",
+        "x-ms-client-request-id": "2af040dc8f1a5053530b6126c88e3912",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 202,
       "ResponseHeaders": {
         "DataServiceVersion": "3.0",
-        "Date": "Mon, 26 Sep 2022 16:12:11 GMT",
-        "request-id": "4929ae2d-49f2-4e48-bc54-4baad91d9ba0",
+        "Date": "Wed, 28 Sep 2022 16:10:37 GMT",
+        "request-id": "8524cfe1-5740-4d99-8bfb-ef315a72f275",
         "Server": "Microsoft-HTTPAPI/2.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
@@ -116,6 +116,6 @@
   "Variables": {
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
     "BATCH_ENDPOINT": "https://batchbatchaccteqyg6rr6mg.westus.batch.azure.com",
-    "RandomSeed": "525338877"
+    "RandomSeed": "1882698912"
   }
 }

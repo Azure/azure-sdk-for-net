@@ -82,111 +82,90 @@ namespace Azure.Compute.Batch
             });
         }
 
-        private Response<T> HandleResponse<T>(Response response) where T : BaseHeaders, new()
-        {
-            T headers = new() { Response = response };
-            return Response.FromValue(headers, response);
-        }
-
-        protected Response<T> HandleAdd<T>(object contentObj, Func<RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Response> add) where T : BaseHeaders, new()
+        protected Response HandleAdd(object contentObj, Func<RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Response> add)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
-            Response response = add(content, null, null, null, null, null);
-            return HandleResponse<T>(response);
+            return add(content, null, null, null, null, null);
         }
 
-        protected async System.Threading.Tasks.Task<Response<T>> HandleAddAsync<T>(object contentObj, Func<RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, System.Threading.Tasks.Task<Response>> add) where T : BaseHeaders, new()
+        protected async System.Threading.Tasks.Task<Response> HandleAddAsync(object contentObj, Func<RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, System.Threading.Tasks.Task<Response>> add)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
-            Response response = await add(content, null, null, null, null, null).ConfigureAwait(false);
-            return HandleResponse<T>(response);
+            return await add(content, null, null, null, null, null).ConfigureAwait(false);
         }
 
-        protected Response<T> HandleAdd<T>(string parentId, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Response> add) where T : BaseHeaders, new()
+        protected Response HandleAdd(string parentId, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Response> add)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
-            Response response = add(parentId, content, null, null, null, null, null);
-            return HandleResponse<T>(response);
+            return add(parentId, content, null, null, null, null, null);
         }
 
-        protected async System.Threading.Tasks.Task<Response<T>> HandleAddAsync<T>(string parentId, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, System.Threading.Tasks.Task<Response>> add) where T : BaseHeaders, new()
+        protected async System.Threading.Tasks.Task<Response> HandleAddAsync(string parentId, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, System.Threading.Tasks.Task<Response>> add)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
-            Response response = await add(parentId, content, null, null, null, null, null).ConfigureAwait(false);
-            return HandleResponse<T>(response);
+            return await add(parentId, content, null, null, null, null, null).ConfigureAwait(false);
         }
 
-        protected Response<T> HandleAddCollection<T>(string parentId, IEnumerable<object> contentList, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Response> add) where T : BaseHeaders, new()
+        protected Response HandleAddCollection(string parentId, IEnumerable<object> contentList, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestContext, Response> add)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentList);
-            Response response = add(parentId, content, null, null, null, null, null);
-            return HandleResponse<T>(response);
+            return add(parentId, content, null, null, null, null, null);
         }
 
-        protected Response<T> HandleUpdate<T>(string id, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> update) where T : BaseHeaders, new()
+        protected Response HandleUpdate(string id, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> update)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
-            Response response = update(id, content, null, null, null, null, null, null);
-            return HandleResponse<T>(response);
+            return update(id, content, null, null, null, null, null, null);
         }
 
-        protected async System.Threading.Tasks.Task<Response<T>> HandleUpdateAsync<T>(string id, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> update) where T : BaseHeaders, new()
+        protected async System.Threading.Tasks.Task<Response> HandleUpdateAsync(string id, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> update)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
-            Response response = await update(id, content, null, null, null, null, null, null).ConfigureAwait(false);
-            return HandleResponse<T>(response);
+            return await update(id, content, null, null, null, null, null, null).ConfigureAwait(false);
         }
 
-        protected Response<T> HandleUpdate<T>(string parentId, string id, object contentObj, Func<string, string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> update) where T : BaseHeaders, new()
+        protected Response HandleUpdate(string parentId, string id, object contentObj, Func<string, string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> update)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
-            Response response = update(parentId, id, content, null, null, null, null, null, null);
-            return HandleResponse<T>(response);
+            return update(parentId, id, content, null, null, null, null, null, null);
         }
 
-        protected async System.Threading.Tasks.Task<Response<T>> HandleUpdateAsync<T>(string parentId, string id, object contentObj, Func<string, string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> update) where T : BaseHeaders, new()
+        protected async System.Threading.Tasks.Task<Response> HandleUpdateAsync(string parentId, string id, object contentObj, Func<string, string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> update)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
-            Response response = await update(parentId, id, content, null, null, null, null, null, null).ConfigureAwait(false);
-            return HandleResponse<T>(response);
+            return await update(parentId, id, content, null, null, null, null, null, null).ConfigureAwait(false);
         }
 
-        protected Response<T> HandlePatch<T>(string id, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> patch) where T : BaseHeaders, new()
+        protected Response HandlePatch(string id, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> patch)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
-            Response response = patch(id, content, null, null, null, null, null, null);
-            return HandleResponse<T>(response);
+            return patch(id, content, null, null, null, null, null, null);
         }
 
-        protected async System.Threading.Tasks.Task<Response<T>> HandlePatchAsync<T>(string id, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> patch) where T : BaseHeaders, new()
+        protected async System.Threading.Tasks.Task<Response> HandlePatchAsync(string id, object contentObj, Func<string, RequestContent, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> patch)
         {
             RequestContent content = ModelHelpers.ToRequestContent(contentObj);
-            Response response = await patch(id, content, null, null, null, null, null, null).ConfigureAwait(false);
-            return HandleResponse<T>(response);
+            return await patch(id, content, null, null, null, null, null, null).ConfigureAwait(false);
         }
 
-        protected Response<T> HandleDelete<T>(string id, Func<string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> delete) where T : BaseHeaders, new()
+        protected Response HandleDelete(string id, Func<string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> delete)
         {
-            Response response = delete(id, null, null, null, null, null, null);
-            return HandleResponse<T>(response);
+            return delete(id, null, null, null, null, null, null);
         }
 
-        protected async System.Threading.Tasks.Task<Response<T>> HandleDeleteAsync<T>(string id, Func<string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> delete) where T : BaseHeaders, new()
+        protected async System.Threading.Tasks.Task<Response> HandleDeleteAsync(string id, Func<string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> delete)
         {
-            Response response = await delete(id, null, null, null, null, null, null).ConfigureAwait(false);
-            return HandleResponse<T>(response);
+            return await delete(id, null, null, null, null, null, null).ConfigureAwait(false);
         }
 
-        protected Response<T> HandleDelete<T>(string parentId, string id, Func<string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> delete) where T : BaseHeaders, new()
+        protected Response HandleDelete(string parentId, string id, Func<string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, Response> delete)
         {
-            Response response = delete(parentId, id, null, null, null, null, null, null);
-            return HandleResponse<T>(response);
+            return delete(parentId, id, null, null, null, null, null, null);
         }
 
-        protected async System.Threading.Tasks.Task<Response<T>> HandleDeleteAsync<T>(string parentId, string id, Func<string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> delete) where T : BaseHeaders, new()
+        protected async System.Threading.Tasks.Task<Response> HandleDeleteAsync(string parentId, string id, Func<string, string, int?, Guid?, bool?, DateTimeOffset?, RequestConditions, RequestContext, System.Threading.Tasks.Task<Response>> delete)
         {
-            Response response = await delete(parentId, id, null, null, null, null, null, null).ConfigureAwait(false);
-            return HandleResponse<T>(response);
+            return await delete(parentId, id, null, null, null, null, null, null).ConfigureAwait(false);
         }
     }
 }

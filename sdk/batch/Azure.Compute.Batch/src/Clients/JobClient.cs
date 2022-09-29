@@ -31,51 +31,51 @@ namespace Azure.Compute.Batch
         }
 
         [ForwardsClientCalls]
-        public virtual Response<JobHeaders> Add(Job job)
+        public virtual Response Add(Job job)
         {
-            return HandleAdd<JobHeaders>(job, jobRest.Add);
+            return HandleAdd(job, jobRest.Add);
         }
 
         [ForwardsClientCalls]
-        public virtual async System.Threading.Tasks.Task<Response<JobHeaders>> AddAsync(Job job)
+        public virtual async System.Threading.Tasks.Task<Response> AddAsync(Job job)
         {
-            return await HandleAddAsync<JobHeaders>(job, jobRest.AddAsync).ConfigureAwait(false);
+            return await HandleAddAsync(job, jobRest.AddAsync).ConfigureAwait(false);
         }
 
         [ForwardsClientCalls]
-        public virtual Response<JobHeaders> Update(Job job)
+        public virtual Response Update(Job job)
         {
-            return HandleUpdate<JobHeaders>(job.Id, job, jobRest.Update);
+            return HandleUpdate(job.Id, job, jobRest.Update);
         }
 
         [ForwardsClientCalls]
-        public virtual async System.Threading.Tasks.Task<Response<JobHeaders>> UpdateAsync(Job job)
+        public virtual async System.Threading.Tasks.Task<Response> UpdateAsync(Job job)
         {
-            return await HandleUpdateAsync<JobHeaders>(job.Id, job, jobRest.UpdateAsync).ConfigureAwait(false);
+            return await HandleUpdateAsync(job.Id, job, jobRest.UpdateAsync).ConfigureAwait(false);
         }
 
         [ForwardsClientCalls]
-        public virtual Response<JobHeaders> Patch(string jobId, JobUpdate updateContents)
+        public virtual Response Patch(string jobId, JobUpdate updateContents)
         {
-            return HandlePatch<JobHeaders>(jobId, updateContents, jobRest.Patch);
+            return HandlePatch(jobId, updateContents, jobRest.Patch);
         }
 
         [ForwardsClientCalls]
-        public virtual async System.Threading.Tasks.Task<Response<JobHeaders>> PatchAsync(string jobId, JobUpdate updateContents)
+        public virtual async System.Threading.Tasks.Task<Response> PatchAsync(string jobId, JobUpdate updateContents)
         {
-            return await HandlePatchAsync<JobHeaders>(jobId, updateContents, jobRest.PatchAsync).ConfigureAwait(false);
+            return await HandlePatchAsync(jobId, updateContents, jobRest.PatchAsync).ConfigureAwait(false);
         }
 
         [ForwardsClientCalls]
-        public virtual Response<JobHeaders> Delete(string jobId)
+        public virtual Response Delete(string jobId)
         {
-            return HandleDelete<JobHeaders>(jobId, jobRest.Delete);
+            return HandleDelete(jobId, jobRest.Delete);
         }
 
         [ForwardsClientCalls]
-        public virtual async System.Threading.Tasks.Task<Response<JobHeaders>> DeleteAsync(string jobId)
+        public virtual async System.Threading.Tasks.Task<Response> DeleteAsync(string jobId)
         {
-            return await HandleDeleteAsync<JobHeaders>(jobId, jobRest.DeleteAsync).ConfigureAwait(false);
+            return await HandleDeleteAsync(jobId, jobRest.DeleteAsync).ConfigureAwait(false);
         }
 
         [ForwardsClientCalls]

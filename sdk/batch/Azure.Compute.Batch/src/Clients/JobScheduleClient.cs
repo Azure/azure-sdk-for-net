@@ -31,44 +31,44 @@ namespace Azure.Compute.Batch
             return await HandleGetAsync(jobScheduleId, options, jobScheduleRest.GetJobScheduleAsync, JobSchedule.DeserializeJobSchedule).ConfigureAwait(false);
         }
 
-        public virtual Response<JobScheduleHeaders> Add(JobSchedule jobSchedule)
+        public virtual Response Add(JobSchedule jobSchedule)
         {
-            return HandleAdd<JobScheduleHeaders>(jobSchedule, jobScheduleRest.Add);
+            return HandleAdd(jobSchedule, jobScheduleRest.Add);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response<JobScheduleHeaders>> AddAsync(JobSchedule jobSchedule)
+        public virtual async System.Threading.Tasks.Task<Response> AddAsync(JobSchedule jobSchedule)
         {
-            return await HandleAddAsync<JobScheduleHeaders>(jobSchedule, jobScheduleRest.AddAsync).ConfigureAwait(false);
+            return await HandleAddAsync(jobSchedule, jobScheduleRest.AddAsync).ConfigureAwait(false);
         }
 
-        public virtual Response<JobScheduleHeaders> Update(JobSchedule jobSchedule)
+        public virtual Response Update(JobSchedule jobSchedule)
         {
-            return HandleUpdate<JobScheduleHeaders>(jobSchedule.Id, jobSchedule, jobScheduleRest.Update);
+            return HandleUpdate(jobSchedule.Id, jobSchedule, jobScheduleRest.Update);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response<JobScheduleHeaders>> UpdateAsync(JobSchedule jobSchedule)
+        public virtual async System.Threading.Tasks.Task<Response> UpdateAsync(JobSchedule jobSchedule)
         {
-            return await HandleUpdateAsync<JobScheduleHeaders>(jobSchedule.Id, jobSchedule, jobScheduleRest.UpdateAsync).ConfigureAwait(false);
+            return await HandleUpdateAsync(jobSchedule.Id, jobSchedule, jobScheduleRest.UpdateAsync).ConfigureAwait(false);
         }
 
-        public virtual Response<JobScheduleHeaders> Patch(string jobScheduleId, JobScheduleUpdate updateContents)
+        public virtual Response Patch(string jobScheduleId, JobScheduleUpdate updateContents)
         {
-            return HandlePatch<JobScheduleHeaders>(jobScheduleId, updateContents, jobScheduleRest.Patch);
+            return HandlePatch(jobScheduleId, updateContents, jobScheduleRest.Patch);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response<JobScheduleHeaders>> PatchAsync(string jobScheduleId, JobScheduleUpdate updateContents)
+        public virtual async System.Threading.Tasks.Task<Response> PatchAsync(string jobScheduleId, JobScheduleUpdate updateContents)
         {
-            return await HandlePatchAsync<JobScheduleHeaders>(jobScheduleId, updateContents, jobScheduleRest.PatchAsync).ConfigureAwait(false);
+            return await HandlePatchAsync(jobScheduleId, updateContents, jobScheduleRest.PatchAsync).ConfigureAwait(false);
         }
 
-        public virtual Response<JobScheduleHeaders> Delete(string jobScheduleId)
+        public virtual Response Delete(string jobScheduleId)
         {
-            return HandleDelete<JobScheduleHeaders>(jobScheduleId, jobScheduleRest.Delete);
+            return HandleDelete(jobScheduleId, jobScheduleRest.Delete);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response<JobScheduleHeaders>> DeleteAsync(string jobScheduleId)
+        public virtual async System.Threading.Tasks.Task<Response> DeleteAsync(string jobScheduleId)
         {
-            return await HandleDeleteAsync<JobScheduleHeaders>(jobScheduleId, jobScheduleRest.DeleteAsync).ConfigureAwait(false);
+            return await HandleDeleteAsync(jobScheduleId, jobScheduleRest.DeleteAsync).ConfigureAwait(false);
         }
     }
 }

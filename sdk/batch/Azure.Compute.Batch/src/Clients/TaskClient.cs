@@ -40,17 +40,17 @@ namespace Azure.Compute.Batch
             return HandleList(jobId, options, taskRest.GetTasks, Task.DeserializeTask);
         }
 
-        public virtual Response<TaskHeaders> Add(string jobId, Task task)
+        public virtual Response Add(string jobId, Task task)
         {
-            return HandleAdd<TaskHeaders>(jobId, task, taskRest.Add);
+            return HandleAdd(jobId, task, taskRest.Add);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response<TaskHeaders>> AddAsync(string jobId, Task task)
+        public virtual async System.Threading.Tasks.Task<Response> AddAsync(string jobId, Task task)
         {
-            return await HandleAddAsync<TaskHeaders>(jobId, task, taskRest.AddAsync).ConfigureAwait(false);
+            return await HandleAddAsync(jobId, task, taskRest.AddAsync).ConfigureAwait(false);
         }
 
-        public virtual Response<TaskHeaders> Add(string jobId, IEnumerable<Task> tasks)
+        public virtual Response Add(string jobId, IEnumerable<Task> tasks)
         {
             if (tasks.Count() > MaxAddTasks)
             {
@@ -58,27 +58,27 @@ namespace Azure.Compute.Batch
             }
 
             TaskAddCollectionParameter addParameter = new TaskAddCollectionParameter(tasks);
-            return HandleAdd<TaskHeaders>(jobId, addParameter, taskRest.AddCollection);
+            return HandleAdd(jobId, addParameter, taskRest.AddCollection);
         }
 
-        public virtual Response<TaskHeaders> Update(string jobId, Task task)
+        public virtual Response Update(string jobId, Task task)
         {
-            return HandleUpdate<TaskHeaders>(jobId, task.Id, task, taskRest.Update);
+            return HandleUpdate(jobId, task.Id, task, taskRest.Update);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response<TaskHeaders>> UpdateAsync(string jobId, Task task)
+        public virtual async System.Threading.Tasks.Task<Response> UpdateAsync(string jobId, Task task)
         {
-            return await HandleUpdateAsync<TaskHeaders>(jobId, task.Id, task, taskRest.UpdateAsync).ConfigureAwait(false);
+            return await HandleUpdateAsync(jobId, task.Id, task, taskRest.UpdateAsync).ConfigureAwait(false);
         }
 
-        public virtual Response<TaskHeaders> Delete(string jobId, string taskId)
+        public virtual Response Delete(string jobId, string taskId)
         {
-            return HandleDelete<TaskHeaders>(jobId, taskId, taskRest.Delete);
+            return HandleDelete(jobId, taskId, taskRest.Delete);
         }
 
-        public virtual async System.Threading.Tasks.Task<Response<TaskHeaders>> DeleteAsync(string jobId, string taskId)
+        public virtual async System.Threading.Tasks.Task<Response> DeleteAsync(string jobId, string taskId)
         {
-            return await HandleDeleteAsync<TaskHeaders>(jobId, taskId, taskRest.DeleteAsync).ConfigureAwait(false);
+            return await HandleDeleteAsync(jobId, taskId, taskRest.DeleteAsync).ConfigureAwait(false);
         }
     }
 }

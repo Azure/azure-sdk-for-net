@@ -31,7 +31,7 @@ namespace Azure.Compute.Batch
         {
             try
             {
-                Response<TaskHeaders> result = taskClient.Add(jobId, tasks);
+                Response result = taskClient.Add(jobId, tasks);
                 completedCount += tasks.Count;
             }
             catch (Azure.RequestFailedException exception)
