@@ -47,7 +47,7 @@ jobs:
             - "/*"
             - "!SessionRecords"
             - "!/sdk/*/**/SessionRecords"
-            - "$(ServiceDirectories)"
+            - '$(ServiceDirectories)'
       - task: DownloadPipelineArtifact@2
         inputs:
           artifact: DependencyTestProjectReferences

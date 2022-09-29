@@ -105,6 +105,6 @@ function Write-Project-Files-To-Matrix($ProjListInfos, $MatrixJsonPath, $MatrixO
     Throw "Need at least one project file for test matrix. Please adjust the NumberOfTestsPerJob for better split."
   }
   $platformJson.matrix | Add-Member -Name "OverrideFiles" -value $overrideFiles -MemberType NoteProperty
-  $platformJson | ConvertTo-Json -Depth 100 | Foreach {[System.Text.RegularExpressions.Regex]::Unescape($_)} | Out-File $MatrixJsonPath 
+  $platformJson | ConvertTo-Json -Depth 100 | Out-File $MatrixJsonPath 
   Copy-Item $MatrixJsonPath -Destination $MatrixOutputFolder
 }
