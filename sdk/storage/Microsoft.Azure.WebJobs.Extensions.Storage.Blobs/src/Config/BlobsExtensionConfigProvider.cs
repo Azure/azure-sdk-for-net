@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -214,25 +215,35 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Config
         {
             var blobPath = BlobPath.ParseAndValidate(blobAttribute.BlobPath);
             var connectionName = blobAttribute.Connection ?? Constants.DefaultAzureStorageConnectionName;
-            // return CreateParameterBindingData(connectionName, blobPath.ContainerName, blobPath.BlobName);
-            return CreateParameterBindingData(blobAttribute);
+
+            dynamic blobDetails = new ExpandoObject();
+            blobDetails.Connection = connectionName;
+            blobDetails.BlobName = blobPath.BlobName;
+            blobDetails.ContainerName = blobPath.ContainerName;
+
+            return CreateParameterBindingData(blobDetails);
         }
 
         private static ParameterBindingData ConvertToBindingData(BlobBaseClient input, BlobTriggerAttribute blobAttribute)
         {
             var connectionName = blobAttribute.Connection ?? Constants.DefaultAzureStorageConnectionName;
-            // return CreateParameterBindingData(connectionName, input.BlobContainerName, input.Name);
-            return CreateParameterBindingData(blobAttribute);
+
+            dynamic blobDetails = new ExpandoObject();
+            blobDetails.Connection = connectionName;
+            blobDetails.BlobName = input.Name;
+            blobDetails.ContainerName = input.BlobContainerName;
+
+            return CreateParameterBindingData(blobDetails);
         }
 
-        private static ParameterBindingData CreateParameterBindingData(Attribute attribute)
+        private static ParameterBindingData CreateParameterBindingData(object blobDetails)
         {
             var bindingData = new ParameterBindingData
             {
                 Version = "1.0.0",
                 ContentType = "application/json",
                 Source = AssemblyName.GetAssemblyName(Assembly.GetExecutingAssembly().Location).Name,
-                Content = JsonConvert.SerializeObject(attribute)
+                Content = blobDetails
             };
 
             return bindingData;
