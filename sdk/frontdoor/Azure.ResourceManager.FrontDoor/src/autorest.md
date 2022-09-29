@@ -21,7 +21,8 @@ override-operation-name:
 
 no-property-type-replacement:
 - SubResource
-- webApplicationFirewallPolicyLink
+- RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink
+- FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink
 rename-mapping:
   Experiment: FrontDoorExperiment
   State: FrontDoorExperimentState
@@ -225,6 +226,18 @@ directive:
         $["x-nullable"] = true;
   - from: swagger-document
     where: $.definitions.RulesEngineRule.properties.matchProcessingBehavior
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.FrontendEndpointProperties.properties.customHttpsProvisioningState
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.FrontendEndpointProperties.properties.customHttpsProvisioningSubstate
+    transform: >
+        $["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.FrontendEndpointProperties.properties.customHttpsConfiguration
     transform: >
         $["x-nullable"] = true;
 

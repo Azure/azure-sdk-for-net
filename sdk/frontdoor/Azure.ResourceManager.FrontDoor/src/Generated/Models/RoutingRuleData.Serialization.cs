@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -83,8 +82,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
-                writer.WritePropertyName("webApplicationFirewallPolicyLink");
-                JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
+                if (WebApplicationFirewallPolicyLink != null)
+                {
+                    writer.WritePropertyName("webApplicationFirewallPolicyLink");
+                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
+                }
+                else
+                {
+                    writer.WriteNull("webApplicationFirewallPolicyLink");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -101,7 +107,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<RoutingRuleEnabledState> enabledState = default;
             Optional<RouteConfiguration> routeConfiguration = default;
             Optional<SubResource> rulesEngine = default;
-            Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
+            Optional<RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
             Optional<FrontDoorResourceState> resourceState = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -218,10 +224,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                //property0.ThrowNonNullablePropertyIsNull();
+                                webApplicationFirewallPolicyLink = null;
                                 continue;
                             }
-                            webApplicationFirewallPolicyLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            webApplicationFirewallPolicyLink = RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink.DeserializeRoutingRuleUpdateParametersWebApplicationFirewallPolicyLink(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceState"))
@@ -238,7 +244,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     continue;
                 }
             }
-            return new RoutingRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToList(frontendEndpoints), Optional.ToList(acceptedProtocols), Optional.ToList(patternsToMatch), Optional.ToNullable(enabledState), routeConfiguration.Value, rulesEngine.Value, webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState));
+            return new RoutingRuleData(id.Value, name.Value, Optional.ToNullable(type), Optional.ToList(frontendEndpoints), Optional.ToList(acceptedProtocols), Optional.ToList(patternsToMatch), Optional.ToNullable(enabledState), routeConfiguration.Value, rulesEngine.Value, webApplicationFirewallPolicyLink.Value, Optional.ToNullable(resourceState));
         }
     }
 }

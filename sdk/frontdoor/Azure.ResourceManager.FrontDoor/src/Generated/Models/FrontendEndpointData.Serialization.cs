@@ -8,7 +8,6 @@
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
@@ -46,8 +45,15 @@ namespace Azure.ResourceManager.FrontDoor
             }
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
-                writer.WritePropertyName("webApplicationFirewallPolicyLink");
-                JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
+                if (WebApplicationFirewallPolicyLink != null)
+                {
+                    writer.WritePropertyName("webApplicationFirewallPolicyLink");
+                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
+                }
+                else
+                {
+                    writer.WriteNull("webApplicationFirewallPolicyLink");
+                }
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -61,10 +67,10 @@ namespace Azure.ResourceManager.FrontDoor
             Optional<string> hostName = default;
             Optional<SessionAffinityEnabledState> sessionAffinityEnabledState = default;
             Optional<int> sessionAffinityTtlSeconds = default;
-            Optional<WritableSubResource> webApplicationFirewallPolicyLink = default;
+            Optional<FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink> webApplicationFirewallPolicyLink = default;
             Optional<FrontDoorResourceState> resourceState = default;
-            Optional<FrontendEndpointCustomHttpsProvisioningState> customHttpsProvisioningState = default;
-            Optional<FrontendEndpointCustomHttpsProvisioningSubstate> customHttpsProvisioningSubstate = default;
+            Optional<FrontendEndpointCustomHttpsProvisioningState?> customHttpsProvisioningState = default;
+            Optional<FrontendEndpointCustomHttpsProvisioningSubstate?> customHttpsProvisioningSubstate = default;
             Optional<CustomHttpsConfiguration> customHttpsConfiguration = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -131,10 +137,10 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                //property0.ThrowNonNullablePropertyIsNull();
+                                webApplicationFirewallPolicyLink = null;
                                 continue;
                             }
-                            webApplicationFirewallPolicyLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
+                            webApplicationFirewallPolicyLink = FrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink.DeserializeFrontendEndpointUpdateParametersWebApplicationFirewallPolicyLink(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("resourceState"))
@@ -151,7 +157,7 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                customHttpsProvisioningState = null;
                                 continue;
                             }
                             customHttpsProvisioningState = new FrontendEndpointCustomHttpsProvisioningState(property0.Value.GetString());
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                customHttpsProvisioningSubstate = null;
                                 continue;
                             }
                             customHttpsProvisioningSubstate = new FrontendEndpointCustomHttpsProvisioningSubstate(property0.Value.GetString());
@@ -171,7 +177,7 @@ namespace Azure.ResourceManager.FrontDoor
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
+                                customHttpsConfiguration = null;
                                 continue;
                             }
                             customHttpsConfiguration = CustomHttpsConfiguration.DeserializeCustomHttpsConfiguration(property0.Value);
@@ -181,7 +187,7 @@ namespace Azure.ResourceManager.FrontDoor
                     continue;
                 }
             }
-            return new FrontendEndpointData(id.Value, name.Value, Optional.ToNullable(type), hostName.Value, Optional.ToNullable(sessionAffinityEnabledState), Optional.ToNullable(sessionAffinityTtlSeconds), webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsConfiguration.Value);
+            return new FrontendEndpointData(id.Value, name.Value, Optional.ToNullable(type), hostName.Value, Optional.ToNullable(sessionAffinityEnabledState), Optional.ToNullable(sessionAffinityTtlSeconds), webApplicationFirewallPolicyLink.Value, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsConfiguration.Value);
         }
     }
 }

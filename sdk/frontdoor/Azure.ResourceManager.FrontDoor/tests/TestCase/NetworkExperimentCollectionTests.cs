@@ -11,6 +11,7 @@ using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.FrontDoor.Tests.Helpers;
 using NUnit.Framework;
+using Microsoft.Extensions.Options;
 
 namespace Azure.ResourceManager.FrontDoor.Tests.TestCase
 {

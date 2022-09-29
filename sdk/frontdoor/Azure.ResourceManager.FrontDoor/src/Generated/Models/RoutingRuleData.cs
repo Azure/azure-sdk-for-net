@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="rulesEngine"> A reference to a specific Rules Engine Configuration to apply to this route. </param>
         /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for each routing rule (if applicable). </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal RoutingRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IList<SubResource> frontendEndpoints, IList<FrontDoorProtocol> acceptedProtocols, IList<string> patternsToMatch, RoutingRuleEnabledState? enabledState, RouteConfiguration routeConfiguration, SubResource rulesEngine, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
+        internal RoutingRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IList<SubResource> frontendEndpoints, IList<FrontDoorProtocol> acceptedProtocols, IList<string> patternsToMatch, RoutingRuleEnabledState? enabledState, RouteConfiguration routeConfiguration, SubResource rulesEngine, RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
         {
             FrontendEndpoints = frontendEndpoints;
             AcceptedProtocols = acceptedProtocols;
@@ -79,15 +78,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Defines the Web Application Firewall policy for each routing rule (if applicable). </summary>
-        internal WritableSubResource WebApplicationFirewallPolicyLink { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier WebApplicationFirewallPolicyLinkId
+        internal RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink WebApplicationFirewallPolicyLink { get; set; }
+        /// <summary> Resource ID. </summary>
+        public string WebApplicationFirewallPolicyLinkId
         {
             get => WebApplicationFirewallPolicyLink is null ? default : WebApplicationFirewallPolicyLink.Id;
             set
             {
                 if (WebApplicationFirewallPolicyLink is null)
-                    WebApplicationFirewallPolicyLink = new WritableSubResource();
+                    WebApplicationFirewallPolicyLink = new RoutingRuleUpdateParametersWebApplicationFirewallPolicyLink();
                 WebApplicationFirewallPolicyLink.Id = value;
             }
         }
