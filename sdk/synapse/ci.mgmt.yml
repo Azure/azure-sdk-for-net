@@ -17,6 +17,7 @@ extends:
   parameters:
     SDKType: mgmtclient
     ServiceDirectory: synapse
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Synapse
       safeName: AzureResourceManagerSynapse

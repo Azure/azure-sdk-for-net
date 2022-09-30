@@ -17,6 +17,7 @@ extends:
   parameters:
     SDKType: mgmtclient
     ServiceDirectory: quantum
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Quantum
       safeName: AzureResourceManagerQuantum

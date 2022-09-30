@@ -18,6 +18,7 @@ extends:
   parameters:
     SDKType: mgmtclient
     ServiceDirectory: monitor
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Monitor
       safeName: AzureResourceManagerMonitor

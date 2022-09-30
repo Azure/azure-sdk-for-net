@@ -16,6 +16,7 @@ extends:
   template: ../../eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: automanage
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Automanage
       safeName: AzureResourceManagerAutomanage

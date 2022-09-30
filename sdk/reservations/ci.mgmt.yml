@@ -17,6 +17,7 @@ extends:
   parameters:
     ServiceDirectory: reservations
     BuildSnippets: true
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Reservations
       safeName: AzureResourceManagerReservations

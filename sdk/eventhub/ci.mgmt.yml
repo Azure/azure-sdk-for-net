@@ -17,6 +17,7 @@ extends:
   parameters:
     SdkType: mgmtclient
     ServiceDirectory: eventhub
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.EventHubs
       safeName: AzureResourceManagerEventHubs

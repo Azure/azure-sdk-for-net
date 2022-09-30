@@ -36,7 +36,12 @@ pr:
 "@
 
     $content = $content -replace "(?s)pr:[^\n]*(\n([ ]+[^\n]*|))*", $prtriggers
-    $content = $content -replace "trigger:[^\n]*(\n([ ]+[^\n]*|))*", "trigger: none"
+    $content = $content -replace "(?s)trigger:[^\n]*(\n([ ]+[^\n]*|))*", "trigger: none`r`n"
+
+    if ($content -notmatch "LimitForPullRequest: true")
+    {
+        $content = $content -replace "(.*)Artifacts:", "`$1LimitForPullRequest: true`r`n`$1Artifacts:"
+    }
 
     Set-Content -Path $mgmtCiFile $content -NoNewline
 }

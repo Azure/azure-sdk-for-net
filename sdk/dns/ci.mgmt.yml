@@ -17,6 +17,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: dns
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Dns
       safeName: AzureResourceManagerDns

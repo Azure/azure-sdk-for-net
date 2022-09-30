@@ -16,6 +16,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: streamanalytics
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.StreamAnalytics
       safeName: AzureResourceManagerStreamAnalytics

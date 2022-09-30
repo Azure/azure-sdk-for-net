@@ -17,6 +17,7 @@ extends:
   parameters:
     ServiceDirectory: authorization
     BuildSnippets: true
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Authorization
       safeName: AzureResourceManagerAuthorization

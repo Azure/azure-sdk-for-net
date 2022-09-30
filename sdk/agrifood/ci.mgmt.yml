@@ -17,6 +17,7 @@ extends:
   parameters:
     SDKType: mgmtclient
     ServiceDirectory: agrifood
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.AgFoodPlatform
       safeName: AzureResourceManagerAgFoodPlatform

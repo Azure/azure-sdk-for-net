@@ -16,6 +16,7 @@ extends:
   parameters:
     ServiceDirectory: communication
     BuildSnippets: true
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Communication
       safeName: AzureResourceManagerCommunication

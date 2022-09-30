@@ -16,6 +16,7 @@ extends:
   parameters:
     ServiceDirectory: purview
     BuildSnippets: true
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Purview
       safeName: AzureResourceManagerPurview

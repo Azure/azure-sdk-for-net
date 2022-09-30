@@ -15,6 +15,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: machinelearningservices
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.MachineLearning
       safeName: AzureResourceManagerMachineLearning

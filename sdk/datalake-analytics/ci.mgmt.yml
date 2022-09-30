@@ -16,6 +16,7 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: datalake-analytics
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.DataLakeAnalytics
       safeName: AzureResourceManagerDataLakeAnalytics

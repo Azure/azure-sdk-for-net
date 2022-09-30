@@ -17,6 +17,7 @@ extends:
   parameters:
     ServiceDirectory: keyvault
     BuildSnippets: true
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.KeyVault
       safeName: AzureResourceManagerKeyVault

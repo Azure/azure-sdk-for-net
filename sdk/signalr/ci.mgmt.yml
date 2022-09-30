@@ -17,6 +17,7 @@ extends:
   parameters:
     SDKType: mgmtclient
     ServiceDirectory: signalr
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.SignalR
       safeName: AzureResourceManagerSignalR
