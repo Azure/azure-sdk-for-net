@@ -55,7 +55,7 @@ The authentication events trigger output binding allows a function to send authe
 
 ## Documentation
 
-Learn about custom [claims providers and custom extensions](https://learn.microsoft.com/en-us/azure/active-directory/develop/custom-claims-provider-overview).  Learn how to create and register your custom claims provider API, how to add tokens from external stores, and how to test and troubleshoot your API.
+Learn about custom [claims providers and custom extensions](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-overview).  Learn how to create and register your custom claims provider API, how to add tokens from external stores, and how to test and troubleshoot your API.
 
 ## Examples
 
