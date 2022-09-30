@@ -80,7 +80,7 @@ function DeployStressTests(
         return $true
     })]
     [System.IO.FileInfo]$LocalAddonsPath,
-    [string]$MatrixSelection,
+    [Parameter(Mandatory=$False)][string]$MatrixSelection = "sparse",
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
     [Parameter(Mandatory=$False)][array]$MatrixFilters,
     [Parameter(Mandatory=$False)][array]$MatrixReplace,

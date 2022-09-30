@@ -27,7 +27,7 @@ param(
     [System.IO.FileInfo]$LocalAddonsPath,
 
     # Matrix generation parameters
-    [string]$MatrixSelection = "sparse",
+    [Parameter(Mandatory=$False)][string]$MatrixSelection,
     [Parameter(Mandatory=$False)][string]$MatrixDisplayNameFilter,
     [Parameter(Mandatory=$False)][array]$MatrixFilters,
     [Parameter(Mandatory=$False)][array]$MatrixReplace,
