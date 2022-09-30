@@ -29,105 +29,25 @@ When the Azure AD authentication events service calls your custom extension, it 
   * The `azp` claim in the token if your application `accessTokenAcceptedVersion` property is set to `2`.
   * The `appid` claim in the token if your resource application's `accessTokenAcceptedVersion` property is set to `1` or `null`.
 
-There are three approaches to authenticating HTTP requests to your function app and validating the token. 
+There are three approaches to authenticating HTTP requests to your function app and validating the token.
 
-#### Validate tokens using Azure Functions Azure AD authentication integration
+- Validate tokens using Azure Functions Azure AD authentication integration: When running your function in production, it is **highly recommended** to use the [Azure Functions Azure AD authentication integration](https://learn.microsoft.com/azure/app-service/configure-authentication-provider-aad#-option-2-use-an-existing-registration-created-separately) for validating incoming tokens.
+- Have the trigger validate the token: In local environments or environments that aren't hosted in the Azure Function service, the trigger can do the token validation.
+- Don't validate the token: If you would like to _not_ authenticate the token during local development.
 
-When running your function in production, it is **highly recommended** to use the [Azure Functions Azure AD authentication integration](https://learn.microsoft.com/azure/app-service/configure-authentication-provider-aad#-option-2-use-an-existing-registration-created-separately) for validating incoming tokens. Set the following function [application settings](https://learn.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings?tabs=portal#settings).
-
-1. Go to the "Authentication" tab in your Function App
-2. Click on "Add identity provider"
-3. Select "Microsoft" as the identity provider
-4. Select "Provide the details of an existing app registration"
-5. Enter the `Application ID` of the app that represents your API in Azure AD
-
-The issuer and allowed audience depends on the [`accessTokenAcceptedVersion`](https://learn.microsoft.com/azure/active-directory/develop/access-tokens) property of your application (can be found in the "Manifest" of the application).
-
-If the `accessTokenAcceptedVersion` property is set to `2`:
-6. Set the `Issuer URL to "https://login.microsoftonline.com/{tenantId}/v2.0"
-7. Set an 'Allowed Audience' to the Application ID (`appId`)
-
-If the `accessTokenAcceptedVersion` property is set to `1` or `null`:
-6. Set the `Issuer URL to "https://sts.windows.net/{tenantId}/"
-7. Set an 'Allowed Audience' to the Application ID URI (also known as`identifierUri`). It should be in the format of`api://{azureFunctionAppName}.azurewebsites.net/{resourceApiAppId}` or `api://{FunctionAppFullyQualifiedDomainName}/{resourceApiAppId}` if using a [custom domain name](https://learn.microsoft.com/azure/dns/dns-custom-domain#:~:text=Azure%20Function%20App%201%20Navigate%20to%20Function%20App,Custom%20domain%20text%20field%20and%20select%20Validate.%20).
-
-By default, the Authentication event trigger will validate that Azure Function authentication integration is configured and it will check that the **client** in the token is set to `99045fe1-7639-4a75-9d4a-577b6ca3810f` (via the `azp` or `appid` claims in the token).
-
-If you want to test your API against some other client that is not Azure AD authentication events service, like using Postman, you can configure an _optional_ application setting:
-
-* **AuthenticationEvents__CustomCallerAppId** - the guid of your desired client. If not provided, `99045fe1-7639-4a75-9d4a-577b6ca3810f` is assumed.
-
-#### Have the trigger validate the token
-
-In local environments or environments that aren't hosted in the Azure Function service, the trigger can do the token validation. Set the following application settings in the [local.settings.json](https://learn.microsoft.com/azure/azure-functions/functions-develop-local#local-settings-file) file:
-
-* **AuthenticationEvents__TenantId** - your tenant ID
-* **AuthenticationEvents__AudienceAppId** - the same value as "Allowed audience" in option 1.
-* **AuthenticationEvents__CustomCallerAppId** (_optional_) - the guid of your desired client. If not provided, `99045fe1-7639-4a75-9d4a-577b6ca3810f` is assumed.
-
-An example `local.settings.json` file:
-
-```json
-{
-  "IsEncrypted": false,
-  "Values": {
-    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-    "AuthenticationEvents__TenantId": "8615397b-****-****-****-********06c8",
-    "AuthenticationEvents__AudienceAppId": "api://46f98993-****-****-****-********0038",
-    "AuthenticationEvents__CustomCallerAppId": "46f98993-****-****-****-********0038"
-  }
-}
-```
-
-#### No token validation
-
-If you would like to _not_ authenticate the token while in local development, set the following application settings in the [local.settings.json](https://learn.microsoft.com/azure/azure-functions/functions-develop-local#local-settings-file) file:
-
-* **AuthenticationEvents__BypassTokenValidation** - value of `true` will make the trigger not check for a validation of the token.
-
-### Quickstart
-
-* Visual Studio 2019
-  * Start Visual Studio
-  * Select "Create a new project"
-  * In the template search area search and select "AzureAuthEventsTrigger"
-  * Give your project a meaningful Project Name, Location, Solution and Solution Name.
-
-* Visual Studio Code
-  * Start Visual Studio Code
-  * Run the command "Create Azure Authentication Events Trigger Project" via the command palette
-  * Follow the project creation prompts
-* Please note: that on a first time run it might take awhile to download the the required packages.
-* For development purpose turn of token validation for testing:
-* Add the **AuthenticationEvents__BypassTokenValidation** application key to the "Values" section in the local.settings.json file and set it's value to **true**. If you do not have a local.settings.json file in your local environment, create one in the root of your Function App.
-
-```json
-{
-  "IsEncrypted": false,
-  "Values": {
-    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
-    "AuthenticationEvents__BypassTokenValidation": true
-  }
-}
-```
-
-* Once the project is loaded, you can run the sample code and you should see the Azure functions developer's application load your end point.
+To learn more, read about [testing your custom claims provider API](https://learn.microsoft.com/en-us/azure/active-directory/develop/custom-claims-provider-test-function-trigger).  
 
 ## Key concepts
 
-### .NET SDK
-
-Key concepts of the Azure .NET SDK can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
-
 ### Azure AD custom extensions
 
-Custom extensions allow you to handle Azure AD events, integrate with external systems, and customize what happens in your application authentication experience. For example, a custom claims provider is a custom extension that allows you to enrich or customize application tokens with information from external systems that can't be stored as part of the Azure AD directory. 
+Custom extensions allow you to handle Azure AD events, integrate with external systems, and customize what happens in your application authentication experience. For example, a custom claims provider is a custom extension that allows you to enrich or customize application tokens with information from external systems that can't be stored as part of the Azure AD directory. Read [Custom claims providers overview](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-overview) to learn more about custom extensions and custom claims providers.
 
 ### Authentication events trigger
 
 The authentication events trigger allows a function to be executed when an authentication event is sent from the Azure AD event service.
+
+Read [Configure a SAML app to receive tokens with claims from an external store](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-source-claims-from-external-system-saml-app) and [Configure an OIDC app to receive tokens with claims from an external store](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-source-claims-from-external-system-oidc-app) to learn more about using the authentication events trigger.
 
 ### Authentication events trigger output binding
 
@@ -135,100 +55,66 @@ The authentication events trigger output binding allows a function to send authe
 
 ## Documentation
 
-* One the function has been published, there's some good reading about logging and metrics that can be found [here](https://learn.microsoft.com/azure/azure-functions/functions-monitor-log-analytics?tabs=csharp)
-
-* For API Documentation, please see the (Link TBD)
-* Once this moves to preview, we except no breaking changes and would be as simple as removing the the NuGet source that points to the private preview.
+Learn about custom [claims providers and custom extensions](https://learn.microsoft.com/en-us/azure/active-directory/develop/custom-claims-provider-overview).  Learn how to create and register your custom claims provider API, how to add tokens from external stores, and how to test and troubleshoot your API.
 
 ## Examples
 
-To Test Token Augmentation, please do the following.
+### Quickstart
 
-* Start Visual Studio.
-* Open the project that was created in the prior step. (QuickStart)
-* Run the Application. (F5)
-* Once the Azure functions developer's application has started, copy the listening url that is displayed with the application starts up.
-* Note: All Authentication functions are listed, in the case we have one function listener registered called "**OnTokenIssuanceStart**"
-* Your function endpoint will then be a combination of the listening url and function, for example: "http://localhost:7071/runtime/webhooks/AuthenticationEvents?code=(YOUR_CODE)&function=OnTokenIssuanceStart"
-* Post the following payload using something like Postman or Fiddler.
-* Steps for using Postman can be found (Link TBD)
+#### Prerequisites
+
+1. [Download Postman](https://www.postman.com/downloads/)
+2. Download the [Authentication_Events_Collection.json](https://github.com/Azure/microsoft-azure-webJobs-extensions-authentication-events/wiki/collection/Authentication_Events_Collection.json) for the Authentication Events Trigger.
+3. In the Postman app, [create a new workspace](https://learning.postman.com/docs/getting-started/creating-your-first-workspace/) and [import](https://learning.postman.com/docs/getting-started/importing-and-exporting-data/) the Authentication Events Collection JSON file.
+
+#### Create the project
+
+##### Visual Studio
+
+1. Open Visual Studio and select **Create a new project**.
+
+2. In **Search for a template**, search for "AzureAuthEventsTrigger" and select it from the returned results.
+
+3. Select **Next**.
+
+4. Give your project a meaningful **Project name**, **Empty Location**, and **Solution name** and select **Create**. The name of the project created is the `{functionAppName}`. For example, "authenticationeventsAPI".
+
+##### Visual Studio Code
+
+1. Open Visual Studio Code.
+
+2. Select **View** -> **Command Palette** and run the command `Create Azure Authentication Events Trigger Project`.
+
+3. Give your project a meaningful **Project name**, **Empty Location**, and **Solution name** and select **Create**. The name of the project created is the `{functionAppName}`. For example, "authenticationeventsAPI".
+
+#### Update the function configuration and run locally
+
+For local development and testing purposes, you can turn off token validation. Open the *local.settings.json* file in the project. Add the *AuthenticationEventTrigger__BypassTokenValidation* setting and a value of "true":
 
 ```json
 {
-  "type":"microsoft.graph.authenticationEvent.TokenIssuanceStart",
-  "source":"/tenants/{tenantId}/applications/{resourceAppId}",
-  "data":{
-    "@odata.type": "microsoft.graph.onTokenIssuanceStartCalloutData",
-    "tenantId": "30000000-0000-0000-0000-000000000003",
-    "authenticationEventListenerId1": "10000000-0000-0000-0000-000000000001",
-    "customAuthenticationExtensionId": "10000000-0000-0000-0000-000000000002",
-    "authenticationContext1":{
-      "correlationId": "20000000-0000-0000-0000-000000000002",
-      "client": {
-        "ip": "127.0.0.1",
-        "locale": "en-us",
-        "market": "en-au"
-      },
-      "authenticationProtocol": "OAUTH2.0",
-      "clientServicePrincipal": {
-        "id": "40000000-0000-0000-0000-000000000001",
-        "appId": "40000000-0000-0000-0000-000000000002",
-        "appDisplayName": "Test client app",
-        "displayName": "Test client application"
-      },
-      "resourceServicePrincipal": {
-        "id": "40000000-0000-0000-0000-000000000003",
-        "appId": "40000000-0000-0000-0000-000000000004",
-        "appDisplayName": "Test resource app",
-        "displayName": "Test resource application"
-      },
-      "user": {
-        "companyName": "Nick Gomez",
-        "country": "USA",
-        "createdDateTime": "0001-01-01T00:00:00Z",
-        "displayName": "Dummy display name",
-        "givenName": "Example",
-        "id": "60000000-0000-0000-0000-000000000006",
-        "mail": "test@example.com",
-        "onPremisesSamAccountName": "testadmin",
-        "onPremisesSecurityIdentifier": "DummySID",
-        "onPremisesUserPrincipalName": "Dummy Name",
-        "preferredDataLocation": "DummyDataLocation",
-        "preferredLanguage": "DummyLanguage",
-        "surname": "Test",
-        "userPrincipalName": "testadmin@example.com",
-        "userType": "UserTypeCloudManaged"
-      }
-    }
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "AuthenticationEventTrigger__BypassTokenValidation": true
   }
 }
 ```
 
-* You should see this response:
+Run the function app from Visual Studio or Visual Studio Code. In the output, you should see the Azure functions developer's application load your end point. Find the **Host** value (for example, "localhost:7071") and **Code** value (for example, "Z4pp0zA3zoA...FuJWxaog==").
 
-```json
-{
-    "data": {
-        "@odata.type": "microsoft.graph.onTokenIssuanceStartResponseData",
-        "actions": [
-            {
-                "@odata.type": "ProvideClaimsForToken",
-                "claims": [
-                    {
-                        "DateOfBirth": "01/01/2000"
-                    },
-                    {
-                        "CustomRoles": [
-                            "Writer",
-                            "Editor"
-                        ]
-                    }
-                ]
-            }
-        ]
-    }
-}
-```
+#### Update Postman variables
+
+In Postman, select the **Authentication Events** collection. Select the **Variable** tab. Copy and paste the **Host** and **Code** variables values from the running function app into the host and code variables (in the **CURRENT VALUE** column). Save the collection.
+
+In Postman, select the **Local** request. Select the **Body** tab. Verify or change sample payload values.
+
+#### Send the request using Postman
+
+While the function app is running locally, send the payload to your function app by clicking **Send**. A debugger is already attached your running function app code, so any breakpoints that are passed through will break into the debugger.
+
+Verify the function app was executed successfully by checking the HTTP response and status code in the **Postman console**.
 
 ## Troubleshooting
 
@@ -238,17 +124,15 @@ To Test Token Augmentation, please do the following.
   * If you see the following error on Windows (it's a bug) when trying to run the created projected.
   * This can be resolved by executing this command in powershell `Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope LocalMachine` more info on this can be found [here](https://github.com/Azure/azure-functions-core-tools/issues/1821) and [here](https://learn.microsoft.com/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7)
 
+For information on troubleshooting you custom claims provider, please read [Troubleshooting](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-troubleshoot).
+
 ## Next steps
 
-For more information on Azure SDK, please refer to [this website](https://azure.github.io/azure-sdk/)
+Learn how to [create, publish, and register a custom claims provider API](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-create-register-api).
 
-## Publish
+If you already have a custom claims provider registered, you can configure a [SAML application](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-source-claims-from-external-system-saml-app) or an [OIDC](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-source-claims-from-external-system-oidc-app) application to receive tokens with claims sourced from an external store.
 
-* Follow the instruction here to create and publish your Azure Application. <https://learn.microsoft.com/azure/azure-functions/functions-develop-vs?tabs=in-process#publish-to-azure>
-* To determine your published posting endpoint, combine the azure function endpoint you created, route to the listener and listener code, the listen code can be found by navigating to your azure function application, selecting "App Keys" and copying the value of AuthenticationEvents_extension.
-* For example: "https://azureautheventstriggerdemo.azurewebsites.net/runtime/webhooks/AuthenticationEvents?code=(AuthenticationEvents_extension_key)&function=OnTokenIssuanceStart"
-* Make sure your production environment has the correct application settings for token authentication.
-* Once again you can test the published function by posting the above payload to the new endpoint.
+Learn how to [test your custom claims provider API](https://learn.microsoft.com/azure/active-directory/develop/custom-claims-provider-test-function-trigger).
 
 ## Contributing
 
