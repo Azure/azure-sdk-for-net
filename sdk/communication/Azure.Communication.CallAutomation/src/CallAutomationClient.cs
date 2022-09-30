@@ -450,9 +450,6 @@ namespace Azure.Communication.CallAutomation
                 if (!options.IsValidRepeatabilityHeaders())
                     throw new ArgumentException(CallAutomationErrorMessages.InvalidRepeatabilityHeadersMessage);
 
-                CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.CallSource.Identifier));
-                sourceDto.CallerId = options.CallSource.CallerId == null ? null : new PhoneNumberIdentifierModel(options.CallSource.CallerId.PhoneNumber);
-
                 CreateCallRequestInternal request = CreateCallRequest(options);
 
                 var createCallResponse = ServerCallingRestClient.CreateCall(
@@ -476,6 +473,7 @@ namespace Azure.Communication.CallAutomation
         {
             CallSourceInternal sourceDto = new CallSourceInternal(CommunicationIdentifierSerializer.Serialize(options.CallSource.Identifier));
             sourceDto.CallerId = options.CallSource.CallerId == null ? null : new PhoneNumberIdentifierModel(options.CallSource.CallerId.PhoneNumber);
+            sourceDto.DisplayName = options.CallSource.DisplayName;
 
             CreateCallRequestInternal request = new CreateCallRequestInternal(
                 options.Targets.Select(t => CommunicationIdentifierSerializer.Serialize(t)),
