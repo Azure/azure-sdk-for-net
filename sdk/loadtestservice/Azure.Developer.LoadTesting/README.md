@@ -1,130 +1,44 @@
+# Azure LoadTesting client library for .NET
+Azure Load Testing provides client library in .net to the user by which they can interact natively with Azure Load Testing service. Azure Load Testing is a fully managed load-testing service that enables you to generate high-scale load. The service simulates traffic for your applications, regardless of where they're hosted. Developers, testers, and quality assurance (QA) engineers can use it to optimize application performance, scalability, or capacity.
 
-# Azure Load Testing client library for Python
-Azure Load Testing provides client library in python to the user by which they can interact natively with Azure Load Testing service. Azure Load Testing is a fully managed load-testing service that enables you to generate high-scale load. The service simulates traffic for your applications, regardless of where they're hosted. Developers, testers, and quality assurance (QA) engineers can use it to optimize application performance, scalability, or capacity.
-
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/loadtestservice/Azure.Developer.LoadTesting/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Developer.LoadTesting) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/en-in/azure/load-testing/)
 
 ## Getting started
 
-### Installing the package
 
-```bash
-python -m pip install azure-developer-loadtesting
+### Install the package
+
+Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
+
+```dotnetcli
+dotnet add package Azure.Developer.LoadTesting --prerelease
 ```
 
-#### Prequisites
+### Prerequisites
+You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Load Test Service Resource](https://learn.microsoft.com/en-in/azure/load-testing/). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
 
-- Python 3.7 or later is required to use this package.
-- You need an [Azure subscription][azure_sub] to use this package.
-- An existing Azure Developer LoadTesting instance.
 
-#### Create with an Azure Active Directory Credential
+### Authenticate the client
 
 To use an [Azure Active Directory (AAD) token credential][authenticate_with_token],
 provide an instance of the desired credential type obtained from the
 [azure-identity][azure_identity_credentials] library.
 
-To authenticate with AAD, you must first [pip][pip] install [`azure-identity`][azure_identity_pip]
+To authenticate with AAD, you must first use [nuget][nuget] install [`azure-identity`][azure_identity_nuget]
 
-After setup, you can choose which type of [credential][azure_identity_credentials] from azure.identity to use.
+After setup, you can choose which type of [credential][azure_identity_credentials] from Azure.Identity to use.
 
 As an example, sign in via the Azure CLI `az login` command and [DefaultAzureCredential](https://learn.microsoft.com/python/api/azure-identity/azure.identity.defaultazurecredential?view=azure-python) will authenticate as that user.
 
 Use the returned token credential to authenticate the client.
 
-#### Create the client
-
-The data plane URI should be provided as the endpoint to create the client. The data plane URI can be obtained by creating an Azure Load Testing resource as shown [here](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/loadtestservice/azure-mgmt-loadtestservice/samples).
-
-```python
-from azure.developer.loadtesting import LoadTestingClient
-
-# for managing authentication and authorization
-# can be installed from pypi, follow: https://pypi.org/project/azure-identity/
-# using DefaultAzureCredentials, read more at: https://learn.microsoft.com/en-us/python/api/azure-identity/azure.identity.defaultazurecredential?view=azure-python
-from azure.identity import DefaultAzureCredential
-
-client = LoadTestingClient(endpoint='<endpoint>', credential=DefaultAzureCredential())
-```
-
 ## Examples
 
-### Creating a load test 
-```python
-from azure.developer.loadtesting import LoadTestingClient
-from azure.identity import DefaultAzureCredential
-from azure.core.exceptions import HttpResponseError
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/loadtestservice/Azure.Developer.LoadTesting/samples).
 
-TEST_ID = "some-test-id"  
-DISPLAY_NAME = "my-load-test"  
-SUBSCRIPTION_ID = os.environ["SUBSCRIPTION_ID"]  
 
-client = LoadTestingClient(endpoint='<endpoint>', credential=DefaultAzureCredential())
-
-try:
-    result = client.load_test_administration.create_or_update_test(
-        TEST_ID,
-        {
-            "description": "",
-            "displayName": DISPLAY_NAME,
-            "loadTestConfig": {
-                "engineInstances": 1,
-                "splitAllCSVs": False,
-            },
-            "secrets": {},
-            "environmentVariables": {},
-            "passFailCriteria": {"passFailMetrics": {}}
-        },
-    )
-    print(result)
-except HttpResponseError as e:
-     print('Service responded with error: {}'.format(e.response.json()))
-
-```
-
-### Uploading .jmx file to a Test
-```python
-from azure.developer.loadtesting import LoadTestingClient
-from azure.identity import DefaultAzureCredential
-from azure.core.exceptions import HttpResponseError
-
-TEST_ID = "some-test-id"  
-FILE_ID = "some-file-id"  
-
-client = LoadTestingClient(endpoint='<endpoint>', credential=DefaultAzureCredential())
-
-try:
-
-    result = client.load_test_administration.upload_test_file(TEST_ID, FILE_ID, open("sample.jmx", "rb"))
-    print(result)
-except HttpResponseError as e:
-    print("Failed with error: {}".format(e.response.json()))
-```
-
-### Running a Test
-```python
-from azure.developer.loadtesting import LoadTestingClient
-from azure.identity import DefaultAzureCredential
-from azure.core.exceptions import HttpResponseError
-
-TEST_ID = "some-test-id"  
-TEST_RUN_ID = "some-testrun-id" 
-DISPLAY_NAME = "my-load-test-run"  
-
-client = LoadTestingClient(endpoint='<endpoint>', credential=DefaultAzureCredential())
-
-try:
-    result = client.load_test_runs.create_or_update_test(
-        TEST_RUN_ID,
-        {
-            "testId": TEST_ID,
-            "displayName": DISPLAY_NAME,
-        },
-    )
-    print(result)
-except HttpResponseError as e:
-    print("Failed with error: {}".format(e.response.json()))
-```
 ## Key concepts
+
 The following components make up the Azure Load Testing Service. The Azure Load Test client library for Python allows you to interact with each of these components through the use of a dedicated client object.
 
 ### Load testing resource
@@ -152,32 +66,36 @@ During a load test, Azure Load Testing collects metrics about the test execution
 ## Troubleshooting
 More about it is coming soon...
 
-## Next steps
 
-More samples can be found [here](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/loadtestservice/azure-developer-loadtesting/samples).
+### Thread safety
+
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
+
 
 ## Contributing
 
-This project welcomes contributions and suggestions. Most contributions require
-you to agree to a Contributor License Agreement (CLA) declaring that you have
-the right to, and actually do, grant us the rights to use your contribution.
-For details, visit https://cla.microsoft.com.
-
-When you submit a pull request, a CLA-bot will automatically determine whether
-you need to provide a CLA and decorate the PR appropriately (e.g., label,
-comment). Simply follow the instructions provided by the bot. You will only
-need to do this once across all repos using our CLA.
-
-This project has adopted the
-[Microsoft Open Source Code of Conduct][code_of_conduct]. For more information,
-see the Code of Conduct FAQ or contact opencode@microsoft.com with any
-additional questions or comments.
+This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
 
 <!-- LINKS -->
+[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
+[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/loadtestservice/Azure.Developer.LoadTesting/README.png)
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [authenticate_with_token]: https://learn.microsoft.com/en-us/azure/developer/java/sdk/identity-user-auth
-[azure_identity_credentials]: https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/identity/azure-identity#credentials
-[azure_identity_pip]: https://pypi.org/project/azure-identity/
-[default_azure_credential]: https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/identity/azure-identity#defaultazurecredential
-[pip]: https://pypi.org/project/pip/
+[azure_identity_credentials]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#credentials
+[azure_identity_nuget]: https://www.nuget.org/packages/Azure.Identity/1.7.0
+[client_secret_credential]: https://learn.microsoft.com/en-us/dotnet/api/azure.identity.clientsecretcredential?view=azure-dotnet-preview
+[nuget]: https://www.nuget.org/
 [azure_sub]: https://azure.microsoft.com/free/
