@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<AppServiceTokenStore> tokenStore = default;
             Optional<bool> preserveUrlFragmentsForLogins = default;
             Optional<IList<string>> allowedExternalRedirectUrls = default;
-            Optional<CookieExpiration> cookieExpiration = default;
+            Optional<WebAppCookieExpiration> cookieExpiration = default;
             Optional<LoginFlowNonceSettings> nonce = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    cookieExpiration = CookieExpiration.DeserializeCookieExpiration(property.Value);
+                    cookieExpiration = WebAppCookieExpiration.DeserializeWebAppCookieExpiration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("nonce"))

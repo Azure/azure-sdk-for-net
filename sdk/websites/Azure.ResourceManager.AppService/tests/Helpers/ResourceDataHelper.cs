@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
                 },
                 IPSecurityRestrictions =
                 {
-                    new IPSecurityRestriction
+                    new AppServiceIPSecurityRestriction
                     {
                         IPAddressOrCidr = "Any",
                         Action = "Allow",
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService.Tests.Helpers
                 },
                 ScmIPSecurityRestrictions =
                 {
-                    new IPSecurityRestriction
+                    new AppServiceIPSecurityRestriction
                     {
                         IPAddressOrCidr = "Any",
                         Action = "Allow",
