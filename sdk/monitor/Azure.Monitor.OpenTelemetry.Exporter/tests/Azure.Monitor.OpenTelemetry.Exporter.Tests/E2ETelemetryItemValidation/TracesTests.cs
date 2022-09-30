@@ -13,6 +13,7 @@ using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 {
@@ -22,6 +23,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
     /// </summary>
     public class TracesTests
     {
+        protected readonly ITestOutputHelper output;
+        internal readonly TelemetryItemOutputHelper telemetryOutput;
+
+        public TracesTests(ITestOutputHelper output)
+        {
+            this.output = output;
+            this.telemetryOutput = new TelemetryItemOutputHelper(output);
+        }
+
         [Theory]
         [InlineData(ActivityKind.Client)]
         [InlineData(ActivityKind.Producer)]
@@ -144,8 +154,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ACT
             string spanId, traceId;
+            string activityName = $"TestActivity {nameof(VerifyLogWithinActivity)} {logLevel}";
 
-            using (var activity = activitySource.StartActivity(name: "SayHello"))
+            using (var activity = activitySource.StartActivity(name: activityName))
             {
                 spanId = activity.SpanId.ToHexString();
                 traceId = activity.TraceId.ToHexString();
@@ -166,11 +177,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             // ASSERT
             Assert.True(activityTelemetryItems.Any(), "test project did not capture telemetry");
+            this.telemetryOutput.Write(activityTelemetryItems);
             var activityTelemetryItem = activityTelemetryItems.Single();
 
             TelemetryItemValidationHelper.AssertActivity_As_DependencyTelemetry(
                 telemetryItem: activityTelemetryItem,
-                expectedName: "SayHello",
+                expectedName: activityName,
                 expectedTraceId: traceId,
                 expectedProperties: null);
 
