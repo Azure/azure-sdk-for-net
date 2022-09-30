@@ -12,25 +12,6 @@ namespace Azure.Communication.CallAutomation
     [CodeGenModel("RecognizeCanceled", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class RecognizeCanceled : CallAutomationEventBase
     {
-        /// <summary> Initializes a new instance of RecognizeCancelled. </summary>
-        /// <param name="eventSource"></param>
-        /// <param name="operationContext"></param>
-        /// <param name="version"> Used to determine the version of the event. </param>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        /// <param name="publicEventType"> The public event namespace used as the &quot;type&quot; property in the CloudEvent. </param>
-        internal RecognizeCanceled(string eventSource, string operationContext, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
-        {
-            EventSource = eventSource;
-            OperationContext = operationContext;
-            Version = version;
-            CallConnectionId = callConnectionId;
-            ServerCallId = serverCallId;
-            CorrelationId = correlationId;
-            PublicEventType = publicEventType;
-        }
-
         /// <summary>
         /// Deserialize <see cref="RecognizeCanceled"/> event.
         /// </summary>
