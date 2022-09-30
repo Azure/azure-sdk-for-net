@@ -18,5 +18,10 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </summary>
         public string CorrelationId { get; internal set; }
+#nullable enable
+        /// <summary> Operation context. </summary>
+        public string? OperationContext { get; internal set; }
+        /// <summary> Gets the result info. </summary>
+        public ResultInformation? ResultInformation { get; internal set; }
     }
 }
