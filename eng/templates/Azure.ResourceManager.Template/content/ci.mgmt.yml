@@ -11,12 +11,14 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/ProviderNameLowercase/
+    - sdk/ProviderNameLowercase/ci.mgmt.yml
+    - sdk/ProviderNameLowercase/Azure.ResourceManager.Template/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: ProviderNameLowercase
+    LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Template
       safeName: AzureManagementTemplateSafeName
