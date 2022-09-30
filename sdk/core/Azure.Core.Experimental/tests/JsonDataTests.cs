@@ -121,6 +121,16 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void CanAccessArrayValues()
+        {
+            dynamic jsonData = new JsonData("{ \"primitive\":\"Hello\", \"nested\": { \"nestedPrimitive\":true } , \"array\": [1, 2, 3] }");
+
+            Assert.AreEqual(1, (int)jsonData.array[0]);
+            Assert.AreEqual(2, (int)jsonData.array[1]);
+            Assert.AreEqual(3, (int)jsonData.array[2]);
+        }
+
+        [Test]
         public void CanReadIntsAsFloatingPoints()
         {
             var json = new JsonData("5");
