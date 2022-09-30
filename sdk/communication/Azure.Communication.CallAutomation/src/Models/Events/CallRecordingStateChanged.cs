@@ -11,7 +11,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary>
     /// The Call Recording state changed event
     /// </summary>
-    [CodeGenModel("RecordingStateChangedEvent", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
+    [CodeGenModel("RecordingStateChanged", Usage = new string[] { "output" }, Formats = new string[] { "json" })]
     public partial class CallRecordingStateChanged : CallAutomationEventBase
     {
         /// <summary>

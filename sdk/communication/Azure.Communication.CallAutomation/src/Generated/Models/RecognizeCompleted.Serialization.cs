@@ -14,17 +14,30 @@ namespace Azure.Communication.CallAutomation
     {
         internal static RecognizeCompleted DeserializeRecognizeCompleted(JsonElement element)
         {
+            Optional<string> callConnectionId = default;
+            Optional<string> serverCallId = default;
+            Optional<string> correlationId = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
             Optional<CallMediaRecognitionType> recognitionType = default;
             Optional<CollectTonesResult> collectTonesResult = default;
-            Optional<string> version = default;
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
-            Optional<string> publicEventType = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("callConnectionId"))
+                {
+                    callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"))
+                {
+                    correlationId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("operationContext"))
                 {
                     operationContext = property.Value.GetString();
@@ -60,33 +73,8 @@ namespace Azure.Communication.CallAutomation
                     collectTonesResult = CollectTonesResult.DeserializeCollectTonesResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("version"))
-                {
-                    version = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("callConnectionId"))
-                {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"))
-                {
-                    correlationId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("publicEventType"))
-                {
-                    publicEventType = property.Value.GetString();
-                    continue;
-                }
             }
-            return new RecognizeCompleted(operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, version.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, publicEventType.Value);
+            return new RecognizeCompleted(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value);
         }
     }
 }
