@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-## 1.0.1 (2022-09-23)
+## 2.0.0 (2022-09-23)
 
 ### Breaking Changes
 - Add new APIs for calculateRefund, return and archive/Unarchive reservation
