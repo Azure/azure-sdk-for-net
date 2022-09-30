@@ -1,0 +1,85 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://eccdc9b7-7603-402b-879d-bde2b637db56.eus.cnt-prod.loadtesting.azure.com/loadtests/d7c68e2a-bcd8-423f-b9ce-fe9cccd00f1c?api-version=2022-06-01-preview",
+      "RequestMethod": "PATCH",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "220",
+        "Content-Type": "application/merge-patch\u002Bjson",
+        "traceparent": "00-c942b2a1a3271759a4a41b26deaea85c-22d73730bd6335ec-00",
+        "User-Agent": "azsdk-net-Developer.LoadTesting/1.0.0-alpha.20220930.1 (.NET 6.0.9; Microsoft Windows 10.0.22621)",
+        "x-ms-client-request-id": "9117b881558d4375aa64ac9f84bd864f",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "description": "This is created using SDK",
+        "displayName": "SDK\u0027s LoadTest",
+        "loadTestConfig": {
+          "engineInstances": 1,
+          "splitAllCSVs": false
+        },
+        "secrets": {},
+        "enviornmentVariables": {},
+        "passFailCriteria": {
+          "passFailMetrics": {}
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "api-supported-versions": "2021-07-01-preview, 2022-06-01-preview",
+        "Connection": "keep-alive",
+        "Content-Length": "1219",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 30 Sep 2022 12:08:39 GMT",
+        "mise-correlation-id": "21fe6cb8-d448-43de-b6c3-3b28e2094d7d",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "66346807-64d9-4531-8b2f-76d9d9e0fe57"
+      },
+      "ResponseBody": {
+        "testId": "d7c68e2a-bcd8-423f-b9ce-fe9cccd00f1c",
+        "description": "This is created using SDK",
+        "displayName": "SDK\u0027s LoadTest",
+        "resourceId": "/subscriptions/7c71b563-0dc0-4bc0-bcf6-06f8f0516c7a/resourcegroups/yashika-rg/providers/microsoft.loadtestservice/loadtests/loadtestsdk",
+        "loadTestConfig": {
+          "engineInstances": 1,
+          "splitAllCSVs": false
+        },
+        "passFailCriteria": {
+          "passFailMetrics": {}
+        },
+        "createdDateTime": "2022-09-15T14:29:00.15Z",
+        "createdBy": null,
+        "lastModifiedDateTime": "2022-09-16T09:33:03.95Z",
+        "lastModifiedBy": "niveditjain@microsoft.com",
+        "inputArtifacts": {
+          "configUrl": null,
+          "testScriptUrl": {
+            "url": "https://stcntproddataeus.blob.core.windows.net/0f707b6c-09cb-4fa8-a12d-b243c792d9b4/1c2ccb7b-8f62-4f70-812e-70df2c3df314?sv=2020-04-08\u0026se=2022-09-30T13%3A08%3A39Z\u0026sr=b\u0026sp=r\u0026sig=5m6LEV4GxKpQQgbe7MEzvs%2Brlb7%2BAnwQ2BGykG1Y%2BuA%3D",
+            "fileId": "1c2ccb7b-8f62-4f70-812e-70df2c3df314",
+            "filename": "sample.jmx",
+            "fileType": 0,
+            "expireTime": "2022-09-30T12:18:39.7355474\u002B00:00",
+            "validationStatus": "VALIDATION_INITIATED"
+          },
+          "userPropUrl": null,
+          "inputArtifactsZipFileurl": null,
+          "additionalUrls": []
+        },
+        "secrets": null,
+        "certificate": null,
+        "environmentVariables": null,
+        "subnetId": null,
+        "keyvaultReferenceIdentityType": null,
+        "keyvaultReferenceIdentityId": null
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com/",
+    "ENDPOINT": "eccdc9b7-7603-402b-879d-bde2b637db56.eus.cnt-prod.loadtesting.azure.com",
+    "RandomSeed": "1342097009"
+  }
+}

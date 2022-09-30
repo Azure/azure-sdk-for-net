@@ -19,6 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SessionRecords\" />
+    <Folder Include="infrastructure\" />
+    <Folder Include="SessionRecords\LoadTestingClientTest\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.Developer.LoadTesting.csproj" />
+  </ItemGroup>
+  
 </Project>

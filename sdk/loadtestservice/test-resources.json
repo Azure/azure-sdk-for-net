@@ -6,7 +6,6 @@
             "type": "string",
             "defaultValue": "[resourceGroup().name]",
             "metadata": {
-                "description": "The base resource name."
             }
         },
         "tenantId": {
