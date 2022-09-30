@@ -10,10 +10,10 @@ using System;
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Parameter group. </summary>
-    public partial class QueryOptions
+    public partial class PolicyQuerySettings
     {
-        /// <summary> Initializes a new instance of QueryOptions. </summary>
-        public QueryOptions()
+        /// <summary> Initializes a new instance of PolicyQuerySettings. </summary>
+        public PolicyQuerySettings()
         {
         }
 

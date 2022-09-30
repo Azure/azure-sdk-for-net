@@ -13,7 +13,7 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    public partial class RemediationData : IUtf8JsonSerializable
+    public partial class PolicyRemediationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PolicyInsights
             writer.WriteEndObject();
         }
 
-        internal static RemediationData DeserializeRemediationData(JsonElement element)
+        internal static PolicyRemediationData DeserializePolicyRemediationData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.PolicyInsights
                     continue;
                 }
             }
-            return new RemediationData(id, name, type, systemData.Value, policyAssignmentId.Value, policyDefinitionReferenceId.Value, Optional.ToNullable(resourceDiscoveryMode), provisioningState.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn), filters.Value, deploymentStatus.Value, statusMessage.Value, correlationId.Value, Optional.ToNullable(resourceCount), Optional.ToNullable(parallelDeployments), failureThreshold.Value);
+            return new PolicyRemediationData(id, name, type, systemData.Value, policyAssignmentId.Value, policyDefinitionReferenceId.Value, Optional.ToNullable(resourceDiscoveryMode), provisioningState.Value, Optional.ToNullable(createdOn), Optional.ToNullable(lastUpdatedOn), filters.Value, deploymentStatus.Value, statusMessage.Value, correlationId.Value, Optional.ToNullable(resourceCount), Optional.ToNullable(parallelDeployments), failureThreshold.Value);
         }
     }
 }

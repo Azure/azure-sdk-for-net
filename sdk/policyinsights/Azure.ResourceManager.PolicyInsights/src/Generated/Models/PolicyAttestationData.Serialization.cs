@@ -14,7 +14,7 @@ using Azure.ResourceManager.PolicyInsights.Models;
 
 namespace Azure.ResourceManager.PolicyInsights
 {
-    public partial class AttestationData : IUtf8JsonSerializable
+    public partial class PolicyAttestationData : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PolicyInsights
             writer.WriteEndObject();
         }
 
-        internal static AttestationData DeserializeAttestationData(JsonElement element)
+        internal static PolicyAttestationData DeserializePolicyAttestationData(JsonElement element)
         {
             ResourceIdentifier id = default;
             string name = default;
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.PolicyInsights
                     continue;
                 }
             }
-            return new AttestationData(id, name, type, systemData.Value, policyAssignmentId, policyDefinitionReferenceId.Value, Optional.ToNullable(complianceState), Optional.ToNullable(expiresOn), owner.Value, comments.Value, Optional.ToList(evidence), provisioningState.Value, Optional.ToNullable(lastComplianceStateChangeAt));
+            return new PolicyAttestationData(id, name, type, systemData.Value, policyAssignmentId, policyDefinitionReferenceId.Value, Optional.ToNullable(complianceState), Optional.ToNullable(expiresOn), owner.Value, comments.Value, Optional.ToList(evidence), provisioningState.Value, Optional.ToNullable(lastComplianceStateChangeAt));
         }
     }
 }

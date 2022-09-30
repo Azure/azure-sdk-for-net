@@ -6,34 +6,35 @@
 #nullable disable
 
 using System;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Policy tracked resource record. </summary>
-    public partial class PolicyTrackedResource
+    public partial class PolicyTrackedResourceRecord
     {
-        /// <summary> Initializes a new instance of PolicyTrackedResource. </summary>
-        internal PolicyTrackedResource()
+        /// <summary> Initializes a new instance of PolicyTrackedResourceRecord. </summary>
+        internal PolicyTrackedResourceRecord()
         {
         }
 
-        /// <summary> Initializes a new instance of PolicyTrackedResource. </summary>
+        /// <summary> Initializes a new instance of PolicyTrackedResourceRecord. </summary>
         /// <param name="trackedResourceId"> The ID of the policy tracked resource. </param>
         /// <param name="policyDetails"> The details of the policy that require the tracked resource. </param>
         /// <param name="createdBy"> The details of the policy triggered deployment that created the tracked resource. </param>
         /// <param name="lastModifiedBy"> The details of the policy triggered deployment that modified the tracked resource. </param>
-        /// <param name="lastUpdateUtc"> Timestamp of the last update to the tracked resource. </param>
-        internal PolicyTrackedResource(string trackedResourceId, PolicyDetails policyDetails, TrackedResourceModificationDetails createdBy, TrackedResourceModificationDetails lastModifiedBy, DateTimeOffset? lastUpdateUtc)
+        /// <param name="lastUpdateOn"> Timestamp of the last update to the tracked resource. </param>
+        internal PolicyTrackedResourceRecord(ResourceIdentifier trackedResourceId, PolicyDetails policyDetails, TrackedResourceModificationDetails createdBy, TrackedResourceModificationDetails lastModifiedBy, DateTimeOffset? lastUpdateOn)
         {
             TrackedResourceId = trackedResourceId;
             PolicyDetails = policyDetails;
             CreatedBy = createdBy;
             LastModifiedBy = lastModifiedBy;
-            LastUpdateUtc = lastUpdateUtc;
+            LastUpdateOn = lastUpdateOn;
         }
 
         /// <summary> The ID of the policy tracked resource. </summary>
-        public string TrackedResourceId { get; }
+        public ResourceIdentifier TrackedResourceId { get; }
         /// <summary> The details of the policy that require the tracked resource. </summary>
         public PolicyDetails PolicyDetails { get; }
         /// <summary> The details of the policy triggered deployment that created the tracked resource. </summary>
@@ -41,6 +42,6 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <summary> The details of the policy triggered deployment that modified the tracked resource. </summary>
         public TrackedResourceModificationDetails LastModifiedBy { get; }
         /// <summary> Timestamp of the last update to the tracked resource. </summary>
-        public DateTimeOffset? LastUpdateUtc { get; }
+        public DateTimeOffset? LastUpdateOn { get; }
     }
 }
