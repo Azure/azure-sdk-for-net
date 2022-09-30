@@ -9,7 +9,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Data Box Edge management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.DataBoxEdge --prerelease
+dotnet add package Azure.ResourceManager.DataBoxEdge
 ```
 
 ### Prerequisites

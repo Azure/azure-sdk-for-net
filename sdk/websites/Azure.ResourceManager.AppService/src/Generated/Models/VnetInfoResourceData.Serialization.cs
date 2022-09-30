@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -57,9 +58,9 @@ namespace Azure.ResourceManager.AppService
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ResourceIdentifier> vnetResourceId = default;
-            Optional<string> certThumbprint = default;
+            Optional<BinaryData> certThumbprint = default;
             Optional<string> certBlob = default;
-            Optional<IReadOnlyList<VnetRoute>> routes = default;
+            Optional<IReadOnlyList<AppServiceVnetRoute>> routes = default;
             Optional<bool> resyncRequired = default;
             Optional<string> dnsServers = default;
             Optional<bool> isSwift = default;
@@ -116,7 +117,12 @@ namespace Azure.ResourceManager.AppService
                         }
                         if (property0.NameEquals("certThumbprint"))
                         {
-                            certThumbprint = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                property0.ThrowNonNullablePropertyIsNull();
+                                continue;
+                            }
+                            certThumbprint = BinaryData.FromString(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("certBlob"))
@@ -131,10 +137,10 @@ namespace Azure.ResourceManager.AppService
                                 property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            List<VnetRoute> array = new List<VnetRoute>();
+                            List<AppServiceVnetRoute> array = new List<AppServiceVnetRoute>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VnetRoute.DeserializeVnetRoute(item));
+                                array.Add(AppServiceVnetRoute.DeserializeAppServiceVnetRoute(item));
                             }
                             routes = array;
                             continue;

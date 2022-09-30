@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.LabServices.Models
         }
 
         /// <summary> Initializes a new instance of AvailableLabServicesSkuRestrictions. </summary>
-        /// <param name="restrictionType"> The type of restriction. </param>
+        /// <param name="labServicesSkuRestrictionType"> The type of restriction. </param>
         /// <param name="values"> The values of the restriction. </param>
         /// <param name="reasonCode"> The reason for the restriction. </param>
-        internal AvailableLabServicesSkuRestrictions(RestrictionType? restrictionType, IReadOnlyList<string> values, RestrictionReasonCode? reasonCode)
+        internal AvailableLabServicesSkuRestrictions(LabServicesSkuRestrictionType? labServicesSkuRestrictionType, IReadOnlyList<string> values, LabServicesSkuRestrictionReasonCode? reasonCode)
         {
-            RestrictionType = restrictionType;
+            LabServicesSkuRestrictionType = labServicesSkuRestrictionType;
             Values = values;
             ReasonCode = reasonCode;
         }
 
         /// <summary> The type of restriction. </summary>
-        public RestrictionType? RestrictionType { get; }
+        public LabServicesSkuRestrictionType? LabServicesSkuRestrictionType { get; }
         /// <summary> The values of the restriction. </summary>
         public IReadOnlyList<string> Values { get; }
         /// <summary> The reason for the restriction. </summary>
-        public RestrictionReasonCode? ReasonCode { get; }
+        public LabServicesSkuRestrictionReasonCode? ReasonCode { get; }
     }
 }

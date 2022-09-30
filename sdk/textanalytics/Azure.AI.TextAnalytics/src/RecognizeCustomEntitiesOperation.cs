@@ -87,6 +87,8 @@ namespace Azure.AI.TextAnalytics
         /// </summary>
         /// <param name="operationId">The ID of this operation.</param>
         /// <param name="client">The client used to check for completion.</param>
+        /// <exception cref="ArgumentException"><paramref name="operationId"/> is an empty string or does not represent a valid continuation token from the <see cref="Id"/> property returned on the original operation.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="operationId"/> or <paramref name="client"/> is null.</exception>
         public RecognizeCustomEntitiesOperation(string operationId, TextAnalyticsClient client)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));

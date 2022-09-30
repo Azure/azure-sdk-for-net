@@ -27,13 +27,27 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsDefined(PrivateLinkResourceId))
             {
-                writer.WritePropertyName("privateLinkResourceId");
-                writer.WriteStringValue(PrivateLinkResourceId);
+                if (PrivateLinkResourceId != null)
+                {
+                    writer.WritePropertyName("privateLinkResourceId");
+                    writer.WriteStringValue(PrivateLinkResourceId);
+                }
+                else
+                {
+                    writer.WriteNull("privateLinkResourceId");
+                }
             }
             if (Optional.IsDefined(PrivateLinkLocation))
             {
-                writer.WritePropertyName("privateLinkLocation");
-                writer.WriteStringValue(PrivateLinkLocation.Value);
+                if (PrivateLinkLocation != null)
+                {
+                    writer.WritePropertyName("privateLinkLocation");
+                    writer.WriteStringValue(PrivateLinkLocation.Value);
+                }
+                else
+                {
+                    writer.WriteNull("privateLinkLocation");
+                }
             }
             if (Optional.IsDefined(PrivateLinkApprovalMessage))
             {
@@ -78,8 +92,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Optional<string> address = default;
             Optional<string> privateLinkAlias = default;
             Optional<ResourceIdentifier> privateLinkResourceId = default;
-            Optional<AzureLocation> privateLinkLocation = default;
-            Optional<BackendPrivateEndpointStatus> privateEndpointStatus = default;
+            Optional<AzureLocation?> privateLinkLocation = default;
+            Optional<BackendPrivateEndpointStatus?> privateEndpointStatus = default;
             Optional<string> privateLinkApprovalMessage = default;
             Optional<int> httpPort = default;
             Optional<int> httpsPort = default;
@@ -103,7 +117,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        privateLinkResourceId = null;
                         continue;
                     }
                     privateLinkResourceId = new ResourceIdentifier(property.Value.GetString());
@@ -113,7 +127,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        privateLinkLocation = null;
                         continue;
                     }
                     privateLinkLocation = new AzureLocation(property.Value.GetString());
@@ -123,7 +137,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        privateEndpointStatus = null;
                         continue;
                     }
                     privateEndpointStatus = new BackendPrivateEndpointStatus(property.Value.GetString());

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             Optional<string> name = default;
             Optional<bool> available = default;
-            Optional<DomainType> domainType = default;
+            Optional<AppServiceDomainType> domainType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"))
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppService.Models
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    domainType = property.Value.GetString().ToDomainType();
+                    domainType = property.Value.GetString().ToAppServiceDomainType();
                     continue;
                 }
             }

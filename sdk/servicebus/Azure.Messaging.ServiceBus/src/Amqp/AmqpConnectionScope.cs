@@ -72,12 +72,25 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// </summary>
         private static int AuthorizationBaseJitterSeconds { get; } = 30;
 
-        ///// <summary>
-        /////   The number of milliseconds to use as the basis for calculating a random jitter amount
-        /////   when opening receiver links. This is intended to ensure that multiple
-        /////   accept session operations don't timeout at the same exact moment.
-        /////// </summary>
+        /// <summary>
+        ///   The number of milliseconds to use as the basis for calculating a random jitter amount
+        ///   when opening receiver links. This is intended to ensure that multiple
+        ///   accept session operations don't timeout at the same exact moment.
+        /// </summary>
         private static int OpenReceiveLinkBaseJitterMilliseconds { get; } = 100;
+
+        /// <summary>
+        /// The amount of time to subtract from the client timeout when setting the server timeout when attempting to
+        /// accept the next available session. This will decrease the likelihood that the client times out before receiving a
+        /// response from the server.
+        /// </summary>
+        private static TimeSpan OpenReceiveLinkBuffer { get; } = TimeSpan.FromMilliseconds(20);
+
+        /// <summary>
+        /// The amount minimum threshold for the server timeout for which we will subtract the <see cref="OpenReceiveLinkBuffer"/>.
+        /// If the server timeout is less than this, we will not subtract the additional buffer.
+        /// </summary>
+        private static TimeSpan OpenReceiveLinkBufferThreshold { get; } = TimeSpan.FromSeconds(1);
 
         /// <summary>
         ///   The minimum amount of time for authorization to be refreshed; any calculations that
@@ -691,13 +704,20 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     // We set the operation timeout on the properties not only to include the jitter, but also because the server will otherwise
                     // restrict the maximum timeout to 1 minute and 5 seconds, regardless of the client timeout. We only do this for accepting next available
                     // session as this is the only long-polling scenario.
+                    var serverTimeout = _operationTimeout.Subtract(TimeSpan.FromMilliseconds(jitterBase * RandomNumberGenerator.Value.NextDouble()));
+
+                    // Subtract an additional constant buffer to reduce the likelihood that the client times out before the service which leads to unnecessary
+                    // network traffic. If the timeout is too short, we won't do this.
+                    if (serverTimeout >= OpenReceiveLinkBufferThreshold)
+                    {
+                        serverTimeout = serverTimeout.Subtract(OpenReceiveLinkBuffer);
+                    }
+
                     linkSettings.Properties = new Fields
                     {
                         {
                             AmqpClientConstants.TimeoutName,
-                            (uint)_operationTimeout
-                                .Subtract(TimeSpan.FromMilliseconds(jitterBase * RandomNumberGenerator.Value.NextDouble()))
-                                .TotalMilliseconds
+                            (uint)serverTimeout.TotalMilliseconds
                         }
                     };
                 }
@@ -1171,7 +1191,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
             await OpenAmqpObjectCoreAsync(targetObject, timeout: timeout).ConfigureAwait(false);
         }
 
-        private static async Task OpenAmqpObjectCoreAsync(
+        private async Task OpenAmqpObjectCoreAsync(
             AmqpObject target,
             string entityPath = default,
             TimeSpan? timeout = default,
@@ -1195,14 +1215,12 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 switch (target)
                 {
                     case AmqpLink linkTarget:
-                        linkTarget.Session?.SafeClose();
+                        CloseLink(linkTarget);
                         break;
                     case RequestResponseAmqpLink linkTarget:
-                        linkTarget.Session?.SafeClose();
+                        CloseLink(linkTarget);
                         break;
                 }
-
-                target.SafeClose();
 
                 // The AMQP library may throw an InvalidOperationException or one of its derived types, such as
                 // ObjectDisposedException if the underlying network state changes.  While normally terminal, in this

@@ -14,28 +14,22 @@ namespace Azure.ResourceManager.DataShare.Models
     {
         /// <summary> Initializes a new instance of ShareSubscriptionSynchronization. </summary>
         /// <param name="synchronizationId"> Synchronization id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="synchronizationId"/> is null. </exception>
-        public ShareSubscriptionSynchronization(string synchronizationId)
+        public ShareSubscriptionSynchronization(Guid synchronizationId)
         {
-            if (synchronizationId == null)
-            {
-                throw new ArgumentNullException(nameof(synchronizationId));
-            }
-
             SynchronizationId = synchronizationId;
         }
 
         /// <summary> Initializes a new instance of ShareSubscriptionSynchronization. </summary>
-        /// <param name="durationMs"> Synchronization duration. </param>
+        /// <param name="durationInMilliSeconds"> Synchronization duration. </param>
         /// <param name="endOn"> End time of synchronization. </param>
         /// <param name="message"> message of Synchronization. </param>
         /// <param name="startOn"> start time of synchronization. </param>
         /// <param name="status"> Raw Status. </param>
         /// <param name="synchronizationId"> Synchronization id. </param>
         /// <param name="synchronizationMode"> Synchronization Mode. </param>
-        internal ShareSubscriptionSynchronization(int? durationMs, DateTimeOffset? endOn, string message, DateTimeOffset? startOn, string status, string synchronizationId, SynchronizationMode? synchronizationMode)
+        internal ShareSubscriptionSynchronization(int? durationInMilliSeconds, DateTimeOffset? endOn, string message, DateTimeOffset? startOn, string status, Guid synchronizationId, SynchronizationMode? synchronizationMode)
         {
-            DurationMs = durationMs;
+            DurationInMilliSeconds = durationInMilliSeconds;
             EndOn = endOn;
             Message = message;
             StartOn = startOn;
@@ -45,7 +39,7 @@ namespace Azure.ResourceManager.DataShare.Models
         }
 
         /// <summary> Synchronization duration. </summary>
-        public int? DurationMs { get; }
+        public int? DurationInMilliSeconds { get; }
         /// <summary> End time of synchronization. </summary>
         public DateTimeOffset? EndOn { get; }
         /// <summary> message of Synchronization. </summary>
@@ -55,7 +49,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <summary> Raw Status. </summary>
         public string Status { get; }
         /// <summary> Synchronization id. </summary>
-        public string SynchronizationId { get; set; }
+        public Guid SynchronizationId { get; set; }
         /// <summary> Synchronization Mode. </summary>
         public SynchronizationMode? SynchronizationMode { get; }
     }

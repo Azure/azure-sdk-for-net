@@ -28,8 +28,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             if (Optional.IsDefined(CacheConfiguration))
             {
-                writer.WritePropertyName("cacheConfiguration");
-                writer.WriteObjectValue(CacheConfiguration);
+                if (CacheConfiguration != null)
+                {
+                    writer.WritePropertyName("cacheConfiguration");
+                    writer.WriteObjectValue(CacheConfiguration);
+                }
+                else
+                {
+                    writer.WriteNull("cacheConfiguration");
+                }
             }
             if (Optional.IsDefined(BackendPool))
             {
@@ -69,7 +76,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
+                        cacheConfiguration = null;
                         continue;
                     }
                     cacheConfiguration = FrontDoorCacheConfiguration.DeserializeFrontDoorCacheConfiguration(property.Value);

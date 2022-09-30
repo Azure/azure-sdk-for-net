@@ -28,5 +28,3 @@ extends:
     Artifacts:
     - name: Azure.Security.ConfidentialLedger
       safeName: AzureConfidentialLedger
-    - name: Azure.ResourceManager.ConfidentialLedger
-      safeName: AzureResourceManagerConfidentialLedger

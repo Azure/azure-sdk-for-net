@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
     /// A class representing a collection of <see cref="CloudEndpointResource" /> and their operations.
-    /// Each <see cref="CloudEndpointResource" /> in the collection will belong to the same instance of <see cref="SyncGroupResource" />.
-    /// To get a <see cref="CloudEndpointCollection" /> instance call the GetCloudEndpoints method from an instance of <see cref="SyncGroupResource" />.
+    /// Each <see cref="CloudEndpointResource" /> in the collection will belong to the same instance of <see cref="StorageSyncGroupResource" />.
+    /// To get a <see cref="CloudEndpointCollection" /> instance call the GetCloudEndpoints method from an instance of <see cref="StorageSyncGroupResource" />.
     /// </summary>
     public partial class CloudEndpointCollection : ArmCollection, IEnumerable<CloudEndpointResource>, IAsyncEnumerable<CloudEndpointResource>
     {
@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.StorageSync
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SyncGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, SyncGroupResource.ResourceType), nameof(id));
+            if (id.ResourceType != StorageSyncGroupResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StorageSyncGroupResource.ResourceType), nameof(id));
         }
 
         /// <summary>

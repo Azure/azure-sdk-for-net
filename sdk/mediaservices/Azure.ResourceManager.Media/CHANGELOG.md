@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,37 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2022-09-26)
+
+This is the first stable release of the Media Management client library.
+
+### Breaking Changes
+
+- All `Asset-` models renamed to `MediaAsset-`.
+- Prepended `MediaServices` prefix to some special models.
+- Prepended `Media` prefix to all `Job` models.
+- Renamed `MediaTransformJob` to `MediaJob`.
+- Shorted `HttpLiveStreaming` to `Hls`.
+- Renamed `ContentKeyPolicyPlayReadySecurityLevel` to `PlayReadySecurityLevel`.
+- Renamed `LiveEvent` to `MediaLiveEvent`.
+- Renamed `LiveOutput` to `MediaLiveOutput`.
+- Removed operations releated methods which have been supported by core lib.
+- Other renames.
+
+## 1.0.0-beta.3 (2022-09-14)
+
+### Features Added
+
+- Upgraded the API version to `2022-08-01`
+
+### Breaking Changes
+
+- Renamed `TransformOutputsPriority` to `MediaTransformOutputsPriority`.
+- Renamed `ContentKeyPolicyPreference` to `ContentKeyPolicyOption`.
+- Renamed `GetContainerSasContent` to `GetStorageContainersContent`.
+- Renamed `MediaPreset` to `MediaTransformPreset`.
+- Removed all get LRO operation status / result methods which is nativly supported by the LRO object ArmOperation.
 
 ## 1.0.0-beta.2 (2022-08-29)
 

@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.TestFramework
 
         protected ManagementGroupCleanupPolicy OneTimeManagementGroupCleanupPolicy = new ManagementGroupCleanupPolicy();
 
+        protected ResponseNullFilterPolicy NullFilterPolicy = new ResponseNullFilterPolicy();
+
         protected ArmClient GlobalClient { get; private set; }
 
         public TestEnvironment SessionEnvironment { get; private set; }
@@ -84,6 +86,7 @@ namespace Azure.ResourceManager.TestFramework
             options.Environment = GetEnvironment(TestEnvironment.ResourceManagerUrl);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
+            options.AddPolicy(NullFilterPolicy, HttpPipelinePosition.PerRetry);
             if (ApiVersion is not null)
                 options.SetApiVersion(_resourceType, ApiVersion);
 

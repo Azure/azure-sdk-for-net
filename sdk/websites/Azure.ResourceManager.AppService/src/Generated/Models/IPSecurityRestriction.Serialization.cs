@@ -16,10 +16,10 @@ namespace Azure.ResourceManager.AppService.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(IPAddress))
+            if (Optional.IsDefined(IPAddressOrCidr))
             {
                 writer.WritePropertyName("ipAddress");
-                writer.WriteStringValue(IPAddress);
+                writer.WriteStringValue(IPAddressOrCidr);
             }
             if (Optional.IsDefined(SubnetMask))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             Optional<string> ipAddress = default;
             Optional<string> subnetMask = default;
-            Optional<string> vnetSubnetResourceId = default;
+            Optional<ResourceIdentifier> vnetSubnetResourceId = default;
             Optional<int> vnetTrafficTag = default;
             Optional<int> subnetTrafficTag = default;
             Optional<string> action = default;
@@ -112,7 +112,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (property.NameEquals("vnetSubnetResourceId"))
                 {
-                    vnetSubnetResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    vnetSubnetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("vnetTrafficTag"))

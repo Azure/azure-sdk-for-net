@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of IPSecurityRestriction. </summary>
-        /// <param name="ipAddress">
+        /// <param name="ipAddressOrCidr">
         /// IP address the security restriction is valid for.
         /// It can be in form of pure ipv4 address (required SubnetMask property) or
         /// CIDR notation such as ipv4/mask (leading bit match). For CIDR,
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// X-Azure-FDID and X-FD-HealthProbe.
         /// The matching logic is exact match.
         /// </param>
-        internal IPSecurityRestriction(string ipAddress, string subnetMask, string vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, IPFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers)
+        internal IPSecurityRestriction(string ipAddressOrCidr, string subnetMask, ResourceIdentifier vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, IPFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers)
         {
-            IPAddress = ipAddress;
+            IPAddressOrCidr = ipAddressOrCidr;
             SubnetMask = subnetMask;
             VnetSubnetResourceId = vnetSubnetResourceId;
             VnetTrafficTag = vnetTrafficTag;
@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// CIDR notation such as ipv4/mask (leading bit match). For CIDR,
         /// SubnetMask property must not be specified.
         /// </summary>
-        public string IPAddress { get; set; }
+        public string IPAddressOrCidr { get; set; }
         /// <summary> Subnet mask for the range of IP addresses the restriction is valid for. </summary>
         public string SubnetMask { get; set; }
         /// <summary> Virtual network resource id. </summary>
-        public string VnetSubnetResourceId { get; set; }
+        public ResourceIdentifier VnetSubnetResourceId { get; set; }
         /// <summary> (internal) Vnet traffic tag. </summary>
         public int? VnetTrafficTag { get; set; }
         /// <summary> (internal) Subnet traffic tag. </summary>

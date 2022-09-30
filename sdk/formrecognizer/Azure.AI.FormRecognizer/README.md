@@ -3,7 +3,7 @@
 Azure Cognitive Services Form Recognizer is a cloud service that uses machine learning to analyze text and structured data from your documents. It includes the following main features:
 
 - Layout - Extract text, selection marks, table structures, styles, and paragraphs, along with their bounding region coordinates from documents.
-- Document - Analyze key-value pairs in addition to general layout from documents.
+- General document - Analyze key-value pairs in addition to general layout from documents.
 - Read - Read information about textual elements, such as page words and lines in addition to text language information.
 - Prebuilt - Analyze data from certain types of common documents using prebuilt models. Supported documents include receipts, invoices, business cards, identity documents, US W2 tax forms, and more.
 - Custom - Build custom models to analyze text, field values, selection marks, table structures, styles, and paragraphs from documents. Custom models are built with your own data, so they're tailored to your documents.
@@ -19,21 +19,21 @@ Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 dotnet add package Azure.AI.FormRecognizer
 ``` 
 
-> Note: This version of the client library defaults to the `2022-06-30-preview` version of the service.
+> Note: This version of the client library defaults to the `2022-08-31` version of the service.
 
 This table shows the relationship between SDK versions and supported API versions of the service:
 
 |SDK version|Supported API version of service
 |-|-
-|4.0.0-beta.5 | 2.0, 2.1, 2022-06-30-preview
-|3.1.X        | 2.0, 2.1
-|3.0.X        | 2.0
+|4.0.0 | 2.0, 2.1, 2022-08-31
+|3.1.X | 2.0, 2.1
+|3.0.X | 2.0
 
-> Note: Starting with version `4.0.0-beta.1`, a new set of clients were introduced to leverage the newest features of the Form Recognizer service. Please see the [Migration Guide][migration_guide] for detailed instructions on how to update application code from client library version `3.1.X` or lower to the latest version. Additionally, see the [Changelog][formreco_changelog] for more detailed information. The below table describes the relationship of each client and its supported API version(s):
+> Note: Starting with version `4.0.0`, a new set of clients were introduced to leverage the newest features of the Form Recognizer service. Please see the [Migration Guide][migration_guide] for detailed instructions on how to update application code from client library version `3.1.X` or lower to the latest version. Additionally, see the [Changelog][formreco_changelog] for more detailed information. The table below describes the relationship of each client and its supported API version(s):
 
 |API version|Supported clients
 |-|-
-|2022-06-30-preview|DocumentAnalysisClient and DocumentModelAdministrationClient
+|2022-08-31|DocumentAnalysisClient and DocumentModelAdministrationClient
 |2.1|FormRecognizerClient and FormTrainingClient
 |2.0|FormRecognizerClient and FormTrainingClient
 
@@ -52,13 +52,13 @@ You can create either resource using:
 Below is an example of how you can create a Form Recognizer resource using the CLI:
 
 ```PowerShell
-# Create a new resource group to hold the form recognizer resource
-# if using an existing resource group, skip this step
+# Create a new resource group to hold the Form Recognizer resource
+# If using an existing resource group, skip this step
 az group create --name <your-resource-name> --location <location>
 ```
 
 ```PowerShell
-# Create form recognizer 
+# Create the Form Recognizer resource
 az cognitiveservices account create \
     --name <resource-name> \
     --resource-group <resource-group-name> \
@@ -80,7 +80,7 @@ You can find the endpoint for your Form Recognizer resource using the
 or [Azure CLI][azure_cli_endpoint_lookup]:
 
 ```PowerShell
-# Get the endpoint for the form recognizer resource
+# Get the endpoint for the Form Recognizer resource
 az cognitiveservices account show --name "<resource-name>" --resource-group "<resource-group-name>" --query "properties.endpoint"
 ```
 
@@ -145,7 +145,7 @@ More information about analyzing documents, including supported features, locale
 
 `DocumentModelAdministrationClient` provides operations for:
 
-- Building custom models to analyze specific fields you specify by labeling your custom documents. A `DocumentModel` is returned indicating the document type(s) the model can analyze, the fields it can analyze for each document type, as well as the estimated confidence for each field. See the [service documentation][formreco_build_model] for a more detailed explanation.
+- Building custom models to analyze specific fields you specify by labeling your custom documents. A `DocumentModelDetails` instance is returned indicating the document type(s) the model can analyze, the fields it can analyze for each document type, as well as the estimated confidence for each field. See the [service documentation][formreco_build_model] for a more detailed explanation.
 - Compose a model from a collection of existing models.
 - Managing models created in your account.
 - Listing document model operations or getting a specific model operation created within the last 24 hours.
@@ -179,7 +179,7 @@ The following section provides several code snippets illustrating common pattern
 
 ### Async examples
 * [Extract Layout](#extract-layout)
-* [Use the General Prebuilt Document Model](#use-the-general-prebuilt-document-model)
+* [Use the Prebuilt General Document Model](#use-the-prebuilt-general-document-model)
 * [Use the Prebuilt Read Model](#use-the-prebuilt-read-model)
 * [Use Prebuilt Models](#use-prebuilt-models)
 * [Build a Custom Model](#build-a-custom-model)
@@ -189,7 +189,7 @@ The following section provides several code snippets illustrating common pattern
 ### Sync examples
 * [Manage Models Synchronously](#manage-models-synchronously)
 
-> Note that these samples use SDK `V4.0.0-beta.X`. For lower versions of the SDK, please see [Form Recognizer Samples for V3.1.X][formrecov3_samples].
+> Note that these samples use SDK version `4.0.0`. For lower versions of the SDK, please see [Form Recognizer Samples for V3.1.X][formrecov3_samples].
 
 ### Extract Layout
 Extract text, selection marks, table structures, styles, and paragraphs, along with their bounding region coordinates from documents.
@@ -278,8 +278,8 @@ for (int i = 0; i < result.Tables.Count; i++)
 
 For more information and samples see [here][extract_layout].
 
-### Use the General Prebuilt Document Model
-Analyze text, selection marks, table structures, styles, paragraphs, and key-value pairs from documents using the general prebuilt document model.
+### Use the Prebuilt General Document Model
+Analyze text, selection marks, table structures, styles, paragraphs, and key-value pairs from documents using the prebuilt general document model.
 
 ```C# Snippet:FormRecognizerAnalyzePrebuiltDocumentFromUriAsync
 Uri fileUri = new Uri("<fileUri>");
@@ -651,7 +651,7 @@ await client.DeleteDocumentModelAsync(newCreatedModel.ModelId);
 For more information and samples see [here][manage_models].
 
 ### Manage Models Synchronously
-Manage the models stored in your account with a synchronous API. Note that we are still making an asynchronous call to `WaitForCompletionAsync` when building a model, since this method does not have a synchronous counterpart. For more information on long-running operations, see [Long-Running Operations](#long-running-operations).
+Manage the models stored in your account with a synchronous API.
 
 ```C# Snippet:FormRecognizerSampleManageModels
 var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
@@ -750,7 +750,7 @@ To learn more about other logging mechanisms see [Diagnostics Samples][logging].
 Samples showing how to use the Cognitive Services Form Recognizer library are available in this GitHub repository. Samples are provided for each main functional area:
 
 - [Extract the layout of a document][extract_layout]
-- [Analyze with the prebuilt document model][analyze_prebuilt_document]
+- [Analyze with the prebuilt general document model][analyze_prebuilt_document]
 - [Analyze with the prebuilt read model][analyze_prebuilt_read]
 - [Analyze a document with a custom model][analyze_custom]
 - [Analyze a document with a prebuilt model][analyze_prebuilt]
@@ -759,8 +759,9 @@ Samples showing how to use the Cognitive Services Form Recognizer library are av
 - [Get and List document model operations][get_and_list]
 - [Compose a model][compose_model]
 - [Copy a custom model between Form Recognizer resources][copy_custom_models]
+- [Mock a client for testing using the Moq library][mock_client]
 
-> Note that these samples use SDK `V4.0.0-beta.X`. For lower versions of the SDK, please see [Form Recognizer Samples for V3.1.X][formrecov3_samples].
+> Note that these samples use SDK version `4.0.0`. For lower versions of the SDK, please see [Form Recognizer Samples for V3.1.X][formrecov3_samples].
 
 ## Contributing
 
@@ -817,6 +818,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [copy_custom_models]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_CopyCustomModel.md
 [compose_model]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_ModelCompose.md
 [get_and_list]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_GetAndListOperations.md
+[mock_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/formrecognizer/Azure.AI.FormRecognizer/samples/Sample_MockClient.md
 
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/

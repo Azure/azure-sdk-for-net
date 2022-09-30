@@ -9,7 +9,7 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Azure Confidential Ledger management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.ConfidentialLedger --prerelease
+dotnet add package Azure.ResourceManager.ConfidentialLedger
 ```
 
 ### Prerequisites

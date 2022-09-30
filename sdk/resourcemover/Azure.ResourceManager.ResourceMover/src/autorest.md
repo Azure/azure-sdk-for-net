@@ -40,9 +40,9 @@ rename-mapping:
   MoveResourceInputType.MoveResourceSourceId: MoverResourceSourceId
   NicIpConfigurationResourceSettings.primary: IsPrimary
   NicIpConfigurationResourceSettings.privateIpAddress: -|ip-address
-  OperationStatus.endTime: EndOn|datetime
+  OperationStatus.endTime: EndOn
   OperationStatus.id: -|arm-id
-  OperationStatus.startTime: startOn|datetime
+  OperationStatus.startTime: startOn
   PrepareRequest.moveResourceInputType: MoverResourceInputType
   PrepareRequest.moveResources: MoverResources
   ResourceMoveRequest.moveResourceInputType: MoverResourceInputType
@@ -100,6 +100,7 @@ rename-mapping:
   UnresolvedDependency: MoverUnresolvedDependency
   UnresolvedDependencyCollection: MoverUnresolvedDependencyList
   ZoneRedundant: ResourceZoneRedundantSetting
+  VirtualNetworkResourceSettings: MoverVirtualNetworkResourceSettings
 
 override-operation-name:
   MoveCollections_ListRequiredFor: GetRequiredForResources
@@ -147,6 +148,24 @@ directive:
       $.DiscardRequest.properties.moveResources.items['x-ms-format'] = 'arm-id';
       $.BulkRemoveRequest.properties.moveResources.items['x-ms-format'] = 'arm-id';
       $.VirtualMachineResourceSettings.properties.userManagedIdentities.items['x-ms-format'] = 'arm-id';
+      $.MoveCollectionProperties.properties.errors['x-nullable'] = true;
+      $.MoveResourceProperties.properties.targetId['x-nullable'] = true;
+      $.MoveResourceProperties.properties.existingTargetId['x-nullable'] = true;
+      $.MoveResourceProperties.properties.errors['x-nullable'] = true;
+      $.VirtualNetworkResourceSettings.properties.addressSpace['x-nullable'] = true;
+      $.VirtualNetworkResourceSettings.properties.dnsServers['x-nullable'] = true;
+      $.VirtualNetworkResourceSettings.properties.subnets['x-nullable'] = true;
+      $.VirtualNetworkResourceSettings.properties.tags['x-nullable'] = true;
+      $.MoveResourceStatus.properties.jobStatus['x-nullable'] = true;
+      $.MoveResourceStatus.properties.errors['x-nullable'] = true;
+      $.SubnetResourceSettings.properties.networkSecurityGroup['x-nullable'] = true;
+      $.MoveResourceCollection.properties.summaryCollection['x-nullable'] = true;
+      $.OperationStatus.properties.error['x-nullable'] = true;
+      $.OperationStatusError.properties.additionalInfo['x-nullable'] = true;
+      $.MoveResourceProperties.properties.resourceSettings['x-nullable'] = true;
+      $.MoveResourceProperties.properties.sourceResourceSettings['x-nullable'] = true;
+      $.OperationStatus.properties.startTime['format'] = 'date-time';
+      $.OperationStatus.properties.endTime['format'] = 'date-time';
   - from: resourcemovercollection.json
     where: $.parameters
     transform: >
@@ -160,4 +179,6 @@ directive:
     where: $.paths..parameters[?(@.name === 'moveResourceName')]
     transform: >
       $['x-ms-client-name'] = 'moverResourceName';
+  - remove-operation: MoveCollections_Delete
+    reason: The azure-asyncoperation header will change when polling
 ```

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A class representing a collection of <see cref="TopicEventSubscriptionResource" /> and their operations.
-    /// Each <see cref="TopicEventSubscriptionResource" /> in the collection will belong to the same instance of <see cref="TopicResource" />.
-    /// To get a <see cref="TopicEventSubscriptionCollection" /> instance call the GetTopicEventSubscriptions method from an instance of <see cref="TopicResource" />.
+    /// Each <see cref="TopicEventSubscriptionResource" /> in the collection will belong to the same instance of <see cref="EventGridTopicResource" />.
+    /// To get a <see cref="TopicEventSubscriptionCollection" /> instance call the GetTopicEventSubscriptions method from an instance of <see cref="EventGridTopicResource" />.
     /// </summary>
     public partial class TopicEventSubscriptionCollection : ArmCollection, IEnumerable<TopicEventSubscriptionResource>, IAsyncEnumerable<TopicEventSubscriptionResource>
     {
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.EventGrid
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != TopicResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, TopicResource.ResourceType), nameof(id));
+            if (id.ResourceType != EventGridTopicResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EventGridTopicResource.ResourceType), nameof(id));
         }
 
         /// <summary>

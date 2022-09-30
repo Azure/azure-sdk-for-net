@@ -8,10 +8,10 @@
         "Authorization": "Sanitized",
         "Content-Length": "146",
         "Content-Type": "application/json",
-        "traceparent": "00-e40e8134faa5774f5372bcdddc1ec0b9-445865448909c031-00",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220904.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "traceparent": "00-06164c9cd8aabfe2fd9ece31addff24f-039242fd007f3184-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "0d26bc16fcb73e8812a7821ea983c53a",
+        "x-ms-client-request-id": "7ba7f4b3c7fbd6fa6d400937755881e2",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -28,38 +28,38 @@
       "ResponseHeaders": {
         "Content-Length": "2",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Mon, 05 Sep 2022 03:06:04 GMT",
-        "Location": "https://atlas.microsoft.com/search/fuzzy/batch/59e35836-02df-4c15-9d9a-0ddead3b1fe5?api-version=1.0",
+        "Date": "Thu, 08 Sep 2022 18:56:12 GMT",
+        "Location": "https://atlas.microsoft.com/search/fuzzy/batch/8cf2af6b-baed-4e5d-9cb6-f28dfbe7cb95?api-version=1.0",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: E9C18FBB784F4AE0A89AFDF9574A98B0 Ref B: PAOEDGE0511 Ref C: 2022-09-05T03:06:04Z"
+        "X-MSEdge-Ref": "Ref A: E7F4BD842C9B4940B5337C035F413DC0 Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:13Z"
       },
       "ResponseBody": "\u0022\u0022"
     },
     {
-      "RequestUri": "https://atlas.microsoft.com/search/fuzzy/batch/59e35836-02df-4c15-9d9a-0ddead3b1fe5?api-version=1.0",
+      "RequestUri": "https://atlas.microsoft.com/search/fuzzy/batch/8cf2af6b-baed-4e5d-9cb6-f28dfbe7cb95?api-version=1.0",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220904.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
         "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
-        "x-ms-client-request-id": "981f4b456eefc1259e3ee92347fbd93e",
+        "x-ms-client-request-id": "a349990f3b18743c17936254adc86965",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": null,
       "StatusCode": 200,
       "ResponseHeaders": {
         "Content-Type": "application/json",
-        "Date": "Mon, 05 Sep 2022 03:06:04 GMT",
+        "Date": "Thu, 08 Sep 2022 18:56:13 GMT",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "Transfer-Encoding": "chunked",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-azuremaps-region": "West US 2",
-        "X-MSEdge-Ref": "Ref A: 782EC1714EC04716AA6C11DBB51DF000 Ref B: PAOEDGE0511 Ref C: 2022-09-05T03:06:04Z"
+        "X-MSEdge-Ref": "Ref A: 01C3680594114A559949D6AC987102FB Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:13Z"
       },
       "ResponseBody": {
         "batchItems": [
@@ -69,10 +69,10 @@
               "summary": {
                 "query": "coffee",
                 "queryType": "NON_NEAR",
-                "queryTime": 15,
+                "queryTime": 7,
                 "numResults": 10,
                 "offset": 0,
-                "totalResults": 1792342,
+                "totalResults": 1792334,
                 "fuzzyLevel": 1,
                 "geoBias": {
                   "lat": 25.04,
@@ -105,11 +105,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -174,11 +174,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -245,11 +245,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9/pub"
+                            "name": "caf\u00E9"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "caf\u00E9"
+                            "name": "caf\u00E9/pub"
                           }
                         ]
                       }
@@ -371,12 +371,12 @@
                 },
                 {
                   "type": "POI",
-                  "id": "158009001710928",
+                  "id": "158009001771249",
                   "score": 2.5745120049,
                   "dist": 220.2243834162837,
-                  "info": "search:ta:158009001710928-TW",
+                  "info": "search:ta:158009001771249-TW",
                   "poi": {
-                    "name": "ou li jiang ka fei guan",
+                    "name": "fa dou ka fei qing shi guan",
                     "categorySet": [
                       {
                         "id": 9376006
@@ -442,12 +442,12 @@
                 },
                 {
                   "type": "POI",
-                  "id": "158009001771249",
+                  "id": "158009001710928",
                   "score": 2.5745120049,
                   "dist": 220.2243834162837,
-                  "info": "search:ta:158009001771249-TW",
+                  "info": "search:ta:158009001710928-TW",
                   "poi": {
-                    "name": "fa dou ka fei qing shi guan",
+                    "name": "ou li jiang ka fei guan",
                     "categorySet": [
                       {
                         "id": 9376006
@@ -813,7 +813,7 @@
                 "queryTime": 8,
                 "numResults": 10,
                 "offset": 0,
-                "totalResults": 377233,
+                "totalResults": 377230,
                 "fuzzyLevel": 1,
                 "geoBias": {
                   "lat": 25.04,
@@ -845,11 +845,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -915,11 +915,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -992,11 +992,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1062,11 +1062,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1134,11 +1134,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1206,11 +1206,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1282,11 +1282,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1354,11 +1354,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1425,11 +1425,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1496,11 +1496,11 @@
                         "names": [
                           {
                             "nameLocale": "en-US",
-                            "name": "pizza"
+                            "name": "restaurant"
                           },
                           {
                             "nameLocale": "en-US",
-                            "name": "restaurant"
+                            "name": "pizza"
                           }
                         ]
                       }
@@ -1557,6 +1557,6 @@
     "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
     "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
     "ENDPOINT_URL": "https://atlas.microsoft.com",
-    "RandomSeed": "745747258"
+    "RandomSeed": "1827730417"
   }
 }

@@ -18,10 +18,6 @@ public-clients: false
 head-as-boolean: false
 resource-model-requires-type: false
 
-suppress-abstract-base-class:
-- FirewallPolicyRule
-- FirewallPolicyRuleCollectionInfo
-
 rename-mapping:
   ConnectionMonitor: ConnectionMonitorInput
   ConnectionMonitorResult: ConnectionMonitor
@@ -127,7 +123,7 @@ format-by-name-rules:
   'validatedCertData': 'any'
   'publicCertData': 'any'
   '*Guid': 'uuid'
-  '*Time': 'datetime'
+  '*Time': 'date-time'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 

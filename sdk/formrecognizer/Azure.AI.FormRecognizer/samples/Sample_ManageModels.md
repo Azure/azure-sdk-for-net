@@ -20,7 +20,7 @@ var client = new DocumentModelAdministrationClient(new Uri(endpoint), credential
 ## Operations
 
 Operations related to models that can be executed are:
-- Check the number of custom models in the FormRecognizer resource account, and the maximum number of custom models that can be stored there.
+- Check the number of custom models in the Form Recognizer resource account, and the maximum number of custom models that can be stored there.
 - List the models currently stored in the resource account.
 - Get a specific model using the model's Id.
 - Delete a custom model from the resource account.
