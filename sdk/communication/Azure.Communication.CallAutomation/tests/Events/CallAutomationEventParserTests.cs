@@ -253,21 +253,18 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         [Test]
         public void PlayCancelledEventParsed_Test()
         {
-            RecognizeFailed @event = CallAutomationModelFactory.PlayCancelled(
+            RecognizeFailed @event = CallAutomationModelFactory.PlayCanceled(
                 operationContext: "operationContext",
-                resultInformation: new ResultInformation(code: 400, subCode: 8508, message: "Action failed, the operation was cancelled."),
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId");
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCancelled");
-            if (parsedEvent is PlayCancelled playCancelled)
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.PlayCanceled");
+            if (parsedEvent is PlayCanceled playCancelled)
             {
                 Assert.AreEqual("correlationId", playCancelled.CorrelationId);
                 Assert.AreEqual("serverCallId", playCancelled.ServerCallId);
-                Assert.AreEqual(400, playCancelled.ResultInformation.Code);
-                Assert.AreEqual(ReasonCodeName.OperationCancelled, playCancelled.ReasonCodeName);
             }
             else
             {
@@ -337,21 +334,18 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         [Test]
         public void RecognizeCancelledEventParsed_Test()
         {
-            RecognizeFailed @event = CallAutomationModelFactory.RecognizeCancelled(
+            RecognizeFailed @event = CallAutomationModelFactory.RecognizeCanceled(
                 operationContext: "operationContext",
-                resultInformation: new ResultInformation(code: 400, subCode: 8508, message: "Action failed, the operation was cancelled."),
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId");
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
-            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCancelled");
-            if (parsedEvent is RecognizeCancelled recognizeCancelled)
+            var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.RecognizeCanceled");
+            if (parsedEvent is RecognizeCanceled recognizeCancelled)
             {
                 Assert.AreEqual("correlationId", recognizeCancelled.CorrelationId);
                 Assert.AreEqual("serverCallId", recognizeCancelled.ServerCallId);
-                Assert.AreEqual(400, recognizeCancelled.ResultInformation.Code);
-                Assert.AreEqual(ReasonCodeName.OperationCancelled, recognizeCancelled.ReasonCodeName);
             }
             else
             {

@@ -31,7 +31,6 @@ namespace Azure.Communication.CallAutomation
         private const string PlayInvalidFileFormatValue = "8535";
 
         private const string CompletedSuccessfullyValue = "0";
-        private const string OperationCancelledValue = "8508";
         private const string UnspecifiedErrorValue = "9999";
 
         /// <summary> Action failed, initial silence timeout reached. </summary>
@@ -55,8 +54,6 @@ namespace Azure.Communication.CallAutomation
         public static ReasonCodeName CompletedSuccessfully { get; } = new ReasonCodeName (CompletedSuccessfullyValue);
         /// <summary> Unknown internal server error. </summary>
         public static ReasonCodeName UnspecifiedError { get; } = new ReasonCodeName(UnspecifiedErrorValue);
-        /// <summary> Action falied, the operation was cancelled. </summary>
-        public static ReasonCodeName OperationCancelled { get; } = new ReasonCodeName(OperationCancelledValue);
 
         /// <summary> Determines if two <see cref="ReasonCodeName"/> values are the same. </summary>
         public static bool operator ==(ReasonCodeName left, ReasonCodeName right) => left.Equals(right);
