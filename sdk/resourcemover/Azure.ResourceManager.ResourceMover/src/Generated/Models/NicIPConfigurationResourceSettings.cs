@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <param name="privateIPAddress"> Gets or sets the private IP address of the network interface IP Configuration. </param>
         /// <param name="privateIPAllocationMethod"> Gets or sets the private IP address allocation method. </param>
         /// <param name="subnet"> Defines reference to subnet. </param>
-        /// <param name="isValidateOnly"> Gets or sets a value indicating whether this IP configuration is the primary. </param>
+        /// <param name="isPrimary"> Gets or sets a value indicating whether this IP configuration is the primary. </param>
         /// <param name="loadBalancerBackendAddressPools"> Gets or sets the references of the load balancer backend address pools. </param>
         /// <param name="loadBalancerNatRules"> Gets or sets the references of the load balancer NAT rules. </param>
         /// <param name="publicIP"> Defines reference to a public IP. </param>
-        internal NicIPConfigurationResourceSettings(string name, IPAddress privateIPAddress, string privateIPAllocationMethod, SubnetReferenceInfo subnet, bool? isValidateOnly, IList<LoadBalancerBackendAddressPoolReferenceInfo> loadBalancerBackendAddressPools, IList<LoadBalancerNatRuleReferenceInfo> loadBalancerNatRules, PublicIPReferenceInfo publicIP)
+        internal NicIPConfigurationResourceSettings(string name, IPAddress privateIPAddress, string privateIPAllocationMethod, SubnetReferenceInfo subnet, bool? isPrimary, IList<LoadBalancerBackendAddressPoolReferenceInfo> loadBalancerBackendAddressPools, IList<LoadBalancerNatRuleReferenceInfo> loadBalancerNatRules, PublicIPReferenceInfo publicIP)
         {
             Name = name;
             PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
-            IsValidateOnly = isValidateOnly;
+            IsPrimary = isPrimary;
             LoadBalancerBackendAddressPools = loadBalancerBackendAddressPools;
             LoadBalancerNatRules = loadBalancerNatRules;
             PublicIP = publicIP;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <summary> Defines reference to subnet. </summary>
         public SubnetReferenceInfo Subnet { get; set; }
         /// <summary> Gets or sets a value indicating whether this IP configuration is the primary. </summary>
-        public bool? IsValidateOnly { get; set; }
+        public bool? IsPrimary { get; set; }
         /// <summary> Gets or sets the references of the load balancer backend address pools. </summary>
         public IList<LoadBalancerBackendAddressPoolReferenceInfo> LoadBalancerBackendAddressPools { get; }
         /// <summary> Gets or sets the references of the load balancer NAT rules. </summary>

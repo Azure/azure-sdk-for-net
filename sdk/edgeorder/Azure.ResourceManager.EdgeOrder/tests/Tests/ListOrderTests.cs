@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.EdgeOrder.Models;
 using Azure.ResourceManager.EdgeOrder.Tests.Helpers;
@@ -16,7 +17,7 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
     {
         private string _resourceGroupName;
         private string _orderItemName;
-        private OrderItemResourceCollection _orderItemResourceCollection;
+        private EdgeOrderItemCollection _orderItemResourceCollection;
 
         public ListOrderTests() : base(true)
         {
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             CleanupResourceGroups();
 
             //Get
-            Response<OrderItemResource> getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(_orderItemName);
-            OrderItemResource orderItemResource = getOrderItemResourceResponse.Value;
+            Response<EdgeOrderItemResource> getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(_orderItemName);
+            EdgeOrderItemResource orderItemResource = getOrderItemResourceResponse.Value;
 
             //Cancel
-            _ = await orderItemResource.CancelOrderItemAsync(
-                new CancellationReason("Test Order item cancelled"));
+            _ = await orderItemResource.CancelAsync(
+                new EdgeOrderItemCancellationReason("Test Order item cancelled"));
 
             //Get
             getOrderItemResourceResponse = await _orderItemResourceCollection.GetAsync(_orderItemName);
@@ -61,20 +62,20 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
             await EdgeOrderManagementTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,
                 EdgeOrderManagementTestUtilities.DefaultResourceLocation, _resourceGroupName);
             _orderItemName = Recording.GenerateAssetName("Sdk-OrderItem");
-            ContactDetails contactDetails = GetDefaultContactDetails();
-            ShippingAddress shippingAddress = GetDefaultShippingAddress();
-            AddressProperties addressProperties = new(contactDetails)
+            EdgeOrderAddressContactDetails contactDetails = GetDefaultContactDetails();
+            EdgeOrderShippingAddress shippingAddress = GetDefaultShippingAddress();
+            EdgeOrderItemAddressProperties addressProperties = new(contactDetails)
             {
                 ShippingAddress = shippingAddress
             };
-            AddressDetails addressDetails = new(addressProperties);
+            EdgeOrderItemAddressDetails addressDetails = new(addressProperties);
             string orderId = string.Format(EdgeOrderManagementTestUtilities.OrderArmIdFormat,
                 TestEnvironment.SubscriptionId, _resourceGroupName, EdgeOrderManagementTestUtilities.DefaultResourceLocation, _orderItemName);
 
             _orderItemResourceCollection = await GetOrderItemResourceCollectionAsync(_resourceGroupName);
 
-            OrderItemResourceData orderItemResourceData = new(EdgeOrderManagementTestUtilities.DefaultResourceLocation,
-                GetDefaultOrderItemDetails(), addressDetails, orderId);
+            EdgeOrderItemData orderItemResourceData = new(EdgeOrderManagementTestUtilities.DefaultResourceLocation,
+                GetDefaultOrderItemDetails(), addressDetails, new ResourceIdentifier(orderId));
 
             // Create
             var createOrderItemOperation = await _orderItemResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, _orderItemName, orderItemResourceData);
@@ -84,8 +85,8 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         [TestCase, Order(1)]
         public async Task TestListOrdersAtSubscriptionLevel()
         {
-            AsyncPageable<OrderResource> orders = EdgeOrderExtensions.GetOrderResourcesAsync(Subscription);
-            List<OrderResource> ordersResult = await orders.ToEnumerableAsync();
+            AsyncPageable<EdgeOrderResource> orders = EdgeOrderExtensions.GetEdgeOrdersAsync(Subscription);
+            List<EdgeOrderResource> ordersResult = await orders.ToEnumerableAsync();
 
             Assert.NotNull(ordersResult);
             Assert.IsTrue(ordersResult.Count >= 1);
@@ -95,8 +96,8 @@ namespace Azure.ResourceManager.EdgeOrder.Tests.Tests
         public async Task TestListOrdersAtResourceGroupLevel()
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(_resourceGroupName);
-            AsyncPageable<OrderResource> orders = EdgeOrderExtensions.GetOrderResourcesAsync(rg);
-            List<OrderResource> ordersResult = await orders.ToEnumerableAsync();
+            AsyncPageable<EdgeOrderResource> orders = EdgeOrderExtensions.GetEdgeOrdersAsync(rg);
+            List<EdgeOrderResource> ordersResult = await orders.ToEnumerableAsync();
 
             Assert.NotNull(ordersResult);
             Assert.IsTrue(ordersResult.Count >= 1);

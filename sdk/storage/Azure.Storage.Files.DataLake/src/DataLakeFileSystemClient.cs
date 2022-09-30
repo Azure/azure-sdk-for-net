@@ -3532,7 +3532,8 @@ namespace Azure.Storage.Files.DataLake
             {
                 DataLakeUriBuilder datalakeUriBuilder = new DataLakeUriBuilder(Uri)
                 {
-                    // erase parameters unrelated to container
+                    // erase parameters unrelated to the endpoint
+                    FileSystemName = null,
                     DirectoryOrFilePath = null,
                     Snapshot = null,
                 };

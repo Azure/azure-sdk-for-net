@@ -28,7 +28,7 @@ namespace Azure.Communication.JobRouter
         /// <summary>
         /// Id of the job.
         /// </summary>
-        public string JobId { get; set; }
+        public string JobId { get; }
 
         /// <summary> Reason code for cancelled or closed jobs. </summary>
         public string DispositionCode { get; set; }

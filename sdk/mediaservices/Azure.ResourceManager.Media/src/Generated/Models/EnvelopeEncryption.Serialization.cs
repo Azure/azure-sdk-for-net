@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(CustomKeyAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customKeyAcquisitionUrlTemplate");
-                writer.WriteStringValue(CustomKeyAcquisitionUriTemplate.AbsoluteUri);
+                writer.WriteStringValue(CustomKeyAcquisitionUriTemplate);
             }
             writer.WriteEndObject();
         }
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.Media.Models
             Optional<MediaEnabledProtocols> enabledProtocols = default;
             Optional<IList<MediaTrackSelection>> clearTracks = default;
             Optional<StreamingPolicyContentKeys> contentKeys = default;
-            Optional<Uri> customKeyAcquisitionUriTemplate = default;
+            Optional<string> customKeyAcquisitionUriTemplate = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledProtocols"))
@@ -90,12 +89,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("customKeyAcquisitionUrlTemplate"))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        customKeyAcquisitionUriTemplate = null;
-                        continue;
-                    }
-                    customKeyAcquisitionUriTemplate = new Uri(property.Value.GetString());
+                    customKeyAcquisitionUriTemplate = property.Value.GetString();
                     continue;
                 }
             }

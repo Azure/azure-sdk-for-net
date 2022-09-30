@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Initializes a new instance of ProductLine. </summary>
         internal ProductLine()
         {
-            ImageInformation = new ChangeTrackingList<ImageInformation>();
+            ImageInformation = new ChangeTrackingList<EdgeOrderProductImageInformation>();
             FilterableProperties = new ChangeTrackingList<FilterableProperty>();
             Products = new ChangeTrackingList<EdgeOrderProduct>();
         }
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
         /// <param name="filterableProperties"> list of filters supported for a product. </param>
         /// <param name="products"> List of products in the product line. </param>
-        internal ProductLine(string displayName, ProductDescription description, IReadOnlyList<ImageInformation> imageInformation, CostInformation costInformation, AvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<EdgeOrderProduct> products)
+        internal ProductLine(string displayName, ProductDescription description, IReadOnlyList<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IReadOnlyList<FilterableProperty> filterableProperties, IReadOnlyList<EdgeOrderProduct> products)
         {
             DisplayName = displayName;
             Description = description;
@@ -47,11 +47,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <summary> Description related to the product system. </summary>
         public ProductDescription Description { get; }
         /// <summary> Image information for the product system. </summary>
-        public IReadOnlyList<ImageInformation> ImageInformation { get; }
+        public IReadOnlyList<EdgeOrderProductImageInformation> ImageInformation { get; }
         /// <summary> Cost information for the product system. </summary>
-        public CostInformation CostInformation { get; }
+        public EdgeOrderProductCostInformation CostInformation { get; }
         /// <summary> Availability information of the product system. </summary>
-        public AvailabilityInformation AvailabilityInformation { get; }
+        public ProductAvailabilityInformation AvailabilityInformation { get; }
         /// <summary> Hierarchy information of a product. </summary>
         public HierarchyInformation HierarchyInformation { get; }
         /// <summary> list of filters supported for a product. </summary>

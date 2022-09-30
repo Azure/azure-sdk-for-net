@@ -24,14 +24,19 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         {
         }
 
-        private TextAnalyticsClient CreateTestClient(HttpPipelineTransport transport)
+        private TextAnalyticsClient CreateTestClient(HttpPipelineTransport transport, TextAnalyticsClientOptions.ServiceVersion version = TextAnalyticsClientOptions.ServiceVersion.V3_1, bool instrument = false)
         {
-            var options = new TextAnalyticsClientOptions(TextAnalyticsClientOptions.ServiceVersion.V3_1)
+            var options = new TextAnalyticsClientOptions(version)
             {
                 Transport = transport
             };
 
             var client = new TextAnalyticsClient(new Uri(s_endpoint), new AzureKeyCredential(s_apiKey), options);
+
+            if (instrument)
+            {
+                return InstrumentClient(client);
+            }
 
             return client;
         }
@@ -731,6 +736,84 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await operation.UpdateStatusAsync());
             Assert.AreEqual("InternalServerError", ex.ErrorCode);
             Assert.IsTrue(ex.Message.Contains("Some error"));
+        }
+
+        [Test]
+        public void AnalyzeActionsNotSupported()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = CreateTestClient(new MockTransport(), TextAnalyticsClientOptions.ServiceVersion.V3_0, true);
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeActionsAsync(new[] { "test" }, new TextAnalyticsActions
+            {
+                AnalyzeSentimentActions = new[]
+                {
+                    new AnalyzeSentimentAction(),
+                },
+            }));
+
+            if (IsAsync)
+            {
+                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeActionsAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
+            else
+            {
+                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeActions is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
+        }
+
+        [Test]
+        public void RecognizePiiEntitiesNotSupported()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = CreateTestClient(new MockTransport(), TextAnalyticsClientOptions.ServiceVersion.V3_0, true);
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.RecognizePiiEntitiesAsync("test"));
+
+            if (IsAsync)
+            {
+                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntitiesAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
+            else
+            {
+                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntities is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
+        }
+
+        [Test]
+        public void RecognizePiiEntitiesBatchNotSupported()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = CreateTestClient(new MockTransport(), TextAnalyticsClientOptions.ServiceVersion.V3_0, true);
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.RecognizePiiEntitiesBatchAsync(new[] { "test" }));
+
+            if (IsAsync)
+            {
+                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntitiesBatchAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
+            else
+            {
+                Assert.AreEqual("TextAnalyticsClient.RecognizePiiEntitiesBatch is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
+        }
+
+        [Test]
+        public void StartAnalyzeHealthcareEntitiesNotSupported()
+        {
+            TestDiagnostics = false;
+
+            TextAnalyticsClient client = CreateTestClient(new MockTransport(), TextAnalyticsClientOptions.ServiceVersion.V3_0, true);
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartAnalyzeHealthcareEntitiesAsync(new[] { "test" }));
+
+            if (IsAsync)
+            {
+                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeHealthcareEntitiesAsync is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
+            else
+            {
+                Assert.AreEqual("TextAnalyticsClient.StartAnalyzeHealthcareEntities is not available in API version v3.0. Use service API version v3.1 or newer.", ex.Message);
+            }
         }
 
         private static string GetString(RequestContent content)

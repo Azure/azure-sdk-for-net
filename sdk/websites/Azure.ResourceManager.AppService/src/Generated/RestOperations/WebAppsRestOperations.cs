@@ -677,11 +677,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateBackupRequest(string subscriptionId, string resourceGroupName, string name, BackupRequest request)
+        internal HttpMessage CreateBackupRequest(string subscriptionId, string resourceGroupName, string name, WebAppBackupInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -692,12 +692,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/backup", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -706,26 +706,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="request"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
+        /// <param name="info"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupItemData>> BackupAsync(string subscriptionId, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupData>> BackupAsync(string subscriptionId, string resourceGroupName, string name, WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateBackupRequest(subscriptionId, resourceGroupName, name, request);
+            using var message = CreateBackupRequest(subscriptionId, resourceGroupName, name, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BackupItemData value = default;
+                        WebAppBackupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupItemData.DeserializeBackupItemData(document.RootElement);
+                        value = WebAppBackupData.DeserializeWebAppBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -737,26 +737,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="request"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
+        /// <param name="info"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupItemData> Backup(string subscriptionId, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupData> Backup(string subscriptionId, string resourceGroupName, string name, WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateBackupRequest(subscriptionId, resourceGroupName, name, request);
+            using var message = CreateBackupRequest(subscriptionId, resourceGroupName, name, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BackupItemData value = default;
+                        WebAppBackupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupItemData.DeserializeBackupItemData(document.RootElement);
+                        value = WebAppBackupData.DeserializeWebAppBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -767,8 +767,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListBackupsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -779,8 +779,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/backups", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupItemCollection>> ListBackupsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupItemListResult>> ListBackupsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -804,9 +804,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupItemCollection> ListBackups(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupItemListResult> ListBackups(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -833,9 +833,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -846,8 +846,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetBackupStatusRequest(string subscriptionId, string resourceGroupName, string name, string backupId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -859,8 +859,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/backups/", false);
             uri.AppendPath(backupId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="backupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupItemData>> GetBackupStatusAsync(string subscriptionId, string resourceGroupName, string name, string backupId, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupData>> GetBackupStatusAsync(string subscriptionId, string resourceGroupName, string name, string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -886,13 +886,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemData value = default;
+                        WebAppBackupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupItemData.DeserializeBackupItemData(document.RootElement);
+                        value = WebAppBackupData.DeserializeWebAppBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BackupItemData)null, message.Response);
+                    return Response.FromValue((WebAppBackupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="backupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupItemData> GetBackupStatus(string subscriptionId, string resourceGroupName, string name, string backupId, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupData> GetBackupStatus(string subscriptionId, string resourceGroupName, string name, string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -919,13 +919,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemData value = default;
+                        WebAppBackupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupItemData.DeserializeBackupItemData(document.RootElement);
+                        value = WebAppBackupData.DeserializeWebAppBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BackupItemData)null, message.Response);
+                    return Response.FromValue((WebAppBackupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -934,8 +934,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteBackupRequest(string subscriptionId, string resourceGroupName, string name, string backupId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -947,8 +947,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/backups/", false);
             uri.AppendPath(backupId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -1005,11 +1005,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListBackupStatusSecretsRequest(string subscriptionId, string resourceGroupName, string name, string backupId, BackupRequest request)
+        internal HttpMessage CreateListBackupStatusSecretsRequest(string subscriptionId, string resourceGroupName, string name, string backupId, WebAppBackupInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -1022,12 +1022,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(backupId, true);
             uri.AppendPath("/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1037,27 +1037,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="backupId"> ID of backup. </param>
-        /// <param name="request"> Information on backup request. </param>
+        /// <param name="info"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="backupId"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="backupId"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupItemData>> ListBackupStatusSecretsAsync(string subscriptionId, string resourceGroupName, string name, string backupId, BackupRequest request, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupData>> ListBackupStatusSecretsAsync(string subscriptionId, string resourceGroupName, string name, string backupId, WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateListBackupStatusSecretsRequest(subscriptionId, resourceGroupName, name, backupId, request);
+            using var message = CreateListBackupStatusSecretsRequest(subscriptionId, resourceGroupName, name, backupId, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BackupItemData value = default;
+                        WebAppBackupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupItemData.DeserializeBackupItemData(document.RootElement);
+                        value = WebAppBackupData.DeserializeWebAppBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1070,27 +1070,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of web app. </param>
         /// <param name="backupId"> ID of backup. </param>
-        /// <param name="request"> Information on backup request. </param>
+        /// <param name="info"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="backupId"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="backupId"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupItemData> ListBackupStatusSecrets(string subscriptionId, string resourceGroupName, string name, string backupId, BackupRequest request, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupData> ListBackupStatusSecrets(string subscriptionId, string resourceGroupName, string name, string backupId, WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateListBackupStatusSecretsRequest(subscriptionId, resourceGroupName, name, backupId, request);
+            using var message = CreateListBackupStatusSecretsRequest(subscriptionId, resourceGroupName, name, backupId, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BackupItemData value = default;
+                        WebAppBackupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupItemData.DeserializeBackupItemData(document.RootElement);
+                        value = WebAppBackupData.DeserializeWebAppBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1101,8 +1101,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateRestoreRequest(string subscriptionId, string resourceGroupName, string name, string backupId, RestoreRequestInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -1115,12 +1115,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(backupId, true);
             uri.AppendPath("/restore", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(info);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1186,8 +1186,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListBasicPublishingCredentialsPoliciesRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -1198,8 +1198,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/basicPublishingCredentialsPolicies", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -1265,8 +1265,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetFtpAllowedRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -1277,8 +1277,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/basicPublishingCredentialsPolicies/ftp", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -1348,8 +1348,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateFtpAllowedRequest(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -1360,12 +1360,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/basicPublishingCredentialsPolicies/ftp", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1435,8 +1435,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetScmAllowedRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -1447,8 +1447,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/basicPublishingCredentialsPolicies/scm", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -1518,8 +1518,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateScmAllowedRequest(string subscriptionId, string resourceGroupName, string name, CsmPublishingCredentialsPoliciesEntityData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -1530,12 +1530,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/basicPublishingCredentialsPolicies/scm", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1605,8 +1605,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListConfigurationsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -1617,8 +1617,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -1684,8 +1684,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateApplicationSettingsRequest(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary appSettings)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -1696,12 +1696,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/appsettings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(appSettings);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1771,8 +1771,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListApplicationSettingsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -1783,8 +1783,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/appsettings/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -1850,8 +1850,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateAuthSettingsRequest(string subscriptionId, string resourceGroupName, string name, SiteAuthSettings siteAuthSettings)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -1862,12 +1862,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/authsettings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteAuthSettings);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1937,8 +1937,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetAuthSettingsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -1949,8 +1949,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/authsettings/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -2016,8 +2016,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateAuthSettingsV2Request(string subscriptionId, string resourceGroupName, string name, SiteAuthSettingsV2 siteAuthSettingsV2)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -2028,12 +2028,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/authsettingsV2", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(siteAuthSettingsV2);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -2103,8 +2103,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetAuthSettingsV2Request(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -2115,8 +2115,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/authsettingsV2/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -2182,8 +2182,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateAzureStorageAccountsRequest(string subscriptionId, string resourceGroupName, string name, AzureStoragePropertyDictionary azureStorageAccounts)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -2194,12 +2194,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/azurestorageaccounts", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(azureStorageAccounts);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -2269,8 +2269,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListAzureStorageAccountsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -2281,8 +2281,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/azurestorageaccounts/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -2345,11 +2345,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateBackupConfigurationRequest(string subscriptionId, string resourceGroupName, string name, BackupRequest request)
+        internal HttpMessage CreateUpdateBackupConfigurationRequest(string subscriptionId, string resourceGroupName, string name, WebAppBackupInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -2360,12 +2360,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/backup", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(request);
-            request0.Content = content;
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -2374,26 +2374,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="request"> Edited backup configuration. </param>
+        /// <param name="info"> Edited backup configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupRequest>> UpdateBackupConfigurationAsync(string subscriptionId, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupInfo>> UpdateBackupConfigurationAsync(string subscriptionId, string resourceGroupName, string name, WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateUpdateBackupConfigurationRequest(subscriptionId, resourceGroupName, name, request);
+            using var message = CreateUpdateBackupConfigurationRequest(subscriptionId, resourceGroupName, name, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BackupRequest value = default;
+                        WebAppBackupInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupRequest.DeserializeBackupRequest(document.RootElement);
+                        value = WebAppBackupInfo.DeserializeWebAppBackupInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2405,26 +2405,26 @@ namespace Azure.ResourceManager.AppService
         /// <param name="subscriptionId"> Your Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
-        /// <param name="request"> Edited backup configuration. </param>
+        /// <param name="info"> Edited backup configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupRequest> UpdateBackupConfiguration(string subscriptionId, string resourceGroupName, string name, BackupRequest request, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupInfo> UpdateBackupConfiguration(string subscriptionId, string resourceGroupName, string name, WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateUpdateBackupConfigurationRequest(subscriptionId, resourceGroupName, name, request);
+            using var message = CreateUpdateBackupConfigurationRequest(subscriptionId, resourceGroupName, name, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BackupRequest value = default;
+                        WebAppBackupInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupRequest.DeserializeBackupRequest(document.RootElement);
+                        value = WebAppBackupInfo.DeserializeWebAppBackupInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2435,8 +2435,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteBackupConfigurationRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -2447,8 +2447,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/backup", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -2504,8 +2504,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetBackupConfigurationRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -2516,8 +2516,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/backup/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -2529,7 +2529,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupRequest>> GetBackupConfigurationAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupInfo>> GetBackupConfigurationAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2541,9 +2541,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupRequest value = default;
+                        WebAppBackupInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupRequest.DeserializeBackupRequest(document.RootElement);
+                        value = WebAppBackupInfo.DeserializeWebAppBackupInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2558,7 +2558,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupRequest> GetBackupConfiguration(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupInfo> GetBackupConfiguration(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2570,9 +2570,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupRequest value = default;
+                        WebAppBackupInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupRequest.DeserializeBackupRequest(document.RootElement);
+                        value = WebAppBackupInfo.DeserializeWebAppBackupInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2583,8 +2583,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetAppSettingsKeyVaultReferencesRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -2595,8 +2595,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/configreferences/appsettings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -2608,7 +2608,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiKVReferenceCollection>> GetAppSettingsKeyVaultReferencesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceApiKeyVaultReferenceList>> GetAppSettingsKeyVaultReferencesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2620,9 +2620,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2637,7 +2637,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiKVReferenceCollection> GetAppSettingsKeyVaultReferences(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<AppServiceApiKeyVaultReferenceList> GetAppSettingsKeyVaultReferences(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2649,9 +2649,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2662,8 +2662,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetAppSettingKeyVaultReferenceRequest(string subscriptionId, string resourceGroupName, string name, string appSettingKey)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -2675,8 +2675,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/config/configreferences/appsettings/", false);
             uri.AppendPath(appSettingKey, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -2750,8 +2750,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSiteConnectionStringKeyVaultReferencesRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -2762,8 +2762,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/configreferences/connectionstrings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -2775,7 +2775,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiKVReferenceCollection>> GetSiteConnectionStringKeyVaultReferencesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceApiKeyVaultReferenceList>> GetSiteConnectionStringKeyVaultReferencesAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2787,9 +2787,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2804,7 +2804,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiKVReferenceCollection> GetSiteConnectionStringKeyVaultReferences(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<AppServiceApiKeyVaultReferenceList> GetSiteConnectionStringKeyVaultReferences(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -2816,9 +2816,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2829,8 +2829,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSiteConnectionStringKeyVaultReferenceRequest(string subscriptionId, string resourceGroupName, string name, string connectionStringKey)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -2842,8 +2842,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/config/configreferences/connectionstrings/", false);
             uri.AppendPath(connectionStringKey, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -2917,8 +2917,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateConnectionStringsRequest(string subscriptionId, string resourceGroupName, string name, ConnectionStringDictionary connectionStrings)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -2929,12 +2929,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/connectionstrings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(connectionStrings);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -3004,8 +3004,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListConnectionStringsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -3016,8 +3016,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/connectionstrings/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -3083,8 +3083,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetDiagnosticLogsConfigurationRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -3095,8 +3095,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/logs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -3166,8 +3166,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateDiagnosticLogsConfigRequest(string subscriptionId, string resourceGroupName, string name, SiteLogsConfigData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -3178,12 +3178,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/logs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -3253,8 +3253,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateMetadataRequest(string subscriptionId, string resourceGroupName, string name, AppServiceConfigurationDictionary metadata)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -3265,12 +3265,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/metadata", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(metadata);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -3340,8 +3340,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListMetadataRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -3352,8 +3352,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/metadata/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -3419,8 +3419,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListPublishingCredentialsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -3431,8 +3431,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/publishingcredentials/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -3485,11 +3485,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateSitePushSettingsRequest(string subscriptionId, string resourceGroupName, string name, PushSettings pushSettings)
+        internal HttpMessage CreateUpdateSitePushSettingsRequest(string subscriptionId, string resourceGroupName, string name, WebAppPushSettings pushSettings)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -3500,12 +3500,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/pushsettings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(pushSettings);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -3518,7 +3518,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="pushSettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PushSettings>> UpdateSitePushSettingsAsync(string subscriptionId, string resourceGroupName, string name, PushSettings pushSettings, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppPushSettings>> UpdateSitePushSettingsAsync(string subscriptionId, string resourceGroupName, string name, WebAppPushSettings pushSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3531,9 +3531,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        PushSettings value = default;
+                        WebAppPushSettings value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PushSettings.DeserializePushSettings(document.RootElement);
+                        value = WebAppPushSettings.DeserializeWebAppPushSettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3549,7 +3549,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="pushSettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PushSettings> UpdateSitePushSettings(string subscriptionId, string resourceGroupName, string name, PushSettings pushSettings, CancellationToken cancellationToken = default)
+        public Response<WebAppPushSettings> UpdateSitePushSettings(string subscriptionId, string resourceGroupName, string name, WebAppPushSettings pushSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3562,9 +3562,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        PushSettings value = default;
+                        WebAppPushSettings value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PushSettings.DeserializePushSettings(document.RootElement);
+                        value = WebAppPushSettings.DeserializeWebAppPushSettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3575,8 +3575,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSitePushSettingsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -3587,8 +3587,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/pushsettings/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -3600,7 +3600,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PushSettings>> ListSitePushSettingsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppPushSettings>> ListSitePushSettingsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3612,9 +3612,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        PushSettings value = default;
+                        WebAppPushSettings value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PushSettings.DeserializePushSettings(document.RootElement);
+                        value = WebAppPushSettings.DeserializeWebAppPushSettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3629,7 +3629,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PushSettings> ListSitePushSettings(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<WebAppPushSettings> ListSitePushSettings(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -3641,9 +3641,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        PushSettings value = default;
+                        WebAppPushSettings value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PushSettings.DeserializePushSettings(document.RootElement);
+                        value = WebAppPushSettings.DeserializeWebAppPushSettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -3654,8 +3654,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSlotConfigurationNamesRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -3666,8 +3666,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/slotConfigNames", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -3737,8 +3737,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateSlotConfigurationNamesRequest(string subscriptionId, string resourceGroupName, string name, SlotConfigNamesResourceData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -3749,12 +3749,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/slotConfigNames", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -3824,8 +3824,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetConfigurationRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -3836,8 +3836,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/web", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -3907,8 +3907,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateConfigurationRequest(string subscriptionId, string resourceGroupName, string name, SiteConfigData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -3919,12 +3919,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/web", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -3994,8 +3994,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateConfigurationRequest(string subscriptionId, string resourceGroupName, string name, SiteConfigData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -4006,12 +4006,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/web", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -4081,8 +4081,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListConfigurationSnapshotInfoRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -4093,8 +4093,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/config/web/snapshots", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -4160,8 +4160,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetConfigurationSnapshotRequest(string subscriptionId, string resourceGroupName, string name, string snapshotId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -4173,8 +4173,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/config/web/snapshots/", false);
             uri.AppendPath(snapshotId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -4248,8 +4248,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateRecoverSiteConfigurationSnapshotRequest(string subscriptionId, string resourceGroupName, string name, string snapshotId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -4262,8 +4262,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(snapshotId, true);
             uri.AppendPath("/recover", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -4323,8 +4323,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetWebSiteContainerLogsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -4335,8 +4335,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/containerlogs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/octet-stream");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/octet-stream");
             _userAgent.Apply(message);
             return message;
         }
@@ -4402,8 +4402,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetContainerLogsZipRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -4414,8 +4414,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/containerlogs/zip/download", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/zip");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/zip");
             _userAgent.Apply(message);
             return message;
         }
@@ -4481,8 +4481,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListContinuousWebJobsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -4493,8 +4493,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/continuouswebjobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -4560,8 +4560,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetContinuousWebJobRequest(string subscriptionId, string resourceGroupName, string name, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -4573,8 +4573,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/continuouswebjobs/", false);
             uri.AppendPath(webJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -4648,8 +4648,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteContinuousWebJobRequest(string subscriptionId, string resourceGroupName, string name, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -4661,8 +4661,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/continuouswebjobs/", false);
             uri.AppendPath(webJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -4724,8 +4724,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStartContinuousWebJobRequest(string subscriptionId, string resourceGroupName, string name, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -4738,8 +4738,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(webJobName, true);
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -4799,8 +4799,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStopContinuousWebJobRequest(string subscriptionId, string resourceGroupName, string name, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -4813,8 +4813,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(webJobName, true);
             uri.AppendPath("/stop", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -4874,8 +4874,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListDeploymentsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -4886,8 +4886,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -4899,7 +4899,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentCollection>> ListDeploymentsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppDeploymentListResult>> ListDeploymentsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -4911,9 +4911,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentCollection value = default;
+                        WebAppDeploymentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentCollection.DeserializeDeploymentCollection(document.RootElement);
+                        value = WebAppDeploymentListResult.DeserializeWebAppDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4928,7 +4928,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentCollection> ListDeployments(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<WebAppDeploymentListResult> ListDeployments(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -4940,9 +4940,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentCollection value = default;
+                        WebAppDeploymentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentCollection.DeserializeDeploymentCollection(document.RootElement);
+                        value = WebAppDeploymentListResult.DeserializeWebAppDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -4953,8 +4953,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetDeploymentRequest(string subscriptionId, string resourceGroupName, string name, string id)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -4966,8 +4966,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -4980,7 +4980,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentData>> GetDeploymentAsync(string subscriptionId, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppDeploymentData>> GetDeploymentAsync(string subscriptionId, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -4993,13 +4993,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentData value = default;
+                        WebAppDeploymentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentData.DeserializeDeploymentData(document.RootElement);
+                        value = WebAppDeploymentData.DeserializeWebAppDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DeploymentData)null, message.Response);
+                    return Response.FromValue((WebAppDeploymentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -5013,7 +5013,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentData> GetDeployment(string subscriptionId, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default)
+        public Response<WebAppDeploymentData> GetDeployment(string subscriptionId, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5026,23 +5026,23 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentData value = default;
+                        WebAppDeploymentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentData.DeserializeDeploymentData(document.RootElement);
+                        value = WebAppDeploymentData.DeserializeWebAppDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DeploymentData)null, message.Response);
+                    return Response.FromValue((WebAppDeploymentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateDeploymentRequest(string subscriptionId, string resourceGroupName, string name, string id, DeploymentData data)
+        internal HttpMessage CreateCreateDeploymentRequest(string subscriptionId, string resourceGroupName, string name, string id, WebAppDeploymentData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -5054,12 +5054,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -5073,7 +5073,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentData>> CreateDeploymentAsync(string subscriptionId, string resourceGroupName, string name, string id, DeploymentData data, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppDeploymentData>> CreateDeploymentAsync(string subscriptionId, string resourceGroupName, string name, string id, WebAppDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5087,9 +5087,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentData value = default;
+                        WebAppDeploymentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentData.DeserializeDeploymentData(document.RootElement);
+                        value = WebAppDeploymentData.DeserializeWebAppDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -5106,7 +5106,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentData> CreateDeployment(string subscriptionId, string resourceGroupName, string name, string id, DeploymentData data, CancellationToken cancellationToken = default)
+        public Response<WebAppDeploymentData> CreateDeployment(string subscriptionId, string resourceGroupName, string name, string id, WebAppDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5120,9 +5120,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentData value = default;
+                        WebAppDeploymentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentData.DeserializeDeploymentData(document.RootElement);
+                        value = WebAppDeploymentData.DeserializeWebAppDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -5133,8 +5133,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteDeploymentRequest(string subscriptionId, string resourceGroupName, string name, string id)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -5146,8 +5146,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -5209,8 +5209,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListDeploymentLogRequest(string subscriptionId, string resourceGroupName, string name, string id)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -5223,8 +5223,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(id, true);
             uri.AppendPath("/log", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -5237,7 +5237,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentData>> ListDeploymentLogAsync(string subscriptionId, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppDeploymentData>> ListDeploymentLogAsync(string subscriptionId, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5250,9 +5250,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentData value = default;
+                        WebAppDeploymentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentData.DeserializeDeploymentData(document.RootElement);
+                        value = WebAppDeploymentData.DeserializeWebAppDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -5268,7 +5268,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentData> ListDeploymentLog(string subscriptionId, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default)
+        public Response<WebAppDeploymentData> ListDeploymentLog(string subscriptionId, string resourceGroupName, string name, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5281,9 +5281,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentData value = default;
+                        WebAppDeploymentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentData.DeserializeDeploymentData(document.RootElement);
+                        value = WebAppDeploymentData.DeserializeWebAppDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -5294,8 +5294,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDiscoverBackupRequest(string subscriptionId, string resourceGroupName, string name, RestoreRequestInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -5306,12 +5306,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/discoverbackup", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(info);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -5381,8 +5381,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListDomainOwnershipIdentifiersRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -5393,8 +5393,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/domainOwnershipIdentifiers", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -5406,7 +5406,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IdentifierCollection>> ListDomainOwnershipIdentifiersAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceIdentifierListResult>> ListDomainOwnershipIdentifiersAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5418,9 +5418,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierCollection value = default;
+                        AppServiceIdentifierListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IdentifierCollection.DeserializeIdentifierCollection(document.RootElement);
+                        value = AppServiceIdentifierListResult.DeserializeAppServiceIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -5435,7 +5435,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IdentifierCollection> ListDomainOwnershipIdentifiers(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<AppServiceIdentifierListResult> ListDomainOwnershipIdentifiers(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5447,9 +5447,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierCollection value = default;
+                        AppServiceIdentifierListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IdentifierCollection.DeserializeIdentifierCollection(document.RootElement);
+                        value = AppServiceIdentifierListResult.DeserializeAppServiceIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -5460,8 +5460,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetDomainOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -5473,8 +5473,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/domainOwnershipIdentifiers/", false);
             uri.AppendPath(domainOwnershipIdentifierName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -5487,7 +5487,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IdentifierData>> GetDomainOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceIdentifierData>> GetDomainOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5500,13 +5500,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierData value = default;
+                        AppServiceIdentifierData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IdentifierData.DeserializeIdentifierData(document.RootElement);
+                        value = AppServiceIdentifierData.DeserializeAppServiceIdentifierData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IdentifierData)null, message.Response);
+                    return Response.FromValue((AppServiceIdentifierData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -5520,7 +5520,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IdentifierData> GetDomainOwnershipIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
+        public Response<AppServiceIdentifierData> GetDomainOwnershipIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5533,23 +5533,23 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierData value = default;
+                        AppServiceIdentifierData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IdentifierData.DeserializeIdentifierData(document.RootElement);
+                        value = AppServiceIdentifierData.DeserializeAppServiceIdentifierData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IdentifierData)null, message.Response);
+                    return Response.FromValue((AppServiceIdentifierData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateDomainOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData data)
+        internal HttpMessage CreateCreateOrUpdateDomainOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, AppServiceIdentifierData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -5561,12 +5561,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/domainOwnershipIdentifiers/", false);
             uri.AppendPath(domainOwnershipIdentifierName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -5580,7 +5580,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IdentifierData>> CreateOrUpdateDomainOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceIdentifierData>> CreateOrUpdateDomainOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, AppServiceIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5594,9 +5594,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierData value = default;
+                        AppServiceIdentifierData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IdentifierData.DeserializeIdentifierData(document.RootElement);
+                        value = AppServiceIdentifierData.DeserializeAppServiceIdentifierData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -5613,7 +5613,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IdentifierData> CreateOrUpdateDomainOwnershipIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
+        public Response<AppServiceIdentifierData> CreateOrUpdateDomainOwnershipIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, AppServiceIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5627,9 +5627,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierData value = default;
+                        AppServiceIdentifierData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IdentifierData.DeserializeIdentifierData(document.RootElement);
+                        value = AppServiceIdentifierData.DeserializeAppServiceIdentifierData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -5640,8 +5640,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteDomainOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -5653,8 +5653,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/domainOwnershipIdentifiers/", false);
             uri.AppendPath(domainOwnershipIdentifierName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -5713,11 +5713,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateDomainOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData data)
+        internal HttpMessage CreateUpdateDomainOwnershipIdentifierRequest(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, AppServiceIdentifierData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -5729,12 +5729,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/domainOwnershipIdentifiers/", false);
             uri.AppendPath(domainOwnershipIdentifierName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -5748,7 +5748,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IdentifierData>> UpdateDomainOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceIdentifierData>> UpdateDomainOwnershipIdentifierAsync(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, AppServiceIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5762,9 +5762,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierData value = default;
+                        AppServiceIdentifierData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IdentifierData.DeserializeIdentifierData(document.RootElement);
+                        value = AppServiceIdentifierData.DeserializeAppServiceIdentifierData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -5781,7 +5781,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IdentifierData> UpdateDomainOwnershipIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
+        public Response<AppServiceIdentifierData> UpdateDomainOwnershipIdentifier(string subscriptionId, string resourceGroupName, string name, string domainOwnershipIdentifierName, AppServiceIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5795,9 +5795,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierData value = default;
+                        AppServiceIdentifierData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IdentifierData.DeserializeIdentifierData(document.RootElement);
+                        value = AppServiceIdentifierData.DeserializeAppServiceIdentifierData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -5808,8 +5808,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetMSDeployStatusRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -5820,8 +5820,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/extensions/MSDeploy", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -5888,11 +5888,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateMSDeployOperationRequest(string subscriptionId, string resourceGroupName, string name, MSDeploy msDeploy)
+        internal HttpMessage CreateCreateMSDeployOperationRequest(string subscriptionId, string resourceGroupName, string name, WebAppMSDeploy msDeploy)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -5903,12 +5903,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/extensions/MSDeploy", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(msDeploy);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -5921,7 +5921,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="msDeploy"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateMSDeployOperationAsync(string subscriptionId, string resourceGroupName, string name, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateMSDeployOperationAsync(string subscriptionId, string resourceGroupName, string name, WebAppMSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5947,7 +5947,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="msDeploy"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateMSDeployOperation(string subscriptionId, string resourceGroupName, string name, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        public Response CreateMSDeployOperation(string subscriptionId, string resourceGroupName, string name, WebAppMSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -5968,8 +5968,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetMSDeployLogRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -5980,8 +5980,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/extensions/MSDeploy/log", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -5993,7 +5993,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MSDeployLog>> GetMSDeployLogAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppMSDeployLog>> GetMSDeployLogAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -6005,9 +6005,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        WebAppMSDeployLog value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = WebAppMSDeployLog.DeserializeWebAppMSDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -6022,7 +6022,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MSDeployLog> GetMSDeployLog(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<WebAppMSDeployLog> GetMSDeployLog(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -6034,9 +6034,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        WebAppMSDeployLog value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = WebAppMSDeployLog.DeserializeWebAppMSDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -6047,8 +6047,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListFunctionsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -6059,8 +6059,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/functions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -6126,8 +6126,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetFunctionsAdminTokenRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -6138,8 +6138,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/functions/admin/token", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -6205,8 +6205,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetFunctionRequest(string subscriptionId, string resourceGroupName, string name, string functionName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -6218,8 +6218,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/functions/", false);
             uri.AppendPath(functionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -6293,8 +6293,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateFunctionRequest(string subscriptionId, string resourceGroupName, string name, string functionName, FunctionEnvelopeData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -6306,12 +6306,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/functions/", false);
             uri.AppendPath(functionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -6375,8 +6375,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteFunctionRequest(string subscriptionId, string resourceGroupName, string name, string functionName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -6388,8 +6388,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/functions/", false);
             uri.AppendPath(functionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -6449,8 +6449,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateFunctionSecretRequest(string subscriptionId, string resourceGroupName, string name, string functionName, string keyName, KeyInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -6464,12 +6464,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/keys/", false);
             uri.AppendPath(keyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(info);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -6549,8 +6549,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteFunctionSecretRequest(string subscriptionId, string resourceGroupName, string name, string functionName, string keyName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -6564,8 +6564,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/keys/", false);
             uri.AppendPath(keyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -6629,8 +6629,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListFunctionKeysRequest(string subscriptionId, string resourceGroupName, string name, string functionName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -6643,8 +6643,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(functionName, true);
             uri.AppendPath("/listkeys", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -6714,8 +6714,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListFunctionSecretsRequest(string subscriptionId, string resourceGroupName, string name, string functionName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -6728,8 +6728,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(functionName, true);
             uri.AppendPath("/listsecrets", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -6799,8 +6799,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListHostKeysRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -6811,8 +6811,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/host/default/listkeys", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -6824,7 +6824,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HostKeys>> ListHostKeysAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<FunctionAppHostKeys>> ListHostKeysAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -6836,9 +6836,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        HostKeys value = default;
+                        FunctionAppHostKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HostKeys.DeserializeHostKeys(document.RootElement);
+                        value = FunctionAppHostKeys.DeserializeFunctionAppHostKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -6853,7 +6853,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HostKeys> ListHostKeys(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<FunctionAppHostKeys> ListHostKeys(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -6865,9 +6865,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        HostKeys value = default;
+                        FunctionAppHostKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HostKeys.DeserializeHostKeys(document.RootElement);
+                        value = FunctionAppHostKeys.DeserializeFunctionAppHostKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -6878,8 +6878,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSyncStatusRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -6890,8 +6890,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/host/default/listsyncstatus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -6947,8 +6947,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateSyncFunctionsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -6959,8 +6959,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/host/default/sync", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -7016,8 +7016,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateHostSecretRequest(string subscriptionId, string resourceGroupName, string name, string keyType, string keyName, KeyInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -7031,12 +7031,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/", false);
             uri.AppendPath(keyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(info);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -7116,8 +7116,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteHostSecretRequest(string subscriptionId, string resourceGroupName, string name, string keyType, string keyName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -7131,8 +7131,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/", false);
             uri.AppendPath(keyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -7196,8 +7196,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListHostNameBindingsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -7208,8 +7208,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/hostNameBindings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -7275,8 +7275,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetHostNameBindingRequest(string subscriptionId, string resourceGroupName, string name, string hostName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -7288,8 +7288,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/hostNameBindings/", false);
             uri.AppendPath(hostName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -7363,8 +7363,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateHostNameBindingRequest(string subscriptionId, string resourceGroupName, string name, string hostName, HostNameBindingData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -7376,12 +7376,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/hostNameBindings/", false);
             uri.AppendPath(hostName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -7455,8 +7455,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteHostNameBindingRequest(string subscriptionId, string resourceGroupName, string name, string hostName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -7468,8 +7468,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/hostNameBindings/", false);
             uri.AppendPath(hostName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -7531,8 +7531,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetHybridConnectionRequest(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -7546,8 +7546,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/relays/", false);
             uri.AppendPath(relayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -7625,8 +7625,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateHybridConnectionRequest(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -7640,12 +7640,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/relays/", false);
             uri.AppendPath(relayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -7723,8 +7723,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteHybridConnectionRequest(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -7738,8 +7738,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/relays/", false);
             uri.AppendPath(relayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -7803,8 +7803,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateHybridConnectionRequest(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnectionData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -7818,12 +7818,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/relays/", false);
             uri.AppendPath(relayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -7901,8 +7901,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListHybridConnectionsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -7913,8 +7913,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/hybridConnectionRelays", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -7980,8 +7980,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListRelayServiceConnectionsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -7992,8 +7992,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/hybridconnection", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -8059,8 +8059,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetRelayServiceConnectionRequest(string subscriptionId, string resourceGroupName, string name, string entityName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -8072,8 +8072,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/hybridconnection/", false);
             uri.AppendPath(entityName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -8147,8 +8147,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateRelayServiceConnectionRequest(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -8160,12 +8160,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/hybridconnection/", false);
             uri.AppendPath(entityName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -8239,8 +8239,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteRelayServiceConnectionRequest(string subscriptionId, string resourceGroupName, string name, string entityName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -8252,8 +8252,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/hybridconnection/", false);
             uri.AppendPath(entityName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -8313,8 +8313,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateRelayServiceConnectionRequest(string subscriptionId, string resourceGroupName, string name, string entityName, RelayServiceConnectionEntityData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -8326,12 +8326,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/hybridconnection/", false);
             uri.AppendPath(entityName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(data);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -8405,8 +8405,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceIdentifiersRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -8417,8 +8417,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/instances", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -8484,8 +8484,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetInstanceInfoRequest(string subscriptionId, string resourceGroupName, string name, string instanceId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -8497,8 +8497,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/instances/", false);
             uri.AppendPath(instanceId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -8569,11 +8569,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetInstanceMSDeployStatusRequest(string subscriptionId, string resourceGroupName, string name, string instanceId)
+        internal HttpMessage CreateGetInstanceMsDeployStatusRequest(string subscriptionId, string resourceGroupName, string name, string instanceId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -8586,8 +8586,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/extensions/MSDeploy", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -8600,14 +8600,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MSDeployStatusData>> GetInstanceMSDeployStatusAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<MSDeployStatusData>> GetInstanceMsDeployStatusAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
-            using var message = CreateGetInstanceMSDeployStatusRequest(subscriptionId, resourceGroupName, name, instanceId);
+            using var message = CreateGetInstanceMsDeployStatusRequest(subscriptionId, resourceGroupName, name, instanceId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -8633,14 +8633,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MSDeployStatusData> GetInstanceMSDeployStatus(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
+        public Response<MSDeployStatusData> GetInstanceMsDeployStatus(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
-            using var message = CreateGetInstanceMSDeployStatusRequest(subscriptionId, resourceGroupName, name, instanceId);
+            using var message = CreateGetInstanceMsDeployStatusRequest(subscriptionId, resourceGroupName, name, instanceId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -8658,11 +8658,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateInstanceMSDeployOperationRequest(string subscriptionId, string resourceGroupName, string name, string instanceId, MSDeploy msDeploy)
+        internal HttpMessage CreateCreateInstanceMSDeployOperationRequest(string subscriptionId, string resourceGroupName, string name, string instanceId, WebAppMSDeploy msDeploy)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -8675,12 +8675,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/extensions/MSDeploy", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(msDeploy);
-            request0.Content = content;
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -8694,7 +8694,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="msDeploy"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateInstanceMSDeployOperationAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateInstanceMSDeployOperationAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, WebAppMSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -8722,7 +8722,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="instanceId"/> or <paramref name="msDeploy"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateInstanceMSDeployOperation(string subscriptionId, string resourceGroupName, string name, string instanceId, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        public Response CreateInstanceMSDeployOperation(string subscriptionId, string resourceGroupName, string name, string instanceId, WebAppMSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -8744,8 +8744,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetInstanceMSDeployLogRequest(string subscriptionId, string resourceGroupName, string name, string instanceId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -8758,8 +8758,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/extensions/MSDeploy/log", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -8772,7 +8772,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MSDeployLog>> GetInstanceMSDeployLogAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppMSDeployLog>> GetInstanceMSDeployLogAsync(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -8785,9 +8785,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        WebAppMSDeployLog value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = WebAppMSDeployLog.DeserializeWebAppMSDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -8803,7 +8803,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MSDeployLog> GetInstanceMSDeployLog(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
+        public Response<WebAppMSDeployLog> GetInstanceMSDeployLog(string subscriptionId, string resourceGroupName, string name, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -8816,9 +8816,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        WebAppMSDeployLog value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = WebAppMSDeployLog.DeserializeWebAppMSDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -8829,8 +8829,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceProcessesRequest(string subscriptionId, string resourceGroupName, string name, string instanceId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -8843,8 +8843,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/processes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -8914,8 +8914,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetInstanceProcessRequest(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -8929,8 +8929,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/processes/", false);
             uri.AppendPath(processId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -9008,8 +9008,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteInstanceProcessRequest(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -9023,8 +9023,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/processes/", false);
             uri.AppendPath(processId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -9088,8 +9088,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetInstanceProcessDumpRequest(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -9104,8 +9104,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(processId, true);
             uri.AppendPath("/dump", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -9175,8 +9175,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceProcessModulesRequest(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -9191,8 +9191,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(processId, true);
             uri.AppendPath("/modules", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -9266,8 +9266,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetInstanceProcessModuleRequest(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId, string baseAddress)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -9283,8 +9283,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/modules/", false);
             uri.AppendPath(baseAddress, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -9366,8 +9366,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceProcessThreadsRequest(string subscriptionId, string resourceGroupName, string name, string instanceId, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -9382,8 +9382,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(processId, true);
             uri.AppendPath("/threads", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -9457,8 +9457,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateIsCloneableRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -9469,8 +9469,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/iscloneable", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -9536,8 +9536,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSiteBackupsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -9548,8 +9548,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/listbackups", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -9561,7 +9561,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupItemCollection>> ListSiteBackupsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupItemListResult>> ListSiteBackupsAsync(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -9573,9 +9573,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -9590,7 +9590,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupItemCollection> ListSiteBackups(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupItemListResult> ListSiteBackups(string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -9602,9 +9602,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -9615,8 +9615,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSyncFunctionTriggersRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -9627,8 +9627,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/listsyncfunctiontriggerstatus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -9694,8 +9694,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateMigrateStorageRequest(string subscriptionId, string resourceGroupName, string name, string subscriptionName, StorageMigrationContent content)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -9707,12 +9707,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/migrate", false);
             uri.AppendQuery("subscriptionName", subscriptionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content);
-            request0.Content = content0;
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -9776,8 +9776,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateMigrateMySqlRequest(string subscriptionId, string resourceGroupName, string name, MigrateMySqlContent content)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -9788,12 +9788,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/migratemysql", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content);
-            request0.Content = content0;
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -9853,8 +9853,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetMigrateMySqlStatusRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -9865,8 +9865,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/migratemysql/status", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -9932,8 +9932,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSwiftVirtualNetworkConnectionRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -9944,8 +9944,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/networkConfig/virtualNetwork", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -10015,8 +10015,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckRequest(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -10027,12 +10027,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/networkConfig/virtualNetwork", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -10108,8 +10108,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteSwiftVirtualNetworkRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -10120,8 +10120,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/networkConfig/virtualNetwork", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -10177,8 +10177,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateSwiftVirtualNetworkConnectionWithCheckRequest(string subscriptionId, string resourceGroupName, string name, SwiftVirtualNetworkData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -10189,12 +10189,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/networkConfig/virtualNetwork", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -10270,8 +10270,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListNetworkFeaturesRequest(string subscriptionId, string resourceGroupName, string name, string view)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -10283,8 +10283,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/networkFeatures/", false);
             uri.AppendPath(view, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -10354,8 +10354,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetNetworkTraceOperationRequest(string subscriptionId, string resourceGroupName, string name, string operationId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -10367,8 +10367,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/networkTrace/operationresults/", false);
             uri.AppendPath(operationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -10381,7 +10381,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTraceOperationAsync(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<WebAppNetworkTrace>>> GetNetworkTraceOperationAsync(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -10395,12 +10395,12 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10418,7 +10418,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<NetworkTrace>> GetNetworkTraceOperation(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<WebAppNetworkTrace>> GetNetworkTraceOperation(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -10432,12 +10432,12 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10450,8 +10450,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStartWebSiteNetworkTraceRequest(string subscriptionId, string resourceGroupName, string name, int? durationInSeconds, int? maxFrameLength, string sasUrl)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -10474,8 +10474,8 @@ namespace Azure.ResourceManager.AppService
                 uri.AppendQuery("sasUrl", sasUrl, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -10547,8 +10547,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStartWebSiteNetworkTraceOperationRequest(string subscriptionId, string resourceGroupName, string name, int? durationInSeconds, int? maxFrameLength, string sasUrl)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -10571,8 +10571,8 @@ namespace Azure.ResourceManager.AppService
                 uri.AppendQuery("sasUrl", sasUrl, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -10636,8 +10636,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStopWebSiteNetworkTraceRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -10648,8 +10648,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/networkTrace/stop", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -10707,8 +10707,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetNetworkTracesRequest(string subscriptionId, string resourceGroupName, string name, string operationId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -10720,8 +10720,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/networkTrace/", false);
             uri.AppendPath(operationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -10734,7 +10734,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTracesAsync(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<WebAppNetworkTrace>>> GetNetworkTracesAsync(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -10747,12 +10747,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10770,7 +10770,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<NetworkTrace>> GetNetworkTraces(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<WebAppNetworkTrace>> GetNetworkTraces(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -10783,12 +10783,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10801,8 +10801,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetNetworkTraceOperationV2Request(string subscriptionId, string resourceGroupName, string name, string operationId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -10814,8 +10814,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/networkTraces/current/operationresults/", false);
             uri.AppendPath(operationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -10828,7 +10828,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTraceOperationV2Async(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<WebAppNetworkTrace>>> GetNetworkTraceOperationV2Async(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -10842,12 +10842,12 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10865,7 +10865,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<NetworkTrace>> GetNetworkTraceOperationV2(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<WebAppNetworkTrace>> GetNetworkTraceOperationV2(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -10879,12 +10879,12 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10897,8 +10897,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetNetworkTracesV2Request(string subscriptionId, string resourceGroupName, string name, string operationId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -10910,8 +10910,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/networkTraces/", false);
             uri.AppendPath(operationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -10924,7 +10924,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTracesV2Async(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<WebAppNetworkTrace>>> GetNetworkTracesV2Async(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -10937,12 +10937,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10960,7 +10960,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<NetworkTrace>> GetNetworkTracesV2(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<WebAppNetworkTrace>> GetNetworkTracesV2(string subscriptionId, string resourceGroupName, string name, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -10973,12 +10973,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -10991,8 +10991,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGenerateNewSitePublishingPasswordRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -11003,8 +11003,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/newpassword", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -11062,8 +11062,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListPerfMonCountersRequest(string subscriptionId, string resourceGroupName, string name, string filter)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -11078,8 +11078,8 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("$filter", filter, false);
             }
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -11147,8 +11147,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSitePhpErrorLogFlagRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -11159,8 +11159,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/phplogging", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -11226,8 +11226,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListPremierAddOnsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -11238,8 +11238,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/premieraddons", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -11305,8 +11305,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetPremierAddOnRequest(string subscriptionId, string resourceGroupName, string name, string premierAddOnName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -11318,8 +11318,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/premieraddons/", false);
             uri.AppendPath(premierAddOnName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -11393,8 +11393,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateAddPremierAddOnRequest(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, PremierAddOnData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -11406,12 +11406,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/premieraddons/", false);
             uri.AppendPath(premierAddOnName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -11485,8 +11485,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeletePremierAddOnRequest(string subscriptionId, string resourceGroupName, string name, string premierAddOnName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -11498,8 +11498,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/premieraddons/", false);
             uri.AppendPath(premierAddOnName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -11559,8 +11559,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdatePremierAddOnRequest(string subscriptionId, string resourceGroupName, string name, string premierAddOnName, PremierAddOnPatchResource premierAddOn)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -11572,12 +11572,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/premieraddons/", false);
             uri.AppendPath(premierAddOnName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(premierAddOn);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(premierAddOn);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -11651,8 +11651,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetPrivateAccessRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -11663,8 +11663,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/privateAccess/virtualNetworks", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -11734,8 +11734,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreatePutPrivateAccessVnetRequest(string subscriptionId, string resourceGroupName, string name, PrivateAccessData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -11746,12 +11746,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/privateAccess/virtualNetworks", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -11821,8 +11821,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetPrivateEndpointConnectionListRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -11833,8 +11833,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/privateEndpointConnections", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -11900,8 +11900,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetPrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -11913,8 +11913,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/privateEndpointConnections/", false);
             uri.AppendPath(privateEndpointConnectionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -11988,8 +11988,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateApproveOrRejectPrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -12001,12 +12001,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/privateEndpointConnections/", false);
             uri.AppendPath(privateEndpointConnectionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(info);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -12072,8 +12072,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeletePrivateEndpointConnectionRequest(string subscriptionId, string resourceGroupName, string name, string privateEndpointConnectionName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -12085,8 +12085,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/privateEndpointConnections/", false);
             uri.AppendPath(privateEndpointConnectionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -12150,8 +12150,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetPrivateLinkResourcesRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -12162,8 +12162,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/privateLinkResources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -12229,8 +12229,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListProcessesRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -12241,8 +12241,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/processes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -12308,8 +12308,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetProcessRequest(string subscriptionId, string resourceGroupName, string name, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -12321,8 +12321,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/processes/", false);
             uri.AppendPath(processId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -12396,8 +12396,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteProcessRequest(string subscriptionId, string resourceGroupName, string name, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -12409,8 +12409,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/processes/", false);
             uri.AppendPath(processId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -12470,8 +12470,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetProcessDumpRequest(string subscriptionId, string resourceGroupName, string name, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -12484,8 +12484,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(processId, true);
             uri.AppendPath("/dump", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -12551,8 +12551,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListProcessModulesRequest(string subscriptionId, string resourceGroupName, string name, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -12565,8 +12565,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(processId, true);
             uri.AppendPath("/modules", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -12636,8 +12636,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetProcessModuleRequest(string subscriptionId, string resourceGroupName, string name, string processId, string baseAddress)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -12651,8 +12651,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/modules/", false);
             uri.AppendPath(baseAddress, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -12730,8 +12730,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListProcessThreadsRequest(string subscriptionId, string resourceGroupName, string name, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -12744,8 +12744,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(processId, true);
             uri.AppendPath("/threads", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -12815,8 +12815,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListPublicCertificatesRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -12827,8 +12827,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/publicCertificates", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -12894,8 +12894,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetPublicCertificateRequest(string subscriptionId, string resourceGroupName, string name, string publicCertificateName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -12907,8 +12907,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/publicCertificates/", false);
             uri.AppendPath(publicCertificateName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -12982,8 +12982,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdatePublicCertificateRequest(string subscriptionId, string resourceGroupName, string name, string publicCertificateName, PublicCertificateData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -12995,12 +12995,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/publicCertificates/", false);
             uri.AppendPath(publicCertificateName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -13074,8 +13074,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeletePublicCertificateRequest(string subscriptionId, string resourceGroupName, string name, string publicCertificateName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -13087,8 +13087,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/publicCertificates/", false);
             uri.AppendPath(publicCertificateName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -13150,8 +13150,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListPublishingProfileXmlWithSecretsRequest(string subscriptionId, string resourceGroupName, string name, CsmPublishingProfile publishingProfileOptions)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -13162,12 +13162,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/publishxml", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/xml");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(publishingProfileOptions);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(publishingProfileOptions);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -13233,8 +13233,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateResetProductionSlotConfigRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -13245,8 +13245,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/resetSlotConfig", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -13302,8 +13302,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateRestartRequest(string subscriptionId, string resourceGroupName, string name, bool? softRestart, bool? synchronous)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -13322,8 +13322,8 @@ namespace Azure.ResourceManager.AppService
                 uri.AppendQuery("synchronous", synchronous.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -13383,8 +13383,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateRestoreFromBackupBlobRequest(string subscriptionId, string resourceGroupName, string name, RestoreRequestInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -13395,12 +13395,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/restoreFromBackupBlob", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(info);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -13462,8 +13462,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateRestoreFromDeletedAppRequest(string subscriptionId, string resourceGroupName, string name, DeletedAppRestoreContent content)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -13474,12 +13474,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/restoreFromDeletedApp", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content);
-            request0.Content = content0;
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -13541,8 +13541,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateRestoreSnapshotRequest(string subscriptionId, string resourceGroupName, string name, SnapshotRestoreRequest restoreRequest)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -13553,12 +13553,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/restoreSnapshot", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(restoreRequest);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(restoreRequest);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -13620,8 +13620,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSiteExtensionsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -13632,8 +13632,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/siteextensions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -13699,8 +13699,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSiteExtensionRequest(string subscriptionId, string resourceGroupName, string name, string siteExtensionId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -13712,8 +13712,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/siteextensions/", false);
             uri.AppendPath(siteExtensionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -13787,8 +13787,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateInstallSiteExtensionRequest(string subscriptionId, string resourceGroupName, string name, string siteExtensionId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -13800,8 +13800,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/siteextensions/", false);
             uri.AppendPath(siteExtensionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -13863,8 +13863,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteSiteExtensionRequest(string subscriptionId, string resourceGroupName, string name, string siteExtensionId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -13876,8 +13876,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/siteextensions/", false);
             uri.AppendPath(siteExtensionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -13937,8 +13937,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSlotsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -13949,8 +13949,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/slots", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -14016,8 +14016,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -14029,8 +14029,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/slots/", false);
             uri.AppendPath(slot, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -14104,8 +14104,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, WebSiteData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -14117,12 +14117,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/slots/", false);
             uri.AppendPath(slot, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -14188,8 +14188,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, bool? deleteMetrics, bool? deleteEmptyServerFarm)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -14209,8 +14209,8 @@ namespace Azure.ResourceManager.AppService
                 uri.AppendQuery("deleteEmptyServerFarm", deleteEmptyServerFarm.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -14276,8 +14276,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SitePatchInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -14289,12 +14289,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/slots/", false);
             uri.AppendPath(slot, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(info);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -14370,8 +14370,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateAnalyzeCustomHostnameSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string hostName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -14388,8 +14388,8 @@ namespace Azure.ResourceManager.AppService
                 uri.AppendQuery("hostName", hostName, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -14461,8 +14461,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateApplySlotConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, CsmSlotEntity slotSwapEntity)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -14475,12 +14475,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/applySlotConfig", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(slotSwapEntity);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -14541,11 +14541,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateBackupSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, BackupRequest request)
+        internal HttpMessage CreateBackupSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, WebAppBackupInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -14558,12 +14558,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/backup", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(request);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -14573,27 +14573,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will create a backup for the production slot. </param>
-        /// <param name="request"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
+        /// <param name="info"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupItemData>> BackupSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, BackupRequest request, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupData>> BackupSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateBackupSlotRequest(subscriptionId, resourceGroupName, name, slot, request);
+            using var message = CreateBackupSlotRequest(subscriptionId, resourceGroupName, name, slot, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BackupItemData value = default;
+                        WebAppBackupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupItemData.DeserializeBackupItemData(document.RootElement);
+                        value = WebAppBackupData.DeserializeWebAppBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -14606,27 +14606,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will create a backup for the production slot. </param>
-        /// <param name="request"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
+        /// <param name="info"> Backup configuration. You can use the JSON response from the POST action as input here. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupItemData> BackupSlot(string subscriptionId, string resourceGroupName, string name, string slot, BackupRequest request, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupData> BackupSlot(string subscriptionId, string resourceGroupName, string name, string slot, WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateBackupSlotRequest(subscriptionId, resourceGroupName, name, slot, request);
+            using var message = CreateBackupSlotRequest(subscriptionId, resourceGroupName, name, slot, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BackupItemData value = default;
+                        WebAppBackupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupItemData.DeserializeBackupItemData(document.RootElement);
+                        value = WebAppBackupData.DeserializeWebAppBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -14637,8 +14637,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListBackupsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -14651,8 +14651,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/backups", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -14665,7 +14665,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupItemCollection>> ListBackupsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupItemListResult>> ListBackupsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -14678,9 +14678,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -14696,7 +14696,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupItemCollection> ListBackupsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupItemListResult> ListBackupsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -14709,9 +14709,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -14722,8 +14722,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetBackupStatusSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string backupId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -14737,8 +14737,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/backups/", false);
             uri.AppendPath(backupId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -14752,7 +14752,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="backupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupItemData>> GetBackupStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupData>> GetBackupStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -14766,13 +14766,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemData value = default;
+                        WebAppBackupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupItemData.DeserializeBackupItemData(document.RootElement);
+                        value = WebAppBackupData.DeserializeWebAppBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BackupItemData)null, message.Response);
+                    return Response.FromValue((WebAppBackupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -14787,7 +14787,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="backupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupItemData> GetBackupStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupData> GetBackupStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -14801,13 +14801,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemData value = default;
+                        WebAppBackupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupItemData.DeserializeBackupItemData(document.RootElement);
+                        value = WebAppBackupData.DeserializeWebAppBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BackupItemData)null, message.Response);
+                    return Response.FromValue((WebAppBackupData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -14816,8 +14816,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteBackupSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string backupId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -14831,8 +14831,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/backups/", false);
             uri.AppendPath(backupId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -14893,11 +14893,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListBackupStatusSecretsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, BackupRequest request)
+        internal HttpMessage CreateListBackupStatusSecretsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, WebAppBackupInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -14912,12 +14912,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(backupId, true);
             uri.AppendPath("/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(request);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -14928,28 +14928,28 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="backupId"> ID of backup. </param>
-        /// <param name="request"> Information on backup request. </param>
+        /// <param name="info"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="backupId"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="backupId"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupItemData>> ListBackupStatusSecretsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, BackupRequest request, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupData>> ListBackupStatusSecretsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateListBackupStatusSecretsSlotRequest(subscriptionId, resourceGroupName, name, slot, backupId, request);
+            using var message = CreateListBackupStatusSecretsSlotRequest(subscriptionId, resourceGroupName, name, slot, backupId, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BackupItemData value = default;
+                        WebAppBackupData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupItemData.DeserializeBackupItemData(document.RootElement);
+                        value = WebAppBackupData.DeserializeWebAppBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -14963,28 +14963,28 @@ namespace Azure.ResourceManager.AppService
         /// <param name="name"> Name of web app. </param>
         /// <param name="slot"> Name of web app slot. If not specified then will default to production slot. </param>
         /// <param name="backupId"> ID of backup. </param>
-        /// <param name="request"> Information on backup request. </param>
+        /// <param name="info"> Information on backup request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="backupId"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="backupId"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="backupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupItemData> ListBackupStatusSecretsSlot(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, BackupRequest request, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupData> ListBackupStatusSecretsSlot(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(backupId, nameof(backupId));
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateListBackupStatusSecretsSlotRequest(subscriptionId, resourceGroupName, name, slot, backupId, request);
+            using var message = CreateListBackupStatusSecretsSlotRequest(subscriptionId, resourceGroupName, name, slot, backupId, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BackupItemData value = default;
+                        WebAppBackupData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupItemData.DeserializeBackupItemData(document.RootElement);
+                        value = WebAppBackupData.DeserializeWebAppBackupData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -14995,8 +14995,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateRestoreSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string backupId, RestoreRequestInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -15011,12 +15011,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(backupId, true);
             uri.AppendPath("/restore", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(info);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -15086,8 +15086,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListBasicPublishingCredentialsPoliciesSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -15100,8 +15100,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/basicPublishingCredentialsPolicies", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -15171,8 +15171,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetFtpAllowedSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -15185,8 +15185,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/basicPublishingCredentialsPolicies/ftp", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -15260,8 +15260,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateFtpAllowedSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -15274,12 +15274,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/basicPublishingCredentialsPolicies/ftp", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -15353,8 +15353,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetScmAllowedSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -15367,8 +15367,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/basicPublishingCredentialsPolicies/scm", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -15442,8 +15442,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateScmAllowedSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingCredentialsPoliciesEntityData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -15456,12 +15456,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/basicPublishingCredentialsPolicies/scm", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -15535,8 +15535,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListConfigurationsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -15549,8 +15549,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -15620,8 +15620,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateApplicationSettingsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, AppServiceConfigurationDictionary appSettings)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -15634,12 +15634,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/appsettings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(appSettings);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(appSettings);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -15713,8 +15713,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListApplicationSettingsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -15727,8 +15727,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/appsettings/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -15798,8 +15798,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateAuthSettingsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettings siteAuthSettings)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -15812,12 +15812,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/authsettings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(siteAuthSettings);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(siteAuthSettings);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -15891,8 +15891,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetAuthSettingsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -15905,8 +15905,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/authsettings/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -15976,8 +15976,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateAuthSettingsV2SlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteAuthSettingsV2 siteAuthSettingsV2)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -15990,12 +15990,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/authsettingsV2", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(siteAuthSettingsV2);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(siteAuthSettingsV2);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -16069,8 +16069,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetAuthSettingsV2SlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -16083,8 +16083,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/authsettingsV2/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -16154,8 +16154,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateAzureStorageAccountsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, AzureStoragePropertyDictionary azureStorageAccounts)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -16168,12 +16168,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/azurestorageaccounts", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(azureStorageAccounts);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(azureStorageAccounts);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -16247,8 +16247,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListAzureStorageAccountsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -16261,8 +16261,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/azurestorageaccounts/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -16329,11 +16329,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateBackupConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, BackupRequest request)
+        internal HttpMessage CreateUpdateBackupConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, WebAppBackupInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -16346,12 +16346,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/backup", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(request);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -16361,27 +16361,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the backup configuration for the production slot. </param>
-        /// <param name="request"> Edited backup configuration. </param>
+        /// <param name="info"> Edited backup configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupRequest>> UpdateBackupConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, BackupRequest request, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupInfo>> UpdateBackupConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateUpdateBackupConfigurationSlotRequest(subscriptionId, resourceGroupName, name, slot, request);
+            using var message = CreateUpdateBackupConfigurationSlotRequest(subscriptionId, resourceGroupName, name, slot, info);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BackupRequest value = default;
+                        WebAppBackupInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupRequest.DeserializeBackupRequest(document.RootElement);
+                        value = WebAppBackupInfo.DeserializeWebAppBackupInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -16394,27 +16394,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="resourceGroupName"> Name of the resource group to which the resource belongs. </param>
         /// <param name="name"> Name of the app. </param>
         /// <param name="slot"> Name of the deployment slot. If a slot is not specified, the API will update the backup configuration for the production slot. </param>
-        /// <param name="request"> Edited backup configuration. </param>
+        /// <param name="info"> Edited backup configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="request"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="info"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupRequest> UpdateBackupConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, BackupRequest request, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupInfo> UpdateBackupConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, WebAppBackupInfo info, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
-            Argument.AssertNotNull(request, nameof(request));
+            Argument.AssertNotNull(info, nameof(info));
 
-            using var message = CreateUpdateBackupConfigurationSlotRequest(subscriptionId, resourceGroupName, name, slot, request);
+            using var message = CreateUpdateBackupConfigurationSlotRequest(subscriptionId, resourceGroupName, name, slot, info);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        BackupRequest value = default;
+                        WebAppBackupInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupRequest.DeserializeBackupRequest(document.RootElement);
+                        value = WebAppBackupInfo.DeserializeWebAppBackupInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -16425,8 +16425,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteBackupConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -16439,8 +16439,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/backup", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -16500,8 +16500,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetBackupConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -16514,8 +16514,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/backup/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -16528,7 +16528,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupRequest>> GetBackupConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupInfo>> GetBackupConfigurationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -16541,9 +16541,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupRequest value = default;
+                        WebAppBackupInfo value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupRequest.DeserializeBackupRequest(document.RootElement);
+                        value = WebAppBackupInfo.DeserializeWebAppBackupInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -16559,7 +16559,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupRequest> GetBackupConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupInfo> GetBackupConfigurationSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -16572,9 +16572,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupRequest value = default;
+                        WebAppBackupInfo value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupRequest.DeserializeBackupRequest(document.RootElement);
+                        value = WebAppBackupInfo.DeserializeWebAppBackupInfo(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -16585,8 +16585,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetAppSettingsKeyVaultReferencesSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -16599,8 +16599,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/configreferences/appsettings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -16613,7 +16613,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiKVReferenceCollection>> GetAppSettingsKeyVaultReferencesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceApiKeyVaultReferenceList>> GetAppSettingsKeyVaultReferencesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -16626,9 +16626,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -16644,7 +16644,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiKVReferenceCollection> GetAppSettingsKeyVaultReferencesSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<AppServiceApiKeyVaultReferenceList> GetAppSettingsKeyVaultReferencesSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -16657,9 +16657,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -16670,8 +16670,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetAppSettingKeyVaultReferenceSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string appSettingKey)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -16685,8 +16685,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/config/configreferences/appsettings/", false);
             uri.AppendPath(appSettingKey, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -16764,8 +16764,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSiteConnectionStringKeyVaultReferencesSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -16778,8 +16778,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/configreferences/connectionstrings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -16792,7 +16792,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiKVReferenceCollection>> GetSiteConnectionStringKeyVaultReferencesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceApiKeyVaultReferenceList>> GetSiteConnectionStringKeyVaultReferencesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -16805,9 +16805,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -16823,7 +16823,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiKVReferenceCollection> GetSiteConnectionStringKeyVaultReferencesSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<AppServiceApiKeyVaultReferenceList> GetSiteConnectionStringKeyVaultReferencesSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -16836,9 +16836,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -16849,8 +16849,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSiteConnectionStringKeyVaultReferenceSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string connectionStringKey)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -16864,8 +16864,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/config/configreferences/connectionstrings/", false);
             uri.AppendPath(connectionStringKey, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -16943,8 +16943,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateConnectionStringsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, ConnectionStringDictionary connectionStrings)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -16957,12 +16957,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/connectionstrings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(connectionStrings);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(connectionStrings);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -17036,8 +17036,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListConnectionStringsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -17050,8 +17050,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/connectionstrings/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -17121,8 +17121,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetDiagnosticLogsConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -17135,8 +17135,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/logs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -17210,8 +17210,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateDiagnosticLogsConfigSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteLogsConfigData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -17224,12 +17224,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/logs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -17303,8 +17303,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateMetadataSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, AppServiceConfigurationDictionary metadata)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -17317,12 +17317,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/metadata", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(metadata);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(metadata);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -17396,8 +17396,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListMetadataSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -17410,8 +17410,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/metadata/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -17481,8 +17481,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListPublishingCredentialsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -17495,8 +17495,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/publishingcredentials/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -17553,11 +17553,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateSitePushSettingsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, PushSettings pushSettings)
+        internal HttpMessage CreateUpdateSitePushSettingsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, WebAppPushSettings pushSettings)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -17570,12 +17570,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/pushsettings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(pushSettings);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(pushSettings);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -17589,7 +17589,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="pushSettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PushSettings>> UpdateSitePushSettingsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, PushSettings pushSettings, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppPushSettings>> UpdateSitePushSettingsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, WebAppPushSettings pushSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -17603,9 +17603,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        PushSettings value = default;
+                        WebAppPushSettings value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PushSettings.DeserializePushSettings(document.RootElement);
+                        value = WebAppPushSettings.DeserializeWebAppPushSettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -17622,7 +17622,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="pushSettings"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PushSettings> UpdateSitePushSettingsSlot(string subscriptionId, string resourceGroupName, string name, string slot, PushSettings pushSettings, CancellationToken cancellationToken = default)
+        public Response<WebAppPushSettings> UpdateSitePushSettingsSlot(string subscriptionId, string resourceGroupName, string name, string slot, WebAppPushSettings pushSettings, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -17636,9 +17636,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        PushSettings value = default;
+                        WebAppPushSettings value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PushSettings.DeserializePushSettings(document.RootElement);
+                        value = WebAppPushSettings.DeserializeWebAppPushSettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -17649,8 +17649,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSitePushSettingsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -17663,8 +17663,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/pushsettings/list", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -17677,7 +17677,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PushSettings>> ListSitePushSettingsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppPushSettings>> ListSitePushSettingsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -17690,9 +17690,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        PushSettings value = default;
+                        WebAppPushSettings value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = PushSettings.DeserializePushSettings(document.RootElement);
+                        value = WebAppPushSettings.DeserializeWebAppPushSettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -17708,7 +17708,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PushSettings> ListSitePushSettingsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<WebAppPushSettings> ListSitePushSettingsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -17721,9 +17721,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        PushSettings value = default;
+                        WebAppPushSettings value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = PushSettings.DeserializePushSettings(document.RootElement);
+                        value = WebAppPushSettings.DeserializeWebAppPushSettings(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -17734,8 +17734,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -17748,8 +17748,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/web", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -17823,8 +17823,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -17837,12 +17837,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/web", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -17916,8 +17916,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteConfigData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -17930,12 +17930,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/web", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -18009,8 +18009,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListConfigurationSnapshotInfoSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -18023,8 +18023,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/config/web/snapshots", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -18094,8 +18094,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetConfigurationSnapshotSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string snapshotId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -18109,8 +18109,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/config/web/snapshots/", false);
             uri.AppendPath(snapshotId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -18188,8 +18188,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateRecoverSiteConfigurationSnapshotSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string snapshotId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -18204,8 +18204,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(snapshotId, true);
             uri.AppendPath("/recover", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -18269,8 +18269,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetWebSiteContainerLogsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -18283,8 +18283,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/containerlogs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/octet-stream");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/octet-stream");
             _userAgent.Apply(message);
             return message;
         }
@@ -18354,8 +18354,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetContainerLogsZipSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -18368,8 +18368,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/containerlogs/zip/download", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/zip");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/zip");
             _userAgent.Apply(message);
             return message;
         }
@@ -18439,8 +18439,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListContinuousWebJobsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -18453,8 +18453,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/continuouswebjobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -18524,8 +18524,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetContinuousWebJobSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -18539,8 +18539,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/continuouswebjobs/", false);
             uri.AppendPath(webJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -18618,8 +18618,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteContinuousWebJobSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -18633,8 +18633,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/continuouswebjobs/", false);
             uri.AppendPath(webJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -18700,8 +18700,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStartContinuousWebJobSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -18716,8 +18716,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(webJobName, true);
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -18781,8 +18781,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStopContinuousWebJobSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -18797,8 +18797,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(webJobName, true);
             uri.AppendPath("/stop", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -18862,8 +18862,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListDeploymentsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -18876,8 +18876,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/deployments", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -18890,7 +18890,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentCollection>> ListDeploymentsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppDeploymentListResult>> ListDeploymentsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -18903,9 +18903,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentCollection value = default;
+                        WebAppDeploymentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentCollection.DeserializeDeploymentCollection(document.RootElement);
+                        value = WebAppDeploymentListResult.DeserializeWebAppDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -18921,7 +18921,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentCollection> ListDeploymentsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<WebAppDeploymentListResult> ListDeploymentsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -18934,9 +18934,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentCollection value = default;
+                        WebAppDeploymentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentCollection.DeserializeDeploymentCollection(document.RootElement);
+                        value = WebAppDeploymentListResult.DeserializeWebAppDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -18947,8 +18947,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetDeploymentSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string id)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -18962,8 +18962,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -18977,7 +18977,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentData>> GetDeploymentSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string id, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppDeploymentData>> GetDeploymentSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -18991,13 +18991,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentData value = default;
+                        WebAppDeploymentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentData.DeserializeDeploymentData(document.RootElement);
+                        value = WebAppDeploymentData.DeserializeWebAppDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DeploymentData)null, message.Response);
+                    return Response.FromValue((WebAppDeploymentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -19012,7 +19012,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentData> GetDeploymentSlot(string subscriptionId, string resourceGroupName, string name, string slot, string id, CancellationToken cancellationToken = default)
+        public Response<WebAppDeploymentData> GetDeploymentSlot(string subscriptionId, string resourceGroupName, string name, string slot, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19026,23 +19026,23 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentData value = default;
+                        WebAppDeploymentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentData.DeserializeDeploymentData(document.RootElement);
+                        value = WebAppDeploymentData.DeserializeWebAppDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((DeploymentData)null, message.Response);
+                    return Response.FromValue((WebAppDeploymentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateDeploymentSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string id, DeploymentData data)
+        internal HttpMessage CreateCreateDeploymentSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string id, WebAppDeploymentData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -19056,12 +19056,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -19076,7 +19076,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentData>> CreateDeploymentSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string id, DeploymentData data, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppDeploymentData>> CreateDeploymentSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string id, WebAppDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19091,9 +19091,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentData value = default;
+                        WebAppDeploymentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentData.DeserializeDeploymentData(document.RootElement);
+                        value = WebAppDeploymentData.DeserializeWebAppDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -19111,7 +19111,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="id"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentData> CreateDeploymentSlot(string subscriptionId, string resourceGroupName, string name, string slot, string id, DeploymentData data, CancellationToken cancellationToken = default)
+        public Response<WebAppDeploymentData> CreateDeploymentSlot(string subscriptionId, string resourceGroupName, string name, string slot, string id, WebAppDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19126,9 +19126,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentData value = default;
+                        WebAppDeploymentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentData.DeserializeDeploymentData(document.RootElement);
+                        value = WebAppDeploymentData.DeserializeWebAppDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -19139,8 +19139,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteDeploymentSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string id)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -19154,8 +19154,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/deployments/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -19221,8 +19221,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListDeploymentLogSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string id)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -19237,8 +19237,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(id, true);
             uri.AppendPath("/log", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -19252,7 +19252,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentData>> ListDeploymentLogSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string id, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppDeploymentData>> ListDeploymentLogSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19266,9 +19266,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentData value = default;
+                        WebAppDeploymentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentData.DeserializeDeploymentData(document.RootElement);
+                        value = WebAppDeploymentData.DeserializeWebAppDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -19285,7 +19285,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentData> ListDeploymentLogSlot(string subscriptionId, string resourceGroupName, string name, string slot, string id, CancellationToken cancellationToken = default)
+        public Response<WebAppDeploymentData> ListDeploymentLogSlot(string subscriptionId, string resourceGroupName, string name, string slot, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19299,9 +19299,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentData value = default;
+                        WebAppDeploymentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentData.DeserializeDeploymentData(document.RootElement);
+                        value = WebAppDeploymentData.DeserializeWebAppDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -19312,8 +19312,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDiscoverBackupSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, RestoreRequestInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -19326,12 +19326,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/discoverbackup", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(info);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -19405,8 +19405,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListDomainOwnershipIdentifiersSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -19419,8 +19419,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/domainOwnershipIdentifiers", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -19433,7 +19433,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IdentifierCollection>> ListDomainOwnershipIdentifiersSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceIdentifierListResult>> ListDomainOwnershipIdentifiersSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19446,9 +19446,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierCollection value = default;
+                        AppServiceIdentifierListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IdentifierCollection.DeserializeIdentifierCollection(document.RootElement);
+                        value = AppServiceIdentifierListResult.DeserializeAppServiceIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -19464,7 +19464,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IdentifierCollection> ListDomainOwnershipIdentifiersSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<AppServiceIdentifierListResult> ListDomainOwnershipIdentifiersSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19477,9 +19477,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierCollection value = default;
+                        AppServiceIdentifierListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IdentifierCollection.DeserializeIdentifierCollection(document.RootElement);
+                        value = AppServiceIdentifierListResult.DeserializeAppServiceIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -19490,8 +19490,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetDomainOwnershipIdentifierSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -19505,8 +19505,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/domainOwnershipIdentifiers/", false);
             uri.AppendPath(domainOwnershipIdentifierName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -19520,7 +19520,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IdentifierData>> GetDomainOwnershipIdentifierSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceIdentifierData>> GetDomainOwnershipIdentifierSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19534,13 +19534,13 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierData value = default;
+                        AppServiceIdentifierData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IdentifierData.DeserializeIdentifierData(document.RootElement);
+                        value = AppServiceIdentifierData.DeserializeAppServiceIdentifierData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IdentifierData)null, message.Response);
+                    return Response.FromValue((AppServiceIdentifierData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -19555,7 +19555,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IdentifierData> GetDomainOwnershipIdentifierSlot(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
+        public Response<AppServiceIdentifierData> GetDomainOwnershipIdentifierSlot(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19569,23 +19569,23 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierData value = default;
+                        AppServiceIdentifierData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IdentifierData.DeserializeIdentifierData(document.RootElement);
+                        value = AppServiceIdentifierData.DeserializeAppServiceIdentifierData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((IdentifierData)null, message.Response);
+                    return Response.FromValue((AppServiceIdentifierData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateDomainOwnershipIdentifierSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData data)
+        internal HttpMessage CreateCreateOrUpdateDomainOwnershipIdentifierSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, AppServiceIdentifierData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -19599,12 +19599,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/domainOwnershipIdentifiers/", false);
             uri.AppendPath(domainOwnershipIdentifierName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -19619,7 +19619,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IdentifierData>> CreateOrUpdateDomainOwnershipIdentifierSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceIdentifierData>> CreateOrUpdateDomainOwnershipIdentifierSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, AppServiceIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19634,9 +19634,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierData value = default;
+                        AppServiceIdentifierData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IdentifierData.DeserializeIdentifierData(document.RootElement);
+                        value = AppServiceIdentifierData.DeserializeAppServiceIdentifierData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -19654,7 +19654,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IdentifierData> CreateOrUpdateDomainOwnershipIdentifierSlot(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
+        public Response<AppServiceIdentifierData> CreateOrUpdateDomainOwnershipIdentifierSlot(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, AppServiceIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19669,9 +19669,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierData value = default;
+                        AppServiceIdentifierData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IdentifierData.DeserializeIdentifierData(document.RootElement);
+                        value = AppServiceIdentifierData.DeserializeAppServiceIdentifierData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -19682,8 +19682,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteDomainOwnershipIdentifierSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -19697,8 +19697,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/domainOwnershipIdentifiers/", false);
             uri.AppendPath(domainOwnershipIdentifierName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -19761,11 +19761,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateUpdateDomainOwnershipIdentifierSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData data)
+        internal HttpMessage CreateUpdateDomainOwnershipIdentifierSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, AppServiceIdentifierData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -19779,12 +19779,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/domainOwnershipIdentifiers/", false);
             uri.AppendPath(domainOwnershipIdentifierName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -19799,7 +19799,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IdentifierData>> UpdateDomainOwnershipIdentifierSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceIdentifierData>> UpdateDomainOwnershipIdentifierSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, AppServiceIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19814,9 +19814,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierData value = default;
+                        AppServiceIdentifierData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IdentifierData.DeserializeIdentifierData(document.RootElement);
+                        value = AppServiceIdentifierData.DeserializeAppServiceIdentifierData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -19834,7 +19834,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="domainOwnershipIdentifierName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="domainOwnershipIdentifierName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IdentifierData> UpdateDomainOwnershipIdentifierSlot(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, IdentifierData data, CancellationToken cancellationToken = default)
+        public Response<AppServiceIdentifierData> UpdateDomainOwnershipIdentifierSlot(string subscriptionId, string resourceGroupName, string name, string slot, string domainOwnershipIdentifierName, AppServiceIdentifierData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -19849,9 +19849,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierData value = default;
+                        AppServiceIdentifierData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IdentifierData.DeserializeIdentifierData(document.RootElement);
+                        value = AppServiceIdentifierData.DeserializeAppServiceIdentifierData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -19862,8 +19862,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetMSDeployStatusSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -19876,8 +19876,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/extensions/MSDeploy", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -19948,11 +19948,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateMSDeployOperationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, MSDeploy msDeploy)
+        internal HttpMessage CreateCreateMSDeployOperationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, WebAppMSDeploy msDeploy)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -19965,12 +19965,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/extensions/MSDeploy", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(msDeploy);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(msDeploy);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -19984,7 +19984,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="msDeploy"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateMSDeployOperationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateMSDeployOperationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, WebAppMSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -20012,7 +20012,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="msDeploy"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateMSDeployOperationSlot(string subscriptionId, string resourceGroupName, string name, string slot, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        public Response CreateMSDeployOperationSlot(string subscriptionId, string resourceGroupName, string name, string slot, WebAppMSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -20034,8 +20034,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetMSDeployLogSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -20048,8 +20048,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/extensions/MSDeploy/log", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -20062,7 +20062,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MSDeployLog>> GetMSDeployLogSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppMSDeployLog>> GetMSDeployLogSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -20075,9 +20075,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        WebAppMSDeployLog value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = WebAppMSDeployLog.DeserializeWebAppMSDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -20093,7 +20093,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MSDeployLog> GetMSDeployLogSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<WebAppMSDeployLog> GetMSDeployLogSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -20106,9 +20106,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        WebAppMSDeployLog value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = WebAppMSDeployLog.DeserializeWebAppMSDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -20119,8 +20119,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceFunctionsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -20133,8 +20133,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/functions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -20204,8 +20204,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetFunctionsAdminTokenSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -20218,8 +20218,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/functions/admin/token", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -20289,8 +20289,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetInstanceFunctionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -20304,8 +20304,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/functions/", false);
             uri.AppendPath(functionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -20383,8 +20383,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateInstanceFunctionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, FunctionEnvelopeData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -20398,12 +20398,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/functions/", false);
             uri.AppendPath(functionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -20471,8 +20471,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteInstanceFunctionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -20486,8 +20486,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/functions/", false);
             uri.AppendPath(functionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -20551,8 +20551,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateFunctionSecretSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, string keyName, KeyInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -20568,12 +20568,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/keys/", false);
             uri.AppendPath(keyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(info);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -20657,8 +20657,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteFunctionSecretSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, string keyName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -20674,8 +20674,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/keys/", false);
             uri.AppendPath(keyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -20743,8 +20743,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListFunctionKeysSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -20759,8 +20759,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(functionName, true);
             uri.AppendPath("/listkeys", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -20834,8 +20834,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListFunctionSecretsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -20850,8 +20850,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(functionName, true);
             uri.AppendPath("/listsecrets", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -20925,8 +20925,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListHostKeysSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -20939,8 +20939,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/host/default/listkeys", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -20953,7 +20953,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<HostKeys>> ListHostKeysSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<FunctionAppHostKeys>> ListHostKeysSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -20966,9 +20966,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        HostKeys value = default;
+                        FunctionAppHostKeys value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = HostKeys.DeserializeHostKeys(document.RootElement);
+                        value = FunctionAppHostKeys.DeserializeFunctionAppHostKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -20984,7 +20984,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<HostKeys> ListHostKeysSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<FunctionAppHostKeys> ListHostKeysSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -20997,9 +20997,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        HostKeys value = default;
+                        FunctionAppHostKeys value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = HostKeys.DeserializeHostKeys(document.RootElement);
+                        value = FunctionAppHostKeys.DeserializeFunctionAppHostKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -21010,8 +21010,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSyncStatusSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -21024,8 +21024,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/host/default/listsyncstatus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -21085,8 +21085,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateSyncFunctionsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -21099,8 +21099,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/host/default/sync", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -21160,8 +21160,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateHostSecretSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string keyType, string keyName, KeyInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -21177,12 +21177,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/", false);
             uri.AppendPath(keyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(info);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -21266,8 +21266,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteHostSecretSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string keyType, string keyName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -21283,8 +21283,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/", false);
             uri.AppendPath(keyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -21352,8 +21352,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListHostNameBindingsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -21366,8 +21366,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/hostNameBindings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -21437,8 +21437,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetHostNameBindingSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string hostName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -21452,8 +21452,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/hostNameBindings/", false);
             uri.AppendPath(hostName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -21531,8 +21531,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateHostNameBindingSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string hostName, HostNameBindingData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -21546,12 +21546,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/hostNameBindings/", false);
             uri.AppendPath(hostName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -21629,8 +21629,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteHostNameBindingSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string hostName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -21644,8 +21644,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/hostNameBindings/", false);
             uri.AppendPath(hostName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -21711,8 +21711,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetHybridConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -21728,8 +21728,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/relays/", false);
             uri.AppendPath(relayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -21811,8 +21811,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateHybridConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -21828,12 +21828,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/relays/", false);
             uri.AppendPath(relayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -21915,8 +21915,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteHybridConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -21932,8 +21932,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/relays/", false);
             uri.AppendPath(relayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -22001,8 +22001,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateHybridConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string namespaceName, string relayName, HybridConnectionData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -22018,12 +22018,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/relays/", false);
             uri.AppendPath(relayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -22105,8 +22105,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListHybridConnectionsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -22119,8 +22119,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/hybridConnectionRelays", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -22190,8 +22190,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListRelayServiceConnectionsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -22204,8 +22204,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/hybridconnection", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -22275,8 +22275,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetRelayServiceConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string entityName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -22290,8 +22290,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/hybridconnection/", false);
             uri.AppendPath(entityName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -22369,8 +22369,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateRelayServiceConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -22384,12 +22384,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/hybridconnection/", false);
             uri.AppendPath(entityName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -22467,8 +22467,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteRelayServiceConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string entityName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -22482,8 +22482,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/hybridconnection/", false);
             uri.AppendPath(entityName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -22547,8 +22547,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateRelayServiceConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string entityName, RelayServiceConnectionEntityData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -22562,12 +22562,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/hybridconnection/", false);
             uri.AppendPath(entityName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -22645,8 +22645,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceIdentifiersSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -22659,8 +22659,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/instances", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -22730,8 +22730,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetInstanceInfoSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -22745,8 +22745,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/instances/", false);
             uri.AppendPath(instanceId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -22821,11 +22821,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateGetInstanceMSDeployStatusSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId)
+        internal HttpMessage CreateGetInstanceMsDeployStatusSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -22840,8 +22840,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/extensions/MSDeploy", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -22855,7 +22855,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MSDeployStatusData>> GetInstanceMSDeployStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<MSDeployStatusData>> GetInstanceMsDeployStatusSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -22863,7 +22863,7 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
-            using var message = CreateGetInstanceMSDeployStatusSlotRequest(subscriptionId, resourceGroupName, name, slot, instanceId);
+            using var message = CreateGetInstanceMsDeployStatusSlotRequest(subscriptionId, resourceGroupName, name, slot, instanceId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -22890,7 +22890,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MSDeployStatusData> GetInstanceMSDeployStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
+        public Response<MSDeployStatusData> GetInstanceMsDeployStatusSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -22898,7 +22898,7 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(instanceId, nameof(instanceId));
 
-            using var message = CreateGetInstanceMSDeployStatusSlotRequest(subscriptionId, resourceGroupName, name, slot, instanceId);
+            using var message = CreateGetInstanceMsDeployStatusSlotRequest(subscriptionId, resourceGroupName, name, slot, instanceId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -22916,11 +22916,11 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateCreateInstanceMSDeployOperationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, MSDeploy msDeploy)
+        internal HttpMessage CreateCreateInstanceMSDeployOperationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, WebAppMSDeploy msDeploy)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -22935,12 +22935,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/extensions/MSDeploy", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(msDeploy);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(msDeploy);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -22955,7 +22955,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="msDeploy"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateInstanceMSDeployOperationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateInstanceMSDeployOperationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, WebAppMSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -22985,7 +22985,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/>, <paramref name="instanceId"/> or <paramref name="msDeploy"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateInstanceMSDeployOperationSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, MSDeploy msDeploy, CancellationToken cancellationToken = default)
+        public Response CreateInstanceMSDeployOperationSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, WebAppMSDeploy msDeploy, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -23008,8 +23008,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetInstanceMSDeployLogSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -23024,8 +23024,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/extensions/MSDeploy/log", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -23039,7 +23039,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MSDeployLog>> GetInstanceMSDeployLogSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppMSDeployLog>> GetInstanceMSDeployLogSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -23053,9 +23053,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        WebAppMSDeployLog value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = WebAppMSDeployLog.DeserializeWebAppMSDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -23072,7 +23072,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="instanceId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MSDeployLog> GetInstanceMSDeployLogSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
+        public Response<WebAppMSDeployLog> GetInstanceMSDeployLogSlot(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -23086,9 +23086,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        MSDeployLog value = default;
+                        WebAppMSDeployLog value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = MSDeployLog.DeserializeMSDeployLog(document.RootElement);
+                        value = WebAppMSDeployLog.DeserializeWebAppMSDeployLog(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -23099,8 +23099,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceProcessesSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -23115,8 +23115,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(instanceId, true);
             uri.AppendPath("/processes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -23190,8 +23190,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetInstanceProcessSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -23207,8 +23207,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/processes/", false);
             uri.AppendPath(processId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -23290,8 +23290,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteInstanceProcessSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -23307,8 +23307,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/processes/", false);
             uri.AppendPath(processId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -23376,8 +23376,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetInstanceProcessDumpSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -23394,8 +23394,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(processId, true);
             uri.AppendPath("/dump", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -23469,8 +23469,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceProcessModulesSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -23487,8 +23487,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(processId, true);
             uri.AppendPath("/modules", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -23566,8 +23566,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetInstanceProcessModuleSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId, string baseAddress)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -23585,8 +23585,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/modules/", false);
             uri.AppendPath(baseAddress, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -23672,8 +23672,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceProcessThreadsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -23690,8 +23690,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(processId, true);
             uri.AppendPath("/threads", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -23769,8 +23769,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateIsCloneableSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -23783,8 +23783,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/iscloneable", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -23854,8 +23854,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSiteBackupsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -23868,8 +23868,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/listbackups", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -23882,7 +23882,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupItemCollection>> ListSiteBackupsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupItemListResult>> ListSiteBackupsSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -23895,9 +23895,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -23913,7 +23913,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupItemCollection> ListSiteBackupsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupItemListResult> ListSiteBackupsSlot(string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -23926,9 +23926,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -23939,8 +23939,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSyncFunctionTriggersSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -23953,8 +23953,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/listsyncfunctiontriggerstatus", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -24024,8 +24024,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetMigrateMySqlStatusSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -24038,8 +24038,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/migratemysql/status", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -24113,8 +24113,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSwiftVirtualNetworkConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -24127,8 +24127,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/networkConfig/virtualNetwork", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -24202,8 +24202,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -24216,12 +24216,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/networkConfig/virtualNetwork", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -24301,8 +24301,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteSwiftVirtualNetworkSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -24315,8 +24315,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/networkConfig/virtualNetwork", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -24376,8 +24376,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateSwiftVirtualNetworkConnectionWithCheckSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SwiftVirtualNetworkData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -24390,12 +24390,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/networkConfig/virtualNetwork", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -24475,8 +24475,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListNetworkFeaturesSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string view)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -24490,8 +24490,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/networkFeatures/", false);
             uri.AppendPath(view, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -24569,8 +24569,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetNetworkTraceOperationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string operationId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -24584,8 +24584,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/networkTrace/operationresults/", false);
             uri.AppendPath(operationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -24599,7 +24599,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTraceOperationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<WebAppNetworkTrace>>> GetNetworkTraceOperationSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -24614,12 +24614,12 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -24638,7 +24638,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<NetworkTrace>> GetNetworkTraceOperationSlot(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<WebAppNetworkTrace>> GetNetworkTraceOperationSlot(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -24653,12 +24653,12 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -24671,8 +24671,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStartWebSiteNetworkTraceSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, int? durationInSeconds, int? maxFrameLength, string sasUrl)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -24697,8 +24697,8 @@ namespace Azure.ResourceManager.AppService
                 uri.AppendQuery("sasUrl", sasUrl, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -24774,8 +24774,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStartWebSiteNetworkTraceOperationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, int? durationInSeconds, int? maxFrameLength, string sasUrl)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -24800,8 +24800,8 @@ namespace Azure.ResourceManager.AppService
                 uri.AppendQuery("sasUrl", sasUrl, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -24869,8 +24869,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStopWebSiteNetworkTraceSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -24883,8 +24883,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/networkTrace/stop", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -24946,8 +24946,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetNetworkTracesSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string operationId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -24961,8 +24961,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/networkTrace/", false);
             uri.AppendPath(operationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -24976,7 +24976,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTracesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<WebAppNetworkTrace>>> GetNetworkTracesSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -24990,12 +24990,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -25014,7 +25014,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<NetworkTrace>> GetNetworkTracesSlot(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<WebAppNetworkTrace>> GetNetworkTracesSlot(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -25028,12 +25028,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -25046,8 +25046,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetNetworkTraceOperationSlotV2Request(string subscriptionId, string resourceGroupName, string name, string slot, string operationId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -25061,8 +25061,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/networkTraces/current/operationresults/", false);
             uri.AppendPath(operationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -25076,7 +25076,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTraceOperationSlotV2Async(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<WebAppNetworkTrace>>> GetNetworkTraceOperationSlotV2Async(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -25091,12 +25091,12 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -25115,7 +25115,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<NetworkTrace>> GetNetworkTraceOperationSlotV2(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<WebAppNetworkTrace>> GetNetworkTraceOperationSlotV2(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -25130,12 +25130,12 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                 case 202:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -25148,8 +25148,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetNetworkTracesSlotV2Request(string subscriptionId, string resourceGroupName, string name, string slot, string operationId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -25163,8 +25163,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/networkTraces/", false);
             uri.AppendPath(operationId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -25178,7 +25178,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<NetworkTrace>>> GetNetworkTracesSlotV2Async(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyList<WebAppNetworkTrace>>> GetNetworkTracesSlotV2Async(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -25192,12 +25192,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -25216,7 +25216,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<NetworkTrace>> GetNetworkTracesSlotV2(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyList<WebAppNetworkTrace>> GetNetworkTracesSlotV2(string subscriptionId, string resourceGroupName, string name, string slot, string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -25230,12 +25230,12 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IReadOnlyList<NetworkTrace> value = default;
+                        IReadOnlyList<WebAppNetworkTrace> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        List<NetworkTrace> array = new List<NetworkTrace>();
+                        List<WebAppNetworkTrace> array = new List<WebAppNetworkTrace>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
-                            array.Add(NetworkTrace.DeserializeNetworkTrace(item));
+                            array.Add(WebAppNetworkTrace.DeserializeWebAppNetworkTrace(item));
                         }
                         value = array;
                         return Response.FromValue(value, message.Response);
@@ -25248,8 +25248,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGenerateNewSitePublishingPasswordSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -25262,8 +25262,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/newpassword", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -25325,8 +25325,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListPerfMonCountersSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string filter)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -25343,8 +25343,8 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("$filter", filter, false);
             }
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -25416,8 +25416,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSitePhpErrorLogFlagSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -25430,8 +25430,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/phplogging", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -25501,8 +25501,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListPremierAddOnsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -25515,8 +25515,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/premieraddons", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -25586,8 +25586,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetPremierAddOnSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -25601,8 +25601,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/premieraddons/", false);
             uri.AppendPath(premierAddOnName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -25680,8 +25680,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateAddPremierAddOnSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, PremierAddOnData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -25695,12 +25695,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/premieraddons/", false);
             uri.AppendPath(premierAddOnName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -25778,8 +25778,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeletePremierAddOnSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -25793,8 +25793,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/premieraddons/", false);
             uri.AppendPath(premierAddOnName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -25858,8 +25858,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdatePremierAddOnSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string premierAddOnName, PremierAddOnPatchResource premierAddOn)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -25873,12 +25873,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/premieraddons/", false);
             uri.AppendPath(premierAddOnName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(premierAddOn);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(premierAddOn);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -25956,8 +25956,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetPrivateAccessSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -25970,8 +25970,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/privateAccess/virtualNetworks", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -26045,8 +26045,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreatePutPrivateAccessVnetSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, PrivateAccessData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -26059,12 +26059,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/privateAccess/virtualNetworks", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -26138,8 +26138,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetPrivateEndpointConnectionListSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -26152,8 +26152,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/privateEndpointConnections", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -26223,8 +26223,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetPrivateEndpointConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string privateEndpointConnectionName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -26238,8 +26238,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/privateEndpointConnections/", false);
             uri.AppendPath(privateEndpointConnectionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -26317,8 +26317,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateApproveOrRejectPrivateEndpointConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string privateEndpointConnectionName, PrivateLinkConnectionApprovalRequestInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -26332,12 +26332,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/privateEndpointConnections/", false);
             uri.AppendPath(privateEndpointConnectionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(info);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -26407,8 +26407,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeletePrivateEndpointConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string privateEndpointConnectionName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -26422,8 +26422,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/privateEndpointConnections/", false);
             uri.AppendPath(privateEndpointConnectionName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -26491,8 +26491,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetPrivateLinkResourcesSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -26505,8 +26505,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/privateLinkResources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -26576,8 +26576,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListProcessesSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -26590,8 +26590,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/processes", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -26661,8 +26661,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetProcessSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -26676,8 +26676,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/processes/", false);
             uri.AppendPath(processId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -26755,8 +26755,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteProcessSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -26770,8 +26770,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/processes/", false);
             uri.AppendPath(processId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -26835,8 +26835,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetProcessDumpSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -26851,8 +26851,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(processId, true);
             uri.AppendPath("/dump", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -26922,8 +26922,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListProcessModulesSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -26938,8 +26938,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(processId, true);
             uri.AppendPath("/modules", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -27013,8 +27013,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetProcessModuleSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string processId, string baseAddress)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -27030,8 +27030,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/modules/", false);
             uri.AppendPath(baseAddress, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -27113,8 +27113,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListProcessThreadsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -27129,8 +27129,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(processId, true);
             uri.AppendPath("/threads", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -27204,8 +27204,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListPublicCertificatesSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -27218,8 +27218,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/publicCertificates", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -27289,8 +27289,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetPublicCertificateSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -27304,8 +27304,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/publicCertificates/", false);
             uri.AppendPath(publicCertificateName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -27383,8 +27383,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdatePublicCertificateSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName, PublicCertificateData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -27398,12 +27398,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/publicCertificates/", false);
             uri.AppendPath(publicCertificateName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -27481,8 +27481,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeletePublicCertificateSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string publicCertificateName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -27496,8 +27496,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/publicCertificates/", false);
             uri.AppendPath(publicCertificateName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -27563,8 +27563,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListPublishingProfileXmlWithSecretsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, CsmPublishingProfile publishingProfileOptions)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -27577,12 +27577,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/publishxml", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/xml");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(publishingProfileOptions);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/xml");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(publishingProfileOptions);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -27652,8 +27652,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateResetSlotConfigurationSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -27666,8 +27666,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/resetSlotConfig", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -27727,8 +27727,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateRestartSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, bool? softRestart, bool? synchronous)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -27749,8 +27749,8 @@ namespace Azure.ResourceManager.AppService
                 uri.AppendQuery("synchronous", synchronous.Value, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -27814,8 +27814,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateRestoreFromBackupBlobSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, RestoreRequestInfo info)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -27828,12 +27828,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/restoreFromBackupBlob", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(info);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(info);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -27899,8 +27899,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateRestoreFromDeletedAppSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, DeletedAppRestoreContent content)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -27913,12 +27913,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/restoreFromDeletedApp", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(content);
-            request0.Content = content0;
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -27984,8 +27984,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateRestoreSnapshotSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SnapshotRestoreRequest restoreRequest)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -27998,12 +27998,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/restoreSnapshot", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(restoreRequest);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(restoreRequest);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -28069,8 +28069,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSiteExtensionsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -28083,8 +28083,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/siteextensions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -28154,8 +28154,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSiteExtensionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string siteExtensionId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -28169,8 +28169,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/siteextensions/", false);
             uri.AppendPath(siteExtensionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -28248,8 +28248,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateInstallSiteExtensionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string siteExtensionId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -28263,8 +28263,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/siteextensions/", false);
             uri.AppendPath(siteExtensionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -28330,8 +28330,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteSiteExtensionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string siteExtensionId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -28345,8 +28345,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/siteextensions/", false);
             uri.AppendPath(siteExtensionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -28410,8 +28410,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSlotDifferencesSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, CsmSlotEntity slotSwapEntity)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -28424,12 +28424,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/slotsdiffs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(slotSwapEntity);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -28503,8 +28503,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateSwapSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, CsmSlotEntity slotSwapEntity)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -28517,12 +28517,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/slotsswap", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(slotSwapEntity);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -28588,8 +28588,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSnapshotsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -28602,8 +28602,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/snapshots", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -28673,8 +28673,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSnapshotsFromDRSecondarySlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -28687,8 +28687,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/snapshotsdr", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -28758,8 +28758,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSourceControlSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -28772,8 +28772,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/sourcecontrols/web", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -28851,8 +28851,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateSourceControlSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -28865,12 +28865,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/sourcecontrols/web", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -28938,8 +28938,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteSourceControlSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string additionalFlags)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -28956,8 +28956,8 @@ namespace Azure.ResourceManager.AppService
                 uri.AppendQuery("additionalFlags", additionalFlags, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -29021,8 +29021,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateSourceControlSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, SiteSourceControlData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -29035,12 +29035,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/sourcecontrols/web", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -29118,8 +29118,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStartSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -29132,8 +29132,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -29193,8 +29193,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStartNetworkTraceSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, int? durationInSeconds, int? maxFrameLength, string sasUrl)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -29219,8 +29219,8 @@ namespace Azure.ResourceManager.AppService
                 uri.AppendQuery("sasUrl", sasUrl, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -29288,8 +29288,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStopSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -29302,8 +29302,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/stop", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -29363,8 +29363,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStopNetworkTraceSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -29377,8 +29377,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/stopNetworkTrace", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -29440,8 +29440,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateSyncRepositorySlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -29454,8 +29454,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/sync", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -29515,8 +29515,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateSyncFunctionTriggersSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -29529,8 +29529,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/syncfunctiontriggers", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -29590,8 +29590,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListTriggeredWebJobsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -29604,8 +29604,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/triggeredwebjobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -29675,8 +29675,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetTriggeredWebJobSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -29690,8 +29690,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/triggeredwebjobs/", false);
             uri.AppendPath(webJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -29769,8 +29769,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteTriggeredWebJobSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -29784,8 +29784,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/triggeredwebjobs/", false);
             uri.AppendPath(webJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -29851,8 +29851,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListTriggeredWebJobHistorySlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -29867,8 +29867,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(webJobName, true);
             uri.AppendPath("/history", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -29942,8 +29942,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetTriggeredWebJobHistorySlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName, string id)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -29959,8 +29959,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/history/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -30042,8 +30042,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateRunTriggeredWebJobSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -30058,8 +30058,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(webJobName, true);
             uri.AppendPath("/run", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -30123,8 +30123,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListUsagesSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string filter)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -30141,8 +30141,8 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("$filter", filter, false);
             }
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -30214,8 +30214,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListVnetConnectionsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -30228,8 +30228,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/virtualNetworkConnections", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -30309,8 +30309,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetVnetConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -30324,8 +30324,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/virtualNetworkConnections/", false);
             uri.AppendPath(vnetName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -30403,8 +30403,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateVnetConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -30418,12 +30418,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/virtualNetworkConnections/", false);
             uri.AppendPath(vnetName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -30501,8 +30501,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteVnetConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -30516,8 +30516,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/virtualNetworkConnections/", false);
             uri.AppendPath(vnetName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -30581,8 +30581,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateVnetConnectionSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, VnetInfoResourceData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -30596,12 +30596,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/virtualNetworkConnections/", false);
             uri.AppendPath(vnetName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -30679,8 +30679,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetVnetConnectionGatewaySlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -30696,8 +30696,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/gateways/", false);
             uri.AppendPath(gatewayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -30779,8 +30779,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateVnetConnectionGatewaySlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -30796,12 +30796,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/gateways/", false);
             uri.AppendPath(gatewayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -30883,8 +30883,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateVnetConnectionGatewaySlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string vnetName, string gatewayName, VnetGatewayData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -30900,12 +30900,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/gateways/", false);
             uri.AppendPath(gatewayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -30987,8 +30987,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListWebJobsSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -31001,8 +31001,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(slot, true);
             uri.AppendPath("/webjobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -31072,8 +31072,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetWebJobSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -31087,8 +31087,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/webjobs/", false);
             uri.AppendPath(webJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -31166,8 +31166,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSlotDifferencesFromProductionRequest(string subscriptionId, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -31178,12 +31178,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/slotsdiffs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(slotSwapEntity);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -31253,8 +31253,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateSwapSlotWithProductionRequest(string subscriptionId, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -31265,12 +31265,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/slotsswap", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(slotSwapEntity);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(slotSwapEntity);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -31332,8 +31332,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSnapshotsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -31344,8 +31344,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/snapshots", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -31411,8 +31411,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSnapshotsFromDRSecondaryRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -31423,8 +31423,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/snapshotsdr", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -31490,8 +31490,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSourceControlRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -31502,8 +31502,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/sourcecontrols/web", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -31577,8 +31577,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateSourceControlRequest(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -31589,12 +31589,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/sourcecontrols/web", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -31658,8 +31658,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteSourceControlRequest(string subscriptionId, string resourceGroupName, string name, string additionalFlags)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -31674,8 +31674,8 @@ namespace Azure.ResourceManager.AppService
                 uri.AppendQuery("additionalFlags", additionalFlags, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -31735,8 +31735,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateSourceControlRequest(string subscriptionId, string resourceGroupName, string name, SiteSourceControlData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -31747,12 +31747,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/sourcecontrols/web", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -31826,8 +31826,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -31838,8 +31838,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/start", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -31895,8 +31895,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStartNetworkTraceRequest(string subscriptionId, string resourceGroupName, string name, int? durationInSeconds, int? maxFrameLength, string sasUrl)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -31919,8 +31919,8 @@ namespace Azure.ResourceManager.AppService
                 uri.AppendQuery("sasUrl", sasUrl, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -31984,8 +31984,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -31996,8 +31996,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/stop", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -32053,8 +32053,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateStopNetworkTraceRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -32065,8 +32065,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/stopNetworkTrace", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -32124,8 +32124,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateSyncRepositoryRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -32136,8 +32136,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/sync", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -32193,8 +32193,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateSyncFunctionTriggersRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -32205,8 +32205,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/syncfunctiontriggers", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -32262,8 +32262,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListTriggeredWebJobsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -32274,8 +32274,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/triggeredwebjobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -32341,8 +32341,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetTriggeredWebJobRequest(string subscriptionId, string resourceGroupName, string name, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -32354,8 +32354,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/triggeredwebjobs/", false);
             uri.AppendPath(webJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -32429,8 +32429,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteTriggeredWebJobRequest(string subscriptionId, string resourceGroupName, string name, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -32442,8 +32442,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/triggeredwebjobs/", false);
             uri.AppendPath(webJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -32505,8 +32505,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListTriggeredWebJobHistoryRequest(string subscriptionId, string resourceGroupName, string name, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -32519,8 +32519,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(webJobName, true);
             uri.AppendPath("/history", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -32590,8 +32590,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetTriggeredWebJobHistoryRequest(string subscriptionId, string resourceGroupName, string name, string webJobName, string id)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -32605,8 +32605,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/history/", false);
             uri.AppendPath(id, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -32684,8 +32684,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateRunTriggeredWebJobRequest(string subscriptionId, string resourceGroupName, string name, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Post;
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -32698,8 +32698,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(webJobName, true);
             uri.AppendPath("/run", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -32759,8 +32759,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListUsagesRequest(string subscriptionId, string resourceGroupName, string name, string filter)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -32775,8 +32775,8 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("$filter", filter, false);
             }
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -32844,8 +32844,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListVnetConnectionsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -32856,8 +32856,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/virtualNetworkConnections", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -32933,8 +32933,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetVnetConnectionRequest(string subscriptionId, string resourceGroupName, string name, string vnetName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -32946,8 +32946,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/virtualNetworkConnections/", false);
             uri.AppendPath(vnetName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -33021,8 +33021,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateVnetConnectionRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -33034,12 +33034,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/virtualNetworkConnections/", false);
             uri.AppendPath(vnetName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -33113,8 +33113,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateDeleteVnetConnectionRequest(string subscriptionId, string resourceGroupName, string name, string vnetName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Delete;
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -33126,8 +33126,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/virtualNetworkConnections/", false);
             uri.AppendPath(vnetName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -33187,8 +33187,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateVnetConnectionRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, VnetInfoResourceData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -33200,12 +33200,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/virtualNetworkConnections/", false);
             uri.AppendPath(vnetName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -33279,8 +33279,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetVnetConnectionGatewayRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -33294,8 +33294,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/gateways/", false);
             uri.AppendPath(gatewayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -33373,8 +33373,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateCreateOrUpdateVnetConnectionGatewayRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Put;
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -33388,12 +33388,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/gateways/", false);
             uri.AppendPath(gatewayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -33471,8 +33471,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateUpdateVnetConnectionGatewayRequest(string subscriptionId, string resourceGroupName, string name, string vnetName, string gatewayName, VnetGatewayData data)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Patch;
+            var request = message.Request;
+            request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -33486,12 +33486,12 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/gateways/", false);
             uri.AppendPath(gatewayName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
-            request0.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(data);
-            request0.Content = content0;
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(data);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -33569,8 +33569,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListWebJobsRequest(string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -33581,8 +33581,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath(name, true);
             uri.AppendPath("/webjobs", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -33648,8 +33648,8 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetWebJobRequest(string subscriptionId, string resourceGroupName, string name, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -33661,8 +33661,8 @@ namespace Azure.ResourceManager.AppService
             uri.AppendPath("/webjobs/", false);
             uri.AppendPath(webJobName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -33736,13 +33736,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -33804,13 +33804,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, bool? includeSlots)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -33878,13 +33878,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListBackupsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -33897,7 +33897,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupItemCollection>> ListBackupsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupItemListResult>> ListBackupsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -33910,9 +33910,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -33928,7 +33928,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupItemCollection> ListBackupsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupItemListResult> ListBackupsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -33941,9 +33941,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -33954,13 +33954,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListBasicPublishingCredentialsPoliciesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -34030,13 +34030,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListConfigurationsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -34106,13 +34106,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetAppSettingsKeyVaultReferencesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -34125,7 +34125,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiKVReferenceCollection>> GetAppSettingsKeyVaultReferencesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceApiKeyVaultReferenceList>> GetAppSettingsKeyVaultReferencesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -34138,9 +34138,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -34156,7 +34156,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiKVReferenceCollection> GetAppSettingsKeyVaultReferencesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<AppServiceApiKeyVaultReferenceList> GetAppSettingsKeyVaultReferencesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -34169,9 +34169,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -34182,13 +34182,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSiteConnectionStringKeyVaultReferencesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -34201,7 +34201,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiKVReferenceCollection>> GetSiteConnectionStringKeyVaultReferencesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceApiKeyVaultReferenceList>> GetSiteConnectionStringKeyVaultReferencesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -34214,9 +34214,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -34232,7 +34232,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiKVReferenceCollection> GetSiteConnectionStringKeyVaultReferencesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<AppServiceApiKeyVaultReferenceList> GetSiteConnectionStringKeyVaultReferencesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -34245,9 +34245,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -34258,13 +34258,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListConfigurationSnapshotInfoNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -34334,13 +34334,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListContinuousWebJobsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -34410,13 +34410,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListDeploymentsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -34429,7 +34429,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentCollection>> ListDeploymentsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppDeploymentListResult>> ListDeploymentsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -34442,9 +34442,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentCollection value = default;
+                        WebAppDeploymentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentCollection.DeserializeDeploymentCollection(document.RootElement);
+                        value = WebAppDeploymentListResult.DeserializeWebAppDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -34460,7 +34460,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentCollection> ListDeploymentsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<WebAppDeploymentListResult> ListDeploymentsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -34473,9 +34473,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentCollection value = default;
+                        WebAppDeploymentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentCollection.DeserializeDeploymentCollection(document.RootElement);
+                        value = WebAppDeploymentListResult.DeserializeWebAppDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -34486,13 +34486,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListDomainOwnershipIdentifiersNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -34505,7 +34505,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IdentifierCollection>> ListDomainOwnershipIdentifiersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceIdentifierListResult>> ListDomainOwnershipIdentifiersNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -34518,9 +34518,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierCollection value = default;
+                        AppServiceIdentifierListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IdentifierCollection.DeserializeIdentifierCollection(document.RootElement);
+                        value = AppServiceIdentifierListResult.DeserializeAppServiceIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -34536,7 +34536,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IdentifierCollection> ListDomainOwnershipIdentifiersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<AppServiceIdentifierListResult> ListDomainOwnershipIdentifiersNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -34549,9 +34549,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierCollection value = default;
+                        AppServiceIdentifierListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IdentifierCollection.DeserializeIdentifierCollection(document.RootElement);
+                        value = AppServiceIdentifierListResult.DeserializeAppServiceIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -34562,13 +34562,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListFunctionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -34638,13 +34638,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListHostNameBindingsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -34714,13 +34714,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceIdentifiersNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -34790,13 +34790,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceProcessesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string instanceId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -34870,13 +34870,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceProcessModulesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string instanceId, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -34954,13 +34954,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceProcessThreadsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string instanceId, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -35038,13 +35038,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSiteBackupsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -35057,7 +35057,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupItemCollection>> ListSiteBackupsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupItemListResult>> ListSiteBackupsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -35070,9 +35070,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -35088,7 +35088,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupItemCollection> ListSiteBackupsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupItemListResult> ListSiteBackupsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -35101,9 +35101,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -35114,13 +35114,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListPerfMonCountersNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -35192,13 +35192,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetPrivateEndpointConnectionListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -35268,13 +35268,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListProcessesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -35344,13 +35344,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListProcessModulesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -35424,13 +35424,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListProcessThreadsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -35504,13 +35504,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListPublicCertificatesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -35580,13 +35580,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSiteExtensionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -35656,13 +35656,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSlotsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -35732,13 +35732,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListBackupsSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -35752,7 +35752,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupItemCollection>> ListBackupsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupItemListResult>> ListBackupsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -35766,9 +35766,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -35785,7 +35785,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupItemCollection> ListBackupsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupItemListResult> ListBackupsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -35799,9 +35799,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -35812,13 +35812,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListBasicPublishingCredentialsPoliciesSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -35892,13 +35892,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListConfigurationsSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -35972,13 +35972,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetAppSettingsKeyVaultReferencesSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -35992,7 +35992,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiKVReferenceCollection>> GetAppSettingsKeyVaultReferencesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceApiKeyVaultReferenceList>> GetAppSettingsKeyVaultReferencesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -36006,9 +36006,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -36025,7 +36025,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiKVReferenceCollection> GetAppSettingsKeyVaultReferencesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<AppServiceApiKeyVaultReferenceList> GetAppSettingsKeyVaultReferencesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -36039,9 +36039,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -36052,13 +36052,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetSiteConnectionStringKeyVaultReferencesSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -36072,7 +36072,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiKVReferenceCollection>> GetSiteConnectionStringKeyVaultReferencesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceApiKeyVaultReferenceList>> GetSiteConnectionStringKeyVaultReferencesSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -36086,9 +36086,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -36105,7 +36105,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiKVReferenceCollection> GetSiteConnectionStringKeyVaultReferencesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<AppServiceApiKeyVaultReferenceList> GetSiteConnectionStringKeyVaultReferencesSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -36119,9 +36119,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        ApiKVReferenceCollection value = default;
+                        AppServiceApiKeyVaultReferenceList value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ApiKVReferenceCollection.DeserializeApiKVReferenceCollection(document.RootElement);
+                        value = AppServiceApiKeyVaultReferenceList.DeserializeAppServiceApiKeyVaultReferenceList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -36132,13 +36132,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListConfigurationSnapshotInfoSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -36212,13 +36212,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListContinuousWebJobsSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -36292,13 +36292,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListDeploymentsSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -36312,7 +36312,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DeploymentCollection>> ListDeploymentsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppDeploymentListResult>> ListDeploymentsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -36326,9 +36326,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentCollection value = default;
+                        WebAppDeploymentListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DeploymentCollection.DeserializeDeploymentCollection(document.RootElement);
+                        value = WebAppDeploymentListResult.DeserializeWebAppDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -36345,7 +36345,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DeploymentCollection> ListDeploymentsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<WebAppDeploymentListResult> ListDeploymentsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -36359,9 +36359,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        DeploymentCollection value = default;
+                        WebAppDeploymentListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DeploymentCollection.DeserializeDeploymentCollection(document.RootElement);
+                        value = WebAppDeploymentListResult.DeserializeWebAppDeploymentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -36372,13 +36372,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListDomainOwnershipIdentifiersSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -36392,7 +36392,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IdentifierCollection>> ListDomainOwnershipIdentifiersSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<AppServiceIdentifierListResult>> ListDomainOwnershipIdentifiersSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -36406,9 +36406,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierCollection value = default;
+                        AppServiceIdentifierListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = IdentifierCollection.DeserializeIdentifierCollection(document.RootElement);
+                        value = AppServiceIdentifierListResult.DeserializeAppServiceIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -36425,7 +36425,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IdentifierCollection> ListDomainOwnershipIdentifiersSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<AppServiceIdentifierListResult> ListDomainOwnershipIdentifiersSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -36439,9 +36439,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        IdentifierCollection value = default;
+                        AppServiceIdentifierListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = IdentifierCollection.DeserializeIdentifierCollection(document.RootElement);
+                        value = AppServiceIdentifierListResult.DeserializeAppServiceIdentifierListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -36452,13 +36452,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceFunctionsSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -36532,13 +36532,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListHostNameBindingsSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -36612,13 +36612,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceIdentifiersSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -36692,13 +36692,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceProcessesSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string instanceId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -36776,13 +36776,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceProcessModulesSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -36864,13 +36864,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListInstanceProcessThreadsSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string instanceId, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -36952,13 +36952,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSiteBackupsSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -36972,7 +36972,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BackupItemCollection>> ListSiteBackupsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppBackupItemListResult>> ListSiteBackupsSlotNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -36986,9 +36986,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -37005,7 +37005,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="slot"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BackupItemCollection> ListSiteBackupsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
+        public Response<WebAppBackupItemListResult> ListSiteBackupsSlotNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -37019,9 +37019,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        BackupItemCollection value = default;
+                        WebAppBackupItemListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BackupItemCollection.DeserializeBackupItemCollection(document.RootElement);
+                        value = WebAppBackupItemListResult.DeserializeWebAppBackupItemListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -37032,13 +37032,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListPerfMonCountersSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string filter)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -37114,13 +37114,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateGetPrivateEndpointConnectionListSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -37194,13 +37194,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListProcessesSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -37274,13 +37274,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListProcessModulesSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -37358,13 +37358,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListProcessThreadsSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string processId)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -37442,13 +37442,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListPublicCertificatesSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -37522,13 +37522,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSiteExtensionsSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -37602,13 +37602,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSlotDifferencesSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, CsmSlotEntity slotSwapEntity)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -37686,13 +37686,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSnapshotsSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -37766,13 +37766,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSnapshotsFromDRSecondarySlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -37846,13 +37846,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListTriggeredWebJobsSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -37926,13 +37926,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListTriggeredWebJobHistorySlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -38010,13 +38010,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListUsagesSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot, string filter)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -38092,13 +38092,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListWebJobsSlotNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string slot)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -38172,13 +38172,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSlotDifferencesFromProductionNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, CsmSlotEntity slotSwapEntity)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -38252,13 +38252,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSnapshotsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -38328,13 +38328,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListSnapshotsFromDRSecondaryNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -38404,13 +38404,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListTriggeredWebJobsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -38480,13 +38480,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListTriggeredWebJobHistoryNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string webJobName)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -38560,13 +38560,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListUsagesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name, string filter)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }
@@ -38638,13 +38638,13 @@ namespace Azure.ResourceManager.AppService
         internal HttpMessage CreateListWebJobsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string name)
         {
             var message = _pipeline.CreateMessage();
-            var request0 = message.Request;
-            request0.Method = RequestMethod.Get;
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
-            request0.Uri = uri;
-            request0.Headers.Add("Accept", "application/json");
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
         }

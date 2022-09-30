@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 switch (discriminator.GetString())
                 {
                     case "DockerBuildRequest": return ContainerRegistryDockerBuildContent.DeserializeContainerRegistryDockerBuildContent(element);
-                    case "EncodedTaskRunRequest": return ContainerRegistryEncodedTaskRunRequest.DeserializeContainerRegistryEncodedTaskRunRequest(element);
+                    case "EncodedTaskRunRequest": return ContainerRegistryEncodedTaskRunContent.DeserializeContainerRegistryEncodedTaskRunContent(element);
                     case "FileTaskRunRequest": return ContainerRegistryFileTaskRunContent.DeserializeContainerRegistryFileTaskRunContent(element);
                     case "TaskRunRequest": return ContainerRegistryTaskRunContent.DeserializeContainerRegistryTaskRunContent(element);
                 }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     continue;
                 }
             }
-            return new ContainerRegistryRunContent(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value);
+            return new UnknownContainerRegistryRunContent(type, Optional.ToNullable(isArchiveEnabled), agentPoolName.Value, logTemplate.Value);
         }
     }
 }

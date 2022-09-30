@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -31,9 +32,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="blobName"> The name of the blob input. </param>
         /// <param name="deltaPathPattern"> The path pattern of the delta snapshot. </param>
         /// <param name="sourcePartitionCount"> The partition count of the blob input data source. Range 1 - 256. </param>
-        /// <param name="fullSnapshotRefreshRate"> The refresh interval of the blob input data source. </param>
-        /// <param name="deltaSnapshotRefreshRate"> The interval that the user generates a delta snapshot of this reference blob input data source. </param>
-        internal BlobReferenceInputDataSource(string referenceInputDataSourceType, IList<StreamAnalyticsStorageAccount> storageAccounts, string container, string pathPattern, string dateFormat, string timeFormat, StreamAnalyticsAuthenticationMode? authenticationMode, string blobName, string deltaPathPattern, int? sourcePartitionCount, string fullSnapshotRefreshRate, string deltaSnapshotRefreshRate) : base(referenceInputDataSourceType)
+        /// <param name="fullSnapshotRefreshInterval"> The refresh interval of the blob input data source. </param>
+        /// <param name="deltaSnapshotRefreshInterval"> The interval that the user generates a delta snapshot of this reference blob input data source. </param>
+        internal BlobReferenceInputDataSource(string referenceInputDataSourceType, IList<StreamAnalyticsStorageAccount> storageAccounts, string container, string pathPattern, string dateFormat, string timeFormat, StreamAnalyticsAuthenticationMode? authenticationMode, string blobName, string deltaPathPattern, int? sourcePartitionCount, TimeSpan? fullSnapshotRefreshInterval, TimeSpan? deltaSnapshotRefreshInterval) : base(referenceInputDataSourceType)
         {
             StorageAccounts = storageAccounts;
             Container = container;
@@ -44,8 +45,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             BlobName = blobName;
             DeltaPathPattern = deltaPathPattern;
             SourcePartitionCount = sourcePartitionCount;
-            FullSnapshotRefreshRate = fullSnapshotRefreshRate;
-            DeltaSnapshotRefreshRate = deltaSnapshotRefreshRate;
+            FullSnapshotRefreshInterval = fullSnapshotRefreshInterval;
+            DeltaSnapshotRefreshInterval = deltaSnapshotRefreshInterval;
             ReferenceInputDataSourceType = referenceInputDataSourceType ?? "Microsoft.Storage/Blob";
         }
 
@@ -68,8 +69,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <summary> The partition count of the blob input data source. Range 1 - 256. </summary>
         public int? SourcePartitionCount { get; set; }
         /// <summary> The refresh interval of the blob input data source. </summary>
-        public string FullSnapshotRefreshRate { get; set; }
+        public TimeSpan? FullSnapshotRefreshInterval { get; set; }
         /// <summary> The interval that the user generates a delta snapshot of this reference blob input data source. </summary>
-        public string DeltaSnapshotRefreshRate { get; set; }
+        public TimeSpan? DeltaSnapshotRefreshInterval { get; set; }
     }
 }

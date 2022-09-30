@@ -99,12 +99,12 @@ namespace Azure.ResourceManager.AppService
                     writer.WriteNull("spotExpirationTime");
                 }
             }
-            if (Optional.IsDefined(FreeOfferExpiredOn))
+            if (Optional.IsDefined(FreeOfferExpireOn))
             {
-                if (FreeOfferExpiredOn != null)
+                if (FreeOfferExpireOn != null)
                 {
                     writer.WritePropertyName("freeOfferExpirationTime");
-                    writer.WriteStringValue(FreeOfferExpiredOn.Value, "O");
+                    writer.WriteStringValue(FreeOfferExpireOn.Value, "O");
                 }
                 else
                 {

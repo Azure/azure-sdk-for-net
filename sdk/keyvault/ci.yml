@@ -20,7 +20,6 @@ pr:
   paths:
     include:
     - sdk/keyvault/
-    - sdk/resourcemanager/
     - sdk/network/
 
 extends:
@@ -38,5 +37,3 @@ extends:
       safeName: AzureSecurityKeyVaultKeys
     - name: Azure.Security.KeyVault.Secrets
       safeName: AzureSecurityKeyVaultSecrets
-    - name: Azure.ResourceManager.KeyVault
-      safeName: AzureResourceManagerKeyVault

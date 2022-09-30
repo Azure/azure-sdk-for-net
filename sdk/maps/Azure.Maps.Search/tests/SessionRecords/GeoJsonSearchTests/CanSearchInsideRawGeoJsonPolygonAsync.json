@@ -1,0 +1,809 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://atlas.microsoft.com/search/geometry/json?api-version=1.0\u0026query=coffee",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "204",
+        "Content-Type": "application/json",
+        "traceparent": "00-20b6bca9774881655b864ec829ac7d87-89f87b64be9e6278-00",
+        "User-Agent": "azsdk-net-Maps.Search/1.0.0-alpha.20220908.1 (.NET 6.0.8; Microsoft Windows 10.0.19044)",
+        "x-ms-client-id": "a1ee513d-a824-4693-a430-e997b5d25172",
+        "x-ms-client-request-id": "e8adcb3fa8e5f8293d5716899d6273f2",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "geometry": {
+          "coordinates": [
+            [
+              [
+                -122.43576049804686,
+                37.7524152343544
+              ],
+              [
+                -122.4330139159,
+                37.70660472542312
+              ],
+              [
+                -122.36434936523438,
+                37.712059855877314
+              ],
+              [
+                -122.43576049804686,
+                37.7524152343544
+              ]
+            ]
+          ],
+          "type": "Polygon"
+        }
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Content-Length": "10716",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Thu, 08 Sep 2022 18:56:20 GMT",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "Vary": [
+          "Accept-Encoding",
+          "X-HTTP-Method-Override"
+        ],
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-azuremaps-region": "West US 2",
+        "X-MSEdge-Ref": "Ref A: 785B100A60F648E381D0D16F3F7D6454 Ref B: PAOEDGE0610 Ref C: 2022-09-08T18:56:21Z"
+      },
+      "ResponseBody": {
+        "summary": {
+          "query": "coffee",
+          "queryType": "NON_NEAR",
+          "queryTime": 11,
+          "numResults": 10,
+          "offset": 0,
+          "totalResults": 64,
+          "fuzzyLevel": 1
+        },
+        "results": [
+          {
+            "type": "POI",
+            "id": "840069020843503",
+            "score": 2.145565033,
+            "info": "search:ta:840069020843503-US",
+            "poi": {
+              "name": "5 Degree Tea House",
+              "phone": "\u002B1 415-468-8123",
+              "categorySet": [
+                {
+                  "id": 9376005
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "tea house"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "tea house"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "2527",
+              "streetName": "San Bruno Avenue",
+              "municipalitySubdivision": "Portola",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94134",
+              "extendedPostalCode": "94134-1504",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "2527 San Bruno Avenue, San Francisco, CA 94134",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.72984,
+              "lon": -122.40423
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.73074,
+                "lon": -122.40537
+              },
+              "btmRightPoint": {
+                "lat": 37.72894,
+                "lon": -122.40309
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.72977,
+                  "lon": -122.4045
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069019666802",
+            "score": 2.145506382,
+            "info": "search:ta:840069019666802-US",
+            "poi": {
+              "name": "Four Barrel Coffee",
+              "phone": "\u002B1 415-715-8296",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "url": "fourbarrelcoffee.com",
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "2599",
+              "streetName": "San Bruno Avenue",
+              "municipalitySubdivision": "Portola",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94134",
+              "extendedPostalCode": "94134-1504",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "2599 San Bruno Avenue, San Francisco, CA 94134",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.729,
+              "lon": -122.40395
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.7299,
+                "lon": -122.40509
+              },
+              "btmRightPoint": {
+                "lat": 37.7281,
+                "lon": -122.40281
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.72892,
+                  "lon": -122.40414
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069019636456",
+            "score": 2.1454870701,
+            "info": "search:ta:840069019636456-US",
+            "poi": {
+              "name": "Lucky Deli Cafe",
+              "phone": "\u002B1 415-825-5315",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "2609",
+              "streetName": "San Bruno Avenue",
+              "municipalitySubdivision": "Portola",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94134",
+              "extendedPostalCode": "94134-1506",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "2609 San Bruno Avenue, San Francisco, CA 94134",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.72868,
+              "lon": -122.40375
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.72958,
+                "lon": -122.40489
+              },
+              "btmRightPoint": {
+                "lat": 37.72778,
+                "lon": -122.40261
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.72861,
+                  "lon": -122.40401
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840061002468477",
+            "score": 2.1454861164,
+            "info": "search:ta:840061002468477-US",
+            "poi": {
+              "name": "Coco\u0027s Bar",
+              "phone": "\u002B1 415-334-6863",
+              "categorySet": [
+                {
+                  "id": 9376003
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "4541",
+              "streetName": "Mission Street",
+              "municipalitySubdivision": "Mission Terrace",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94112",
+              "extendedPostalCode": "94112-2603",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "4541 Mission Street, San Francisco, CA 94112",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.72546,
+              "lon": -122.43388
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.72636,
+                "lon": -122.43502
+              },
+              "btmRightPoint": {
+                "lat": 37.72456,
+                "lon": -122.43274
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.72558,
+                  "lon": -122.43413
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069020941831",
+            "score": 2.1454794407,
+            "info": "search:ta:840069020941831-US",
+            "poi": {
+              "name": "Candlestick Coffee",
+              "phone": "\u002B1 415-467-2442",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "2155",
+              "streetName": "Bayshore Boulevard",
+              "municipalitySubdivision": "Visitacion Valley",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94134",
+              "extendedPostalCode": "94134-2455",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "2155 Bayshore Boulevard, San Francisco, CA 94134",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.71254,
+              "lon": -122.40084
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.71344,
+                "lon": -122.40198
+              },
+              "btmRightPoint": {
+                "lat": 37.71164,
+                "lon": -122.3997
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.71276,
+                  "lon": -122.40086
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069019289366",
+            "score": 2.1454770565,
+            "info": "search:ta:840069019289366-US",
+            "poi": {
+              "name": "Pinhole Coffee",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "url": "www.pinholecoffee.com",
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "231",
+              "streetName": "Cortland Avenue",
+              "municipalitySubdivision": "Bernal Heights",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94110",
+              "extendedPostalCode": "94110-5556",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "231 Cortland Avenue, San Francisco, CA 94110",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.73967,
+              "lon": -122.41894
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.74057,
+                "lon": -122.42008
+              },
+              "btmRightPoint": {
+                "lat": 37.73877,
+                "lon": -122.4178
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.73949,
+                  "lon": -122.41906
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069005615432",
+            "score": 2.1454720497,
+            "info": "search:ta:840069005615432-US",
+            "poi": {
+              "name": "Artis Coffee",
+              "phone": "\u002B1 415-875-9081",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "1439",
+              "streetName": "Egbert Avenue",
+              "municipalitySubdivision": "Bayview",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94124",
+              "extendedPostalCode": "94124-3221",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "1439 Egbert Avenue, San Francisco, CA 94124",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.72286,
+              "lon": -122.39326
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.72376,
+                "lon": -122.3944
+              },
+              "btmRightPoint": {
+                "lat": 37.72196,
+                "lon": -122.39212
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.72308,
+                  "lon": -122.39335
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069002766840",
+            "score": 2.145462513,
+            "info": "search:ta:840069002766840-US",
+            "poi": {
+              "name": "La Paloma Cafe",
+              "phone": "\u002B1 415-654-5147",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "257",
+              "streetName": "Randall Street",
+              "municipalitySubdivision": "Glen Park",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94131",
+              "extendedPostalCode": "94131-2738",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "257 Randall Street, San Francisco, CA 94131",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.74004,
+              "lon": -122.42905
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.74094,
+                "lon": -122.43019
+              },
+              "btmRightPoint": {
+                "lat": 37.73914,
+                "lon": -122.42791
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.74022,
+                  "lon": -122.42889
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069006289203",
+            "score": 2.1454617977,
+            "info": "search:ta:840069006289203-US",
+            "poi": {
+              "name": "Piccolo Pete\u0027s Cafe",
+              "phone": "\u002B1 415-468-6601",
+              "categorySet": [
+                {
+                  "id": 9376002
+                }
+              ],
+              "categories": [
+                "caf\u00E9",
+                "caf\u00E9/pub"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "2155",
+              "streetName": "Bayshore Boulevard",
+              "municipalitySubdivision": "Visitacion Valley",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94134",
+              "extendedPostalCode": "94134-2455",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "2155 Bayshore Boulevard, San Francisco, CA 94134",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.71277,
+              "lon": -122.40067
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.71367,
+                "lon": -122.40181
+              },
+              "btmRightPoint": {
+                "lat": 37.71187,
+                "lon": -122.39953
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.71276,
+                  "lon": -122.40086
+                }
+              }
+            ]
+          },
+          {
+            "type": "POI",
+            "id": "840069020996381",
+            "score": 2.1454598904,
+            "info": "search:ta:840069020996381-US",
+            "poi": {
+              "name": "Lolocup Tea And Coffee",
+              "phone": "\u002B1 415-715-6757",
+              "categorySet": [
+                {
+                  "id": 9376006
+                }
+              ],
+              "categories": [
+                "caf\u00E9/pub",
+                "coffee shop"
+              ],
+              "classifications": [
+                {
+                  "code": "CAFE_PUB",
+                  "names": [
+                    {
+                      "nameLocale": "en-US",
+                      "name": "coffee shop"
+                    },
+                    {
+                      "nameLocale": "en-US",
+                      "name": "caf\u00E9/pub"
+                    }
+                  ]
+                }
+              ]
+            },
+            "address": {
+              "streetNumber": "2527",
+              "streetName": "San Bruno Avenue",
+              "municipalitySubdivision": "Portola",
+              "municipality": "San Francisco",
+              "countrySecondarySubdivision": "San Francisco",
+              "countrySubdivision": "CA",
+              "countrySubdivisionName": "California",
+              "postalCode": "94134",
+              "extendedPostalCode": "94134-1504",
+              "countryCode": "US",
+              "country": "United States",
+              "countryCodeISO3": "USA",
+              "freeformAddress": "2527 San Bruno Avenue, San Francisco, CA 94134",
+              "localName": "San Francisco"
+            },
+            "position": {
+              "lat": 37.72984,
+              "lon": -122.40423
+            },
+            "viewport": {
+              "topLeftPoint": {
+                "lat": 37.73074,
+                "lon": -122.40537
+              },
+              "btmRightPoint": {
+                "lat": 37.72894,
+                "lon": -122.40309
+              }
+            },
+            "entryPoints": [
+              {
+                "type": "main",
+                "position": {
+                  "lat": 37.72977,
+                  "lon": -122.4045
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "AZMAPS_CLIENT_ID": "a1ee513d-a824-4693-a430-e997b5d25172",
+    "AZURE_AUTHORITY_HOST": "https://login.microsoftonline.com",
+    "ENDPOINT_URL": "https://atlas.microsoft.com",
+    "RandomSeed": "1685312457"
+  }
+}

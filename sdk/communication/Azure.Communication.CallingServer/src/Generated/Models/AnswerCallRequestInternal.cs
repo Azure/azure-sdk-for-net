@@ -14,22 +14,28 @@ namespace Azure.Communication.CallingServer
     {
         /// <summary> Initializes a new instance of AnswerCallRequestInternal. </summary>
         /// <param name="incomingCallContext"> The context associated with the call. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> is null. </exception>
-        public AnswerCallRequestInternal(string incomingCallContext)
+        /// <param name="callbackUri"> The callback uri. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="incomingCallContext"/> or <paramref name="callbackUri"/> is null. </exception>
+        public AnswerCallRequestInternal(string incomingCallContext, string callbackUri)
         {
             if (incomingCallContext == null)
             {
                 throw new ArgumentNullException(nameof(incomingCallContext));
             }
+            if (callbackUri == null)
+            {
+                throw new ArgumentNullException(nameof(callbackUri));
+            }
 
             IncomingCallContext = incomingCallContext;
+            CallbackUri = callbackUri;
         }
 
         /// <summary> The context associated with the call. </summary>
         public string IncomingCallContext { get; }
         /// <summary> The callback uri. </summary>
-        public string CallbackUri { get; set; }
+        public string CallbackUri { get; }
         /// <summary> Media Streaming Configuration. </summary>
-        public MediaStreamingConfigurationDto MediaStreamingConfiguration { get; set; }
+        public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
     }
 }

@@ -12,7 +12,6 @@ namespace Azure.Messaging.ServiceBus
     /// </summary>
     ///
     /// <seealso cref="System.Exception" />
-    ///
     public class ServiceBusException : Exception
     {
         /// <summary>
@@ -20,14 +19,12 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value><c>true</c> if the exception is likely transient; otherwise, <c>false</c>.</value>
-        ///
         public bool IsTransient { get; }
 
         /// <summary>
         ///   The reason for the failure of an Service Bus operation that resulted
         ///   in the exception.
         /// </summary>
-        ///
         public ServiceBusFailureReason Reason { get; }
 
         /// <summary>
@@ -35,7 +32,6 @@ namespace Azure.Messaging.ServiceBus
         /// </summary>
         ///
         /// <value>The name of the Service Bus entity, if available; otherwise, <c>null</c>.</value>
-        ///
         public string EntityPath { get; }
 
         /// <summary>
@@ -46,7 +42,6 @@ namespace Azure.Messaging.ServiceBus
         /// <summary>
         ///   Gets a message that describes the current exception.
         /// </summary>
-        ///
         public override string Message
         {
             get
@@ -55,16 +50,18 @@ namespace Azure.Messaging.ServiceBus
                 {
                     return string.Format(
                         CultureInfo.InvariantCulture,
-                        "{0} ({1})",
+                        "{0} ({1}). {2}",
                         base.Message,
-                        Reason);
+                        Reason,
+                        Constants.TroubleshootingMessage);
                 }
                 return string.Format(
                     CultureInfo.InvariantCulture,
-                    "{0} ({1} - {2})",
+                    "{0} ({1} - {2}). {3}",
                     base.Message,
                     EntityPath,
-                    Reason);
+                    Reason,
+                    Constants.TroubleshootingMessage);
             }
         }
 
@@ -77,7 +74,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="reason">The reason for the failure that resulted in the exception.</param>
         /// <param name="entityPath">The name of the Service Bus entity to which the exception is associated.</param>
         /// <param name="innerException"></param>
-        ///
         public ServiceBusException(
             string message,
             ServiceBusFailureReason reason,
@@ -108,7 +104,6 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="entityName">The name of the Service Bus entity to which the exception is associated.</param>
         /// <param name="reason">The reason for the failure that resulted in the exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null reference if no inner exception is specified.</param>
-        ///
         public ServiceBusException(bool isTransient,
                                   string message,
                                   string entityName = default,

@@ -187,19 +187,11 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
             {
                 (
                     new MockRequest { Method = RequestMethod.Post, Uri = actionUri },
-                    new MockResponse(202).WithHeader("operation-location", "/text/analytics/v3.1/analyze/jobs/12341234-1234-1234-1234-123412341234")
+                    new MockResponse(202).WithHeader("operation-location", "/language/analyze-text/jobs/12341234-1234-1234-1234-123412341234")
                 ),
                 (
                     new MockRequest { Method = RequestMethod.Get, Uri = statusUri },
                     new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""running"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":1}}")
-                ),
-                (
-                    new MockRequest { Method = RequestMethod.Delete, Uri = statusUri },
-                    new MockResponse(202).WithHeader("operation-location", "/text/analytics/v3.1/analyze/jobs/12341234-1234-1234-1234-123412341234")
-                ),
-                (
-                    new MockRequest { Method = RequestMethod.Get, Uri = statusUri },
-                    new MockResponse(200).WithContent(@"{""jobId"":""12341234-1234-1234-1234-123412341234"",""status"":""cancelled"",""tasks"":{""total"":1,""completed"":0,""failed"":0,""inProgress"":0}}")
                 ),
             });
 
@@ -221,19 +213,38 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
                 ExpectSyncPipeline = !IsAsync,
             };
 
+            var documents = new List<TextDocumentInput>
+            {
+                new TextDocumentInput("134234", "Elon Musk is the CEO of SpaceX and Tesla.")
+                {
+                     Language = "en",
+                },
+                new TextDocumentInput("324232", "Tesla stock is up by 400% this year.")
+                {
+                     Language = "en",
+                }
+            };
+
+            TextAnalyticsActions batchActions = new TextAnalyticsActions()
+            {
+                ExtractKeyPhrasesActions = new List<ExtractKeyPhrasesAction>() { new ExtractKeyPhrasesAction() },
+            };
+
             TextAnalyticsClient client = InstrumentClient(CreateTestClient(transport));
-            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(new[] { "100mg ibuprofen" }, new TextAnalyticsActions { AnalyzeHealthcareEntitiesActions = new[] { new AnalyzeHealthcareEntitiesAction() } }, "en");
+            AnalyzeActionsOperation operation = await client.StartAnalyzeActionsAsync(documents, batchActions);
 
             if (IsAsync)
             {
                 await operation.UpdateStatusAsync();
-                Assert.ThrowsAsync<NotSupportedException>(async () => await operation.CancelAsync());
             }
             else
             {
                 operation.UpdateStatus();
-                Assert.Throws<NotSupportedException>(() => operation.Cancel());
             }
+
+            NotSupportedException ex = Assert.ThrowsAsync<NotSupportedException>(async () => await operation.CancelAsync());
+
+            Assert.AreEqual("Cancellation is not available in API version v3.1. Use service API version 2022-05-01 or newer.", ex.Message);
         }
 
         #endregion Analyze
@@ -436,5 +447,38 @@ namespace Azure.AI.TextAnalytics.Legacy.Tests
         }
 
         #endregion Healthcare
+
+        #region Recognize Custom Entities
+
+        [Test]
+        public void CancelRecognizeCustomEntitiesOperation()
+        {
+            TextAnalyticsClient client = CreateTestClient(new MockTransport());
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartRecognizeCustomEntitiesAsync(new[] { "100mg ibuprofen" }, "project", "deployment", "en"));
+        }
+
+        #endregion
+
+        #region Single Label Classify
+
+        [Test]
+        public void CancelSingleLabelClassifyDocumentOperation()
+        {
+            TextAnalyticsClient client = CreateTestClient(new MockTransport());
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartSingleLabelClassifyAsync(new[] { "It was the best of times, it was the worst of times." }, "project", "deployment", "en"));
+        }
+
+        #endregion
+
+        #region Multi Label Classify
+
+        [Test]
+        public void CancelMultiLabelClassifyDocumentOperation()
+        {
+            TextAnalyticsClient client = CreateTestClient(new MockTransport());
+            Assert.ThrowsAsync<NotSupportedException>(async () => await client.StartMultiLabelClassifyAsync(new[] { "It was the best of times, it was the worst of times." }, "project", "deployment", "en"));
+        }
+
+        #endregion
     }
 }

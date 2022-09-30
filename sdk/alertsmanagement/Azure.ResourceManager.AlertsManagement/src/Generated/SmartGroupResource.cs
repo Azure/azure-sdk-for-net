@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AlertsManagement
     public partial class SmartGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SmartGroupResource"/> instance. </summary>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string smartGroupId)
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, Guid smartGroupId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}";
             return new ResourceIdentifier(resourceId);
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AlertsManagement
             scope.Start();
             try
             {
-                var response = await _smartGroupRestClient.GetByIdAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _smartGroupRestClient.GetByIdAsync(Id.SubscriptionId, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SmartGroupResource(Client, response.Value), response.GetRawResponse());
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AlertsManagement
             scope.Start();
             try
             {
-                var response = _smartGroupRestClient.GetById(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = _smartGroupRestClient.GetById(Id.SubscriptionId, Guid.Parse(Id.Name), cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new SmartGroupResource(Client, response.Value), response.GetRawResponse());
@@ -143,13 +143,13 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="newState"> New state of the alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SmartGroupResource>> ChangeStateAsync(AlertState newState, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SmartGroupResource>> ChangeStateAsync(ServiceAlertState newState, CancellationToken cancellationToken = default)
         {
             using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupResource.ChangeState");
             scope.Start();
             try
             {
-                var response = await _smartGroupRestClient.ChangeStateAsync(Id.SubscriptionId, Id.Name, newState, cancellationToken).ConfigureAwait(false);
+                var response = await _smartGroupRestClient.ChangeStateAsync(Id.SubscriptionId, Guid.Parse(Id.Name), newState, cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(new SmartGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -166,13 +166,13 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </summary>
         /// <param name="newState"> New state of the alert. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SmartGroupResource> ChangeState(AlertState newState, CancellationToken cancellationToken = default)
+        public virtual Response<SmartGroupResource> ChangeState(ServiceAlertState newState, CancellationToken cancellationToken = default)
         {
             using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupResource.ChangeState");
             scope.Start();
             try
             {
-                var response = _smartGroupRestClient.ChangeState(Id.SubscriptionId, Id.Name, newState, cancellationToken);
+                var response = _smartGroupRestClient.ChangeState(Id.SubscriptionId, Guid.Parse(Id.Name), newState, cancellationToken);
                 return Response.FromValue(new SmartGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.AlertsManagement
             scope.Start();
             try
             {
-                var response = await _smartGroupRestClient.GetHistoryAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _smartGroupRestClient.GetHistoryAsync(Id.SubscriptionId, Guid.Parse(Id.Name), cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AlertsManagement
             scope.Start();
             try
             {
-                var response = _smartGroupRestClient.GetHistory(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = _smartGroupRestClient.GetHistory(Id.SubscriptionId, Guid.Parse(Id.Name), cancellationToken);
                 return response;
             }
             catch (Exception e)
