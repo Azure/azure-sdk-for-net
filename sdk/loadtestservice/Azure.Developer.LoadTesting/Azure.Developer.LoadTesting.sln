@@ -13,7 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Developer.LoadTesting
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Developer.LoadTesting.Tests", "tests\Azure.Developer.LoadTesting.Tests.csproj", "{40264874-2DF3-44F5-B600-D0C986A8989D}"
 EndProject
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,10 +39,6 @@ Global
 		{40264874-2DF3-44F5-B600-D0C986A8989D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40264874-2DF3-44F5-B600-D0C986A8989D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40264874-2DF3-44F5-B600-D0C986A8989D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{28552B8E-103A-4E14-A81C-19EFDC3C93FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28552B8E-103A-4E14-A81C-19EFDC3C93FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28552B8E-103A-4E14-A81C-19EFDC3C93FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28552B8E-103A-4E14-A81C-19EFDC3C93FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
