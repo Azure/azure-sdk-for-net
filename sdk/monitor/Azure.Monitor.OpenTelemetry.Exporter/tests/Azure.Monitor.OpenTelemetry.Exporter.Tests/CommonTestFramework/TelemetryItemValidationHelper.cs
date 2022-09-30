@@ -138,6 +138,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             TelemetryItem telemetryItem,
             string expectedName,
             string expectedTraceId,
+            string expectedSpanId,
             IDictionary<string, string> expectedProperties)
         {
             Assert.Equal("RemoteDependency", telemetryItem.Name); // telemetry type
@@ -152,6 +153,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
 
             var remoteDependencyData = (RemoteDependencyData)telemetryItem.Data.BaseData;
+            Assert.Equal(expectedSpanId, remoteDependencyData.Id);
             Assert.Equal(expectedName, remoteDependencyData.Name);
 
             if (expectedProperties == null)
@@ -172,7 +174,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             ActivityKind activityKind,
             string expectedName,
             string expectedTraceId,
-            IDictionary<string, string> expectedProperties)
+            IDictionary<string, string> expectedProperties,
+            string expectedSpanId)
         {
             Assert.Equal("Request", telemetryItem.Name); // telemetry type
             Assert.Equal("RequestData", telemetryItem.Data.BaseType); // telemetry data type
@@ -197,6 +200,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
 
             var requestData = (RequestData)telemetryItem.Data.BaseData;
             Assert.Equal(expectedName, requestData.Name);
+            Assert.Equal(expectedSpanId, requestData.Id);
 
             if (expectedProperties == null)
             {
